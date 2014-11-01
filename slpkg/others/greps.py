@@ -24,6 +24,8 @@
 import os
 
 from toolbar import status
+from __metadata__ import lib_path
+from splitting import split_package
 from slack_version import slack_ver
 
 
@@ -41,6 +43,7 @@ def repo_data(PACKAGES_TXT, step, repo):
             name.append(line[15:].strip())
         if line.startswith("PACKAGE LOCATION"):
             location.append(line[21:].strip())
+
         if line.startswith("PACKAGE SIZE (compressed):  "):
             size.append(line[28:-2].strip())
         if line.startswith("PACKAGE SIZE (uncompressed):  "):
@@ -80,3 +83,17 @@ def alien_filter(name, location, size, unsize):
             fsize.append(s)
             funsize.append(u)
     return [fname, flocation, fsize, funsize]
+
+
+def alien_requires(name):
+    lib = lib_path + "alien_repo/PACKAGES.TXT"
+    f = open(lib, "r")
+    PACKAGES_TXT = f.read()
+    f.close()
+    for line in PACKAGES_TXT.splitlines():
+        if line.startswith("PACKAGE NAME: "):
+            pkg = line[14:].strip()
+            alien_name = split_package(pkg)[0]
+        if line.startswith("PACKAGE REQUIRED: "):
+            if alien_name == name:
+                return line[18:].strip().split(",")

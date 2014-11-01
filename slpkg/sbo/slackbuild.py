@@ -106,7 +106,7 @@ class SBoInstall(object):
                     # installs = b_ins[0]
                     # upgraded = b_ins[1]
                     # versions = b_ins[2]
-                    b_ins = build_install(dependencies, idata[0], idata[1])
+                    b_ins = build_install(dependencies, idata[0])
                     reference(count[1], msg[0], count[0], msg[1],
                               b_ins[0], b_ins[2], b_ins[1])
                     write_deps(self.name, dependencies)
@@ -309,7 +309,7 @@ def search_in_tmp(prgnam):
     return binary
 
 
-def build_install(dependencies, sbo_versions, packages_arch):
+def build_install(dependencies, sbo_versions):
     '''
     Searches the package name and version in /tmp to
     install. If find two or more packages e.g. to build
@@ -318,7 +318,7 @@ def build_install(dependencies, sbo_versions, packages_arch):
     installs, upgraded, versions = [], [], []
     create_build_path()
     os.chdir(build_path)
-    for pkg, ver, ar in zip(dependencies, sbo_versions, packages_arch):
+    for pkg, ver in zip(dependencies, sbo_versions):
         prgnam = ("{0}-{1}".format(pkg, ver))
         sbo_file = "".join(find_package(prgnam, pkg_path))
         if sbo_file:

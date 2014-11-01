@@ -24,26 +24,22 @@
 import sys
 
 from colors import GREY, ENDC
-from blacklist import BlackList
 
-from greps import SBoGrep
+from greps import alien_requires
 
 dep_results = []
 
 
-def sbo_dependencies_pkg(name):
+def dependencies_pkg(name):
     '''
     Build all dependencies of a package
     '''
     try:
         dependencies = []
-        blacklist = BlackList().packages()
-        requires = SBoGrep(name).requires()
+        requires = alien_requires(name)
         if requires:
             for req in requires:
-                # avoid to add %README% as dependency and
-                # if require in blacklist
-                if "%README%" not in req and req not in blacklist:
+                if req:
                     dependencies.append(req)
             if dependencies:
                 dep_results.append(dependencies)
@@ -51,7 +47,7 @@ def sbo_dependencies_pkg(name):
                     sys.stdout.write("{0}.{1}".format(
                                      GREY, ENDC))
                     sys.stdout.flush()
-                    sbo_dependencies_pkg(dep)
+                    dependencies_pkg(dep)
         return dep_results
     except KeyboardInterrupt:
         print   # new line at exit

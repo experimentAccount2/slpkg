@@ -37,6 +37,7 @@ from pkg.manager import PackageManager
 from sizes import units
 from remove import delete
 from greps import repo_data
+from dependency import dependencies_pkg
 from download import slack_dwn
 from slack_version import slack_ver
 
@@ -75,6 +76,10 @@ class Others(object):
         Install packages from official Slackware distribution
         '''
         try:
+            # name = data[0]
+            # location = data[1]
+            # size = data[2]
+            # unsize = data[3]
             data = repo_data(self.PACKAGES_TXT, self.step, self.repo)
             (dwn_links, install_all,
              comp_sum, uncomp_sum) = store(data[0], data[1], data[2], data[3],
@@ -200,3 +205,21 @@ def install(tmp_path, install_all):
             print("[ {0}installing{1} ] --> {2}".format(
                   GREEN, ENDC, install))
             PackageManager(package).upgrade()
+
+
+def alien_deps(name):
+    '''
+    Return package dependencies
+    '''
+    deps = dependencies_pkg(name)
+    requires, dependencies = [], []
+    # requires.append(name)
+    # Create one list for all packages
+    for pkg in deps:
+        requires += pkg
+    requires.reverse()
+    # Remove double dependencies
+    for duplicate in requires:
+        if duplicate not in dependencies:
+            dependencies.append(duplicate)
+    return dependencies
