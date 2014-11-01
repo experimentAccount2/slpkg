@@ -24,7 +24,7 @@
 import sys
 
 from messages import template
-from init import initialization
+from init import Initialization
 from __metadata__ import pkg_path, sp
 from colors import RED, GREEN, GREY, YELLOW, CYAN, ENDC
 
@@ -42,7 +42,7 @@ def track_dep(name):
     '''
     sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
     sys.stdout.flush()
-    initialization()
+    Initialization().sbo()
     dependencies_list = sbo_dependencies_pkg(name)
     sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
     if dependencies_list:

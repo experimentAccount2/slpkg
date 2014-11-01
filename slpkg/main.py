@@ -41,6 +41,7 @@ from sbo.slackbuild import SBoInstall
 
 from slack.install import Slack
 from slack.patches import Patches
+from others.install import Others
 
 
 def main():
@@ -49,7 +50,7 @@ def main():
     s_user(getpass.getuser())
     args = sys.argv
     args.pop(0)
-    repository = ["sbo", "slack"]
+    repository = ["sbo", "slack", "rlw", "alien"]
     blacklist = BlackList()
     queue = QueuePkgs()
 
@@ -88,6 +89,10 @@ def main():
             SBoInstall(args[2]).start()
         elif args[1] == repository[1]:
             Slack(args[2], "stable").start()
+        elif args[1] == repository[2]:
+            Others(args[2], repository[2]).start()
+        elif args[1] == repository[3]:
+            Others(args[2], repository[3]).start()
         else:
             usage()
     elif len(args) == 4 and args[0] == "-s":

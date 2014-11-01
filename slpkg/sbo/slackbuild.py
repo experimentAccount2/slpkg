@@ -25,8 +25,9 @@ import os
 import sys
 
 from toolbar import status
-from init import initialization
+from init import Initialization
 from downloader import Download
+from splitting import split_package
 from __metadata__ import (tmp, pkg_path, build_path,
                           log_path, lib_path, sp)
 
@@ -50,7 +51,7 @@ class SBoInstall(object):
         self.name = name
         sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
         sys.stdout.flush()
-        initialization()
+        Initialization().sbo()
         self.UNST = ["UNSUPPORTED", "UNTESTED"]
         self.dependencies_list = sbo_dependencies_pkg(name)
 
@@ -321,9 +322,8 @@ def build_install(dependencies, sbo_versions, packages_arch):
         prgnam = ("{0}-{1}".format(pkg, ver))
         sbo_file = "".join(find_package(prgnam, pkg_path))
         if sbo_file:
-            sbo_file_version = sbo_file[len(pkg) + 1:-len(ar) - 7]
             template(78)
-            pkg_found(pkg, sbo_file_version)
+            pkg_found(pkg, split_package(sbo_file)[1])
             template(78)
         else:
             sbo_url = sbo_search_pkg(pkg)

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# splitting.py file is part of slpkg.
+# sizes.py file is part of slpkg.
 
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
@@ -21,30 +21,24 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from slack.slack_version import slack_ver
 
-
-def split_package(package):
+def units(comp_sum, uncomp_sum):
     '''
-    Split package in name, version
-    arch and build tag.
+    Calculate package size
     '''
-    split = package.split("-")
-    sbo = "_SBo"
-    slack = "_slack{0}".format(slack_ver())
-    rlw = "_rlw"
-    alien = "alien"
-    if sbo in package:
-        build = split[-1][:-4]   # remove .t?z extension
-    if slack in package:
-        build = split[-1][:-len(slack)]
-    elif rlw in package:
-        build = split[-1][:-len(rlw)]
-    elif alien in package:
-        build = split[-1][:-len(alien)]
-    else:
-        build = split[-1]
-    arch = split[-2]
-    ver = split[-3]
-    name = "-".join(split[:-3])
-    return [name, ver, arch, build]
+    compressed = round((sum(map(float, comp_sum)) / 1024), 2)
+    uncompressed = round((sum(map(float, uncomp_sum)) / 1024), 2)
+    comp_unit = uncomp_unit = "Mb"
+    if compressed > 1024:
+        compressed = round((compressed / 1024), 2)
+        comp_unit = "Gb"
+    if uncompressed > 1024:
+        uncompressed = round((uncompressed / 1024), 2)
+        uncomp_unit = "Gb"
+    if compressed < 1:
+        compressed = sum(map(int, comp_sum))
+        comp_unit = "Kb"
+    if uncompressed < 1:
+        uncompressed = sum(map(int, uncomp_sum))
+        uncomp_unit = "Kb"
+    return [comp_unit, uncomp_unit], [compressed, uncompressed]

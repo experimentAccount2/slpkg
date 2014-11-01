@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# splitting.py file is part of slpkg.
+# slack_version.py file is part of slpkg.
 
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
@@ -21,30 +21,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from slack.slack_version import slack_ver
+import re
 
 
-def split_package(package):
+def slack_ver():
     '''
-    Split package in name, version
-    arch and build tag.
+    Open file and read Slackware version
     '''
-    split = package.split("-")
-    sbo = "_SBo"
-    slack = "_slack{0}".format(slack_ver())
-    rlw = "_rlw"
-    alien = "alien"
-    if sbo in package:
-        build = split[-1][:-4]   # remove .t?z extension
-    if slack in package:
-        build = split[-1][:-len(slack)]
-    elif rlw in package:
-        build = split[-1][:-len(rlw)]
-    elif alien in package:
-        build = split[-1][:-len(alien)]
-    else:
-        build = split[-1]
-    arch = split[-2]
-    ver = split[-3]
-    name = "-".join(split[:-3])
-    return [name, ver, arch, build]
+    with open("/etc/slackware-version", "r") as f:
+        sv = f.read()
+        f.close()
+    return (".".join(re.findall(r"\d+", sv)))

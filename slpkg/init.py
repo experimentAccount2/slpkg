@@ -31,75 +31,115 @@ from __metadata__ import log_path, lib_path
 from slack.slack_version import slack_ver
 
 
-def initialization():
-    '''
-    Slpkg initialization, creating directories and SLACKBUILDS.TXT in
-    /var/lib/slpkg/sbo_repo/ and ChangeLog.txt in /var/log/slpkg/ from
-    slackbuilds.org.
-    '''
-    sbo_log = log_path + "sbo/"
-    sbo_lib = lib_path + "sbo_repo/"
-    pkg_que = lib_path + "queue"
-    if not os.path.exists(log_path):
-        os.mkdir(log_path)
-    if not os.path.exists(lib_path):
-        os.mkdir(lib_path)
-    if not os.path.exists(sbo_log):
-        os.mkdir(sbo_log)
-    if not os.path.exists(sbo_lib):
-        os.mkdir(sbo_lib)
-    if not os.path.exists(pkg_que):
-        os.mkdir(pkg_que)
-    sbo_url = ("http://slackbuilds.org/slackbuilds/{0}/".format(slack_ver()))
-    # Read SLACKBUILDS.TXT from slackbuilds.org and write in
-    # /var/lib/slpkg/sbo_repo directory if not exist
-    if not os.path.isfile(sbo_lib + "SLACKBUILDS.TXT"):
-        print("\nslpkg ...initialization")
-        sys.stdout.write("SLACKBUILDS.TXT read ...")
-        sys.stdout.flush()
-        SLACKBUILDS_TXT = URL((
-            "http://slackbuilds.org/slackbuilds/{0}/SLACKBUILDS.TXT".format(
-                slack_ver()))).reading()
-        sys.stdout.write("Done\n")
-        with open("{0}SLACKBUILDS.TXT".format(sbo_lib), "w") as sbo:
-            sbo.write(SLACKBUILDS_TXT)
-            sbo.close()
-            print("File SLACKBUILDS.TXT created in {0}".format(sbo_lib))
-    # Read ChangeLog.txt from slackbuilds.org and write in /var/log/slpkg/sbo/
-    # directory if not exist
-    if not os.path.isfile(sbo_log + "ChangeLog.txt"):
-        print("\nslpkg initialization")
-        sys.stdout.write("ChangeLog.txt read ...")
-        sys.stdout.flush()
-        ChangeLog_txt = URL((
-            "http://slackbuilds.org/slackbuilds/{0}/ChangeLog.txt".format(
-                slack_ver()))).reading()
-        sys.stdout.write("Done\n")
-        with open("{0}ChangeLog.txt".format(sbo_log), "w") as log:
-            log.write(ChangeLog_txt)
-            log.close()
-            print("File ChangeLog.txt created in {0}".format(sbo_log))
-    # We take the size of ChangeLog.txt from the server and locally
-    server = FileSize(sbo_url + "ChangeLog.txt").server()
-    local = FileSize(sbo_log + "ChangeLog.txt").local()
-    # If the two files differ in size delete and replaced with new
-    if server != local:
-        os.remove("{0}{1}".format(sbo_lib, "SLACKBUILDS.TXT"))
-        os.remove("{0}{1}".format(sbo_log, "ChangeLog.txt"))
-        print("\nNEWS in ChangeLog.txt")
-        print("slpkg ...initialization")
-        sys.stdout.write("Files re-created ...")
-        sys.stdout.flush()
-        SLACKBUILDS_TXT = URL((
-            "http://slackbuilds.org/slackbuilds/{0}/SLACKBUILDS.TXT".format(
-                slack_ver()))).reading()
-        ChangeLog_txt = URL((
-            "http://slackbuilds.org/slackbuilds/{0}/ChangeLog.txt".format(
-                slack_ver()))).reading()
-        with open("{0}SLACKBUILDS.TXT".format(sbo_lib), "w") as sbo:
-            sbo.write(SLACKBUILDS_TXT)
-            sbo.close()
-        with open("{0}ChangeLog.txt".format(sbo_log), "w") as log:
-            log.write(ChangeLog_txt)
-            log.close()
-        sys.stdout.write("Done\n")
+class Initialization(object):
+
+    def __init__(self):
+        if not os.path.exists(log_path):
+            os.mkdir(log_path)
+        if not os.path.exists(lib_path):
+            os.mkdir(lib_path)
+
+    def sbo(self):
+        '''
+        Creating sbo local library
+        '''
+        log = log_path + "sbo/"
+        lib = lib_path + "sbo_repo/"
+        lib_file = "SLACKBUILDS.TXT"
+        log_file = "ChangeLog.txt"
+        if not os.path.exists(log):
+            os.mkdir(log)
+        if not os.path.exists(lib):
+            os.mkdir(lib)
+        packages_txt = ("http://slackbuilds.org/slackbuilds/{0}/{1}".format(
+            slack_ver(), lib_file))
+        changelog_txt = ("http://slackbuilds.org/slackbuilds/{0}/{1}".format(
+            slack_ver(), log_file))
+        self.write(lib, lib_file, packages_txt)
+        self.write(log, log_file, changelog_txt)
+        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt)
+
+    def rlw(self):
+        '''
+        Creating rlw local library
+        '''
+        log = log_path + "rlw/"
+        lib = lib_path + "rlw_repo/"
+        lib_file = "PACKAGES.TXT"
+        log_file = "ChangeLog.txt"
+        if not os.path.exists(log):
+            os.mkdir(log)
+        if not os.path.exists(lib):
+            os.mkdir(lib)
+        packages_txt = ("http://rlworkman.net/pkgs/{0}/{1}".format(
+            slack_ver(), lib_file))
+        changelog_txt = ("http://rlworkman.net/pkgs/{0}/{1}".format(
+            slack_ver(), log_file))
+        self.write(lib, lib_file, packages_txt)
+        self.write(log, log_file, changelog_txt)
+        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt)
+
+    def alien(self):
+        '''
+        Creating alien local library
+        '''
+        log = log_path + "alien/"
+        lib = lib_path + "alien_repo/"
+        lib_file = "PACKAGES.TXT"
+        log_file = "ChangeLog.txt"
+        if not os.path.exists(log):
+            os.mkdir(log)
+        if not os.path.exists(lib):
+            os.mkdir(lib)
+        packages_txt = ("http://www.slackware.com/~alien/slackbuilds/"
+                        "{0}".format(lib_file))
+        changelog_txt = ("http://www.slackware.com/~alien/slackbuilds/"
+                         "{0}".format(log_file))
+        self.write(lib, lib_file, packages_txt)
+        self.write(log, log_file, changelog_txt)
+        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt)
+
+    @staticmethod
+    def write(path, files, file_url):
+        '''
+        Read SLACKBUILDS.TXT from slackbuilds.org and write in
+        /var/lib/slpkg/sbo_repo directory if not exist
+        '''
+        if not os.path.isfile(path + files):
+            print("\nslpkg ...initialization")
+            sys.stdout.write(files + " read ...")
+            sys.stdout.flush()
+            PACKAGES_TXT = URL(file_url).reading()
+            sys.stdout.write("Done\n")
+            with open("{0}{1}".format(path, files), "w") as f:
+                f.write(PACKAGES_TXT)
+                f.close()
+                print("File {0} created in {1}".format(files, path))
+
+    @staticmethod
+    def remote(*args):
+        '''
+        args[0]=log, args[1]=log_file, arg[2]=changelog_txt
+        args[3]=lib, args[4]=lib_file, arg[5]=packages_txt
+
+        If the two files differ in size delete and replaced with new
+        We take the size of ChangeLog.txt from the server and locally
+        '''
+        server = FileSize(args[2]).server()
+        local = FileSize(args[0] + args[1]).local()
+        if server != local:
+            os.remove("{0}{1}".format(args[3], args[4]))
+            os.remove("{0}{1}".format(args[0], args[1]))
+            print("\nNEWS in " + args[1])
+            print("slpkg ...initialization")
+            sys.stdout.write("Files re-created ...")
+            sys.stdout.flush()
+            PACKAGES_TXT = URL(args[5]).reading()
+            CHANGELOG_TXT = URL(args[2]).reading()
+            with open("{0}{1}".format(args[3], args[4]), "w") as f:
+                f.write(PACKAGES_TXT)
+                f.close()
+            with open("{0}{1}".format(args[0], args[1]), "w") as f:
+                f.write(CHANGELOG_TXT)
+                f.close()
+            sys.stdout.write("Done\n")

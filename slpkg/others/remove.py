@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# splitting.py file is part of slpkg.
+# remove.py file is part of slpkg.
 
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
@@ -21,30 +21,25 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from slack.slack_version import slack_ver
+import os
 
 
-def split_package(package):
+def delete(path, packages):
     '''
-    Split package in name, version
-    arch and build tag.
+    Remove downloaded packages
     '''
-    split = package.split("-")
-    sbo = "_SBo"
-    slack = "_slack{0}".format(slack_ver())
-    rlw = "_rlw"
-    alien = "alien"
-    if sbo in package:
-        build = split[-1][:-4]   # remove .t?z extension
-    if slack in package:
-        build = split[-1][:-len(slack)]
-    elif rlw in package:
-        build = split[-1][:-len(rlw)]
-    elif alien in package:
-        build = split[-1][:-len(alien)]
+    read = raw_input("Removal downloaded packages [Y/n]? ")
+    if read == "Y" or read == "y":
+        for pkg in packages:
+            os.remove(path + pkg)
+            os.remove(path + pkg + ".asc")
+        is_empty(path)
     else:
-        build = split[-1]
-    arch = split[-2]
-    ver = split[-3]
-    name = "-".join(split[:-3])
-    return [name, ver, arch, build]
+        is_empty(path)
+
+
+def is_empty(path):
+    if not os.listdir(path):
+        print("Packages removed")
+    else:
+        print("\nThere are packages in direcrory {0}\n".format(path))

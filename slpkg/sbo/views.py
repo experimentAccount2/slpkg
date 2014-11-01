@@ -25,7 +25,7 @@ import os
 import sys
 import pydoc
 
-from init import initialization
+from init import Initialization
 from downloader import Download
 from __metadata__ import tmp, build_path, pkg_path, sp
 from colors import RED, GREEN, GREY, CYAN, YELLOW, ENDC
@@ -48,7 +48,7 @@ class SBoNetwork(object):
         self.name = name
         sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
         sys.stdout.flush()
-        initialization()
+        Initialization().sbo()
         grep = SBoGrep(self.name)
         self.sbo_url = sbo_search_pkg(self.name)
         self.sbo_desc = grep.description()[len(self.name) + 2:-1]

@@ -29,7 +29,7 @@ from pkg.build import BuildPackage
 from pkg.manager import PackageManager
 
 from toolbar import status
-from init import initialization
+from init import Initialization
 from downloader import Download
 from splitting import split_package
 from messages import template, build_FAILED
@@ -48,7 +48,7 @@ class SBoCheck(object):
         self.done = "{0}Done{1}\n".format(GREY, ENDC)
         sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
         sys.stdout.flush()
-        initialization()
+        Initialization().sbo()
         self.installed = []
         self.index, self.toolbar_width = 0, 3
 
