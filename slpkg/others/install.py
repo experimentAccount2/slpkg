@@ -59,6 +59,7 @@ class Others(object):
         if not os.path.exists(self.tmp_path):
             os.mkdir(self.tmp_path)
         self.step = 700
+        # Choose mirror and open file
         if self.repo == "rlw":
             lib = lib_path + "rlw_repo/PACKAGES.TXT"
             f = open(lib, "r")
@@ -83,8 +84,23 @@ class Others(object):
             data = repo_data(self.PACKAGES_TXT, self.step, self.repo)
             (dwn_links, install_all,
              comp_sum, uncomp_sum) = store(data[0], data[1], data[2], data[3],
-                                           self.package, self.mirror, self.repo)
-            sys.stdout.write("{0}Done{1}\n\n".format(GREY, ENDC))
+                                           self.package.split(), self.mirror,
+                                           self.repo)
+            sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
+            dependencies = resolving_deps(self.package, len(install_all),
+                                          self.repo)
+            view = False
+            if len(dependencies) > 1:
+                (dwn_links, install_all, comp_sum,
+                 uncomp_sum) = store(data[0], data[1], data[2], data[3],
+                                     dependencies, self.mirror,
+                                     self.repo)
+                dwn_links.reverse()
+                install_all.reverse()
+                comp_sum.reverse()
+                uncomp_sum.reverse()
+                view = True
+            print   # new line at start
             if install_all:
                 template(78)
                 print("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
@@ -96,7 +112,7 @@ class Others(object):
                     "Size"))
                 template(78)
                 print("Installing:")
-                sums = views(install_all, comp_sum, self.repo)
+                sums = views(install_all, comp_sum, self.repo, view)
                 unit, size = units(comp_sum, uncomp_sum)
                 msg = msgs(install_all, sums[2])
                 print("\nInstalling summary")
@@ -112,6 +128,7 @@ class Others(object):
                       "will be used.{2}".format(size[1], unit[1], ENDC))
                 read = raw_input("\nWould you like to install [Y/n]? ")
                 if read == "Y" or read == "y":
+                    install_all.reverse()
                     slack_dwn(self.tmp_path, dwn_links)
                     install(self.tmp_path, install_all)
                     delete(self.tmp_path, install_all)
@@ -127,32 +144,36 @@ def store(*args):
     Store and return packages for install
     '''
     dwn, install, comp_sum, uncomp_sum = ([] for i in range(4))
-    for name, loc, comp, uncomp in zip(args[0], args[1], args[2], args[3]):
-        if args[4] in name and args[4] not in BlackList().packages():
-            if args[6] == "rlw":
-                dwn.append("{0}{1}/{2}".format(args[5], loc, name))
-            else:
-                arch = os.uname()[4]
-                if arch.startswith("i") and arch.endswith("86"):
-                    arch = ""
+    for pkg in args[4]:
+        for name, loc, comp, uncomp in zip(args[0], args[1], args[2], args[3]):
+            if pkg in name and pkg not in BlackList().packages():
+                # store downloads packages by repo
+                if args[6] == "rlw":
+                    dwn.append("{0}{1}/{2}".format(args[5], loc, name))
                 else:
-                    arch = "64"
-                ver = slack_ver()
-                dwn.append("{0}{1}/pkg{2}/{3}/{4}".format(args[5], args[4],
-                                                          arch, ver, name))
-            install.append(name)
-            comp_sum.append(comp)
-            uncomp_sum.append(uncomp)
+                    # Eric repo
+                    arch = os.uname()[4]
+                    if arch.startswith("i") and arch.endswith("86"):
+                        arch = ""
+                    else:
+                        arch = "64"
+                    ver = slack_ver()
+                    dwn.append("{0}{1}/pkg{2}/{3}/{4}".format(args[5], pkg,
+                                                              arch, ver, name))
+                install.append(name)
+                comp_sum.append(comp)
+                uncomp_sum.append(uncomp)
     return [dwn, install, comp_sum, uncomp_sum]
 
 
-def views(install_all, comp_sum, repository):
+def views(install_all, comp_sum, repository, view):
     '''
     Views packages
     '''
     pkg_sum = uni_sum = upg_sum = 0
     if repository == "rlw":
         repository = repository + "  "
+    i = 0
     for pkg, comp in zip(install_all, comp_sum):
         pkg_split = split_package(pkg[:-4])
         if os.path.isfile(pkg_path + pkg[:-4]):
@@ -171,6 +192,9 @@ def views(install_all, comp_sum, repository):
             " " * (8-len(pkg_split[2])), pkg_split[3],
             " " * (7-len(pkg_split[3])), repository,
             comp, " K"))
+        if view and i == 0:
+            print("Installing for dependencies:")
+        i += 1
     return [pkg_sum, upg_sum, uni_sum]
 
 
@@ -213,7 +237,7 @@ def alien_deps(name):
     '''
     deps = dependencies_pkg(name)
     requires, dependencies = [], []
-    # requires.append(name)
+    requires.append(name)
     # Create one list for all packages
     for pkg in deps:
         requires += pkg
@@ -222,4 +246,18 @@ def alien_deps(name):
     for duplicate in requires:
         if duplicate not in dependencies:
             dependencies.append(duplicate)
+    return dependencies
+
+
+def resolving_deps(name, ins_len, repo):
+    '''
+    Return dependencies for one package from
+    alien repository
+    '''
+    dependencies = []
+    if ins_len == 1 and repo == "alien":
+        sys.stdout.write("{0}Resolving dependencies ...{1}".format(GREY, ENDC))
+        sys.stdout.flush()
+        dependencies = alien_deps(name)
+        sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
     return dependencies

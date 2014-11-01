@@ -362,7 +362,7 @@ def reference(*args):
     for pkg, ver in zip(args[4], args[5]):
         installed = ("{0}-{1}".format(pkg, ver))
         if find_package(installed, pkg_path):
-            if pkg in args[5]:
+            if pkg in args[6]:
                 print("| Package {0} upgraded successfully".format(installed))
             else:
                 print("| Package {0} installed successfully".format(installed))

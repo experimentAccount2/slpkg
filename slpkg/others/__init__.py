@@ -1,1 +1,1 @@
-# [ slackware ] directory
+# [ others ] directory

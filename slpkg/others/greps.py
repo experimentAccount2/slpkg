@@ -43,7 +43,6 @@ def repo_data(PACKAGES_TXT, step, repo):
             name.append(line[15:].strip())
         if line.startswith("PACKAGE LOCATION"):
             location.append(line[21:].strip())
-
         if line.startswith("PACKAGE SIZE (compressed):  "):
             size.append(line[28:-2].strip())
         if line.startswith("PACKAGE SIZE (uncompressed):  "):
