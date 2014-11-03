@@ -35,7 +35,7 @@ def sbo_search_pkg(name):
     Search for package path from SLACKBUILDS.TXT file
     '''
     try:
-        repo = Repo.sbo
+        repo = Repo().sbo()
         blacklist = BlackList().packages()
         sbo_url = "{0}{1}/".format(repo, slack_ver())
         with open(lib_path + "sbo_repo/SLACKBUILDS.TXT",

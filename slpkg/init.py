@@ -44,7 +44,7 @@ class Initialization(object):
         '''
         Creating sbo local library
         '''
-        repo = Repo.sbo
+        repo = Repo().sbo()
         log = log_path + "sbo/"
         lib = lib_path + "sbo_repo/"
         lib_file = "SLACKBUILDS.TXT"
@@ -63,7 +63,7 @@ class Initialization(object):
         '''
         Creating rlw local library
         '''
-        repo = Repo.rlw
+        repo = Repo().rlw()
         log = log_path + "rlw/"
         lib = lib_path + "rlw_repo/"
         lib_file = "PACKAGES.TXT"
@@ -82,7 +82,7 @@ class Initialization(object):
         '''
         Creating alien local library
         '''
-        repo = Repo.alien
+        repo = Repo().alien()
         log = log_path + "alien/"
         lib = lib_path + "alien_repo/"
         lib_file = "PACKAGES.TXT"
@@ -103,7 +103,7 @@ class Initialization(object):
         '''
         ar = ""
         arch = os.uname()[4]
-        repo = Repo.slacky
+        repo = Repo().slacky()
         log = log_path + "slacky/"
         lib = lib_path + "slacky_repo/"
         lib_file = "PACKAGES.TXT"

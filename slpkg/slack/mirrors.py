@@ -32,7 +32,7 @@ def mirrors(name, location, version):
     Select Slackware official mirror packages
     based architecture and version.
     '''
-    repo = Repo.slack
+    repo = Repo().slack()
     if arch == "x86_64":
         if version == "stable":
             http = repo + "slackware64-{0}/{1}{2}".format(slack_ver(),

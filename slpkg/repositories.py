@@ -22,19 +22,37 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-class Repo:
+class Repo(object):
 
-    # Official slackware repository
-    slack = "http://mirrors.slackware.com/slackware/"
+    def __init__(self):
+        pass
 
-    # SlackBuilds.org repository
-    sbo = "http://slackbuilds.org/slackbuilds/"
+    def slack(self):
+        '''
+        Official slackware repository
+        '''
+        return "http://mirrors.slackware.com/slackware/"
 
-    # Robby's repository
-    rlw = "http://rlworkman.net/pkgs/"
+    def sbo(self):
+        '''
+        SlackBuilds.org repository
+        '''
+        return "http://slackbuilds.org/slackbuilds/"
 
-    # Alien repository
-    alien = "http://www.slackware.com/~alien/slackbuilds/"
+    def rlw(self):
+        '''
+        Robby's repoisitory
+        '''
+        return "http://rlworkman.net/pkgs/"
 
-    # Slacky.eu repository
-    slacky = "http://repository.slacky.eu/"
+    def alien(self):
+        '''
+        Alien repository
+        '''
+        return "http://www.slackware.com/~alien/slackbuilds/"
+
+    def slacky(self):
+        '''
+        Slacky.eu repository
+        '''
+        return "http://repository.slacky.eu/"

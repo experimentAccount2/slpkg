@@ -63,14 +63,15 @@ class Others(object):
             os.mkdir(self.tmp_path)
         self.step = 700
         # Choose mirror and open file
+        repos = Repo()
         if self.repo == "rlw":
             lib = lib_path + "rlw_repo/PACKAGES.TXT"
             f = open(lib, "r")
-            self.mirror = "{0}{1}/".format(Repo.rlw, slack_ver())
+            self.mirror = "{0}{1}/".format(repos.rlw(), slack_ver())
         elif self.repo == "alien":
             lib = lib_path + "alien_repo/PACKAGES.TXT"
             f = open(lib, "r")
-            self.mirror = Repo.alien
+            self.mirror = repos.alien()
             self.step = self.step * 2
         elif self.repo == "slacky":
             lib = lib_path + "slacky_repo/PACKAGES.TXT"
@@ -78,7 +79,7 @@ class Others(object):
             arch = ""
             if os.uname()[4] == "x86_64":
                 arch = "64"
-            self.mirror = "{0}slackware{1}-{2}/".format(Repo.slacky, arch,
+            self.mirror = "{0}slackware{1}-{2}/".format(repos.slacky(), arch,
                                                         slack_ver())
             self.step = self.step * 2
         self.PACKAGES_TXT = f.read()
@@ -142,7 +143,7 @@ class Others(object):
                 if read == "Y" or read == "y":
                     install_all.reverse()
                     slack_dwn(self.tmp_path, dwn_links)
-                    install(self.tmp_path, install_all, self.repo)
+                    install(self.tmp_path, install_all)
                     delete(self.tmp_path, install_all)
             else:
                 pkg_not_found("", self.package, "No matching", "\n")
@@ -214,7 +215,7 @@ def msgs(install_all, uni_sum):
     return [msg_pkg, msg_2_pkg]
 
 
-def install(tmp_path, install_all, repository):
+def install(tmp_path, install_all):
     '''
     Install or upgrade packages
     '''
