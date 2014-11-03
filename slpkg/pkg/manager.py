@@ -90,7 +90,7 @@ class PackageManager(object):
         Remove Slackware binary packages
         '''
         dep_path = log_path + "dep/"
-        dependencies = []
+        dependencies, rmv_list = [], []
         removed = self.view_removed(self.binary)
         if not removed:
             print   # new line at end
@@ -120,13 +120,14 @@ class PackageManager(object):
                             print  # new line at exit
                             sys.exit()
                         if remove_dep == "y" or remove_dep == "Y":
-                            rmv_list = self.rmv_deps(self.binary, dependencies,
-                                                     dep_path, rmv)
+                            rmv_list += self.rmv_deps(self.binary,
+                                                      dependencies,
+                                                      dep_path, rmv)
                         else:
-                            rmv_list = self.rmv_pkg(rmv)
+                            rmv_list += self.rmv_pkg(rmv)
                             os.remove(dep_path + rmv)
                     else:
-                        rmv_list = self.rmv_pkg(rmv)
+                        rmv_list += self.rmv_pkg(rmv)
                 # Prints all removed packages
                 self.reference_rmvs(rmv_list)
 
@@ -188,16 +189,15 @@ class PackageManager(object):
         if find_package(package + sp, pkg_path):
             print(subprocess.check_output("removepkg {0}".format(package),
                                           shell=True))
-            return package.split()
+        return package.split()
 
     @staticmethod
     def reference_rmvs(removes):
         '''
         Prints all removed packages
         '''
-        if len(removes) > 1:
-            template(78)
-            print("| Total {0} packages removed".format(len(removes)))
+        template(78)
+        print("| Total {0} packages removed".format(len(removes)))
         template(78)
         for pkg in removes:
             if not find_package(pkg + sp, pkg_path):
@@ -283,8 +283,10 @@ class PackageManager(object):
                     index += 1
                     print("{0}{1}:{2} {3}".format(GREY, index, ENDC, pkg))
                     if index == page:
-                        raw_input("\nPress {0}Enter{1} to continue...".format(
-                            CYAN, ENDC))
+                        r = raw_input("\nPress {0}Enter{1} to "
+                                      "continue... ".format(CYAN, ENDC))
+                        if r in ['Q', 'q']:
+                            break
                         print   # new line after page
                         page += row
             print   # new line at end

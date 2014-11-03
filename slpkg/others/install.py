@@ -24,6 +24,7 @@
 import os
 import sys
 
+from repositories import Repo
 from init import Initialization
 from blacklist import BlackList
 from splitting import split_package
@@ -34,12 +35,13 @@ from colors import RED, GREEN, CYAN, YELLOW, GREY, ENDC
 from pkg.find import find_package
 from pkg.manager import PackageManager
 
+from slack.slack_version import slack_ver
+
 from sizes import units
 from remove import delete
 from greps import repo_data
-from dependency import dependencies_pkg
 from download import slack_dwn
-from slack_version import slack_ver
+from dependency import dependencies_pkg
 
 
 class Others(object):
@@ -50,6 +52,7 @@ class Others(object):
         self.tmp_path = slpkg_tmp + "packages/"
         Initialization().rlw()
         Initialization().alien()
+        Initialization().slacky()
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
               CYAN, self.package, ENDC))
         sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
@@ -63,11 +66,20 @@ class Others(object):
         if self.repo == "rlw":
             lib = lib_path + "rlw_repo/PACKAGES.TXT"
             f = open(lib, "r")
-            self.mirror = "http://rlworkman.net/pkgs/{0}".format(slack_ver())
-        else:
+            self.mirror = "{0}{1}/".format(Repo.rlw, slack_ver())
+        elif self.repo == "alien":
             lib = lib_path + "alien_repo/PACKAGES.TXT"
             f = open(lib, "r")
-            self.mirror = "http://www.slackware.com/~alien/slackbuilds/"
+            self.mirror = Repo.alien
+            self.step = self.step * 2
+        elif self.repo == "slacky":
+            lib = lib_path + "slacky_repo/PACKAGES.TXT"
+            f = open(lib, "r")
+            arch = ""
+            if os.uname()[4] == "x86_64":
+                arch = "64"
+            self.mirror = "{0}slackware{1}-{2}/".format(Repo.slacky, arch,
+                                                        slack_ver())
             self.step = self.step * 2
         self.PACKAGES_TXT = f.read()
         f.close()
@@ -130,7 +142,7 @@ class Others(object):
                 if read == "Y" or read == "y":
                     install_all.reverse()
                     slack_dwn(self.tmp_path, dwn_links)
-                    install(self.tmp_path, install_all)
+                    install(self.tmp_path, install_all, self.repo)
                     delete(self.tmp_path, install_all)
             else:
                 pkg_not_found("", self.package, "No matching", "\n")
@@ -148,18 +160,7 @@ def store(*args):
         for name, loc, comp, uncomp in zip(args[0], args[1], args[2], args[3]):
             if pkg in name and pkg not in BlackList().packages():
                 # store downloads packages by repo
-                if args[6] == "rlw":
-                    dwn.append("{0}{1}/{2}".format(args[5], loc, name))
-                else:
-                    # Eric repo
-                    arch = os.uname()[4]
-                    if arch.startswith("i") and arch.endswith("86"):
-                        arch = ""
-                    else:
-                        arch = "64"
-                    ver = slack_ver()
-                    dwn.append("{0}{1}/pkg{2}/{3}/{4}".format(args[5], pkg,
-                                                              arch, ver, name))
+                dwn.append("{0}{1}/{2}".format(args[5], loc, name))
                 install.append(name)
                 comp_sum.append(comp)
                 uncomp_sum.append(uncomp)
@@ -170,13 +171,15 @@ def views(install_all, comp_sum, repository, view):
     '''
     Views packages
     '''
-    pkg_sum = uni_sum = upg_sum = 0
+    count = pkg_sum = uni_sum = upg_sum = 0
+    # fix repositories align
     if repository == "rlw":
-        repository = repository + "  "
-    i = 0
+        repository = repository + (" "*3)
+    elif repository == "alien":
+        repository = repository + " "
     for pkg, comp in zip(install_all, comp_sum):
         pkg_split = split_package(pkg[:-4])
-        if os.path.isfile(pkg_path + pkg[:-4]):
+        if find_package(pkg_split[0] + "-" + pkg_split[1], pkg_path):
             pkg_sum += 1
             COLOR = GREEN
         elif find_package(pkg_split[0] + "-", pkg_path):
@@ -185,16 +188,16 @@ def views(install_all, comp_sum, repository, view):
         else:
             COLOR = RED
             uni_sum += 1
-        print(" {0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11:>12}{12}".format(
+        print(" {0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11:>11}{12}".format(
             COLOR, pkg_split[0], ENDC,
             " " * (25-len(pkg_split[0])), pkg_split[1],
             " " * (19-len(pkg_split[1])), pkg_split[2],
             " " * (8-len(pkg_split[2])), pkg_split[3],
             " " * (7-len(pkg_split[3])), repository,
             comp, " K"))
-        if view and i == 0:
+        if view and count == 0:
             print("Installing for dependencies:")
-        i += 1
+        count += 1
     return [pkg_sum, upg_sum, uni_sum]
 
 
@@ -211,7 +214,7 @@ def msgs(install_all, uni_sum):
     return [msg_pkg, msg_2_pkg]
 
 
-def install(tmp_path, install_all):
+def install(tmp_path, install_all, repository):
     '''
     Install or upgrade packages
     '''
@@ -221,7 +224,8 @@ def install(tmp_path, install_all):
             print("[ {0}reinstalling{1} ] --> {2}".format(
                   GREEN, ENDC, install))
             PackageManager(package).reinstall()
-        elif find_package(split_package(install)[0] + "-", pkg_path):
+        elif find_package(split_package(install)[0] + "-",
+                          pkg_path):
             print("[ {0}upgrading{1} ] --> {2}".format(
                   YELLOW, ENDC, install))
             PackageManager(package).upgrade()
@@ -231,22 +235,53 @@ def install(tmp_path, install_all):
             PackageManager(package).upgrade()
 
 
-def alien_deps(name):
+def repo_deps(name, repo):
     '''
     Return package dependencies
     '''
-    deps = dependencies_pkg(name)
+    deps = dependencies_pkg(name, repo)
     requires, dependencies = [], []
     requires.append(name)
     # Create one list for all packages
     for pkg in deps:
         requires += pkg
+    if repo == "slacky":
+        new = []
+        for req in requires:
+            if not find_package(req + "-", pkg_path):
+                new.append(req.split()[0])
+        print requires
+        requires = []
+        requires = new
     requires.reverse()
     # Remove double dependencies
     for duplicate in requires:
         if duplicate not in dependencies:
             dependencies.append(duplicate)
+    print dependencies
     return dependencies
+
+
+def rlw_deps(name):
+    '''
+    Robby's repository dependencies as shown in the central page
+    http://rlworkman.net/pkgs/
+    '''
+    dependencies = {
+        "abiword": "wv",
+        "claws-mail": "libetpan bogofilter html2ps",
+        "inkscape": "gtkmm atkmm pangomm cairomm mm-common libsigc++ libwpg" +
+                    "lxml gsl numpy BeautifulSoup",
+        "texlive": "libsigsegv texi2html",
+        "xfburn": "libburn libisofs"
+    }
+    # fix double inkscape package
+    if name.startswith("inkscape"):
+        name = "inkscape"
+    if name in dependencies.keys():
+        return dependencies[name]
+    else:
+        return ""
 
 
 def resolving_deps(name, ins_len, repo):
@@ -255,9 +290,16 @@ def resolving_deps(name, ins_len, repo):
     alien repository
     '''
     dependencies = []
-    if ins_len == 1 and repo == "alien":
+    if ins_len == 1 and repo == "alien" or repo == "slacky":
         sys.stdout.write("{0}Resolving dependencies ...{1}".format(GREY, ENDC))
         sys.stdout.flush()
-        dependencies = alien_deps(name)
+        dependencies = repo_deps(name, repo)
+        sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
+    elif ins_len == 1 and repo == "rlw":
+        sys.stdout.write("{0}Resolving dependencies ...{1}".format(GREY, ENDC))
+        sys.stdout.flush()
+        dependencies = rlw_deps(name)
+        dependencies = dependencies.split()
+        dependencies.append(name)
         sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
     return dependencies

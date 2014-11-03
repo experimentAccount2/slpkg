@@ -25,6 +25,7 @@ import os
 import sys
 
 from url_read import URL
+from repositories import Repo
 from file_size import FileSize
 from __metadata__ import log_path, lib_path
 
@@ -43,6 +44,7 @@ class Initialization(object):
         '''
         Creating sbo local library
         '''
+        repo = Repo.sbo
         log = log_path + "sbo/"
         lib = lib_path + "sbo_repo/"
         lib_file = "SLACKBUILDS.TXT"
@@ -51,10 +53,8 @@ class Initialization(object):
             os.mkdir(log)
         if not os.path.exists(lib):
             os.mkdir(lib)
-        packages_txt = ("http://slackbuilds.org/slackbuilds/{0}/{1}".format(
-            slack_ver(), lib_file))
-        changelog_txt = ("http://slackbuilds.org/slackbuilds/{0}/{1}".format(
-            slack_ver(), log_file))
+        packages_txt = "{0}{1}/{2}".format(repo, slack_ver(), lib_file)
+        changelog_txt = "{0}/{1}/{2}".format(repo, slack_ver(), log_file)
         self.write(lib, lib_file, packages_txt)
         self.write(log, log_file, changelog_txt)
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt)
@@ -63,6 +63,7 @@ class Initialization(object):
         '''
         Creating rlw local library
         '''
+        repo = Repo.rlw
         log = log_path + "rlw/"
         lib = lib_path + "rlw_repo/"
         lib_file = "PACKAGES.TXT"
@@ -71,10 +72,8 @@ class Initialization(object):
             os.mkdir(log)
         if not os.path.exists(lib):
             os.mkdir(lib)
-        packages_txt = ("http://rlworkman.net/pkgs/{0}/{1}".format(
-            slack_ver(), lib_file))
-        changelog_txt = ("http://rlworkman.net/pkgs/{0}/{1}".format(
-            slack_ver(), log_file))
+        packages_txt = "{0}{1}/{2}".format(repo, slack_ver(), lib_file)
+        changelog_txt = "{0}{1}/{2}".format(repo, slack_ver(), log_file)
         self.write(lib, lib_file, packages_txt)
         self.write(log, log_file, changelog_txt)
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt)
@@ -83,6 +82,7 @@ class Initialization(object):
         '''
         Creating alien local library
         '''
+        repo = Repo.alien
         log = log_path + "alien/"
         lib = lib_path + "alien_repo/"
         lib_file = "PACKAGES.TXT"
@@ -91,10 +91,33 @@ class Initialization(object):
             os.mkdir(log)
         if not os.path.exists(lib):
             os.mkdir(lib)
-        packages_txt = ("http://www.slackware.com/~alien/slackbuilds/"
-                        "{0}".format(lib_file))
-        changelog_txt = ("http://www.slackware.com/~alien/slackbuilds/"
-                         "{0}".format(log_file))
+        packages_txt = "{0}{1}".format(repo, lib_file)
+        changelog_txt = "{0}{1}".format(repo, log_file)
+        self.write(lib, lib_file, packages_txt)
+        self.write(log, log_file, changelog_txt)
+        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt)
+
+    def slacky(self):
+        '''
+        Creating alien local library
+        '''
+        ar = ""
+        arch = os.uname()[4]
+        repo = Repo.slacky
+        log = log_path + "slacky/"
+        lib = lib_path + "slacky_repo/"
+        lib_file = "PACKAGES.TXT"
+        log_file = "ChangeLog.txt"
+        if not os.path.exists(log):
+            os.mkdir(log)
+        if not os.path.exists(lib):
+            os.mkdir(lib)
+        if arch == "x86_64":
+            ar = "64"
+        packages_txt = "{0}slackware{1}-{2}/{3}".format(repo, ar, slack_ver(),
+                                                        lib_file)
+        changelog_txt = "{0}slackware{1}-{2}/{3}".format(repo, ar, slack_ver(),
+                                                         log_file)
         self.write(lib, lib_file, packages_txt)
         self.write(log, log_file, changelog_txt)
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt)
@@ -102,8 +125,7 @@ class Initialization(object):
     @staticmethod
     def write(path, files, file_url):
         '''
-        Read SLACKBUILDS.TXT from slackbuilds.org and write in
-        /var/lib/slpkg/sbo_repo directory if not exist
+        Write files in /var/lib/slpkg/?_repo directory
         '''
         if not os.path.isfile(path + files):
             print("\nslpkg ...initialization")
@@ -122,7 +144,7 @@ class Initialization(object):
         args[0]=log, args[1]=log_file, arg[2]=changelog_txt
         args[3]=lib, args[4]=lib_file, arg[5]=packages_txt
 
-        If the two files differ in size delete and replaced with new
+        If the two files differ in size delete and replaced with new.
         We take the size of ChangeLog.txt from the server and locally
         '''
         server = FileSize(args[2]).server()

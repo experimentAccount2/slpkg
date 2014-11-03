@@ -34,16 +34,18 @@ def split_package(package):
     slack = "_slack{0}".format(slack_ver())
     rlw = "_rlw"
     alien = "alien"
-    if sbo in package:
-        build = split[-1][:-4]   # remove .t?z extension
-    if slack in package:
+    slacky = "sl"
+    build = split[-1]
+    if build.endswith(sbo):
+        build = split[-1][:-4]   # and remove .t?z extension
+    if build.endswith(slack):
         build = split[-1][:-len(slack)]
-    elif rlw in package:
+    elif build.endswith(rlw):
         build = split[-1][:-len(rlw)]
-    elif alien in package:
+    elif build.endswith(alien):
         build = split[-1][:-len(alien)]
-    else:
-        build = split[-1]
+    elif build.endswith(slacky):
+        build = split[-1][:-len(slacky)]
     arch = split[-2]
     ver = split[-3]
     name = "-".join(split[:-3])

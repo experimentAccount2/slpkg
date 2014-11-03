@@ -82,13 +82,14 @@ class SBoInstall(object):
                 ARCH_COLOR = arch_colors_tag(self.UNST, idata[1])
                 view_packages(PKG_COLOR, self.name, idata[0][-1], ARCH_COLOR,
                               idata[1][-1])
-                print("Installing for dependencies:")
-                for dep, ver, dep_arch in zip(dependencies[:-1], idata[0][:-1],
-                                              idata[1][:-1]):
-                    (DEP_COLOR, count) = pkg_colors_tag(dep, ver, count[0],
-                                                        count[1])
-                    ARCH_COLOR = arch_colors_tag(self.UNST, dep)
-                    view_packages(DEP_COLOR, dep, ver, ARCH_COLOR, dep_arch)
+                if len(dependencies) > 1:
+                    print("Installing for dependencies:")
+                    for dep, ver, dep_arch in zip(dependencies[:-1],
+                                                  idata[0][:-1], idata[1][:-1]):
+                        (DEP_COLOR, count) = pkg_colors_tag(dep, ver, count[0],
+                                                            count[1])
+                        ARCH_COLOR = arch_colors_tag(self.UNST, dep)
+                        view_packages(DEP_COLOR, dep, ver, ARCH_COLOR, dep_arch)
                 # insstall message = msg[0]
                 # upgraded message = msg[1]
                 # total message = msg[2]

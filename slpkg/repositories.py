@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# remove.py file is part of slpkg.
+# mirrors.py file is part of slpkg.
 
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
@@ -21,26 +21,20 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import os
 
+class Repo:
 
-def delete(path, packages):
-    '''
-    Remove downloaded packages
-    '''
-    if os.listdir(path):
-        read = raw_input("Removal downloaded packages [Y/n]? ")
-        if read == "Y" or read == "y":
-            for pkg in packages:
-                os.remove(path + pkg)
-                os.remove(path + pkg + ".asc")
-            is_empty(path)
-        else:
-            is_empty(path)
+    # Official slackware repository
+    slack = "http://mirrors.slackware.com/slackware/"
 
+    # SlackBuilds.org repository
+    sbo = "http://slackbuilds.org/slackbuilds/"
 
-def is_empty(path):
-    if not os.listdir(path):
-        print("Packages removed")
-    else:
-        print("\nThere are packages in direcrory {0}\n".format(path))
+    # Robby's repository
+    rlw = "http://rlworkman.net/pkgs/"
+
+    # Alien repository
+    alien = "http://www.slackware.com/~alien/slackbuilds/"
+
+    # Slacky.eu repository
+    slacky = "http://repository.slacky.eu/"

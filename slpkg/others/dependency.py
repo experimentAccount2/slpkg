@@ -25,18 +25,18 @@ import sys
 
 from colors import GREY, ENDC
 
-from greps import alien_requires
+from greps import repo_requires
 
 dep_results = []
 
 
-def dependencies_pkg(name):
+def dependencies_pkg(name, repo):
     '''
     Build all dependencies of a package
     '''
     try:
         dependencies = []
-        requires = alien_requires(name)
+        requires = repo_requires(name, repo)
         if requires:
             for req in requires:
                 if req:
@@ -47,7 +47,7 @@ def dependencies_pkg(name):
                     sys.stdout.write("{0}.{1}".format(
                                      GREY, ENDC))
                     sys.stdout.flush()
-                    dependencies_pkg(dep)
+                    dependencies_pkg(dep, repo)
         return dep_results
     except KeyboardInterrupt:
         print   # new line at exit

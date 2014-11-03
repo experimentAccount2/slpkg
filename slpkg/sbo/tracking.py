@@ -30,6 +30,7 @@ from colors import RED, GREEN, GREY, YELLOW, CYAN, ENDC
 
 from pkg.find import find_package
 
+from search import sbo_search_pkg
 from dependency import sbo_dependencies_pkg
 
 
@@ -45,7 +46,7 @@ def track_dep(name):
     Initialization().sbo()
     dependencies_list = sbo_dependencies_pkg(name)
     sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
-    if dependencies_list:
+    if sbo_search_pkg(name):
         requires, dependencies = [], []
         # Create one list for all packages
         for pkg in dependencies_list:
