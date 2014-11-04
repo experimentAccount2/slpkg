@@ -24,6 +24,7 @@
 import os
 import sys
 
+from sizes import units
 from url_read import URL
 from blacklist import BlackList
 from splitting import split_package
@@ -34,7 +35,6 @@ from colors import RED, GREEN, CYAN, YELLOW, GREY, ENDC
 from pkg.find import find_package
 from pkg.manager import PackageManager
 
-from sizes import units
 from remove import delete
 from mirrors import mirrors
 from greps import slack_data
@@ -168,14 +168,11 @@ def install(tmp_path, install_all):
     for install in install_all:
         package = (tmp_path + install).split()
         if os.path.isfile(pkg_path + install[:-4]):
-            print("[ {0}reinstalling{1} ] --> {2}".format(
-                  GREEN, ENDC, install))
+            print("[ {0}reinstalling{1} ] --> {2}".format(GREEN, ENDC, install))
             PackageManager(package).reinstall()
         elif find_package(split_package(install)[0] + "-", pkg_path):
-            print("[ {0}upgrading{1} ] --> {2}".format(
-                  YELLOW, ENDC, install))
+            print("[ {0}upgrading{1} ] --> {2}".format(YELLOW, ENDC, install))
             PackageManager(package).upgrade()
         else:
-            print("[ {0}installing{1} ] --> {2}".format(
-                  GREEN, ENDC, install))
+            print("[ {0}installing{1} ] --> {2}".format(GREEN, ENDC, install))
             PackageManager(package).upgrade()

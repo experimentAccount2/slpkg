@@ -24,7 +24,7 @@
 from downloader import Download
 
 
-def slack_dwn(path, links):
+def packages_dwn(path, links):
     '''
     Download patches
     '''

@@ -55,8 +55,11 @@ def options():
         "  -r, [package...]                          remove binary packages",
         "  -d, [package...]                          display the contents\n",
         "Repositories:",
+        "      Slackware = slack '--current'",
+        "      Alien = alien '--current'",
         "      SlackBuilds = sbo",
-        "      Slackware = slack '--current'\n",
+        "      Slacky = slacky",
+        "      Robby's = rlw\n"
     ]
     for opt in arguments:
         print(opt)

@@ -30,7 +30,7 @@ from splitting import split_package
 from slack.slack_version import slack_ver
 
 
-def repo_data(PACKAGES_TXT, step, repo):
+def repo_data(PACKAGES_TXT, step, repo, version):
     '''
     Grap data packages
     '''
@@ -59,13 +59,9 @@ def repo_data(PACKAGES_TXT, step, repo):
          rlocation,
          rsize,
          runsize
-         ) = alien_filter(name, location, size, unsize)
+         ) = alien_filter(name, location, size, unsize, version)
     elif repo == "slacky":
-        (rname,
-         rlocation,
-         rsize,
-         runsize
-         ) = slacky_filter(name, location, size, unsize)
+        rname, rlocation, rsize, runsize = name, location, size, unsize
     return [rname, rlocation, rsize, runsize]
 
 
@@ -78,7 +74,8 @@ def rlw_filter(name, location, size, unsize):
         arch = "i486"
     (fname, flocation, fsize, funsize) = ([] for i in range(4))
     for n, l, s, u in zip(name, location, size, unsize):
-        if arch in n:
+        loc = l.split("/")
+        if arch == loc[-1]:
             fname.append(n)
             flocation.append(l)
             fsize.append(s)
@@ -86,36 +83,26 @@ def rlw_filter(name, location, size, unsize):
     return [fname, flocation, fsize, funsize]
 
 
-def alien_filter(name, location, size, unsize):
+def alien_filter(name, location, size, unsize, version):
     '''
     Filter alien repository data
     '''
     arch = os.uname()[4]
     path_pkg = "pkg64"
+    ver = slack_ver()
+    if version == "current":
+        ver = "current"
     if arch.startswith("i") and arch.endswith("86"):
-        arch, path_pkg = "i486", "pkg"
+        path_pkg = "pkg"
     (fname, flocation, fsize, funsize) = ([] for i in range(4))
     for n, l, s, u in zip(name, location, size, unsize):
         loc = l.split("/")
-        if arch in n and loc[-1] == slack_ver():
-            fname.append(n)
-            flocation.append(l)
-            fsize.append(s)
-            funsize.append(u)
-        elif "noarch" in n and loc[-1] == slack_ver() and loc[-2] == path_pkg:
+        if path_pkg == loc[-2] and loc[-1] == ver:
             fname.append(n)
             flocation.append(l)
             fsize.append(s)
             funsize.append(u)
     return [fname, flocation, fsize, funsize]
-
-
-def slacky_filter(name, location, size, unsize):
-    '''
-    Filter slacky repository data
-    but nothing to filter yet
-    '''
-    return name, location, size, unsize
 
 
 def repo_requires(name, repo):
@@ -132,7 +119,7 @@ def repo_requires(name, repo):
     for line in PACKAGES_TXT.splitlines():
         if line.startswith("PACKAGE NAME: "):
             pkg = line[14:].strip()
-            alien_name = split_package(pkg)[0]
+            pkg_name = split_package(pkg)[0]
         if line.startswith("PACKAGE REQUIRED: "):
-            if alien_name == name:
+            if pkg_name == name:
                 return line[18:].strip().split(",")

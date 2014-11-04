@@ -90,16 +90,18 @@ def main():
         elif args[1] == repository[1]:
             Slack(args[2], "stable").start()
         elif args[1] == repository[2]:
-            Others(args[2], repository[2]).start()
+            Others(args[2], repository[2], "").start()
         elif args[1] == repository[3]:
-            Others(args[2], repository[3]).start()
+            Others(args[2], repository[3], "").start()
         elif args[1] == repository[4]:
-            Others(args[2], repository[4]).start()
+            Others(args[2], repository[4], "").start()
         else:
             usage()
     elif len(args) == 4 and args[0] == "-s":
         if args[1] == repository[1] and args[3] == "--current":
             Slack(args[2], "current").start()
+        elif args[1] == repository[3] and args[3] == "--current":
+            Others(args[2], repository[3], "current").start()
         else:
             usage()
     elif len(args) == 2 and args[0] == "-t":

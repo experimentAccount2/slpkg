@@ -44,8 +44,7 @@ def dependencies_pkg(name, repo):
             if dependencies:
                 dep_results.append(dependencies)
                 for dep in dependencies:
-                    sys.stdout.write("{0}.{1}".format(
-                                     GREY, ENDC))
+                    sys.stdout.write("{0}.{1}".format(GREY, ENDC))
                     sys.stdout.flush()
                     dependencies_pkg(dep, repo)
         return dep_results

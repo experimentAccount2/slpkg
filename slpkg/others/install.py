@@ -24,6 +24,7 @@
 import os
 import sys
 
+from sizes import units
 from repositories import Repo
 from init import Initialization
 from blacklist import BlackList
@@ -37,22 +38,20 @@ from pkg.manager import PackageManager
 
 from slack.slack_version import slack_ver
 
-from sizes import units
 from remove import delete
 from greps import repo_data
-from download import slack_dwn
+from download import packages_dwn
 from dependency import dependencies_pkg
 
 
 class Others(object):
 
-    def __init__(self, package, repo):
+    def __init__(self, package, repo, version):
         self.package = package
         self.repo = repo
+        self.version = version
         self.tmp_path = slpkg_tmp + "packages/"
-        Initialization().rlw()
-        Initialization().alien()
-        Initialization().slacky()
+        self.repo_init()
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
               CYAN, self.package, ENDC))
         sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
@@ -85,6 +84,17 @@ class Others(object):
         self.PACKAGES_TXT = f.read()
         f.close()
 
+    def repo_init(self):
+        '''
+        Initialization repository if only use
+        '''
+        if self.repo == "rlw":
+            Initialization().rlw()
+        elif self.repo == "alien":
+            Initialization().alien()
+        elif self.repo == "slacky":
+            Initialization().slacky()
+
     def start(self):
         '''
         Install packages from official Slackware distribution
@@ -94,7 +104,8 @@ class Others(object):
             # location = data[1]
             # size = data[2]
             # unsize = data[3]
-            data = repo_data(self.PACKAGES_TXT, self.step, self.repo)
+            data = repo_data(self.PACKAGES_TXT, self.step, self.repo,
+                             self.version)
             (dwn_links, install_all,
              comp_sum, uncomp_sum) = store(data[0], data[1], data[2], data[3],
                                            self.package.split(), self.mirror,
@@ -102,8 +113,7 @@ class Others(object):
             sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
             dependencies = resolving_deps(self.package, len(install_all),
                                           self.repo)
-            view = False
-            if len(dependencies) > 1:
+            if dependencies:
                 (dwn_links, install_all, comp_sum,
                  uncomp_sum) = store(data[0], data[1], data[2], data[3],
                                      dependencies, self.mirror,
@@ -112,7 +122,6 @@ class Others(object):
                 install_all.reverse()
                 comp_sum.reverse()
                 uncomp_sum.reverse()
-                view = True
             print   # new line at start
             if install_all:
                 template(78)
@@ -125,7 +134,7 @@ class Others(object):
                     "Size"))
                 template(78)
                 print("Installing:")
-                sums = views(install_all, comp_sum, self.repo, view)
+                sums = views(install_all, comp_sum, self.repo, dependencies)
                 unit, size = units(comp_sum, uncomp_sum)
                 msg = msgs(install_all, sums[2])
                 print("\nInstalling summary")
@@ -142,7 +151,7 @@ class Others(object):
                 read = raw_input("\nWould you like to install [Y/n]? ")
                 if read == "Y" or read == "y":
                     install_all.reverse()
-                    slack_dwn(self.tmp_path, dwn_links)
+                    packages_dwn(self.tmp_path, dwn_links)
                     install(self.tmp_path, install_all)
                     delete(self.tmp_path, install_all)
             else:
@@ -159,7 +168,9 @@ def store(*args):
     dwn, install, comp_sum, uncomp_sum = ([] for i in range(4))
     for pkg in args[4]:
         for name, loc, comp, uncomp in zip(args[0], args[1], args[2], args[3]):
-            if pkg in name and pkg not in BlackList().packages():
+            pkg_name = "{0}-{1}".format(split_package(name)[0],
+                                        split_package(name)[1])
+            if pkg in pkg_name and pkg not in BlackList().packages():
                 # store downloads packages by repo
                 dwn.append("{0}{1}/{2}".format(args[5], loc, name))
                 install.append(name)
@@ -168,7 +179,7 @@ def store(*args):
     return [dwn, install, comp_sum, uncomp_sum]
 
 
-def views(install_all, comp_sum, repository, view):
+def views(install_all, comp_sum, repository, dependencies):
     '''
     Views packages
     '''
@@ -196,7 +207,7 @@ def views(install_all, comp_sum, repository, view):
             " " * (8-len(pkg_split[2])), pkg_split[3],
             " " * (7-len(pkg_split[3])), repository,
             comp, " K"))
-        if view and count == 0:
+        if len(dependencies) > 1 and count == 0:
             print("Installing for dependencies:")
         count += 1
     return [pkg_sum, upg_sum, uni_sum]
@@ -222,17 +233,13 @@ def install(tmp_path, install_all):
     for install in install_all:
         package = (tmp_path + install).split()
         if os.path.isfile(pkg_path + install[:-4]):
-            print("[ {0}reinstalling{1} ] --> {2}".format(
-                  GREEN, ENDC, install))
+            print("[ {0}reinstalling{1} ] --> {2}".format(GREEN, ENDC, install))
             PackageManager(package).reinstall()
-        elif find_package(split_package(install)[0] + "-",
-                          pkg_path):
-            print("[ {0}upgrading{1} ] --> {2}".format(
-                  YELLOW, ENDC, install))
+        elif find_package(split_package(install)[0] + "-", pkg_path):
+            print("[ {0}upgrading{1} ] --> {2}".format(YELLOW, ENDC, install))
             PackageManager(package).upgrade()
         else:
-            print("[ {0}installing{1} ] --> {2}".format(
-                  GREEN, ENDC, install))
+            print("[ {0}installing{1} ] --> {2}".format(GREEN, ENDC, install))
             PackageManager(package).upgrade()
 
 
@@ -247,19 +254,12 @@ def repo_deps(name, repo):
     for pkg in deps:
         requires += pkg
     if repo == "slacky":
-        new = []
-        for req in requires:
-            if not find_package(req + "-", pkg_path):
-                new.append(req.split()[0])
-        print requires
-        requires = []
-        requires = new
+        requires = slacky_req_check(name, requires)
     requires.reverse()
     # Remove double dependencies
     for duplicate in requires:
         if duplicate not in dependencies:
             dependencies.append(duplicate)
-    print dependencies
     return dependencies
 
 
@@ -304,3 +304,21 @@ def resolving_deps(name, ins_len, repo):
         dependencies.append(name)
         sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
     return dependencies
+
+
+def slacky_req_check(name, requires):
+    '''
+    Checks if the requirement is installed or if it is
+    smaller version
+    '''
+    new = []
+    for req in requires[1:]:
+        split_req = req.split()     # split requirements
+        req_name = split_req[0]     # store name
+        installed = find_package(req_name + "-", pkg_path)
+        if not installed:
+            new.append(req_name)
+    requires = []
+    requires.append(name)
+    requires += new
+    return requires

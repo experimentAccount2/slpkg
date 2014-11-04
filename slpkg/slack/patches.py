@@ -25,6 +25,7 @@ import os
 import sys
 import subprocess
 
+from sizes import units
 from url_read import URL
 from messages import template
 from blacklist import BlackList
@@ -34,7 +35,6 @@ from __metadata__ import pkg_path, slpkg_tmp
 
 from pkg.manager import PackageManager
 
-from sizes import units
 from remove import delete
 from mirrors import mirrors
 from greps import slack_data

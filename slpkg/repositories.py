@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# mirrors.py file is part of slpkg.
+# repositories.py file is part of slpkg.
 
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
