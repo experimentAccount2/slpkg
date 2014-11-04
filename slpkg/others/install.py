@@ -61,7 +61,7 @@ class Others(object):
         if not os.path.exists(self.tmp_path):
             os.mkdir(self.tmp_path)
         self.step = 700
-        # Choose mirror and open file
+
         repos = Repo()
         if self.repo == "rlw":
             lib = lib_path + "rlw_repo/PACKAGES.TXT"
@@ -166,11 +166,23 @@ def store(*args):
     Store and return packages for install
     '''
     dwn, install, comp_sum, uncomp_sum = ([] for i in range(4))
-    for pkg in args[4]:
+    # check if dependencies
+    if len(args[4]) > 1:
+        for pkg in args[4]:
+            for name, loc, comp, uncomp in zip(args[0], args[1], args[2],
+                                               args[3]):
+                pkg_name = "{0}-{1}".format(split_package(name)[0],
+                                            split_package(name)[1])
+                if pkg + "-" in pkg_name and pkg not in BlackList().packages():
+                    # store downloads packages by repo
+                    dwn.append("{0}{1}/{2}".format(args[5], loc, name))
+                    install.append(name)
+                    comp_sum.append(comp)
+                    uncomp_sum.append(uncomp)
+    else:
         for name, loc, comp, uncomp in zip(args[0], args[1], args[2], args[3]):
-            pkg_name = "{0}-{1}".format(split_package(name)[0],
-                                        split_package(name)[1])
-            if pkg in pkg_name and pkg not in BlackList().packages():
+            package = "".join(args[4])
+            if package in name and package not in BlackList().packages():
                 # store downloads packages by repo
                 dwn.append("{0}{1}/{2}".format(args[5], loc, name))
                 install.append(name)
@@ -276,9 +288,6 @@ def rlw_deps(name):
         "texlive": "libsigsegv texi2html",
         "xfburn": "libburn libisofs"
     }
-    # fix double inkscape package
-    if name.startswith("inkscape"):
-        name = "inkscape"
     if name in dependencies.keys():
         return dependencies[name]
     else:
