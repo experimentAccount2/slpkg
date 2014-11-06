@@ -62,23 +62,19 @@ class SBoCheck(object):
         some version in /tmp directory.
         '''
         try:
-            if sbo_list():
-                upg_name = exists(self.index, self.toolbar_width)
+            if self.sbo_list():
+                upg_name = self.exists()
                 sys.stdout.write(self.done)
                 data = []
                 if upg_name:
                     sys.stdout.write("{0}Resolving dependencies ...{1}".format(
                                      GREY, ENDC))
                     sys.stdout.flush()
-                    dependencies = deps(upg_name)
-                    requires = one_for_all(dependencies)
-                    dependencies_list = order_list(upg_name,
-                                                   remove_dbs(requires))
                     # upgrade name = data[0]
                     # package for upgrade = data[1]
                     # upgrade version = data[2]
                     # upgrade arch = data[3]
-                    data = store(dependencies_list)
+                    data = store(order_list(upg_name))
                     sys.stdout.write(self.done)
                 if data:
                     # count installed = count[0]
@@ -122,7 +118,7 @@ class SBoCheck(object):
                                   msg[0], msg[1], self.installed)
                 else:
                     print("\nTotal {0} SBo packages are up to date\n".format(
-                        len(sbo_list())))
+                        len(self.sbo_list())))
             else:
                 sys.stdout.write(self.done)
                 print("\nNo SBo packages found\n")
@@ -130,35 +126,33 @@ class SBoCheck(object):
             print   # new line at exit
             sys.exit()
 
+    def sbo_list(self):
+        '''
+        Return all SBo packages
+        '''
+        sbo_packages = []
+        for pkg in os.listdir(pkg_path):
+            if pkg.endswith("_SBo"):
+                sbo_packages.append(pkg)
+        return sbo_packages
 
-def sbo_list():
-    '''
-    Return all SBo packages
-    '''
-    sbo_packages = []
-    for pkg in os.listdir(pkg_path):
-        if pkg.endswith("_SBo"):
-            sbo_packages.append(pkg)
-    return sbo_packages
-
-
-def exists(index, toolbar_width):
-    '''
-    search packages if exists in the repository
-    and it gets to avoidable modified packages
-    from the user with the tag _SBo
-    '''
-    upgrade_names = []
-    for pkg in sbo_list():
-        index += 1
-        toolbar_width = status(index, toolbar_width, 4)
-        name = split_package(pkg)[0]
-        if sbo_search_pkg(name):
-            sbo_package = ("{0}-{1}".format(name, SBoGrep(name).version()))
-            package = ("{0}-{1}".format(name, split_package(pkg)[1]))
-            if sbo_package > package:
-                upgrade_names.append(name)
-    return upgrade_names
+    def exists(self):
+        '''
+        search packages if exists in the repository
+        and it gets to avoidable modified packages
+        from the user with the tag _SBo
+        '''
+        upgrade_names = []
+        for pkg in self.sbo_list():
+            self.index += 1
+            self.toolbar_width = status(self.index, self.toolbar_width, 4)
+            name = split_package(pkg)[0]
+            if sbo_search_pkg(name):
+                sbo_package = ("{0}-{1}".format(name, SBoGrep(name).version()))
+                package = ("{0}-{1}".format(name, split_package(pkg)[1]))
+                if sbo_package > package:
+                    upgrade_names.append(name)
+        return upgrade_names
 
 
 def deps(upgrade_names):
@@ -172,13 +166,14 @@ def deps(upgrade_names):
     return dependencies
 
 
-def one_for_all(dependencies):
+def one_for_all(upgrade_names):
     '''
     Because there are dependencies that depend on other
     dependencies are created lists into other lists.
     Thus creating this loop create one-dimensional list.
     '''
     requires = []
+    dependencies = deps(upgrade_names)
     for dep in dependencies:
         requires += dep
     # Inverting the list brings the
@@ -187,33 +182,35 @@ def one_for_all(dependencies):
     return requires
 
 
-def remove_dbs(requires):
+def remove_dbs(upgrade_names):
     '''
     Many packages use the same dependencies, in this loop
     creates a new list by removing duplicate dependencies but
     without spoiling the line must be installed.
     '''
     dependencies = []
+    requires = one_for_all(upgrade_names)
     for duplicate in requires:
         if duplicate not in dependencies:
             dependencies.append(duplicate)
     return dependencies
 
 
-def order_list(upgrade_names, dependencies):
+def order_list(upgrade_names):
     '''
     Last and after the list is created with the correct number
     of dependencies that must be installed, and add the particular
     packages that need to be upgraded if they are not already on
     the list in end to list.
     '''
+    dependencies = remove_dbs(upgrade_names)
     for upg in upgrade_names:
         if upg not in dependencies:
             dependencies.append(upg)
     return dependencies
 
 
-def store(dependencies_list):
+def store(dependencies):
     '''
     In the end lest a check of the packages that are on the list
     are already installed.
@@ -223,7 +220,7 @@ def store(dependencies_list):
      upgrade_version,
      upgrade_arch
      ) = ([] for i in range(4))
-    for pkg in dependencies_list:
+    for pkg in dependencies:
         ver = SBoGrep(pkg).version()
         prgnam = ("{0}-{1}".format(pkg, ver))
         # if package not installed

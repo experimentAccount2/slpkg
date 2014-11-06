@@ -107,11 +107,11 @@ def repo_requires(name, repo):
     '''
     Grap package requirements from alien repository
     '''
-    if repo == "alien":
-        lib = lib_path + "alien_repo/PACKAGES.TXT"
-    elif repo == "slacky":
-        lib = lib_path + "slacky_repo/PACKAGES.TXT"
-    f = open(lib, "r")
+    lib = {
+        'alien': lib_path + "alien_repo/PACKAGES.TXT",
+        'slacky': lib_path + "slacky_repo/PACKAGES.TXT"
+    }
+    f = open(lib[repo], "r")
     PACKAGES_TXT = f.read()
     f.close()
     for line in PACKAGES_TXT.splitlines():
