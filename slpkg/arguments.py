@@ -54,6 +54,7 @@ def options():
         "  -o, [package...]                          reinstall binary packages",
         "  -r, [package...]                          remove binary packages",
         "  -d, [package...]                          display the contents\n",
+        "Note: '-q' options is working only for SBo repository\n",
         "Repositories:",
         "      Slackware = slack '--current'",
         "      Alien = alien '--current'",

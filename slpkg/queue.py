@@ -157,7 +157,7 @@ class QueuePkgs(object):
         if packages:
             print   # new line at start
             for pkg in packages:
-                # check if package exist in repository
+                # check if package exist in /tmp
                 find = find_package(pkg, tmp)
                 try:
                     find = max(find)

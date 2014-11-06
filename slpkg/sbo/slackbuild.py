@@ -103,7 +103,7 @@ class SBoInstall(object):
                                        msg[1]))
                 print("will be upgraded.{0}\n".format(ENDC))
                 read = arch_support(idata[3], self.UNST, idata[2], dependencies)
-                if read == "Y" or read == "y":
+                if read in['y', 'Y']:
                     # installs = b_ins[0]
                     # upgraded = b_ins[1]
                     # versions = b_ins[2]

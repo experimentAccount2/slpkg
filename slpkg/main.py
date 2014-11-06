@@ -41,11 +41,11 @@ from sbo.slackbuild import SBoInstall
 
 from slack.install import Slack
 from slack.patches import Patches
-from others.install import Others
+from others.check import OthersUpgrade
+from others.install import OthersInstall
 
 
 def main():
-
     # root privileges required
     s_user(getpass.getuser())
     args = sys.argv
@@ -65,8 +65,8 @@ def main():
     elif len(args) == 3 and args[0] == "-a":
         BuildPackage(args[1], args[2:], path).build()
     elif len(args) == 2 and args[0] == "-l":
-        sbo_list = ["all", "sbo", "slack", "noarch"]
-        if args[1] in sbo_list:
+        pkg_list = ["all", "noarch"] + repository
+        if args[1] in pkg_list:
             PackageManager(None).list(args[1])
         else:
             usage()
@@ -76,6 +76,12 @@ def main():
         elif args[1] == repository[1] and args[2] == "--upgrade":
             version = "stable"
             Patches(version).start()
+        elif args[1] == repository[2] and args[2] == "--upgrade":
+            OthersUpgrade(repository[2], "").start()
+        elif args[1] == repository[3] and args[2] == "--upgrade":
+            OthersUpgrade(repository[3], "").start()
+        elif args[1] == repository[4] and args[2] == "--upgrade":
+            OthersUpgrade(repository[4], "").start()
         else:
             usage()
     elif len(args) == 4 and args[0] == "-c":
@@ -90,18 +96,18 @@ def main():
         elif args[1] == repository[1]:
             Slack(args[2], "stable").start()
         elif args[1] == repository[2]:
-            Others(args[2], repository[2], "").start()
+            OthersInstall(args[2], repository[2], "").start()
         elif args[1] == repository[3]:
-            Others(args[2], repository[3], "").start()
+            OthersInstall(args[2], repository[3], "").start()
         elif args[1] == repository[4]:
-            Others(args[2], repository[4], "").start()
+            OthersInstall(args[2], repository[4], "").start()
         else:
             usage()
     elif len(args) == 4 and args[0] == "-s":
         if args[1] == repository[1] and args[3] == "--current":
             Slack(args[2], "current").start()
         elif args[1] == repository[3] and args[3] == "--current":
-            Others(args[2], repository[3], "current").start()
+            OthersInstall(args[2], repository[3], "current").start()
         else:
             usage()
     elif len(args) == 2 and args[0] == "-t":

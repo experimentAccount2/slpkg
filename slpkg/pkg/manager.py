@@ -105,7 +105,7 @@ class PackageManager(object):
             except KeyboardInterrupt:
                 print   # new line at exit
                 sys.exit()
-            if remove_pkg == "y" or remove_pkg == "Y":
+            if remove_pkg in ['y', 'Y']:
                 for rmv in removed:
                     # If package build and install with 'slpkg -s sbo <package>'
                     # then look log file for dependencies in /var/log/slpkg/dep,
@@ -119,7 +119,7 @@ class PackageManager(object):
                         except KeyboardInterrupt:
                             print  # new line at exit
                             sys.exit()
-                        if remove_dep == "y" or remove_dep == "Y":
+                        if remove_dep in ['y', 'Y']:
                             rmv_list += self.rmv_deps(self.binary,
                                                       dependencies,
                                                       dep_path, rmv)
@@ -269,23 +269,28 @@ class PackageManager(object):
         tty_size = os.popen('stty size', 'r').read().split()
         row = int(tty_size[0]) - 2
         try:
-            if "sbo" in pattern:
-                search = "_SBo"
-            elif "slack" in pattern:
-                search = "_slack"
-            elif "noarch" in pattern:
-                search = "-noarch-"
-            elif "all" in pattern:
-                search = ""
+            pkg_list = {
+                'sbo': '_SBo',
+                'slack': '_slack',
+                'noarch': '-noarch-',
+                'rlw': '_rlw',
+                'alien': 'alien',
+                'slacky': 'sl',
+                'all': ''
+            }
+            search = pkg_list[pattern]
             index, page = 0, row
+            sl = search
+            if search == "-noarch-":
+                search = ""
             for pkg in find_package("", pkg_path):
-                if search in pkg:
+                if pkg.endswith(search) and sl in pkg:
                     index += 1
                     print("{0}{1}:{2} {3}".format(GREY, index, ENDC, pkg))
                     if index == page:
-                        r = raw_input("\nPress {0}Enter{1} to "
-                                      "continue... ".format(CYAN, ENDC))
-                        if r in ['Q', 'q']:
+                        read = raw_input("\nPress {0}Enter{1} to "
+                                         "continue... ".format(CYAN, ENDC))
+                        if read in ['Q', 'q']:
                             break
                         print   # new line after page
                         page += row
