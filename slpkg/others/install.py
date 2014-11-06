@@ -190,8 +190,10 @@ class OthersInstall(object):
                     uncomp_sum.append(uncomp)
                     if len(install) > 1:
                         matching = True
-        dwn.reverse(), install.reverse()
-        comp_sum.reverse(), uncomp_sum.reverse()
+        dwn.reverse()
+        install.reverse()
+        comp_sum.reverse()
+        uncomp_sum.reverse()
         return [dwn, install, comp_sum, uncomp_sum, matching]
 
 

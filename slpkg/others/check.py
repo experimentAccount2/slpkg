@@ -199,7 +199,7 @@ def views(upgrade_all, comp_sum, repository):
     return upg_sum
 
 
-def msgs(upgrade_all, uni_sum):
+def msgs(upgrade_all):
     '''
     Print singular plural
     '''
@@ -209,7 +209,7 @@ def msgs(upgrade_all, uni_sum):
     return msg_pkg
 
 
-def upgrade(tmp_path, upgrade_all):
+def upgrade(upgrade_all):
     '''
     Install or upgrade packages
     '''
