@@ -87,17 +87,15 @@ def alien_filter(name, location, size, unsize, version):
     '''
     Filter alien repository data
     '''
-    arch = os.uname()[4]
-    path_pkg = "pkg64"
     ver = slack_ver()
     if version == "current":
         ver = "current"
-    if arch.startswith("i") and arch.endswith("86"):
-        path_pkg = "pkg"
+    path_pkg = "pkg"
+    if os.uname()[4] == "x86_64":
+        path_pkg = "pkg64"
     (fname, flocation, fsize, funsize) = ([] for i in range(4))
     for n, l, s, u in zip(name, location, size, unsize):
-        loc = l.split("/")
-        if path_pkg == loc[-2] and loc[-1] == ver:
+        if path_pkg == l.split("/")[-2] and ver == l.split("/")[-1]:
             fname.append(n)
             flocation.append(l)
             fsize.append(s)
