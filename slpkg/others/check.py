@@ -108,9 +108,9 @@ class OthersUpgrade(object):
                     "Size"))
                 template(78)
                 print("Upgrading:")
-                sums = views(upgrade_all, comp_sum, self.repo)
+                views(upgrade_all, comp_sum, self.repo)
                 unit, size = units(comp_sum, uncomp_sum)
-                msg = msgs(upgrade_all, sums)
+                msg = msgs(upgrade_all)
                 print("\nInstalling summary")
                 print("=" * 79)
                 print("{0}Total {1} {2} will be upgraded.".format(
@@ -123,7 +123,7 @@ class OthersUpgrade(object):
                 if read in ['Y', 'y']:
                     upgrade_all.reverse()
                     packages_dwn(self.tmp_path, dwn_links)
-                    upgrade(self.tmp_path, upgrade_all)
+                    upgrade(upgrade_all)
                     delete(self.tmp_path, upgrade_all)
             else:
                 print("There are no packages for upgrade\n")
