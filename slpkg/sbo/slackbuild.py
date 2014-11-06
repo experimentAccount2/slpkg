@@ -63,8 +63,7 @@ class SBoInstall(object):
         '''
         try:
             if self.dependencies_list or sbo_search_pkg(self.name) is not None:
-                requires = one_for_all(self.name, self.dependencies_list)
-                dependencies = remove_dbs(requires)
+                dependencies = self.remove_dbs()
                 # sbo versions = idata[0]
                 # package arch = idata[1]
                 # package sum = idata[2]
@@ -110,7 +109,7 @@ class SBoInstall(object):
                     b_ins = build_install(dependencies, idata[0])
                     reference(count[1], msg[0], count[0], msg[1],
                               b_ins[0], b_ins[2], b_ins[1])
-                    write_deps(self.name, dependencies)
+                    write_deps(dependencies)
             else:
                 count_installed = count_uninstalled = 0
                 # sbo matching = mdata[0]
@@ -147,28 +146,27 @@ class SBoInstall(object):
             print   # new line at exit
             sys.exit()
 
+    def one_for_all(self):
+        '''
+        Create one list for all packages
+        '''
+        requires = []
+        requires.append(self.name)
+        for pkg in self.dependencies_list:
+            requires += pkg
+        requires.reverse()
+        return requires
 
-def one_for_all(name, dependencies):
-    '''
-    Create one list for all packages
-    '''
-    requires = []
-    requires.append(name)
-    for pkg in dependencies:
-        requires += pkg
-    requires.reverse()
-    return requires
-
-
-def remove_dbs(requires):
-    '''
-    Remove double dependencies
-    '''
-    dependencies = []
-    for duplicate in requires:
-        if duplicate not in dependencies:
-            dependencies.append(duplicate)
-    return dependencies
+    def remove_dbs(self):
+        '''
+        Remove double dependencies
+        '''
+        requires = self.one_for_all()
+        dependencies = []
+        for duplicate in requires:
+            if duplicate not in dependencies:
+                dependencies.append(duplicate)
+        return dependencies
 
 
 def installing_data(dependencies, support):
@@ -372,11 +370,12 @@ def reference(*args):
     template(78)
 
 
-def write_deps(name, dependencies):
+def write_deps(dependencies):
     '''
     Write dependencies in a log file
     into directory `/var/log/slpkg/dep/`
     '''
+    name = dependencies[-1]
     if find_package(name + sp, pkg_path):
         dep_path = log_path + "dep/"
         if not os.path.exists(log_path):
