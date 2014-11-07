@@ -86,8 +86,9 @@ def main():
             usage()
     elif len(args) == 4 and args[0] == "-c":
         if args[1] == repository[1] and args[3] == "--current":
-            version = "current"
-            Patches(version).start()
+            Patches("current").start()
+        elif args[1] == repository[3] and args[3] == "--current":
+            OthersUpgrade(repository[3], "current").start()
         else:
             usage()
     elif len(args) == 3 and args[0] == "-s":

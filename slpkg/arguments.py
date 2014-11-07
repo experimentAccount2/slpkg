@@ -40,7 +40,7 @@ def options():
         "queue",
         "      --build, --install, --build-install   build or install from " +
         "queue",
-        "  -l, all, sbo, slack, noarch               list of installed " +
+        "  -l, <repository>, all, noarch             list of installed " +
         "packages",
         "  -c, <repository> --upgrade --current      check for updated " +
         "packages",

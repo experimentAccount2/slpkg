@@ -68,9 +68,8 @@ Features
 --------
 
 - Build third party packages from source with all dependencies
-- Install packages through from official `Slackware <http://www.slackware.com/>`_ mirrors
-- Find and Download packages from `slackbuilds.org <http://slackbuilds.org/>`_
-- Grabs packages from slackbuilds.org in real time
+- Grabs packages from repositories in real time
+- Find and Download packages from repositories 
 - Automatic tool build and install packages
 - Check if your distribution is up to date
 - Remove packages with all dependencies
@@ -135,7 +134,7 @@ Command Line Tool Usage
       -b, --list, [package...] --add, --remove  add, remove packages in blacklist
       -q, --list, [package...] --add, --remove  add, remove packages in queue
           --build, --install, --build-install   build or install from queue
-      -l, all, sbo, slack, noarch               list of installed packages
+      -l, <repository>, all, noarch             list of installed packages
       -c, <repository> --upgrade --current      check for updated packages
       -s, <repository> <package> --current      download, build & install
       -f, <package>                             find installed packages

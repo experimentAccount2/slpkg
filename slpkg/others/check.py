@@ -26,10 +26,10 @@ import sys
 
 from sizes import units
 from repositories import Repo
-from init import Initialization
-from blacklist import BlackList
-from splitting import split_package
 from messages import template
+from blacklist import BlackList
+from init import Initialization
+from splitting import split_package
 from colors import YELLOW, GREY, ENDC
 from __metadata__ import slpkg_tmp, pkg_path, lib_path
 
