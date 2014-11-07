@@ -45,13 +45,13 @@ What makes slpkg to distinguish it from other tools; The user friendliness is it
 target as well as easy to understand and use, also use color to highlight packages and 
 display warning messages, etc.
 
-The big advantages is resolving dependencies packages from repository slackbuilds.org and
-monitored for upgraded packages.
+The big advantages is resolving dependencies packages from repositories and monitored for 
+upgraded packages.
 
 Of course you wonder how the slpkg is up to date at all times;
 It's simple, every time there is a change in ChangeLog.txt before proceeding to any 
 execution program looksat whether there is a change in file size and downloads and updates
-the SLACKBUILDS.TXT file.
+the PACKAGES.TXT file.
 
 Also you can install official packages of your favorite distribution directly from the 
 official repositories
