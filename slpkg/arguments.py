@@ -40,7 +40,7 @@ def options():
         "queue",
         "      --build, --install, --build-install   build or install from " +
         "queue",
-        "  -l, all, sbo, slack, noarch               list of installed " +
+        "  -l, <repository>, all, noarch             list of installed " +
         "packages",
         "  -c, <repository> --upgrade --current      check for updated " +
         "packages",
@@ -54,9 +54,13 @@ def options():
         "  -o, [package...]                          reinstall binary packages",
         "  -r, [package...]                          remove binary packages",
         "  -d, [package...]                          display the contents\n",
+        "Note: '-q' options is working only for SBo repository\n",
         "Repositories:",
+        "      Slackware = slack '--current'",
+        "      Alien = alien '--current'",
         "      SlackBuilds = sbo",
-        "      Slackware = slack '--current'\n",
+        "      Slacky = slacky",
+        "      Robby's = rlw\n"
     ]
     for opt in arguments:
         print(opt)

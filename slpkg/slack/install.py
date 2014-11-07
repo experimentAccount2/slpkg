@@ -24,6 +24,7 @@
 import os
 import sys
 
+from slpkg.sizes import units
 from slpkg.url_read import URL
 from slpkg.blacklist import BlackList
 from slpkg.splitting import split_package
@@ -34,7 +35,6 @@ from slpkg.colors import RED, GREEN, CYAN, YELLOW, GREY, ENDC
 from slpkg.pkg.find import find_package
 from slpkg.pkg.manager import PackageManager
 
-from sizes import units
 from remove import delete
 from mirrors import mirrors
 from greps import slack_data
@@ -66,10 +66,7 @@ class Slack(object):
         Install packages from official Slackware distribution
         '''
         try:
-            data = slack_data(self.PACKAGES_TXT, 700)
-            (dwn_links, install_all,
-             comp_sum, uncomp_sum) = store(data[0], data[1], data[2], data[3],
-                                           self.slack_pkg, self.version)
+            dwn_links, install_all, comp_sum, uncomp_sum = self.store()
             sys.stdout.write("{0}Done{1}\n\n".format(GREY, ENDC))
             if install_all:
                 template(78)
@@ -97,7 +94,7 @@ class Slack(object):
                 print("After this process, {0} {1} of additional disk space "
                       "will be used.{2}".format(size[1], unit[1], ENDC))
                 read = raw_input("\nWould you like to install [Y/n]? ")
-                if read == "Y" or read == "y":
+                if read in ['y', 'Y']:
                     slack_dwn(self.tmp_path, dwn_links)
                     install(self.tmp_path, install_all)
                     delete(self.tmp_path, install_all)
@@ -107,19 +104,21 @@ class Slack(object):
             print   # new line at exit
             sys.exit()
 
-
-def store(*args):
-    '''
-    Store and return packages for install
-    '''
-    dwn, install, comp_sum, uncomp_sum = ([] for i in range(4))
-    for name, loc, comp, uncomp in zip(args[0], args[1], args[2], args[3]):
-        if args[4] in name and args[4] not in BlackList().packages():
-            dwn.append("{0}{1}/{2}".format(mirrors("", "", args[5]), loc, name))
-            install.append(name)
-            comp_sum.append(comp)
-            uncomp_sum.append(uncomp)
-    return [dwn, install, comp_sum, uncomp_sum]
+    def store(self):
+        '''
+        Store and return packages for install
+        '''
+        dwn, install, comp_sum, uncomp_sum = ([] for i in range(4))
+        data = slack_data(self.PACKAGES_TXT, 700)
+        black = BlackList().packages()
+        for name, loc, comp, uncomp in zip(data[0], data[1], data[2], data[3]):
+            if self.slack_pkg in name and self.slack_pkg not in black:
+                dwn.append("{0}{1}/{2}".format(mirrors("", "", self.version),
+                                               loc, name))
+                install.append(name)
+                comp_sum.append(comp)
+                uncomp_sum.append(uncomp)
+        return [dwn, install, comp_sum, uncomp_sum]
 
 
 def views(install_all, comp_sum):
@@ -168,14 +167,11 @@ def install(tmp_path, install_all):
     for install in install_all:
         package = (tmp_path + install).split()
         if os.path.isfile(pkg_path + install[:-4]):
-            print("[ {0}reinstalling{1} ] --> {2}".format(
-                  GREEN, ENDC, install))
+            print("[ {0}reinstalling{1} ] --> {2}".format(GREEN, ENDC, install))
             PackageManager(package).reinstall()
         elif find_package(split_package(install)[0] + "-", pkg_path):
-            print("[ {0}upgrading{1} ] --> {2}".format(
-                  YELLOW, ENDC, install))
+            print("[ {0}upgrading{1} ] --> {2}".format(YELLOW, ENDC, install))
             PackageManager(package).upgrade()
         else:
-            print("[ {0}installing{1} ] --> {2}".format(
-                  GREEN, ENDC, install))
+            print("[ {0}installing{1} ] --> {2}".format(GREEN, ENDC, install))
             PackageManager(package).upgrade()

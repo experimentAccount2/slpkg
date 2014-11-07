@@ -29,7 +29,7 @@ def delete(path, packages):
     Remove downloaded packages
     '''
     read = raw_input("Removal downloaded packages [Y/n]? ")
-    if read == "Y" or read == "y":
+    if read in ['y', 'Y']:
         for pkg in packages:
             os.remove(path + pkg)
             os.remove(path + pkg + ".asc")

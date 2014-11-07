@@ -48,8 +48,7 @@ def sbo_dependencies_pkg(name):
             if dependencies:
                 dep_results.append(dependencies)
                 for dep in dependencies:
-                    sys.stdout.write("{0}.{1}".format(
-                                     GREY, ENDC))
+                    sys.stdout.write("{0}.{1}".format(GREY, ENDC))
                     sys.stdout.flush()
                     sbo_dependencies_pkg(dep)
         return dep_results

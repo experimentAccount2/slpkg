@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# find.py file is part of slpkg.
+# repositories.py file is part of slpkg.
 
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
@@ -21,19 +21,38 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import os
 
-from slpkg.blacklist import BlackList
-from slpkg.splitting import split_package
+class Repo(object):
 
+    def __init__(self):
+        pass
 
-def find_package(find_pkg, directory):
-    '''
-    Find packages
-    '''
-    pkgs = []
-    blacklist = BlackList().packages()
-    for pkg in sorted(os.listdir(directory)):
-        if pkg.startswith(find_pkg)and split_package(pkg)[0] not in blacklist:
-            pkgs.append(pkg)
-    return pkgs
+    def slack(self):
+        '''
+        Official slackware repository
+        '''
+        return "http://mirrors.slackware.com/slackware/"
+
+    def sbo(self):
+        '''
+        SlackBuilds.org repository
+        '''
+        return "http://slackbuilds.org/slackbuilds/"
+
+    def rlw(self):
+        '''
+        Robby's repoisitory
+        '''
+        return "http://rlworkman.net/pkgs/"
+
+    def alien(self):
+        '''
+        Alien repository
+        '''
+        return "http://www.slackware.com/~alien/slackbuilds/"
+
+    def slacky(self):
+        '''
+        Slacky.eu repository
+        '''
+        return "http://repository.slacky.eu/"

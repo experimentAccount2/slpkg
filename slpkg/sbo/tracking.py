@@ -24,12 +24,13 @@
 import sys
 
 from slpkg.messages import template
-from slpkg.init import initialization
+from slpkg.init import Initialization
 from slpkg.__metadata__ import pkg_path, sp
 from slpkg.colors import RED, GREEN, GREY, YELLOW, CYAN, ENDC
 
 from slpkg.pkg.find import find_package
 
+from search import sbo_search_pkg
 from dependency import sbo_dependencies_pkg
 
 
@@ -42,10 +43,10 @@ def track_dep(name):
     '''
     sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
     sys.stdout.flush()
-    initialization()
+    Initialization().sbo()
     dependencies_list = sbo_dependencies_pkg(name)
     sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
-    if dependencies_list:
+    if sbo_search_pkg(name):
         requires, dependencies = [], []
         # Create one list for all packages
         for pkg in dependencies_list:

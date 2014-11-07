@@ -25,8 +25,9 @@ import os
 import sys
 
 from slpkg.toolbar import status
-from slpkg.init import initialization
+from slpkg.init import Initialization
 from slpkg.downloader import Download
+from slpkg.splitting import split_package
 from slpkg.__metadata__ import (tmp, pkg_path, build_path,
                                 log_path, lib_path, sp)
 
@@ -50,7 +51,7 @@ class SBoInstall(object):
         self.name = name
         sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
         sys.stdout.flush()
-        initialization()
+        Initialization().sbo()
         self.UNST = ["UNSUPPORTED", "UNTESTED"]
         self.dependencies_list = sbo_dependencies_pkg(name)
 
@@ -62,8 +63,7 @@ class SBoInstall(object):
         '''
         try:
             if self.dependencies_list or sbo_search_pkg(self.name) is not None:
-                requires = one_for_all(self.name, self.dependencies_list)
-                dependencies = remove_dbs(requires)
+                dependencies = self.remove_dbs()
                 # sbo versions = idata[0]
                 # package arch = idata[1]
                 # package sum = idata[2]
@@ -81,13 +81,14 @@ class SBoInstall(object):
                 ARCH_COLOR = arch_colors_tag(self.UNST, idata[1])
                 view_packages(PKG_COLOR, self.name, idata[0][-1], ARCH_COLOR,
                               idata[1][-1])
-                print("Installing for dependencies:")
-                for dep, ver, dep_arch in zip(dependencies[:-1], idata[0][:-1],
-                                              idata[1][:-1]):
-                    (DEP_COLOR, count) = pkg_colors_tag(dep, ver, count[0],
-                                                        count[1])
-                    ARCH_COLOR = arch_colors_tag(self.UNST, dep)
-                    view_packages(DEP_COLOR, dep, ver, ARCH_COLOR, dep_arch)
+                if len(dependencies) > 1:
+                    print("Installing for dependencies:")
+                    for dep, ver, dep_arch in zip(dependencies[:-1],
+                                                  idata[0][:-1], idata[1][:-1]):
+                        (DEP_COLOR, count) = pkg_colors_tag(dep, ver, count[0],
+                                                            count[1])
+                        ARCH_COLOR = arch_colors_tag(self.UNST, dep)
+                        view_packages(DEP_COLOR, dep, ver, ARCH_COLOR, dep_arch)
                 # insstall message = msg[0]
                 # upgraded message = msg[1]
                 # total message = msg[2]
@@ -101,14 +102,14 @@ class SBoInstall(object):
                                        msg[1]))
                 print("will be upgraded.{0}\n".format(ENDC))
                 read = arch_support(idata[3], self.UNST, idata[2], dependencies)
-                if read == "Y" or read == "y":
+                if read in['y', 'Y']:
                     # installs = b_ins[0]
                     # upgraded = b_ins[1]
                     # versions = b_ins[2]
-                    b_ins = build_install(dependencies, idata[0], idata[1])
+                    b_ins = build_install(dependencies, idata[0])
                     reference(count[1], msg[0], count[0], msg[1],
                               b_ins[0], b_ins[2], b_ins[1])
-                    write_deps(self.name, dependencies)
+                    write_deps(dependencies)
             else:
                 count_installed = count_uninstalled = 0
                 # sbo matching = mdata[0]
@@ -145,28 +146,27 @@ class SBoInstall(object):
             print   # new line at exit
             sys.exit()
 
+    def one_for_all(self):
+        '''
+        Create one list for all packages
+        '''
+        requires = []
+        requires.append(self.name)
+        for pkg in self.dependencies_list:
+            requires += pkg
+        requires.reverse()
+        return requires
 
-def one_for_all(name, dependencies):
-    '''
-    Create one list for all packages
-    '''
-    requires = []
-    requires.append(name)
-    for pkg in dependencies:
-        requires += pkg
-    requires.reverse()
-    return requires
-
-
-def remove_dbs(requires):
-    '''
-    Remove double dependencies
-    '''
-    dependencies = []
-    for duplicate in requires:
-        if duplicate not in dependencies:
-            dependencies.append(duplicate)
-    return dependencies
+    def remove_dbs(self):
+        '''
+        Remove double dependencies
+        '''
+        requires = self.one_for_all()
+        dependencies = []
+        for duplicate in requires:
+            if duplicate not in dependencies:
+                dependencies.append(duplicate)
+        return dependencies
 
 
 def installing_data(dependencies, support):
@@ -308,7 +308,7 @@ def search_in_tmp(prgnam):
     return binary
 
 
-def build_install(dependencies, sbo_versions, packages_arch):
+def build_install(dependencies, sbo_versions):
     '''
     Searches the package name and version in /tmp to
     install. If find two or more packages e.g. to build
@@ -317,13 +317,12 @@ def build_install(dependencies, sbo_versions, packages_arch):
     installs, upgraded, versions = [], [], []
     create_build_path()
     os.chdir(build_path)
-    for pkg, ver, ar in zip(dependencies, sbo_versions, packages_arch):
+    for pkg, ver in zip(dependencies, sbo_versions):
         prgnam = ("{0}-{1}".format(pkg, ver))
         sbo_file = "".join(find_package(prgnam, pkg_path))
         if sbo_file:
-            sbo_file_version = sbo_file[len(pkg) + 1:-len(ar) - 7]
             template(78)
-            pkg_found(pkg, sbo_file_version)
+            pkg_found(pkg, split_package(sbo_file)[1])
             template(78)
         else:
             sbo_url = sbo_search_pkg(pkg)
@@ -362,7 +361,7 @@ def reference(*args):
     for pkg, ver in zip(args[4], args[5]):
         installed = ("{0}-{1}".format(pkg, ver))
         if find_package(installed, pkg_path):
-            if pkg in args[5]:
+            if pkg in args[6]:
                 print("| Package {0} upgraded successfully".format(installed))
             else:
                 print("| Package {0} installed successfully".format(installed))
@@ -371,11 +370,12 @@ def reference(*args):
     template(78)
 
 
-def write_deps(name, dependencies):
+def write_deps(dependencies):
     '''
     Write dependencies in a log file
     into directory `/var/log/slpkg/dep/`
     '''
+    name = dependencies[-1]
     if find_package(name + sp, pkg_path):
         dep_path = log_path + "dep/"
         if not os.path.exists(log_path):

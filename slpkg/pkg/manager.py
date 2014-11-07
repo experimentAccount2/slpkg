@@ -90,7 +90,7 @@ class PackageManager(object):
         Remove Slackware binary packages
         '''
         dep_path = log_path + "dep/"
-        dependencies = []
+        dependencies, rmv_list = [], []
         removed = self.view_removed(self.binary)
         if not removed:
             print   # new line at end
@@ -105,7 +105,7 @@ class PackageManager(object):
             except KeyboardInterrupt:
                 print   # new line at exit
                 sys.exit()
-            if remove_pkg == "y" or remove_pkg == "Y":
+            if remove_pkg in ['y', 'Y']:
                 for rmv in removed:
                     # If package build and install with 'slpkg -s sbo <package>'
                     # then look log file for dependencies in /var/log/slpkg/dep,
@@ -119,14 +119,15 @@ class PackageManager(object):
                         except KeyboardInterrupt:
                             print  # new line at exit
                             sys.exit()
-                        if remove_dep == "y" or remove_dep == "Y":
-                            rmv_list = self.rmv_deps(self.binary, dependencies,
-                                                     dep_path, rmv)
+                        if remove_dep in ['y', 'Y']:
+                            rmv_list += self.rmv_deps(self.binary,
+                                                      dependencies,
+                                                      dep_path, rmv)
                         else:
-                            rmv_list = self.rmv_pkg(rmv)
+                            rmv_list += self.rmv_pkg(rmv)
                             os.remove(dep_path + rmv)
                     else:
-                        rmv_list = self.rmv_pkg(rmv)
+                        rmv_list += self.rmv_pkg(rmv)
                 # Prints all removed packages
                 self.reference_rmvs(rmv_list)
 
@@ -188,16 +189,15 @@ class PackageManager(object):
         if find_package(package + sp, pkg_path):
             print(subprocess.check_output("removepkg {0}".format(package),
                                           shell=True))
-            return package.split()
+        return package.split()
 
     @staticmethod
     def reference_rmvs(removes):
         '''
         Prints all removed packages
         '''
-        if len(removes) > 1:
-            template(78)
-            print("| Total {0} packages removed".format(len(removes)))
+        template(78)
+        print("| Total {0} packages removed".format(len(removes)))
         template(78)
         for pkg in removes:
             if not find_package(pkg + sp, pkg_path):
@@ -269,22 +269,29 @@ class PackageManager(object):
         tty_size = os.popen('stty size', 'r').read().split()
         row = int(tty_size[0]) - 2
         try:
-            if "sbo" in pattern:
-                search = "_SBo"
-            elif "slack" in pattern:
-                search = "_slack"
-            elif "noarch" in pattern:
-                search = "-noarch-"
-            elif "all" in pattern:
-                search = ""
+            pkg_list = {
+                'sbo': '_SBo',
+                'slack': '_slack',
+                'noarch': '-noarch-',
+                'rlw': '_rlw',
+                'alien': 'alien',
+                'slacky': 'sl',
+                'all': ''
+            }
+            search = pkg_list[pattern]
             index, page = 0, row
+            sl = search
+            if search == "-noarch-":
+                search = ""
             for pkg in find_package("", pkg_path):
-                if search in pkg:
+                if pkg.endswith(search) and sl in pkg:
                     index += 1
                     print("{0}{1}:{2} {3}".format(GREY, index, ENDC, pkg))
                     if index == page:
-                        raw_input("\nPress {0}Enter{1} to continue...".format(
-                            CYAN, ENDC))
+                        read = raw_input("\nPress {0}Enter{1} to "
+                                         "continue... ".format(CYAN, ENDC))
+                        if read in ['Q', 'q']:
+                            break
                         print   # new line after page
                         page += row
             print   # new line at end

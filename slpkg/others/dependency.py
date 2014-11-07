@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# search.py file is part of slpkg.
+# dependency.py file is part of slpkg.
 
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
@@ -23,30 +23,31 @@
 
 import sys
 
-from slpkg.repositories import Repo
-from slpkg.blacklist import BlackList
-from slpkg.__metadata__ import lib_path
+from slpkg.colors import GREY, ENDC
 
-from slpkg.slack.slack_version import slack_ver
+from greps import repo_requires
+
+dep_results = []
 
 
-def sbo_search_pkg(name):
+def dependencies_pkg(name, repo):
     '''
-    Search for package path from SLACKBUILDS.TXT file
+    Build all dependencies of a package
     '''
     try:
-        repo = Repo().sbo()
-        blacklist = BlackList().packages()
-        sbo_url = "{0}{1}/".format(repo, slack_ver())
-        with open(lib_path + "sbo_repo/SLACKBUILDS.TXT",
-                  "r") as SLACKBUILDS_TXT:
-            for line in SLACKBUILDS_TXT:
-                if line.startswith("SLACKBUILD LOCATION"):
-                    sbo_name = (line[23:].split("/")[-1].replace("\n",
-                                                                 "")).strip()
-                    if name == sbo_name and name not in blacklist:
-                        SLACKBUILDS_TXT.close()
-                        return (sbo_url + line[23:].strip() + "/")
+        dependencies = []
+        requires = repo_requires(name, repo)
+        if requires:
+            for req in requires:
+                if req:
+                    dependencies.append(req)
+            if dependencies:
+                dep_results.append(dependencies)
+                for dep in dependencies:
+                    sys.stdout.write("{0}.{1}".format(GREY, ENDC))
+                    sys.stdout.flush()
+                    dependencies_pkg(dep, repo)
+        return dep_results
     except KeyboardInterrupt:
         print   # new line at exit
         sys.exit()

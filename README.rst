@@ -11,9 +11,9 @@
 
 Latest Release:
 
-- Version: 2.0.3
+- Version: 2.0.4
 - `Package <https://sourceforge.net/projects/slpkg/files/slpkg/binary/>`_
-- `Source <https://github.com/dslackw/slpkg/archive/v2.0.3.tar.gz>`_
+- `Source <https://github.com/dslackw/slpkg/archive/v2.0.4.tar.gz>`_
 - `CHANGELOG <https://github.com/dslackw/slpkg/blob/master/CHANGELOG>`_
  
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/logo.png
@@ -29,10 +29,13 @@ packages.
 
 Slpkg is `Open Source <http://en.wikipedia.org/wiki/Open_source>`_ software written in 
 Python language. It's use is for managing packages in Slackware linux distribution.
-Species are adapted to two repositories:
+Supported Repositories:
 
 - SBo - `slackbuilds.org <http://slackbuilds.org/>`_
 - Slack - `slackware.com <http://www.slackware.com/>`_
+- Alien - `alien bob <http://www.slackware.com/~alien/slackbuilds/>`_
+- Slacky - `slacky.eu <http://repository.slacky.eu/>`_
+- Robby's - `rworkman's <http://rlworkman.net/pkgs/>`_
 
 Slpkg works in accordance with the standards of the organization slackbuilds.org 
 to builds packages. Also uses the Slackware linux instructions for installation,
@@ -65,9 +68,8 @@ Features
 --------
 
 - Build third party packages from source with all dependencies
-- Install packages through from official `Slackware <http://www.slackware.com/>`_ mirrors
-- Find and Download packages from `slackbuilds.org <http://slackbuilds.org/>`_
-- Grabs packages from slackbuilds.org in real time
+- Grabs packages from repositories in real time
+- Find and Download packages from repositories 
 - Automatic tool build and install packages
 - Check if your distribution is up to date
 - Remove packages with all dependencies
@@ -100,8 +102,8 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.0.3.tar.gz
-    $ cd slpkg-2.0.3
+    $ tar xvf slpkg-2.0.4.tar.gz
+    $ cd slpkg-2.0.4
     $ ./install.sh
 
 Using `pip <https://pip.pypa.io/en/latest/>`_ :
@@ -132,7 +134,7 @@ Command Line Tool Usage
       -b, --list, [package...] --add, --remove  add, remove packages in blacklist
       -q, --list, [package...] --add, --remove  add, remove packages in queue
           --build, --install, --build-install   build or install from queue
-      -l, all, sbo, slack, noarch               list of installed packages
+      -l, <repository>, all, noarch             list of installed packages
       -c, <repository> --upgrade --current      check for updated packages
       -s, <repository> <package> --current      download, build & install
       -f, <package>                             find installed packages
@@ -143,10 +145,15 @@ Command Line Tool Usage
       -o, [package...]                          reinstall binary packages
       -r, [package...]                          remove binary packages
       -d, [package...]                          display the contents
-    Repositories:
-          SlackBuilds = sbo
-          Slackware = slack '--current'
     
+    Note: '-q' options is working only for SBo repository
+      
+    Repositories:
+          Slackware = slack '--current'
+          Alien = alien '--current'
+          SlackBuilds = sbo
+          Slacky = slacky
+          Robby's = rlw
 
 Slpkg Examples
 --------------
@@ -378,7 +385,7 @@ Auto tool to build package:
 
     Searching for symbolic links:
 
-    No symbolic links were found, so we won't make an installation script.
+    No symbolic links were found, so we wont make an installation script.
     You can make your own later in ./install/doinst.sh and rebuild the
     package if you like.
 
