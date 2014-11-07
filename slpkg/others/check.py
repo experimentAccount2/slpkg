@@ -36,9 +36,9 @@ from __metadata__ import slpkg_tmp, pkg_path, lib_path
 
 from pkg.manager import PackageManager
 
+from slack.remove import delete
 from slack.slack_version import slack_ver
 
-from remove import delete
 from greps import repo_data
 from download import packages_dwn
 
