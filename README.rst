@@ -146,6 +146,9 @@ Command Line Tool Usage
       -o, [package...]                          reinstall binary packages
       -r, [package...]                          remove binary packages
       -d, [package...]                          display the contents
+    
+    Note: '-q' options is working only for SBo repository
+      
     Repositories:
           Slackware = slack '--current'
           Alien = alien '--current'
