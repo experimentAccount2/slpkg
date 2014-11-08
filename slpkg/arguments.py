@@ -73,7 +73,7 @@ def usage():
         "             [-b --list, [...] --add, --remove]",
         "             [-q --list, [...] --add, --remove]",
         "             [-q --build, --install, --build-install]",
-        "             [-l all, sbo, slack, noarch]",
+        "             [-l <repository>, all, noarch]",
         "             [-c <repository> --upgrade --current]",
         "             [-s <repository> <package> --current]",
         "             [-f] [-t] [-n] [-i [...]] [-u  [...]]",

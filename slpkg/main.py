@@ -45,6 +45,21 @@ from others.check import OthersUpgrade
 from others.install import OthersInstall
 
 
+class case(object):
+
+    def __init__(self, package):
+        self.package = package
+
+    def sboinstall(self):
+        SBoInstall(self.package).start()
+
+    def slackinstall(self):
+        Slack(self.package, "stable").start()
+
+    def rlwinstall(self):
+        OthersInstall(self.package, "rlw", "").start()
+
+
 def main():
     # root privileges required
     s_user(getpass.getuser())
@@ -92,7 +107,14 @@ def main():
         else:
             usage()
     elif len(args) == 3 and args[0] == "-s":
-        if args[1] == repository[0]:
+        install = {
+            "sbo": case(args[2]).sboinstall,
+            "slack": case(args[2]).slackinstall,
+            "rlw": case(args[2]).rlwinstall
+        }
+        install[args[1]]()
+
+        '''if args[1] == repository[0]:
             SBoInstall(args[2]).start()
         elif args[1] == repository[1]:
             Slack(args[2], "stable").start()
@@ -103,7 +125,7 @@ def main():
         elif args[1] == repository[4]:
             OthersInstall(args[2], repository[4], "").start()
         else:
-            usage()
+            usage()'''
     elif len(args) == 4 and args[0] == "-s":
         if args[1] == repository[1] and args[3] == "--current":
             Slack(args[2], "current").start()
