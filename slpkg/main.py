@@ -45,26 +45,40 @@ from others.check import OthersUpgrade
 from others.install import OthersInstall
 
 
-class case(object):
+class Case(object):
 
     def __init__(self, package):
         self.package = package
 
-    def sboinstall(self):
+    def sbo_install(self):
         SBoInstall(self.package).start()
 
-    def slackinstall(self):
+    def slack_install(self):
         Slack(self.package, "stable").start()
 
-    def rlwinstall(self):
+    def rlw_install(self):
         OthersInstall(self.package, "rlw", "").start()
 
-    def alieninstall(self):
+    def alien_install(self):
         OthersInstall(self.package, "alien", "").start()
 
-    def slackyinstall(self):
+    def slacky_install(self):
         OthersInstall(self.package, "slacky", "").start()
 
+    def sbo_upgrade(self):
+        SBoCheck().start()
+
+    def slack_upgrade(self):
+        Patches("stable").start()
+
+    def rlw_upgrade(self):
+        OthersUpgrade("rlw", "").start()
+
+    def alien_upgrade(self):
+        OthersUpgrade("alien", "").start()
+
+    def slacky_upgrade(self):
+        OthersUpgrade("slacky", "").start()
 
 
 def main():
@@ -75,7 +89,6 @@ def main():
     repository = ["sbo", "slack", "rlw", "alien", "slacky"]
     blacklist = BlackList()
     queue = QueuePkgs()
-
     if len(args) == 0:
         usage()
     elif (len(args) == 1 and args[0] == "-h" or
@@ -92,35 +105,35 @@ def main():
             PackageManager(None).list(args[1])
         else:
             usage()
-    elif len(args) == 3 and args[0] == "-c":
-        if args[1] == repository[0] and args[2] == "--upgrade":
-            SBoCheck().start()
-        elif args[1] == repository[1] and args[2] == "--upgrade":
-            version = "stable"
-            Patches(version).start()
-        elif args[1] == repository[2] and args[2] == "--upgrade":
-            OthersUpgrade(repository[2], "").start()
-        elif args[1] == repository[3] and args[2] == "--upgrade":
-            OthersUpgrade(repository[3], "").start()
-        elif args[1] == repository[4] and args[2] == "--upgrade":
-            OthersUpgrade(repository[4], "").start()
+    elif len(args) == 3 and args[0] == "-c" and args[2] == "--upgrade":
+        pkg = Case("")
+        upgrade = {
+            "sbo": pkg.sbo_upgrade,
+            "slack": pkg.slack_upgrade,
+            "rlw": pkg.rlw_upgrade,
+            "alien": pkg.alien_upgrade,
+            "slacky": pkg.slacky_upgrade
+        }
+        if args[1] in repository:
+            upgrade[args[1]]()
         else:
             usage()
-    elif len(args) == 4 and args[0] == "-c":
-        if args[1] == repository[1] and args[3] == "--current":
+    elif len(args) == 4 and args[0] == "-c" and args[3] == "--current":
+        if args[1] == repository[1]:
             Patches("current").start()
-        elif args[1] == repository[3] and args[3] == "--current":
+        elif args[1] == repository[3]:
             OthersUpgrade(repository[3], "current").start()
         else:
             usage()
     elif len(args) == 3 and args[0] == "-s":
+        pkg = Case(args[2])
         if args[1] in repository:
             install = {
-                "sbo": case(args[2]).sboinstall,
-                "slack": case(args[2]).slackinstall,
-                "rlw": case(args[2]).rlwinstall,
-                "alien": case(args[2]).alieninstall,
-                "slacky": case(args[2]).slackyinstall
+                "sbo": pkg.sbo_install,
+                "slack": pkg.slack_install,
+                "rlw": pkg.rlw_install,
+                "alien": pkg.alien_install,
+                "slacky": pkg.slacky_install
             }
             install[args[1]]()
         else:
