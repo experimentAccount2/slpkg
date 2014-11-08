@@ -59,6 +59,13 @@ class case(object):
     def rlwinstall(self):
         OthersInstall(self.package, "rlw", "").start()
 
+    def alieninstall(self):
+        OthersInstall(self.package, "alien", "").start()
+
+    def slackyinstall(self):
+        OthersInstall(self.package, "slacky", "").start()
+
+
 
 def main():
     # root privileges required
@@ -107,25 +114,17 @@ def main():
         else:
             usage()
     elif len(args) == 3 and args[0] == "-s":
-        install = {
-            "sbo": case(args[2]).sboinstall,
-            "slack": case(args[2]).slackinstall,
-            "rlw": case(args[2]).rlwinstall
-        }
-        install[args[1]]()
-
-        '''if args[1] == repository[0]:
-            SBoInstall(args[2]).start()
-        elif args[1] == repository[1]:
-            Slack(args[2], "stable").start()
-        elif args[1] == repository[2]:
-            OthersInstall(args[2], repository[2], "").start()
-        elif args[1] == repository[3]:
-            OthersInstall(args[2], repository[3], "").start()
-        elif args[1] == repository[4]:
-            OthersInstall(args[2], repository[4], "").start()
+        if args[1] in repository:
+            install = {
+                "sbo": case(args[2]).sboinstall,
+                "slack": case(args[2]).slackinstall,
+                "rlw": case(args[2]).rlwinstall,
+                "alien": case(args[2]).alieninstall,
+                "slacky": case(args[2]).slackyinstall
+            }
+            install[args[1]]()
         else:
-            usage()'''
+            usage()
     elif len(args) == 4 and args[0] == "-s":
         if args[1] == repository[1] and args[3] == "--current":
             Slack(args[2], "current").start()
