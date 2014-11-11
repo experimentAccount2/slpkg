@@ -41,9 +41,9 @@ def track_dep(name):
     if allready installed and color red
     if not installed.
     '''
+    Initialization().sbo()
     sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
     sys.stdout.flush()
-    Initialization().sbo()
     dependencies_list = sbo_dependencies_pkg(name)
     sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
     if sbo_search_pkg(name):

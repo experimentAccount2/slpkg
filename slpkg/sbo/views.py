@@ -46,9 +46,9 @@ class SBoNetwork(object):
 
     def __init__(self, name):
         self.name = name
+        Initialization().sbo()
         sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
         sys.stdout.flush()
-        Initialization().sbo()
         grep = SBoGrep(self.name)
         self.sbo_url = sbo_search_pkg(self.name)
         self.sbo_desc = grep.description()[len(self.name) + 2:-1]

@@ -33,7 +33,7 @@ def options():
         "  -h, --help                                show this help message " +
         "and exit",
         "  -v, --version                             print version and exit",
-        "  -a, script [source...]                    auto build packages",
+        "  -a, script.tar.gz [source...]             auto build SBo packages",
         "  -b, --list, [package...] --add, --remove  add, remove packages in " +
         "blacklist",
         "  -q, --list, [package...] --add, --remove  add, remove packages in " +
@@ -42,9 +42,11 @@ def options():
         "queue",
         "  -l, <repository>, all, noarch             list of installed " +
         "packages",
-        "  -c, <repository> --upgrade --current      check for updated " +
+        "  -c, <repository> --upgrade                check for updated " +
         "packages",
-        "  -s, <repository> <package> --current      download, build & install",
+        "  -s, <repository> <package>                download, build & install",
+        "  -p, <repository> <package> --color=       print package description",
+        "      red, green, yellow, cyan, grey        colors support",
         "  -f, <package>                             find installed packages",
         "  -t, <package>                             tracking dependencies " +
         "from SBo",
@@ -56,8 +58,8 @@ def options():
         "  -d, [package...]                          display the contents\n",
         "Note: '-q' options is working only for SBo repository\n",
         "Repositories:",
-        "      Slackware = slack '--current'",
-        "      Alien = alien '--current'",
+        "      Slackware = slack",
+        "      Alien = alien",
         "      SlackBuilds = sbo",
         "      Slacky = slacky",
         "      Robby's = rlw\n"
@@ -69,13 +71,14 @@ def options():
 def usage():
     view = [
         "slpkg - version {0}\n".format(__version__),
-        "Usage: slpkg [-h] [-v] [-a script [sources...]]",
+        "Usage: slpkg [-h] [-v] [-a script.tar.gz [sources...]]",
         "             [-b --list, [...] --add, --remove]",
         "             [-q --list, [...] --add, --remove]",
         "             [-q --build, --install, --build-install]",
         "             [-l <repository>, all, noarch]",
-        "             [-c <repository> --upgrade --current]",
-        "             [-s <repository> <package> --current]",
+        "             [-c <repository> --upgrade]",
+        "             [-s <repository> <package>]",
+        "             [-p <repository> <package>]",
         "             [-f] [-t] [-n] [-i [...]] [-u  [...]]",
         "             [-o  [...]] [-r [...]] [-d [...]]\n",
         "For more information try 'slpkg --help'\n"

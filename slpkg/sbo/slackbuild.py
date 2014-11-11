@@ -49,9 +49,9 @@ class SBoInstall(object):
 
     def __init__(self, name):
         self.name = name
+        Initialization().sbo()
         sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
         sys.stdout.flush()
-        Initialization().sbo()
         self.UNST = ["UNSUPPORTED", "UNTESTED"]
         self.dependencies_list = sbo_dependencies_pkg(name)
 

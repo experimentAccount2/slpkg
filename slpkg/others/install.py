@@ -104,7 +104,7 @@ class OthersInstall(object):
             (dwn_links, install_all, comp_sum, uncomp_sum,
                 matching) = self.store(dependencies)
             sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
-            print   # new line at start
+            print("")   # new line at start
             if install_all:
                 template(78)
                 print("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
@@ -153,7 +153,7 @@ class OthersInstall(object):
             else:
                 pkg_not_found("", self.package, "No matching", "\n")
         except KeyboardInterrupt:
-            print   # new line at exit
+            print("")   # new line at exit
             sys.exit()
 
     def store(self, deps):

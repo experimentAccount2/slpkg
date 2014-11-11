@@ -25,11 +25,11 @@ import os
 import sys
 
 from sizes import units
-from url_read import URL
 from blacklist import BlackList
 from splitting import split_package
 from messages import pkg_not_found, template
-from __metadata__ import slpkg_tmp, pkg_path
+from __metadata__ import slpkg_tmp, pkg_path, lib_path
+from init import Initialization
 from colors import RED, GREEN, CYAN, YELLOW, GREY, ENDC
 
 from pkg.find import find_package
@@ -47,19 +47,20 @@ class Slack(object):
         self.slack_pkg = slack_pkg
         self.version = version
         self.tmp_path = slpkg_tmp + "packages/"
+        Initialization().slack()
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
               CYAN, self.slack_pkg, ENDC))
         sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
         sys.stdout.flush()
+        Initialization().slack()
         if not os.path.exists(slpkg_tmp):
             os.mkdir(slpkg_tmp)
         if not os.path.exists(self.tmp_path):
             os.mkdir(self.tmp_path)
-        PACKAGES = URL(mirrors("PACKAGES.TXT", "", self.version)).reading()
-        EXTRA = URL(mirrors("PACKAGES.TXT", "extra/", self.version)).reading()
-        PASTURE = URL(mirrors("PACKAGES.TXT", "pasture/",
-                              self.version)).reading()
-        self.PACKAGES_TXT = PACKAGES + EXTRA + PASTURE
+        lib = lib_path + "slack_repo/PACKAGES.TXT"
+        f = open(lib, "r")
+        self.PACKAGES_TXT = f.read()
+        f.close()
 
     def start(self):
         '''

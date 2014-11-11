@@ -24,12 +24,14 @@
 import sys
 import getpass
 
+from desc import PkgDesc
 from queue import QueuePkgs
 from messages import s_user
-from __metadata__ import path
 from blacklist import BlackList
 from version import prog_version
 from arguments import options, usage
+from slackware_release import slack_rel
+from __metadata__ import path, repositories
 
 from pkg.build import BuildPackage
 from pkg.manager import PackageManager
@@ -49,44 +51,45 @@ class Case(object):
 
     def __init__(self, package):
         self.package = package
+        self.release = slack_rel()
 
     def sbo_install(self):
         SBoInstall(self.package).start()
 
     def slack_install(self):
-        Slack(self.package, "stable").start()
+        Slack(self.package, self.release).start()
 
     def rlw_install(self):
-        OthersInstall(self.package, "rlw", "").start()
+        OthersInstall(self.package, "rlw", self.release).start()
 
     def alien_install(self):
-        OthersInstall(self.package, "alien", "").start()
+        OthersInstall(self.package, "alien", self.release).start()
 
     def slacky_install(self):
-        OthersInstall(self.package, "slacky", "").start()
+        OthersInstall(self.package, "slacky", self.release).start()
 
     def sbo_upgrade(self):
         SBoCheck().start()
 
     def slack_upgrade(self):
-        Patches("stable").start()
+        Patches(self.release).start()
 
     def rlw_upgrade(self):
-        OthersUpgrade("rlw", "").start()
+        OthersUpgrade("rlw", self.release).start()
 
     def alien_upgrade(self):
-        OthersUpgrade("alien", "").start()
+        OthersUpgrade("alien", self.release).start()
 
     def slacky_upgrade(self):
-        OthersUpgrade("slacky", "").start()
+        OthersUpgrade("slacky", self.release).start()
 
 
 def main():
-    # root privileges required
+
+    # repositories = ["sbo", "slack", "rlw", "alien", "slacky"]
     s_user(getpass.getuser())
     args = sys.argv
     args.pop(0)
-    repository = ["sbo", "slack", "rlw", "alien", "slacky"]
     blacklist = BlackList()
     queue = QueuePkgs()
     if len(args) == 0:
@@ -100,7 +103,7 @@ def main():
     elif len(args) == 3 and args[0] == "-a":
         BuildPackage(args[1], args[2:], path).build()
     elif len(args) == 2 and args[0] == "-l":
-        pkg_list = ["all", "noarch"] + repository
+        pkg_list = ["all", "noarch"] + repositories
         if args[1] in pkg_list:
             PackageManager(None).list(args[1])
         else:
@@ -114,20 +117,13 @@ def main():
             "alien": pkg.alien_upgrade,
             "slacky": pkg.slacky_upgrade
         }
-        if args[1] in repository:
+        if args[1] in repositories:
             upgrade[args[1]]()
-        else:
-            usage()
-    elif len(args) == 4 and args[0] == "-c" and args[3] == "--current":
-        if args[1] == repository[1]:
-            Patches("current").start()
-        elif args[1] == repository[3]:
-            OthersUpgrade(repository[3], "current").start()
         else:
             usage()
     elif len(args) == 3 and args[0] == "-s":
         pkg = Case(args[2])
-        if args[1] in repository:
+        if args[1] in repositories:
             install = {
                 "sbo": pkg.sbo_install,
                 "slack": pkg.slack_install,
@@ -136,13 +132,6 @@ def main():
                 "slacky": pkg.slacky_install
             }
             install[args[1]]()
-        else:
-            usage()
-    elif len(args) == 4 and args[0] == "-s":
-        if args[1] == repository[1] and args[3] == "--current":
-            Slack(args[2], "current").start()
-        elif args[1] == repository[3] and args[3] == "--current":
-            OthersInstall(args[2], repository[3], "current").start()
         else:
             usage()
     elif len(args) == 2 and args[0] == "-t":
@@ -178,6 +167,15 @@ def main():
         PackageManager(args[1:]).remove()
     elif len(args) > 1 and args[0] == "-f":
         PackageManager(args[1:]).find()
+    elif len(args) == 3 and args[0] == "-p":
+        PkgDesc(args[2], args[1], "").view()
+    elif len(args) == 4 and args[0] == "-p" and args[3].startswith("--color="):
+        colors = ['red', 'green', 'yellow', 'cyan', 'grey']
+        tag = args[3][len("--color="):]
+        if args[1] in repositories and tag in colors:
+            PkgDesc(args[2], args[1], tag).view()
+        else:
+            usage()
     elif len(args) > 1 and args[0] == "-d":
         PackageManager(args[1:]).display()
     else:

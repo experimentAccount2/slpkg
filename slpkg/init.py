@@ -29,6 +29,7 @@ from repositories import Repo
 from file_size import FileSize
 from __metadata__ import log_path, lib_path
 
+from slack.mirrors import mirrors
 from slack.slack_version import slack_ver
 
 
@@ -39,6 +40,60 @@ class Initialization(object):
             os.mkdir(log_path)
         if not os.path.exists(lib_path):
             os.mkdir(lib_path)
+        self.release()
+        self.is_release()
+
+    def release(self):
+        '''
+        Create file with Slackware version 'stable' or 'current'
+        '''
+        if (not os.path.isfile(log_path + "slackware-release") or
+                FileSize(log_path + "slackware-release").local() == 0):
+            with open(log_path + "slackware-release", "w") as f:
+                release = raw_input("Please type Slackware version "
+                                    "(default=stable) [stable/current]: ")
+                if release in ["stable", "current"]:
+                    print("Selected version '{0}'".format(release))
+                    f.write(release)
+                else:
+                    print("Selected the default version 'stable'")
+                    f.write("stable")
+                f.close()
+
+    def is_release(self):
+        '''
+        Check if file 'slackware-release' states correct version
+        '''
+        if os.path.isfile(log_path + "slackware-release"):
+            with open(log_path + "slackware-release", "r") as f:
+                release = f.read()
+                f.close()
+            if release not in ["stable", "current"]:
+                os.remove(log_path + "slackware-release")
+                self.release()
+        return release
+
+    def slack(self):
+        '''
+        Creating slack local libraries
+        '''
+        log = log_path + "slack/"
+        lib = lib_path + "slack_repo/"
+        lib_file = "PACKAGES.TXT"
+        log_file = "ChangeLog.txt"
+        version = self.is_release()
+        if not os.path.exists(log):
+            os.mkdir(log)
+        if not os.path.exists(lib):
+            os.mkdir(lib)
+        packages = mirrors(lib_file, "", version)
+        extra = mirrors(lib_file, "extra/", version)
+        pasture = mirrors(lib_file, "pasture/", version)
+        packages_txt = ("{0} {1} {2}".format(packages, extra, pasture))
+        changelog_txt = mirrors(log_file, "", version)
+        self.write(lib, lib_file, packages_txt)
+        self.write(log, log_file, changelog_txt)
+        self.remote(log, log_file, changelog_txt, lib, lib_file, packages)
 
     def sbo(self):
         '''
@@ -127,11 +182,13 @@ class Initialization(object):
         '''
         Write files in /var/lib/slpkg/?_repo directory
         '''
+        PACKAGES_TXT = ""
         if not os.path.isfile(path + files):
             print("\nslpkg ...initialization")
             sys.stdout.write(files + " read ...")
             sys.stdout.flush()
-            PACKAGES_TXT = URL(file_url).reading()
+            for fu in file_url.split():
+                PACKAGES_TXT += URL(fu).reading()
             sys.stdout.write("Done\n")
             with open("{0}{1}".format(path, files), "w") as f:
                 f.write(PACKAGES_TXT)

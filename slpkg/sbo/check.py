@@ -46,9 +46,9 @@ class SBoCheck(object):
 
     def __init__(self):
         self.done = "{0}Done{1}\n".format(GREY, ENDC)
+        Initialization().sbo()
         sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
         sys.stdout.flush()
-        Initialization().sbo()
         self.installed = []
         self.index, self.toolbar_width = 0, 3
 
