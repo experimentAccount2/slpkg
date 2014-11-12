@@ -107,17 +107,41 @@ def repo_requires(name, repo):
     '''
     Grap package requirements from alien repository
     '''
-    lib = {
-        'alien': lib_path + "alien_repo/PACKAGES.TXT",
-        'slacky': lib_path + "slacky_repo/PACKAGES.TXT"
-    }
-    f = open(lib[repo], "r")
-    PACKAGES_TXT = f.read()
-    f.close()
-    for line in PACKAGES_TXT.splitlines():
-        if line.startswith("PACKAGE NAME: "):
-            pkg = line[14:].strip()
-            pkg_name = split_package(pkg)[0]
-        if line.startswith("PACKAGE REQUIRED: "):
-            if pkg_name == name:
-                return line[18:].strip().split(",")
+    slacky_deps = []
+    if repo in ["alien", "slacky"]:
+        lib = {
+            'alien': lib_path + "alien_repo/PACKAGES.TXT",
+            'slacky': lib_path + "slacky_repo/PACKAGES.TXT"
+        }
+        f = open(lib[repo], "r")
+        PACKAGES_TXT = f.read()
+        f.close()
+        for line in PACKAGES_TXT.splitlines():
+            if line.startswith("PACKAGE NAME: "):
+                pkg = line[14:].strip()
+                pkg_name = split_package(pkg)[0]
+            if line.startswith("PACKAGE REQUIRED: "):
+                if pkg_name == name:
+                    if repo == "slacky":
+                        for dep in line[18:].strip().split(","):
+                            slacky_deps.append(dep.split()[0])
+                        return slacky_deps
+                    else:
+                        return line[18:].strip().split(",")
+    elif repo == "rlw":
+        '''
+        Robby's repository dependencies as shown in the central page
+        http://rlworkman.net/pkgs/
+        '''
+        dependencies = {
+            "abiword": "wv",
+            "claws-mail": "libetpan bogofilter html2ps",
+            "inkscape": "gtkmm atkmm pangomm cairomm mm-common libsigc++ "
+                        "libwpg lxml gsl numpy BeautifulSoup",
+            "texlive": "libsigsegv texi2html",
+            "xfburn": "libburn libisofs"
+        }
+        if name in dependencies.keys():
+            return dependencies[name].split()
+        else:
+            return ""

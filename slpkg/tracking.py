@@ -30,11 +30,14 @@ from colors import RED, GREEN, GREY, YELLOW, CYAN, ENDC
 
 from pkg.find import find_package
 
-from search import sbo_search_pkg
-from dependency import sbo_dependencies_pkg
+from sbo.search import sbo_search_pkg
+from sbo.dependency import sbo_dependencies_pkg
+
+from others.dependency import dependencies_pkg
+from others.search import search_pkg
 
 
-def track_dep(name):
+def track_dep(name, repo):
     '''
     View tree of dependencies and also
     highlight packages with color green
@@ -44,9 +47,14 @@ def track_dep(name):
     Initialization().sbo()
     sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
     sys.stdout.flush()
-    dependencies_list = sbo_dependencies_pkg(name)
+    if repo == "sbo":
+        dependencies_list = sbo_dependencies_pkg(name)
+        find_pkg = sbo_search_pkg(name)
+    else:
+        find_pkg = search_pkg(name, repo)
+        dependencies_list = dependencies_pkg(name, repo)
     sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
-    if sbo_search_pkg(name):
+    if find_pkg:
         requires, dependencies = [], []
         # Create one list for all packages
         for pkg in dependencies_list:

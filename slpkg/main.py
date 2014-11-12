@@ -27,6 +27,7 @@ import getpass
 from desc import PkgDesc
 from queue import QueuePkgs
 from messages import s_user
+from tracking import track_dep
 from blacklist import BlackList
 from version import prog_version
 from arguments import options, usage
@@ -38,7 +39,6 @@ from pkg.manager import PackageManager
 
 from sbo.check import SBoCheck
 from sbo.views import SBoNetwork
-from sbo.tracking import track_dep
 from sbo.slackbuild import SBoInstall
 
 from slack.install import Slack
@@ -134,8 +134,9 @@ def main():
             install[args[1]]()
         else:
             usage()
-    elif len(args) == 2 and args[0] == "-t":
-        track_dep(args[1])
+    elif len(args) == 3 and args[0] == "-t" and args[1] in ["sbo", "alien",
+                                                            "rlw", "slacky"]:
+        track_dep(args[2], args[1])
     elif len(args) == 2 and args[0] == "-n":
         SBoNetwork(args[1]).view()
     elif len(args) == 2 and args[0] == "-b" and args[1] == "--list":

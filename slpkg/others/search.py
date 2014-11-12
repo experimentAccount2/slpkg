@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# dependency.py file is part of slpkg.
+# search.py file is part of slpkg.
 
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
@@ -23,36 +23,30 @@
 
 import sys
 
-from toolbar import status
 from blacklist import BlackList
-
-from greps import SBoGrep
-
-dep_results = []
+from __metadata__ import lib_path
+from splitting import split_package
 
 
-def sbo_dependencies_pkg(name):
+def search_pkg(name, repo):
     '''
-    Build all dependencies of a package
+    Search if package exists in PACKAGES.TXT file
+    and return the name.
     '''
     try:
-        dependencies = []
         blacklist = BlackList().packages()
-        requires = SBoGrep(name).requires()
-        toolbar_width, index = 2, 0
-        if requires:
-            for req in requires:
-                index += 1
-                toolbar_width = status(index, toolbar_width, 1)
-                # avoid to add %README% as dependency and
-                # if require in blacklist
-                if "%README%" not in req and req not in blacklist:
-                    dependencies.append(req)
-            if dependencies:
-                dep_results.append(dependencies)
-                for dep in dependencies:
-                    sbo_dependencies_pkg(dep)
-        return dep_results
+        repo_dir = {
+            "rlw": "rlw_repo/PACKAGES.TXT",
+            "alien": "alien_repo/PACKAGES.TXT",
+            "slacky": "slacky_repo/PACKAGES.TXT"
+        }
+        with open(lib_path + repo_dir[repo], "r") as PACKAGES_TXT:
+            for line in PACKAGES_TXT:
+                if line.startswith("PACKAGE NAME:  "):
+                    pkg_name = split_package(line[15:])[0].strip()
+                    if name == pkg_name and name not in blacklist:
+                        PACKAGES_TXT.close()
+                        return pkg_name
     except KeyboardInterrupt:
-        print("")   # new line at exit
+        print   # new line at exit
         sys.exit()

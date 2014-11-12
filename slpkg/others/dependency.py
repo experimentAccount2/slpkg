@@ -23,7 +23,7 @@
 
 import sys
 
-from colors import GREY, ENDC
+from toolbar import status
 
 from greps import repo_requires
 
@@ -37,17 +37,18 @@ def dependencies_pkg(name, repo):
     try:
         dependencies = []
         requires = repo_requires(name, repo)
+        toolbar_width, index = 2, 0
         if requires:
             for req in requires:
+                index += 1
+                toolbar_width = status(index, toolbar_width, 1)
                 if req:
                     dependencies.append(req)
             if dependencies:
                 dep_results.append(dependencies)
                 for dep in dependencies:
-                    sys.stdout.write("{0}.{1}".format(GREY, ENDC))
-                    sys.stdout.flush()
                     dependencies_pkg(dep, repo)
         return dep_results
     except KeyboardInterrupt:
-        print   # new line at exit
+        print("")   # new line at exit
         sys.exit()

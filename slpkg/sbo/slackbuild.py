@@ -64,12 +64,12 @@ class SBoInstall(object):
         try:
             if self.dependencies_list or sbo_search_pkg(self.name) is not None:
                 dependencies = self.remove_dbs()
+                sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
                 # sbo versions = idata[0]
                 # package arch = idata[1]
                 # package sum = idata[2]
                 # sources = idata[3]
                 idata = installing_data(dependencies, self.UNST)
-                sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
                 # count upgraded = cnt[0]
                 # count installed = cnt[1]
                 (PKG_COLOR, count) = pkg_colors_tag(self.name, idata[0], 0, 0)
@@ -176,7 +176,12 @@ def installing_data(dependencies, support):
     '''
     package_sum = 0
     sbo_versions, package_arch = [], []
+    sys.stdout.write("{0}Resolving dependencies ...{1}".format(GREY, ENDC))
+    sys.stdout.flush()
+    toolbar_width, index = 2, 0
     for pkg in dependencies:
+        index += 1
+        toolbar_width = status(index, toolbar_width, 1)
         version = SBoGrep(pkg).version()
         sbo_versions.append(version)
         sources = SBoGrep(pkg).source()
@@ -184,6 +189,7 @@ def installing_data(dependencies, support):
         sbo_package = ("{0}-{1}".format(pkg, version))
         if find_package(sbo_package, pkg_path):
             package_sum += 1
+    sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
     return [sbo_versions, package_arch, package_sum, sources]
 
 

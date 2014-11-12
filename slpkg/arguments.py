@@ -45,11 +45,10 @@ def options():
         "  -c, <repository> --upgrade                check for updated " +
         "packages",
         "  -s, <repository> <package>                download, build & install",
+        "  -t, <repository> <package>                tracking dependencies",
         "  -p, <repository> <package> --color=       print package description",
         "      red, green, yellow, cyan, grey        colors support",
         "  -f, <package>                             find installed packages",
-        "  -t, <package>                             tracking dependencies " +
-        "from SBo",
         "  -n, <package>                             view packages from SBo",
         "  -i, [package...]                          install binary packages",
         "  -u, [package...]                          upgrade binary packages",
@@ -74,12 +73,14 @@ def usage():
         "Usage: slpkg [-h] [-v] [-a script.tar.gz [sources...]]",
         "             [-b --list, [...] --add, --remove]",
         "             [-q --list, [...] --add, --remove]",
-        "             [-q --build, --install, --build-install]",
+        "             [   --build, --install, --build-install]",
         "             [-l <repository>, all, noarch]",
         "             [-c <repository> --upgrade]",
         "             [-s <repository> <package>]",
-        "             [-p <repository> <package>]",
-        "             [-f] [-t] [-n] [-i [...]] [-u  [...]]",
+        "             [-t <repository> <package>]",
+        "             [-p <repository> <package> --color=]",
+        "             [   red, green, yellow, cyan, grey]",
+        "             [-f] [-n] [-i [...]] [-u [...]]",
         "             [-o  [...]] [-r [...]] [-d [...]]\n",
         "For more information try 'slpkg --help'\n"
     ]

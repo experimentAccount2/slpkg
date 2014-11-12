@@ -172,7 +172,7 @@ class OthersInstall(object):
             for pkg in deps:
                 for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
                                                    data[3]):
-                    if name.startswith(pkg) and pkg not in black:
+                    if name.startswith(pkg + "-") and pkg not in black:
                         # store downloads packages by repo
                         dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
                         install.append(name)
@@ -182,7 +182,7 @@ class OthersInstall(object):
             for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
                                                data[3]):
                 package = "".join(deps)
-                if package in name and package not in BlackList().packages():
+                if package in name and package not in black:
                     # store downloads packages by repo
                     dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
                     install.append(name)
@@ -263,77 +263,24 @@ def install(tmp_path, install_all):
             PackageManager(package).upgrade()
 
 
-def repo_deps(name, repo):
+def resolving_deps(name, repo):
     '''
     Return package dependencies
     '''
-    deps = dependencies_pkg(name, repo)
     requires, dependencies = [], []
+    sys.stdout.write("{0}Resolving dependencies ...{1}".format(GREY, ENDC))
+    sys.stdout.flush()
+    deps = dependencies_pkg(name, repo)
     requires.append(name)
     # Create one list for all packages
     for pkg in deps:
         requires += pkg
-    if repo == "slacky":
-        requires = slacky_req_check(name, requires)
     requires.reverse()
     # Remove double dependencies
     for duplicate in requires:
         if duplicate not in dependencies:
             dependencies.append(duplicate)
     return dependencies
-
-
-def rlw_deps(name):
-    '''
-    Robby's repository dependencies as shown in the central page
-    http://rlworkman.net/pkgs/
-    '''
-    dependencies = {
-        "abiword": "wv",
-        "claws-mail": "libetpan bogofilter html2ps",
-        "inkscape": "gtkmm atkmm pangomm cairomm mm-common libsigc++ libwpg" +
-                    "lxml gsl numpy BeautifulSoup",
-        "texlive": "libsigsegv texi2html",
-        "xfburn": "libburn libisofs"
-    }
-    if name in dependencies.keys():
-        return dependencies[name]
-    else:
-        return ""
-
-
-def resolving_deps(name, repo):
-    '''
-    Return dependencies for one package from
-    alien repository
-    '''
-    dependencies = []
-    sys.stdout.write("{0}Resolving dependencies ...{1}".format(GREY, ENDC))
-    sys.stdout.flush()
-    if repo == "alien" or repo == "slacky":
-        dependencies = repo_deps(name, repo)
-    elif repo == "rlw":
-        dependencies = rlw_deps(name).split()
-        dependencies.append(name)
-    return dependencies
-
-
-def slacky_req_check(name, requires):
-    '''
-    Checks if the requirement is installed or if it is
-    smaller version
-    '''
-    new = []
-    for req in requires[1:]:
-        split_req = req.split()     # split requirements
-        req_name = split_req[0]     # store name
-        installed = find_package(req_name + "-", pkg_path)
-        if not installed:
-            new.append(req_name)
-    requires = []
-    requires.append(name)
-    requires += new
-    return requires
 
 
 def write_deps(dependencies):
