@@ -28,7 +28,7 @@ from sizes import units
 from blacklist import BlackList
 from splitting import split_package
 from messages import pkg_not_found, template
-from __metadata__ import slpkg_tmp, pkg_path, lib_path
+from __metadata__ import pkg_path, lib_path, slpkg_tmp_packages
 from init import Initialization
 from colors import RED, GREEN, CYAN, YELLOW, GREY, ENDC
 
@@ -46,17 +46,13 @@ class Slack(object):
     def __init__(self, slack_pkg, version):
         self.slack_pkg = slack_pkg
         self.version = version
-        self.tmp_path = slpkg_tmp + "packages/"
+        self.tmp_path = slpkg_tmp_packages
         Initialization().slack()
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
               CYAN, self.slack_pkg, ENDC))
         sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
         sys.stdout.flush()
         Initialization().slack()
-        if not os.path.exists(slpkg_tmp):
-            os.mkdir(slpkg_tmp)
-        if not os.path.exists(self.tmp_path):
-            os.mkdir(self.tmp_path)
         lib = lib_path + "slack_repo/PACKAGES.TXT"
         f = open(lib, "r")
         self.PACKAGES_TXT = f.read()

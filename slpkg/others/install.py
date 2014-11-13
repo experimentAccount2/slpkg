@@ -31,7 +31,8 @@ from blacklist import BlackList
 from splitting import split_package
 from messages import pkg_not_found, template
 from colors import RED, GREEN, CYAN, YELLOW, GREY, ENDC
-from __metadata__ import slpkg_tmp, pkg_path, lib_path, log_path
+from __metadata__ import (pkg_path, lib_path, log_path,
+                          slpkg_tmp_packages)
 
 
 from pkg.find import find_package
@@ -51,7 +52,7 @@ class OthersInstall(object):
         self.package = package
         self.repo = repo
         self.version = version
-        self.tmp_path = slpkg_tmp + "packages/"
+        self.tmp_path = slpkg_tmp_packages
         self.repo_init()
         repos = Repo()
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
@@ -84,10 +85,6 @@ class OthersInstall(object):
         '''
         Initialization repository if only use
         '''
-        if not os.path.exists(slpkg_tmp):
-            os.mkdir(slpkg_tmp)
-        if not os.path.exists(self.tmp_path):
-            os.mkdir(self.tmp_path)
         repository = {
             "rlw": Initialization().rlw,
             "alien": Initialization().alien,
@@ -167,6 +164,7 @@ class OthersInstall(object):
         # location = data[1]
         # size = data[2]
         # unsize = data[3]
+        print deps
         data = repo_data(self.PACKAGES_TXT, self.step, self.repo, self.version)
         if len(deps) > 1:
             for pkg in deps:

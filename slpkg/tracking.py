@@ -33,8 +33,8 @@ from pkg.find import find_package
 from sbo.search import sbo_search_pkg
 from sbo.dependency import sbo_dependencies_pkg
 
-from others.dependency import dependencies_pkg
 from others.search import search_pkg
+from others.dependency import dependencies_pkg
 
 
 def track_dep(name, repo):
@@ -51,8 +51,8 @@ def track_dep(name, repo):
         dependencies_list = sbo_dependencies_pkg(name)
         find_pkg = sbo_search_pkg(name)
     else:
-        find_pkg = search_pkg(name, repo)
         dependencies_list = dependencies_pkg(name, repo)
+        find_pkg = search_pkg(name, repo)
     sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
     if find_pkg:
         requires, dependencies = [], []
@@ -67,7 +67,7 @@ def track_dep(name, repo):
         if dependencies == []:
             dependencies = ["No dependencies"]
         pkg_len = len(name) + 24
-        print    # new line at start
+        print("")    # new line at start
         template(pkg_len)
         print("| Package {0}{1}{2} dependencies :".format(CYAN, name, ENDC))
         template(pkg_len)
@@ -83,6 +83,6 @@ def track_dep(name, repo):
             else:
                 print(" |")
                 print(" {0}{1}: {2}{3}{4}".format("+--", index, RED, pkg, ENDC))
-        print    # new line at end
+        print("")    # new line at end
     else:
         print("\nNo package was found to match\n")

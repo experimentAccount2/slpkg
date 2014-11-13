@@ -31,8 +31,8 @@ from blacklist import BlackList
 from init import Initialization
 from splitting import split_package
 from colors import YELLOW, GREY, ENDC
-from __metadata__ import slpkg_tmp, pkg_path, lib_path
-
+from __metadata__ import (pkg_path, lib_path,
+                          slpkg_tmp_packages)
 
 from pkg.manager import PackageManager
 
@@ -48,7 +48,7 @@ class OthersUpgrade(object):
     def __init__(self, repo, version):
         self.repo = repo
         self.version = version
-        self.tmp_path = slpkg_tmp + "packages/"
+        self.tmp_path = slpkg_tmp_packages
         self.repo_init()
         repos = Repo()
         sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
@@ -78,10 +78,6 @@ class OthersUpgrade(object):
         '''
         Initialization repository if only use
         '''
-        if not os.path.exists(slpkg_tmp):
-            os.mkdir(slpkg_tmp)
-        if not os.path.exists(self.tmp_path):
-            os.mkdir(self.tmp_path)
         repository = {
             'rlw': Initialization().rlw,
             'alien': Initialization().alien,

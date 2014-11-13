@@ -188,8 +188,6 @@ class SBoNetwork(object):
         if FAULT:
             print("\n{0}The package {1} {2}\n".format(RED, FAULT, ENDC))
             sys.exit()
-        if not os.path.exists(build_path):
-            os.mkdir(build_path)
         sources = []
         os.chdir(build_path)
         Download(build_path, self.sbo_dwn).start()

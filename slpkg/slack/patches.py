@@ -31,7 +31,7 @@ from messages import template
 from blacklist import BlackList
 from splitting import split_package
 from colors import GREY, YELLOW, ENDC
-from __metadata__ import pkg_path, slpkg_tmp
+from __metadata__ import pkg_path, slpkg_tmp_patches
 
 from pkg.manager import PackageManager
 
@@ -46,13 +46,9 @@ class Patches(object):
 
     def __init__(self, version):
         self.version = version
-        self.patch_path = slpkg_tmp + "patches/"
+        self.patch_path = slpkg_tmp_patches
         sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
         sys.stdout.flush()
-        if not os.path.exists(slpkg_tmp):
-            os.mkdir(slpkg_tmp)
-        if not os.path.exists(self.patch_path):
-            os.mkdir(self.patch_path)
         if version == "stable":
             self.PACKAGES_TXT = URL(mirrors("PACKAGES.TXT", "patches/",
                                             version)).reading()

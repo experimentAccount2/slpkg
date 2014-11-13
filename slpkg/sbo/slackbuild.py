@@ -283,14 +283,6 @@ def arch_support(source, support, package_sum, dependencies):
     return read
 
 
-def create_build_path():
-    '''
-    Create build directory if not exists
-    '''
-    if not os.path.exists(build_path):
-        os.mkdir(build_path)
-
-
 def dwn_sources(sources):
     '''
     Download sources and return filenames
@@ -321,7 +313,6 @@ def build_install(dependencies, sbo_versions):
     tag 2 or 3 will fit most
     '''
     installs, upgraded, versions = [], [], []
-    create_build_path()
     os.chdir(build_path)
     for pkg, ver in zip(dependencies, sbo_versions):
         prgnam = ("{0}-{1}".format(pkg, ver))

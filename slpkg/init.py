@@ -27,7 +27,8 @@ import sys
 from url_read import URL
 from repositories import Repo
 from file_size import FileSize
-from __metadata__ import log_path, lib_path
+from __metadata__ import (log_path, lib_path, slack_rel,
+                          build_path, slpkg_tmp_packages, slpkg_tmp_patches)
 
 from slack.mirrors import mirrors
 from slack.slack_version import slack_ver
@@ -40,38 +41,12 @@ class Initialization(object):
             os.mkdir(log_path)
         if not os.path.exists(lib_path):
             os.mkdir(lib_path)
-        self.release()
-        self.is_release()
-
-    def release(self):
-        '''
-        Create file with Slackware version 'stable' or 'current'
-        '''
-        if (not os.path.isfile(log_path + "slackware-release") or
-                FileSize(log_path + "slackware-release").local() == 0):
-            with open(log_path + "slackware-release", "w") as f:
-                release = raw_input("Please type Slackware version "
-                                    "(default=stable) [stable/current]: ")
-                if release in ["stable", "current"]:
-                    print("Selected version '{0}'".format(release))
-                    f.write(release)
-                else:
-                    print("Selected the default version 'stable'")
-                    f.write("stable")
-                f.close()
-
-    def is_release(self):
-        '''
-        Check if file 'slackware-release' states correct version
-        '''
-        if os.path.isfile(log_path + "slackware-release"):
-            with open(log_path + "slackware-release", "r") as f:
-                release = f.read()
-                f.close()
-            if release not in ["stable", "current"]:
-                os.remove(log_path + "slackware-release")
-                self.release()
-        return release
+        if not os.path.exists(build_path):
+            os.mkdir(build_path)
+        if not os.path.exists(slpkg_tmp_packages):
+            os.mkdir(slpkg_tmp_packages)
+        if not os.path.exists(slpkg_tmp_patches):
+            os.mkdir(slpkg_tmp_patches)
 
     def slack(self):
         '''
@@ -81,7 +56,7 @@ class Initialization(object):
         lib = lib_path + "slack_repo/"
         lib_file = "PACKAGES.TXT"
         log_file = "ChangeLog.txt"
-        version = self.is_release()
+        version = slack_rel
         if not os.path.exists(log):
             os.mkdir(log)
         if not os.path.exists(lib):

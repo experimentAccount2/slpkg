@@ -31,8 +31,7 @@ from tracking import track_dep
 from blacklist import BlackList
 from version import prog_version
 from arguments import options, usage
-from slackware_release import slack_rel
-from __metadata__ import path, repositories
+from __metadata__ import path, repositories, slack_rel
 
 from pkg.build import BuildPackage
 from pkg.manager import PackageManager
@@ -51,7 +50,7 @@ class Case(object):
 
     def __init__(self, package):
         self.package = package
-        self.release = slack_rel()
+        self.release = slack_rel
 
     def sbo_install(self):
         SBoInstall(self.package).start()

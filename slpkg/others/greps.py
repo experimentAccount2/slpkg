@@ -105,7 +105,7 @@ def alien_filter(name, location, size, unsize, version):
 
 def repo_requires(name, repo):
     '''
-    Grap package requirements from alien repository
+    Grap package requirements from repositories
     '''
     slacky_deps = []
     if repo in ["alien", "slacky"]:
@@ -129,10 +129,8 @@ def repo_requires(name, repo):
                     else:
                         return line[18:].strip().split(",")
     elif repo == "rlw":
-        '''
-        Robby's repository dependencies as shown in the central page
-        http://rlworkman.net/pkgs/
-        '''
+        # Robby's repository dependencies as shown in the central page
+        # http://rlworkman.net/pkgs/
         dependencies = {
             "abiword": "wv",
             "claws-mail": "libetpan bogofilter html2ps",

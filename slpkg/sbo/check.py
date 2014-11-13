@@ -84,7 +84,6 @@ class SBoCheck(object):
                     count, msg = view_packages(data[1], data[2], data[3])
                     read = raw_input("Would you like to upgrade [Y/n]? ")
                     if read in ['y', 'Y']:
-                        create_build_path()
                         os.chdir(build_path)
                         for name, version in zip(data[0], data[2]):
                             prgnam = ("{0}-{1}".format(name, version))
@@ -279,14 +278,6 @@ def view_packages(package_for_upgrade, upgrade_version, upgrade_arch):
           "installed.{5}\n".format(GREY, count_upgraded, msg_upg,
                                    count_installed, msg_ins, ENDC))
     return [count_installed, count_upgraded], [msg_ins, msg_upg]
-
-
-def create_build_path():
-    '''
-    Create build directory if not exists
-    '''
-    if not os.path.exists(build_path):
-        os.mkdir(build_path)
 
 
 def dwn_sources(sources):

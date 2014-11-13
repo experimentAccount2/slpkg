@@ -30,6 +30,43 @@ __version__ = "{0}.{1}.{2}".format(*__version_info__)
 __license__ = "GNU General Public License v3 (GPLv3)"
 __email__ = "d.zlatanidis@gmail.com"
 
+
+f = open("/etc/slpkg/slpkg.conf", "r")
+conf = f.read()
+f.close()
+
+''' temponary path '''
+tmp = "/tmp/"
+
+for line in conf.splitlines():
+    line = line.lstrip()
+    if line.startswith("VERSION"):
+        slack_rel = line[8:].strip()
+    if line.startswith("BUILD"):
+        build_path = line[6:].strip()
+    if line.startswith("PACKAGES"):
+        slpkg_tmp_packages = line[9:].strip()
+    if line.startswith("PATCHES"):
+        slpkg_tmp_patches = line[8:].strip()
+
+if not slack_rel or slack_rel not in ['stable', 'current']:
+    slack_rel = "stable"
+
+if not build_path:
+    build_path = "/tmp/slpkg/build/"
+elif not build_path.endswith("/"):
+    build_path = build_path + "/"
+
+if not slpkg_tmp_packages:
+    slpkg_tmp_packages = tmp + "slpkg/packages/"
+elif not slpkg_tmp_packages.endswith("/"):
+    slpkg_tmp_packages = slpkg_tmp_packages + "/"
+
+if not slpkg_tmp_patches:
+    slpkg_tmp_patches = tmp + "slpkg/patches/"
+elif not slpkg_tmp_patches.endswith("/"):
+    slpkg_tmp_patches = slpkg_tmp_patches + "/"
+
 ''' repositories '''
 repositories = [
     "sbo",
@@ -45,18 +82,11 @@ sp = "-"
 ''' current path '''
 path = os.getcwd() + "/"
 
-''' build path '''
-build_path = path + "slpkg_Build/"
-
 ''' library path '''
 lib_path = "/var/lib/slpkg/"
 
 ''' log path '''
 log_path = "/var/log/slpkg/"
-
-''' temponary path '''
-tmp = "/tmp/"
-slpkg_tmp = tmp + "slpkg/"
 
 ''' packages log files path '''
 pkg_path = "/var/log/packages/"

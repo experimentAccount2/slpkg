@@ -38,8 +38,8 @@ class URL(object):
             f = urllib2.urlopen(self.link)
             return f.read()
         except urllib2.URLError:
-            print ("\nslpkg: error: connection refused\n")
+            print("\nslpkg: error: connection refused\n")
             sys.exit()
         except KeyboardInterrupt:
-            print   # new line at exit
+            print("")   # new line at exit
             sys.exit()
