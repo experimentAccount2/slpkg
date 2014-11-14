@@ -40,6 +40,7 @@ from pkg.build import BuildPackage
 from pkg.manager import PackageManager
 
 from greps import SBoGrep
+from remove import delete
 from compressed import SBoLink
 from search import sbo_search_pkg
 from dependency import sbo_dependencies_pkg
@@ -110,6 +111,7 @@ class SBoInstall(object):
                     reference(count[1], msg[0], count[0], msg[1],
                               b_ins[0], b_ins[2], b_ins[1])
                     write_deps(dependencies)
+                    delete(build_path)
             else:
                 count_installed = count_uninstalled = 0
                 # sbo matching = mdata[0]

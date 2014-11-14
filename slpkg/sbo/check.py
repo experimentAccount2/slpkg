@@ -37,6 +37,7 @@ from colors import RED, GREEN, GREY, YELLOW, ENDC
 from __metadata__ import tmp, pkg_path, build_path, sp
 
 from greps import SBoGrep
+from remove import delete
 from compressed import SBoLink
 from search import sbo_search_pkg
 from dependency import sbo_dependencies_pkg
@@ -115,6 +116,7 @@ class SBoCheck(object):
                             PackageManager(binary).upgrade()
                         reference(data[0], data[1], data[2], count[0], count[1],
                                   msg[0], msg[1], self.installed)
+                        delete(build_path)
                 else:
                     print("\nTotal {0} SBo packages are up to date\n".format(
                         len(self.sbo_list())))

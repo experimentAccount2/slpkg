@@ -21,16 +21,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import os
+import shutil
 
-from __metadata__ import del_all
+from __metadata__ import del_build
 
 
-def delete(path, packages):
+def delete(build_folder):
     '''
-    Remove downloaded packages
+    Delete build directory and all its contents.
     '''
-    if del_all == "on":
-        for pkg in packages:
-            os.remove(path + pkg)
-            os.remove(path + pkg + ".asc")
+    if del_build == "on":
+        shutil.rmtree(build_folder)

@@ -22,6 +22,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+from init import Initialization
 from messages import pkg_not_found
 from colors import RED, GREEN, YELLOW, CYAN, GREY,  ENDC
 from __metadata__ import pkg_path, lib_path, repositories
@@ -37,6 +38,14 @@ class PkgDesc(object):
         self.color = color
         self.COLOR = ""
         self.lib = ""
+        init_repos = {
+            'sbo': Initialization().sbo,
+            'slack': Initialization().slack,
+            'rlw': Initialization().rlw,
+            'alien': Initialization().alien,
+            'slacky': Initialization().slacky
+        }
+        init_repos[self.repo]()
         color_text = {
             'red': RED,
             'green': GREEN,
@@ -48,11 +57,11 @@ class PkgDesc(object):
         self.COLOR = color_text[self.color]
         if self.repo in repositories:
             repos = {
-                "sbo": "sbo_repo/SLACKBUILDS.TXT",
-                "slack": "slack_repo/PACKAGES.TXT",
-                "rlw": "rlw_repo/PACKAGES.TXT",
-                "alien": "alien_repo/PACKAGES.TXT",
-                "slacky": "slacky_repo/PACKAGES.TXT"
+                'sbo': 'sbo_repo/SLACKBUILDS.TXT',
+                'slack': 'slack_repo/PACKAGES.TXT',
+                'rlw': 'rlw_repo/PACKAGES.TXT',
+                'alien': 'alien_repo/PACKAGES.TXT',
+                'slacky': 'slacky_repo/PACKAGES.TXT'
             }
             self.lib = lib_path + repos[self.repo]
 

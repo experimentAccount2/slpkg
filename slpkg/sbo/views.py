@@ -37,6 +37,7 @@ from pkg.build import BuildPackage
 from pkg.manager import PackageManager
 
 from read import Read
+from remove import delete
 from greps import SBoGrep
 from compressed import SBoLink
 from search import sbo_search_pkg
@@ -92,11 +93,13 @@ class SBoNetwork(object):
                     pydoc.pager(SlackBuild + fill)
                 elif choice in ['B', 'b']:
                     self.build(FAULT)
+                    delete(build_path)
                     break
                 elif choice in ['I', 'i']:
                     if not find_package(prgnam + sp, pkg_path):
                         self.build(FAULT)
                         self.install(prgnam)
+                        delete(build_path)
                         break
                     else:
                         template(78)
