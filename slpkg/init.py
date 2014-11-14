@@ -43,6 +43,8 @@ class Initialization(object):
             os.mkdir(log_path)
         if not os.path.exists(lib_path):
             os.mkdir(lib_path)
+        if not os.path.exists("/tmp/slpkg/"):
+            os.mkdir("/tmp/slpkg/")
         if not os.path.exists(build_path):
             os.mkdir(build_path)
         if not os.path.exists(slpkg_tmp_packages):
@@ -70,7 +72,7 @@ class Initialization(object):
         changelog_txt = mirrors(log_file, "", version)
         self.write(lib, lib_file, packages_txt)
         self.write(log, log_file, changelog_txt)
-        self.remote(log, log_file, changelog_txt, lib, lib_file, packages)
+        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt)
 
     def sbo(self):
         '''
@@ -181,6 +183,7 @@ class Initialization(object):
         If the two files differ in size delete and replaced with new.
         We take the size of ChangeLog.txt from the server and locally
         '''
+        PACKAGES_TXT = ""
         server = FileSize(args[2]).server()
         local = FileSize(args[0] + args[1]).local()
         if server != local:
@@ -190,7 +193,8 @@ class Initialization(object):
             print("slpkg ...initialization")
             sys.stdout.write("Files re-created ...")
             sys.stdout.flush()
-            PACKAGES_TXT = URL(args[5]).reading()
+            for fu in args[5].split():
+                PACKAGES_TXT += URL(fu).reading()
             CHANGELOG_TXT = URL(args[2]).reading()
             with open("{0}{1}".format(args[3], args[4]), "w") as f:
                 f.write(PACKAGES_TXT)

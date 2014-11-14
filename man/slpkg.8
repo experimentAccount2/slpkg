@@ -15,14 +15,17 @@
 .SH NAME
 slpkg - Utility for easy management packages in Slackware
 .SH SYNOPSIS
-  \fBUsage: slpkg [-h] [-v] [-a script [sources...]]
+  \fBUsage: slpkg [-h] [-v] [-a script.tar.gz [sources...]]
                   [-b --list, --add, --remove [...]]
                   [-q --list, [...] --add, --remove]
-                  [-q --build, --install, --build-install]
-                  [-l all, sbo, slack, noarch]
-                  [-c <repository> --upgrade --current]
-                  [-s <repository> <package> --current]
-                  [-f] [-t] [-n] [-i [...]] [-u  [...]]
+                  [   --build, --install, --build-install]
+                  [-l <repository>, all, noarch]
+                  [-c <repository> --upgrade]
+                  [-s <repository> <package>]
+                  [-t <repository> <package>]
+                  [-p <repository> <package> --color=]
+                  [   red, green, yellow, cyan, grey]
+                  [-f] [-n] [-i [...]] [-u [...]]
                   [-o  [...]] [-r [...]] [-d [...]]\fp
 
 .SH DESCRIPTION
@@ -35,15 +38,17 @@ It's a quick and easy way to manage your packages in slackware to a command.
 Optional arguments:
   -h, --help                                show this help message and exit
   -v, --version                             print version and exit
-  -a, script [source...]                    auto build packages
+  -a, script.tar.gz [source...]             auto build SBo packages
   -b, --list, [package...] --add, --remove  add, remove packages in blacklist
   -q, --list, [package...] --add, --remove  add, remove packages in queue
       --build, --install, --build-install   build or install from queue
   -l, <repository>, all, noarch             list of installed packages
-  -c, <repository> --upgrade --current      check for updated packages
-  -s, <repository> <package> --current      download, build & install
+  -c, <repository> --upgrade                check for updated packages
+  -s, <repository> <package>                download, build & install
+  -t, <repository> <package>                tracking dependencies
+  -p, <repository> <package> --color=       view package description
+      red, green, yellow, cyan, grey        colors support
   -f, <package>                             find installed packages
-  -t, <package>                             tracking dependencies from SBo
   -n, <package>                             view packages from SBo
   -i, [package...]                          install binary packages
   -u, [package...]                          upgrade binary packages
@@ -54,8 +59,8 @@ Optional arguments:
 Note: '-q' options is working only for SBo repository
 
 Repositories:
-      Slackware = slack '--current'
-      Alien = alien '--current'
+      Slackware = slack
+      Alien = alien
       SlackBuilds = sbo
       Slacky = slacky
       Robby's = rlw\fP
@@ -91,25 +96,28 @@ Build or install or build and install packages are queued.
 Four display options list, sbo, slack, noarch and all packages
 items that are installed on the system.
 .SS -c , <repository> check if your packages is up to date
-\fBslpkg\fP \fB-c\fP <\fIrepository\fP> \fI--upgrade\fP \fB--current\fP
+\fBslpkg\fP \fB-c\fP <\fIrepository\fP> \fI--upgrade\f
 .PP
-Check your packages from Slackware official mirrors or from 
-slackbuilds.org is up to date. Use '--current' to switch in current repository.
+Check your packages is up to date.
 .SS -s , <repository> download, build and install package with all dependencies
-\fBslpkg\fP \fB-s\fP <\fIrepository\fP> <\fIname of package\fP> \fB--current\fP
+\fBslpkg\fP \fB-s\fP <\fIrepository\fP> <\fIname of package\fP>
 .PP
-Installs or upgrade packages from the repository slackbuilds.org automatically resolving all 
+Installs or upgrade packages from the repositories with automatically resolving all 
 dependencies of the package. Also installs the official distribution Slackware 
-packages. Use '--current' to install packages from Slackware current repository.
+packages.
+.SS -t , tracking dependencies
+\fBslpkg\fP \fB-t\fP <\fIrepository\fP> <\fIname of package\fP>
+.PP
+Tracking all dependencies of that package.
+The sequence shown is that you must follow to correctly install package.
+.SS -p , print packages description
+\fBslpkg\fP \fB-p\fP <\fIrepository\fP> <\fIname of package\fP>
+.PP
+Print package description
 .SS -f find packages
 \fBslpkg\fP \fB-f\fP <\fIname of package\fP>
 .PP
 Find installed packages with view total file size. 
-.SS -t , tracking dependencies
-\fBslpkg\fP \fB-t\fP <\fIname of package\fP>
-.PP
-Tracking all dependencies of that package.
-The sequence shown is that you must follow to correctly install package.
 .SS -n , find packages from SBo repositority
 \fBslpkg\fP \fB-n\fP <\fIname of package\fP>
 .PP
@@ -155,6 +163,25 @@ command.
 .br
 For example:
   \fBslpkg \-\-help\fP - display help for slpkg
+
+.SH FILES
+
+/etc/slpkg/slpkg.conf
+     General configuration of slpkg
+
+/etc/slpkg/blacklist
+     List of packages to skip
+
+/var/log/slpkg
+     ChangeLog.txt repositories files
+     SlackBuilds logs and dependencies files
+
+/var/lib/slpkg
+     PACKAGES.TXT files and SLACKBUILDS.TXT file
+
+/tmp/slpkg
+     Slpkg temponary donwloaded files and build packages
+
 .SH AUTHOR
 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 .SH HOMEPAGE
@@ -163,4 +190,5 @@ https://github.com/dslackw/slpkg
 Copyright \(co 2014 Dimitris Zlatanidis
 
 .SH SEE ALSO
-installpkg(8), upgradepkg(8), removepkg(8), pkgtool(8), slackpkg(8) 
+installpkg(8), upgradepkg(8), removepkg(8), pkgtool(8), slackpkg(8), explodepkg(8),
+makepkg(8).

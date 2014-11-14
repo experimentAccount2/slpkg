@@ -63,22 +63,29 @@ slpkg_conf = [
     "# Slackware version 'stable' or 'current'.\n",
     "VERSION=stable\n",
     "\n",
-    "# Build directory for repository slackbuilds.org. In this directory\n"
+    "# Build directory for repository slackbuilds.org. In this directory\n",
     "# downloaded sources and scripts for building.\n",
     "BUILD=/tmp/slpkg/build/\n",
     "\n",
-    "# Download directory for others repositories that use binaries files\n"
+    "# If SBO_CHECK_MD5 is 'on' the system will check all downloaded\n",
+    "# sources from SBo repository.\n",
+    "SBO_CHECK_MD5=on\n",
+    "\n",
+    "# Download directory for others repositories that use binaries files\n",
     "# for installation.\n",
     "PACKAGES=/tmp/slpkg/packages/\n",
     "\n",
     "# Download directory for Slackware patches file.\n",
-    "PATCHES=/tmp/slpkg/patches/\n"
+    "PATCHES=/tmp/slpkg/patches/\n",
     "\n",
     "# Delete all downloaded files if DEL_ALL is 'on'.\n",
-    "DEL_ALL=on\n"
+    "DEL_ALL=on\n",
     "\n",
     "# Delete build directory after each process if DEL_BUILD is 'on'.\n",
-    "DEL_BUILD=off\n"
+    "DEL_BUILD=off\n",
+    "\n",
+    "# Keep build log file if SBO_BUILD_LOG is 'on'.\n",
+    "SBO_BUILD_LOG=on\n"
 ]
 
 if not os.path.isfile("/etc/slpkg/slpkg.conf"):
@@ -90,6 +97,16 @@ if not os.path.isfile("/etc/slpkg/slpkg.conf"):
 f = open("/etc/slpkg/slpkg.conf", "r")
 conf = f.read()
 f.close()
+
+# Default configuration values
+slack_rel = "stable"
+build_path = "/tmp/slpkg/build/"
+slpkg_tmp_packages = tmp + "slpkg/packages/"
+slpkg_tmp_patches = tmp + "slpkg/patches/"
+del_all = "on"
+sbo_check_md5 = "on"
+del_build = "off"
+sbo_build_log = "on"
 
 for line in conf.splitlines():
     line = line.lstrip()
@@ -105,6 +122,10 @@ for line in conf.splitlines():
         del_all = line[8:].strip()
     if line.startswith("DEL_BUILD"):
         del_build = line[10:].strip()
+    if line.startswith("SBO_CHECK_MD5"):
+        sbo_check_md5 = line[14:].strip()
+    if line.startswith("SBO_BUILD_LOG"):
+        sbo_build_log = line[14:].strip()
 
 if not slack_rel or slack_rel not in ['stable', 'current']:
     slack_rel = "stable"
@@ -129,6 +150,12 @@ if not del_all or del_all not in ['on', 'off']:
 
 if not del_build or del_build not in ['on', 'off']:
     del_build = "off"
+
+if not sbo_check_md5 or sbo_check_md5 not in ['on', 'off']:
+    sbo_check_md5 = "on"
+
+if not sbo_build_log or sbo_build_log not in ['on', 'off']:
+    sbo_build_log = "on"
 
 # repositories
 repositories = [

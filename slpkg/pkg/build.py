@@ -30,9 +30,9 @@ import tarfile
 import subprocess
 
 from checksum import md5sum
-from __metadata__ import log_path
 from colors import RED, GREEN, ENDC
 from messages import pkg_not_found, template
+from __metadata__ import log_path, sbo_check_md5, sbo_build_log
 
 from sbo.greps import SBoGrep
 
@@ -55,8 +55,6 @@ class BuildPackage(object):
             os.mkdir(self.sbo_logs)
         if not os.path.exists(self.build_logs):
             os.mkdir(self.build_logs)
-        if os.path.isfile(self.build_logs + self.log_file):
-            os.remove(self.build_logs + self.log_file)
 
     def build(self):
         '''
@@ -72,23 +70,30 @@ class BuildPackage(object):
             for src, sbo_md5 in zip(self.sources, sbo_md5_list):
                 # fix build sources with spaces
                 src = src.replace("%20", " ")
-                check_md5(sbo_md5, src)
+                if sbo_check_md5 == "on":
+                    check_md5(sbo_md5, src)
                 shutil.copy2(src, self.prgnam)
             os.chdir(self.path + self.prgnam)
             # change permissions
             subprocess.call("chmod +x {0}.SlackBuild".format(self.prgnam),
                             shell=True)
-            # start log write
-            log_head(self.build_logs, self.log_file, self.start_log_time)
-            subprocess.Popen("./{0}.SlackBuild 2>&1 | tee -a {1}{2}".format(
-                self.prgnam, self.build_logs, self.log_file), shell=True,
-                stdout=sys.stdout).communicate()
-            sum_time = build_time(self.start_time)
-            # write end in log file
-            log_end(self.build_logs, self.log_file, sum_time)
+            if sbo_build_log == "on":
+                if os.path.isfile(self.build_logs + self.log_file):
+                    os.remove(self.build_logs + self.log_file)
+                # start log write
+                log_head(self.build_logs, self.log_file, self.start_log_time)
+                subprocess.Popen("./{0}.SlackBuild 2>&1 | tee -a {1}{2}".format(
+                    self.prgnam, self.build_logs, self.log_file), shell=True,
+                    stdout=sys.stdout).communicate()
+                sum_time = build_time(self.start_time)
+                # write end in log file
+                log_end(self.build_logs, self.log_file, sum_time)
+                print("Total build time for package {0} : {1}\n".format(
+                    self.prgnam, sum_time))
+            else:
+                subprocess.call("./{0}.SlackBuild".format(self.prgnam,
+                                                          shell=True))
             os.chdir(self.path)
-            print("Total build time for package {0} : {1}\n".format(self.prgnam,
-                                                                    sum_time))
         except (OSError, IOError):
             pkg_not_found("\n", self.prgnam, "Wrong file", "\n")
         except KeyboardInterrupt:
