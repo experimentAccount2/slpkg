@@ -107,7 +107,6 @@ def repo_requires(name, repo):
     '''
     Grap package requirements from repositories
     '''
-    slacky_deps = []
     if repo in ["alien", "slacky"]:
         lib = {
             'alien': lib_path + "alien_repo/PACKAGES.TXT",
@@ -123,9 +122,7 @@ def repo_requires(name, repo):
             if line.startswith("PACKAGE REQUIRED: "):
                 if pkg_name == name:
                     if repo == "slacky":
-                        for dep in line[18:].strip().split(","):
-                            slacky_deps.append(dep.split()[0])
-                        return slacky_deps
+                        return slacky_req_fix(line)
                     else:
                         return line[18:].strip().split(",")
     elif repo == "rlw":
@@ -143,3 +140,19 @@ def repo_requires(name, repo):
             return dependencies[name].split()
         else:
             return ""
+
+
+def slacky_req_fix(line):
+    '''
+    Fix slacky requirements because more dependencies splitting
+    with ',' and others with '|'
+    '''
+    slacky_deps = []
+    for dep in line[18:].strip().split(","):
+        dep = dep.split("|")
+        if len(dep) > 1:
+            for d in dep:
+                slacky_deps.append(d.split()[0])
+        dep = "".join(dep)
+        slacky_deps.append(dep.split()[0])
+    return slacky_deps

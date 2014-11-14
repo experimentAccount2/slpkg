@@ -164,7 +164,6 @@ class OthersInstall(object):
         # location = data[1]
         # size = data[2]
         # unsize = data[3]
-        print deps
         data = repo_data(self.PACKAGES_TXT, self.step, self.repo, self.version)
         if len(deps) > 1:
             for pkg in deps:
@@ -225,7 +224,7 @@ def views(install_all, comp_sum, repository, dependencies):
             " " * (8-len(pkg_split[2])), pkg_split[3],
             " " * (7-len(pkg_split[3])), repository,
             comp, " K"))
-        if len(dependencies) > 1 and count == 0:
+        if len(dependencies) > 1 and len(install_all) > 1 and count == 0:
             print("Installing for dependencies:")
         count += 1
     return [pkg_sum, upg_sum, uni_sum]

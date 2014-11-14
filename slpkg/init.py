@@ -37,6 +37,8 @@ from slack.slack_version import slack_ver
 class Initialization(object):
 
     def __init__(self):
+        if not os.path.exists("/etc/slpkg"):
+            os.mkdir("/etc/slpkg")
         if not os.path.exists(log_path):
             os.mkdir(log_path)
         if not os.path.exists(lib_path):
