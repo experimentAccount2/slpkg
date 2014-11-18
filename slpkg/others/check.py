@@ -31,8 +31,11 @@ from blacklist import BlackList
 from init import Initialization
 from splitting import split_package
 from colors import YELLOW, GREY, ENDC
-from __metadata__ import (pkg_path, lib_path,
-                          slpkg_tmp_packages)
+from __metadata__ import (
+    pkg_path,
+    lib_path,
+    slpkg_tmp_packages
+)
 
 from pkg.manager import PackageManager
 
@@ -92,12 +95,12 @@ class OthersUpgrade(object):
         try:
             dwn_links, upgrade_all, comp_sum, uncomp_sum = self.store()
             sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
-            print   # new line at start
+            print("")   # new line at start
             if upgrade_all:
                 template(78)
                 print("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
                     "| Package", " " * 17,
-                    "Version", " " * 12,
+                    "New version", " " * 8,
                     "Arch", " " * 4,
                     "Build", " " * 2,
                     "Repos", " " * 10,
@@ -119,12 +122,13 @@ class OthersUpgrade(object):
                 if read in ['Y', 'y']:
                     upgrade_all.reverse()
                     packages_dwn(self.tmp_path, dwn_links)
-                    upgrade(upgrade_all)
+                    upgrade(self.tmp_path, upgrade_all)
                     delete(self.tmp_path, upgrade_all)
             else:
-                print("There are no packages for upgrade\n")
+                print("No new updates in the repository '{0}'\n".format(
+                    self.repo))
         except KeyboardInterrupt:
-            print   # new line at exit
+            print("")   # new line at exit
             sys.exit()
 
     def store(self):
@@ -205,10 +209,11 @@ def msgs(upgrade_all):
     return msg_pkg
 
 
-def upgrade(upgrade_all):
+def upgrade(tmp_path, upgrade_all):
     '''
     Install or upgrade packages
     '''
     for pkg in upgrade_all:
+        package = (tmp_path + pkg).split()
         print("[ {0}upgrading{1} ] --> {2}".format(YELLOW, ENDC, pkg[:-4]))
-        PackageManager(pkg).upgrade()
+        PackageManager(package).upgrade()

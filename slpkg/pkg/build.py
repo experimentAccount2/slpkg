@@ -32,7 +32,7 @@ import subprocess
 from checksum import md5sum
 from colors import RED, GREEN, ENDC
 from messages import pkg_not_found, template
-from __metadata__ import log_path, sbo_check_md5, sbo_build_log
+from __metadata__ import log_path, sbo_build_log, sbo_check_md5
 
 from sbo.greps import SBoGrep
 

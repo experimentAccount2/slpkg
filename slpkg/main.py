@@ -25,6 +25,7 @@ import sys
 import getpass
 
 from desc import PkgDesc
+from config import Config
 from queue import QueuePkgs
 from messages import s_user
 from tracking import track_dep
@@ -178,6 +179,14 @@ def main():
             usage()
     elif len(args) > 1 and args[0] == "-d":
         PackageManager(args[1:]).display()
+    elif len(args) == 2 and args[0] == "-g" and args[1].startswith("--config"):
+        editor = args[1][len("--config="):]
+        if args[1] == "--config":
+            Config().view()
+        elif editor:
+            Config().edit(editor)
+        else:
+            usage()
     else:
         usage()
 

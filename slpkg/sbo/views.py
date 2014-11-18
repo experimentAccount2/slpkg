@@ -116,7 +116,7 @@ class SBoNetwork(object):
         '''
         View slackbuild.org
         '''
-        print   # new line at start
+        print("")   # new line at start
         template(78)
         print("| {0}Package {1}{2}{3} --> {4}".format(GREEN, CYAN, args[0],
                                                       GREEN, ENDC + args[1]))
@@ -163,7 +163,7 @@ class SBoNetwork(object):
         try:
             choice = raw_input(" {0}Choose an option: {1}".format(GREY, ENDC))
         except KeyboardInterrupt:
-            print   # new line at exit
+            print("")   # new line at exit
             sys.exit()
         return choice
 

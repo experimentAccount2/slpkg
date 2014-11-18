@@ -25,7 +25,7 @@ import sys
 
 from toolbar import status
 
-from greps import repo_requires
+from greps import Requires
 
 dep_results = []
 
@@ -36,7 +36,7 @@ def dependencies_pkg(name, repo):
     '''
     try:
         dependencies = []
-        requires = repo_requires(name, repo)
+        requires = Requires(name, repo).get_deps()
         toolbar_width, index = 2, 0
         if requires:
             for req in requires:

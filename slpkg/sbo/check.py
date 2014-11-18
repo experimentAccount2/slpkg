@@ -124,7 +124,7 @@ class SBoCheck(object):
                 sys.stdout.write(self.done)
                 print("\nNo SBo packages found\n")
         except KeyboardInterrupt:
-            print   # new line at exit
+            print("")   # new line at exit
             sys.exit()
 
     def sbo_list(self):

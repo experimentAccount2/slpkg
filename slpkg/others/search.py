@@ -48,5 +48,5 @@ def search_pkg(name, repo):
                         PACKAGES_TXT.close()
                         return pkg_name
     except KeyboardInterrupt:
-        print   # new line at exit
+        print("")   # new line at exit
         sys.exit()

@@ -26,11 +26,11 @@ import sys
 
 from sizes import units
 from blacklist import BlackList
+from init import Initialization
 from splitting import split_package
 from messages import pkg_not_found, template
-from __metadata__ import pkg_path, lib_path, slpkg_tmp_packages
-from init import Initialization
 from colors import RED, GREEN, CYAN, YELLOW, GREY, ENDC
+from __metadata__ import pkg_path, lib_path, slpkg_tmp_packages
 
 from pkg.find import find_package
 from pkg.manager import PackageManager
@@ -98,7 +98,7 @@ class Slack(object):
             else:
                 pkg_not_found("", self.slack_pkg, "No matching", "\n")
         except KeyboardInterrupt:
-            print   # new line at exit
+            print("")   # new line at exit
             sys.exit()
 
     def store(self):

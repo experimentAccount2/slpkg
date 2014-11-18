@@ -27,7 +27,7 @@ from __metadata__ import __version__
 
 def options():
     arguments = [
-        "slpkg - version {0}\n".format(__version__),
+        "\nslpkg - version {0}\n".format(__version__),
         "Utility for easy management packages in Slackware\n",
         "Optional arguments:",
         "  -h, --help                                show this help message " +
@@ -36,32 +36,28 @@ def options():
         "  -a, script.tar.gz [source...]             auto build SBo packages",
         "  -b, --list, [package...] --add, --remove  add, remove packages in " +
         "blacklist",
-        "  -q, --list, [package...] --add, --remove  add, remove packages in " +
-        "queue",
-        "      --build, --install, --build-install   build or install from " +
-        "queue",
+        "  -q, --list, [package...] --add, --remove  add, remove SBo packages "
+        "in queue",
+        "      --build, --install, --build-install   build or install packages "
+        "from queue",
+        "  -g, --config, --config=<editor>           configuration file " +
+        "management",
         "  -l, <repository>, all, noarch             list of installed " +
         "packages",
         "  -c, <repository> --upgrade                check for updated " +
         "packages",
-        "  -s, <repository> <package>                download, build & install",
-        "  -t, <repository> <package>                tracking dependencies",
-        "  -p, <repository> <package> --color=       print package description",
-        "      red, green, yellow, cyan, grey        colors support",
-        "  -f, <package>                             find installed packages",
-        "  -n, <package>                             view packages from SBo",
+        "  -s, <repository> [package]                download, build & install",
+        "  -t, <repository> [package]                tracking dependencies",
+        "  -p, <repository> [package] --color=[]     print package description",
+        "  -f, [package]                             find installed packages",
+        "  -n, [package]                             view packages from SBo",
         "  -i, [package...]                          install binary packages",
         "  -u, [package...]                          upgrade binary packages",
         "  -o, [package...]                          reinstall binary packages",
         "  -r, [package...]                          remove binary packages",
         "  -d, [package...]                          display the contents\n",
-        "Note: '-q' options is working only for SBo repository\n",
-        "Repositories:",
-        "      Slackware = slack",
-        "      Alien = alien",
-        "      SlackBuilds = sbo",
-        "      Slacky = slacky",
-        "      Robby's = rlw\n"
+        "Repositories: <slack, sbo, alien, slacky, rlw>",
+        "Colors = [red, green, yellow, cyan, grey]\n",
     ]
     for opt in arguments:
         print(opt)
@@ -74,6 +70,7 @@ def usage():
         "             [-b --list, [...] --add, --remove]",
         "             [-q --list, [...] --add, --remove]",
         "             [   --build, --install, --build-install]",
+        "             [-g  --config, --config=<editor>]",
         "             [-l <repository>, all, noarch]",
         "             [-c <repository> --upgrade]",
         "             [-s <repository> <package>]",
@@ -81,7 +78,7 @@ def usage():
         "             [-p <repository> <package> --color=]",
         "             [   red, green, yellow, cyan, grey]",
         "             [-f] [-n] [-i [...]] [-u [...]]",
-        "             [-o  [...]] [-r [...]] [-d [...]]\n",
+        "             [-o  [...]] [-r [...]] [-d [...]]\n"
         "For more information try 'slpkg --help'\n"
     ]
     for usg in view:

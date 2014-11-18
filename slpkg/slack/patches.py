@@ -100,7 +100,7 @@ class Patches(object):
                 print("\nSlackware{0} '{1}' v{2} distribution is up to "
                       "date\n".format(slack_arch, self.version, slack_ver()))
         except KeyboardInterrupt:
-            print   # new line at exit
+            print("")   # new line at exit
             sys.exit()
 
     def store(self):

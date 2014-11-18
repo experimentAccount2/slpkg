@@ -145,7 +145,7 @@ class SBoInstall(object):
                 else:
                     pkg_not_found("\n", self.name, "No matching", "\n")
         except KeyboardInterrupt:
-            print   # new line at exit
+            print("")   # new line at exit
             sys.exit()
 
     def one_for_all(self):
