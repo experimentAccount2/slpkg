@@ -11,9 +11,9 @@
 
 Latest Release:
 
-- Version: 2.0.4
+- Version: 2.0.5
 - `Package <https://sourceforge.net/projects/slpkg/files/slpkg/binary/>`_
-- `Source <https://github.com/dslackw/slpkg/archive/v2.0.4.tar.gz>`_
+- `Source <https://github.com/dslackw/slpkg/archive/v2.0.5.tar.gz>`_
 - `CHANGELOG <https://github.com/dslackw/slpkg/blob/master/CHANGELOG>`_
  
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/logo.png
@@ -102,8 +102,8 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.0.4.tar.gz
-    $ cd slpkg-2.0.4
+    $ tar xvf slpkg-2.0.5.tar.gz
+    $ cd slpkg-2.0.5
     $ ./install.sh
 
 Using `pip <https://pip.pypa.io/en/latest/>`_ :
@@ -120,6 +120,11 @@ Using Slackware command:
     
 Download binary package from `SourceForge <https://sourceforge.net/projects/slpkg/>`_
     
+Slackware Current
+-----------------
+
+For Slackware 'current' users must change the variable VERSION in /etc/slpkg.conf file.
+
 Command Line Tool Usage
 -----------------------
 
@@ -130,30 +135,26 @@ Command Line Tool Usage
     Optional arguments:
       -h, --help                                show this help message and exit
       -v, --version                             print version and exit
-      -a, script [source...]                    auto build packages
+      -a, script.tar.gz [source...]             auto build SBo packages
       -b, --list, [package...] --add, --remove  add, remove packages in blacklist
-      -q, --list, [package...] --add, --remove  add, remove packages in queue
-          --build, --install, --build-install   build or install from queue
-      -l, <repository>, all, noarch             list of installed packages
-      -c, <repository> --upgrade --current      check for updated packages
-      -s, <repository> <package> --current      download, build & install
-      -f, <package>                             find installed packages
-      -t, <package>                             tracking dependencies from SBo
-      -n, <package>                             view packages from SBo
+      -q, --list, [package...] --add, --remove  add, remove SBo packages in queue
+          --build, --install, --build-install   build or install packages from queue
+      -g, --config, --config=[editor]           configuration file management
+      -l, [repository], all, noarch             list of installed packages
+      -c, [repository] --upgrade                check for updated packages
+      -s, [repository] [package]                download, build & install
+      -t, [repository] [package]                tracking dependencies
+      -p, [repository] [package] --color=[]     print package description
+      -f, [package]                             find installed packages
+      -n, [package]                             view packages from SBo
       -i, [package...]                          install binary packages
       -u, [package...]                          upgrade binary packages
       -o, [package...]                          reinstall binary packages
       -r, [package...]                          remove binary packages
       -d, [package...]                          display the contents
-    
-    Note: '-q' options is working only for SBo repository
-      
-    Repositories:
-          Slackware = slack '--current'
-          Alien = alien '--current'
-          SlackBuilds = sbo
-          Slacky = slacky
-          Robby's = rlw
+
+    Repositories: <slack, sbo, alien, slacky, rlw>
+    Colors = [red, green, yellow, cyan, grey]         
 
 Slpkg Examples
 --------------
@@ -210,12 +211,11 @@ build and install with all dependencies :
     0 installed package and 4 uninstalled packages.
     
     
-Find packages from `Slackware official mirrors <http://mirrors.slackware.com/>`_ 
-download and install (use '--current' to switch in current repository):
+Install packages from `Slackware official mirrors <http://mirrors.slackware.com/>`_ :
 
 .. code-block:: bash
 
-    $ slpkg -s slack mozilla (add '--current' to switch in current version)
+    $ slpkg -s slack mozilla
 
     Packages with name matching [ mozilla ]
     Reading package lists ..............................Done
@@ -242,7 +242,7 @@ and also displays installed packages:
 
 .. code-block:: bash
 
-    $ slpkg -t brasero
+    $ slpkg -t sbo brasero
     Reading package lists ......Done
 
     +=========================
@@ -261,7 +261,7 @@ and also displays installed packages:
      |
      +--5 libunique
 
-Check if your packages is up to date from slackbuilds.org:
+Check if your packages is up to date:
 
 .. code-block:: bash
 
@@ -290,11 +290,11 @@ Check if your packages is up to date from slackbuilds.org:
     Would you like to upgrade [Y/n]?
 
 Check if your distribution is up to date from `Slackware official mirrors 
-<http://mirrors.slackware.com/>`_ (use '--current' to switch in current repository):
+<http://mirrors.slackware.com/>`_ :
 
 .. code-block:: bash
 
-    $ slpkg -c slack --upgrade (add '--current' to switch in current version)
+    $ slpkg -c slack --upgrade
     Reading package lists .......Done
 
     These packages need upgrading:
@@ -553,7 +553,7 @@ Remove packages:
     +==============================================================================
 
 Remove packages with all dependencies:
-(presupposes facility with the option 'slpkg -s sbo <package>)
+(presupposes facility with the option 'slpkg -s <repository> <package>)
 
 .. code-block:: bash
 
@@ -651,6 +651,25 @@ Add packages in blacklist file manually from
 
     live555
     faac
+
+    
+Print package description:
+
+.. code-block:: bash
+
+    $ slpkg -p alien vlc
+
+    vlc (multimedia player for various audio and video formats)
+
+    VLC media player is a highly portable multimedia player for various
+    audio and video formats (MPEG-1, MPEG-2, MPEG-4, DivX, mp3, ogg, ...)
+    as well as DVDs, VCDs, and various streaming protocols.
+    It can also be used as a server to stream in unicast or multicast in
+    IPv4 or IPv6 on a high-bandwidth network.
+
+
+    vlc home: http://www.videolan.org/vlc/
+
 
 Man page it is available for full support:
 

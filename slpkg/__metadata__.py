@@ -22,38 +22,93 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import os
+import getpass
+
+from config import config_file
+from messages import s_user
 
 __all__ = "slpkg"
 __author__ = "dslackw"
-__version_info__ = (2, 0, 4)
+__version_info__ = (2, 0, 5)
 __version__ = "{0}.{1}.{2}".format(*__version_info__)
 __license__ = "GNU General Public License v3 (GPLv3)"
 __email__ = "d.zlatanidis@gmail.com"
 
-''' file spacer '''
+s_user(getpass.getuser())
+
+# temponary path
+tmp = "/tmp/"
+
+if not os.path.exists("/etc/slpkg/"):
+    os.mkdir("/etc/slpkg/")
+
+if not os.path.isfile("/etc/slpkg/slpkg.conf"):
+    with open("/etc/slpkg/slpkg.conf", "w") as conf:
+        for line in config_file():
+            conf.write(line)
+        conf.close()
+
+f = open("/etc/slpkg/slpkg.conf", "r")
+conf = f.read()
+f.close()
+
+# Default configuration values
+slack_rel = "stable"
+build_path = "/tmp/slpkg/build/"
+slpkg_tmp_packages = tmp + "slpkg/packages/"
+slpkg_tmp_patches = tmp + "slpkg/patches/"
+del_all = "on"
+sbo_check_md5 = "on"
+del_build = "off"
+sbo_build_log = "on"
+
+for line in conf.splitlines():
+    line = line.lstrip()
+    if line.startswith("VERSION"):
+        slack_rel = line[8:].strip()
+        if not slack_rel:
+            slack_rel = "stable"
+    if line.startswith("BUILD"):
+        build_path = line[6:].strip()
+    if line.startswith("PACKAGES"):
+        slpkg_tmp_packages = line[9:].strip()
+    if line.startswith("PATCHES"):
+        slpkg_tmp_patches = line[8:].strip()
+    if line.startswith("DEL_ALL"):
+        del_all = line[8:].strip()
+    if line.startswith("DEL_BUILD"):
+        del_build = line[10:].strip()
+    if line.startswith("SBO_CHECK_MD5"):
+        sbo_check_md5 = line[14:].strip()
+    if line.startswith("SBO_BUILD_LOG"):
+        sbo_build_log = line[14:].strip()
+
+# repositories
+repositories = [
+    "sbo",
+    "slack",
+    "rlw",
+    "alien",
+    "slacky"
+]
+
+# file spacer
 sp = "-"
 
-''' current path '''
+# current path
 path = os.getcwd() + "/"
 
-''' build path '''
-build_path = path + "slpkg_Build/"
-
-''' library path '''
+# library path
 lib_path = "/var/lib/slpkg/"
 
-''' log path '''
+# log path
 log_path = "/var/log/slpkg/"
 
-''' temponary path '''
-tmp = "/tmp/"
-slpkg_tmp = tmp + "slpkg/"
-
-''' packages log files path '''
+# packages log files path
 pkg_path = "/var/log/packages/"
 
-''' blacklist conf path '''
+# blacklist conf path
 bls_path = "/etc/slpkg/"
 
-''' computer architecture '''
+# computer architecture
 arch = os.uname()[4]

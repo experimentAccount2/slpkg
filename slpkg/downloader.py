@@ -24,7 +24,10 @@
 import sys
 import subprocess
 
-from colors import GREEN, ENDC
+from colors import (
+    GREEN,
+    ENDC
+)
 
 
 class Download(object):

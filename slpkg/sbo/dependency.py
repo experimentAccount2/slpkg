@@ -23,7 +23,7 @@
 
 import sys
 
-from slpkg.colors import GREY, ENDC
+from slpkg.toolbar import status
 from slpkg.blacklist import BlackList
 
 from greps import SBoGrep
@@ -39,8 +39,11 @@ def sbo_dependencies_pkg(name):
         dependencies = []
         blacklist = BlackList().packages()
         requires = SBoGrep(name).requires()
+        toolbar_width, index = 2, 0
         if requires:
             for req in requires:
+                index += 1
+                toolbar_width = status(index, toolbar_width, 1)
                 # avoid to add %README% as dependency and
                 # if require in blacklist
                 if "%README%" not in req and req not in blacklist:
@@ -48,10 +51,8 @@ def sbo_dependencies_pkg(name):
             if dependencies:
                 dep_results.append(dependencies)
                 for dep in dependencies:
-                    sys.stdout.write("{0}.{1}".format(GREY, ENDC))
-                    sys.stdout.flush()
                     sbo_dependencies_pkg(dep)
         return dep_results
     except KeyboardInterrupt:
-        print   # new line at exit
+        print("")   # new line at exit
         sys.exit()

@@ -24,7 +24,11 @@
 import os
 
 from __metadata__ import bls_path
-from colors import RED, GREEN, ENDC
+from colors import (
+    RED,
+    GREEN,
+    ENDC
+)
 
 
 class BlackList(object):
@@ -109,7 +113,7 @@ class BlackList(object):
                 print("{0}{1}{2}".format(GREEN, black, ENDC))
                 self.quit = True
         if self.quit:
-            print   # new line at exit
+            print("")   # new line at exit
 
     def add(self, pkgs):
         '''
@@ -126,7 +130,7 @@ class BlackList(object):
                     self.quit = True
             black_conf.close()
         if self.quit:
-            print   # new line at exit
+            print("")   # new line at exit
 
     def remove(self, pkgs):
         '''
@@ -142,4 +146,4 @@ class BlackList(object):
                     self.quit = True
             remove.close()
         if self.quit:
-            print   # new line at exit
+            print("")   # new line at exit

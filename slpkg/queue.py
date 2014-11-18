@@ -24,8 +24,16 @@
 import os
 
 from downloader import Download
-from colors import GREEN, RED, ENDC
-from __metadata__ import lib_path, build_path, tmp
+from colors import (
+    GREEN,
+    RED,
+    ENDC
+)
+from __metadata__ import (
+    lib_path,
+    build_path,
+    tmp
+)
 
 from sbo.greps import SBoGrep
 from pkg.find import find_package
@@ -85,7 +93,7 @@ class QueuePkgs(object):
                 print("{0}{1}{2}".format(GREEN, pkg, ENDC))
                 self.quit = True
         if self.quit:
-            print   # new line at exit
+            print("")   # new line at exit
 
     def add(self, pkgs):
         '''
@@ -106,7 +114,7 @@ class QueuePkgs(object):
                     self.quit = True
             queue.close()
         if self.quit:
-            print   # new line at exit
+            print("")   # new line at exit
 
     def remove(self, pkgs):
         '''
@@ -124,7 +132,7 @@ class QueuePkgs(object):
                     self.quit = True
             queue.close()
         if self.quit:
-            print   # new line at exit
+            print("")   # new line at exit
 
     def build(self):
         '''
@@ -155,7 +163,7 @@ class QueuePkgs(object):
         '''
         packages = self.packages()
         if packages:
-            print   # new line at start
+            print("")   # new line at start
             for pkg in packages:
                 # check if package exist in /tmp
                 find = find_package(pkg, tmp)

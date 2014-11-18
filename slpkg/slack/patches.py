@@ -30,8 +30,15 @@ from slpkg.url_read import URL
 from slpkg.messages import template
 from slpkg.blacklist import BlackList
 from slpkg.splitting import split_package
-from slpkg.colors import GREY, YELLOW, ENDC
-from slpkg.__metadata__ import pkg_path, slpkg_tmp
+from slpkg.colors import (
+    GREY,
+    YELLOW,
+    ENDC
+)
+from slpkg.__metadata__ import (
+    pkg_path,
+    slpkg_tmp_patches
+)
 
 from slpkg.pkg.manager import PackageManager
 
@@ -46,13 +53,9 @@ class Patches(object):
 
     def __init__(self, version):
         self.version = version
-        self.patch_path = slpkg_tmp + "patches/"
+        self.patch_path = slpkg_tmp_patches
         sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
         sys.stdout.flush()
-        if not os.path.exists(slpkg_tmp):
-            os.mkdir(slpkg_tmp)
-        if not os.path.exists(self.patch_path):
-            os.mkdir(self.patch_path)
         if version == "stable":
             self.PACKAGES_TXT = URL(mirrors("PACKAGES.TXT", "patches/",
                                             version)).reading()
@@ -104,7 +107,7 @@ class Patches(object):
                 print("\nSlackware{0} '{1}' v{2} distribution is up to "
                       "date\n".format(slack_arch, self.version, slack_ver()))
         except KeyboardInterrupt:
-            print   # new line at exit
+            print("")   # new line at exit
             sys.exit()
 
     def store(self):

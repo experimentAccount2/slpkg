@@ -1,7 +1,7 @@
 #!/usr/bin/python
-# -*- coding: utf-8 -*
+# -*- coding: utf-8 -*-
 
-# file_size.py file is part of slpkg.
+# remove.py file is part of slpkg.
 
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
@@ -21,33 +21,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import os
-import sys
-import urllib2
+import shutil
+
+from slpkg.__metadata__ import del_build
 
 
-class FileSize(object):
-
-    def __init__(self, registry):
-        self.registry = registry
-
-    def server(self):
-        '''
-        Returns the size of remote files
-        '''
-        try:
-            tar = urllib2.urlopen(self.registry)
-            meta = tar.info()
-            return int(meta.getheaders("Content-Length")[0])
-        except (urllib2.URLError, IndexError):
-            print("\nError: connection refused\n")
-            sys.exit()
-        except KeyboardInterrupt:
-            print("")   # new line at cancel
-            sys.exit()
-
-    def local(self):
-        '''
-        Returns the size of local files
-        '''
-        return os.path.getsize(self.registry)
+def delete(build_folder):
+    '''
+    Delete build directory and all its contents.
+    '''
+    if del_build == "on":
+        shutil.rmtree(build_folder)

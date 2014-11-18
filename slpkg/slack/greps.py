@@ -33,9 +33,9 @@ def slack_data(PACKAGES_TXT, step):
     for line in PACKAGES_TXT.splitlines():
         index += 1
         toolbar_width = status(index, toolbar_width, step)
-        if line.startswith("PACKAGE NAME"):
+        if line.startswith("PACKAGE NAME:"):
             name.append(line[15:].strip())
-        if line.startswith("PACKAGE LOCATION"):
+        if line.startswith("PACKAGE LOCATION:"):
             location.append(line[21:].strip())
         if line.startswith("PACKAGE SIZE (compressed):  "):
             size.append(line[28:-2].strip())

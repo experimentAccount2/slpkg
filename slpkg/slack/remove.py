@@ -23,23 +23,14 @@
 
 import os
 
+from slpkg.__metadata__ import del_all
+
 
 def delete(path, packages):
     '''
     Remove downloaded packages
     '''
-    read = raw_input("Removal downloaded packages [Y/n]? ")
-    if read in ['y', 'Y']:
+    if del_all == "on":
         for pkg in packages:
             os.remove(path + pkg)
             os.remove(path + pkg + ".asc")
-        is_empty(path)
-    else:
-        is_empty(path)
-
-
-def is_empty(path):
-    if not os.listdir(path):
-        print("Packages removed")
-    else:
-        print("\nThere are packages in direcrory {0}\n".format(path))

@@ -27,40 +27,37 @@ from __metadata__ import __version__
 
 def options():
     arguments = [
-        "slpkg - version {0}\n".format(__version__),
+        "\nslpkg - version {0}\n".format(__version__),
         "Utility for easy management packages in Slackware\n",
         "Optional arguments:",
         "  -h, --help                                show this help message " +
         "and exit",
         "  -v, --version                             print version and exit",
-        "  -a, script [source...]                    auto build packages",
+        "  -a, script.tar.gz [source...]             auto build SBo packages",
         "  -b, --list, [package...] --add, --remove  add, remove packages in " +
         "blacklist",
-        "  -q, --list, [package...] --add, --remove  add, remove packages in " +
-        "queue",
-        "      --build, --install, --build-install   build or install from " +
-        "queue",
-        "  -l, <repository>, all, noarch             list of installed " +
+        "  -q, --list, [package...] --add, --remove  add, remove SBo packages "
+        "in queue",
+        "      --build, --install, --build-install   build or install packages "
+        "from queue",
+        "  -g, --config, --config=[editor]           configuration file " +
+        "management",
+        "  -l, [repository], all, noarch             list of installed " +
         "packages",
-        "  -c, <repository> --upgrade --current      check for updated " +
+        "  -c, [repository] --upgrade                check for updated " +
         "packages",
-        "  -s, <repository> <package> --current      download, build & install",
-        "  -f, <package>                             find installed packages",
-        "  -t, <package>                             tracking dependencies " +
-        "from SBo",
-        "  -n, <package>                             view packages from SBo",
+        "  -s, [repository] [package]                download, build & install",
+        "  -t, [repository] [package]                tracking dependencies",
+        "  -p, [repository] [package] --color=[]     print package description",
+        "  -f, [package]                             find installed packages",
+        "  -n, [package]                             view packages from SBo",
         "  -i, [package...]                          install binary packages",
         "  -u, [package...]                          upgrade binary packages",
         "  -o, [package...]                          reinstall binary packages",
         "  -r, [package...]                          remove binary packages",
         "  -d, [package...]                          display the contents\n",
-        "Note: '-q' options is working only for SBo repository\n",
-        "Repositories:",
-        "      Slackware = slack '--current'",
-        "      Alien = alien '--current'",
-        "      SlackBuilds = sbo",
-        "      Slacky = slacky",
-        "      Robby's = rlw\n"
+        "Repositories: <slack, sbo, alien, slacky, rlw>",
+        "Colors = [red, green, yellow, cyan, grey]\n",
     ]
     for opt in arguments:
         print(opt)
@@ -69,14 +66,17 @@ def options():
 def usage():
     view = [
         "slpkg - version {0}\n".format(__version__),
-        "Usage: slpkg [-h] [-v] [-a script [sources...]]",
+        "Usage: slpkg [-h] [-v] [-a script.tar.gz [sources...]]",
         "             [-b --list, [...] --add, --remove]",
         "             [-q --list, [...] --add, --remove]",
-        "             [-q --build, --install, --build-install]",
-        "             [-l all, sbo, slack, noarch]",
-        "             [-c <repository> --upgrade --current]",
-        "             [-s <repository> <package> --current]",
-        "             [-f] [-t] [-n] [-i [...]] [-u  [...]]",
+        "             [   --build, --install, --build-install]",
+        "             [-g --config, --config=[editor]]",
+        "             [-l [repository], all, noarch]",
+        "             [-c [repository] --upgrade]",
+        "             [-s [repository] [package]",
+        "             [-t [repository] [package]",
+        "             [-p [repository] [package] --color=[]]",
+        "             [-f] [-n] [-i [...]] [-u [...]]",
         "             [-o  [...]] [-r [...]] [-d [...]]\n",
         "For more information try 'slpkg --help'\n"
     ]

@@ -32,11 +32,26 @@ from slpkg.toolbar import status
 from slpkg.init import Initialization
 from slpkg.downloader import Download
 from slpkg.splitting import split_package
-from slpkg.messages import template, build_FAILED
-from slpkg.colors import RED, GREEN, GREY, YELLOW, ENDC
-from slpkg.__metadata__ import tmp, pkg_path, build_path, sp
+from slpkg.messages import (
+    template,
+    build_FAILED
+)
+from slpkg.colors import (
+    RED,
+    GREEN,
+    GREY,
+    YELLOW,
+    ENDC
+)
+from slpkg.__metadata__ import (
+    tmp,
+    pkg_path,
+    build_path,
+    sp
+)
 
 from greps import SBoGrep
+from remove import delete
 from compressed import SBoLink
 from search import sbo_search_pkg
 from dependency import sbo_dependencies_pkg
@@ -46,9 +61,9 @@ class SBoCheck(object):
 
     def __init__(self):
         self.done = "{0}Done{1}\n".format(GREY, ENDC)
+        Initialization().sbo()
         sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
         sys.stdout.flush()
-        Initialization().sbo()
         self.installed = []
         self.index, self.toolbar_width = 0, 3
 
@@ -84,7 +99,6 @@ class SBoCheck(object):
                     count, msg = view_packages(data[1], data[2], data[3])
                     read = raw_input("Would you like to upgrade [Y/n]? ")
                     if read in ['y', 'Y']:
-                        create_build_path()
                         os.chdir(build_path)
                         for name, version in zip(data[0], data[2]):
                             prgnam = ("{0}-{1}".format(name, version))
@@ -116,6 +130,7 @@ class SBoCheck(object):
                             PackageManager(binary).upgrade()
                         reference(data[0], data[1], data[2], count[0], count[1],
                                   msg[0], msg[1], self.installed)
+                        delete(build_path)
                 else:
                     print("\nTotal {0} SBo packages are up to date\n".format(
                         len(self.sbo_list())))
@@ -123,7 +138,7 @@ class SBoCheck(object):
                 sys.stdout.write(self.done)
                 print("\nNo SBo packages found\n")
         except KeyboardInterrupt:
-            print   # new line at exit
+            print("")   # new line at exit
             sys.exit()
 
     def sbo_list(self):
@@ -279,14 +294,6 @@ def view_packages(package_for_upgrade, upgrade_version, upgrade_arch):
           "installed.{5}\n".format(GREY, count_upgraded, msg_upg,
                                    count_installed, msg_ins, ENDC))
     return [count_installed, count_upgraded], [msg_ins, msg_upg]
-
-
-def create_build_path():
-    '''
-    Create build directory if not exists
-    '''
-    if not os.path.exists(build_path):
-        os.mkdir(build_path)
 
 
 def dwn_sources(sources):

@@ -29,10 +29,24 @@ from slpkg.repositories import Repo
 from slpkg.init import Initialization
 from slpkg.blacklist import BlackList
 from slpkg.splitting import split_package
-from slpkg.messages import pkg_not_found, template
-from slpkg.colors import RED, GREEN, CYAN, YELLOW, GREY, ENDC
-from slpkg.__metadata__ import slpkg_tmp, pkg_path, lib_path, log_path
-
+from slpkg.messages import (
+    pkg_not_found,
+    template
+)
+from slpkg.colors import (
+    RED,
+    GREEN,
+    CYAN,
+    YELLOW,
+    GREY,
+    ENDC
+)
+from slpkg.__metadata__ import (
+    pkg_path,
+    lib_path,
+    log_path,
+    slpkg_tmp_packages
+)
 
 from slpkg.pkg.find import find_package
 from slpkg.pkg.manager import PackageManager
@@ -51,7 +65,7 @@ class OthersInstall(object):
         self.package = package
         self.repo = repo
         self.version = version
-        self.tmp_path = slpkg_tmp + "packages/"
+        self.tmp_path = slpkg_tmp_packages
         self.repo_init()
         repos = Repo()
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
@@ -84,10 +98,10 @@ class OthersInstall(object):
         '''
         Initialization repository if only use
         '''
-        if not os.path.exists(slpkg_tmp):
-            os.mkdir(slpkg_tmp)
-        if not os.path.exists(self.tmp_path):
-            os.mkdir(self.tmp_path)
+        # initialization Slackware repository needed to compare
+        # slacky dependencies
+        if not os.path.isfile(lib_path + "slack_repo/PACKAGES.TXT"):
+            Initialization().slack()
         repository = {
             "rlw": Initialization().rlw,
             "alien": Initialization().alien,
@@ -104,7 +118,7 @@ class OthersInstall(object):
             (dwn_links, install_all, comp_sum, uncomp_sum,
                 matching) = self.store(dependencies)
             sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
-            print   # new line at start
+            print("")   # new line at start
             if install_all:
                 template(78)
                 print("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
@@ -153,7 +167,7 @@ class OthersInstall(object):
             else:
                 pkg_not_found("", self.package, "No matching", "\n")
         except KeyboardInterrupt:
-            print   # new line at exit
+            print("")   # new line at exit
             sys.exit()
 
     def store(self, deps):
@@ -172,7 +186,7 @@ class OthersInstall(object):
             for pkg in deps:
                 for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
                                                    data[3]):
-                    if name.startswith(pkg) and pkg not in black:
+                    if name.startswith(pkg + "-") and pkg not in black:
                         # store downloads packages by repo
                         dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
                         install.append(name)
@@ -182,7 +196,7 @@ class OthersInstall(object):
             for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
                                                data[3]):
                 package = "".join(deps)
-                if package in name and package not in BlackList().packages():
+                if package in name and package not in black:
                     # store downloads packages by repo
                     dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
                     install.append(name)
@@ -227,7 +241,7 @@ def views(install_all, comp_sum, repository, dependencies):
             " " * (8-len(pkg_split[2])), pkg_split[3],
             " " * (7-len(pkg_split[3])), repository,
             comp, " K"))
-        if len(dependencies) > 1 and count == 0:
+        if len(dependencies) > 1 and len(install_all) > 1 and count == 0:
             print("Installing for dependencies:")
         count += 1
     return [pkg_sum, upg_sum, uni_sum]
@@ -263,77 +277,24 @@ def install(tmp_path, install_all):
             PackageManager(package).upgrade()
 
 
-def repo_deps(name, repo):
+def resolving_deps(name, repo):
     '''
     Return package dependencies
     '''
-    deps = dependencies_pkg(name, repo)
     requires, dependencies = [], []
+    sys.stdout.write("{0}Resolving dependencies ...{1}".format(GREY, ENDC))
+    sys.stdout.flush()
+    deps = dependencies_pkg(name, repo)
     requires.append(name)
     # Create one list for all packages
     for pkg in deps:
         requires += pkg
-    if repo == "slacky":
-        requires = slacky_req_check(name, requires)
     requires.reverse()
     # Remove double dependencies
     for duplicate in requires:
         if duplicate not in dependencies:
             dependencies.append(duplicate)
     return dependencies
-
-
-def rlw_deps(name):
-    '''
-    Robby's repository dependencies as shown in the central page
-    http://rlworkman.net/pkgs/
-    '''
-    dependencies = {
-        "abiword": "wv",
-        "claws-mail": "libetpan bogofilter html2ps",
-        "inkscape": "gtkmm atkmm pangomm cairomm mm-common libsigc++ libwpg" +
-                    "lxml gsl numpy BeautifulSoup",
-        "texlive": "libsigsegv texi2html",
-        "xfburn": "libburn libisofs"
-    }
-    if name in dependencies.keys():
-        return dependencies[name]
-    else:
-        return ""
-
-
-def resolving_deps(name, repo):
-    '''
-    Return dependencies for one package from
-    alien repository
-    '''
-    dependencies = []
-    sys.stdout.write("{0}Resolving dependencies ...{1}".format(GREY, ENDC))
-    sys.stdout.flush()
-    if repo == "alien" or repo == "slacky":
-        dependencies = repo_deps(name, repo)
-    elif repo == "rlw":
-        dependencies = rlw_deps(name).split()
-        dependencies.append(name)
-    return dependencies
-
-
-def slacky_req_check(name, requires):
-    '''
-    Checks if the requirement is installed or if it is
-    smaller version
-    '''
-    new = []
-    for req in requires[1:]:
-        split_req = req.split()     # split requirements
-        req_name = split_req[0]     # store name
-        installed = find_package(req_name + "-", pkg_path)
-        if not installed:
-            new.append(req_name)
-    requires = []
-    requires.append(name)
-    requires += new
-    return requires
 
 
 def write_deps(dependencies):

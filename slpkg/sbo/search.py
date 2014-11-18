@@ -48,5 +48,5 @@ def sbo_search_pkg(name):
                         SLACKBUILDS_TXT.close()
                         return (sbo_url + line[23:].strip() + "/")
     except KeyboardInterrupt:
-        print   # new line at exit
+        print("")   # new line at exit
         sys.exit()

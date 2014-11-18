@@ -24,7 +24,10 @@
 import sys
 import time
 
-from colors import GREY, ENDC
+from colors import (
+    GREY,
+    ENDC
+)
 
 
 def status(index, width, step):

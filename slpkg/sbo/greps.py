@@ -21,7 +21,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from slpkg.__metadata__ import arch, lib_path
+from slpkg.__metadata__ import (
+    arch,
+    lib_path
+)
 
 
 class SBoGrep(object):

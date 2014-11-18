@@ -23,30 +23,55 @@
 
 import sys
 
-from slpkg.messages import template
-from slpkg.init import Initialization
-from slpkg.__metadata__ import pkg_path, sp
-from slpkg.colors import RED, GREEN, GREY, YELLOW, CYAN, ENDC
+from messages import template
+from init import Initialization
+from __metadata__ import (
+    pkg_path,
+    sp
+)
+from colors import (
+    RED,
+    GREEN,
+    GREY,
+    YELLOW,
+    CYAN,
+    ENDC
+)
 
-from slpkg.pkg.find import find_package
+from pkg.find import find_package
 
-from search import sbo_search_pkg
-from dependency import sbo_dependencies_pkg
+from sbo.search import sbo_search_pkg
+from sbo.dependency import sbo_dependencies_pkg
+
+from others.search import search_pkg
+from others.dependency import dependencies_pkg
 
 
-def track_dep(name):
+def track_dep(name, repo):
     '''
     View tree of dependencies and also
     highlight packages with color green
     if allready installed and color red
     if not installed.
     '''
+    init_repos = {
+        'sbo': Initialization().sbo,
+        'slack': Initialization().slack,
+        'rlw': Initialization().rlw,
+        'alien': Initialization().alien,
+        'slacky': Initialization().slacky
+    }
+    init_repos[repo]()
     sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
     sys.stdout.flush()
-    Initialization().sbo()
-    dependencies_list = sbo_dependencies_pkg(name)
+    if repo == "sbo":
+        dependencies_list = sbo_dependencies_pkg(name)
+        find_pkg = sbo_search_pkg(name)
+    else:
+        dependencies_list = dependencies_pkg(name, repo)
+        find_pkg = search_pkg(name, repo)
     sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
-    if sbo_search_pkg(name):
+    if find_pkg:
         requires, dependencies = [], []
         # Create one list for all packages
         for pkg in dependencies_list:
@@ -59,7 +84,7 @@ def track_dep(name):
         if dependencies == []:
             dependencies = ["No dependencies"]
         pkg_len = len(name) + 24
-        print    # new line at start
+        print("")    # new line at start
         template(pkg_len)
         print("| Package {0}{1}{2} dependencies :".format(CYAN, name, ENDC))
         template(pkg_len)
@@ -75,6 +100,6 @@ def track_dep(name):
             else:
                 print(" |")
                 print(" {0}{1}: {2}{3}{4}".format("+--", index, RED, pkg, ENDC))
-        print    # new line at end
+        print("")    # new line at end
     else:
         print("\nNo package was found to match\n")

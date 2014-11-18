@@ -30,9 +30,16 @@ from slpkg.messages import template
 from slpkg.blacklist import BlackList
 from slpkg.init import Initialization
 from slpkg.splitting import split_package
-from slpkg.colors import YELLOW, GREY, ENDC
-from slpkg.__metadata__ import slpkg_tmp, pkg_path, lib_path
-
+from slpkg.colors import (
+    YELLOW,
+    GREY,
+    ENDC
+)
+from slpkg.__metadata__ import (
+    pkg_path,
+    lib_path,
+    slpkg_tmp_packages
+)
 
 from slpkg.pkg.manager import PackageManager
 
@@ -48,7 +55,7 @@ class OthersUpgrade(object):
     def __init__(self, repo, version):
         self.repo = repo
         self.version = version
-        self.tmp_path = slpkg_tmp + "packages/"
+        self.tmp_path = slpkg_tmp_packages
         self.repo_init()
         repos = Repo()
         sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
@@ -78,10 +85,6 @@ class OthersUpgrade(object):
         '''
         Initialization repository if only use
         '''
-        if not os.path.exists(slpkg_tmp):
-            os.mkdir(slpkg_tmp)
-        if not os.path.exists(self.tmp_path):
-            os.mkdir(self.tmp_path)
         repository = {
             'rlw': Initialization().rlw,
             'alien': Initialization().alien,
@@ -96,12 +99,12 @@ class OthersUpgrade(object):
         try:
             dwn_links, upgrade_all, comp_sum, uncomp_sum = self.store()
             sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
-            print   # new line at start
+            print("")   # new line at start
             if upgrade_all:
                 template(78)
                 print("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
                     "| Package", " " * 17,
-                    "Version", " " * 12,
+                    "New version", " " * 8,
                     "Arch", " " * 4,
                     "Build", " " * 2,
                     "Repos", " " * 10,
@@ -123,12 +126,13 @@ class OthersUpgrade(object):
                 if read in ['Y', 'y']:
                     upgrade_all.reverse()
                     packages_dwn(self.tmp_path, dwn_links)
-                    upgrade(upgrade_all)
+                    upgrade(self.tmp_path, upgrade_all)
                     delete(self.tmp_path, upgrade_all)
             else:
-                print("There are no packages for upgrade\n")
+                print("No new updates in the repository '{0}'\n".format(
+                    self.repo))
         except KeyboardInterrupt:
-            print   # new line at exit
+            print("")   # new line at exit
             sys.exit()
 
     def store(self):
@@ -209,10 +213,11 @@ def msgs(upgrade_all):
     return msg_pkg
 
 
-def upgrade(upgrade_all):
+def upgrade(tmp_path, upgrade_all):
     '''
     Install or upgrade packages
     '''
     for pkg in upgrade_all:
+        package = (tmp_path + pkg).split()
         print("[ {0}upgrading{1} ] --> {2}".format(YELLOW, ENDC, pkg[:-4]))
-        PackageManager(pkg).upgrade()
+        PackageManager(package).upgrade()

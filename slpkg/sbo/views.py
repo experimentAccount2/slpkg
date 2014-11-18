@@ -27,16 +27,33 @@ import pydoc
 
 from slpkg.init import Initialization
 from slpkg.downloader import Download
-from slpkg.__metadata__ import tmp, build_path, pkg_path, sp
-from slpkg.colors import RED, GREEN, GREY, CYAN, YELLOW, ENDC
-from slpkg.messages import (pkg_found, pkg_not_found, template,
-                            build_FAILED)
+from slpkg.__metadata__ import (
+    tmp,
+    build_path,
+    pkg_path,
+    sp
+)
+from slpkg.colors import (
+    RED,
+    GREEN,
+    GREY,
+    CYAN,
+    YELLOW,
+    ENDC
+)
+from slpkg.messages import (
+    pkg_found,
+    pkg_not_found,
+    template,
+    build_FAILED
+)
 
 from slpkg.pkg.find import find_package
 from slpkg.pkg.build import BuildPackage
 from slpkg.pkg.manager import PackageManager
 
 from read import Read
+from remove import delete
 from greps import SBoGrep
 from compressed import SBoLink
 from search import sbo_search_pkg
@@ -46,16 +63,17 @@ class SBoNetwork(object):
 
     def __init__(self, name):
         self.name = name
+        Initialization().sbo()
         sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
         sys.stdout.flush()
-        Initialization().sbo()
         grep = SBoGrep(self.name)
         self.sbo_url = sbo_search_pkg(self.name)
-        self.sbo_desc = grep.description()[len(self.name) + 2:-1]
-        self.sbo_req = grep.requires()
-        self.source_dwn = grep.source().split()
-        self.sbo_dwn = SBoLink(self.sbo_url).tar_gz()
-        self.sbo_version = grep.version()
+        if self.sbo_url:
+            self.sbo_desc = grep.description()[len(self.name) + 2:-1]
+            self.source_dwn = grep.source().split()
+            self.sbo_req = grep.requires()
+            self.sbo_dwn = SBoLink(self.sbo_url).tar_gz()
+            self.sbo_version = grep.version()
         self.space = ("\n" * 50)
         sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
 
@@ -92,11 +110,13 @@ class SBoNetwork(object):
                     pydoc.pager(SlackBuild + fill)
                 elif choice in ['B', 'b']:
                     self.build(FAULT)
+                    delete(build_path)
                     break
                 elif choice in ['I', 'i']:
                     if not find_package(prgnam + sp, pkg_path):
                         self.build(FAULT)
                         self.install(prgnam)
+                        delete(build_path)
                         break
                     else:
                         template(78)
@@ -113,7 +133,7 @@ class SBoNetwork(object):
         '''
         View slackbuild.org
         '''
-        print   # new line at start
+        print("")   # new line at start
         template(78)
         print("| {0}Package {1}{2}{3} --> {4}".format(GREEN, CYAN, args[0],
                                                       GREEN, ENDC + args[1]))
@@ -160,7 +180,7 @@ class SBoNetwork(object):
         try:
             choice = raw_input(" {0}Choose an option: {1}".format(GREY, ENDC))
         except KeyboardInterrupt:
-            print   # new line at exit
+            print("")   # new line at exit
             sys.exit()
         return choice
 
@@ -188,8 +208,6 @@ class SBoNetwork(object):
         if FAULT:
             print("\n{0}The package {1} {2}\n".format(RED, FAULT, ENDC))
             sys.exit()
-        if not os.path.exists(build_path):
-            os.mkdir(build_path)
         sources = []
         os.chdir(build_path)
         Download(build_path, self.sbo_dwn).start()

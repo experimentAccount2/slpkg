@@ -25,9 +25,22 @@ import os
 import sys
 import subprocess
 
-from slpkg.messages import pkg_not_found, template
-from slpkg.colors import RED, GREEN, CYAN, GREY, ENDC
-from slpkg.__metadata__ import pkg_path, sp, log_path
+from slpkg.messages import (
+    pkg_not_found,
+    template
+)
+from slpkg.colors import (
+    RED,
+    GREEN,
+    CYAN,
+    GREY,
+    ENDC
+)
+from slpkg.__metadata__ import (
+    pkg_path,
+    sp,
+    log_path
+)
 
 from find import find_package
 
@@ -70,9 +83,8 @@ class PackageManager(object):
         '''
         for pkg in self.binary:
             try:
-                print(
-                    subprocess.check_output("upgradepkg --reinstall {0}".format(
-                        pkg), shell=True))
+                print(subprocess.check_output(
+                    "upgradepkg --reinstall {0}".format(pkg), shell=True))
                 print("Completed!\n")
             except subprocess.CalledProcessError:
                 self.not_found("Can't reinstall", self.binary, pkg)
@@ -93,7 +105,7 @@ class PackageManager(object):
         dependencies, rmv_list = [], []
         removed = self.view_removed(self.binary)
         if not removed:
-            print   # new line at end
+            print("")   # new line at end
         else:
             msg = "package"
             if len(removed) > 1:
@@ -103,7 +115,7 @@ class PackageManager(object):
                     "\nAre you sure to remove {0} {1} [Y/n]? ".format(
                         str(len(removed)), msg))
             except KeyboardInterrupt:
-                print   # new line at exit
+                print("")   # new line at exit
                 sys.exit()
             if remove_pkg in ['y', 'Y']:
                 for rmv in removed:
@@ -117,7 +129,7 @@ class PackageManager(object):
                                 "\nRemove dependencies (maybe used by other "
                                 "packages) [Y/n]? ")
                         except KeyboardInterrupt:
-                            print  # new line at exit
+                            print("")  # new line at exit
                             sys.exit()
                         if remove_dep in ['y', 'Y']:
                             rmv_list += self.rmv_deps(self.binary,
@@ -157,7 +169,7 @@ class PackageManager(object):
         with open(path + package, "r") as f:
             dependencies = f.read().split()
             f.close()
-        print   # new line at start
+        print("")   # new line at start
         template(78)
         print("| Found dependencies for package {0}:".format(package))
         template(78)
@@ -205,7 +217,7 @@ class PackageManager(object):
             else:
                 print("| Package {0} not found".format(pkg))
         template(78)
-        print   # new line at end
+        print("")   # new line at end
 
     def find(self):
         '''
@@ -253,7 +265,7 @@ class PackageManager(object):
                 with open(pkg_path + "".join(find), "r") as package:
                     for line in package:
                         print(line).strip()
-                    print   # new line per file
+                    print("")   # new line per file
             else:
                 message = "Can't dislpay"
                 if len(self.binary) > 1:
@@ -292,9 +304,9 @@ class PackageManager(object):
                                          "continue... ".format(CYAN, ENDC))
                         if read in ['Q', 'q']:
                             break
-                        print   # new line after page
+                        print("")   # new line after page
                         page += row
-            print   # new line at end
+            print("")   # new line at end
         except KeyboardInterrupt:
-            print   # new line at exit
+            print("")   # new line at exit
             sys.exit()
