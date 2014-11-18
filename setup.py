@@ -86,10 +86,10 @@ if "install" in sys.argv:
     if not os.path.exists(conf_path):
         os.system("mkdir -p {0}".format(conf_path))
     # slpkg.conf file
-    if not os.isfile(conf_path + conf_file):
+    if not os.path.isfile(conf_path + conf_file):
         print("Installing slpkg configuration file")
         shutil.copy2(conf_file, conf_path)
     # blacklist file
-    if not os.isfile(conf_path + black_file):
+    if not os.path.isfile(conf_path + black_file):
         print("Installing blacklist configuration file")
         shutil.copy2(black_file, conf_path)

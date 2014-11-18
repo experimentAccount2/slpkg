@@ -29,7 +29,7 @@ from messages import s_user
 
 __all__ = "slpkg"
 __author__ = "dslackw"
-__version_info__ = (2, 0, 5)
+__version_info__ = (2, 0, 6)
 __version__ = "{0}.{1}.{2}".format(*__version_info__)
 __license__ = "GNU General Public License v3 (GPLv3)"
 __email__ = "d.zlatanidis@gmail.com"
