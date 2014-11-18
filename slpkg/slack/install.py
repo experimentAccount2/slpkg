@@ -28,9 +28,23 @@ from sizes import units
 from blacklist import BlackList
 from init import Initialization
 from splitting import split_package
-from messages import pkg_not_found, template
-from colors import RED, GREEN, CYAN, YELLOW, GREY, ENDC
-from __metadata__ import pkg_path, lib_path, slpkg_tmp_packages
+from messages import (
+    pkg_not_found,
+    template
+)
+from colors import (
+    RED,
+    GREEN,
+    CYAN,
+    YELLOW,
+    GREY,
+    ENDC
+)
+from __metadata__ import (
+    pkg_path,
+    lib_path,
+    slpkg_tmp_packages
+)
 
 from pkg.find import find_package
 from pkg.manager import PackageManager

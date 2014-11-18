@@ -25,8 +25,18 @@ import sys
 
 from messages import template
 from init import Initialization
-from __metadata__ import pkg_path, sp
-from colors import RED, GREEN, GREY, YELLOW, CYAN, ENDC
+from __metadata__ import (
+    pkg_path,
+    sp
+)
+from colors import (
+    RED,
+    GREEN,
+    GREY,
+    YELLOW,
+    CYAN,
+    ENDC
+)
 
 from pkg.find import find_package
 

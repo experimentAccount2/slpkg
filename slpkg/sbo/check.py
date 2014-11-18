@@ -32,9 +32,23 @@ from toolbar import status
 from init import Initialization
 from downloader import Download
 from splitting import split_package
-from messages import template, build_FAILED
-from colors import RED, GREEN, GREY, YELLOW, ENDC
-from __metadata__ import tmp, pkg_path, build_path, sp
+from messages import (
+    template,
+    build_FAILED
+)
+from colors import (
+    RED,
+    GREEN,
+    GREY,
+    YELLOW,
+    ENDC
+)
+from __metadata__ import (
+    tmp,
+    pkg_path,
+    build_path,
+    sp
+)
 
 from greps import SBoGrep
 from remove import delete

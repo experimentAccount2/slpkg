@@ -24,9 +24,9 @@
 import os
 
 from toolbar import status
+from init import Initialization
 from __metadata__ import lib_path
 from splitting import split_package
-from init import Initialization
 from slack.slack_version import slack_ver
 
 

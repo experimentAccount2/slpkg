@@ -11,9 +11,9 @@
 
 Latest Release:
 
-- Version: 2.0.4
+- Version: 2.0.5
 - `Package <https://sourceforge.net/projects/slpkg/files/slpkg/binary/>`_
-- `Source <https://github.com/dslackw/slpkg/archive/v2.0.4.tar.gz>`_
+- `Source <https://github.com/dslackw/slpkg/archive/v2.0.5.tar.gz>`_
 - `CHANGELOG <https://github.com/dslackw/slpkg/blob/master/CHANGELOG>`_
  
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/logo.png
@@ -102,8 +102,8 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.0.4.tar.gz
-    $ cd slpkg-2.0.4
+    $ tar xvf slpkg-2.0.5.tar.gz
+    $ cd slpkg-2.0.5
     $ ./install.sh
 
 Using `pip <https://pip.pypa.io/en/latest/>`_ :
@@ -123,7 +123,7 @@ Download binary package from `SourceForge <https://sourceforge.net/projects/slpk
 Slackware Current
 -----------------
 
-For Slackware 'current' users must change the VERSION in /etc/slpkg.conf file.
+For Slackware 'current' users must change the variable VERSION in /etc/slpkg.conf file.
 
 Command Line Tool Usage
 -----------------------
@@ -137,31 +137,24 @@ Command Line Tool Usage
       -v, --version                             print version and exit
       -a, script.tar.gz [source...]             auto build SBo packages
       -b, --list, [package...] --add, --remove  add, remove packages in blacklist
-      -q, --list, [package...] --add, --remove  add, remove packages in queue
-          --build, --install, --build-install   build or install from queue
-      -l, <repository>, all, noarch             list of installed packages
-      -c, <repository> --upgrade                check for updated packages
-      -s, <repository> <package>                download, build & install
-      -t, <repository> <package>                tracking dependencies
-      -p, <repository> <package> --color=       print package description
-          red, green, yellow, cyan, grey        colors support
-      -f, <package>                             find installed packages
-      -n, <package>                             view packages from SBo
+      -q, --list, [package...] --add, --remove  add, remove SBo packages in queue
+          --build, --install, --build-install   build or install packages from queue
+      -g, --config, --config=[editor]           configuration file management
+      -l, [repository], all, noarch             list of installed packages
+      -c, [repository] --upgrade                check for updated packages
+      -s, [repository] [package]                download, build & install
+      -t, [repository] [package]                tracking dependencies
+      -p, [repository] [package] --color=[]     print package description
+      -f, [package]                             find installed packages
+      -n, [package]                             view packages from SBo
       -i, [package...]                          install binary packages
       -u, [package...]                          upgrade binary packages
       -o, [package...]                          reinstall binary packages
       -r, [package...]                          remove binary packages
       -d, [package...]                          display the contents
-    
-    Note: '-q' options is working only for SBo repository
-      
-    Repositories:
-          Slackware = slack
-          Alien = alien
-          SlackBuilds = sbo
-          Slacky = slacky
-          Robby's = rlw
-         
+
+    Repositories: <slack, sbo, alien, slacky, rlw>
+    Colors = [red, green, yellow, cyan, grey]         
 
 Slpkg Examples
 --------------

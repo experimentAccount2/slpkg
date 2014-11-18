@@ -30,7 +30,11 @@ from messages import template
 from blacklist import BlackList
 from init import Initialization
 from splitting import split_package
-from colors import YELLOW, GREY, ENDC
+from colors import (
+    YELLOW,
+    GREY,
+    ENDC
+)
 from __metadata__ import (
     pkg_path,
     lib_path,

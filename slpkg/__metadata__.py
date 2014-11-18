@@ -22,9 +22,10 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import os
+import getpass
 
-from config import slpkg_conf
-
+from config import config_file
+from messages import s_user
 
 __all__ = "slpkg"
 __author__ = "dslackw"
@@ -33,6 +34,7 @@ __version__ = "{0}.{1}.{2}".format(*__version_info__)
 __license__ = "GNU General Public License v3 (GPLv3)"
 __email__ = "d.zlatanidis@gmail.com"
 
+s_user(getpass.getuser())
 
 # temponary path
 tmp = "/tmp/"
@@ -42,7 +44,7 @@ if not os.path.exists("/etc/slpkg/"):
 
 if not os.path.isfile("/etc/slpkg/slpkg.conf"):
     with open("/etc/slpkg/slpkg.conf", "w") as conf:
-        for line in slpkg_conf:
+        for line in config_file():
             conf.write(line)
         conf.close()
 

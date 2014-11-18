@@ -27,10 +27,26 @@ import pydoc
 
 from init import Initialization
 from downloader import Download
-from __metadata__ import tmp, build_path, pkg_path, sp
-from colors import RED, GREEN, GREY, CYAN, YELLOW, ENDC
-from messages import (pkg_found, pkg_not_found, template,
-                      build_FAILED)
+from __metadata__ import (
+    tmp,
+    build_path,
+    pkg_path,
+    sp
+)
+from colors import (
+    RED,
+    GREEN,
+    GREY,
+    CYAN,
+    YELLOW,
+    ENDC
+)
+from messages import (
+    pkg_found,
+    pkg_not_found,
+    template,
+    build_FAILED
+)
 
 from pkg.find import find_package
 from pkg.build import BuildPackage
@@ -52,11 +68,12 @@ class SBoNetwork(object):
         sys.stdout.flush()
         grep = SBoGrep(self.name)
         self.sbo_url = sbo_search_pkg(self.name)
-        self.sbo_desc = grep.description()[len(self.name) + 2:-1]
-        self.sbo_req = grep.requires()
-        self.source_dwn = grep.source().split()
-        self.sbo_dwn = SBoLink(self.sbo_url).tar_gz()
-        self.sbo_version = grep.version()
+        if self.sbo_url:
+            self.sbo_desc = grep.description()[len(self.name) + 2:-1]
+            self.source_dwn = grep.source().split()
+            self.sbo_req = grep.requires()
+            self.sbo_dwn = SBoLink(self.sbo_url).tar_gz()
+            self.sbo_version = grep.version()
         self.space = ("\n" * 50)
         sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
 

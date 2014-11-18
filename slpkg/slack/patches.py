@@ -30,8 +30,15 @@ from url_read import URL
 from messages import template
 from blacklist import BlackList
 from splitting import split_package
-from colors import GREY, YELLOW, ENDC
-from __metadata__ import pkg_path, slpkg_tmp_patches
+from colors import (
+    GREY,
+    YELLOW,
+    ENDC
+)
+from __metadata__ import (
+    pkg_path,
+    slpkg_tmp_patches
+)
 
 from pkg.manager import PackageManager
 

@@ -30,9 +30,20 @@ import tarfile
 import subprocess
 
 from checksum import md5sum
-from colors import RED, GREEN, ENDC
-from messages import pkg_not_found, template
-from __metadata__ import log_path, sbo_build_log, sbo_check_md5
+from colors import (
+    RED,
+    GREEN,
+    ENDC
+)
+from messages import (
+    pkg_not_found,
+    template
+)
+from __metadata__ import (
+    log_path,
+    sbo_build_log,
+    sbo_check_md5
+)
 
 from sbo.greps import SBoGrep
 
@@ -97,7 +108,7 @@ class BuildPackage(object):
         except (OSError, IOError):
             pkg_not_found("\n", self.prgnam, "Wrong file", "\n")
         except KeyboardInterrupt:
-            print   # new line at exit
+            print("")   # new line at exit
             sys.exit()
 
 
@@ -123,7 +134,7 @@ def check_md5(sbo_md5, src):
         print("| MD5SUM check for {0} [ {1}PASSED{2} ]".format(src, GREEN,
                                                                ENDC))
         template(78)
-        print   # new line after pass checksum
+        print("")   # new line after pass checksum
 
 
 def log_head(path, log_file, log_time):

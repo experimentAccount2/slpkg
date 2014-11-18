@@ -28,12 +28,28 @@ from toolbar import status
 from init import Initialization
 from downloader import Download
 from splitting import split_package
-from __metadata__ import (tmp, pkg_path, build_path,
-                          log_path, lib_path, sp)
-
-from colors import RED, GREEN, GREY, YELLOW, CYAN, ENDC
-from messages import (pkg_found, template, build_FAILED,
-                      pkg_not_found)
+from __metadata__ import (
+    tmp,
+    pkg_path,
+    build_path,
+    log_path,
+    lib_path,
+    sp
+)
+from colors import (
+    RED,
+    GREEN,
+    GREY,
+    YELLOW,
+    CYAN,
+    ENDC
+)
+from messages import (
+    pkg_found,
+    template,
+    build_FAILED,
+    pkg_not_found
+)
 
 from pkg.find import find_package
 from pkg.build import BuildPackage

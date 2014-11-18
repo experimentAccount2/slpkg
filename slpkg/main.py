@@ -32,7 +32,11 @@ from tracking import track_dep
 from blacklist import BlackList
 from version import prog_version
 from arguments import options, usage
-from __metadata__ import path, repositories, slack_rel
+from __metadata__ import (
+    path,
+    repositories,
+    slack_rel
+)
 
 from pkg.build import BuildPackage
 from pkg.manager import PackageManager
@@ -168,7 +172,7 @@ def main():
         PackageManager(args[1:]).remove()
     elif len(args) > 1 and args[0] == "-f":
         PackageManager(args[1:]).find()
-    elif len(args) == 3 and args[0] == "-p":
+    elif len(args) == 3 and args[0] == "-p" and args[1] in repositories:
         PkgDesc(args[2], args[1], "").view()
     elif len(args) == 4 and args[0] == "-p" and args[3].startswith("--color="):
         colors = ['red', 'green', 'yellow', 'cyan', 'grey']

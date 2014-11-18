@@ -22,7 +22,12 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-from colors import RED, CYAN, ENDC
+
+from colors import (
+    RED,
+    CYAN,
+    ENDC
+)
 
 
 def pkg_not_found(bol, pkg, message, eol):

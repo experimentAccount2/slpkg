@@ -25,9 +25,22 @@ import os
 import sys
 import subprocess
 
-from messages import pkg_not_found, template
-from colors import RED, GREEN, CYAN, GREY, ENDC
-from __metadata__ import pkg_path, sp, log_path
+from messages import (
+    pkg_not_found,
+    template
+)
+from colors import (
+    RED,
+    GREEN,
+    CYAN,
+    GREY,
+    ENDC
+)
+from __metadata__ import (
+    pkg_path,
+    sp,
+    log_path
+)
 
 from find import find_package
 
@@ -70,9 +83,8 @@ class PackageManager(object):
         '''
         for pkg in self.binary:
             try:
-                print(
-                    subprocess.check_output("upgradepkg --reinstall {0}".format(
-                        pkg), shell=True))
+                print(subprocess.check_output(
+                    "upgradepkg --reinstall {0}".format(pkg), shell=True))
                 print("Completed!\n")
             except subprocess.CalledProcessError:
                 self.not_found("Can't reinstall", self.binary, pkg)

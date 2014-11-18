@@ -29,11 +29,24 @@ from repositories import Repo
 from init import Initialization
 from blacklist import BlackList
 from splitting import split_package
-from messages import pkg_not_found, template
-from colors import RED, GREEN, CYAN, YELLOW, GREY, ENDC
-from __metadata__ import (pkg_path, lib_path, log_path,
-                          slpkg_tmp_packages)
-
+from messages import (
+    pkg_not_found,
+    template
+)
+from colors import (
+    RED,
+    GREEN,
+    CYAN,
+    YELLOW,
+    GREY,
+    ENDC
+)
+from __metadata__ import (
+    pkg_path,
+    lib_path,
+    log_path,
+    slpkg_tmp_packages
+)
 
 from pkg.find import find_package
 from pkg.manager import PackageManager

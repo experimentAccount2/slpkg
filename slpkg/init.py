@@ -27,8 +27,14 @@ import sys
 from url_read import URL
 from repositories import Repo
 from file_size import FileSize
-from __metadata__ import (log_path, lib_path, slack_rel,
-                          build_path, slpkg_tmp_packages, slpkg_tmp_patches)
+from __metadata__ import (
+    log_path,
+    lib_path,
+    slack_rel,
+    build_path,
+    slpkg_tmp_packages,
+    slpkg_tmp_patches
+)
 
 from slack.mirrors import mirrors
 from slack.slack_version import slack_ver

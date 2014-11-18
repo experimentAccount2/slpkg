@@ -1,3 +1,15 @@
+Version 2.0.5
+15-11-2014
+
+[Feature] - Add /etc/slpkg.conf file.
+          - Move "--current" switch in /etc/slpkg.conf file.
+          - Add local PACKAGES.TXT for Slackware repository.
+          - Add options to view package description.
+          - Add all repositories in tracking dependencies options '-t'.
+          - Add configuration file managment
+
+[Updated] - Bugfix upgrading binary packages.
+
 Version 2.0.4
 07-11-2014
 

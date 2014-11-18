@@ -40,15 +40,15 @@ def options():
         "in queue",
         "      --build, --install, --build-install   build or install packages "
         "from queue",
-        "  -g, --config, --config=<editor>           configuration file " +
+        "  -g, --config, --config=[editor]           configuration file " +
         "management",
-        "  -l, <repository>, all, noarch             list of installed " +
+        "  -l, [repository], all, noarch             list of installed " +
         "packages",
-        "  -c, <repository> --upgrade                check for updated " +
+        "  -c, [repository] --upgrade                check for updated " +
         "packages",
-        "  -s, <repository> [package]                download, build & install",
-        "  -t, <repository> [package]                tracking dependencies",
-        "  -p, <repository> [package] --color=[]     print package description",
+        "  -s, [repository] [package]                download, build & install",
+        "  -t, [repository] [package]                tracking dependencies",
+        "  -p, [repository] [package] --color=[]     print package description",
         "  -f, [package]                             find installed packages",
         "  -n, [package]                             view packages from SBo",
         "  -i, [package...]                          install binary packages",
@@ -70,15 +70,14 @@ def usage():
         "             [-b --list, [...] --add, --remove]",
         "             [-q --list, [...] --add, --remove]",
         "             [   --build, --install, --build-install]",
-        "             [-g  --config, --config=<editor>]",
-        "             [-l <repository>, all, noarch]",
-        "             [-c <repository> --upgrade]",
-        "             [-s <repository> <package>]",
-        "             [-t <repository> <package>]",
-        "             [-p <repository> <package> --color=]",
-        "             [   red, green, yellow, cyan, grey]",
+        "             [-g --config, --config=[editor]]",
+        "             [-l [repository], all, noarch]",
+        "             [-c [repository] --upgrade]",
+        "             [-s [repository] [package]",
+        "             [-t [repository] [package]",
+        "             [-p [repository] [package] --color=[]]",
         "             [-f] [-n] [-i [...]] [-u [...]]",
-        "             [-o  [...]] [-r [...]] [-d [...]]\n"
+        "             [-o  [...]] [-r [...]] [-d [...]]\n",
         "For more information try 'slpkg --help'\n"
     ]
     for usg in view:

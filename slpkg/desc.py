@@ -24,8 +24,19 @@
 
 from init import Initialization
 from messages import pkg_not_found
-from colors import RED, GREEN, YELLOW, CYAN, GREY,  ENDC
-from __metadata__ import pkg_path, lib_path, repositories
+from colors import (
+    RED,
+    GREEN,
+    YELLOW,
+    CYAN,
+    GREY,
+    ENDC
+)
+from __metadata__ import (
+    pkg_path,
+    lib_path,
+    repositories
+)
 
 from pkg.find import find_package
 

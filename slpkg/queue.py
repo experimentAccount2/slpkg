@@ -24,8 +24,16 @@
 import os
 
 from downloader import Download
-from colors import GREEN, RED, ENDC
-from __metadata__ import lib_path, build_path, tmp
+from colors import (
+    GREEN,
+    RED,
+    ENDC
+)
+from __metadata__ import (
+    lib_path,
+    build_path,
+    tmp
+)
 
 from sbo.greps import SBoGrep
 from pkg.find import find_package
