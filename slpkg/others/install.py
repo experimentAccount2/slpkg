@@ -45,7 +45,8 @@ from __metadata__ import (
     pkg_path,
     lib_path,
     log_path,
-    slpkg_tmp_packages
+    slpkg_tmp_packages,
+    default_answer
 )
 
 from pkg.find import find_package
@@ -98,6 +99,10 @@ class OthersInstall(object):
         '''
         Initialization repository if only use
         '''
+        # initialization Slackware repository needed to compare
+        # slacky dependencies
+        if not os.path.isfile(lib_path + "slack_repo/PACKAGES.TXT"):
+            Initialization().slack()
         repository = {
             "rlw": Initialization().rlw,
             "alien": Initialization().alien,
@@ -142,8 +147,12 @@ class OthersInstall(object):
                     print("After this process, {0} {1} of additional disk "
                           "space will be used.{2}".format(size[1], unit[1],
                                                           ENDC))
-                    read = raw_input("\nWould you like to install [Y/n]? ")
-                    if read in ['Y', 'y']:
+                    if default_answer == "y":
+                        answer = default_answer
+                    else:
+                        answer = raw_input("\nWould you like to continue " +
+                                           "[Y/n]? ")
+                    if answer in ['y', 'Y']:
                         install_all.reverse()
                         packages_dwn(self.tmp_path, dwn_links)
                         install(self.tmp_path, install_all)

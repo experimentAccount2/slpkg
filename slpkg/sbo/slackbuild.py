@@ -34,6 +34,7 @@ from __metadata__ import (
     build_path,
     log_path,
     lib_path,
+    default_answer,
     sp
 )
 from colors import (
@@ -118,8 +119,9 @@ class SBoInstall(object):
                       "{3} {4}".format(count[1], msg[0], idata[2], count[0],
                                        msg[1]))
                 print("will be upgraded.{0}\n".format(ENDC))
-                read = arch_support(idata[3], self.UNST, idata[2], dependencies)
-                if read in['y', 'Y']:
+                answer = arch_support(idata[3], self.UNST, idata[2],
+                                      dependencies)
+                if answer in['y', 'Y']:
                     # installs = b_ins[0]
                     # upgraded = b_ins[1]
                     # versions = b_ins[2]
@@ -293,12 +295,14 @@ def arch_support(source, support, package_sum, dependencies):
     '''
     if source in support:
         print("{0}The package {1}{2}\n".format(RED, source, ENDC))
-        read = ""
+        answer = ""
     elif package_sum == len(dependencies):
-        read = ""
+        answer = ""
+    elif default_answer == "y":
+        answer = default_answer
     else:
-        read = raw_input("Do you want to continue [Y/n]? ")
-    return read
+        answer = raw_input("Do you want to continue [Y/n]? ")
+    return answer
 
 
 def dwn_sources(sources):

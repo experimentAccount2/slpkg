@@ -24,27 +24,28 @@
 import os
 import sys
 
-from sizes import units
-from repositories import Repo
-from messages import template
-from blacklist import BlackList
-from init import Initialization
-from splitting import split_package
-from colors import (
+from slpkg.sizes import units
+from slpkg.repositories import Repo
+from slpkg.messages import template
+from slpkg.blacklist import BlackList
+from slpkg.init import Initialization
+from slpkg.splitting import split_package
+from slpkg.colors import (
     YELLOW,
     GREY,
     ENDC
 )
-from __metadata__ import (
+from slpkg.__metadata__ import (
     pkg_path,
     lib_path,
-    slpkg_tmp_packages
+    slpkg_tmp_packages,
+    default_answer
 )
 
-from pkg.manager import PackageManager
+from slpkg.pkg.manager import PackageManager
 
-from slack.remove import delete
-from slack.slack_version import slack_ver
+from slpkg.slack.remove import delete
+from slpkg.slack.slack_version import slack_ver
 
 from greps import repo_data
 from download import packages_dwn
@@ -122,8 +123,11 @@ class OthersUpgrade(object):
                                                                 unit[0]))
                 print("After this process, {0} {1} of additional disk "
                       "space will be used.{2}".format(size[1], unit[1], ENDC))
-                read = raw_input("\nWould you like to upgrade [Y/n]? ")
-                if read in ['Y', 'y']:
+                if default_answer == "y":
+                    answer = default_answer
+                else:
+                    answer = raw_input("\nWould you like to continue [Y/n]? ")
+                if answer in ['y', 'Y']:
                     upgrade_all.reverse()
                     packages_dwn(self.tmp_path, dwn_links)
                     upgrade(self.tmp_path, upgrade_all)

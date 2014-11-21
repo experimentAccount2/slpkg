@@ -37,7 +37,7 @@ class URL(object):
         try:
             f = urllib2.urlopen(self.link)
             return f.read()
-        except urllib2.URLError:
+        except (urllib2.URLError, ValueError):
             print("\nslpkg: error: connection refused\n")
             sys.exit()
         except KeyboardInterrupt:

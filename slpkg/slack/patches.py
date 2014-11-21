@@ -37,7 +37,8 @@ from colors import (
 )
 from __metadata__ import (
     pkg_path,
-    slpkg_tmp_patches
+    slpkg_tmp_patches,
+    default_answer
 )
 
 from pkg.manager import PackageManager
@@ -94,8 +95,11 @@ class Patches(object):
                                                                 unit[0]))
                 print("After this process, {0} {1} of additional disk space "
                       "will be used.{2}".format(size[1], unit[1], ENDC))
-                read = raw_input("\nWould you like to upgrade [Y/n]? ")
-                if read in ['y', 'Y']:
+                if default_answer == "y":
+                    answer = default_answer
+                else:
+                    answer = raw_input("\nWould you like to continue [Y/n]? ")
+                if answer in ['y', 'Y']:
                     slack_dwn(self.patch_path, dwn_links)
                     upgrade(self.patch_path, upgrade_all)
                     kernel(upgrade_all)

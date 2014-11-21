@@ -47,6 +47,7 @@ from __metadata__ import (
     tmp,
     pkg_path,
     build_path,
+    default_answer,
     sp
 )
 
@@ -97,8 +98,11 @@ class SBoCheck(object):
                     # message install = msg[0]
                     # message upgrade = msg[1]
                     count, msg = view_packages(data[1], data[2], data[3])
-                    read = raw_input("Would you like to upgrade [Y/n]? ")
-                    if read in ['y', 'Y']:
+                    if default_answer == "y":
+                        answer = default_answer
+                    else:
+                        answer = raw_input("Would you like to continue [Y/n]? ")
+                    if answer in ['y', 'Y']:
                         os.chdir(build_path)
                         for name, version in zip(data[0], data[2]):
                             prgnam = ("{0}-{1}".format(name, version))

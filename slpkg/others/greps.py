@@ -24,10 +24,11 @@
 import os
 
 from toolbar import status
-from init import Initialization
 from __metadata__ import lib_path
 from splitting import split_package
 from slack.slack_version import slack_ver
+
+len_deps = 0
 
 
 def repo_data(PACKAGES_TXT, step, repo, version):
@@ -108,8 +109,6 @@ class Requires(object):
     def __init__(self, name, repo):
         self.name = name
         self.repo = repo
-        if not os.path.isfile(lib_path + "slack_repo/PACKAGES.TXT"):
-            Initialization().slack()
         lib = lib_path + "slack_repo/PACKAGES.TXT"
         f = open(lib, "r")
         self.SLACK_PACKAGES_TXT = f.read()
@@ -177,8 +176,10 @@ class Requires(object):
         that exist in the distribution Slackware, this feature is intended
         to remove them and return only those needed.
         '''
+        global len_deps
+        len_deps += len(dependencies)
         name, slacky_deps = [], []
-        index, toolbar_width, step = 0, 700, 1800
+        index, toolbar_width, step = 0, 700, (len_deps * 500)
         for line in self.SLACK_PACKAGES_TXT.splitlines():
             index += 1
             toolbar_width = status(index, toolbar_width, step)

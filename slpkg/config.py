@@ -82,7 +82,15 @@ def config_file():
         "DEL_BUILD=off\n",
         "\n",
         "# Keep build log file if SBO_BUILD_LOG is 'on'.\n",
-        "SBO_BUILD_LOG=on\n"
+        "SBO_BUILD_LOG=on\n",
+        "\n",
+        "# Define default answer to slpkg questions.\n",
+        "# Choose 'y' if you do not want to questions.\n",
+        "DEFAULT_ANSWER=n\n",
+        "\n",
+        "# Define default answer for the removal of dependencies.\n",
+        "# Choose 'y' if you do not want to question.\n",
+        "REMOVE_DEPS_ANSWER=n\n"
     ]
 
     if not os.path.exists("/etc/slpkg"):
@@ -113,7 +121,8 @@ class Config(object):
             'PATCHES',
             'DEL_ALL',
             'DEL_BUILD',
-            'SBO_BUILD_LOG'
+            'SBO_BUILD_LOG',
+            'DEFAULT_ANSWER'
         ]
         f = open(self.config_file, "r")
         read_conf = f.read()
@@ -129,5 +138,4 @@ class Config(object):
         '''
         Edit configuration file
         '''
-        subprocess.call("{0} {1}".format(editor, self.config_file),
-                        shell=True)
+        subprocess.call("{0} {1}".format(editor, self.config_file), shell=True)

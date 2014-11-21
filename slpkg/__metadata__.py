@@ -29,7 +29,7 @@ from messages import s_user
 
 __all__ = "slpkg"
 __author__ = "dslackw"
-__version_info__ = (2, 0, 5)
+__version_info__ = (2, 0, 6)
 __version__ = "{0}.{1}.{2}".format(*__version_info__)
 __license__ = "GNU General Public License v3 (GPLv3)"
 __email__ = "d.zlatanidis@gmail.com"
@@ -61,6 +61,8 @@ del_all = "on"
 sbo_check_md5 = "on"
 del_build = "off"
 sbo_build_log = "on"
+default_answer = "n"
+remove_deps_answer = "n"
 
 for line in conf.splitlines():
     line = line.lstrip()
@@ -82,6 +84,10 @@ for line in conf.splitlines():
         sbo_check_md5 = line[14:].strip()
     if line.startswith("SBO_BUILD_LOG"):
         sbo_build_log = line[14:].strip()
+    if line.startswith("DEFAULT_ANSWER"):
+        default_answer = line[15:].strip()
+    if line.startswith("REMOVE_DEPS_ANSWER"):
+        remove_deps_answer = line[19:].strip()
 
 # repositories
 repositories = [
