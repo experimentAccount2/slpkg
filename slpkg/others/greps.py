@@ -26,7 +26,6 @@ import os
 from slpkg.toolbar import status
 from slpkg.__metadata__ import lib_path
 from slpkg.splitting import split_package
-
 from slpkg.slack.slack_version import slack_ver
 
 len_deps = 0
@@ -178,6 +177,7 @@ class Requires(object):
         to remove them and return only those needed.
         '''
         global len_deps
+        len_deps += len(dependencies)
         name, slacky_deps = [], []
         index, toolbar_width, step = 0, 700, (len_deps * 500)
         for line in self.SLACK_PACKAGES_TXT.splitlines():

@@ -39,10 +39,12 @@ from slpkg.colors import (
 from slpkg.__metadata__ import (
     pkg_path,
     sp,
-    log_path
+    log_path,
+    default_answer,
+    remove_deps_answer
 )
 
-from find import find_package
+from slpkg.pkg.find import find_package
 
 
 class PackageManager(object):
@@ -111,9 +113,12 @@ class PackageManager(object):
             if len(removed) > 1:
                 msg = msg + "s"
             try:
-                remove_pkg = raw_input(
-                    "\nAre you sure to remove {0} {1} [Y/n]? ".format(
-                        str(len(removed)), msg))
+                if default_answer == "y":
+                    remove_pkg = default_answer
+                else:
+                    remove_pkg = raw_input(
+                        "\nAre you sure to remove {0} {1} [Y/n]? ".format(
+                            str(len(removed)), msg))
             except KeyboardInterrupt:
                 print("")   # new line at exit
                 sys.exit()
@@ -125,9 +130,12 @@ class PackageManager(object):
                     if os.path.isfile(dep_path + rmv):
                         dependencies = self.view_deps(dep_path, rmv)
                         try:
-                            remove_dep = raw_input(
-                                "\nRemove dependencies (maybe used by other "
-                                "packages) [Y/n]? ")
+                            if remove_deps_answer == "y":
+                                remove_dep = remove_deps_answer
+                            else:
+                                remove_dep = raw_input(
+                                    "\nRemove dependencies (maybe used by "
+                                    "other packages) [Y/n]? ")
                         except KeyboardInterrupt:
                             print("")  # new line at exit
                             sys.exit()

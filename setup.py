@@ -26,7 +26,11 @@ import sys
 import gzip
 import shutil
 
-from slpkg.__metadata__ import __version__, __email__, __author__
+from slpkg.__metadata__ import (
+    __version__,
+    __email__,
+    __author__
+)
 
 try:
     from setuptools import setup
@@ -81,15 +85,13 @@ if "install" in sys.argv:
         os.chmod(man_path, int("444", 8))
 
     conf_path = "/etc/slpkg/"
-    conf_file = "conf/slpkg.conf"
-    black_file = "conf/blacklist"
+    conf_file = [
+        'conf/slpkg.conf',
+        'conf/blacklist',
+        'conf/slackware-mirrors'
+    ]
     if not os.path.exists(conf_path):
         os.system("mkdir -p {0}".format(conf_path))
-    # slpkg.conf file
-    if not os.path.isfile(conf_path + conf_file):
-        print("Installing slpkg configuration file")
-        shutil.copy2(conf_file, conf_path)
-    # blacklist file
-    if not os.path.isfile(conf_path + black_file):
-        print("Installing blacklist configuration file")
-        shutil.copy2(black_file, conf_path)
+    for conf in conf_file:
+        print("Installing '{0}' file".format(conf.split("/")[-1]))
+        shutil.copy2(conf, conf_path)

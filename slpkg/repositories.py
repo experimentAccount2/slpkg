@@ -22,6 +22,9 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+import os
+
+
 class Repo(object):
 
     def __init__(self):
@@ -31,7 +34,16 @@ class Repo(object):
         '''
         Official slackware repository
         '''
-        return "http://mirrors.slackware.com/slackware/"
+        default = "http://mirrors.slackware.com/slackware/"
+        if os.path.isfile("/etc/slpkg/slackware-mirrors"):
+            with open("/etc/slpkg/slackware-mirrors", "r") as slacks:
+                mirrors = slacks.read()
+                slacks.close()
+            for line in mirrors.splitlines():
+                line = line.rstrip()
+                if not line.startswith("#") and line:
+                    default = line.split()[-1]
+        return default
 
     def sbo(self):
         '''

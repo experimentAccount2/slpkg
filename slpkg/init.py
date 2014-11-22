@@ -196,7 +196,6 @@ class Initialization(object):
             os.remove("{0}{1}".format(args[3], args[4]))
             os.remove("{0}{1}".format(args[0], args[1]))
             print("\nNEWS in " + args[1])
-            print("slpkg ...initialization")
             sys.stdout.write("Files re-created ...")
             sys.stdout.flush()
             for fu in args[5].split():

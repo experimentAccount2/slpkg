@@ -38,7 +38,8 @@ from slpkg.colors import (
 from slpkg.__metadata__ import (
     pkg_path,
     lib_path,
-    slpkg_tmp_packages
+    slpkg_tmp_packages,
+    default_answer
 )
 
 from slpkg.pkg.manager import PackageManager
@@ -122,8 +123,11 @@ class OthersUpgrade(object):
                                                                 unit[0]))
                 print("After this process, {0} {1} of additional disk "
                       "space will be used.{2}".format(size[1], unit[1], ENDC))
-                read = raw_input("\nWould you like to upgrade [Y/n]? ")
-                if read in ['Y', 'y']:
+                if default_answer == "y":
+                    answer = default_answer
+                else:
+                    answer = raw_input("\nWould you like to continue [Y/n]? ")
+                if answer in ['y', 'Y']:
                     upgrade_all.reverse()
                     packages_dwn(self.tmp_path, dwn_links)
                     upgrade(self.tmp_path, upgrade_all)

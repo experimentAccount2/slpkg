@@ -21,41 +21,25 @@
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 PRGNAM=slpkg
-VERSION=${VERSION:-2.0.6}
+VERSION=${VERSION:-2.0.7}
 TAG=${TAG:-_dsw}
 
-cd ..
 # Installation script.
 # With this script allows you to install the slpkg as a package SlackBuild.
 # Select archive to copy in slackbuild directory
 # support wget download.
-if [ -f $PRGNAM-$VERSION.zip ]; then
-    cp $PRGNAM-$VERSION.zip $PRGNAM-$VERSION/slackbuild
-    cd $PRGNAM-$VERSION/slackbuild
-    chmod +x $PRGNAM.SlackBuild
-    ./$PRGNAM.SlackBuild
-    rm $PRGNAM-$VERSION.zip 
 
-elif [ -f v$VERSION.zip ]; then
-    cp v$VERSION.zip $PRGNAM-$VERSION/slackbuild
-    cd $PRGNAM-$VERSION/slackbuild
-    chmod +x $PRGNAM.SlackBuild
-    ./$PRGNAM.SlackBuild
-    rm v$VERSION.zip
+ARCHIVES="$PRGNAM-$VERSION.tar.gz $PRGNAM-$VERSION.zip v$VERSION.tar.gz v$VERSION.zip"
+cd ..
+for file in $ARCHIVES; do
+    if [ -f $file ]; then
+        cp $file $PRGNAM-$VERSION/slackbuild
+        cd $PRGNAM-$VERSION/slackbuild
+        chmod +x $PRGNAM.SlackBuild
+        ./$PRGNAM.SlackBuild
+        rm $file
+    fi
+done 
 
-elif [ -f $PRGNAM-$VERSION.tar.gz ]; then
-    cp $PRGNAM-$VERSION.tar.gz $PRGNAM-$VERSION/slackbuild
-    cd $PRGNAM-$VERSION/slackbuild
-    chmod +x $PRGNAM.SlackBuild
-    ./$PRGNAM.SlackBuild
-    rm $PRGNAM-$VERSION.tar.gz
-
-else
-    cp v$VERSION.tar.gz $PRGNAM-$VERSION/slackbuild
-    cd $PRGNAM-$VERSION/slackbuild
-    chmod +x $PRGNAM.SlackBuild
-    ./$PRGNAM.SlackBuild
-    rm v$VERSION.tar.gz 
-fi
 # install or upgrade with new version
-upgradepkg --install-new /tmp/$PRGNAM-$VERSION-*$TAG.tgz
+upgradepkg --install-new /tmp/$PRGNAM-$VERSION-*$TAG.t?z
