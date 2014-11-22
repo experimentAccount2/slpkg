@@ -121,9 +121,9 @@ From SourceForge:
 Download binary package from `SourceForge <https://sourceforge.net/projects/slpkg/>`_
     
 Upgrade
--------------
+-------
 
-In each upgrade should track the configuration files in the file '/etc/slpkg' for 
+In each slpkg upgrade should track the configuration files in the file '/etc/slpkg' for 
 new updates.
 
 
@@ -134,7 +134,7 @@ For Slackware 'current' users must change the variable VERSION in /etc/slpkg.con
 
 .. code-block:: bash
 
-$ slpkg -g --config=nano
+    $ slpkg -g --config=nano
 
 
 Slackware Mirrors
@@ -230,7 +230,7 @@ build and install with all dependencies :
     0 installed package and 4 uninstalled packages.
     
     
-Install packages from `Slackware official mirrors <http://mirrors.slackware.com/>`_ :
+Install packages from Slackware official packages:
 
 .. code-block:: bash
 
@@ -308,8 +308,7 @@ Check if your packages is up to date:
                 
     Would you like to upgrade [Y/n]?
 
-Check if your distribution is up to date from `Slackware official mirrors 
-<http://mirrors.slackware.com/>`_ :
+Check if your Slackware distribution is up to date:
 
 .. code-block:: bash
 
