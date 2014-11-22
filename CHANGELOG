@@ -1,5 +1,18 @@
+Version 2.0.7
+22-11-2014
+
+[Feature] - Add more option in slpkg.conf file.
+          - Add slackware-mirrors file in /etc/slpkg
+
+[Updated] - Fix upgrade Slackware packages if installed.
+
+Version 2.0.6
+18-11-2014
+
+[Updated] - Fix setup.py file
+
 Version 2.0.5
-15-11-2014
+18-11-2014
 
 [Feature] - Add /etc/slpkg.conf file.
           - Move "--current" switch in /etc/slpkg.conf file.

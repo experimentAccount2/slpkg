@@ -23,7 +23,7 @@
 
 import shutil
 
-from __metadata__ import del_build
+from slpkg.__metadata__ import del_build
 
 
 def delete(build_folder):

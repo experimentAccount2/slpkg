@@ -11,9 +11,9 @@
 
 Latest Release:
 
-- Version: 2.0.5
+- Version: 2.0.7
 - `Package <https://sourceforge.net/projects/slpkg/files/slpkg/binary/>`_
-- `Source <https://github.com/dslackw/slpkg/archive/v2.0.5.tar.gz>`_
+- `Source <https://github.com/dslackw/slpkg/archive/v2.0.7.tar.gz>`_
 - `CHANGELOG <https://github.com/dslackw/slpkg/blob/master/CHANGELOG>`_
  
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/logo.png
@@ -32,10 +32,20 @@ Python language. It's use is for managing packages in Slackware linux distributi
 Supported Repositories:
 
 - SBo - `slackbuilds.org <http://slackbuilds.org/>`_
+  Arch: {x86, x86_64}
+  Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1}
 - Slack - `slackware.com <http://www.slackware.com/>`_
+  Arch: {x86, x86_64}
+  Versions: {3.3, 8.1, 9.0, 9.1, 10.0, 10.1, 10.2, 11.0, 12.0, 12.2, 13.0, 13.37, 14.0, 14.1, current}
 - Alien - `alien bob <http://www.slackware.com/~alien/slackbuilds/>`_
+  Arch: {x86, x86_64}
+  Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1, current}
 - Slacky - `slacky.eu <http://repository.slacky.eu/>`_
+  Arch: {x86, x86_64}
+  Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1}
 - Robby's - `rworkman's <http://rlworkman.net/pkgs/>`_
+  Arch: {x86, x86_64}
+  Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1}
 
 Slpkg works in accordance with the standards of the organization slackbuilds.org 
 to builds packages. Also uses the Slackware linux instructions for installation,
@@ -102,28 +112,37 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.0.5.tar.gz
-    $ cd slpkg-2.0.5
+    $ tar xvf slpkg-2.0.7.tar.gz
+    $ cd slpkg-2.0.7
     $ ./install.sh
 
-Using `pip <https://pip.pypa.io/en/latest/>`_ :
-
-.. code-block:: bash
-
-    $ pip install --upgrade slpkg
-    
-    uninstall:
-
-    $ pip uninstall slpkg
-
-Using Slackware command:
+From SourceForge:
     
 Download binary package from `SourceForge <https://sourceforge.net/projects/slpkg/>`_
     
+Upgrade
+-------------
+
+In each upgrade should track the configuration files in the file '/etc/slpkg' for 
+new updates.
+
+
 Slackware Current
 -----------------
 
 For Slackware 'current' users must change the variable VERSION in /etc/slpkg.conf file.
+
+.. code-block:: bash
+
+$ slpkg -g --config=nano
+
+
+Slackware Mirrors
+-----------------
+
+Slpkg uses the central mirror "http://mirrors.slackware.com/slackware/" 
+to find the nearest one. If however for some reason this troublesome 
+please edit the file in /etc/slpkg/slackware-mirrors
 
 Command Line Tool Usage
 -----------------------

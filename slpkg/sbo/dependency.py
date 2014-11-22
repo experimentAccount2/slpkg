@@ -23,8 +23,8 @@
 
 import sys
 
-from toolbar import status
-from blacklist import BlackList
+from slpkg.toolbar import status
+from slpkg.blacklist import BlackList
 
 from greps import SBoGrep
 

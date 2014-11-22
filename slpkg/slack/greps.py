@@ -21,7 +21,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from toolbar import status
+from slpkg.toolbar import status
 
 
 def slack_data(PACKAGES_TXT, step):

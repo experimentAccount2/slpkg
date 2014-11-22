@@ -23,11 +23,11 @@
 
 import sys
 
-from repositories import Repo
-from blacklist import BlackList
-from __metadata__ import lib_path
+from slpkg.repositories import Repo
+from slpkg.blacklist import BlackList
+from slpkg.__metadata__ import lib_path
 
-from slack.slack_version import slack_ver
+from slpkg.slack.slack_version import slack_ver
 
 
 def sbo_search_pkg(name):

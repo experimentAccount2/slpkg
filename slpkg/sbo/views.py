@@ -25,15 +25,15 @@ import os
 import sys
 import pydoc
 
-from init import Initialization
-from downloader import Download
-from __metadata__ import (
+from slpkg.init import Initialization
+from slpkg.downloader import Download
+from slpkg.__metadata__ import (
     tmp,
     build_path,
     pkg_path,
     sp
 )
-from colors import (
+from slpkg.colors import (
     RED,
     GREEN,
     GREY,
@@ -41,16 +41,16 @@ from colors import (
     YELLOW,
     ENDC
 )
-from messages import (
+from slpkg.messages import (
     pkg_found,
     pkg_not_found,
     template,
     build_FAILED
 )
 
-from pkg.find import find_package
-from pkg.build import BuildPackage
-from pkg.manager import PackageManager
+from slpkg.pkg.find import find_package
+from slpkg.pkg.build import BuildPackage
+from slpkg.pkg.manager import PackageManager
 
 from read import Read
 from remove import delete

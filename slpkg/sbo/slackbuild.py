@@ -24,11 +24,11 @@
 import os
 import sys
 
-from toolbar import status
-from init import Initialization
-from downloader import Download
-from splitting import split_package
-from __metadata__ import (
+from slpkg.toolbar import status
+from slpkg.init import Initialization
+from slpkg.downloader import Download
+from slpkg.splitting import split_package
+from slpkg.__metadata__ import (
     tmp,
     pkg_path,
     build_path,
@@ -37,7 +37,7 @@ from __metadata__ import (
     default_answer,
     sp
 )
-from colors import (
+from slpkg.colors import (
     RED,
     GREEN,
     GREY,
@@ -45,16 +45,16 @@ from colors import (
     CYAN,
     ENDC
 )
-from messages import (
+from slpkg.messages import (
     pkg_found,
     template,
     build_FAILED,
     pkg_not_found
 )
 
-from pkg.find import find_package
-from pkg.build import BuildPackage
-from pkg.manager import PackageManager
+from slpkg.pkg.find import find_package
+from slpkg.pkg.build import BuildPackage
+from slpkg.pkg.manager import PackageManager
 
 from greps import SBoGrep
 from remove import delete

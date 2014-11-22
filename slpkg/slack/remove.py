@@ -23,7 +23,7 @@
 
 import os
 
-from __metadata__ import del_all
+from slpkg.__metadata__ import del_all
 
 
 def delete(path, packages):

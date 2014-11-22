@@ -23,9 +23,9 @@
 
 import sys
 
-from blacklist import BlackList
-from __metadata__ import lib_path
-from splitting import split_package
+from slpkg.blacklist import BlackList
+from slpkg.__metadata__ import lib_path
+from slpkg.splitting import split_package
 
 
 def search_pkg(name, repo):

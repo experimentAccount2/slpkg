@@ -23,8 +23,8 @@
 
 import os
 
-from blacklist import BlackList
-from splitting import split_package
+from slpkg.blacklist import BlackList
+from slpkg.splitting import split_package
 
 
 def find_package(find_pkg, directory):

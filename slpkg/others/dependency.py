@@ -23,7 +23,7 @@
 
 import sys
 
-from toolbar import status
+from slpkg.toolbar import status
 
 from greps import Requires
 

@@ -25,23 +25,24 @@ import os
 import sys
 import subprocess
 
-from sizes import units
-from url_read import URL
-from messages import template
-from blacklist import BlackList
-from splitting import split_package
-from colors import (
+from slpkg.sizes import units
+from slpkg.url_read import URL
+from slpkg.messages import template
+from slpkg.blacklist import BlackList
+from slpkg.splitting import split_package
+from slpkg.colors import (
     GREY,
     YELLOW,
     ENDC
 )
-from __metadata__ import (
+from slpkg.__metadata__ import (
     pkg_path,
     slpkg_tmp_patches,
     default_answer
 )
 
-from pkg.manager import PackageManager
+from slpkg.pkg.find import find_package
+from slpkg.pkg.manager import PackageManager
 
 from remove import delete
 from mirrors import mirrors
@@ -121,37 +122,15 @@ class Patches(object):
         (dwn, upgrade, comp_sum, uncomp_sum) = ([] for i in range(4))
         data = slack_data(self.PACKAGES_TXT, self.step)
         black = BlackList().packages()
-        if self.version == "stable":    # stables versions upgrade
-            for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
-                                               data[3]):
-                if (not os.path.isfile(pkg_path + name[:-4]) and split_package(
-                        name)[0] not in black):
+        for name, loc, comp, uncomp in zip(data[0], data[1], data[2], data[3]):
+            if find_package(split_package(name)[0] + "-", pkg_path):
+                if (not os.path.isfile(pkg_path + name[:-4]) and
+                        split_package(name)[0] not in black):
                     dwn.append("{0}{1}/{2}".format(
                         mirrors("", "", self.version), loc, name))
                     comp_sum.append(comp)
                     uncomp_sum.append(uncomp)
                     upgrade.append(name)
-        else:   # current version upgrade
-            installed = []
-            # get all installed packages and store the package name.
-            for pkg in os.listdir(pkg_path):
-                installed.append(split_package(pkg)[0])
-            for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
-                                               data[3]):
-                # If the package from the current repository is installed
-                # (check with the name) but not is in the path (check with
-                # all package like 'apr-1.5.0-x86_64-1') then add to list for
-                # upgrade.
-                # etc. 'apr' in list 'installed' ?? if yes 'apr-1.5.0-x86_64-1'
-                # exist in /var/log/packages ?? if no add to upgrade.
-                if split_package(name)[0] in installed:
-                    if (not os.path.isfile(pkg_path + name[:-4]) and
-                            split_package(name)[0] not in black):
-                        dwn.append("{0}{1}/{2}".format(
-                            mirrors("", "", self.version), loc, name))
-                        comp_sum.append(comp)
-                        uncomp_sum.append(uncomp)
-                        upgrade.append(name)
         return [dwn, upgrade, comp_sum, uncomp_sum]
 
 

@@ -25,18 +25,18 @@ import os
 import sys
 import subprocess
 
-from messages import (
+from slpkg.messages import (
     pkg_not_found,
     template
 )
-from colors import (
+from slpkg.colors import (
     RED,
     GREEN,
     CYAN,
     GREY,
     ENDC
 )
-from __metadata__ import (
+from slpkg.__metadata__ import (
     pkg_path,
     sp,
     log_path,
@@ -44,7 +44,7 @@ from __metadata__ import (
     remove_deps_answer
 )
 
-from find import find_package
+from slpkg.pkg.find import find_package
 
 
 class PackageManager(object):

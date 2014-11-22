@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# __metadata__.py
+# __metadata__.py file is part of slpkg.
 
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
@@ -24,12 +24,11 @@
 import os
 import getpass
 
-from config import config_file
 from messages import s_user
 
 __all__ = "slpkg"
 __author__ = "dslackw"
-__version_info__ = (2, 0, 6)
+__version_info__ = (2, 0, 7)
 __version__ = "{0}.{1}.{2}".format(*__version_info__)
 __license__ = "GNU General Public License v3 (GPLv3)"
 __email__ = "d.zlatanidis@gmail.com"
@@ -38,15 +37,6 @@ s_user(getpass.getuser())
 
 # temponary path
 tmp = "/tmp/"
-
-if not os.path.exists("/etc/slpkg/"):
-    os.mkdir("/etc/slpkg/")
-
-if not os.path.isfile("/etc/slpkg/slpkg.conf"):
-    with open("/etc/slpkg/slpkg.conf", "w") as conf:
-        for line in config_file():
-            conf.write(line)
-        conf.close()
 
 f = open("/etc/slpkg/slpkg.conf", "r")
 conf = f.read()

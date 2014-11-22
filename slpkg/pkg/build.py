@@ -29,23 +29,24 @@ import shutil
 import tarfile
 import subprocess
 
-from checksum import md5sum
-from colors import (
+from slpkg.checksum import md5sum
+from slpkg.colors import (
     RED,
     GREEN,
     ENDC
 )
-from messages import (
+from slpkg.messages import (
     pkg_not_found,
     template
 )
-from __metadata__ import (
+from slpkg.__metadata__ import (
     log_path,
     sbo_build_log,
-    sbo_check_md5
+    sbo_check_md5,
+    default_answer
 )
 
-from sbo.greps import SBoGrep
+from slpkg.sbo.greps import SBoGrep
 
 
 class BuildPackage(object):
@@ -124,8 +125,11 @@ def check_md5(sbo_md5, src):
         print("| Expected: {0}".format(md5))
         print("| Found: {0}".format(sbo_md5))
         template(78)
-        read = raw_input("\nDo you want to continue [Y/n]? ")
-        if read == "Y" or read == "y":
+        if default_answer == "y":
+            answer = default_answer
+        else:
+            answer = raw_input("Would you like to continue [Y/n]? ")
+        if answer in ['y', 'Y']:
             pass
         else:
             sys.exit()

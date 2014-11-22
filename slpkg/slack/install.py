@@ -24,15 +24,15 @@
 import os
 import sys
 
-from sizes import units
-from blacklist import BlackList
-from init import Initialization
-from splitting import split_package
-from messages import (
+from slpkg.sizes import units
+from slpkg.blacklist import BlackList
+from slpkg.init import Initialization
+from slpkg.splitting import split_package
+from slpkg.messages import (
     pkg_not_found,
     template
 )
-from colors import (
+from slpkg.colors import (
     RED,
     GREEN,
     CYAN,
@@ -40,15 +40,15 @@ from colors import (
     GREY,
     ENDC
 )
-from __metadata__ import (
+from slpkg.__metadata__ import (
     pkg_path,
     lib_path,
     slpkg_tmp_packages,
     default_answer
 )
 
-from pkg.find import find_package
-from pkg.manager import PackageManager
+from slpkg.pkg.find import find_package
+from slpkg.pkg.manager import PackageManager
 
 from remove import delete
 from mirrors import mirrors

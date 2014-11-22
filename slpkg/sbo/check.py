@@ -24,26 +24,26 @@
 import os
 import sys
 
-from pkg.find import find_package
-from pkg.build import BuildPackage
-from pkg.manager import PackageManager
+from slpkg.pkg.find import find_package
+from slpkg.pkg.build import BuildPackage
+from slpkg.pkg.manager import PackageManager
 
-from toolbar import status
-from init import Initialization
-from downloader import Download
-from splitting import split_package
-from messages import (
+from slpkg.toolbar import status
+from slpkg.init import Initialization
+from slpkg.downloader import Download
+from slpkg.splitting import split_package
+from slpkg.messages import (
     template,
     build_FAILED
 )
-from colors import (
+from slpkg.colors import (
     RED,
     GREEN,
     GREY,
     YELLOW,
     ENDC
 )
-from __metadata__ import (
+from slpkg.__metadata__ import (
     tmp,
     pkg_path,
     build_path,

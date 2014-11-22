@@ -23,10 +23,10 @@
 
 import os
 
-from toolbar import status
-from __metadata__ import lib_path
-from splitting import split_package
-from slack.slack_version import slack_ver
+from slpkg.toolbar import status
+from slpkg.__metadata__ import lib_path
+from slpkg.splitting import split_package
+from slpkg.slack.slack_version import slack_ver
 
 len_deps = 0
 
