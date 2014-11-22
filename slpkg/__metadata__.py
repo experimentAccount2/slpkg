@@ -38,10 +38,6 @@ s_user(getpass.getuser())
 # temponary path
 tmp = "/tmp/"
 
-f = open("/etc/slpkg/slpkg.conf", "r")
-conf = f.read()
-f.close()
-
 # Default configuration values
 slack_rel = "stable"
 build_path = "/tmp/slpkg/build/"
@@ -54,30 +50,34 @@ sbo_build_log = "on"
 default_answer = "n"
 remove_deps_answer = "n"
 
-for line in conf.splitlines():
-    line = line.lstrip()
-    if line.startswith("VERSION"):
-        slack_rel = line[8:].strip()
-        if not slack_rel:
-            slack_rel = "stable"
-    if line.startswith("BUILD"):
-        build_path = line[6:].strip()
-    if line.startswith("PACKAGES"):
-        slpkg_tmp_packages = line[9:].strip()
-    if line.startswith("PATCHES"):
-        slpkg_tmp_patches = line[8:].strip()
-    if line.startswith("DEL_ALL"):
-        del_all = line[8:].strip()
-    if line.startswith("DEL_BUILD"):
-        del_build = line[10:].strip()
-    if line.startswith("SBO_CHECK_MD5"):
-        sbo_check_md5 = line[14:].strip()
-    if line.startswith("SBO_BUILD_LOG"):
-        sbo_build_log = line[14:].strip()
-    if line.startswith("DEFAULT_ANSWER"):
-        default_answer = line[15:].strip()
-    if line.startswith("REMOVE_DEPS_ANSWER"):
-        remove_deps_answer = line[19:].strip()
+if os.path.isfile("/etc/slpkg/slpkg.conf"):
+    f = open("/etc/slpkg/slpkg.conf", "r")
+    conf = f.read()
+    f.close()
+    for line in conf.splitlines():
+        line = line.lstrip()
+        if line.startswith("VERSION"):
+            slack_rel = line[8:].strip()
+            if not slack_rel:
+                slack_rel = "stable"
+        if line.startswith("BUILD"):
+            build_path = line[6:].strip()
+        if line.startswith("PACKAGES"):
+            slpkg_tmp_packages = line[9:].strip()
+        if line.startswith("PATCHES"):
+            slpkg_tmp_patches = line[8:].strip()
+        if line.startswith("DEL_ALL"):
+            del_all = line[8:].strip()
+        if line.startswith("DEL_BUILD"):
+            del_build = line[10:].strip()
+        if line.startswith("SBO_CHECK_MD5"):
+            sbo_check_md5 = line[14:].strip()
+        if line.startswith("SBO_BUILD_LOG"):
+            sbo_build_log = line[14:].strip()
+        if line.startswith("DEFAULT_ANSWER"):
+            default_answer = line[15:].strip()
+        if line.startswith("REMOVE_DEPS_ANSWER"):
+            remove_deps_answer = line[19:].strip()
 
 # repositories
 repositories = [
@@ -102,9 +102,6 @@ log_path = "/var/log/slpkg/"
 
 # packages log files path
 pkg_path = "/var/log/packages/"
-
-# blacklist conf path
-bls_path = "/etc/slpkg/"
 
 # computer architecture
 arch = os.uname()[4]

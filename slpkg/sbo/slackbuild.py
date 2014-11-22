@@ -301,7 +301,7 @@ def arch_support(source, support, package_sum, dependencies):
     elif default_answer == "y":
         answer = default_answer
     else:
-        answer = raw_input("Do you want to continue [Y/n]? ")
+        answer = raw_input("Would you like to continue [Y/n]? ")
     return answer
 
 
