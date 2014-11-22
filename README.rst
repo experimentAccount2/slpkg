@@ -230,7 +230,7 @@ build and install with all dependencies :
     0 installed package and 4 uninstalled packages.
     
     
-Install packages from Slackware official packages:
+Install Slackware official packages:
 
 .. code-block:: bash
 
