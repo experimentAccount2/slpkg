@@ -102,7 +102,7 @@ Tutorial
 --------
 
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/screenshot-1.png
-    :target: https://asciinema.org/a/12667
+    :target: https://asciinema.org/a/14145
 
 
 Installation
@@ -121,10 +121,25 @@ From SourceForge:
 Download binary package from `SourceForge <https://sourceforge.net/projects/slpkg/>`_
     
 Upgrade
--------------
+-------
 
-In each upgrade should track the configuration files in the file '/etc/slpkg' for 
+In each slpkg upgrade should track the configuration files in the file '/etc/slpkg' for 
 new updates.
+
+
+Configuration files
+-------------------
+
+.. code-block:: bash
+
+    /etc/slpkg/slpkg.conf
+         General configuration of slpkg
+
+    /etc/slpkg/blacklist
+         List of packages to skip
+
+    /etc/slpkg/slackware-mirrors
+         List of Slackware Mirrors
 
 
 Slackware Current
@@ -134,7 +149,7 @@ For Slackware 'current' users must change the variable VERSION in /etc/slpkg.con
 
 .. code-block:: bash
 
-$ slpkg -g --config=nano
+    $ slpkg -g --config=nano
 
 
 Slackware Mirrors
@@ -157,7 +172,7 @@ Command Line Tool Usage
       -a, script.tar.gz [source...]             auto build SBo packages
       -b, --list, [package...] --add, --remove  add, remove packages in blacklist
       -q, --list, [package...] --add, --remove  add, remove SBo packages in queue
-          --build, --install, --build-install   build or install packages from queue
+          --build, --install, --build-install   build, install packages from queue
       -g, --config, --config=[editor]           configuration file management
       -l, [repository], all, noarch             list of installed packages
       -c, [repository] --upgrade                check for updated packages
@@ -207,7 +222,7 @@ build and install with all dependencies :
     6 packages will be installed, 0 allready installed and 0 package
     will be upgraded.
 
-    Do you want to continue [Y/n]? y
+    Would you like to continue [Y/n]? y
     
     
     $ slpkg -s sbo fmpeg
@@ -230,7 +245,7 @@ build and install with all dependencies :
     0 installed package and 4 uninstalled packages.
     
     
-Install packages from `Slackware official mirrors <http://mirrors.slackware.com/>`_ :
+Install Slackware official packages:
 
 .. code-block:: bash
 
@@ -254,7 +269,7 @@ Install packages from `Slackware official mirrors <http://mirrors.slackware.com/
     Need to get 48.17 Mb of archives.
     After this process, 125.75 Mb of additional disk space will be used.
 
-    Would you like to install [Y/n]?
+    Would you like to continue [Y/n]?
 
 Tracking all dependencies of packages,
 and also displays installed packages:
@@ -306,10 +321,9 @@ Check if your packages is up to date:
     ===============================================================================
     Total 8 packages will be upgraded and 0 package will be installed.
                 
-    Would you like to upgrade [Y/n]?
+    Would you like to continue [Y/n]?
 
-Check if your distribution is up to date from `Slackware official mirrors 
-<http://mirrors.slackware.com/>`_ :
+Check if your Slackware distribution is up to date:
 
 .. code-block:: bash
 
@@ -332,7 +346,7 @@ Check if your distribution is up to date from `Slackware official mirrors
     Need to get 13.58 Mb of archives.
     After this process, 76.10 Mb of additional disk space will be used.
     
-    Would you like to upgrade [Y/n]?
+    Would you like to continue [Y/n]?
 
 Find packages from slackbuilds.org:
 

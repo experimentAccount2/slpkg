@@ -24,10 +24,7 @@
 import sys
 import time
 
-from colors import (
-    GREY,
-    ENDC
-)
+from __metadata__ import color
 
 
 def status(index, width, step):
@@ -35,7 +32,7 @@ def status(index, width, step):
     Print toolbar status
     '''
     if index == width:
-        sys.stdout.write("{0}.{1}".format(GREY, ENDC))
+        sys.stdout.write("{0}.{1}".format(color['GREY'], color['ENDC']))
         sys.stdout.flush()
         width += step
         time.sleep(0.05)

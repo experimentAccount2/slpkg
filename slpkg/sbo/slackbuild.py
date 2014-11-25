@@ -35,15 +35,8 @@ from slpkg.__metadata__ import (
     log_path,
     lib_path,
     default_answer,
+    color,
     sp
-)
-from slpkg.colors import (
-    RED,
-    GREEN,
-    GREY,
-    YELLOW,
-    CYAN,
-    ENDC
 )
 from slpkg.messages import (
     pkg_found,
@@ -68,7 +61,8 @@ class SBoInstall(object):
     def __init__(self, name):
         self.name = name
         Initialization().sbo()
-        sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
+        sys.stdout.write("{0}Reading package lists ...{1}".format(
+            color['GREY'], color['ENDC']))
         sys.stdout.flush()
         self.UNST = ["UNSUPPORTED", "UNTESTED"]
         self.dependencies_list = sbo_dependencies_pkg(name)
@@ -82,7 +76,8 @@ class SBoInstall(object):
         try:
             if self.dependencies_list or sbo_search_pkg(self.name) is not None:
                 dependencies = self.remove_dbs()
-                sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
+                sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
+                                                       color['ENDC']))
                 # sbo versions = idata[0]
                 # package arch = idata[1]
                 # package sum = idata[2]
@@ -113,12 +108,12 @@ class SBoInstall(object):
                 msg = msgs(dependencies, count[1], count[0])
                 print("\nInstalling summary")
                 print("=" * 79)
-                print("{0}Total {1} {2}.".format(GREY, len(dependencies),
-                                                 msg[2]))
+                print("{0}Total {1} {2}.".format(color['GREY'],
+                                                 len(dependencies), msg[2]))
                 print("{0} {1} will be installed, {2} allready installed and "
                       "{3} {4}".format(count[1], msg[0], idata[2], count[0],
                                        msg[1]))
-                print("will be upgraded.{0}\n".format(ENDC))
+                print("will be upgraded.{0}\n".format(color['ENDC']))
                 answer = arch_support(idata[3], self.UNST, idata[2],
                                       dependencies)
                 if answer in['y', 'Y']:
@@ -136,18 +131,19 @@ class SBoInstall(object):
                 # sbo version = mdata1]
                 # package arch = mdata[2]
                 mdata = matching_data(self.name, self.UNST)
-                sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
+                sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
+                                                       color['ENDC']))
                 if mdata[0]:
                     print("\nPackages with name matching [ {0}{1}{2} ]"
-                          "\n".format(CYAN, self.name, ENDC))
+                          "\n".format(color['CYAN'], self.name, color['ENDC']))
                     top_view()
                     print("Matching:")
                     for match, ver, march in zip(mdata[0], mdata[1], mdata[2]):
                         if find_package(match + sp + ver, pkg_path):
-                            view_packages(GREEN, match, ver, "", march)
+                            view_packages(color['GREEN'], match, ver, "", march)
                             count_installed += 1
                         else:
-                            view_packages(RED, match, ver, "", march)
+                            view_packages(color['RED'], match, ver, "", march)
                             count_uninstalled += 1
                     # insstall message = msg[0]
                     # uninstall message = msg[1]
@@ -156,10 +152,10 @@ class SBoInstall(object):
                     print("\nInstalling summary")
                     print("=" * 79)
                     print("{0}Total found {1} matching {2}.".format(
-                        GREY, len(mdata[0]), msg[2]))
+                        color['GREY'], len(mdata[0]), msg[2]))
                     print("{0} installed {1} and {2} uninstalled {3}.{4}"
                           "\n".format(count_installed, msg[0],
-                                      count_uninstalled, msg[1], ENDC))
+                                      count_uninstalled, msg[1], color['ENDC']))
                 else:
                     pkg_not_found("\n", self.name, "No matching", "\n")
         except KeyboardInterrupt:
@@ -196,7 +192,8 @@ def installing_data(dependencies, support):
     '''
     package_sum = 0
     sbo_versions, package_arch = [], []
-    sys.stdout.write("{0}Resolving dependencies ...{1}".format(GREY, ENDC))
+    sys.stdout.write("{0}Resolving dependencies ...{1}".format(
+        color['GREY'], color['ENDC']))
     sys.stdout.flush()
     toolbar_width, index = 2, 0
     for pkg in dependencies:
@@ -209,7 +206,7 @@ def installing_data(dependencies, support):
         sbo_package = ("{0}-{1}".format(pkg, version))
         if find_package(sbo_package, pkg_path):
             package_sum += 1
-    sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
+    sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))
     return [sbo_versions, package_arch, package_sum, sources]
 
 
@@ -227,14 +224,14 @@ def pkg_colors_tag(name, sbo_versions, count_upg, count_ins):
         sbo_versions = sbo_versions[-1]
     master_pkg = ("{0}-{1}".format(name, sbo_versions))
     if find_package(master_pkg, pkg_path):
-        color = GREEN
+        paint = color['GREEN']
     elif find_package(name + sp, pkg_path):
-        color = YELLOW
+        paint = color['YELLOW']
         count_upg += 1
     else:
-        color = RED
+        paint = color['RED']
         count_ins += 1
-    return color, [count_upg, count_ins]
+    return paint, [count_upg, count_ins]
 
 
 def arch_colors_tag(support, package_arch):
@@ -243,9 +240,9 @@ def arch_colors_tag(support, package_arch):
     '''
     color = ""
     if support[0] in package_arch[-1]:
-        color = RED
+        color = color['RED']
     elif support[1] in package_arch[-1]:
-        color = YELLOW
+        color = color['YELLOW']
     return color
 
 
@@ -267,9 +264,9 @@ def view_packages(*args):
     View slackbuild packages with version and arch
     '''
     print(" {0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
-        args[0], args[1], ENDC,
+        args[0], args[1], color['ENDC'],
         " " * (38-len(args[1])), args[2],
-        " " * (17-len(args[2])), args[3], args[4], ENDC,
+        " " * (17-len(args[2])), args[3], args[4], color['ENDC'],
         " " * (13-len(args[4])), "SBo"))
 
 
@@ -294,7 +291,8 @@ def arch_support(source, support, package_sum, dependencies):
     Exit if all packages already installed
     '''
     if source in support:
-        print("{0}The package {1}{2}\n".format(RED, source, ENDC))
+        print("{0}The package {1}{2}\n".format(color['RED'], source,
+                                               color['ENDC']))
         answer = ""
     elif package_sum == len(dependencies):
         answer = ""
@@ -358,10 +356,14 @@ def build_install(dependencies, sbo_versions):
                 build_FAILED(sbo_url, prgnam)
                 sys.exit()
             if find_package(pkg + sp, pkg_path):
-                print("{0}[ Upgrading ] --> {1}{2}".format(GREEN, ENDC, pkg))
+                print("{0}[ Upgrading ] --> {1}{2}".format(color['GREEN'],
+                                                           color['ENDC'],
+                                                           pkg))
                 upgraded.append(pkg)
             else:
-                print("{0}[ Installing ] --> {1}{2}".format(GREEN, ENDC, pkg))
+                print("{0}[ Installing ] --> {1}{2}".format(color['GREEN'],
+                                                            color['ENDC'],
+                                                            pkg))
             PackageManager(binary).upgrade()
             installs.append(pkg)
             versions.append(ver)

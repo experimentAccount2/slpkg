@@ -23,11 +23,7 @@
 
 import sys
 
-from colors import (
-    RED,
-    CYAN,
-    ENDC
-)
+from __metadata__ import color
 
 
 def pkg_not_found(bol, pkg, message, eol):
@@ -65,10 +61,11 @@ def build_FAILED(sbo_url, prgnam):
     Print error message if build failed
     '''
     template(78)
-    print("| Build package {0} [ {1}FAILED{2} ]".format(prgnam, RED, ENDC))
+    print("| Build package {0} [ {1}FAILED{2} ]".format(prgnam, color['RED'],
+                                                        color['ENDC']))
     template(78)
     print("| See log file in {0}/var/log/slpkg/sbo/build_logs{1} directory or "
-          "read README file:".format(CYAN, ENDC))
+          "read README file:".format(color['CYAN'], color['ENDC']))
     print("| {0}{1}".format(sbo_url, "README"))
     template(78)
     print   # new line at end

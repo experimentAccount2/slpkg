@@ -33,20 +33,13 @@ from slpkg.messages import (
     pkg_not_found,
     template
 )
-from slpkg.colors import (
-    RED,
-    GREEN,
-    CYAN,
-    YELLOW,
-    GREY,
-    ENDC
-)
 from slpkg.__metadata__ import (
     pkg_path,
     lib_path,
     log_path,
     slpkg_tmp_packages,
-    default_answer
+    default_answer,
+    color
 )
 
 from slpkg.pkg.find import find_package
@@ -70,8 +63,9 @@ class OthersInstall(object):
         self.repo_init()
         repos = Repo()
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
-              CYAN, self.package, ENDC))
-        sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
+              color['CYAN'], self.package, color['ENDC']))
+        sys.stdout.write("{0}Reading package lists ...{1}".format(
+            color['GREY'], color['ENDC']))
         sys.stdout.flush()
         self.step = 700
         repos = Repo()
@@ -93,7 +87,7 @@ class OthersInstall(object):
         f = open(lib, "r")
         self.PACKAGES_TXT = f.read()
         f.close()
-        sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
+        sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))
 
     def repo_init(self):
         '''
@@ -118,7 +112,8 @@ class OthersInstall(object):
             dependencies = resolving_deps(self.package, self.repo)
             (dwn_links, install_all, comp_sum, uncomp_sum,
                 matching) = self.store(dependencies)
-            sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
+            sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
+                                                   color['ENDC']))
             print("")   # new line at start
             if install_all:
                 template(78)
@@ -137,8 +132,8 @@ class OthersInstall(object):
                     msg = msgs(install_all, sums[2])
                     print("\nInstalling summary")
                     print("=" * 79)
-                    print("{0}Total {1} {2}.".format(GREY, len(install_all),
-                                                     msg[0]))
+                    print("{0}Total {1} {2}.".format(color['GREY'],
+                                                     len(install_all), msg[0]))
                     print("{0} {1} will be installed, {2} will be upgraded and "
                           "{3} will be resettled.".format(sums[2], msg[1],
                                                           sums[1], sums[0]))
@@ -146,7 +141,7 @@ class OthersInstall(object):
                                                                     unit[0]))
                     print("After this process, {0} {1} of additional disk "
                           "space will be used.{2}".format(size[1], unit[1],
-                                                          ENDC))
+                                                          color['ENDC']))
                     if default_answer == "y":
                         answer = default_answer
                     else:
@@ -165,10 +160,10 @@ class OthersInstall(object):
                     print("\nInstalling summary")
                     print("=" * 79)
                     print("{0}Total found {1} matching {2}.".format(
-                        GREY, len(install_all), msg[1]))
+                        color['GREY'], len(install_all), msg[1]))
                     print("{0} installed {1} and {2} uninstalled {3}.{4}"
                           "\n".format(sums[0] + sums[1], msg[0], sums[2],
-                                      msg[1], ENDC))
+                                      msg[1], color['ENDC']))
             else:
                 pkg_not_found("", self.package, "No matching", "\n")
         except KeyboardInterrupt:
@@ -232,15 +227,15 @@ def views(install_all, comp_sum, repository, dependencies):
         pkg_split = split_package(pkg[:-4])
         if find_package(pkg_split[0] + "-" + pkg_split[1], pkg_path):
             pkg_sum += 1
-            COLOR = GREEN
+            COLOR = color['GREEN']
         elif find_package(pkg_split[0] + "-", pkg_path):
-            COLOR = YELLOW
+            COLOR = color['YELLOW']
             upg_sum += 1
         else:
-            COLOR = RED
+            COLOR = color['RED']
             uni_sum += 1
         print(" {0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11:>11}{12}".format(
-            COLOR, pkg_split[0], ENDC,
+            COLOR, pkg_split[0], color['ENDC'],
             " " * (25-len(pkg_split[0])), pkg_split[1],
             " " * (19-len(pkg_split[1])), pkg_split[2],
             " " * (8-len(pkg_split[2])), pkg_split[3],
@@ -272,13 +267,19 @@ def install(tmp_path, install_all):
     for install in install_all:
         package = (tmp_path + install).split()
         if os.path.isfile(pkg_path + install[:-4]):
-            print("[ {0}reinstalling{1} ] --> {2}".format(GREEN, ENDC, install))
+            print("[ {0}reinstalling{1} ] --> {2}".format(color['GREEN'],
+                                                          color['ENDC'],
+                                                          install))
             PackageManager(package).reinstall()
         elif find_package(split_package(install)[0] + "-", pkg_path):
-            print("[ {0}upgrading{1} ] --> {2}".format(YELLOW, ENDC, install))
+            print("[ {0}upgrading{1} ] --> {2}".format(color['YELLOW'],
+                                                       color['ENDC'],
+                                                       install))
             PackageManager(package).upgrade()
         else:
-            print("[ {0}installing{1} ] --> {2}".format(GREEN, ENDC, install))
+            print("[ {0}installing{1} ] --> {2}".format(color['GREEN'],
+                                                        color['ENDC'],
+                                                        install))
             PackageManager(package).upgrade()
 
 
@@ -287,7 +288,8 @@ def resolving_deps(name, repo):
     Return package dependencies
     '''
     requires, dependencies = [], []
-    sys.stdout.write("{0}Resolving dependencies ...{1}".format(GREY, ENDC))
+    sys.stdout.write("{0}Resolving dependencies ...{1}".format(color['GREY'],
+                                                               color['ENDC']))
     sys.stdout.flush()
     deps = dependencies_pkg(name, repo)
     requires.append(name)

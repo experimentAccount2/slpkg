@@ -31,15 +31,8 @@ from slpkg.__metadata__ import (
     tmp,
     build_path,
     pkg_path,
+    color,
     sp
-)
-from slpkg.colors import (
-    RED,
-    GREEN,
-    GREY,
-    CYAN,
-    YELLOW,
-    ENDC
 )
 from slpkg.messages import (
     pkg_found,
@@ -64,7 +57,8 @@ class SBoNetwork(object):
     def __init__(self, name):
         self.name = name
         Initialization().sbo()
-        sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
+        sys.stdout.write("{0}Reading package lists ...{1}".format(
+            color['GREY'], color['ENDC']))
         sys.stdout.flush()
         grep = SBoGrep(self.name)
         self.sbo_url = sbo_search_pkg(self.name)
@@ -75,7 +69,7 @@ class SBoNetwork(object):
             self.sbo_dwn = SBoLink(self.sbo_url).tar_gz()
             self.sbo_version = grep.version()
         self.space = ("\n" * 50)
-        sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
+        sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))
 
     def view(self):
         '''
@@ -135,28 +129,35 @@ class SBoNetwork(object):
         '''
         print("")   # new line at start
         template(78)
-        print("| {0}Package {1}{2}{3} --> {4}".format(GREEN, CYAN, args[0],
-                                                      GREEN, ENDC + args[1]))
+        print("| {0}Package {1}{2}{3} --> {4}".format(color['GREEN'],
+                                                      color['CYAN'], args[0],
+                                                      color['GREEN'],
+                                                      color['ENDC'] + args[1]))
         template(78)
-        print("| {0}Description : {1}{2}".format(GREEN, ENDC, args[2]))
-        print("| {0}SlackBuild : {1}{2}".format(GREEN, ENDC, args[3]))
-        print("| {0}Sources : {1}{2}".format(GREEN, ENDC, args[4]))
-        print("| {0}Requirements : {1}{2}".format(YELLOW, ENDC,
+        print("| {0}Description : {1}{2}".format(color['GREEN'],
+                                                 color['ENDC'], args[2]))
+        print("| {0}SlackBuild : {1}{2}".format(color['GREEN'], color['ENDC'],
+                                                args[3]))
+        print("| {0}Sources : {1}{2}".format(color['GREEN'], color['ENDC'],
+                                             args[4]))
+        print("| {0}Requirements : {1}{2}".format(color['YELLOW'],
+                                                  color['ENDC'],
                                                   ", ".join(args[5])))
         template(78)
-        print(" {0}R{1}EADME               View the README file".format(RED,
-                                                                        ENDC))
+        print(" {0}R{1}EADME               View the README file".format(
+            color['RED'], color['ENDC']))
         print(" {0}S{1}lackBuild           View the SlackBuild file".format(
-            RED, ENDC))
-        print(" In{0}f{1}o                 View the Info file".format(RED,
-                                                                      ENDC))
-        print(" {0}D{1}ownload             Download this package".format(RED,
-                                                                         ENDC))
-        print(" {0}B{1}uild                Download and build".format(RED,
-                                                                      ENDC))
+            color['RED'], color['ENDC']))
+        print(" In{0}f{1}o                 View the Info file".format(
+            color['RED'], color['ENDC']))
+        print(" {0}D{1}ownload             Download this package".format(
+            color['RED'], color['ENDC']))
+        print(" {0}B{1}uild                Download and build".format(
+            color['RED'], color['ENDC']))
         print(" {0}I{1}nstall              Download/Build/Install".format(
-            RED, ENDC))
-        print(" {0}Q{1}uit                 Quit\n".format(RED, ENDC))
+            color['RED'], color['ENDC']))
+        print(" {0}Q{1}uit                 Quit\n".format(color['RED'],
+                                                          color['ENDC']))
 
     @staticmethod
     def fill_pager(page):
@@ -178,7 +179,8 @@ class SBoNetwork(object):
         Return choice
         '''
         try:
-            choice = raw_input(" {0}Choose an option: {1}".format(GREY, ENDC))
+            choice = raw_input(" {0}Choose an option: {1}".format(
+                color['GREY'], color['ENDC']))
         except KeyboardInterrupt:
             print("")   # new line at exit
             sys.exit()
@@ -206,7 +208,8 @@ class SBoNetwork(object):
         Only build and create Slackware package
         '''
         if FAULT:
-            print("\n{0}The package {1} {2}\n".format(RED, FAULT, ENDC))
+            print("\n{0}The package {1} {2}\n".format(color['RED'], FAULT,
+                                                      color['ENDC']))
             sys.exit()
         sources = []
         os.chdir(build_path)
@@ -231,5 +234,7 @@ class SBoNetwork(object):
             except ValueError:
                 build_FAILED(self.sbo_url, prgnam)
                 sys.exit()
-            print("[ {0}Installing{1} ] --> {2}".format(GREEN, ENDC, self.name))
+            print("[ {0}Installing{1} ] --> {2}".format(color['GREEN'],
+                                                        color['ENDC'],
+                                                        self.name))
             PackageManager(binary).upgrade()

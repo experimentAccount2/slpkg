@@ -21,11 +21,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from colors import (
-    RED,
-    GREEN,
-    ENDC
-)
+from __metadata__ import color
 
 
 class BlackList(object):
@@ -59,7 +55,7 @@ class BlackList(object):
         print("\nPackages in blacklist:\n")
         for black in self.packages():
             if black:
-                print("{0}{1}{2}".format(GREEN, black, ENDC))
+                print("{0}{1}{2}".format(color['GREEN'], black, color['ENDC']))
                 self.quit = True
         if self.quit:
             print("")   # new line at exit
@@ -74,7 +70,8 @@ class BlackList(object):
         with open(self.blackfile, "a") as black_conf:
             for pkg in pkgs:
                 if pkg not in blacklist:
-                    print("{0}{1}{2}".format(GREEN, pkg, ENDC))
+                    print("{0}{1}{2}".format(color['GREEN'], pkg,
+                                             color['ENDC']))
                     black_conf.write(pkg + "\n")
                     self.quit = True
             black_conf.close()
@@ -91,7 +88,7 @@ class BlackList(object):
                 if line not in pkgs:
                     remove.write(line + "\n")
                 else:
-                    print("{0}{1}{2}".format(RED, line, ENDC))
+                    print("{0}{1}{2}".format(color['RED'], line, color['ENDC']))
                     self.quit = True
             remove.close()
         if self.quit:

@@ -24,10 +24,7 @@
 import sys
 import subprocess
 
-from colors import (
-    GREEN,
-    ENDC
-)
+from __metadata__ import color
 
 
 class Download(object):
@@ -43,7 +40,8 @@ class Download(object):
         Check if file already download the skip or continue
         download if before stoped.
         '''
-        print("\n[ {0}Download{1} ] -->{1} {2}\n".format(GREEN, ENDC,
+        print("\n[ {0}Download{1} ] -->{1} {2}\n".format(color['GREEN'],
+                                                         color['ENDC'],
                                                          self.file_name))
         try:
             subprocess.call("wget -c -N --directory-prefix={0} {1}".format(

@@ -24,18 +24,11 @@
 
 from init import Initialization
 from messages import pkg_not_found
-from colors import (
-    RED,
-    GREEN,
-    YELLOW,
-    CYAN,
-    GREY,
-    ENDC
-)
 from __metadata__ import (
     pkg_path,
     lib_path,
-    repositories
+    repositories,
+    color
 )
 
 from pkg.find import find_package
@@ -43,10 +36,10 @@ from pkg.find import find_package
 
 class PkgDesc(object):
 
-    def __init__(self, name, repo, color):
+    def __init__(self, name, repo, paint):
         self.name = name
         self.repo = repo
-        self.color = color
+        self.paint = paint
         self.COLOR = ""
         self.lib = ""
         init_repos = {
@@ -58,14 +51,14 @@ class PkgDesc(object):
         }
         init_repos[self.repo]()
         color_text = {
-            'red': RED,
-            'green': GREEN,
-            'yellow': YELLOW,
-            'cyan': CYAN,
-            'grey': GREY,
+            'red': color['RED'],
+            'green': color['GREEN'],
+            'yellow': color['YELLOW'],
+            'cyan': color['CYAN'],
+            'grey': color['GREY'],
             '': ''
         }
-        self.COLOR = color_text[self.color]
+        self.COLOR = color_text[self.paint]
         if self.repo in repositories:
             repos = {
                 'sbo': 'sbo_repo/SLACKBUILDS.TXT',
@@ -94,7 +87,7 @@ class PkgDesc(object):
             if line.startswith(self.name + end):
                 print("{0}{1}{2}".format(self.COLOR,
                                          line[len(self.name) + n:].strip(),
-                      ENDC))
+                      color['ENDC']))
                 count += 1
                 if count == 11:
                     break

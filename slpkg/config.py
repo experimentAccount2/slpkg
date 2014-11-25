@@ -23,10 +23,7 @@
 
 import subprocess
 
-from colors import (
-    CYAN,
-    ENDC
-)
+from __metadata__ import color
 
 
 class Config(object):
@@ -58,7 +55,7 @@ class Config(object):
             if not line.startswith("#") and line.split("=")[0] in conf_args:
                 print(line)
             else:
-                print("{0}{1}{2}".format(CYAN, line, ENDC))
+                print("{0}{1}{2}".format(color['CYAN'], line, color['ENDC']))
         print("")   # new line at end
 
     def edit(self, editor):
