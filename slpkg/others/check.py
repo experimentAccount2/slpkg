@@ -30,16 +30,12 @@ from slpkg.messages import template
 from slpkg.blacklist import BlackList
 from slpkg.init import Initialization
 from slpkg.splitting import split_package
-from slpkg.colors import (
-    YELLOW,
-    GREY,
-    ENDC
-)
 from slpkg.__metadata__ import (
     pkg_path,
     lib_path,
     slpkg_tmp_packages,
-    default_answer
+    default_answer,
+    color
 )
 
 from slpkg.pkg.manager import PackageManager
@@ -59,7 +55,8 @@ class OthersUpgrade(object):
         self.tmp_path = slpkg_tmp_packages
         self.repo_init()
         repos = Repo()
-        sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
+        sys.stdout.write("{0}Reading package lists ...{1}".format(
+            color['GREY'], color['ENDC']))
         sys.stdout.flush()
         self.step = 700
         repos = Repo()
@@ -99,7 +96,8 @@ class OthersUpgrade(object):
         '''
         try:
             dwn_links, upgrade_all, comp_sum, uncomp_sum = self.store()
-            sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
+            sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
+                                                   color['ENDC']))
             print("")   # new line at start
             if upgrade_all:
                 template(78)
@@ -118,11 +116,12 @@ class OthersUpgrade(object):
                 print("\nInstalling summary")
                 print("=" * 79)
                 print("{0}Total {1} {2} will be upgraded.".format(
-                    GREY, len(upgrade_all), msg))
+                    color['GREY'], len(upgrade_all), msg))
                 print("Need to get {0} {1} of archives.".format(size[0],
                                                                 unit[0]))
                 print("After this process, {0} {1} of additional disk "
-                      "space will be used.{2}".format(size[1], unit[1], ENDC))
+                      "space will be used.{2}".format(size[1], unit[1],
+                                                      color['ENDC']))
                 if default_answer == "y":
                     answer = default_answer
                 else:
@@ -198,7 +197,7 @@ def views(upgrade_all, comp_sum, repository):
         pkg_split = split_package(pkg[:-4])
         upg_sum += 1
         print(" {0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11:>11}{12}".format(
-            YELLOW, pkg_split[0], ENDC,
+            color['YELLOW'], pkg_split[0], color['ENDC'],
             " " * (25-len(pkg_split[0])), pkg_split[1],
             " " * (19-len(pkg_split[1])), pkg_split[2],
             " " * (8-len(pkg_split[2])), pkg_split[3],
@@ -223,5 +222,6 @@ def upgrade(tmp_path, upgrade_all):
     '''
     for pkg in upgrade_all:
         package = (tmp_path + pkg).split()
-        print("[ {0}upgrading{1} ] --> {2}".format(YELLOW, ENDC, pkg[:-4]))
+        print("[ {0}upgrading{1} ] --> {2}".format(color['YELLOW'],
+                                                   color['ENDC'], pkg[:-4]))
         PackageManager(package).upgrade()

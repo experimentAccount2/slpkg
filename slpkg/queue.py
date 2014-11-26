@@ -24,14 +24,10 @@
 import os
 
 from downloader import Download
-from colors import (
-    GREEN,
-    RED,
-    ENDC
-)
 from __metadata__ import (
     lib_path,
     build_path,
+    color,
     tmp
 )
 
@@ -90,7 +86,7 @@ class QueuePkgs(object):
         print("\nPackages in queue:\n")
         for pkg in self.packages():
             if pkg:
-                print("{0}{1}{2}".format(GREEN, pkg, ENDC))
+                print("{0}{1}{2}".format(color['GREEN'], pkg, color['ENDC']))
                 self.quit = True
         if self.quit:
             print("")   # new line at exit
@@ -106,11 +102,12 @@ class QueuePkgs(object):
             for pkg in pkgs:
                 find = sbo_search_pkg(pkg)
                 if pkg not in queue_list and find is not None:
-                    print("{0}{1}{2}".format(GREEN, pkg, ENDC))
+                    print("{0}{1}{2}".format(color['GREEN'], pkg,
+                                             color['ENDC']))
                     queue.write(pkg + "\n")
                     self.quit = True
                 else:
-                    print("{0}{1}{2}".format(RED, pkg, ENDC))
+                    print("{0}{1}{2}".format(color['RED'], pkg, color['ENDC']))
                     self.quit = True
             queue.close()
         if self.quit:
@@ -128,7 +125,7 @@ class QueuePkgs(object):
                 if line not in pkgs:
                     queue.write(line + "\n")
                 else:
-                    print("{0}{1}{2}".format(RED, line, ENDC))
+                    print("{0}{1}{2}".format(color['RED'], line, color['ENDC']))
                     self.quit = True
             queue.close()
         if self.quit:

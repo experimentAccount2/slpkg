@@ -38,7 +38,7 @@ def options():
         "blacklist",
         "  -q, --list, [package...] --add, --remove  add, remove SBo packages "
         "in queue",
-        "      --build, --install, --build-install   build or install packages "
+        "      --build, --install, --build-install   build, install packages "
         "from queue",
         "  -g, --config, --config=[editor]           configuration file " +
         "management",

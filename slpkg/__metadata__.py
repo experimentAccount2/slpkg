@@ -22,18 +22,14 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import os
-import getpass
 
-from messages import s_user
 
 __all__ = "slpkg"
 __author__ = "dslackw"
-__version_info__ = (2, 0, 7)
+__version_info__ = (2, 0, 8)
 __version__ = "{0}.{1}.{2}".format(*__version_info__)
 __license__ = "GNU General Public License v3 (GPLv3)"
 __email__ = "d.zlatanidis@gmail.com"
-
-s_user(getpass.getuser())
 
 # temponary path
 tmp = "/tmp/"
@@ -49,6 +45,8 @@ del_build = "off"
 sbo_build_log = "on"
 default_answer = "n"
 remove_deps_answer = "n"
+del_deps = "on"
+use_colors = "on"
 
 if os.path.isfile("/etc/slpkg/slpkg.conf"):
     f = open("/etc/slpkg/slpkg.conf", "r")
@@ -78,6 +76,11 @@ if os.path.isfile("/etc/slpkg/slpkg.conf"):
             default_answer = line[15:].strip()
         if line.startswith("REMOVE_DEPS_ANSWER"):
             remove_deps_answer = line[19:].strip()
+        if line.startswith("DEL_DEPS"):
+            del_deps = line[9:].strip()
+        if line.startswith("USE_COLORS"):
+            use_colors = line[11:].strip()
+
 
 # repositories
 repositories = [
@@ -87,6 +90,25 @@ repositories = [
     "alien",
     "slacky"
 ]
+
+if use_colors == "on":
+    color = {
+        'RED': "\x1b[31m",
+        'GREEN': "\x1b[32m",
+        'YELLOW': "\x1b[33m",
+        'CYAN': "\x1b[36m",
+        'GREY': "\x1b[38;5;247m",
+        'ENDC': "\x1b[0m"
+    }
+else:
+    color = {
+        'RED': "",
+        'GREEN': "",
+        'YELLOW': "",
+        'CYAN': "",
+        'GREY': "",
+        'ENDC': ""
+    }
 
 # file spacer
 sp = "-"

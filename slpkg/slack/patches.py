@@ -30,15 +30,11 @@ from slpkg.url_read import URL
 from slpkg.messages import template
 from slpkg.blacklist import BlackList
 from slpkg.splitting import split_package
-from slpkg.colors import (
-    GREY,
-    YELLOW,
-    ENDC
-)
 from slpkg.__metadata__ import (
     pkg_path,
     slpkg_tmp_patches,
-    default_answer
+    default_answer,
+    color
 )
 
 from slpkg.pkg.find import find_package
@@ -56,7 +52,8 @@ class Patches(object):
     def __init__(self, version):
         self.version = version
         self.patch_path = slpkg_tmp_patches
-        sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
+        sys.stdout.write("{0}Reading package lists ...{1}".format(
+            color['GREY'], color['ENDC']))
         sys.stdout.flush()
         if version == "stable":
             self.PACKAGES_TXT = URL(mirrors("PACKAGES.TXT", "patches/",
@@ -73,7 +70,8 @@ class Patches(object):
         '''
         try:
             dwn_links, upgrade_all, comp_sum, uncomp_sum = self.store()
-            sys.stdout.write("{0}Done{1}\n".format(GREY, ENDC))
+            sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
+                                                   color['ENDC']))
             if upgrade_all:
                 print("\nThese packages need upgrading:\n")
                 template(78)
@@ -91,11 +89,12 @@ class Patches(object):
                 print("\nInstalling summary")
                 print("=" * 79)
                 print("{0}Total {1} {2} will be upgraded.".format(
-                    GREY, len(upgrade_all), msgs(upgrade_all)))
+                    color['GREY'], len(upgrade_all), msgs(upgrade_all)))
                 print("Need to get {0} {1} of archives.".format(size[0],
                                                                 unit[0]))
                 print("After this process, {0} {1} of additional disk space "
-                      "will be used.{2}".format(size[1], unit[1], ENDC))
+                      "will be used.{2}".format(size[1], unit[1],
+                                                color['ENDC']))
                 if default_answer == "y":
                     answer = default_answer
                 else:
@@ -141,7 +140,7 @@ def views(upgrade_all, comp_sum):
     for upgrade, size in zip(upgrade_all, comp_sum):
         pkg_split = split_package(upgrade[:-4])
         print(" {0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11:>12}{12}".format(
-            YELLOW, pkg_split[0], ENDC,
+            color['YELLOW'], pkg_split[0], color['ENDC'],
             " " * (25-len(pkg_split[0])), pkg_split[1],
             " " * (19-len(pkg_split[1])), pkg_split[2],
             " " * (8-len(pkg_split[2])), pkg_split[3],
@@ -164,7 +163,8 @@ def upgrade(patch_path, upgrade_all):
     Upgrade packages
     '''
     for pkg in upgrade_all:
-        print("[ {0}upgrading{1} ] --> {2}".format(YELLOW, ENDC, pkg[:-4]))
+        print("[ {0}upgrading{1} ] --> {2}".format(color['YELLOW'],
+                                                   color['ENDC'], pkg[:-4]))
         PackageManager((patch_path + pkg).split()).upgrade()
 
 

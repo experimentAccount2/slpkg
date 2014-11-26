@@ -36,18 +36,12 @@ from slpkg.messages import (
     template,
     build_FAILED
 )
-from slpkg.colors import (
-    RED,
-    GREEN,
-    GREY,
-    YELLOW,
-    ENDC
-)
 from slpkg.__metadata__ import (
     tmp,
     pkg_path,
     build_path,
     default_answer,
+    color,
     sp
 )
 
@@ -61,9 +55,10 @@ from dependency import sbo_dependencies_pkg
 class SBoCheck(object):
 
     def __init__(self):
-        self.done = "{0}Done{1}\n".format(GREY, ENDC)
+        self.done = "{0}Done{1}\n".format(color['GREY'], color['ENDC'])
         Initialization().sbo()
-        sys.stdout.write("{0}Reading package lists ...{1}".format(GREY, ENDC))
+        sys.stdout.write("{0}Reading package lists ...{1}".format(
+            color['GREY'], color['ENDC']))
         sys.stdout.flush()
         self.installed = []
         self.index, self.toolbar_width = 0, 3
@@ -84,7 +79,7 @@ class SBoCheck(object):
                 data = []
                 if upg_name:
                     sys.stdout.write("{0}Resolving dependencies ...{1}".format(
-                                     GREY, ENDC))
+                                     color['GREY'], color['ENDC']))
                     sys.stdout.flush()
                     # upgrade name = data[0]
                     # package for upgrade = data[1]
@@ -124,10 +119,10 @@ class SBoCheck(object):
                                 sys.exit()
                             if find_package(name + sp, pkg_path):
                                 print("[ {0}Upgrading{1} ] --> {2}".format(
-                                    YELLOW, ENDC, name))
+                                    color['YELLOW'], color['ENDC'], name))
                             else:
                                 print("[ {0}Installing{1} ] --> {2}".format(
-                                    GREEN, ENDC, name))
+                                    color['GREEN'], color['ENDC'], name))
                                 # Use this list to pick out what
                                 # packages will be installed
                                 self.installed.append(name)
@@ -277,14 +272,14 @@ def view_packages(package_for_upgrade, upgrade_version, upgrade_arch):
     for upg, ver, arch in zip(package_for_upgrade, upgrade_version,
                               upgrade_arch):
         if find_package(upg[:-len(ver)], pkg_path):
-            COLOR = YELLOW
+            COLOR = color['YELLOW']
             count_upgraded += 1
         else:
-            COLOR = RED
+            COLOR = color['RED']
             count_installed += 1
         print(" {0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
-            COLOR, upg, ENDC, " " * (38-len(upg)), GREEN,
-            ver, ENDC, " " * (17-len(ver)), arch,
+            COLOR, upg, color['ENDC'], " " * (38-len(upg)), color['GREEN'],
+            ver, color['ENDC'], " " * (17-len(ver)), arch,
             " " * (13-len(arch)), "SBo"))
     msg_upg = "package"
     msg_ins = msg_upg
@@ -295,8 +290,8 @@ def view_packages(package_for_upgrade, upgrade_version, upgrade_arch):
     print("\nInstalling summary")
     print("=" * 79)
     print("{0}Total {1} {2} will be upgraded and {3} {4} will be "
-          "installed.{5}\n".format(GREY, count_upgraded, msg_upg,
-                                   count_installed, msg_ins, ENDC))
+          "installed.{5}\n".format(color['GREY'], count_upgraded, msg_upg,
+                                   count_installed, msg_ins, color['ENDC']))
     return [count_installed, count_upgraded], [msg_ins, msg_upg]
 
 

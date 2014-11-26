@@ -29,19 +29,14 @@ from slpkg.messages import (
     pkg_not_found,
     template
 )
-from slpkg.colors import (
-    RED,
-    GREEN,
-    CYAN,
-    GREY,
-    ENDC
-)
 from slpkg.__metadata__ import (
     pkg_path,
     sp,
     log_path,
     default_answer,
-    remove_deps_answer
+    remove_deps_answer,
+    del_deps,
+    color
 )
 
 from slpkg.pkg.find import find_package
@@ -127,7 +122,7 @@ class PackageManager(object):
                     # If package build and install with 'slpkg -s sbo <package>'
                     # then look log file for dependencies in /var/log/slpkg/dep,
                     # read and remove all else remove only the package.
-                    if os.path.isfile(dep_path + rmv):
+                    if os.path.isfile(dep_path + rmv) and del_deps == "on":
                         dependencies = self.view_deps(dep_path, rmv)
                         try:
                             if remove_deps_answer == "y":
@@ -158,12 +153,13 @@ class PackageManager(object):
         '''
         removed = []
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
-            CYAN, ", ".join(binary), ENDC))
+            color['CYAN'], ", ".join(binary), color['ENDC']))
         for pkg in binary:
             pkgs = find_package(pkg + sp, pkg_path)
             if pkgs:
-                print("[ {0}delete{1} ] --> {2}".format(RED, ENDC,
-                      "\n               ".join(pkgs)))
+                print("[ {0}delete{1} ] --> {2}".format(
+                    color['RED'], color['ENDC'],
+                    "\n               ".join(pkgs)))
                 removed.append(pkg)
             else:
                 pkg_not_found("", pkg, "Can't remove", "")
@@ -182,7 +178,7 @@ class PackageManager(object):
         print("| Found dependencies for package {0}:".format(package))
         template(78)
         for dep in dependencies:
-            print("| {0}{1}{2}".format(RED, dep, ENDC))
+            print("| {0}{1}{2}".format(color['RED'], dep, color['ENDC']))
         template(78)
         return dependencies
 
@@ -234,12 +230,12 @@ class PackageManager(object):
         self.binary = "".join(self.binary)
         matching = size = 0
         print("\nPackages with matching name [ {0}{1}{2} ]\n".format(
-              CYAN, self.binary, ENDC))
+              color['CYAN'], self.binary, color['ENDC']))
         for match in find_package(self.binary, pkg_path):
             if self.binary in match:
                 matching += 1
                 print("[ {0}installed{1} ] - {2}".format(
-                      GREEN, ENDC, match))
+                      color['GREEN'], color['ENDC'], match))
                 with open(pkg_path + match, "r") as f:
                     data = f.read()
                     f.close()
@@ -255,13 +251,13 @@ class PackageManager(object):
             pkg_not_found("", self.binary, message, "\n")
         else:
             print("\n{0}Total found {1} matching packages.{2}".format(
-                  GREY, matching, ENDC))
+                  color['GREY'], matching, color['ENDC']))
             unit = "Kb"
             if size > 1024:
                 unit = "Mb"
                 size = (size / 1024)
             print("{0}Size of installed packages {1} {2}.{3}\n".format(
-                  GREY, round(size, 2), unit, ENDC))
+                  color['GREY'], round(size, 2), unit, color['ENDC']))
 
     def display(self):
         '''
@@ -306,10 +302,12 @@ class PackageManager(object):
             for pkg in find_package("", pkg_path):
                 if pkg.endswith(search) and sl in pkg:
                     index += 1
-                    print("{0}{1}:{2} {3}".format(GREY, index, ENDC, pkg))
+                    print("{0}{1}:{2} {3}".format(color['GREY'], index,
+                                                  color['ENDC'], pkg))
                     if index == page:
                         read = raw_input("\nPress {0}Enter{1} to "
-                                         "continue... ".format(CYAN, ENDC))
+                                         "continue... ".format(color['CYAN'],
+                                                               color['ENDC']))
                         if read in ['Q', 'q']:
                             break
                         print("")   # new line after page
