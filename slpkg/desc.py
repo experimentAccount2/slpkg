@@ -25,13 +25,10 @@
 from init import Initialization
 from messages import pkg_not_found
 from __metadata__ import (
-    pkg_path,
     lib_path,
     repositories,
     color
 )
-
-from pkg.find import find_package
 
 
 class PkgDesc(object):
@@ -70,31 +67,27 @@ class PkgDesc(object):
             self.lib = lib_path + repos[self.repo]
 
     def view(self):
-        end, n, count = ":", 1, 0
-        find = "".join(find_package(self.name + '-', pkg_path))
-        if self.repo == "sbo" and find.endswith("_SBo"):
-            self.lib = pkg_path + find
-        elif self.repo == "sbo" and not find:
-            sbo_name = self.name
-            self.name = "SLACKBUILD SHORT DESCRIPTION:  "
-            end = sbo_name + " ("
-            n = 0
         f = open(self.lib, "r")
         PACKAGES_TXT = f.read()
         f.close()
         print("")   # new line at start
-        for line in PACKAGES_TXT.splitlines():
-            if line.startswith(self.name + end):
-                print("{0}{1}{2}".format(self.COLOR,
-                                         line[len(self.name) + n:].strip(),
-                      color['ENDC']))
-                count += 1
-                if count == 11:
-                    break
+        count = 0
+        if self.repo != "sbo":
+            for line in PACKAGES_TXT.splitlines():
+                if line.startswith(self.name + ":"):
+                    print(
+                        self.COLOR + line[len(self.name) + 1:] + color['ENDC'])
+                    count += 1
+                    if count == 11:
+                        break
+        else:
+            for line in PACKAGES_TXT.splitlines():
+                if (line.startswith("SLACKBUILD SHORT DESCRIPTION:  "
+                                    + self.name + " (")):
+                    count += 1
+                    print(
+                        self.COLOR + line[31:] + color['ENDC'])
         if count == 0:
-            if self.repo == "sbo":
-                pkg_not_found("", sbo_name, "No matching", "\n")
-            else:
                 pkg_not_found("", self.name, "No matching", "\n")
-        if self.repo == "sbo" and count > 0:
+        else:
             print("")   # new line at end
