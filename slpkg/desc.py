@@ -88,6 +88,6 @@ class PkgDesc(object):
                     print(
                         self.COLOR + line[31:] + color['ENDC'])
         if count == 0:
-                pkg_not_found("", self.name, "No matching", "\n")
+            pkg_not_found("", self.name, "No matching", "\n")
         else:
             print("")   # new line at end
