@@ -46,7 +46,9 @@ class Config(object):
             'DEL_BUILD',
             'SBO_BUILD_LOG',
             'DEFAULT_ANSWER',
-            'REMOVE_DEPS_ANSWER'
+            'REMOVE_DEPS_ANSWER',
+            'DEL_DEPS',
+            'USE_COLORS'
         ]
         f = open(self.config_file, "r")
         read_conf = f.read()

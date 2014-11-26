@@ -11,15 +11,17 @@ slpkg works on Slackware distribution.
 Install slpkg
 -------------
 
-There are mainly 3 ways:
+There are mainly 4 ways:
 
-1) Download latest slpkg version from https://github.com/dslackw/slpkg/releases
+1) Using pip: pip install slpkg --upgrade
+
+2) Download latest slpkg version from https://github.com/dslackw/slpkg/releases
    Untar or unzip the archive, cd in slpkg-?.?.? directory.
    Run install.sh in this directory `./install.sh` and slpkg auto-installed.
 
-2) Download slpkg package from slackbuilds.org.
+3) Download slpkg package from slackbuilds.org.
 
-3) Download binary package from sourceforge:
+4) Download binary package from sourceforge:
  
    https://sourceforge.net/projects/slpkg/
 

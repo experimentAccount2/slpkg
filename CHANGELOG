@@ -1,3 +1,10 @@
+Version 2.0.9
+26-11-2014
+
+[Updated] - Fix setup.py to install configuration files after checksum.
+          - Fix view slpkg config file.
+
+
 Version 2.0.8
 25-11-2014
 
