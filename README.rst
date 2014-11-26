@@ -11,9 +11,9 @@
 
 Latest Release:
 
-- Version: 2.0.8
+- Version: 2.0.9
 - `Package <https://sourceforge.net/projects/slpkg/files/slpkg/binary/>`_
-- `Source <https://github.com/dslackw/slpkg/archive/v2.0.8.tar.gz>`_
+- `Source <https://github.com/dslackw/slpkg/archive/v2.0.9.tar.gz>`_
 - `CHANGELOG <https://github.com/dslackw/slpkg/blob/master/CHANGELOG>`_
  
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/logo.png
@@ -112,14 +112,21 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.0.8.tar.gz
-    $ cd slpkg-2.0.8
+    $ tar xvf slpkg-2.0.9.tar.gz
+    $ cd slpkg-2.0.9
     $ ./install.sh
 
 From SourceForge:
     
 Download binary package from `SourceForge <https://sourceforge.net/projects/slpkg/>`_
     
+Using pip:
+
+.. code-block:: bash
+    
+    $ pip install slpkg --upgrade
+
+
 Upgrade
 -------
 
@@ -145,7 +152,7 @@ Configuration files
 Slackware Current
 -----------------
 
-For Slackware 'current' users must change the variable VERSION in /etc/slpkg.conf file.
+For Slackware 'current' users must change the variable VERSION in '/etc/slpkg.conf' file.
 
 .. code-block:: bash
 
@@ -157,7 +164,7 @@ Slackware Mirrors
 
 Slpkg uses the central mirror "http://mirrors.slackware.com/slackware/" 
 to find the nearest one. If however for some reason this troublesome 
-please edit the file in /etc/slpkg/slackware-mirrors
+please edit the file in '/etc/slpkg/slackware-mirrors'.
 
 Command Line Tool Usage
 -----------------------

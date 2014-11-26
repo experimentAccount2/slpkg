@@ -75,8 +75,8 @@ class PkgDesc(object):
         if self.repo != "sbo":
             for line in PACKAGES_TXT.splitlines():
                 if line.startswith(self.name + ":"):
-                    print(
-                        self.COLOR + line[len(self.name) + 1:] + color['ENDC'])
+                    print(self.COLOR + line[len(self.name) + 1:] +
+                          color['ENDC'])
                     count += 1
                     if count == 11:
                         break
@@ -85,9 +85,8 @@ class PkgDesc(object):
                 if (line.startswith("SLACKBUILD SHORT DESCRIPTION:  "
                                     + self.name + " (")):
                     count += 1
-                    print(
-                        self.COLOR + line[31:] + color['ENDC'])
+                    print(self.COLOR + line[31:] + color['ENDC'])
         if count == 0:
-                pkg_not_found("", self.name, "No matching", "\n")
+            pkg_not_found("", self.name, "No matching", "\n")
         else:
             print("")   # new line at end

@@ -31,6 +31,8 @@ from slpkg.__metadata__ import (
     __email__,
     __author__
 )
+from slpkg.checksum import md5sum
+
 
 try:
     from setuptools import setup
@@ -93,5 +95,12 @@ if "install" in sys.argv:
     if not os.path.exists(conf_path):
         os.system("mkdir -p {0}".format(conf_path))
     for conf in conf_file:
-        print("Installing '{0}' file".format(conf.split("/")[-1]))
-        shutil.copy2(conf, conf_path)
+        filename = conf.split("/")[-1]
+        print("Installing '{0}' file".format(filename))
+        if os.path.isfile(conf_path + filename):
+            old = md5sum(conf_path + filename)
+            new = md5sum(conf)
+            if old != new:
+                shutil.copy2(conf, conf_path + filename + ".new")
+        else:
+            shutil.copy2(conf, conf_path)
