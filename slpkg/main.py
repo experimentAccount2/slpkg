@@ -146,9 +146,8 @@ def main():
             install[args[1]]()
         else:
             usage()
-    elif len(args) == 3 and args[0] == "-t" and args[1] in ["sbo", "alien",
-                                                            "rlw", "slacky",
-                                                            "studio"]:
+    elif (len(args) == 3 and args[0] == "-t" and args[1] in repositories
+          and args[1] != "slack"):
         track_dep(args[2], args[1])
     elif len(args) == 2 and args[0] == "-n":
         SBoNetwork(args[1]).view()

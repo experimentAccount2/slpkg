@@ -84,31 +84,31 @@ if os.path.isfile("/etc/slpkg/slpkg.conf"):
 
 # repositories
 repositories = [
-    "sbo",
-    "slack",
-    "rlw",
-    "alien",
-    "slacky",
-    "studio"
+    'slack',
+    'sbo',
+    'rlw',
+    'alien',
+    'slacky',
+    'studio'
 ]
 
 if use_colors == "on":
     color = {
-        'RED': "\x1b[31m",
-        'GREEN': "\x1b[32m",
-        'YELLOW': "\x1b[33m",
-        'CYAN': "\x1b[36m",
-        'GREY': "\x1b[38;5;247m",
-        'ENDC': "\x1b[0m"
+        'RED': '\x1b[31m',
+        'GREEN': '\x1b[32m',
+        'YELLOW': '\x1b[33m',
+        'CYAN': '\x1b[36m',
+        'GREY': '\x1b[38;5;247m',
+        'ENDC': '\x1b[0m'
     }
 else:
     color = {
-        'RED': "",
-        'GREEN': "",
-        'YELLOW': "",
-        'CYAN': "",
-        'GREY': "",
-        'ENDC': ""
+        'RED': '',
+        'GREEN': '',
+        'YELLOW': '',
+        'CYAN': '',
+        'GREY': '',
+        'ENDC': ''
     }
 
 # file spacer
