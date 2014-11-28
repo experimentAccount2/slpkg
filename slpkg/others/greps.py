@@ -61,7 +61,7 @@ def repo_data(PACKAGES_TXT, step, repo, version):
          rsize,
          runsize
          ) = alien_filter(name, location, size, unsize, version)
-    elif repo == "slacky":
+    elif repo in ["slacky", "studio"]:
         rname, rlocation, rsize, runsize = name, location, size, unsize
     return [rname, rlocation, rsize, runsize]
 

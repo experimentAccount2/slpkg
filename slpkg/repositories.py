@@ -68,3 +68,9 @@ class Repo(object):
         Slacky.eu repository
         '''
         return "http://repository.slacky.eu/"
+
+    def studioware(self):
+        '''
+        Studioware repository
+        '''
+        return "http://studioware.org/files/packages/"

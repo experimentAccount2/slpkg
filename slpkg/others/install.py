@@ -84,6 +84,15 @@ class OthersInstall(object):
             self.mirror = "{0}slackware{1}-{2}/".format(repos.slacky(), arch,
                                                         slack_ver())
             self.step = self.step * 2
+        elif self.repo == "studio":
+            lib = lib_path + "studio_repo/PACKAGES.TXT"
+            arch = ""
+            if os.uname()[4] == "x86_64":
+                arch = "64"
+            self.mirror = "{0}slackware{1}-{2}/".format(repos.studioware(),
+                                                        arch, slack_ver())
+            self.step = self.step * 2
+
         f = open(lib, "r")
         self.PACKAGES_TXT = f.read()
         f.close()
@@ -98,9 +107,10 @@ class OthersInstall(object):
         if not os.path.isfile(lib_path + "slack_repo/PACKAGES.TXT"):
             Initialization().slack()
         repository = {
-            "rlw": Initialization().rlw,
-            "alien": Initialization().alien,
-            "slacky": Initialization().slacky
+            'rlw': Initialization().rlw,
+            'alien': Initialization().alien,
+            'slacky': Initialization().slacky,
+            'studio': Initialization().studioware
         }
         repository[self.repo]()
 
@@ -218,9 +228,10 @@ def views(install_all, comp_sum, repository, dependencies):
     count = pkg_sum = uni_sum = upg_sum = 0
     # fix repositories align
     align = {
-        "rlw": ' ' * 3,
-        "alien": ' ',
-        "slacky": ''
+        'rlw': ' ' * 3,
+        'alien': ' ',
+        'slacky': '',
+        'studio': ''
     }
     repository += align[repository]
     for pkg, comp in zip(install_all, comp_sum):

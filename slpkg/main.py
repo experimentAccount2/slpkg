@@ -72,6 +72,9 @@ class Case(object):
     def slacky_install(self):
         OthersInstall(self.package, "slacky", self.release).start()
 
+    def studioware_install(self):
+        OthersInstall(self.package, "studio", self.release).start()
+
     def sbo_upgrade(self):
         SBoCheck().start()
 
@@ -86,6 +89,9 @@ class Case(object):
 
     def slacky_upgrade(self):
         OthersUpgrade("slacky", self.release).start()
+
+    def studioware_upgrade(self):
+        OthersUpgrade("studio", self.release).start()
 
 
 def main():
@@ -115,11 +121,12 @@ def main():
     elif len(args) == 3 and args[0] == "-c" and args[2] == "--upgrade":
         pkg = Case("")
         upgrade = {
-            "sbo": pkg.sbo_upgrade,
-            "slack": pkg.slack_upgrade,
-            "rlw": pkg.rlw_upgrade,
-            "alien": pkg.alien_upgrade,
-            "slacky": pkg.slacky_upgrade
+            'sbo': pkg.sbo_upgrade,
+            'slack': pkg.slack_upgrade,
+            'rlw': pkg.rlw_upgrade,
+            'alien': pkg.alien_upgrade,
+            'slacky': pkg.slacky_upgrade,
+            'studio': pkg.studioware_upgrade
         }
         if args[1] in repositories:
             upgrade[args[1]]()
@@ -129,17 +136,19 @@ def main():
         pkg = Case(args[2])
         if args[1] in repositories:
             install = {
-                "sbo": pkg.sbo_install,
-                "slack": pkg.slack_install,
-                "rlw": pkg.rlw_install,
-                "alien": pkg.alien_install,
-                "slacky": pkg.slacky_install
+                'sbo': pkg.sbo_install,
+                'slack': pkg.slack_install,
+                'rlw': pkg.rlw_install,
+                'alien': pkg.alien_install,
+                'slacky': pkg.slacky_install,
+                'studio': pkg.studioware_install
             }
             install[args[1]]()
         else:
             usage()
     elif len(args) == 3 and args[0] == "-t" and args[1] in ["sbo", "alien",
-                                                            "rlw", "slacky"]:
+                                                            "rlw", "slacky",
+                                                            "studio"]:
         track_dep(args[2], args[1])
     elif len(args) == 2 and args[0] == "-n":
         SBoNetwork(args[1]).view()

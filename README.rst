@@ -31,21 +31,24 @@ Slpkg is `Open Source <http://en.wikipedia.org/wiki/Open_source>`_ software writ
 Python language. It's use is for managing packages in Slackware linux distribution.
 Supported Repositories:
 
-- SBo - `slackbuilds.org <http://slackbuilds.org/>`_
+- SBo - `Reposiory <http://slackbuilds.org/>`_
   Arch: {x86, x86_64}
   Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1}
-- Slack - `slackware.com <http://www.slackware.com/>`_
+- Slack - `Repository <http://www.slackware.com/>`_
   Arch: {x86, x86_64}
   Versions: {3.3, 8.1, 9.0, 9.1, 10.0, 10.1, 10.2, 11.0, 12.0, 12.2, 13.0, 13.37, 14.0, 14.1, current}
-- Alien - `alien bob <http://www.slackware.com/~alien/slackbuilds/>`_
+- Alien - `Repository <http://www.slackware.com/~alien/slackbuilds/>`_
   Arch: {x86, x86_64}
   Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1, current}
-- Slacky - `slacky.eu <http://repository.slacky.eu/>`_
+- Slacky - `Repository <http://repository.slacky.eu/>`_
   Arch: {x86, x86_64}
   Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1}
-- Robby's - `rworkman's <http://rlworkman.net/pkgs/>`_
+- Robby's - `Repository <http://rlworkman.net/pkgs/>`_
   Arch: {x86, x86_64}
   Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1}
+- Studioware - `Repository <http://studioware.org/packages>`_
+  Arch: {x86, x86_64}
+  Versions: {13.37, 14.0, 14.1}
 
 Slpkg works in accordance with the standards of the organization slackbuilds.org 
 to builds packages. Also uses the Slackware linux instructions for installation,
@@ -194,7 +197,7 @@ Command Line Tool Usage
       -r, [package...]                          remove binary packages
       -d, [package...]                          display the contents
 
-    Repositories: <slack, sbo, alien, slacky, rlw>
+    Repositories: <slack, sbo, alien, slacky, rlw, studio>
     Colors = [red, green, yellow, cyan, grey]         
 
 Slpkg Examples

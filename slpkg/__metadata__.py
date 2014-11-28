@@ -88,7 +88,8 @@ repositories = [
     "slack",
     "rlw",
     "alien",
-    "slacky"
+    "slacky",
+    "studio"
 ]
 
 if use_colors == "on":

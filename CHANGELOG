@@ -1,7 +1,9 @@
 Version 2.1.0-dev
+28-11-2014
 
 [Updated] - Fix change build path.
           - Fix creating directories if not exists.
+          - Added Studioware repository.
 
 Version 2.0.9
 26-11-2014

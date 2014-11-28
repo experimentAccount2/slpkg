@@ -44,7 +44,8 @@ class PkgDesc(object):
             'slack': Initialization().slack,
             'rlw': Initialization().rlw,
             'alien': Initialization().alien,
-            'slacky': Initialization().slacky
+            'slacky': Initialization().slacky,
+            'studio': Initialization().studioware
         }
         init_repos[self.repo]()
         color_text = {
@@ -62,7 +63,8 @@ class PkgDesc(object):
                 'slack': 'slack_repo/PACKAGES.TXT',
                 'rlw': 'rlw_repo/PACKAGES.TXT',
                 'alien': 'alien_repo/PACKAGES.TXT',
-                'slacky': 'slacky_repo/PACKAGES.TXT'
+                'slacky': 'slacky_repo/PACKAGES.TXT',
+                'studio': 'studio_repo/PACKAGES.TXT'
             }
             self.lib = lib_path + repos[self.repo]
 
