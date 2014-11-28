@@ -52,11 +52,11 @@ class Initialization(object):
         if not os.path.exists("/tmp/slpkg/"):
             os.mkdir("/tmp/slpkg/")
         if not os.path.exists(build_path):
-            os.mkdir(build_path)
+            os.makedirs(build_path)
         if not os.path.exists(slpkg_tmp_packages):
-            os.mkdir(slpkg_tmp_packages)
+            os.makedirs(slpkg_tmp_packages)
         if not os.path.exists(slpkg_tmp_patches):
-            os.mkdir(slpkg_tmp_patches)
+            os.makedirs(slpkg_tmp_patches)
 
     def slack(self):
         '''
