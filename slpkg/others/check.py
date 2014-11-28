@@ -75,6 +75,15 @@ class OthersUpgrade(object):
             self.mirror = "{0}slackware{1}-{2}/".format(repos.slacky(), arch,
                                                         slack_ver())
             self.step = self.step * 2
+        elif self.repo == "studio":
+            lib = lib_path + "studio_repo/PACKAGES.TXT"
+            arch = ""
+            if os.uname()[4] == "x86_64":
+                arch = "64"
+            self.mirror = "{0}slackware{1}-{2}/".format(repos.studioware(),
+                                                        arch, slack_ver())
+            self.step = self.step * 2
+
         f = open(lib, "r")
         self.PACKAGES_TXT = f.read()
         f.close()
@@ -86,7 +95,8 @@ class OthersUpgrade(object):
         repository = {
             'rlw': Initialization().rlw,
             'alien': Initialization().alien,
-            'slacky': Initialization().slacky
+            'slacky': Initialization().slacky,
+            'studio': Initialization().studioware
         }
         repository[self.repo]()
 
@@ -155,8 +165,8 @@ class OthersUpgrade(object):
                                                data[3]):
                 inst_pkg = split_package(pkg)
                 repo_pkg = split_package(name[:-4])
-                if repo_pkg[0] == inst_pkg[0] and name[:-4] > pkg \
-                        and inst_pkg[0] not in black:
+                if (repo_pkg[0] == inst_pkg[0] and
+                        name[:-4] > pkg and inst_pkg[0] not in black):
                     # store downloads packages by repo
                     dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
                     install.append(name)
@@ -172,7 +182,8 @@ class OthersUpgrade(object):
         repository = {
             'rlw': '_rlw',
             'alien': 'alien',
-            'slacky': 'sl'
+            'slacky': 'sl',
+            'studio': 'se'
         }
         repo = repository[self.repo]
         for pkg in os.listdir(pkg_path):
@@ -190,7 +201,8 @@ def views(upgrade_all, comp_sum, repository):
     align = {
         'rlw': ' ' * 3,
         'alien': ' ',
-        'slacky': ''
+        'slacky': '',
+        'studio': ''
     }
     repository += align[repository]
     for pkg, comp in zip(upgrade_all, comp_sum):

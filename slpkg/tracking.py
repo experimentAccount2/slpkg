@@ -52,7 +52,8 @@ def track_dep(name, repo):
         'slack': Initialization().slack,
         'rlw': Initialization().rlw,
         'alien': Initialization().alien,
-        'slacky': Initialization().slacky
+        'slacky': Initialization().slacky,
+        'studio': Initialization().studioware
     }
     init_repos[repo]()
     sys.stdout.write("{0}Reading package lists ...{1}".format(color['GREY'],

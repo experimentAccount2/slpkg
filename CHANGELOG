@@ -1,9 +1,15 @@
+Version 2.1.0
+28-11-2014
+
+[Updated] - Fix change build path.
+          - Fix creating directories if not exists.
+          - Added Studioware repository.
+
 Version 2.0.9
 26-11-2014
 
 [Updated] - Fix setup.py to install configuration files after checksum.
           - Fix view slpkg config file.
-
 
 Version 2.0.8
 25-11-2014

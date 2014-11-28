@@ -81,7 +81,7 @@ class BuildPackage(object):
                 if sbo_check_md5 == "on":
                     check_md5(sbo_md5, src)
                 shutil.copy2(src, self.prgnam)
-            os.chdir(self.path + self.prgnam)
+            os.chdir(self.path + "/" + self.prgnam)
             # change permissions
             subprocess.call("chmod +x {0}.SlackBuild".format(self.prgnam),
                             shell=True)

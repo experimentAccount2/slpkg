@@ -38,7 +38,8 @@ def search_pkg(name, repo):
         repo_dir = {
             "rlw": "rlw_repo/PACKAGES.TXT",
             "alien": "alien_repo/PACKAGES.TXT",
-            "slacky": "slacky_repo/PACKAGES.TXT"
+            "slacky": "slacky_repo/PACKAGES.TXT",
+            "studio": "studio_repo/PACKAGES.TXT"
         }
         with open(lib_path + repo_dir[repo], "r") as PACKAGES_TXT:
             for line in PACKAGES_TXT:
