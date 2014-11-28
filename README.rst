@@ -11,9 +11,9 @@
 
 Latest Release:
 
-- Version: 2.0.9
+- Version: 2.1.x-dev
 - `Package <https://sourceforge.net/projects/slpkg/files/slpkg/binary/>`_
-- `Source <https://github.com/dslackw/slpkg/archive/v2.0.9.tar.gz>`_
+- `Source <https://github.com/dslackw/slpkg/archive/v2.1.x-dev.tar.gz>`_
 - `CHANGELOG <https://github.com/dslackw/slpkg/blob/master/CHANGELOG>`_
  
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/logo.png
@@ -112,8 +112,8 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.0.9.tar.gz
-    $ cd slpkg-2.0.9
+    $ tar xvf slpkg-2.1.x-dev.tar.gz
+    $ cd slpkg-2.1.x-dev
     $ ./install.sh
 
 From SourceForge:
