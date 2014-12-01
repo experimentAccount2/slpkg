@@ -23,7 +23,8 @@
 
 from slpkg.__metadata__ import (
     arch,
-    lib_path
+    lib_path,
+    skip_unst
 )
 
 
@@ -43,7 +44,8 @@ class SBoGrep(object):
         self.line_md5_64 = "SLACKBUILD MD5SUM_{0}: ".format(arch64)
         self.line_des = "SLACKBUILD SHORT DESCRIPTION:  "
         self.sbo_txt = lib_path + "sbo_repo/SLACKBUILDS.TXT"
-
+        self.answer = ['y', 'Y']
+        self.unst = ['UNSUPPORTED', 'UNTESTED']
         # open an read SLACKBUILDS.TXT file
         f = open(self.sbo_txt, "r")
         self.SLACKBUILDS_TXT = f.read()
@@ -53,20 +55,29 @@ class SBoGrep(object):
         '''
         Grab sources downloads links
         '''
-        if arch == "x86_64":
-            for line in self.SLACKBUILDS_TXT.splitlines():
-                if line.startswith(self.line_name):
-                    sbo_name = line[17:].strip()
-                if line.startswith(self.line_down_64):
-                    if sbo_name == self.name:
-                        if line[28:].strip():
-                            return line[28:].strip()
+        source, source64, src, = "", "", ""
         for line in self.SLACKBUILDS_TXT.splitlines():
             if line.startswith(self.line_name):
                 sbo_name = line[17:].strip()
             if line.startswith(self.line_down):
-                if sbo_name == self.name:
-                    return line[21:].strip()
+                if sbo_name == self.name and line[21:].strip():
+                    source = line[21:]
+            if line.startswith(self.line_down_64):
+                if sbo_name == self.name and line[28:].strip():
+                    source64 = line[28:]
+        if arch == "x86_64":
+            if source64:
+                src = source64
+            else:
+                src = source
+            if skip_unst in self.answer and source64 in self.unst:
+                src = source
+        else:
+            if source:
+                src = source
+            if skip_unst in self.answer and source in self.unst:
+                src = source64
+        return src
 
     def requires(self):
         '''
@@ -94,20 +105,29 @@ class SBoGrep(object):
         '''
         Grab checksum string
         '''
-        if arch == "x86_64":
-            for line in self.SLACKBUILDS_TXT.splitlines():
-                if line.startswith(self.line_name):
-                    sbo_name = line[17:].strip()
-                if line.startswith(self.line_md5_64):
-                    if sbo_name == self.name:
-                        if line[26:].strip():
-                            return line[26:].strip().split()
+        md5sum, md5sum64, md5 = [], [], []
         for line in self.SLACKBUILDS_TXT.splitlines():
             if line.startswith(self.line_name):
                 sbo_name = line[17:].strip()
+            if line.startswith(self.line_md5_64):
+                if sbo_name == self.name and line[26:].strip():
+                    md5sum64 = line[26:].strip().split()
             if line.startswith(self.line_md5):
-                if sbo_name == self.name:
-                    return line[19:].strip().split()
+                if sbo_name == self.name and line[19:].strip():
+                    md5sum = line[19:].strip().split()
+        if arch == "x86_64":
+            if md5sum64:
+                md5 = md5sum64
+            else:
+                md5 = md5sum
+            if skip_unst in self.answer:
+                md5 = md5sum
+        else:
+            if md5sum:
+                md5 = md5sum
+            if skip_unst in self.answer and not md5sum:
+                md5 = md5sum64
+        return md5
 
     def description(self):
         '''

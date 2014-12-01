@@ -26,7 +26,7 @@ import os
 
 __all__ = "slpkg"
 __author__ = "dslackw"
-__version_info__ = (2, 1, 0)
+__version_info__ = (2, 1, 1)
 __version__ = "{0}.{1}.{2}".format(*__version_info__)
 __license__ = "GNU General Public License v3 (GPLv3)"
 __email__ = "d.zlatanidis@gmail.com"
@@ -36,6 +36,14 @@ tmp = "/tmp/"
 
 # Default configuration values
 slack_rel = "stable"
+repositories = [
+    'slack',
+    'sbo',
+    'rlw',
+    'alien',
+    'slacky',
+    'studio'
+]
 build_path = "/tmp/slpkg/build/"
 slpkg_tmp_packages = tmp + "slpkg/packages/"
 slpkg_tmp_patches = tmp + "slpkg/patches/"
@@ -45,6 +53,7 @@ del_build = "off"
 sbo_build_log = "on"
 default_answer = "n"
 remove_deps_answer = "n"
+skip_unst = "n"
 del_deps = "on"
 use_colors = "on"
 
@@ -58,6 +67,8 @@ if os.path.isfile("/etc/slpkg/slpkg.conf"):
             slack_rel = line[8:].strip()
             if not slack_rel:
                 slack_rel = "stable"
+        if line.startswith("REPOSITORIES"):
+            repositories = line[13:].strip().split(",")
         if line.startswith("BUILD"):
             build_path = line[6:].strip()
         if line.startswith("PACKAGES"):
@@ -76,21 +87,12 @@ if os.path.isfile("/etc/slpkg/slpkg.conf"):
             default_answer = line[15:].strip()
         if line.startswith("REMOVE_DEPS_ANSWER"):
             remove_deps_answer = line[19:].strip()
+        if line.startswith("SKIP_UNST"):
+            skip_unst = line[10:].strip()
         if line.startswith("DEL_DEPS"):
             del_deps = line[9:].strip()
         if line.startswith("USE_COLORS"):
             use_colors = line[11:].strip()
-
-
-# repositories
-repositories = [
-    'slack',
-    'sbo',
-    'rlw',
-    'alien',
-    'slacky',
-    'studio'
-]
 
 if use_colors == "on":
     color = {

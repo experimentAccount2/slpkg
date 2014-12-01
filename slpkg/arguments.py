@@ -22,7 +22,10 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-from __metadata__ import __version__
+from __metadata__ import (
+    __version__,
+    repositories
+)
 
 
 def options():
@@ -56,8 +59,6 @@ def options():
         "  -o, [package...]                          reinstall binary packages",
         "  -r, [package...]                          remove binary packages",
         "  -d, [package...]                          display the contents\n",
-        "Repositories: <slack, sbo, alien, slacky, rlw, studio>",
-        "Colors = [red, green, yellow, cyan, grey]\n",
     ]
     for opt in arguments:
         print(opt)
@@ -78,7 +79,10 @@ def usage():
         "             [-p [repository] [package] --color=[]]",
         "             [-f] [-n] [-i [...]] [-u [...]]",
         "             [-o  [...]] [-r [...]] [-d [...]]\n",
+        "Repositories: " + ", ".join(repositories),
+        "Colors: red, green, yellow, cyan, grey\n",
         "For more information try 'slpkg --help'\n"
     ]
+
     for usg in view:
         print(usg)

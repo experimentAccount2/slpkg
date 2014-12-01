@@ -1,3 +1,12 @@
+Version 2.1.1-dev
+02-12-2014
+
+[Feature] - Added options in /etc/slpkg/slpkg.conf file to select
+            repositories.
+          - Added options to skip unsupported and untested packages.
+
+[Updated] - Bugfix TypeError for unsupported/untested sbo packages.
+
 Version 2.1.0
 28-11-2014
 
@@ -14,13 +23,13 @@ Version 2.0.9
 Version 2.0.8
 25-11-2014
 
-[Updated] - Add more options in slpkg configuration file.
+[Updated] - Added more options in slpkg configuration file.
 
 Version 2.0.7
 22-11-2014
 
-[Feature] - Add more option in slpkg.conf file.
-          - Add slackware-mirrors file in /etc/slpkg
+[Feature] - Added more option in slpkg.conf file.
+          - Added slackware-mirrors file in /etc/slpkg
 
 [Updated] - Fix upgrade Slackware packages if installed.
 
@@ -32,19 +41,19 @@ Version 2.0.6
 Version 2.0.5
 18-11-2014
 
-[Feature] - Add /etc/slpkg.conf file.
+[Feature] - Added /etc/slpkg.conf file.
           - Move "--current" switch in /etc/slpkg.conf file.
-          - Add local PACKAGES.TXT for Slackware repository.
-          - Add options to view package description.
-          - Add all repositories in tracking dependencies options '-t'.
-          - Add configuration file managment
+          - Added local PACKAGES.TXT for Slackware repository.
+          - Added options to view package description.
+          - Added all repositories in tracking dependencies options '-t'.
+          - Added configuration file managment
 
 [Updated] - Bugfix upgrading binary packages.
 
 Version 2.0.4
 07-11-2014
 
-[Feature] - Add Robby Workman, Alien Bob (Eric Hameleers) and
+[Feature] - Added Robby Workman, Alien Bob (Eric Hameleers) and
             slacky.eu repositories.
 
 [Updated] - Fix remove list reference.
