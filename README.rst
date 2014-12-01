@@ -50,6 +50,9 @@ Supported Repositories:
   Arch: {x86, x86_64}
   Versions: {13.37, 14.0, 14.1}
 
+* Choose repositories you need to work from file '/etc/slpkg/slpkg.conf' default is all repositories.
+
+
 Slpkg works in accordance with the standards of the organization slackbuilds.org 
 to builds packages. Also uses the Slackware linux instructions for installation,
 upgrading or removing packages. 
@@ -136,6 +139,9 @@ Upgrade
 In each slpkg upgrade should track the configuration files in the file '/etc/slpkg' for 
 new updates.
 
+*** IMPORTANT :
+*** Recommended to replace '/etc/slpkg/slpkg.conf' file with '/etc/slpkg/slpkg.conf.new' file.
+
 
 Configuration files
 -------------------
@@ -197,8 +203,6 @@ Command Line Tool Usage
       -r, [package...]                          remove binary packages
       -d, [package...]                          display the contents
 
-    Repositories: <slack, sbo, alien, slacky, rlw, studio>
-    Colors = [red, green, yellow, cyan, grey]         
 
 Slpkg Examples
 --------------
@@ -700,7 +704,7 @@ Print package description:
 
 .. code-block:: bash
 
-    $ slpkg -p alien vlc
+    $ slpkg -p alien vlc --color=green
 
     vlc (multimedia player for various audio and video formats)
 
