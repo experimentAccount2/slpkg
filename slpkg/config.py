@@ -38,6 +38,7 @@ class Config(object):
         print("")   # new line at start
         conf_args = [
             'VERSION',
+            'REPOSITORIES',
             'BUILD',
             'SBO_CHECK_MD5',
             'PACKAGES',
@@ -47,6 +48,7 @@ class Config(object):
             'SBO_BUILD_LOG',
             'DEFAULT_ANSWER',
             'REMOVE_DEPS_ANSWER',
+            'SKIP_UNST',
             'DEL_DEPS',
             'USE_COLORS'
         ]

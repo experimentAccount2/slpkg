@@ -214,8 +214,7 @@ def pkg_colors_tag(name, sbo_versions, count_upg, count_ins):
     '''
     Tag with color green if package already installed,
     color yellow for packages to upgrade and color red
-    if not installed. Also if package arch is UNSUPPORTED
-    tag with color red and if UNTESTED with color yellow.
+    if not installed.
     '''
     # check if 'sbo_versions' is list if true
     # then get last package from list is master package
@@ -238,12 +237,12 @@ def arch_colors_tag(support, package_arch):
     '''
     Arch color tag
     '''
-    color = ""
+    paint = ""
     if support[0] in package_arch[-1]:
-        color = color['RED']
+        paint = color['RED']
     elif support[1] in package_arch[-1]:
-        color = color['YELLOW']
-    return color
+        paint = color['YELLOW']
+    return paint
 
 
 def top_view():

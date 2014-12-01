@@ -134,22 +134,22 @@ def main():
             usage()
     elif len(args) == 3 and args[0] == "-s":
         pkg = Case(args[2])
+        install = {
+            'sbo': pkg.sbo_install,
+            'slack': pkg.slack_install,
+            'rlw': pkg.rlw_install,
+            'alien': pkg.alien_install,
+            'slacky': pkg.slacky_install,
+            'studio': pkg.studioware_install
+        }
         if args[1] in repositories:
-            install = {
-                'sbo': pkg.sbo_install,
-                'slack': pkg.slack_install,
-                'rlw': pkg.rlw_install,
-                'alien': pkg.alien_install,
-                'slacky': pkg.slacky_install,
-                'studio': pkg.studioware_install
-            }
             install[args[1]]()
         else:
             usage()
     elif (len(args) == 3 and args[0] == "-t" and args[1] in repositories
           and args[1] != "slack"):
         track_dep(args[2], args[1])
-    elif len(args) == 2 and args[0] == "-n":
+    elif len(args) == 2 and args[0] == "-n" and "sbo" in repositories:
         SBoNetwork(args[1]).view()
     elif len(args) == 2 and args[0] == "-b" and args[1] == "--list":
         blacklist.listed()

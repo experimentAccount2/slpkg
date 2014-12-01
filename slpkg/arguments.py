@@ -56,8 +56,6 @@ def options():
         "  -o, [package...]                          reinstall binary packages",
         "  -r, [package...]                          remove binary packages",
         "  -d, [package...]                          display the contents\n",
-        "Repositories: <slack, sbo, alien, slacky, rlw, studio>",
-        "Colors = [red, green, yellow, cyan, grey]\n",
     ]
     for opt in arguments:
         print(opt)
