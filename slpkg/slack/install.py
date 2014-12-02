@@ -25,6 +25,8 @@ import os
 import sys
 
 from slpkg.sizes import units
+from checksum import check_md5
+from grap_md5 import pkg_checksum
 from slpkg.blacklist import BlackList
 from slpkg.init import Initialization
 from slpkg.splitting import split_package
@@ -177,6 +179,7 @@ def install(tmp_path, install_all):
     '''
     for install in install_all:
         package = (tmp_path + install).split()
+        check_md5(pkg_checksum(install, "slack"), tmp_path + install)
         if os.path.isfile(pkg_path + install[:-4]):
             print("[ {0}reinstalling{1} ] --> {2}".format(color['GREEN'],
                                                           color['ENDC'],

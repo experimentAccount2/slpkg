@@ -22,7 +22,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 from slpkg.downloader import Download
-
+from slpkg.checksum import check_md5
 
 def slack_dwn(path, links):
     '''
@@ -30,4 +30,3 @@ def slack_dwn(path, links):
     '''
     for dwn in links:
         Download(path, dwn).start()
-        Download(path, dwn + ".asc").start()

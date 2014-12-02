@@ -33,4 +33,3 @@ def delete(path, packages):
     if del_all == "on":
         for pkg in packages:
             os.remove(path + pkg)
-            os.remove(path + pkg + ".asc")

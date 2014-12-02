@@ -25,6 +25,8 @@ import os
 import sys
 
 from slpkg.sizes import units
+from checksum import check_md5
+from grap_md5 import pkg_checksum
 from slpkg.repositories import Repo
 from slpkg.init import Initialization
 from slpkg.blacklist import BlackList
@@ -160,7 +162,7 @@ class OthersInstall(object):
                     if answer in ['y', 'Y']:
                         install_all.reverse()
                         packages_dwn(self.tmp_path, dwn_links)
-                        install(self.tmp_path, install_all)
+                        install(self.tmp_path, install_all, self.repo)
                         write_deps(dependencies)
                         delete(self.tmp_path, install_all)
                 else:
@@ -271,12 +273,17 @@ def msgs(install_all, uni_sum):
     return [msg_pkg, msg_2_pkg]
 
 
-def install(tmp_path, install_all):
+def install(tmp_path, install_all, repo):
     '''
     Install or upgrade packages
     '''
     for install in install_all:
         package = (tmp_path + install).split()
+        if repo == "alien":
+            check_md5(pkg_checksum("/" + slack_ver() + "/" + install, repo),
+                      tmp_path + install)
+        else:
+            check_md5(pkg_checksum(install, repo), tmp_path + install)
         if os.path.isfile(pkg_path + install[:-4]):
             print("[ {0}reinstalling{1} ] --> {2}".format(color['GREEN'],
                                                           color['ENDC'],

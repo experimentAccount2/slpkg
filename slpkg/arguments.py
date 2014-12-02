@@ -22,7 +22,9 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-from __metadata__ import __version__
+from __metadata__ import (
+    __version__,
+)
 
 
 def options():
@@ -76,7 +78,8 @@ def usage():
         "             [-p [repository] [package] --color=[]]",
         "             [-f] [-n] [-i [...]] [-u [...]]",
         "             [-o  [...]] [-r [...]] [-d [...]]\n",
-        "For more information try 'slpkg --help'\n"
+        "For more information try 'slpkg --help' or view manpage\n"
     ]
+
     for usg in view:
         print(usg)

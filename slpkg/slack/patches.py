@@ -26,6 +26,8 @@ import sys
 import subprocess
 
 from slpkg.sizes import units
+from checksum import check_md5
+from grap_md5 import pkg_checksum
 from slpkg.url_read import URL
 from slpkg.messages import template
 from slpkg.blacklist import BlackList
@@ -163,6 +165,7 @@ def upgrade(patch_path, upgrade_all):
     Upgrade packages
     '''
     for pkg in upgrade_all:
+        check_md5(pkg_checksum(pkg, "slack"), patch_path + pkg)
         print("[ {0}upgrading{1} ] --> {2}".format(color['YELLOW'],
                                                    color['ENDC'], pkg[:-4]))
         PackageManager((patch_path + pkg).split()).upgrade()

@@ -22,12 +22,41 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import hashlib
+import sys
+
+from messages import template
+from __metadata__ import (
+    color,
+    default_answer
+)
 
 
-def md5sum(source):
+def check_md5(pkg_md5, src_file):
     '''
-    Calculate packages md5 checksum
+    MD5 Checksum
     '''
-    with open(source) as file_to_check:
+    with open(src_file) as file_to_check:
         data = file_to_check.read()
-        return hashlib.md5(data).hexdigest()
+        md5 = hashlib.md5(data).hexdigest()
+    if pkg_md5 != md5:
+        template(78)
+        print("| MD5SUM check for {0} [ {1}FAILED{2} ]".format(
+            src_file.split("/")[-1], color['RED'], color['ENDC']))
+        template(78)
+        print("| Expected: {0}".format(md5))
+        print("| Found: {0}".format(pkg_md5))
+        template(78)
+        if default_answer == "y":
+            answer = default_answer
+        else:
+            answer = raw_input("Would you like to continue [Y/n]? ")
+        if answer in ['y', 'Y']:
+            print("")   # new line after answer
+        else:
+            sys.exit()
+    else:
+        template(78)
+        print("| MD5SUM check for {0} [ {1}PASSED{2} ]".format(
+            src_file.split("/")[-1], color['GREEN'], color['ENDC']))
+        template(78)
+        print("")   # new line after pass checksum

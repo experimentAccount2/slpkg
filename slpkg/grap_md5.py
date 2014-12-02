@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# downloads.py file is part of slpkg.
+# grap_md5.py file is part of slpkg.
 
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
@@ -21,12 +21,26 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from slpkg.downloader import Download
+
+from __metadata__ import lib_path
 
 
-def packages_dwn(path, links):
+def pkg_checksum(binary, repo):
     '''
-    Download patches
+    Return checksum from CHECKSUMS.md5 file by repository
     '''
-    for dwn in links:
-        Download(path, dwn).start()
+    repos = {
+        'slack': 'slack_repo/CHECKSUMS.md5',
+        'rlw': 'rlw_repo/CHECKSUMS.md5',
+        'alien': 'alien_repo/CHECKSUMS.md5',
+        'slacky': 'slacky_repo/CHECKSUMS.md5',
+        'studio': 'studio_repo/CHECKSUMS.md5'
+    }
+    lib = repos[repo]
+    f = open(lib_path + lib, "r")
+    CHECKSUMS_md5 = f.read()
+    f.close()
+    for line in CHECKSUMS_md5.splitlines():
+        if line.endswith(binary):
+            md5 = line.split()[0]
+    return md5

@@ -25,6 +25,8 @@ import os
 import sys
 
 from slpkg.sizes import units
+from checksum import check_md5
+from grap_md5 import pkg_checksum
 from slpkg.repositories import Repo
 from slpkg.messages import template
 from slpkg.blacklist import BlackList
@@ -139,7 +141,7 @@ class OthersUpgrade(object):
                 if answer in ['y', 'Y']:
                     upgrade_all.reverse()
                     packages_dwn(self.tmp_path, dwn_links)
-                    upgrade(self.tmp_path, upgrade_all)
+                    upgrade(self.tmp_path, upgrade_all, self.repo)
                     delete(self.tmp_path, upgrade_all)
             else:
                 print("No new updates in the repository '{0}'\n".format(
@@ -228,12 +230,17 @@ def msgs(upgrade_all):
     return msg_pkg
 
 
-def upgrade(tmp_path, upgrade_all):
+def upgrade(tmp_path, upgrade_all, repo):
     '''
     Install or upgrade packages
     '''
     for pkg in upgrade_all:
         package = (tmp_path + pkg).split()
+        if repo == "alien":
+            check_md5(pkg_checksum("/" + slack_ver() + "/" + pkg, repo),
+                      tmp_path + pkg)
+        else:
+            check_md5(pkg_checksum(pkg, repo), tmp_path + pkg)
         print("[ {0}upgrading{1} ] --> {2}".format(color['YELLOW'],
                                                    color['ENDC'], pkg[:-4]))
         PackageManager(package).upgrade()
