@@ -11,9 +11,9 @@
 
 Latest Release:
 
-- Version: 2.1.1
+- Version: 2.1.2
 - `Package <https://sourceforge.net/projects/slpkg/files/slpkg/binary/>`_
-- `Source <https://github.com/dslackw/slpkg/archive/v2.1.1.tar.gz>`_
+- `Source <https://github.com/dslackw/slpkg/archive/v2.1.2.tar.gz>`_
 - `CHANGELOG <https://github.com/dslackw/slpkg/blob/master/CHANGELOG>`_
  
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/logo.png
@@ -118,8 +118,8 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.1.1.tar.gz
-    $ cd slpkg-2.1.1
+    $ tar xvf slpkg-2.1.2.tar.gz
+    $ cd slpkg-2.1.2
     $ ./install.sh
 
 From SourceForge:
@@ -196,7 +196,7 @@ Command Line Tool Usage
       -t, [repository] [package]                tracking dependencies
       -p, [repository] [package] --color=[]     print package description
       -f, [package]                             find installed packages
-      -n, [package]                             view packages from SBo
+      -n, [package]                             view SBo packages through network
       -i, [package...]                          install binary packages
       -u, [package...]                          upgrade binary packages
       -o, [package...]                          reinstall binary packages

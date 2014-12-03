@@ -49,7 +49,7 @@ Optional arguments:
   -t, [repository] [package]                tracking dependencies
   -p, [repository] [package] --color=[]     print package description
   -f, [package]                             find installed packages
-  -n, [package]                             view packages from SBo
+  -n, [package]                             view SBo packages through network
   -i, [package...]                          install binary packages
   -u, [package...]                          upgrade binary packages
   -o, [package...]                          reinstall binary packages
@@ -109,7 +109,8 @@ Check your packages is up to date.
 .PP
 Installs or upgrade packages from the repositories with automatically resolving all 
 dependencies of the package. Also installs the official distribution Slackware 
-packages.
+packages. Sometimes to install a package have to pass part of the version of the 
+package as 'slpkg -s alien ffmpeg-2.4.3'.
 
 .SS -t , tracking dependencies
 \fBslpkg\fP \fB-t\fP <\fIrepository\fP> <\fIname of package\fP>

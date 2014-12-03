@@ -1,5 +1,12 @@
+Version 2.1.2-dev
+xx-12-2014
+
+[Feature] - Added checksum all repositories.
+
+[Updated] - Fix downloads modules.
+
 Version 2.1.1-dev
-02-12-2014
+01-12-2014
 
 [Feature] - Added options in /etc/slpkg/slpkg.conf file to select
             repositories.

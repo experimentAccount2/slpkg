@@ -25,8 +25,12 @@ import os
 import sys
 
 from slpkg.sizes import units
+from slpkg.remove import delete
+from slpkg.checksum import check_md5
 from slpkg.blacklist import BlackList
 from slpkg.init import Initialization
+from slpkg.downloader import Download
+from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
 from slpkg.messages import (
     pkg_not_found,
@@ -43,10 +47,8 @@ from slpkg.__metadata__ import (
 from slpkg.pkg.find import find_package
 from slpkg.pkg.manager import PackageManager
 
-from remove import delete
 from mirrors import mirrors
 from greps import slack_data
-from download import slack_dwn
 
 
 class Slack(object):
@@ -106,14 +108,14 @@ class Slack(object):
                 else:
                     answer = raw_input("\nWould you like to continue [Y/n]? ")
                 if answer in ['y', 'Y']:
-                    slack_dwn(self.tmp_path, dwn_links)
+                    Download(self.tmp_path, dwn_links).start()
                     install(self.tmp_path, install_all)
                     delete(self.tmp_path, install_all)
             else:
                 pkg_not_found("", self.slack_pkg, "No matching", "\n")
         except KeyboardInterrupt:
             print("")   # new line at exit
-            sys.exit()
+            sys.exit(0)
 
     def store(self):
         '''
@@ -177,6 +179,7 @@ def install(tmp_path, install_all):
     '''
     for install in install_all:
         package = (tmp_path + install).split()
+        check_md5(pkg_checksum(install, "slack"), tmp_path + install)
         if os.path.isfile(pkg_path + install[:-4]):
             print("[ {0}reinstalling{1} ] --> {2}".format(color['GREEN'],
                                                           color['ENDC'],

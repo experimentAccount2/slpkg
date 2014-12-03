@@ -25,10 +25,14 @@ import os
 import sys
 
 from slpkg.sizes import units
+from slpkg.remove import delete
 from slpkg.repositories import Repo
 from slpkg.messages import template
+from slpkg.checksum import check_md5
 from slpkg.blacklist import BlackList
 from slpkg.init import Initialization
+from slpkg.downloader import Download
+from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
 from slpkg.__metadata__ import (
     pkg_path,
@@ -40,11 +44,9 @@ from slpkg.__metadata__ import (
 
 from slpkg.pkg.manager import PackageManager
 
-from slpkg.slack.remove import delete
 from slpkg.slack.slack_version import slack_ver
 
 from greps import repo_data
-from download import packages_dwn
 
 
 class OthersUpgrade(object):
@@ -138,15 +140,15 @@ class OthersUpgrade(object):
                     answer = raw_input("\nWould you like to continue [Y/n]? ")
                 if answer in ['y', 'Y']:
                     upgrade_all.reverse()
-                    packages_dwn(self.tmp_path, dwn_links)
-                    upgrade(self.tmp_path, upgrade_all)
+                    Download(self.tmp_path, dwn_links).start()
+                    upgrade(self.tmp_path, upgrade_all, self.repo)
                     delete(self.tmp_path, upgrade_all)
             else:
                 print("No new updates in the repository '{0}'\n".format(
                     self.repo))
         except KeyboardInterrupt:
             print("")   # new line at exit
-            sys.exit()
+            sys.exit(0)
 
     def store(self):
         '''
@@ -228,12 +230,17 @@ def msgs(upgrade_all):
     return msg_pkg
 
 
-def upgrade(tmp_path, upgrade_all):
+def upgrade(tmp_path, upgrade_all, repo):
     '''
     Install or upgrade packages
     '''
     for pkg in upgrade_all:
         package = (tmp_path + pkg).split()
+        if repo == "alien":
+            check_md5(pkg_checksum("/" + slack_ver() + "/" + pkg, repo),
+                      tmp_path + pkg)
+        else:
+            check_md5(pkg_checksum(pkg, repo), tmp_path + pkg)
         print("[ {0}upgrading{1} ] --> {2}".format(color['YELLOW'],
                                                    color['ENDC'], pkg[:-4]))
         PackageManager(package).upgrade()

@@ -160,7 +160,7 @@ class SBoInstall(object):
                     pkg_not_found("\n", self.name, "No matching", "\n")
         except KeyboardInterrupt:
             print("")   # new line at exit
-            sys.exit()
+            sys.exit(0)
 
     def one_for_all(self):
         '''
@@ -302,7 +302,7 @@ def arch_support(source, support, package_sum, dependencies):
     return answer
 
 
-def dwn_sources(sources):
+def filenames(sources):
     '''
     Download sources and return filenames
     '''
@@ -310,7 +310,6 @@ def dwn_sources(sources):
     for src in sources:
         # get file from source
         filename.append(src.split("/")[-1])
-        Download(build_path, src).start()
     return filename
 
 
@@ -345,15 +344,16 @@ def build_install(dependencies, sbo_versions):
             sbo_link = SBoLink(sbo_url).tar_gz()
             src_link = SBoGrep(pkg).source().split()
             script = sbo_link.split("/")[-1]
-            Download(build_path, sbo_link).start()
-            sources = dwn_sources(src_link)
+            dwn_srcs = sbo_link.split() + src_link
+            Download(build_path, dwn_srcs).start()
+            sources = filenames(src_link)
             BuildPackage(script, sources, build_path).build()
             binary_list = search_in_tmp(prgnam)
             try:
                 binary = (tmp + max(binary_list)).split()
             except ValueError:
                 build_FAILED(sbo_url, prgnam)
-                sys.exit()
+                sys.exit(0)
             if find_package(pkg + sp, pkg_path):
                 print("{0}[ Upgrading ] --> {1}{2}".format(color['GREEN'],
                                                            color['ENDC'],

@@ -41,10 +41,10 @@ class FileSize(object):
             return int(meta.getheaders("Content-Length")[0])
         except (urllib2.URLError, IndexError):
             print("\nError: connection refused\n")
-            sys.exit()
+            sys.exit(0)
         except KeyboardInterrupt:
             print("")   # new line at cancel
-            sys.exit()
+            sys.exit(0)
 
     def local(self):
         '''

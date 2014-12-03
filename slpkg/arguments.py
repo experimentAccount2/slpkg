@@ -24,7 +24,6 @@
 
 from __metadata__ import (
     __version__,
-    repositories
 )
 
 
@@ -53,7 +52,8 @@ def options():
         "  -t, [repository] [package]                tracking dependencies",
         "  -p, [repository] [package] --color=[]     print package description",
         "  -f, [package]                             find installed packages",
-        "  -n, [package]                             view packages from SBo",
+        "  -n, [package]                             view SBo packages "
+        "through network",
         "  -i, [package...]                          install binary packages",
         "  -u, [package...]                          upgrade binary packages",
         "  -o, [package...]                          reinstall binary packages",
@@ -79,10 +79,7 @@ def usage():
         "             [-p [repository] [package] --color=[]]",
         "             [-f] [-n] [-i [...]] [-u [...]]",
         "             [-o  [...]] [-r [...]] [-d [...]]\n",
-        "Repositories: " + ", ".join(repositories),
-        "Colors: red, green, yellow, cyan, grey\n",
-        "For more information try 'slpkg --help'\n"
+        "For more information try 'slpkg --help' or view manpage\n"
     ]
-
     for usg in view:
         print(usg)

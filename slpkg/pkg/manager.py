@@ -116,7 +116,7 @@ class PackageManager(object):
                             str(len(removed)), msg))
             except KeyboardInterrupt:
                 print("")   # new line at exit
-                sys.exit()
+                sys.exit(0)
             if remove_pkg in ['y', 'Y']:
                 for rmv in removed:
                     # If package build and install with 'slpkg -s sbo <package>'
@@ -133,7 +133,7 @@ class PackageManager(object):
                                     "other packages) [Y/n]? ")
                         except KeyboardInterrupt:
                             print("")  # new line at exit
-                            sys.exit()
+                            sys.exit(0)
                         if remove_dep in ['y', 'Y']:
                             rmv_list += self.rmv_deps(self.binary,
                                                       dependencies,
@@ -316,4 +316,4 @@ class PackageManager(object):
             print("")   # new line at end
         except KeyboardInterrupt:
             print("")   # new line at exit
-            sys.exit()
+            sys.exit(0)

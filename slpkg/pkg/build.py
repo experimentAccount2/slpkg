@@ -29,17 +29,12 @@ import shutil
 import tarfile
 import subprocess
 
-from slpkg.checksum import md5sum
-from slpkg.messages import (
-    pkg_not_found,
-    template
-)
+from slpkg.checksum import check_md5
+from slpkg.messages import pkg_not_found
 from slpkg.__metadata__ import (
     log_path,
     sbo_build_log,
-    sbo_check_md5,
-    default_answer,
-    color
+    sbo_check_md5
 )
 
 from slpkg.sbo.greps import SBoGrep
@@ -106,38 +101,7 @@ class BuildPackage(object):
             pkg_not_found("\n", self.prgnam, "Wrong file", "\n")
         except KeyboardInterrupt:
             print("")   # new line at exit
-            sys.exit()
-
-
-def check_md5(sbo_md5, src):
-    '''
-    MD5 Checksum
-    '''
-    md5 = md5sum(src)
-    if sbo_md5 != md5:
-        template(78)
-        print("| MD5SUM check for {0} [ {1}FAILED{2} ]".format(src,
-                                                               color['RED'],
-                                                               color['ENDC']))
-        template(78)
-        print("| Expected: {0}".format(md5))
-        print("| Found: {0}".format(sbo_md5))
-        template(78)
-        if default_answer == "y":
-            answer = default_answer
-        else:
-            answer = raw_input("Would you like to continue [Y/n]? ")
-        if answer in ['y', 'Y']:
-            pass
-        else:
-            sys.exit()
-    else:
-        template(78)
-        print("| MD5SUM check for {0} [ {1}PASSED{2} ]".format(src,
-                                                               color['GREEN'],
-                                                               color['ENDC']))
-        template(78)
-        print("")   # new line after pass checksum
+            sys.exit(0)
 
 
 def log_head(path, log_file, log_time):

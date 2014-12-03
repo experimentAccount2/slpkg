@@ -32,20 +32,21 @@ class Download(object):
     def __init__(self, path, url):
         self.path = path
         self.url = url
-        self.file_name = self.url.split("/")[-1]
 
     def start(self):
         '''
         Download files usign wget.
-        Check if file already download the skip or continue
+        Check if file already download and skip or continue
         download if before stoped.
         '''
-        print("\n[ {0}Download{1} ] -->{1} {2}\n".format(color['GREEN'],
-                                                         color['ENDC'],
-                                                         self.file_name))
-        try:
-            subprocess.call("wget -c -N --directory-prefix={0} {1}".format(
-                            self.path, self.url), shell=True)
-        except KeyboardInterrupt:
-            print   # new line at cancel
-            sys.exit()
+        for dwn in self.url:
+            file_name = dwn.split("/")[-1]
+            print("\n[ {0}Download{1} ] -->{1} {2}\n".format(color['GREEN'],
+                                                             color['ENDC'],
+                                                             file_name))
+            try:
+                subprocess.call("wget -c -N --directory-prefix={0} {1}".format(
+                                self.path, dwn), shell=True)
+            except KeyboardInterrupt:
+                print   # new line at cancel
+                sys.exit(0)

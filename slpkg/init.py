@@ -65,6 +65,7 @@ class Initialization(object):
         log = log_path + "slack/"
         lib = lib_path + "slack_repo/"
         lib_file = "PACKAGES.TXT"
+        md5_file = "CHECKSUMS.md5"
         log_file = "ChangeLog.txt"
         version = slack_rel
         if not os.path.exists(log):
@@ -72,13 +73,20 @@ class Initialization(object):
         if not os.path.exists(lib):
             os.mkdir(lib)
         packages = mirrors(lib_file, "", version)
+        pkg_checksums = mirrors(md5_file, "", version)
         extra = mirrors(lib_file, "extra/", version)
+        ext_checksums = mirrors(md5_file, "extra/", version)
         pasture = mirrors(lib_file, "pasture/", version)
+        pas_checksums = mirrors(md5_file, "pasture/", version)
         packages_txt = ("{0} {1} {2}".format(packages, extra, pasture))
+        checksums_md5 = ("{0} {1} {2}".format(pkg_checksums, ext_checksums,
+                                              pas_checksums))
         changelog_txt = mirrors(log_file, "", version)
         self.write(lib, lib_file, packages_txt)
+        self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
-        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt)
+        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
+                    md5_file, checksums_md5)
 
     def sbo(self):
         '''
@@ -107,16 +115,20 @@ class Initialization(object):
         log = log_path + "rlw/"
         lib = lib_path + "rlw_repo/"
         lib_file = "PACKAGES.TXT"
+        md5_file = "CHECKSUMS.md5"
         log_file = "ChangeLog.txt"
         if not os.path.exists(log):
             os.mkdir(log)
         if not os.path.exists(lib):
             os.mkdir(lib)
         packages_txt = "{0}{1}/{2}".format(repo, slack_ver(), lib_file)
+        checksums_md5 = "{0}{1}/{2}".format(repo, slack_ver(), md5_file)
         changelog_txt = "{0}{1}/{2}".format(repo, slack_ver(), log_file)
         self.write(lib, lib_file, packages_txt)
+        self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
-        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt)
+        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
+                    md5_file, checksums_md5)
 
     def alien(self):
         '''
@@ -126,16 +138,20 @@ class Initialization(object):
         log = log_path + "alien/"
         lib = lib_path + "alien_repo/"
         lib_file = "PACKAGES.TXT"
+        md5_file = "CHECKSUMS.md5"
         log_file = "ChangeLog.txt"
         if not os.path.exists(log):
             os.mkdir(log)
         if not os.path.exists(lib):
             os.mkdir(lib)
         packages_txt = "{0}{1}".format(repo, lib_file)
+        checksums_md5 = "{0}{1}".format(repo, md5_file)
         changelog_txt = "{0}{1}".format(repo, log_file)
         self.write(lib, lib_file, packages_txt)
+        self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
-        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt)
+        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
+                    md5_file, checksums_md5)
 
     def slacky(self):
         '''
@@ -147,6 +163,7 @@ class Initialization(object):
         log = log_path + "slacky/"
         lib = lib_path + "slacky_repo/"
         lib_file = "PACKAGES.TXT"
+        md5_file = "CHECKSUMS.md5"
         log_file = "ChangeLog.txt"
         if not os.path.exists(log):
             os.mkdir(log)
@@ -156,11 +173,16 @@ class Initialization(object):
             ar = "64"
         packages_txt = "{0}slackware{1}-{2}/{3}".format(repo, ar, slack_ver(),
                                                         lib_file)
+        checksums_md5 = "{0}slackware{1}-{2}/{3}".format(repo, ar, slack_ver(),
+                                                         md5_file)
+
         changelog_txt = "{0}slackware{1}-{2}/{3}".format(repo, ar, slack_ver(),
                                                          log_file)
         self.write(lib, lib_file, packages_txt)
+        self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
-        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt)
+        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
+                    md5_file, checksums_md5)
 
     def studioware(self):
         '''
@@ -172,6 +194,7 @@ class Initialization(object):
         log = log_path + "studio/"
         lib = lib_path + "studio_repo/"
         lib_file = "PACKAGES.TXT"
+        md5_file = "CHECKSUMS.md5"
         log_file = "ChangeLog.txt"
         if not os.path.exists(log):
             os.mkdir(log)
@@ -181,27 +204,31 @@ class Initialization(object):
             ar = "64"
         packages_txt = "{0}slackware{1}-{2}/{3}".format(repo, ar, slack_ver(),
                                                         lib_file)
+        checksums_md5 = "{0}slackware{1}-{2}/{3}".format(repo, ar, slack_ver(),
+                                                         md5_file)
         changelog_txt = "{0}slackware{1}-{2}/{3}".format(repo, ar, slack_ver(),
                                                          log_file)
         self.write(lib, lib_file, packages_txt)
+        self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
-        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt)
+        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
+                    md5_file, checksums_md5)
 
     @staticmethod
     def write(path, files, file_url):
         '''
         Write files in /var/lib/slpkg/?_repo directory
         '''
-        PACKAGES_TXT = ""
+        FILE_TXT = ""
         if not os.path.isfile(path + files):
             print("\nslpkg ...initialization")
             sys.stdout.write(files + " read ...")
             sys.stdout.flush()
             for fu in file_url.split():
-                PACKAGES_TXT += URL(fu).reading()
+                FILE_TXT += URL(fu).reading()
             sys.stdout.write("Done\n")
             with open("{0}{1}".format(path, files), "w") as f:
-                f.write(PACKAGES_TXT)
+                f.write(FILE_TXT)
                 f.close()
                 print("File {0} created in {1}".format(files, path))
 
@@ -210,7 +237,7 @@ class Initialization(object):
         '''
         args[0]=log, args[1]=log_file, arg[2]=changelog_txt
         args[3]=lib, args[4]=lib_file, arg[5]=packages_txt
-
+        args[6]=md5_file, args[7]=checksums_md5
         If the two files differ in size delete and replaced with new.
         We take the size of ChangeLog.txt from the server and locally
         '''
@@ -226,8 +253,12 @@ class Initialization(object):
             for fu in args[5].split():
                 PACKAGES_TXT += URL(fu).reading()
             CHANGELOG_TXT = URL(args[2]).reading()
+            CHECKSUMS_md5 = URL(args[7]).reading()
             with open("{0}{1}".format(args[3], args[4]), "w") as f:
                 f.write(PACKAGES_TXT)
+                f.close()
+            with open("{0}{1}".format(args[3], args[6]), "w") as f:
+                f.write(CHECKSUMS_md5)
                 f.close()
             with open("{0}{1}".format(args[0], args[1]), "w") as f:
                 f.write(CHANGELOG_TXT)

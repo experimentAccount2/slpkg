@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# downloads.py file is part of slpkg.
+# remove.py file is part of slpkg.
 
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
@@ -21,13 +21,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from slpkg.downloader import Download
+import os
+
+from __metadata__ import del_all
 
 
-def slack_dwn(path, links):
+def delete(path, packages):
     '''
-    Download patches
+    Remove downloaded packages
     '''
-    for dwn in links:
-        Download(path, dwn).start()
-        Download(path, dwn + ".asc").start()
+    if del_all == "on":
+        for pkg in packages:
+            os.remove(path + pkg)
