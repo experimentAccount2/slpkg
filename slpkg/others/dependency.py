@@ -51,4 +51,4 @@ def dependencies_pkg(name, repo):
         return dep_results
     except KeyboardInterrupt:
         print("")   # new line at exit
-        sys.exit()
+        sys.exit(0)

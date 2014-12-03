@@ -55,4 +55,4 @@ def sbo_dependencies_pkg(name):
         return dep_results
     except KeyboardInterrupt:
         print("")   # new line at exit
-        sys.exit()
+        sys.exit(0)

@@ -25,12 +25,14 @@ import os
 import sys
 
 from slpkg.sizes import units
-from checksum import check_md5
-from grap_md5 import pkg_checksum
+from slpkg.remove import delete
 from slpkg.repositories import Repo
 from slpkg.messages import template
+from slpkg.checksum import check_md5
 from slpkg.blacklist import BlackList
 from slpkg.init import Initialization
+from slpkg.downloader import Download
+from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
 from slpkg.__metadata__ import (
     pkg_path,
@@ -42,11 +44,9 @@ from slpkg.__metadata__ import (
 
 from slpkg.pkg.manager import PackageManager
 
-from slpkg.slack.remove import delete
 from slpkg.slack.slack_version import slack_ver
 
 from greps import repo_data
-from download import packages_dwn
 
 
 class OthersUpgrade(object):
@@ -140,7 +140,7 @@ class OthersUpgrade(object):
                     answer = raw_input("\nWould you like to continue [Y/n]? ")
                 if answer in ['y', 'Y']:
                     upgrade_all.reverse()
-                    packages_dwn(self.tmp_path, dwn_links)
+                    Download(self.tmp_path, dwn_links).start()
                     upgrade(self.tmp_path, upgrade_all, self.repo)
                     delete(self.tmp_path, upgrade_all)
             else:
@@ -148,7 +148,7 @@ class OthersUpgrade(object):
                     self.repo))
         except KeyboardInterrupt:
             print("")   # new line at exit
-            sys.exit()
+            sys.exit(0)
 
     def store(self):
         '''

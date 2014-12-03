@@ -105,8 +105,9 @@ class SBoCheck(object):
                             sbo_dwn = SBoLink(sbo_url).tar_gz()
                             src_dwn = SBoGrep(name).source().split()
                             script = sbo_dwn.split("/")[-1]
-                            Download(build_path, sbo_dwn).start()
-                            sources = dwn_sources(src_dwn)
+                            dwn_srcs = sbo_dwn.split() + src_dwn
+                            Download(build_path, dwn_srcs).start()
+                            sources = filenames(src_dwn)
                             BuildPackage(script, sources, build_path).build()
                             # Searches the package name and version in /tmp to
                             # install.If find two or more packages e.g. to build
@@ -116,7 +117,7 @@ class SBoCheck(object):
                                 binary = (tmp + max(binary_list)).split()
                             except ValueError:
                                 build_FAILED(sbo_url, prgnam)
-                                sys.exit()
+                                sys.exit(0)
                             if find_package(name + sp, pkg_path):
                                 print("[ {0}Upgrading{1} ] --> {2}".format(
                                     color['YELLOW'], color['ENDC'], name))
@@ -138,7 +139,7 @@ class SBoCheck(object):
                 print("\nNo SBo packages found\n")
         except KeyboardInterrupt:
             print("")   # new line at exit
-            sys.exit()
+            sys.exit(0)
 
     def sbo_list(self):
         '''
@@ -295,13 +296,12 @@ def view_packages(package_for_upgrade, upgrade_version, upgrade_arch):
     return [count_installed, count_upgraded], [msg_ins, msg_upg]
 
 
-def dwn_sources(sources):
+def filenames(sources):
     '''
     Download sources and return filenames
     '''
     filename = []
     for src in sources:
-        Download(build_path, src).start()
         filename.append(src.split("/")[-1])
     return filename
 

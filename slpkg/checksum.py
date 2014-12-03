@@ -53,7 +53,7 @@ def check_md5(pkg_md5, src_file):
         if answer in ['y', 'Y']:
             print("")   # new line after answer
         else:
-            sys.exit()
+            sys.exit(0)
     else:
         template(78)
         print("| MD5SUM check for {0} [ {1}PASSED{2} ]".format(

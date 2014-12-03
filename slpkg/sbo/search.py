@@ -49,4 +49,4 @@ def sbo_search_pkg(name):
                         return (sbo_url + line[23:].strip() + "/")
     except KeyboardInterrupt:
         print("")   # new line at exit
-        sys.exit()
+        sys.exit(0)

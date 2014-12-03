@@ -53,7 +53,7 @@ def s_user(user):
     '''
     if user != "root":
         print("\nslpkg: error: must have root privileges\n")
-        sys.exit()
+        sys.exit(0)
 
 
 def build_FAILED(sbo_url, prgnam):

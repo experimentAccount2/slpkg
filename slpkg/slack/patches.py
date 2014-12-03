@@ -26,11 +26,13 @@ import sys
 import subprocess
 
 from slpkg.sizes import units
-from checksum import check_md5
-from grap_md5 import pkg_checksum
 from slpkg.url_read import URL
+from slpkg.remove import delete
 from slpkg.messages import template
+from slpkg.checksum import check_md5
 from slpkg.blacklist import BlackList
+from slpkg.downloader import Download
+from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
 from slpkg.__metadata__ import (
     pkg_path,
@@ -42,10 +44,8 @@ from slpkg.__metadata__ import (
 from slpkg.pkg.find import find_package
 from slpkg.pkg.manager import PackageManager
 
-from remove import delete
 from mirrors import mirrors
 from greps import slack_data
-from download import slack_dwn
 from slack_version import slack_ver
 
 
@@ -102,7 +102,7 @@ class Patches(object):
                 else:
                     answer = raw_input("\nWould you like to continue [Y/n]? ")
                 if answer in ['y', 'Y']:
-                    slack_dwn(self.patch_path, dwn_links)
+                    Download(self.patch_path, dwn_links).start()
                     upgrade(self.patch_path, upgrade_all)
                     kernel(upgrade_all)
                     delete(self.patch_path, upgrade_all)
@@ -114,7 +114,7 @@ class Patches(object):
                       "date\n".format(slack_arch, self.version, slack_ver()))
         except KeyboardInterrupt:
             print("")   # new line at exit
-            sys.exit()
+            sys.exit(0)
 
     def store(self):
         '''

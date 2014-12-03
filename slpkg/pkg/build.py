@@ -101,7 +101,7 @@ class BuildPackage(object):
             pkg_not_found("\n", self.prgnam, "Wrong file", "\n")
         except KeyboardInterrupt:
             print("")   # new line at exit
-            sys.exit()
+            sys.exit(0)
 
 
 def log_head(path, log_file, log_time):

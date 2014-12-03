@@ -68,6 +68,7 @@ class SBoNetwork(object):
             self.sbo_req = grep.requires()
             self.sbo_dwn = SBoLink(self.sbo_url).tar_gz()
             self.sbo_version = grep.version()
+            self.dwn_srcs = self.sbo_dwn.split() + self.source_dwn
         self.space = ("\n" * 50)
         sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))
 
@@ -87,7 +88,7 @@ class SBoNetwork(object):
             while True:
                 choice = self.read_choice()
                 if choice in ['D', 'd']:
-                    self.download(path="")
+                    Download("", self.dwn_srcs).start()
                     break
                 elif choice in ['R', 'r']:
                     README = Read(self.sbo_url).readme("README")
@@ -183,7 +184,7 @@ class SBoNetwork(object):
                 color['GREY'], color['ENDC']))
         except KeyboardInterrupt:
             print("")   # new line at exit
-            sys.exit()
+            sys.exit(0)
         return choice
 
     def error_uns(self):
@@ -195,14 +196,6 @@ class SBoNetwork(object):
         if "".join(self.source_dwn) in UNST:
             return "".join(self.source_dwn)
 
-    def download(self, path):
-        '''
-        Download sources
-        '''
-        Download(path, self.sbo_dwn).start()
-        for src in self.source_dwn:
-            Download(path, src).start()
-
     def build(self, FAULT):
         '''
         Only build and create Slackware package
@@ -210,13 +203,12 @@ class SBoNetwork(object):
         if FAULT:
             print("\n{0}The package {1} {2}\n".format(color['RED'], FAULT,
                                                       color['ENDC']))
-            sys.exit()
+            sys.exit(0)
         sources = []
         os.chdir(build_path)
-        Download(build_path, self.sbo_dwn).start()
+        Download(build_path, self.dwn_srcs).start()
         script = self.sbo_dwn.split("/")[-1]
         for src in self.source_dwn:
-            Download(build_path, src).start()
             sources.append(src.split("/")[-1])
         BuildPackage(script, sources, build_path).build()
 
@@ -233,7 +225,7 @@ class SBoNetwork(object):
                 binary = (tmp + max(binary_list)).split()
             except ValueError:
                 build_FAILED(self.sbo_url, prgnam)
-                sys.exit()
+                sys.exit(0)
             print("[ {0}Installing{1} ] --> {2}".format(color['GREEN'],
                                                         color['ENDC'],
                                                         self.name))

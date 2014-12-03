@@ -50,4 +50,4 @@ def search_pkg(name, repo):
                         return pkg_name
     except KeyboardInterrupt:
         print("")   # new line at exit
-        sys.exit()
+        sys.exit(0)
