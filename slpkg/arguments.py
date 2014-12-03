@@ -52,7 +52,8 @@ def options():
         "  -t, [repository] [package]                tracking dependencies",
         "  -p, [repository] [package] --color=[]     print package description",
         "  -f, [package]                             find installed packages",
-        "  -n, [package]                             view packages from SBo",
+        "  -n, [package]                             view SBo packages "
+        "through network",
         "  -i, [package...]                          install binary packages",
         "  -u, [package...]                          upgrade binary packages",
         "  -o, [package...]                          reinstall binary packages",
@@ -80,6 +81,5 @@ def usage():
         "             [-o  [...]] [-r [...]] [-d [...]]\n",
         "For more information try 'slpkg --help' or view manpage\n"
     ]
-
     for usg in view:
         print(usg)

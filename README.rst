@@ -196,7 +196,7 @@ Command Line Tool Usage
       -t, [repository] [package]                tracking dependencies
       -p, [repository] [package] --color=[]     print package description
       -f, [package]                             find installed packages
-      -n, [package]                             view packages from SBo
+      -n, [package]                             view SBo packages through network
       -i, [package...]                          install binary packages
       -u, [package...]                          upgrade binary packages
       -o, [package...]                          reinstall binary packages
