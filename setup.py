@@ -31,7 +31,7 @@ from slpkg.__metadata__ import (
     __email__,
     __author__
 )
-from slpkg.checksum import md5sum
+from slpkg.md5sum import md5
 
 
 try:
@@ -98,8 +98,8 @@ if "install" in sys.argv:
         filename = conf.split("/")[-1]
         print("Installing '{0}' file".format(filename))
         if os.path.isfile(conf_path + filename):
-            old = md5sum(conf_path + filename)
-            new = md5sum(conf)
+            old = md5(conf_path + filename)
+            new = md5(conf)
             if old != new:
                 shutil.copy2(conf, conf_path + filename + ".new")
         else:

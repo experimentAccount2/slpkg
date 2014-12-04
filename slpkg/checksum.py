@@ -21,9 +21,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import hashlib
 import sys
 
+from md5sum import md5
 from messages import template
 from __metadata__ import (
     color,
@@ -35,10 +35,8 @@ def check_md5(pkg_md5, src_file):
     '''
     MD5 Checksum
     '''
-    with open(src_file) as file_to_check:
-        data = file_to_check.read()
-        md5 = hashlib.md5(data).hexdigest()
-    if pkg_md5 != md5:
+    md5s = md5(src_file)
+    if pkg_md5 != md5s:
         template(78)
         print("| MD5SUM check for {0} [ {1}FAILED{2} ]".format(
             src_file.split("/")[-1], color['RED'], color['ENDC']))
