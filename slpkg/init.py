@@ -96,16 +96,19 @@ class Initialization(object):
         log = log_path + "sbo/"
         lib = lib_path + "sbo_repo/"
         lib_file = "SLACKBUILDS.TXT"
+        md5_file = ""
         log_file = "ChangeLog.txt"
         if not os.path.exists(log):
             os.mkdir(log)
         if not os.path.exists(lib):
             os.mkdir(lib)
         packages_txt = "{0}{1}/{2}".format(repo, slack_ver(), lib_file)
+        checksums_md5 = ""
         changelog_txt = "{0}/{1}/{2}".format(repo, slack_ver(), log_file)
         self.write(lib, lib_file, packages_txt)
         self.write(log, log_file, changelog_txt)
-        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt)
+        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
+                    md5_file, checksums_md5)
 
     def rlw(self):
         '''
@@ -253,12 +256,13 @@ class Initialization(object):
             for fu in args[5].split():
                 PACKAGES_TXT += URL(fu).reading()
             CHANGELOG_TXT = URL(args[2]).reading()
-            CHECKSUMS_md5 = URL(args[7]).reading()
+            if args[6]:
+                CHECKSUMS_md5 = URL(args[7]).reading()
+                with open("{0}{1}".format(args[3], args[6]), "w") as f:
+                    f.write(CHECKSUMS_md5)
+                    f.close()
             with open("{0}{1}".format(args[3], args[4]), "w") as f:
                 f.write(PACKAGES_TXT)
-                f.close()
-            with open("{0}{1}".format(args[3], args[6]), "w") as f:
-                f.write(CHECKSUMS_md5)
                 f.close()
             with open("{0}{1}".format(args[0], args[1]), "w") as f:
                 f.write(CHANGELOG_TXT)
