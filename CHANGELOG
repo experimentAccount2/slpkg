@@ -1,5 +1,11 @@
+Version 2.1.3-dev
+06-12-2014
+
+[Updated] - Fix 'IndexError: tuple index out of range' when sbo upgrade.
+
+
 Version 2.1.2-dev
-xx-12-2014
+04-12-2014
 
 [Feature] - Added checksum all repositories.
 
