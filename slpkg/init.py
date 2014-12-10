@@ -225,14 +225,14 @@ class Initialization(object):
         '''
         FILE_TXT = ""
         if not os.path.isfile(path + files):
-            sys.stdout.write("  Update {0} ...".format(files))
-            sys.stdout.flush()
+            # sys.stdout.write("  Update {0} ...".format(files))
+            # sys.stdout.flush()
             for fu in file_url.split():
                 FILE_TXT += URL(fu).reading()
             with open("{0}{1}".format(path, files), "w") as f:
                 f.write(FILE_TXT)
                 f.close()
-                sys.stdout.write("Done\n")
+                # sys.stdout.write("Done\n")
 
     @staticmethod
     def remote(*args):
@@ -287,7 +287,7 @@ class Update(object):
         '''
         print("")   # new line at start
         for repo in repositories:
-            sys.stdout.write("Check repository {0} ...".format(repo))
+            sys.stdout.write("Update repository {0} ...".format(repo))
             sys.stdout.flush()
             self.repos[repo]()
             sys.stdout.write("Done\n")
