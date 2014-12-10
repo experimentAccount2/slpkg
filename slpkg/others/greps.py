@@ -24,7 +24,6 @@
 import os
 
 from slpkg.toolbar import status
-from slpkg.init import Initialization
 from slpkg.__metadata__ import lib_path
 from slpkg.splitting import split_package
 from slpkg.slack.slack_version import slack_ver
@@ -110,8 +109,6 @@ class Requires(object):
     def __init__(self, name, repo):
         self.name = name
         self.repo = repo
-        if not os.path.exists(lib_path + "slack_repo/PACKAGES.TXT"):
-            Initialization().slack()
         lib = lib_path + "slack_repo/PACKAGES.TXT"
         f = open(lib, "r")
         self.SLACK_PACKAGES_TXT = f.read()

@@ -29,7 +29,6 @@ from slpkg.pkg.build import BuildPackage
 from slpkg.pkg.manager import PackageManager
 
 from slpkg.toolbar import status
-from slpkg.init import Initialization
 from slpkg.downloader import Download
 from slpkg.splitting import split_package
 from slpkg.messages import (
@@ -56,7 +55,6 @@ class SBoCheck(object):
 
     def __init__(self):
         self.done = "{0}Done{1}\n".format(color['GREY'], color['ENDC'])
-        Initialization().sbo()
         sys.stdout.write("{0}Reading package lists ...{1}".format(
             color['GREY'], color['ENDC']))
         sys.stdout.flush()

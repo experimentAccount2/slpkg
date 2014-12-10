@@ -32,6 +32,7 @@ from __metadata__ import (
     lib_path,
     slack_rel,
     build_path,
+    repositories,
     slpkg_tmp_packages,
     slpkg_tmp_patches
 )
@@ -224,16 +225,14 @@ class Initialization(object):
         '''
         FILE_TXT = ""
         if not os.path.isfile(path + files):
-            print("\nslpkg ...initialization")
-            sys.stdout.write(files + " read ...")
+            sys.stdout.write("  Update {0} ...".format(files))
             sys.stdout.flush()
             for fu in file_url.split():
                 FILE_TXT += URL(fu).reading()
-            sys.stdout.write("Done\n")
             with open("{0}{1}".format(path, files), "w") as f:
                 f.write(FILE_TXT)
                 f.close()
-                print("File {0} created in {1}".format(files, path))
+                sys.stdout.write("Done\n")
 
     @staticmethod
     def remote(*args):
@@ -250,8 +249,8 @@ class Initialization(object):
         if server != local:
             os.remove("{0}{1}".format(args[3], args[4]))
             os.remove("{0}{1}".format(args[0], args[1]))
-            print("\nNEWS in " + args[1])
-            sys.stdout.write("Files re-created ...")
+            print("  NEWS in " + args[1])
+            sys.stdout.write("  Update package list ...")
             sys.stdout.flush()
             for fu in args[5].split():
                 PACKAGES_TXT += URL(fu).reading()
@@ -268,3 +267,42 @@ class Initialization(object):
                 f.write(CHANGELOG_TXT)
                 f.close()
             sys.stdout.write("Done\n")
+
+
+class Update(object):
+
+    def __init__(self):
+        self.repos = {
+            'sbo': Initialization().sbo,
+            'slack': Initialization().slack,
+            'rlw': Initialization().rlw,
+            'alien': Initialization().alien,
+            'slacky': Initialization().slacky,
+            'studio': Initialization().studioware
+        }
+
+    def repository(self):
+        '''
+        Update all repositories lists
+        '''
+        print("")   # new line at start
+        for repo in repositories:
+            sys.stdout.write("Check repository {0} ...".format(repo))
+            sys.stdout.flush()
+            self.repos[repo]()
+            sys.stdout.write("Done\n")
+        print("")   # new line at end
+
+
+def check_exists_repositories():
+    '''
+    Checking if repositories exists by ChangeLog.txt file
+    '''
+    update = False
+    for repo in repositories:
+        if not os.path.isfile("{0}{1}{2}".format(log_path, repo,
+                                                 "/ChangeLog.txt")):
+            update = True
+    if update:
+        print("\nPlease update packages lists. Run 'slpkg update'\n")
+        sys.exit(0)

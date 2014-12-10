@@ -35,6 +35,9 @@ It's a quick and easy way to manage your packages in slackware to a command.
 .SH EXAMPLES
 Utility for easy management packages in Slackware
 
+Commands:
+   update                                   update all package lists
+
 Optional arguments:
   -h, --help                                show this help message and exit
   -v, --version                             print version and exit
@@ -68,6 +71,11 @@ Print the version of program and exit.
 .SH COMMANDS
 .PP
 The following commands are available.
+
+.SS update
+\fBslpkg\fP \fBupdate\fP
+.PP
+Used to re-synchronize the package lists and create some important files.
 
 .SS -a, auto build packages
 \fBslpkg\fP \fB-a\fP <\fIscript\fP> <\fIsources\fP>

@@ -31,6 +31,9 @@ def options():
     arguments = [
         "\nslpkg - version {0}\n".format(__version__),
         "Utility for easy management packages in Slackware\n",
+        "Commands:",
+        "   update                                   update all package " +
+        "lists\n",
         "Optional arguments:",
         "  -h, --help                                show this help message " +
         "and exit",

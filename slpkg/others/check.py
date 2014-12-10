@@ -30,7 +30,6 @@ from slpkg.repositories import Repo
 from slpkg.messages import template
 from slpkg.checksum import check_md5
 from slpkg.blacklist import BlackList
-from slpkg.init import Initialization
 from slpkg.downloader import Download
 from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
@@ -55,7 +54,6 @@ class OthersUpgrade(object):
         self.repo = repo
         self.version = version
         self.tmp_path = slpkg_tmp_packages
-        self.repo_init()
         repos = Repo()
         sys.stdout.write("{0}Reading package lists ...{1}".format(
             color['GREY'], color['ENDC']))
@@ -89,18 +87,6 @@ class OthersUpgrade(object):
         f = open(lib, "r")
         self.PACKAGES_TXT = f.read()
         f.close()
-
-    def repo_init(self):
-        '''
-        Initialization repository if only use
-        '''
-        repository = {
-            'rlw': Initialization().rlw,
-            'alien': Initialization().alien,
-            'slacky': Initialization().slacky,
-            'studio': Initialization().studioware
-        }
-        repository[self.repo]()
 
     def start(self):
         '''

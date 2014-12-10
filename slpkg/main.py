@@ -32,6 +32,10 @@ from tracking import track_dep
 from blacklist import BlackList
 from version import prog_version
 from arguments import options, usage
+from init import (
+    Update,
+    check_exists_repositories
+)
 from __metadata__ import (
     path,
     repositories,
@@ -102,6 +106,14 @@ def main():
     args.pop(0)
     blacklist = BlackList()
     queue = QueuePkgs()
+
+    if len(args) == 1 and args[0] == "update":
+        Update().repository()
+        sys.exit(0)
+
+    # checking if repositories exists
+    check_exists_repositories()
+
     if len(args) == 0:
         usage()
     elif (len(args) == 1 and args[0] == "-h" or

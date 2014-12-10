@@ -24,7 +24,6 @@
 import sys
 
 from messages import template
-from init import Initialization
 from __metadata__ import (
     pkg_path,
     color,
@@ -47,15 +46,6 @@ def track_dep(name, repo):
     if allready installed and color red
     if not installed.
     '''
-    init_repos = {
-        'sbo': Initialization().sbo,
-        'slack': Initialization().slack,
-        'rlw': Initialization().rlw,
-        'alien': Initialization().alien,
-        'slacky': Initialization().slacky,
-        'studio': Initialization().studioware
-    }
-    init_repos[repo]()
     sys.stdout.write("{0}Reading package lists ...{1}".format(color['GREY'],
                                                               color['ENDC']))
     sys.stdout.flush()

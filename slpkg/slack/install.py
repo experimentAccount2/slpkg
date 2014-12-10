@@ -28,7 +28,6 @@ from slpkg.sizes import units
 from slpkg.remove import delete
 from slpkg.checksum import check_md5
 from slpkg.blacklist import BlackList
-from slpkg.init import Initialization
 from slpkg.downloader import Download
 from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
@@ -57,13 +56,11 @@ class Slack(object):
         self.slack_pkg = slack_pkg
         self.version = version
         self.tmp_path = slpkg_tmp_packages
-        Initialization().slack()
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
               color['CYAN'], self.slack_pkg, color['ENDC']))
         sys.stdout.write("{0}Reading package lists ...{1}".format(
             color['GREY'], color['ENDC']))
         sys.stdout.flush()
-        Initialization().slack()
         lib = lib_path + "slack_repo/PACKAGES.TXT"
         f = open(lib, "r")
         self.PACKAGES_TXT = f.read()

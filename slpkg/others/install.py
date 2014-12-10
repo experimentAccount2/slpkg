@@ -28,7 +28,6 @@ from slpkg.sizes import units
 from slpkg.remove import delete
 from slpkg.repositories import Repo
 from slpkg.checksum import check_md5
-from slpkg.init import Initialization
 from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
 from slpkg.grep_md5 import pkg_checksum
@@ -62,7 +61,6 @@ class OthersInstall(object):
         self.repo = repo
         self.version = version
         self.tmp_path = slpkg_tmp_packages
-        self.repo_init()
         repos = Repo()
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
               color['CYAN'], self.package, color['ENDC']))
@@ -99,22 +97,6 @@ class OthersInstall(object):
         self.PACKAGES_TXT = f.read()
         f.close()
         sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))
-
-    def repo_init(self):
-        '''
-        Initialization repository if only use
-        '''
-        # initialization Slackware repository needed to compare
-        # slacky dependencies
-        if not os.path.isfile(lib_path + "slack_repo/PACKAGES.TXT"):
-            Initialization().slack()
-        repository = {
-            'rlw': Initialization().rlw,
-            'alien': Initialization().alien,
-            'slacky': Initialization().slacky,
-            'studio': Initialization().studioware
-        }
-        repository[self.repo]()
 
     def start(self):
         '''

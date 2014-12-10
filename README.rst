@@ -11,9 +11,9 @@
 
 Latest Release:
 
-- Version: 2.1.x-dev
+- Version: 2.1.dev
 - `Package <https://sourceforge.net/projects/slpkg/files/slpkg/binary/>`_
-- `Source <https://github.com/dslackw/slpkg/archive/v2.1.x-dev.tar.gz>`_
+- `Source <https://github.com/dslackw/slpkg/archive/v2.1.dev.tar.gz>`_
 - `CHANGELOG <https://github.com/dslackw/slpkg/blob/master/CHANGELOG>`_
  
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/logo.png
@@ -118,8 +118,8 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.1.x-dev.tar.gz
-    $ cd slpkg-2.1.x-dev
+    $ tar xvf slpkg-2.1.dev.tar.gz
+    $ cd slpkg-2.1.dev
     $ ./install.sh
 
 From SourceForge:
@@ -165,7 +165,7 @@ For Slackware 'current' users must change the variable VERSION in '/etc/slpkg.co
 
 .. code-block:: bash
 
-    $ slpkg -g --config=nano
+    # slpkg -g --config=nano
 
 
 Slackware Mirrors
@@ -175,6 +175,15 @@ Slpkg uses the central mirror "http://mirrors.slackware.com/slackware/"
 to find the nearest one. If however for some reason this troublesome 
 please edit the file in '/etc/slpkg/slackware-mirrors'.
 
+
+Usage
+-----
+
+Need to run '# slpkg update' for the first time to synchronize the list of packages,
+also every time you add a repository.
+To add repositories must edit the file '/etc/slpkg/slpkg.conf'.
+
+
 Command Line Tool Usage
 -----------------------
 
@@ -182,6 +191,9 @@ Command Line Tool Usage
 
     Utility for easy management packages in Slackware
 
+    Commands:
+       update                                   update all package lists
+    
     Optional arguments:
       -h, --help                                show this help message and exit
       -v, --version                             print version and exit
