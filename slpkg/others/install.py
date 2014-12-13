@@ -149,7 +149,8 @@ class OthersInstall(object):
                     if answer in ['y', 'Y']:
                         install_all.reverse()
                         Download(self.tmp_path, dwn_links).start()
-                        install(self.tmp_path, install_all, self.repo)
+                        install(self.tmp_path, install_all, self.repo,
+                                self.version)
                         write_deps(dependencies)
                         delete(self.tmp_path, install_all)
                 else:
@@ -260,14 +261,17 @@ def msgs(install_all, uni_sum):
     return [msg_pkg, msg_2_pkg]
 
 
-def install(tmp_path, install_all, repo):
+def install(tmp_path, install_all, repo, version):
     '''
     Install or upgrade packages
     '''
     for install in install_all:
         package = (tmp_path + install).split()
-        if repo == "alien":
+        if repo == "alien" and version == "stable":
             check_md5(pkg_checksum("/" + slack_ver() + "/" + install, repo),
+                      tmp_path + install)
+        elif repo == "alien" and version == "current":
+            check_md5(pkg_checksum("/" + version + "/" + install, repo),
                       tmp_path + install)
         else:
             check_md5(pkg_checksum(install, repo), tmp_path + install)

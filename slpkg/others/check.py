@@ -127,7 +127,7 @@ class OthersUpgrade(object):
                 if answer in ['y', 'Y']:
                     upgrade_all.reverse()
                     Download(self.tmp_path, dwn_links).start()
-                    upgrade(self.tmp_path, upgrade_all, self.repo)
+                    upgrade(self.tmp_path, upgrade_all, self.repo, self.version)
                     delete(self.tmp_path, upgrade_all)
             else:
                 print("No new updates in the repository '{0}'\n".format(
@@ -216,14 +216,17 @@ def msgs(upgrade_all):
     return msg_pkg
 
 
-def upgrade(tmp_path, upgrade_all, repo):
+def upgrade(tmp_path, upgrade_all, repo, version):
     '''
     Install or upgrade packages
     '''
     for pkg in upgrade_all:
         package = (tmp_path + pkg).split()
-        if repo == "alien":
+        if repo == "alien" and version == "stable":
             check_md5(pkg_checksum("/" + slack_ver() + "/" + pkg, repo),
+                      tmp_path + pkg)
+        elif repo == "alien" and version == "current":
+            check_md5(pkg_checksum("/" + version + "/" + pkg, repo),
                       tmp_path + pkg)
         else:
             check_md5(pkg_checksum(pkg, repo), tmp_path + pkg)

@@ -40,6 +40,7 @@ def pkg_checksum(binary, repo):
     f = open(lib_path + lib, "r")
     CHECKSUMS_md5 = f.read()
     f.close()
+    md5 = str()
     for line in CHECKSUMS_md5.splitlines():
         if line.endswith(binary):
             md5 = line.split()[0]

@@ -1,7 +1,11 @@
 Version 2.1.4-dev
-10-12-2014
+13-12-2014
 
 [Feature] - Added command 'update' and remove auto update package lists.
+
+[Updated] - Fix 'UnboundLocalError: local variable 'md5' referenced before assignment'
+            after try update alien repository in some packages and for Slackware current
+            users.
 
 Version 2.1.3-dev
 06-12-2014

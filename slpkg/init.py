@@ -25,9 +25,11 @@ import os
 import sys
 
 from url_read import URL
+from toolbar import status
 from repositories import Repo
 from file_size import FileSize
 from __metadata__ import (
+    color,
     log_path,
     lib_path,
     slack_rel,
@@ -225,14 +227,15 @@ class Initialization(object):
         '''
         FILE_TXT = ""
         if not os.path.isfile(path + files):
-            # sys.stdout.write("  Update {0} ...".format(files))
-            # sys.stdout.flush()
             for fu in file_url.split():
                 FILE_TXT += URL(fu).reading()
             with open("{0}{1}".format(path, files), "w") as f:
-                f.write(FILE_TXT)
+                toolbar_width, index = 2, 0
+                for line in FILE_TXT.splitlines():
+                    index += 1
+                    toolbar_width = status(index, toolbar_width, 700)
+                    f.write(line + "\n")
                 f.close()
-                # sys.stdout.write("Done\n")
 
     @staticmethod
     def remote(*args):
@@ -249,9 +252,6 @@ class Initialization(object):
         if server != local:
             os.remove("{0}{1}".format(args[3], args[4]))
             os.remove("{0}{1}".format(args[0], args[1]))
-            print("  NEWS in " + args[1])
-            sys.stdout.write("  Update package list ...")
-            sys.stdout.flush()
             for fu in args[5].split():
                 PACKAGES_TXT += URL(fu).reading()
             CHANGELOG_TXT = URL(args[2]).reading()
@@ -266,7 +266,6 @@ class Initialization(object):
             with open("{0}{1}".format(args[0], args[1]), "w") as f:
                 f.write(CHANGELOG_TXT)
                 f.close()
-            sys.stdout.write("Done\n")
 
 
 class Update(object):
@@ -285,12 +284,13 @@ class Update(object):
         '''
         Update all repositories lists
         '''
-        print("")   # new line at start
         for repo in repositories:
-            sys.stdout.write("Update repository {0} ...".format(repo))
+            sys.stdout.write("{0}Update repository {1} ...{2}".format(
+                color['GREY'], repo, color['ENDC']))
             sys.stdout.flush()
             self.repos[repo]()
-            sys.stdout.write("Done\n")
+            sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
+                                                   color['ENDC']))
         print("")   # new line at end
 
 
