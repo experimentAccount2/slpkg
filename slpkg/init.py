@@ -221,15 +221,15 @@ class Initialization(object):
                     md5_file, checksums_md5)
 
     @staticmethod
-    def write(path, files, file_url):
+    def write(path, data_file, file_url):
         '''
         Write files in /var/lib/slpkg/?_repo directory
         '''
         FILE_TXT = ""
-        if not os.path.isfile(path + files):
+        if not os.path.isfile(path + data_file):
             for fu in file_url.split():
                 FILE_TXT += URL(fu).reading()
-            with open("{0}{1}".format(path, files), "w") as f:
+            with open("{0}{1}".format(path, data_file), "w") as f:
                 toolbar_width, index = 2, 0
                 for line in FILE_TXT.splitlines():
                     index += 1
@@ -247,24 +247,39 @@ class Initialization(object):
         We take the size of ChangeLog.txt from the server and locally
         '''
         PACKAGES_TXT = ""
+        toolbar_width, index = 2, 0
         server = FileSize(args[2]).server()
         local = FileSize(args[0] + args[1]).local()
         if server != local:
+            # remove PACKAGES.txt
             os.remove("{0}{1}".format(args[3], args[4]))
+            # remove Changelog.txt
             os.remove("{0}{1}".format(args[0], args[1]))
+            # remove CHECKSUMS.md5
+            if args[6]:
+                os.remove("{0}{1}".format(args[3], args[6]))
             for fu in args[5].split():
                 PACKAGES_TXT += URL(fu).reading()
             CHANGELOG_TXT = URL(args[2]).reading()
             if args[6]:
                 CHECKSUMS_md5 = URL(args[7]).reading()
                 with open("{0}{1}".format(args[3], args[6]), "w") as f:
-                    f.write(CHECKSUMS_md5)
-                    f.close()
+                        for line in CHECKSUMS_md5.splitlines():
+                            index += 1
+                            toolbar_width = status(index, toolbar_width, 700)
+                            f.write(line + "\n")
+                        f.close()
             with open("{0}{1}".format(args[3], args[4]), "w") as f:
-                f.write(PACKAGES_TXT)
+                for line in PACKAGES_TXT.splitlines():
+                    index += 1
+                    toolbar_width = status(index, toolbar_width, 700)
+                    f.write(line + "\n")
                 f.close()
             with open("{0}{1}".format(args[0], args[1]), "w") as f:
-                f.write(CHANGELOG_TXT)
+                for line in CHANGELOG_TXT.splitlines():
+                    index += 1
+                    toolbar_width = status(index, toolbar_width, 700)
+                    f.write(line + "\n")
                 f.close()
 
 
@@ -284,6 +299,7 @@ class Update(object):
         '''
         Update all repositories lists
         '''
+        print("\nCheck and update repositories:\n")
         for repo in repositories:
             sys.stdout.write("{0}Update repository {1} ...{2}".format(
                 color['GREY'], repo, color['ENDC']))
