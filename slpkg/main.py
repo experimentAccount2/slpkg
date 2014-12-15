@@ -100,7 +100,6 @@ class Case(object):
 
 def main():
 
-    # repositories = ["sbo", "slack", "rlw", "alien", "slacky"]
     s_user(getpass.getuser())
     args = sys.argv
     args.pop(0)

@@ -22,7 +22,6 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import os
-import sys
 
 from slpkg.toolbar import status
 from slpkg.__metadata__ import lib_path

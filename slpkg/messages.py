@@ -82,6 +82,6 @@ def slacky_error():
     '''
     Slacky repository error
     '''
-    print("\nRepository slack working together with the slack.")
+    print("\nRepository slack working together with the slacky.")
     print("Please add the repository slack from file " +
           "'/etc/slpkg/slpkg.conf'\n")

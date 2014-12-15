@@ -53,8 +53,8 @@ def track_dep(name, repo):
     '''
     if (not os.path.isfile(lib_path + "slack_repo/PACKAGES.TXT") and
             repo == "slacky"):
-            slacky_error()
-            sys.exit(0)
+        slacky_error()
+        sys.exit(0)
     sys.stdout.write("{0}Reading package lists ...{1}".format(color['GREY'],
                                                               color['ENDC']))
     sys.stdout.flush()

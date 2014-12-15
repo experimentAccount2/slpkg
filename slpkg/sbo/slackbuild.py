@@ -396,8 +396,6 @@ def write_deps(dependencies):
     name = dependencies[-1]
     if find_package(name + sp, pkg_path):
         dep_path = log_path + "dep/"
-        if not os.path.exists(log_path):
-            os.mkdir(log_path)
         if not os.path.exists(dep_path):
             os.mkdir(dep_path)
         if os.path.isfile(dep_path + name):

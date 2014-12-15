@@ -24,7 +24,7 @@ Usage: slpkg [-h] [-v] [-a script.tar.gz [sources...]]
               [-c [repository] --upgrade]
               [-s [repository] [package][
               [-t [repository] [package]]
-              [-p [repository] [package] --color=]
+              [-p [repository] [package], --color=[]]
               [-f] [-n] [-i [...]] [-u [...]]
               [-o  [...]] [-r [...]] [-d [...]]
 
@@ -50,7 +50,7 @@ Optional arguments:
   -c, [repository] --upgrade                check for updated packages
   -s, [repository] [package]                download, build & install
   -t, [repository] [package]                tracking dependencies
-  -p, [repository] [package] --color=[]     print package description
+  -p, [repository] [package], --color=[]    print package description
   -f, [package]                             find installed packages
   -n, [package]                             view SBo packages through network
   -i, [package...]                          install binary packages
@@ -76,6 +76,7 @@ The following commands are available.
 \fBslpkg\fP \fBupdate\fP
 .PP
 Used to re-synchronize the package lists and create some important files.
+This command must run every new repository is added or new updates is available.
 
 .SS -a, auto build packages
 \fBslpkg\fP \fB-a\fP <\fIscript\fP> <\fIsources\fP>

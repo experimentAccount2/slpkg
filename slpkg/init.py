@@ -243,8 +243,9 @@ class Initialization(object):
         args[0]=log, args[1]=log_file, arg[2]=changelog_txt
         args[3]=lib, args[4]=lib_file, arg[5]=packages_txt
         args[6]=md5_file, args[7]=checksums_md5
-        If the two files differ in size delete and replaced with new.
-        We take the size of ChangeLog.txt from the server and locally
+
+        We take the size of ChangeLog.txt from the server and locally.
+        If the two files differ in size delete and replace all files with new.
         '''
         PACKAGES_TXT = ""
         toolbar_width, index = 2, 0
@@ -261,20 +262,23 @@ class Initialization(object):
             for fu in args[5].split():
                 PACKAGES_TXT += URL(fu).reading()
             CHANGELOG_TXT = URL(args[2]).reading()
+            # create CHECKSUMS.md5 file
             if args[6]:
                 CHECKSUMS_md5 = URL(args[7]).reading()
                 with open("{0}{1}".format(args[3], args[6]), "w") as f:
-                        for line in CHECKSUMS_md5.splitlines():
-                            index += 1
-                            toolbar_width = status(index, toolbar_width, 700)
-                            f.write(line + "\n")
-                        f.close()
+                    for line in CHECKSUMS_md5.splitlines():
+                        index += 1
+                        toolbar_width = status(index, toolbar_width, 700)
+                        f.write(line + "\n")
+                    f.close()
+            # create PACKAGES.txt file
             with open("{0}{1}".format(args[3], args[4]), "w") as f:
                 for line in PACKAGES_TXT.splitlines():
                     index += 1
                     toolbar_width = status(index, toolbar_width, 700)
                     f.write(line + "\n")
                 f.close()
+            # create ChangeLog.txt file
             with open("{0}{1}".format(args[0], args[1]), "w") as f:
                 for line in CHANGELOG_TXT.splitlines():
                     index += 1
@@ -320,5 +324,8 @@ def check_exists_repositories():
                                                  "/ChangeLog.txt")):
             update = True
     if update:
-        print("\nPlease update packages lists. Run 'slpkg update'\n")
+        print("\nPlease update packages lists. Run 'slpkg update'.\n" +
+              "This command must run it every time a repository is \n" +
+              "activated or when you want to see if there are new \n" +
+              "update packages to them.\n")
         sys.exit(0)
