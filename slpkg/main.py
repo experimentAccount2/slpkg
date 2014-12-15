@@ -24,6 +24,8 @@
 import sys
 import getpass
 
+from slpkg_update import it_self_update
+
 from desc import PkgDesc
 from config import Config
 from queue import QueuePkgs
@@ -108,7 +110,9 @@ def main():
 
     if len(args) == 1 and args[0] == "update":
         Update().repository()
-        sys.exit(0)
+
+    if len(args) == 2 and args[0] == "update" and args[1] == "slpkg":
+        it_self_update()
 
     # checking if repositories exists
     check_exists_repositories()

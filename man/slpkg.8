@@ -37,6 +37,7 @@ Utility for easy management packages in Slackware
 
 Commands:
    update                                   update all package lists
+   update slpkg                             check and update slpkg
 
 Optional arguments:
   -h, --help                                show this help message and exit
@@ -77,6 +78,11 @@ The following commands are available.
 .PP
 Used to re-synchronize the package lists and create some important files.
 This command must run every new repository is added or new updates is available.
+
+.SS update slpkg
+\fBslpkg\fP \fBupdate\fP \fBslpkg\fP
+.PP
+You can check for new versions and update slpkg itself.
 
 .SS -a, auto build packages
 \fBslpkg\fP \fB-a\fP <\fIscript\fP> <\fIsources\fP>

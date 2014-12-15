@@ -33,7 +33,8 @@ def options():
         "Utility for easy management packages in Slackware\n",
         "Commands:",
         "   update                                   update all package " +
-        "lists\n",
+        "lists",
+        "   update slpkg                             check and update slpkg\n",
         "Optional arguments:",
         "  -h, --help                                show this help message " +
         "and exit",

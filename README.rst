@@ -130,6 +130,7 @@ Using pip:
 Upgrade
 -------
 
+From version '2.1.4' you can update slpkg itself with '# slpkg update slpkg'.
 In each slpkg upgrade should track the configuration files in the file '/etc/slpkg' for 
 new updates.
 
@@ -183,7 +184,7 @@ Need to run '# slpkg update' for the first time to synchronize the list of packa
 also every time you add a repository.
 To add or remove repositories must edit the file '/etc/slpkg/slpkg.conf'.
 
-Also it is good to inform the list of packages by running the command '# slpkg update'
+Also it is good to update the list of packages by running the command '# slpkg update'
 before proceeding to any installation or upgrade a new package.
 
 
@@ -202,7 +203,8 @@ Command Line Tool Usage
 
     Commands:
        update                                   update all package lists
-    
+       update slpkg                             check and update slpkg
+
     Optional arguments:
       -h, --help                                show this help message and exit
       -v, --version                             print version and exit

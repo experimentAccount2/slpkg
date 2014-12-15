@@ -223,7 +223,8 @@ class Initialization(object):
     @staticmethod
     def write(path, data_file, file_url):
         '''
-        Write files in /var/lib/slpkg/?_repo directory
+        Write repositories files in /var/lib/slpkg
+        and /var/log/slpkg
         '''
         FILE_TXT = ""
         if not os.path.isfile(path + data_file):
@@ -312,6 +313,7 @@ class Update(object):
             sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
                                                    color['ENDC']))
         print("")   # new line at end
+        sys.exit(0)
 
 
 def check_exists_repositories():
