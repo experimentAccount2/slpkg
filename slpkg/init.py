@@ -32,7 +32,6 @@ from __metadata__ import (
     color,
     log_path,
     lib_path,
-    slack_rel,
     build_path,
     repositories,
     slpkg_tmp_packages,
@@ -74,17 +73,17 @@ class Initialization(object):
             os.mkdir(log)
         if not os.path.exists(lib):
             os.mkdir(lib)
-        packages = mirrors(lib_file, "", slack_rel)
-        pkg_checksums = mirrors(md5_file, "", slack_rel)
-        extra = mirrors(lib_file, "extra/", slack_rel)
-        ext_checksums = mirrors(md5_file, "extra/", slack_rel)
-        pasture = mirrors(lib_file, "pasture/", slack_rel)
-        pas_checksums = mirrors(md5_file, "pasture/", slack_rel)
+        packages = mirrors(lib_file, "")
+        pkg_checksums = mirrors(md5_file, "")
+        extra = mirrors(lib_file, "extra/")
+        ext_checksums = mirrors(md5_file, "extra/")
+        pasture = mirrors(lib_file, "pasture/")
+        pas_checksums = mirrors(md5_file, "pasture/")
         packages_txt = ("{0} {1} {2}".format(packages, extra, pasture))
 
         checksums_md5 = ("{0} {1} {2}".format(pkg_checksums, ext_checksums,
                                               pas_checksums))
-        changelog_txt = mirrors(log_file, "", slack_rel)
+        changelog_txt = mirrors(log_file, "")
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
