@@ -24,6 +24,8 @@
 import sys
 import getpass
 
+from slpkg_update import it_self_update
+
 from desc import PkgDesc
 from config import Config
 from queue import QueuePkgs
@@ -32,6 +34,10 @@ from tracking import track_dep
 from blacklist import BlackList
 from version import prog_version
 from arguments import options, usage
+from init import (
+    Update,
+    check_exists_repositories
+)
 from __metadata__ import (
     path,
     repositories,
@@ -61,7 +67,7 @@ class Case(object):
         SBoInstall(self.package).start()
 
     def slack_install(self):
-        Slack(self.package, self.release).start()
+        Slack(self.package).start()
 
     def rlw_install(self):
         OthersInstall(self.package, "rlw", self.release).start()
@@ -96,12 +102,21 @@ class Case(object):
 
 def main():
 
-    # repositories = ["sbo", "slack", "rlw", "alien", "slacky"]
     s_user(getpass.getuser())
     args = sys.argv
     args.pop(0)
     blacklist = BlackList()
     queue = QueuePkgs()
+
+    if len(args) == 1 and args[0] == "update":
+        Update().repository()
+
+    if len(args) == 2 and args[0] == "update" and args[1] == "slpkg":
+        it_self_update()
+
+    # checking if repositories exists
+    check_exists_repositories()
+
     if len(args) == 0:
         usage()
     elif (len(args) == 1 and args[0] == "-h" or

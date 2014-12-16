@@ -25,7 +25,6 @@ import os
 import sys
 
 from slpkg.toolbar import status
-from slpkg.init import Initialization
 from slpkg.downloader import Download
 from slpkg.splitting import split_package
 from slpkg.__metadata__ import (
@@ -60,7 +59,6 @@ class SBoInstall(object):
 
     def __init__(self, name):
         self.name = name
-        Initialization().sbo()
         sys.stdout.write("{0}Reading package lists ...{1}".format(
             color['GREY'], color['ENDC']))
         sys.stdout.flush()
@@ -398,8 +396,6 @@ def write_deps(dependencies):
     name = dependencies[-1]
     if find_package(name + sp, pkg_path):
         dep_path = log_path + "dep/"
-        if not os.path.exists(log_path):
-            os.mkdir(log_path)
         if not os.path.exists(dep_path):
             os.mkdir(dep_path)
         if os.path.isfile(dep_path + name):

@@ -25,7 +25,6 @@ import os
 import sys
 import pydoc
 
-from slpkg.init import Initialization
 from slpkg.downloader import Download
 from slpkg.__metadata__ import (
     tmp,
@@ -56,7 +55,6 @@ class SBoNetwork(object):
 
     def __init__(self, name):
         self.name = name
-        Initialization().sbo()
         sys.stdout.write("{0}Reading package lists ...{1}".format(
             color['GREY'], color['ENDC']))
         sys.stdout.flush()

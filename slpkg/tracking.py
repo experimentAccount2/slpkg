@@ -21,11 +21,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+import os
 import sys
 
-from messages import template
-from init import Initialization
+from messages import (
+    template,
+    slacky_error
+)
 from __metadata__ import (
+    lib_path,
     pkg_path,
     color,
     sp
@@ -47,15 +51,10 @@ def track_dep(name, repo):
     if allready installed and color red
     if not installed.
     '''
-    init_repos = {
-        'sbo': Initialization().sbo,
-        'slack': Initialization().slack,
-        'rlw': Initialization().rlw,
-        'alien': Initialization().alien,
-        'slacky': Initialization().slacky,
-        'studio': Initialization().studioware
-    }
-    init_repos[repo]()
+    if (not os.path.isfile(lib_path + "slack_repo/PACKAGES.TXT") and
+            repo == "slacky"):
+        slacky_error()
+        sys.exit(0)
     sys.stdout.write("{0}Reading package lists ...{1}".format(color['GREY'],
                                                               color['ENDC']))
     sys.stdout.flush()

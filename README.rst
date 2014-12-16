@@ -11,9 +11,9 @@
 
 Latest Release:
 
-- Version: 2.1.3
+- Version: 2.1.4
 - `Package <https://sourceforge.net/projects/slpkg/files/slpkg/binary/>`_
-- `Source <https://github.com/dslackw/slpkg/archive/v2.1.3.tar.gz>`_
+- `Source <https://github.com/dslackw/slpkg/archive/v2.1.4.tar.gz>`_
 - `CHANGELOG <https://github.com/dslackw/slpkg/blob/master/CHANGELOG>`_
  
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/logo.png
@@ -50,8 +50,8 @@ Supported Repositories:
   Arch: {x86, x86_64}
   Versions: {13.37, 14.0, 14.1}
 
-* Choose repositories you need to work from file '/etc/slpkg/slpkg.conf' default is all repositories.
-
+* Choose repositories you need to work from file '/etc/slpkg/slpkg.conf' default is 
+  all repositories.
 
 Slpkg works in accordance with the standards of the organization slackbuilds.org 
 to builds packages. Also uses the Slackware linux instructions for installation,
@@ -64,17 +64,11 @@ display warning messages, etc.
 The big advantages is resolving dependencies packages from repositories and monitored for 
 upgraded packages.
 
-Of course you wonder how the slpkg is up to date at all times;
-It's simple, every time there is a change in ChangeLog.txt before proceeding to any 
-execution program looksat whether there is a change in file size and downloads and updates
-the PACKAGES.TXT file.
-
 Also you can install official packages of your favorite distribution directly from the 
 official repositories
 of Slackware. Even you can check for the official updates and install them.
 
 And as we say Slackers, Keep it Simple Stupid!
-
 
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/slpkg_package.png
     :target: https://github.com/dslackw/slpkg
@@ -118,8 +112,8 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.1.3.tar.gz
-    $ cd slpkg-2.1.3
+    $ tar xvf slpkg-2.1.4.tar.gz
+    $ cd slpkg-2.1.4
     $ ./install.sh
 
 From SourceForge:
@@ -136,11 +130,9 @@ Using pip:
 Upgrade
 -------
 
+From version '2.1.4' you can update slpkg itself with '# slpkg update slpkg'.
 In each slpkg upgrade should track the configuration files in the file '/etc/slpkg' for 
 new updates.
-
-*** IMPORTANT :
-*** Recommended to replace '/etc/slpkg/slpkg.conf' file with '/etc/slpkg/slpkg.conf.new' file.
 
 
 Configuration files
@@ -168,6 +160,15 @@ For Slackware 'current' users must change the variable VERSION in '/etc/slpkg.co
     $ slpkg -g --config=nano
 
 
+Testing
+-------
+
+The majority of trials have been made in an environment Slackware x86_64 and x86 stable version 
+14.1.
+Is logical tests are always to be latest versions of the distribution.
+Slpkg are supported version 'current' but it is minimal tests have been done on this release.
+
+
 Slackware Mirrors
 -----------------
 
@@ -175,12 +176,34 @@ Slpkg uses the central mirror "http://mirrors.slackware.com/slackware/"
 to find the nearest one. If however for some reason this troublesome 
 please edit the file in '/etc/slpkg/slackware-mirrors'.
 
+
+Usage
+-----
+
+Need to run '# slpkg update' for the first time to synchronize the list of packages,
+also every time you add a repository.
+To add or remove repositories must edit the file '/etc/slpkg/slpkg.conf'.
+
+Also it is good to update the list of packages by running the command '# slpkg update'
+before proceeding to any installation or upgrade a new package.
+
+
+Issues
+------
+
+Please report any bugs in "https://github.com/dslackw/slpkg/issues"
+
+
 Command Line Tool Usage
 -----------------------
 
 .. code-block:: bash
 
     Utility for easy management packages in Slackware
+
+    Commands:
+       update                                   update all package lists
+       update slpkg                             check and update slpkg
 
     Optional arguments:
       -h, --help                                show this help message and exit
@@ -194,7 +217,7 @@ Command Line Tool Usage
       -c, [repository] --upgrade                check for updated packages
       -s, [repository] [package]                download, build & install
       -t, [repository] [package]                tracking dependencies
-      -p, [repository] [package] --color=[]     print package description
+      -p, [repository] [package], --color=[]    print package description
       -f, [package]                             find installed packages
       -n, [package]                             view SBo packages through network
       -i, [package...]                          install binary packages

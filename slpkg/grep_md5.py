@@ -21,7 +21,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+from slack.mirrors import mirrors
 
+from url_read import URL
 from __metadata__ import lib_path
 
 
@@ -29,17 +31,21 @@ def pkg_checksum(binary, repo):
     '''
     Return checksum from CHECKSUMS.md5 file by repository
     '''
-    repos = {
-        'slack': 'slack_repo/CHECKSUMS.md5',
-        'rlw': 'rlw_repo/CHECKSUMS.md5',
-        'alien': 'alien_repo/CHECKSUMS.md5',
-        'slacky': 'slacky_repo/CHECKSUMS.md5',
-        'studio': 'studio_repo/CHECKSUMS.md5'
-    }
-    lib = repos[repo]
-    f = open(lib_path + lib, "r")
-    CHECKSUMS_md5 = f.read()
-    f.close()
+    md5 = "None"
+    if repo == "slack_patches":
+        CHECKSUMS_md5 = URL(mirrors("CHECKSUMS.md5", "patches/")).reading()
+    else:
+        repos = {
+            'slack': 'slack_repo/CHECKSUMS.md5',
+            'rlw': 'rlw_repo/CHECKSUMS.md5',
+            'alien': 'alien_repo/CHECKSUMS.md5',
+            'slacky': 'slacky_repo/CHECKSUMS.md5',
+            'studio': 'studio_repo/CHECKSUMS.md5'
+        }
+        lib = repos[repo]
+        f = open(lib_path + lib, "r")
+        CHECKSUMS_md5 = f.read()
+        f.close()
     for line in CHECKSUMS_md5.splitlines():
         if line.endswith(binary):
             md5 = line.split()[0]

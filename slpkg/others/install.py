@@ -28,12 +28,12 @@ from slpkg.sizes import units
 from slpkg.remove import delete
 from slpkg.repositories import Repo
 from slpkg.checksum import check_md5
-from slpkg.init import Initialization
 from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
 from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
 from slpkg.messages import (
+    slacky_error,
     pkg_not_found,
     template
 )
@@ -62,7 +62,10 @@ class OthersInstall(object):
         self.repo = repo
         self.version = version
         self.tmp_path = slpkg_tmp_packages
-        self.repo_init()
+        if (not os.path.isfile(lib_path + "slack_repo/PACKAGES.TXT") and
+                repo == "slacky"):
+            slacky_error()
+            sys.exit(0)
         repos = Repo()
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
               color['CYAN'], self.package, color['ENDC']))
@@ -99,22 +102,6 @@ class OthersInstall(object):
         self.PACKAGES_TXT = f.read()
         f.close()
         sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))
-
-    def repo_init(self):
-        '''
-        Initialization repository if only use
-        '''
-        # initialization Slackware repository needed to compare
-        # slacky dependencies
-        if not os.path.isfile(lib_path + "slack_repo/PACKAGES.TXT"):
-            Initialization().slack()
-        repository = {
-            'rlw': Initialization().rlw,
-            'alien': Initialization().alien,
-            'slacky': Initialization().slacky,
-            'studio': Initialization().studioware
-        }
-        repository[self.repo]()
 
     def start(self):
         '''
@@ -162,7 +149,8 @@ class OthersInstall(object):
                     if answer in ['y', 'Y']:
                         install_all.reverse()
                         Download(self.tmp_path, dwn_links).start()
-                        install(self.tmp_path, install_all, self.repo)
+                        install(self.tmp_path, install_all, self.repo,
+                                self.version)
                         write_deps(dependencies)
                         delete(self.tmp_path, install_all)
                 else:
@@ -273,14 +261,17 @@ def msgs(install_all, uni_sum):
     return [msg_pkg, msg_2_pkg]
 
 
-def install(tmp_path, install_all, repo):
+def install(tmp_path, install_all, repo, version):
     '''
     Install or upgrade packages
     '''
     for install in install_all:
         package = (tmp_path + install).split()
-        if repo == "alien":
+        if repo == "alien" and version == "stable":
             check_md5(pkg_checksum("/" + slack_ver() + "/" + install, repo),
+                      tmp_path + install)
+        elif repo == "alien" and version == "current":
+            check_md5(pkg_checksum("/" + version + "/" + install, repo),
                       tmp_path + install)
         else:
             check_md5(pkg_checksum(install, repo), tmp_path + install)
@@ -330,8 +321,6 @@ def write_deps(dependencies):
     name = dependencies[-1]
     if find_package(name + "-", pkg_path):
         dep_path = log_path + "dep/"
-        if not os.path.exists(log_path):
-            os.mkdir(log_path)
         if not os.path.exists(dep_path):
             os.mkdir(dep_path)
         if os.path.isfile(dep_path + name):

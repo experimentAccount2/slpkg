@@ -57,13 +57,12 @@ class Patches(object):
         sys.stdout.write("{0}Reading package lists ...{1}".format(
             color['GREY'], color['ENDC']))
         sys.stdout.flush()
-        if version == "stable":
-            self.PACKAGES_TXT = URL(mirrors("PACKAGES.TXT", "patches/",
-                                            version)).reading()
+        if self.version == "stable":
+            self.PACKAGES_TXT = URL(mirrors("PACKAGES.TXT",
+                                            "patches/")).reading()
             self.step = 100
         else:
-            self.PACKAGES_TXT = URL(mirrors("PACKAGES.TXT", "",
-                                            version)).reading()
+            self.PACKAGES_TXT = URL(mirrors("PACKAGES.TXT", "")).reading()
             self.step = 700
 
     def start(self):
@@ -127,8 +126,7 @@ class Patches(object):
             if find_package(split_package(name)[0] + "-", pkg_path):
                 if (not os.path.isfile(pkg_path + name[:-4]) and
                         split_package(name)[0] not in black):
-                    dwn.append("{0}{1}/{2}".format(
-                        mirrors("", "", self.version), loc, name))
+                    dwn.append("{0}{1}/{2}".format(mirrors("", ""), loc, name))
                     comp_sum.append(comp)
                     uncomp_sum.append(uncomp)
                     upgrade.append(name)
@@ -165,7 +163,7 @@ def upgrade(patch_path, upgrade_all):
     Upgrade packages
     '''
     for pkg in upgrade_all:
-        check_md5(pkg_checksum(pkg, "slack"), patch_path + pkg)
+        check_md5(pkg_checksum(pkg, "slack_patches"), patch_path + pkg)
         print("[ {0}upgrading{1} ] --> {2}".format(color['YELLOW'],
                                                    color['ENDC'], pkg[:-4]))
         PackageManager((patch_path + pkg).split()).upgrade()

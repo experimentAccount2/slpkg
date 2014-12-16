@@ -21,30 +21,33 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from slpkg.__metadata__ import arch
 from slpkg.repositories import Repo
+from slpkg.__metadata__ import (
+    arch,
+    slack_rel
+)
 
 from slack_version import slack_ver
 
 
-def mirrors(name, location, version):
+def mirrors(name, location):
     '''
     Select Slackware official mirror packages
     based architecture and version.
     '''
     repo = Repo().slack()
     if arch == "x86_64":
-        if version == "stable":
+        if slack_rel == "stable":
             http = repo + "slackware64-{0}/{1}{2}".format(slack_ver(),
                                                           location, name)
         else:
-            http = repo + "slackware64-{0}/{1}{2}".format(version,
+            http = repo + "slackware64-{0}/{1}{2}".format(slack_rel,
                                                           location, name)
     else:
-        if version == "stable":
+        if slack_rel == "stable":
             http = repo + "slackware-{0}/{1}{2}".format(slack_ver(),
                                                         location, name)
         else:
-            http = repo + "slackware-{0}/{1}{2}".format(version,
+            http = repo + "slackware-{0}/{1}{2}".format(slack_rel,
                                                         location, name)
     return http

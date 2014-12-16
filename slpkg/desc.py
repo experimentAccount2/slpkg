@@ -22,7 +22,6 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-from init import Initialization
 from messages import pkg_not_found
 from __metadata__ import (
     lib_path,
@@ -39,15 +38,6 @@ class PkgDesc(object):
         self.paint = paint
         self.COLOR = ""
         self.lib = ""
-        init_repos = {
-            'sbo': Initialization().sbo,
-            'slack': Initialization().slack,
-            'rlw': Initialization().rlw,
-            'alien': Initialization().alien,
-            'slacky': Initialization().slacky,
-            'studio': Initialization().studioware
-        }
-        init_repos[self.repo]()
         color_text = {
             'red': color['RED'],
             'green': color['GREEN'],

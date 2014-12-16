@@ -1,4 +1,4 @@
-# List of Slackware Mirrors copy from : 
+# List of Slackware Mirrors copy from :
 # http://mirrors.slackware.com/mirrorlist/
 #
 # slackware-mirrors file is part of slpkg.
@@ -24,14 +24,14 @@
 # END OF LEGAL NOTICE
 #
 #
-# Slpkg uses the central mirror "http://mirrors.slackware.com/slackware/" 
-# to find the nearest one. If however for some reason this troublesome 
-# please uncomment (remove the '#' character) only one mirror from 
-# the list available below. You can also add a new mirror in the list 
+# Slpkg uses the central mirror "http://mirrors.slackware.com/slackware/"
+# to find the nearest one. If however for some reason this troublesome
+# please uncomment (remove the '#' character) only one mirror from
+# the list available below. You can also add a new mirror in the list
 # below. Be careful is the template that the rest.
 #
 #
-# Last Updated: Thu Dec 4 02:47:01 UTC 2014
+# Last Updated: Mon Dec 15 02:47:02 UTC 2014
 # 
 # Available http mirrors:
 # 

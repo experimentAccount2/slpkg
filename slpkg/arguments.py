@@ -31,6 +31,10 @@ def options():
     arguments = [
         "\nslpkg - version {0}\n".format(__version__),
         "Utility for easy management packages in Slackware\n",
+        "Commands:",
+        "   update                                   update all package " +
+        "lists",
+        "   update slpkg                             check and update slpkg\n",
         "Optional arguments:",
         "  -h, --help                                show this help message " +
         "and exit",
@@ -50,7 +54,7 @@ def options():
         "packages",
         "  -s, [repository] [package]                download, build & install",
         "  -t, [repository] [package]                tracking dependencies",
-        "  -p, [repository] [package] --color=[]     print package description",
+        "  -p, [repository] [package], --color=[]    print package description",
         "  -f, [package]                             find installed packages",
         "  -n, [package]                             view SBo packages "
         "through network",
@@ -76,7 +80,7 @@ def usage():
         "             [-c [repository] --upgrade]",
         "             [-s [repository] [package]",
         "             [-t [repository] [package]",
-        "             [-p [repository] [package] --color=[]]",
+        "             [-p [repository] [package], --color=[]]",
         "             [-f] [-n] [-i [...]] [-u [...]]",
         "             [-o  [...]] [-r [...]] [-d [...]]\n",
         "For more information try 'slpkg --help' or view manpage\n"

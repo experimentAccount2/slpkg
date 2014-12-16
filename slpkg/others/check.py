@@ -30,7 +30,6 @@ from slpkg.repositories import Repo
 from slpkg.messages import template
 from slpkg.checksum import check_md5
 from slpkg.blacklist import BlackList
-from slpkg.init import Initialization
 from slpkg.downloader import Download
 from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
@@ -55,7 +54,6 @@ class OthersUpgrade(object):
         self.repo = repo
         self.version = version
         self.tmp_path = slpkg_tmp_packages
-        self.repo_init()
         repos = Repo()
         sys.stdout.write("{0}Reading package lists ...{1}".format(
             color['GREY'], color['ENDC']))
@@ -89,18 +87,6 @@ class OthersUpgrade(object):
         f = open(lib, "r")
         self.PACKAGES_TXT = f.read()
         f.close()
-
-    def repo_init(self):
-        '''
-        Initialization repository if only use
-        '''
-        repository = {
-            'rlw': Initialization().rlw,
-            'alien': Initialization().alien,
-            'slacky': Initialization().slacky,
-            'studio': Initialization().studioware
-        }
-        repository[self.repo]()
 
     def start(self):
         '''
@@ -141,7 +127,7 @@ class OthersUpgrade(object):
                 if answer in ['y', 'Y']:
                     upgrade_all.reverse()
                     Download(self.tmp_path, dwn_links).start()
-                    upgrade(self.tmp_path, upgrade_all, self.repo)
+                    upgrade(self.tmp_path, upgrade_all, self.repo, self.version)
                     delete(self.tmp_path, upgrade_all)
             else:
                 print("No new updates in the repository '{0}'\n".format(
@@ -230,14 +216,17 @@ def msgs(upgrade_all):
     return msg_pkg
 
 
-def upgrade(tmp_path, upgrade_all, repo):
+def upgrade(tmp_path, upgrade_all, repo, version):
     '''
     Install or upgrade packages
     '''
     for pkg in upgrade_all:
         package = (tmp_path + pkg).split()
-        if repo == "alien":
+        if repo == "alien" and version == "stable":
             check_md5(pkg_checksum("/" + slack_ver() + "/" + pkg, repo),
+                      tmp_path + pkg)
+        elif repo == "alien" and version == "current":
+            check_md5(pkg_checksum("/" + version + "/" + pkg, repo),
                       tmp_path + pkg)
         else:
             check_md5(pkg_checksum(pkg, repo), tmp_path + pkg)
