@@ -7,6 +7,7 @@ Version 2.1.4-dev
 [Updated] - Fix 'UnboundLocalError: local variable 'md5' referenced before assignment'
             after try update alien repository in some packages and for Slackware current
             users. Thanks to 'Jack Kiersey' for reporting.
+          - Fix checksums after try to update slackware packages.
 
 Version 2.1.3-dev
 06-12-2014

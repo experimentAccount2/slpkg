@@ -52,9 +52,8 @@ from greps import slack_data
 
 class Slack(object):
 
-    def __init__(self, slack_pkg, version):
+    def __init__(self, slack_pkg):
         self.slack_pkg = slack_pkg
-        self.version = version
         self.tmp_path = slpkg_tmp_packages
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
               color['CYAN'], self.slack_pkg, color['ENDC']))
@@ -123,8 +122,7 @@ class Slack(object):
         black = BlackList().packages()
         for name, loc, comp, uncomp in zip(data[0], data[1], data[2], data[3]):
             if self.slack_pkg in name and self.slack_pkg not in black:
-                dwn.append("{0}{1}/{2}".format(mirrors("", "", self.version),
-                                               loc, name))
+                dwn.append("{0}{1}/{2}".format(mirrors("", ""), loc, name))
                 install.append(name)
                 comp_sum.append(comp)
                 uncomp_sum.append(uncomp)

@@ -70,21 +70,21 @@ class Initialization(object):
         lib_file = "PACKAGES.TXT"
         md5_file = "CHECKSUMS.md5"
         log_file = "ChangeLog.txt"
-        version = slack_rel
         if not os.path.exists(log):
             os.mkdir(log)
         if not os.path.exists(lib):
             os.mkdir(lib)
-        packages = mirrors(lib_file, "", version)
-        pkg_checksums = mirrors(md5_file, "", version)
-        extra = mirrors(lib_file, "extra/", version)
-        ext_checksums = mirrors(md5_file, "extra/", version)
-        pasture = mirrors(lib_file, "pasture/", version)
-        pas_checksums = mirrors(md5_file, "pasture/", version)
+        packages = mirrors(lib_file, "", slack_rel)
+        pkg_checksums = mirrors(md5_file, "", slack_rel)
+        extra = mirrors(lib_file, "extra/", slack_rel)
+        ext_checksums = mirrors(md5_file, "extra/", slack_rel)
+        pasture = mirrors(lib_file, "pasture/", slack_rel)
+        pas_checksums = mirrors(md5_file, "pasture/", slack_rel)
         packages_txt = ("{0} {1} {2}".format(packages, extra, pasture))
+
         checksums_md5 = ("{0} {1} {2}".format(pkg_checksums, ext_checksums,
                                               pas_checksums))
-        changelog_txt = mirrors(log_file, "", version)
+        changelog_txt = mirrors(log_file, "", slack_rel)
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
@@ -326,8 +326,7 @@ def check_exists_repositories():
                                                  "/ChangeLog.txt")):
             update = True
     if update:
-        print("\nPlease update packages lists. Run 'slpkg update'.\n" +
-              "This command must run it every time a repository is \n" +
-              "activated or when you want to see if there are new \n" +
-              "update packages to them.\n")
+        print("\n  Please update packages lists. Run 'slpkg update'.\n" +
+              "  This command should be used to synchronize packages\n" +
+              "  lists from the repositories are enabled.\n")
         sys.exit(0)

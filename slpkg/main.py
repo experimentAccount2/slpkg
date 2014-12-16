@@ -67,7 +67,7 @@ class Case(object):
         SBoInstall(self.package).start()
 
     def slack_install(self):
-        Slack(self.package, self.release).start()
+        Slack(self.package).start()
 
     def rlw_install(self):
         OthersInstall(self.package, "rlw", self.release).start()
