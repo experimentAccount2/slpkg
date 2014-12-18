@@ -101,6 +101,13 @@ class OthersInstall(object):
             lib = lib_path + "slackr_repo/PACKAGES.TXT"
             self.mirror = repos.slackers()
             self.step = self.step * 2
+        elif self.repo == "slonly":
+            lib = lib_path + "slonly_repo/PACKAGES.TXT"
+            arch = "{0}-x86".format(slack_ver())
+            if os.uname()[4] == "x86_64":
+                arch = "{0}-x86_64".format(slack_ver())
+            self.mirror = "{0}{1}/".format(repos.slackonly(), arch)
+            self.step = self.step * 3
 
         f = open(lib, "r")
         self.PACKAGES_TXT = f.read()
@@ -227,7 +234,8 @@ def views(install_all, comp_sum, repository, dependencies):
         'alien': ' ',
         'slacky': '',
         'studio': '',
-        'slackr': ''
+        'slackr': '',
+        'slonly': ''
     }
     repository += align[repository]
     for pkg, comp in zip(install_all, comp_sum):

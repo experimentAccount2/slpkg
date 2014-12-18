@@ -37,6 +37,7 @@ def split_package(package):
     slacky = "sl"
     studio = "se"
     slacks = "cf"
+    slonly = "_slack"
     build = split[-1]
     if build.endswith(sbo):
         build = split[-1][:-4]   # and remove .t?z extension
@@ -52,6 +53,8 @@ def split_package(package):
         build = split[-1][:-len(studio)]
     elif build.endswith(slacks):
         build = split[-1][:-len(slacks)]
+    elif build.endswith(slonly):
+        build = split[-1][:-len(slonly)]
     arch = split[-2]
     ver = split[-3]
     name = "-".join(split[:-3])

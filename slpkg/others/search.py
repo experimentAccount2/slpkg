@@ -40,11 +40,12 @@ def search_pkg(name, repo):
             'alien': 'alien_repo/PACKAGES.TXT',
             'slacky': 'slacky_repo/PACKAGES.TXT',
             'studio': 'studio_repo/PACKAGES.TXT',
-            'slackr': 'slackr_repo/PACKAGES.TXT'
+            'slackr': 'slackr_repo/PACKAGES.TXT',
+            'slonly': 'slonly_repo/PACKAGES.TXT'
         }
         with open(lib_path + repo_dir[repo], "r") as PACKAGES_TXT:
             for line in PACKAGES_TXT:
-                if line.startswith("PACKAGE NAME:  "):
+                if line.startswith("PACKAGE NAME:  ") and len(line) > 16:
                     if repo == 'slackr':
                         pkg_name = line[15:].strip()
                     else:

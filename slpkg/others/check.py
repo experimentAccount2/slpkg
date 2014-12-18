@@ -87,6 +87,13 @@ class OthersUpgrade(object):
             lib = lib_path + "slackr_repo/PACKAGES.TXT"
             self.mirror = repos.slackers()
             self.step = self.step * 2
+        elif self.repo == "slonly":
+            lib = lib_path + "slonly_repo/PACKAGES.TXT"
+            arch = "{0}-x86".format(slack_ver())
+            if os.uname()[4] == "x86_64":
+                arch = "{0}-x86_64".format(slack_ver())
+            self.mirror = "{0}{1}/".format(repos.slackonly(), arch)
+            self.step = self.step * 3
 
         f = open(lib, "r")
         self.PACKAGES_TXT = f.read()
@@ -155,7 +162,8 @@ class OthersUpgrade(object):
             for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
                                                data[3]):
                 inst_pkg = split_package(pkg)
-                repo_pkg = split_package(name[:-4])
+                if name:
+                    repo_pkg = split_package(name[:-4])
                 if (repo_pkg[0] == inst_pkg[0] and
                         name[:-4] > pkg and inst_pkg[0] not in black):
                     # store downloads packages by repo
@@ -175,7 +183,8 @@ class OthersUpgrade(object):
             'alien': 'alien',
             'slacky': 'sl',
             'studio': 'se',
-            'slackr': 'cf'
+            'slackr': 'cf',
+            'slonly': '_slack'
         }
         repo = repository[self.repo]
         for pkg in os.listdir(pkg_path):
@@ -195,7 +204,8 @@ def views(upgrade_all, comp_sum, repository):
         'alien': ' ',
         'slacky': '',
         'studio': '',
-        'slackr': ''
+        'slackr': '',
+        'slonly': ''
     }
     repository += align[repository]
     for pkg, comp in zip(upgrade_all, comp_sum):

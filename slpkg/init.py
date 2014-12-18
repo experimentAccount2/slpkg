@@ -257,6 +257,37 @@ class Initialization(object):
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
+    def slackonly(self):
+        '''
+        Creating slackers local library
+        '''
+        ar = "{0}-x86".format(slack_ver())
+        arch = os.uname()[4]
+        repo = Repo().slackonly()
+        log = log_path + "slonly/"
+        lib = lib_path + "slonly_repo/"
+        lib_file = "PACKAGES.TXT"
+        lst_file = "FILELIST.TXT"
+        md5_file = "CHECKSUMS.md5"
+        log_file = "ChangeLog.txt"
+        if not os.path.exists(log):
+            os.mkdir(log)
+        if not os.path.exists(lib):
+            os.mkdir(lib)
+        if arch == "x86_64":
+            ar = "{0}-x86_64".format(slack_ver())
+        packages_txt = "{0}{1}/{2}".format(repo, ar, lib_file)
+        filelist_txt = "{0}{1}/{2}".format(repo, ar, lst_file)
+        checksums_md5 = "{0}{1}/{2}".format(repo, ar, md5_file)
+        # ChangeLog.txt file available only for x86 arch
+        changelog_txt = "{0}{1}-x86/{2}".format(repo, slack_ver(), log_file)
+        self.write(lib, lib_file, packages_txt)
+        self.write(lib, lst_file, filelist_txt)
+        self.write(lib, md5_file, checksums_md5)
+        self.write(log, log_file, changelog_txt)
+        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
+                    md5_file, checksums_md5, lst_file, filelist_txt)
+
     @staticmethod
     def write(path, data_file, file_url):
         '''
@@ -280,10 +311,10 @@ class Initialization(object):
         '''
         args[0] = log
         args[1] = log_file
-        arg[2] = changelog_txt
+        args[2] = changelog_txt
         args[3] = lib
         args[4] = lib_file
-        arg[5] = packages_txt
+        args[5] = packages_txt
         args[6] = md5_file
         args[7] = checksums_md5
         args[8] = lst_file
@@ -354,7 +385,8 @@ class Update(object):
             'alien': Initialization().alien,
             'slacky': Initialization().slacky,
             'studio': Initialization().studioware,
-            'slackr': Initialization().slackers
+            'slackr': Initialization().slackers,
+            'slonly': Initialization().slackonly
         }
 
     def repository(self):

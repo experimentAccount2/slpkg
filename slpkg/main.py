@@ -84,6 +84,9 @@ class Case(object):
     def slackers_install(self):
         OthersInstall(self.package, "slackr", self.release).start()
 
+    def slackonly_install(self):
+        OthersInstall(self.package, "slonly", self.release).start()
+
     def sbo_upgrade(self):
         SBoCheck().start()
 
@@ -104,6 +107,10 @@ class Case(object):
 
     def slackers_upgrade(self):
         OthersUpgrade("slackr", self.release).start()
+
+    def slackonly_upgrade(self):
+        OthersUpgrade("slonly", self.release).start()
+
 
 
 def main():
@@ -148,7 +155,8 @@ def main():
             'alien': pkg.alien_upgrade,
             'slacky': pkg.slacky_upgrade,
             'studio': pkg.studioware_upgrade,
-            'slackr': pkg.slackers_upgrade
+            'slackr': pkg.slackers_upgrade,
+            'slonly': pkg.slackonly_upgrade
         }
         if args[1] in repositories:
             upgrade[args[1]]()
@@ -163,7 +171,8 @@ def main():
             'alien': pkg.alien_install,
             'slacky': pkg.slacky_install,
             'studio': pkg.studioware_install,
-            'slackr': pkg.slackers_install
+            'slackr': pkg.slackers_install,
+            'slonly': pkg.slackonly_install
         }
         if args[1] in repositories:
             install[args[1]]()

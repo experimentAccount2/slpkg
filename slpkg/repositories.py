@@ -80,3 +80,9 @@ class Repo(object):
         Slackers.it repository
         '''
         return "http://www.slackers.it/repository/"
+
+    def slackonly(self):
+        '''
+        Slackonly.com repository
+        '''
+        return "https://slackonly.com/pub/packages/"

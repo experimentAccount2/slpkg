@@ -52,6 +52,9 @@ Supported Repositories:
 - Slackers - `Repository <http://www.slackers.it/repository/>`_
   Arch: {x86_64}
   Versions: {current}
+- Slackonly - `Repository <https://slackonly.com/>`_
+  Arch: {x86, x86_64}
+  Versions: {14.1}
 
 * Choose repositories you need to work from file '/etc/slpkg/slpkg.conf' default is 
   all repositories.

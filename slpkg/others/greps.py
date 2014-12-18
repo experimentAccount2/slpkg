@@ -64,7 +64,7 @@ def repo_data(PACKAGES_TXT, step, repo, version):
          rsize,
          runsize
          ) = alien_filter(name, location, size, unsize, version)
-    elif repo in ["slacky", "studio", "slackr"]:
+    elif repo in ["slacky", "studio", "slackr", "slonly"]:
         rname, rlocation, rsize, runsize = name, location, size, unsize
     return [rname, rlocation, rsize, runsize]
 
@@ -111,8 +111,8 @@ def fix_slackers_pkg(name):
     '''
     Fix 'PACKAGE NAME:' from PACKAGES.TXT file
     Beacause repository slackers.it not report the full
-    name in PACKAGES.TXT file then use FILELIST.TXT to
-    get it.
+    name in PACKAGES.TXT file use FILELIST.TXT to
+    get.
     '''
     f = open(lib_path + "slackr_repo/FILELIST.TXT", "r")
     FILELIST_TXT = f.read()
@@ -123,7 +123,7 @@ def fix_slackers_pkg(name):
     # This trick fix spliting 'NoneType' packages
     # reference wrong name between PACKAGE.TXT and
     # FILELIST.TXT
-    return "xxx-xxx-xxx-xxx.txz"
+    return "WRONG_FILE-0-noarch-0.txz"
 
 
 class Requires(object):

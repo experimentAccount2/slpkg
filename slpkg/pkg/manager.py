@@ -294,6 +294,7 @@ class PackageManager(object):
                 'slacky': 'sl',
                 'studio': 'se',
                 'slackr': 'cf',
+                'slonly': '_slack',     # this conflict with slack repository
                 'all': ''
             }
             search = pkg_list[pattern]
