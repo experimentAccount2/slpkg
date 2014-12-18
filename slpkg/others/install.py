@@ -97,6 +97,10 @@ class OthersInstall(object):
             self.mirror = "{0}slackware{1}-{2}/".format(repos.studioware(),
                                                         arch, slack_ver())
             self.step = self.step * 2
+        elif self.repo == "slackr":
+            lib = lib_path + "slackr_repo/PACKAGES.TXT"
+            self.mirror = repos.slackers()
+            self.step = self.step * 2
 
         f = open(lib, "r")
         self.PACKAGES_TXT = f.read()
@@ -195,6 +199,7 @@ class OthersInstall(object):
         else:
             for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
                                                data[3]):
+
                 package = "".join(deps)
                 if package in name and package not in black:
                     # store downloads packages by repo
@@ -221,7 +226,8 @@ def views(install_all, comp_sum, repository, dependencies):
         'rlw': ' ' * 3,
         'alien': ' ',
         'slacky': '',
-        'studio': ''
+        'studio': '',
+        'slackr': ''
     }
     repository += align[repository]
     for pkg, comp in zip(install_all, comp_sum):

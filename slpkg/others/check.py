@@ -83,6 +83,10 @@ class OthersUpgrade(object):
             self.mirror = "{0}slackware{1}-{2}/".format(repos.studioware(),
                                                         arch, slack_ver())
             self.step = self.step * 2
+        elif self.repo == "slackr":
+            lib = lib_path + "slackr_repo/PACKAGES.TXT"
+            self.mirror = repos.slackers()
+            self.step = self.step * 2
 
         f = open(lib, "r")
         self.PACKAGES_TXT = f.read()
@@ -146,9 +150,8 @@ class OthersUpgrade(object):
         # location = data[1]
         # size = data[2]
         # unsize = data[3]
-        installed = self.installed()
         data = repo_data(self.PACKAGES_TXT, self.step, self.repo, self.version)
-        for pkg in installed:
+        for pkg in self.installed():
             for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
                                                data[3]):
                 inst_pkg = split_package(pkg)
@@ -171,7 +174,8 @@ class OthersUpgrade(object):
             'rlw': '_rlw',
             'alien': 'alien',
             'slacky': 'sl',
-            'studio': 'se'
+            'studio': 'se',
+            'slackr': 'cf'
         }
         repo = repository[self.repo]
         for pkg in os.listdir(pkg_path):
@@ -190,7 +194,8 @@ def views(upgrade_all, comp_sum, repository):
         'rlw': ' ' * 3,
         'alien': ' ',
         'slacky': '',
-        'studio': ''
+        'studio': '',
+        'slackr': ''
     }
     repository += align[repository]
     for pkg, comp in zip(upgrade_all, comp_sum):

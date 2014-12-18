@@ -74,3 +74,9 @@ class Repo(object):
         Studioware repository
         '''
         return "http://studioware.org/files/packages/"
+
+    def slackers(self):
+        '''
+        Slackers.it repository
+        '''
+        return "http://www.slackers.it/repository/"

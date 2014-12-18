@@ -42,7 +42,10 @@ def repo_data(PACKAGES_TXT, step, repo, version):
         index += 1
         toolbar_width = status(index, toolbar_width, step)
         if line.startswith("PACKAGE NAME"):
-            name.append(line[15:].strip())
+            if repo == "slackr":
+                name.append(fix_slackers_pkg(line[15:]))
+            else:
+                name.append(line[15:].strip())
         if line.startswith("PACKAGE LOCATION"):
             location.append(line[21:].strip())
         if line.startswith("PACKAGE SIZE (compressed):  "):
@@ -61,7 +64,7 @@ def repo_data(PACKAGES_TXT, step, repo, version):
          rsize,
          runsize
          ) = alien_filter(name, location, size, unsize, version)
-    elif repo in ["slacky", "studio"]:
+    elif repo in ["slacky", "studio", "slackr"]:
         rname, rlocation, rsize, runsize = name, location, size, unsize
     return [rname, rlocation, rsize, runsize]
 
@@ -104,6 +107,25 @@ def alien_filter(name, location, size, unsize, version):
     return [fname, flocation, fsize, funsize]
 
 
+def fix_slackers_pkg(name):
+    '''
+    Fix 'PACKAGE NAME:' from PACKAGES.TXT file
+    Beacause repository slackers.it not report the full
+    name in PACKAGES.TXT file then use FILELIST.TXT to
+    get it.
+    '''
+    f = open(lib_path + "slackr_repo/FILELIST.TXT", "r")
+    FILELIST_TXT = f.read()
+    f.close()
+    for line in FILELIST_TXT.splitlines():
+        if name in line and line.endswith(".txz"):
+            return line.split("/")[-1].strip()
+    # This trick fix spliting 'NoneType' packages
+    # reference wrong name between PACKAGE.TXT and
+    # FILELIST.TXT
+    return "xxx-xxx-xxx-xxx.txz"
+
+
 class Requires(object):
 
     def __init__(self, name, repo):
@@ -118,26 +140,32 @@ class Requires(object):
         '''
         Grap package requirements from repositories
         '''
-        if self.repo in ["alien", "slacky"]:
+        if self.repo in ["alien", "slacky", "slackr"]:
             lib = {
-                'alien': lib_path + "alien_repo/PACKAGES.TXT",
-                'slacky': lib_path + "slacky_repo/PACKAGES.TXT"
+                'alien': lib_path + 'alien_repo/PACKAGES.TXT',
+                'slacky': lib_path + 'slacky_repo/PACKAGES.TXT',
+                'slackr': lib_path + 'slackr_repo/PACKAGES.TXT'
             }
             f = open(lib[self.repo], "r")
             PACKAGES_TXT = f.read()
             f.close()
             for line in PACKAGES_TXT.splitlines():
                 if line.startswith("PACKAGE NAME: "):
-                    pkg = line[14:].strip()
-                    pkg_name = split_package(pkg)[0]
+                    if self.repo == "slackr":
+                        pkg_name = line[14:].strip()
+                    else:
+                        pkg = line[14:].strip()
+                        pkg_name = split_package(pkg)[0]
                 if line.startswith("PACKAGE REQUIRED: "):
                     if pkg_name == self.name:
                         if line[17:].strip():
                             if self.repo == "slacky":
                                 return self.slacky_req_fix(line)
-
-                            else:
+                            elif self.repo == "alien":
                                 return line[18:].strip().split(",")
+                            else:
+                                return line[18:].strip().split()
+
         elif self.repo == "rlw":
             # Robby's repository dependencies as shown in the central page
             # http://rlworkman.net/pkgs/

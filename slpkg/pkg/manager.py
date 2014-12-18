@@ -293,6 +293,7 @@ class PackageManager(object):
                 'alien': 'alien',
                 'slacky': 'sl',
                 'studio': 'se',
+                'slackr': 'cf',
                 'all': ''
             }
             search = pkg_list[pattern]

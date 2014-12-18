@@ -42,7 +42,8 @@ repositories = [
     'rlw',
     'alien',
     'slacky',
-    'studio'
+    'studio',
+    'slackr'
 ]
 build_path = "/tmp/slpkg/build/"
 slpkg_tmp_packages = tmp + "slpkg/packages/"

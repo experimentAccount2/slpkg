@@ -49,6 +49,9 @@ Supported Repositories:
 - Studioware - `Repository <http://studioware.org/packages>`_
   Arch: {x86, x86_64}
   Versions: {13.37, 14.0, 14.1}
+- Slackers - `Repository <http://www.slackers.it/repository/>`_
+  Arch: {x86_64}
+  Versions: {current}
 
 * Choose repositories you need to work from file '/etc/slpkg/slpkg.conf' default is 
   all repositories.
@@ -746,3 +749,9 @@ Man page it is available for full support:
 .. code-block:: bash
 
     $ man slpkg
+
+
+Donate
+--------
+If you feel satisfied with this project and want to thank me go
+to `Slackware <https://store.slackware.com/cgi-bin/store/slackdonation>`_ and make a donation or visit the `store <https://store.slackware.com/cgi-bin/store>`_.

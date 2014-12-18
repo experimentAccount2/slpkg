@@ -81,6 +81,9 @@ class Case(object):
     def studioware_install(self):
         OthersInstall(self.package, "studio", self.release).start()
 
+    def slackers_install(self):
+        OthersInstall(self.package, "slackr", self.release).start()
+
     def sbo_upgrade(self):
         SBoCheck().start()
 
@@ -98,6 +101,9 @@ class Case(object):
 
     def studioware_upgrade(self):
         OthersUpgrade("studio", self.release).start()
+
+    def slackers_upgrade(self):
+        OthersUpgrade("slackr", self.release).start()
 
 
 def main():
@@ -141,7 +147,8 @@ def main():
             'rlw': pkg.rlw_upgrade,
             'alien': pkg.alien_upgrade,
             'slacky': pkg.slacky_upgrade,
-            'studio': pkg.studioware_upgrade
+            'studio': pkg.studioware_upgrade,
+            'slackr': pkg.slackers_upgrade
         }
         if args[1] in repositories:
             upgrade[args[1]]()
@@ -155,7 +162,8 @@ def main():
             'rlw': pkg.rlw_install,
             'alien': pkg.alien_install,
             'slacky': pkg.slacky_install,
-            'studio': pkg.studioware_install
+            'studio': pkg.studioware_install,
+            'slackr': pkg.slackers_install
         }
         if args[1] in repositories:
             install[args[1]]()

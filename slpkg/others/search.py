@@ -36,15 +36,19 @@ def search_pkg(name, repo):
     try:
         blacklist = BlackList().packages()
         repo_dir = {
-            "rlw": "rlw_repo/PACKAGES.TXT",
-            "alien": "alien_repo/PACKAGES.TXT",
-            "slacky": "slacky_repo/PACKAGES.TXT",
-            "studio": "studio_repo/PACKAGES.TXT"
+            'rlw': 'rlw_repo/PACKAGES.TXT',
+            'alien': 'alien_repo/PACKAGES.TXT',
+            'slacky': 'slacky_repo/PACKAGES.TXT',
+            'studio': 'studio_repo/PACKAGES.TXT',
+            'slackr': 'slackr_repo/PACKAGES.TXT'
         }
         with open(lib_path + repo_dir[repo], "r") as PACKAGES_TXT:
             for line in PACKAGES_TXT:
                 if line.startswith("PACKAGE NAME:  "):
-                    pkg_name = split_package(line[15:])[0].strip()
+                    if repo == 'slackr':
+                        pkg_name = line[15:].strip()
+                    else:
+                        pkg_name = split_package(line[15:])[0].strip()
                     if name == pkg_name and name not in blacklist:
                         PACKAGES_TXT.close()
                         return pkg_name
