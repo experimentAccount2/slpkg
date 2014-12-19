@@ -6,7 +6,7 @@
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
 
-# Utility for easy management packages in Slackware
+# Slpkg is a user-friendly package manager for Slackware installations
 
 # https://github.com/dslackw/slpkg
 
@@ -40,6 +40,7 @@ from slpkg.__metadata__ import (
 )
 
 from slpkg.pkg.find import find_package
+from slpkg.slack.slack_version import slack_ver
 
 
 class PackageManager(object):
@@ -287,7 +288,7 @@ class PackageManager(object):
         try:
             pkg_list = {
                 'sbo': '_SBo',
-                'slack': '_slack',
+                'slack': '_slack{0}'.format(slack_ver()),
                 'noarch': '-noarch-',
                 'rlw': '_rlw',
                 'alien': 'alien',

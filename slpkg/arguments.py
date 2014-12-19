@@ -6,7 +6,7 @@
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
 
-# Utility for easy management packages in Slackware
+# Slpkg is a user-friendly package manager for Slackware installations
 
 # https://github.com/dslackw/slpkg
 
@@ -30,7 +30,8 @@ from __metadata__ import (
 def options():
     arguments = [
         "\nslpkg - version {0}\n".format(__version__),
-        "Utility for easy management packages in Slackware\n",
+        "Slpkg is a user-friendly package manager for Slackware " +
+        "installations\n",
         "Commands:",
         "   update                                   update all package " +
         "lists",

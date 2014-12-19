@@ -57,7 +57,7 @@ Supported Repositories:
   Versions: {14.1}
 
 * Choose repositories you need to work from file '/etc/slpkg/slpkg.conf' default is 
-  all repositories.
+  'slack' and 'sbo' repositories and read REPOSITORIES file for each of the particularities.
 
 Slpkg works in accordance with the standards of the organization slackbuilds.org 
 to builds packages. Also uses the Slackware linux instructions for installation,
