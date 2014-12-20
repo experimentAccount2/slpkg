@@ -28,4 +28,7 @@ dependence 'ffmpeg' but that is not available from the repository itself).
 
 Slackonly (slonly) repository contains no dependencies on file PACKAGES.TXT and this makes
 it difficult to automatically resolve dependencies and in the file PACKAGES.TXT and some
-lines with 'PACKAGE NAME:' there is no package so 'slpkg' can not find package. 
+lines with 'PACKAGE NAME:' there is no package so 'slpkg' can not find package.
+Users with Slackware x86_64 will use this repository should establish from the beginning 
+the list of packages with the command 'slpkg re-create' to be updated with new packages 
+and it's because the repository has not 'ChangeLog.txt' file.

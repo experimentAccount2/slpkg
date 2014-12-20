@@ -37,6 +37,7 @@ Slpkg is a user-friendly package manager for Slackware installations
 
 Commands:
    update                                   update all package lists
+   re-create                                recreate package lists  
    update slpkg                             check and update slpkg
 
 Optional arguments:
@@ -69,6 +70,10 @@ Optional arguments:
  studioware.org = 'studio'
  slacker.it = 'slackr'
  slackonly.com = 'slonly'
+ 
+ Default enable repository is 'slack' and 'sbo'.
+ Add or remove repository in configuration file '/etc/slpkg/slpkg.conf'
+
 
 .SH COLORS
  red, green, yellow, cyan, grey
@@ -86,6 +91,12 @@ The following commands are available.
 .PP
 Used to re-synchronize the package lists and create some important files.
 This command must run every new repository is added or new updates is available.
+
+.SS re-create
+\fBslpkg\fP \fBre-create\fP
+.PP
+It is sometimes useful to create all of the base file from the beginning so this 
+command deletes all the packages lists and re-created.
 
 .SS update slpkg
 \fBslpkg\fP \fBupdate\fP \fBslpkg\fP

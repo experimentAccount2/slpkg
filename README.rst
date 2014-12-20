@@ -209,6 +209,7 @@ Command Line Tool Usage
 
     Commands:
        update                                   update all package lists
+       re-create                                recreate package lists
        update slpkg                             check and update slpkg
 
     Optional arguments:

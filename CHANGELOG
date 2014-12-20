@@ -2,6 +2,9 @@ Version 2.1.5-dev
 18-12-2014
 
 [Feature] - Added slacker.it and slackonly.com repositories.
+          - Added command 're-create'.
+
+[Updated] - Fix Slackware current upgrade checksums.
 
 Version 2.1.4-dev
 16-12-2014
