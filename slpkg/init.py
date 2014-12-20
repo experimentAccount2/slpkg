@@ -374,6 +374,21 @@ class Initialization(object):
                         f.write(line + "\n")
                     f.close()
 
+    def re_create(self):
+        '''
+        Remove all package lists with changelog and checksums files
+        and create lists again
+        '''
+        for repo in repositories:
+            changelogs = '{0}{1}{2}'.format(log_path, repo, '/ChangeLog.txt')
+            if os.path.isfile(changelogs):
+                os.remove(changelogs)
+            for f in os.listdir(lib_path + '{0}_repo/'.format(repo)):
+                packages = '{0}{1}_repo/{2}'.format(lib_path, repo, f)
+                if os.path.isfile(packages):
+                    os.remove(packages)
+        Update().repository()
+
 
 class Update(object):
 

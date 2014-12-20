@@ -24,8 +24,6 @@
 import sys
 import getpass
 
-from slpkg_update import it_self_update
-
 from desc import PkgDesc
 from config import Config
 from queue import QueuePkgs
@@ -34,7 +32,9 @@ from tracking import track_dep
 from blacklist import BlackList
 from version import prog_version
 from arguments import options, usage
+from slpkg_update import it_self_update
 from init import (
+    Initialization,
     Update,
     check_exists_repositories
 )
@@ -112,7 +112,6 @@ class Case(object):
         OthersUpgrade("slonly", self.release).start()
 
 
-
 def main():
 
     s_user(getpass.getuser())
@@ -129,6 +128,9 @@ def main():
 
     # checking if repositories exists
     check_exists_repositories()
+
+    if len(args) == 1 and args[0] == "re-create":
+        Initialization().re_create()
 
     if len(args) == 0:
         usage()

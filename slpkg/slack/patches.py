@@ -176,6 +176,16 @@ def kernel(upgrade_all):
     '''
     for core in upgrade_all:
         if "kernel" in core:
-            print("The kernel has been upgraded, reinstall `lilo` ...")
-            subprocess.call("lilo", shell=True)
-            break
+            if default_answer == "y":
+                answer = default_answer
+            else:
+                print("")
+                template(78)
+                print("| {0}*** HIGHLY recommended reinstall 'LILO' "
+                      "***{1}".format(color['RED'], color['ENDC']))
+                template(78)
+                answer = raw_input("\nThe kernel has been upgraded, "
+                                   "reinstall `LILO` [Y/n]? ")
+            if answer in ['y', 'Y']:
+                subprocess.call("lilo", shell=True)
+                break

@@ -24,7 +24,10 @@
 from slack.mirrors import mirrors
 
 from url_read import URL
-from __metadata__ import lib_path
+from __metadata__ import (
+    lib_path,
+    slack_rel
+)
 
 
 def pkg_checksum(binary, repo):
@@ -32,8 +35,10 @@ def pkg_checksum(binary, repo):
     Return checksum from CHECKSUMS.md5 file by repository
     '''
     md5 = "None"
-    if repo == "slack_patches":
+    if repo == "slack_patches" and slack_rel == "stable":
         CHECKSUMS_md5 = URL(mirrors("CHECKSUMS.md5", "patches/")).reading()
+    elif repo == "slack_patches" and slack_rel == "current":
+        CHECKSUMS_md5 = URL(mirrors("CHECKSUMS.md5", "")).reading()
     else:
         repos = {
             'slack': 'slack_repo/CHECKSUMS.md5',
