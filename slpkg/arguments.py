@@ -35,6 +35,7 @@ def options():
         "Commands:",
         "   update                                   update all package " +
         "lists",
+        "   re-create                                recreate package lists",
         "   update slpkg                             check and update slpkg\n",
         "Optional arguments:",
         "  -h, --help                                show this help message " +
