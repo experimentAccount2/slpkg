@@ -26,7 +26,10 @@ import sys
 
 from repositories import Repo
 from messages import template
-from __metadata__ import repositories, color
+from __metadata__ import (
+    repositories,
+    color
+)
 
 
 class RepoList(object):
@@ -55,11 +58,9 @@ class RepoList(object):
             'Status'))
         template(78)
         for repo_id, repo_name in sorted(self.all_repos.iteritems()):
-            status = 'disabled'
-            COLOR = color['RED']
+            status, COLOR = 'disabled', color['RED']
             if repo_id in repositories:
-                status = 'enabled'
-                COLOR = color['GREEN']
+                status, COLOR = 'enabled', color['GREEN']
             print('  {0}{1}{2}{3}{4}{5:>15}{6}'.format(
                 repo_id, ' ' * (17 - len(repo_id)),
                 repo_name, ' ' * (45 - len(repo_name)),
