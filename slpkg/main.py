@@ -132,10 +132,6 @@ def main():
     if len(args) == 1 and args[0] == "repolist":
         RepoList().repos()
 
-    if (len(args) == 2 and args[0] == "repoinfo" and
-            args[1] in RepoList().all_repos):
-        RepoInfo().view(args[1])
-
     if len(args) == 0:
         usage()
     elif (len(args) == 1 and args[0] == "-h" or
@@ -151,6 +147,10 @@ def main():
 
     if len(args) == 1 and args[0] == "re-create":
         Initialization().re_create()
+
+    if (len(args) == 2 and args[0] == "repoinfo" and
+            args[1] in RepoList().all_repos):
+        RepoInfo().view(args[1])
 
     if len(args) == 3 and args[0] == "-a":
         BuildPackage(args[1], args[2:], path).build()
