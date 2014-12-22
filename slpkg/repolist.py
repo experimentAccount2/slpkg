@@ -55,13 +55,15 @@ class RepoList(object):
             'Status'))
         template(78)
         for repo_id, repo_name in sorted(self.all_repos.iteritems()):
-            status = '{0}disabled{1}'.format(color['RED'], color['ENDC'])
+            status = 'disabled'
+            COLOR = color['RED']
             if repo_id in repositories:
-                status = '{0}enabled{1}'.format(color['GREEN'], color['ENDC'])
-            print('  {0}{1}{2}{3}{4:>17}'.format(
+                status = 'enabled'
+                COLOR = color['GREEN']
+            print('  {0}{1}{2}{3}{4}{5:>15}{6}'.format(
                 repo_id, ' ' * (17 - len(repo_id)),
-                repo_name, ' ' * (52 - len(repo_name)),
-                status))
+                repo_name, ' ' * (45 - len(repo_name)),
+                COLOR, status, color['ENDC']))
         print("\nFor enable or disable repositories edit "
               "'/etc/slpkg/slpkg.conf' file\n")
         sys.exit(0)

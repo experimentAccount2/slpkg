@@ -95,16 +95,16 @@ if os.path.isfile("/etc/slpkg/slpkg.conf"):
         if line.startswith("USE_COLORS"):
             use_colors = line[11:].strip()
 
-if use_colors == "on":
-    color = {
-        'RED': '\x1b[31m',
-        'GREEN': '\x1b[32m',
-        'YELLOW': '\x1b[33m',
-        'CYAN': '\x1b[36m',
-        'GREY': '\x1b[38;5;247m',
-        'ENDC': '\x1b[0m'
-    }
-else:
+color = {
+    'RED': '\x1b[31m',
+    'GREEN': '\x1b[32m',
+    'YELLOW': '\x1b[33m',
+    'CYAN': '\x1b[36m',
+    'GREY': '\x1b[38;5;247m',
+    'ENDC': '\x1b[0m'
+}
+
+if use_colors == "off":
     color = {
         'RED': '',
         'GREEN': '',
