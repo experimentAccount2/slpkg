@@ -60,7 +60,7 @@ class Patches(object):
         if self.version == "stable":
             self.PACKAGES_TXT = URL(mirrors("PACKAGES.TXT",
                                             "patches/")).reading()
-            self.step = 100
+            self.step = 10
         else:
             self.PACKAGES_TXT = URL(mirrors("PACKAGES.TXT", "")).reading()
             self.step = 700
