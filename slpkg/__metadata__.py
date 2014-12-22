@@ -23,7 +23,6 @@
 
 import os
 
-
 __all__ = "slpkg"
 __author__ = "dslackw"
 __version_info__ = (2, 1, 'x-dev')
@@ -44,7 +43,7 @@ repositories = [
     'slacky',
     'studio',
     'slackr',
-    'only'
+    'slonly'
 ]
 build_path = "/tmp/slpkg/build/"
 slpkg_tmp_packages = tmp + "slpkg/packages/"

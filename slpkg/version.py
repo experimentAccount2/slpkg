@@ -21,6 +21,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+import sys
+
 from __metadata__ import (
     __version__,
     __license__,
@@ -35,3 +37,4 @@ def prog_version():
     print("Version : {0}".format(__version__))
     print("Licence : {0}".format(__license__))
     print("Email   : {0}".format(__email__))
+    sys.exit(0)

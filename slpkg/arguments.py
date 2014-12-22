@@ -21,6 +21,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+import sys
 
 from __metadata__ import (
     __version__,
@@ -36,6 +37,7 @@ def options():
         "   update                                   update all package " +
         "lists",
         "   re-create                                recreate package lists",
+        "   repolist                                 list all repositories",
         "   update slpkg                             check and update slpkg\n",
         "Optional arguments:",
         "  -h, --help                                show this help message " +
@@ -68,6 +70,7 @@ def options():
     ]
     for opt in arguments:
         print(opt)
+    sys.exit(0)
 
 
 def usage():
@@ -89,3 +92,4 @@ def usage():
     ]
     for usg in view:
         print(usg)
+    sys.exit(0)

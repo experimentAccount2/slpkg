@@ -24,6 +24,8 @@
 import sys
 import getpass
 
+from repolist import RepoList
+
 from desc import PkgDesc
 from config import Config
 from queue import QueuePkgs
@@ -126,21 +128,26 @@ def main():
     if len(args) == 2 and args[0] == "update" and args[1] == "slpkg":
         it_self_update()
 
-    # checking if repositories exists
-    check_exists_repositories()
-
-    if len(args) == 1 and args[0] == "re-create":
-        Initialization().re_create()
+    if len(args) == 1 and args[0] == "repolist":
+        RepoList().repos()
 
     if len(args) == 0:
         usage()
     elif (len(args) == 1 and args[0] == "-h" or
             args[0] == "--help" and args[1:] == []):
         options()
-    elif (len(args) == 1 and args[0] == "-v" or
+
+    if (len(args) == 1 and args[0] == "-v" or
             args[0] == "--version" and args[1:] == []):
         prog_version()
-    elif len(args) == 3 and args[0] == "-a":
+
+    # checking if repositories exists
+    check_exists_repositories()
+
+    if len(args) == 1 and args[0] == "re-create":
+        Initialization().re_create()
+
+    if len(args) == 3 and args[0] == "-a":
         BuildPackage(args[1], args[2:], path).build()
     elif len(args) == 2 and args[0] == "-l":
         pkg_list = ["all", "noarch"] + repositories
