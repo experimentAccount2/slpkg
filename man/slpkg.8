@@ -39,6 +39,7 @@ Commands:
    update                                   update all package lists
    re-create                                recreate package lists  
    repolist                                 list all repositories
+   repoinfo [repository]                    repository information
    update slpkg                             check and update slpkg
 
 Optional arguments:
@@ -103,6 +104,11 @@ command deletes all the packages lists and re-created.
 \fBslpkg\fP \fBrepolist\fP
 .PP
 Lists all enabled or disabled repositories.
+
+.SS repoinfo
+\fBslpkg\fP \fBrepoinfo\fP <\fBrepository\fP>
+.PP
+View repository information.
 
 .SS update slpkg
 \fBslpkg\fP \fBupdate\fP \fBslpkg\fP

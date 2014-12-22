@@ -210,6 +210,8 @@ Command Line Tool Usage
     Commands:
        update                                   update all package lists
        re-create                                recreate package lists
+       repolist                                 list all repositories
+       repoinfo [repository]                    repository information
        update slpkg                             check and update slpkg
 
     Optional arguments:

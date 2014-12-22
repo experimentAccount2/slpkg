@@ -38,6 +38,7 @@ def options():
         "lists",
         "   re-create                                recreate package lists",
         "   repolist                                 list all repositories",
+        "   repoinfo [repository]                    repository information",
         "   update slpkg                             check and update slpkg\n",
         "Optional arguments:",
         "  -h, --help                                show this help message " +

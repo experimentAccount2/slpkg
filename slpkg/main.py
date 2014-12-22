@@ -24,6 +24,7 @@
 import sys
 import getpass
 
+from repoinfo import RepoInfo
 from repolist import RepoList
 
 from desc import PkgDesc
@@ -130,6 +131,10 @@ def main():
 
     if len(args) == 1 and args[0] == "repolist":
         RepoList().repos()
+
+    if (len(args) == 2 and args[0] == "repoinfo" and
+            args[1] in RepoList().all_repos):
+        RepoInfo().view(args[1])
 
     if len(args) == 0:
         usage()
