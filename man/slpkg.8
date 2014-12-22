@@ -38,6 +38,7 @@ Slpkg is a user-friendly package manager for Slackware installations
 Commands:
    update                                   update all package lists
    re-create                                recreate package lists  
+   repolist                                 list all repositories
    update slpkg                             check and update slpkg
 
 Optional arguments:
@@ -97,6 +98,11 @@ This command must run every new repository is added or new updates is available.
 .PP
 It is sometimes useful to create all of the base file from the beginning so this 
 command deletes all the packages lists and re-created.
+
+.SS repolist
+\fBslpkg\fP \fBrepolist\fP
+.PP
+Lists all enabled or disabled repositories.
 
 .SS update slpkg
 \fBslpkg\fP \fBupdate\fP \fBslpkg\fP
