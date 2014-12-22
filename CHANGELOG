@@ -3,6 +3,8 @@ Version 2.1.5-dev
 
 [Feature] - Added slacker.it and slackonly.com repositories.
           - Added command 're-create'.
+          - Added command 'repolist'.
+          - Added command 'repoinfo'. 
 
 [Updated] - Fix Slackware current upgrade checksums.
 
