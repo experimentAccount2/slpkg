@@ -134,8 +134,8 @@ class OthersInstall(object):
         '''
         try:
             dependencies = resolving_deps(self.package, self.repo)
-            (dwn_links, install_all, comp_sum, uncomp_sum,
-                matching) = self.store(dependencies)
+            (dwn_links, install_all, comp_sum, uncomp_sum
+             ) = self.store(dependencies)
             sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
                                                    color['ENDC']))
             print("")   # new line at start
@@ -149,46 +149,34 @@ class OthersInstall(object):
                     "Repos", " " * 10,
                     "Size"))
                 template(78)
-                if not matching:
-                    print("Installing:")
-                    sums = views(install_all, comp_sum, self.repo, dependencies)
-                    unit, size = units(comp_sum, uncomp_sum)
-                    msg = msgs(install_all, sums[2])
-                    print("\nInstalling summary")
-                    print("=" * 79)
-                    print("{0}Total {1} {2}.".format(color['GREY'],
-                                                     len(install_all), msg[0]))
-                    print("{0} {1} will be installed, {2} will be upgraded and "
-                          "{3} will be resettled.".format(sums[2], msg[1],
-                                                          sums[1], sums[0]))
-                    print("Need to get {0} {1} of archives.".format(size[0],
-                                                                    unit[0]))
-                    print("After this process, {0} {1} of additional disk "
-                          "space will be used.{2}".format(size[1], unit[1],
-                                                          color['ENDC']))
-                    if default_answer == "y":
-                        answer = default_answer
-                    else:
-                        answer = raw_input("\nWould you like to continue " +
-                                           "[Y/n]? ")
-                    if answer in ['y', 'Y']:
-                        install_all.reverse()
-                        Download(self.tmp_path, dwn_links).start()
-                        install(self.tmp_path, install_all, self.repo,
-                                self.version)
-                        write_deps(dependencies)
-                        delete(self.tmp_path, install_all)
+                print("Installing:")
+                sums = views(install_all, comp_sum, self.repo, dependencies)
+                unit, size = units(comp_sum, uncomp_sum)
+                msg = msgs(install_all, sums[2])
+                print("\nInstalling summary")
+                print("=" * 79)
+                print("{0}Total {1} {2}.".format(color['GREY'],
+                                                 len(install_all), msg[0]))
+                print("{0} {1} will be installed, {2} will be upgraded and "
+                      "{3} will be resettled.".format(sums[2], msg[1],
+                                                      sums[1], sums[0]))
+                print("Need to get {0} {1} of archives.".format(size[0],
+                                                                unit[0]))
+                print("After this process, {0} {1} of additional disk "
+                      "space will be used.{2}".format(size[1], unit[1],
+                                                      color['ENDC']))
+                if default_answer == "y":
+                    answer = default_answer
                 else:
-                    print("Matching:")
-                    sums = views(install_all, comp_sum, self.repo, dependencies)
-                    msg = msgs(install_all, sums[2])
-                    print("\nInstalling summary")
-                    print("=" * 79)
-                    print("{0}Total found {1} matching {2}.".format(
-                        color['GREY'], len(install_all), msg[1]))
-                    print("{0} installed {1} and {2} uninstalled {3}.{4}"
-                          "\n".format(sums[0] + sums[1], msg[0], sums[2],
-                                      msg[1], color['ENDC']))
+                    answer = raw_input("\nWould you like to continue " +
+                                       "[Y/n]? ")
+                if answer in ['y', 'Y']:
+                    install_all.reverse()
+                    Download(self.tmp_path, dwn_links).start()
+                    install(self.tmp_path, install_all, self.repo,
+                            self.version)
+                    write_deps(dependencies)
+                    delete(self.tmp_path, install_all)
             else:
                 pkg_not_found("", self.package, "No matching", "\n")
         except KeyboardInterrupt:
@@ -201,7 +189,6 @@ class OthersInstall(object):
         '''
         dwn, install, comp_sum, uncomp_sum = ([] for i in range(4))
         black = BlackList().packages()
-        matching = False
         # name = data[0]
         # location = data[1]
         # size = data[2]
@@ -228,13 +215,11 @@ class OthersInstall(object):
                     install.append(name)
                     comp_sum.append(comp)
                     uncomp_sum.append(uncomp)
-                    if len(install) > 1:
-                        matching = True
         dwn.reverse()
         install.reverse()
         comp_sum.reverse()
         uncomp_sum.reverse()
-        return [dwn, install, comp_sum, uncomp_sum, matching]
+        return [dwn, install, comp_sum, uncomp_sum]
 
 
 def views(install_all, comp_sum, repository, dependencies):
