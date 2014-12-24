@@ -6,12 +6,6 @@ SlackBuilds.org (sbo) FAQ(15):
 Slackware current is not supported, but as a general rule, the scripts
 should work on it as well.
 
-Slacky.eu (slacky) repository only work with Slackware.com (slack) repository because
-slacky repository highlights dependencies where include in Slackware distribution so
-'slack' repository needed to distinguish dependencies not included in it.
-(Each time you want to use this repository must be enable and the 'slack' repository in
-file /etc/slpkg.conf).
-
 Rworkman's (rlw) repository use dependencies where displayed in central site 
 'http://rlworkman.net/pkgs/' and only those. Unfortunately there is no fixed reference
 dependencies file PACKAGES.TXT.

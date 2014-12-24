@@ -76,12 +76,3 @@ def template(max_len):
     Print template
     '''
     print("+" + "=" * max_len)
-
-
-def slacky_error():
-    '''
-    Slacky repository error
-    '''
-    print("\nRepository slack working together with the slacky.")
-    print("Please add the repository slack from file " +
-          "'/etc/slpkg/slpkg.conf'\n")

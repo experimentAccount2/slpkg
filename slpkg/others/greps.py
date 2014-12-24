@@ -31,8 +31,6 @@ from slpkg.__metadata__ import (
     ktown_kde_repo
 )
 
-len_deps = 0
-
 
 def repo_data(PACKAGES_TXT, step, repo, version):
     '''
@@ -160,10 +158,6 @@ class Requires(object):
     def __init__(self, name, repo):
         self.name = name
         self.repo = repo
-        lib = lib_path + "slack_repo/PACKAGES.TXT"
-        f = open(lib, "r")
-        self.SLACK_PACKAGES_TXT = f.read()
-        f.close()
 
     def get_deps(self):
         '''
@@ -224,25 +218,4 @@ class Requires(object):
                     slacky_deps.append(d.split()[0])
             dep = "".join(dep)
             slacky_deps.append(dep.split()[0])
-        slacky_deps = self.remove_slack_deps(slacky_deps)
-        return slacky_deps
-
-    def remove_slack_deps(self, dependencies):
-        '''
-        Because the repository slacky mentioned packages and dependencies
-        that exist in the distribution Slackware, this feature is intended
-        to remove them and return only those needed.
-        '''
-        global len_deps
-        len_deps += len(dependencies)
-        name, slacky_deps = [], []
-        index, toolbar_width, step = 0, 700, (len_deps * 500)
-        for line in self.SLACK_PACKAGES_TXT.splitlines():
-            index += 1
-            toolbar_width = status(index, toolbar_width, step)
-            if line.startswith("PACKAGE NAME:"):
-                name.append("-".join(line[15:].split("-")[:-3]))
-        for deps in dependencies:
-            if deps not in name:
-                slacky_deps.append(deps)
         return slacky_deps

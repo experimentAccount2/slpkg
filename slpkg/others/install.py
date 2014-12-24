@@ -33,7 +33,6 @@ from slpkg.downloader import Download
 from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
 from slpkg.messages import (
-    slacky_error,
     pkg_not_found,
     template
 )
@@ -62,10 +61,6 @@ class OthersInstall(object):
         self.repo = repo
         self.version = version
         self.tmp_path = slpkg_tmp_packages
-        if (not os.path.isfile(lib_path + "slack_repo/PACKAGES.TXT") and
-                repo == "slacky"):
-            slacky_error()
-            sys.exit(0)
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
               color['CYAN'], self.package, color['ENDC']))
         sys.stdout.write("{0}Reading package lists ...{1}".format(
