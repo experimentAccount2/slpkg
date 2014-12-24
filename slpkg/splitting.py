@@ -38,7 +38,9 @@ def split_package(package):
     studio = "se"
     slackr = "cf"
     slonly = "_slack"
-    ktown = "alien"
+    # ktown = alien
+    # multi = alien
+    compat = "compat32"
     build = split[-1]
 
     if build.endswith(sbo):
@@ -57,8 +59,10 @@ def split_package(package):
         build = split[-1][:-len(slackr)]
     elif build.endswith(slonly):
         build = split[-1][:-len(slonly)]
-    elif build.endswith(ktown):
-        build = split[-1][:-len(ktown)]
+    elif (slack + compat) in build:
+        build = split[-1][:-len(slack + compat)]
+    elif build.endswith(compat):
+        build = split[-1][:-len(compat)]
 
     arch = split[-2]
     ver = split[-3]

@@ -42,7 +42,8 @@ def search_pkg(name, repo):
             'studio': 'studio_repo/PACKAGES.TXT',
             'slackr': 'slackr_repo/PACKAGES.TXT',
             'slonly': 'slonly_repo/PACKAGES.TXT',
-            'ktown': 'ktown_repo/PACKAGES.TXT'
+            'ktown': 'ktown_repo/PACKAGES.TXT',
+            'multi': 'multi_repo/PACKAGES.TXT'
         }
         with open(lib_path + repo_dir[repo], "r") as PACKAGES_TXT:
             for line in PACKAGES_TXT:

@@ -58,6 +58,9 @@ Supported Repositories:
 - Alien's ktown - `Repository <http://alien.slackbook.org/ktown/>`_
   Arch: {x86, x86_64}
   Versions: {13.37, 14.0, 14.1, current}
+- Alien's multi - `Repository <http://www.slackware.com/~alien/multilib/>`_
+  Arch: {x86_64}
+  Versions: {13.0, 13.1, 13.37, 14.0, 14.1, current}
 
 * Choose repositories you need to work from file '/etc/slpkg/slpkg.conf' default is 
   'slack' and 'sbo' repositories and read REPOSITORIES file for each of the particularities.
@@ -269,6 +272,7 @@ Take information repositories with commands:
     +==============================================================================
       alien            http://www.slackware.com/~alien/slackbuilds/         enabled
       ktown            http://alien.slackbook.org/ktown/                    enabled
+      multi            http://www.slackware.com/~alien/multilib/            enabled
       rlw              http://rlworkman.net/pkgs/                           enabled
       sbo              http://slackbuilds.org/slackbuilds/                  enabled
       slack            http://ftp.cc.uoc.gr/mirrors/linux/slackware/        enabled

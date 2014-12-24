@@ -74,7 +74,8 @@ class OthersInstall(object):
             'studio': self._init_studio,
             'slackr': self._init_slackr,
             'slonly': self._init_slonly,
-            'ktown': self._init_ktown
+            'ktown': self._init_ktown,
+            'multi': self._init_multi
         }
         init_repos[self.repo]()
 
@@ -126,6 +127,11 @@ class OthersInstall(object):
     def _init_ktown(self):
         self.lib = lib_path + "ktown_repo/PACKAGES.TXT"
         self.mirror = Repo().ktown()
+        self.step = self.step * 2
+
+    def _init_multi(self):
+        self.lib = lib_path + "multi_repo/PACKAGES.TXT"
+        self.mirror = Repo().multi()
         self.step = self.step * 2
 
     def start(self):
@@ -207,7 +213,6 @@ class OthersInstall(object):
         else:
             for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
                                                data[3]):
-
                 package = "".join(deps)
                 if package in name and package not in black:
                     # store downloads packages by repo
@@ -235,7 +240,8 @@ def views(install_all, comp_sum, repository, dependencies):
         'studio': '',
         'slackr': '',
         'slonly': '',
-        'ktown': ' '
+        'ktown': ' ',
+        'multi': ' '
     }
     repository += align[repository]
     for pkg, comp in zip(install_all, comp_sum):

@@ -26,6 +26,7 @@ import sys
 
 from slpkg.sizes import units
 from slpkg.remove import delete
+from slpkg.toolbar import status
 from slpkg.repositories import Repo
 from slpkg.messages import template
 from slpkg.checksum import check_md5
@@ -65,7 +66,8 @@ class OthersUpgrade(object):
             'studio': self._init_studio,
             'slackr': self._init_slackr,
             'slonly': self._init_slonly,
-            'ktown': self._init_ktown
+            'ktown': self._init_ktown,
+            'multi': self._init_multi
         }
         init_repos[self.repo]()
 
@@ -118,6 +120,11 @@ class OthersUpgrade(object):
         self.mirror = Repo().ktown()
         self.step = self.step * 2
 
+    def _init_multi(self):
+        self.lib = lib_path + "multi_repo/PACKAGES.TXT"
+        self.mirror = Repo().multi()
+        self.step = self.step * 2
+
     def start(self):
         '''
         Install packages from official Slackware distribution
@@ -160,7 +167,7 @@ class OthersUpgrade(object):
                     upgrade(self.tmp_path, upgrade_all, self.repo, self.version)
                     delete(self.tmp_path, upgrade_all)
             else:
-                print("No new updates in the repository '{0}'\n".format(
+                print("No new updates from repository '{0}'\n".format(
                     self.repo))
         except KeyboardInterrupt:
             print("")   # new line at exit
@@ -177,14 +184,18 @@ class OthersUpgrade(object):
         # size = data[2]
         # unsize = data[3]
         data = repo_data(self.PACKAGES_TXT, self.step, self.repo, self.version)
+        index, toolbar_width, step = 0, 700, 10
         for pkg in self.installed():
+            index += 1
+            toolbar_width = status(index, toolbar_width, step)
             for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
                                                data[3]):
                 inst_pkg = split_package(pkg)
-                if name:
+                if name:    # this tips because some pkg_name is empty
                     repo_pkg = split_package(name[:-4])
                 if (repo_pkg[0] == inst_pkg[0] and
-                        name[:-4] > pkg and inst_pkg[0] not in black):
+                        repo_pkg[-3] > inst_pkg[-3] and
+                        inst_pkg[0] not in black):
                     # store downloads packages by repo
                     dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
                     install.append(name)
@@ -197,18 +208,7 @@ class OthersUpgrade(object):
         Return all installed packages by repository
         '''
         packages = []
-        repository = {
-            'rlw': '_rlw',
-            'alien': 'alien',
-            'slacky': 'sl',
-            'studio': 'se',
-            'slackr': 'cf',
-            'slonly': '_slack',
-            'ktown': 'alien'
-        }
-        repo = repository[self.repo]
         for pkg in os.listdir(pkg_path):
-            if pkg.endswith(repo):
                 packages.append(pkg)
         return packages
 
@@ -226,7 +226,8 @@ def views(upgrade_all, comp_sum, repository):
         'studio': '',
         'slackr': '',
         'slonly': '',
-        'ktown': ' '
+        'ktown': ' ',
+        'multi': ' '
     }
     repository += align[repository]
     for pkg, comp in zip(upgrade_all, comp_sum):

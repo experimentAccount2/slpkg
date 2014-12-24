@@ -1,7 +1,8 @@
 Version 2.1.5-dev
-22-12-2014
+24-12-2014
 
-[Feature] - Added slacker.it, slackonly.com, Alien's ktown repositories.
+[Feature] - Added slacker.it, slackonly.com, Alien's ktown, Alien's multilib
+            repositories.
           - Added command 're-create'.
           - Added command 'repolist'.
           - Added command 'repoinfo'. 

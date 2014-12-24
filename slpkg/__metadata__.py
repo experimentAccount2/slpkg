@@ -44,7 +44,8 @@ repositories = [
     'studio',
     'slackr',
     'slonly',
-    'ktown{latest}'
+    'ktown{latest}',
+    'multi'
 ]
 
 

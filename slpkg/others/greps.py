@@ -71,6 +71,12 @@ def repo_data(PACKAGES_TXT, step, repo, version):
          rsize,
          runsize
          ) = ktown_filter(name, location, size, unsize, version)
+    elif repo == "multi":
+        (rname,
+         rlocation,
+         rsize,
+         runsize
+         ) = multi_filter(name, location, size, unsize, version)
     elif repo in ["slacky", "studio", "slackr", "slonly"]:
         rname, rlocation, rsize, runsize = name, location, size, unsize
     return [rname, rlocation, rsize, runsize]
@@ -96,7 +102,7 @@ def rlw_filter(name, location, size, unsize):
 
 def alien_filter(name, location, size, unsize, version):
     '''
-    Filter alien repository data
+    Filter Alien's repository data
     '''
     ver = slack_ver()
     if version == "current":
@@ -116,7 +122,7 @@ def alien_filter(name, location, size, unsize, version):
 
 def ktown_filter(name, location, size, unsize, version):
     '''
-    Filter alien repository data
+    Filter Alien's ktown repository data
     '''
     ver = slack_ver()
     if version == "current":
@@ -127,6 +133,23 @@ def ktown_filter(name, location, size, unsize, version):
     (fname, flocation, fsize, funsize) = ([] for i in range(4))
     for n, l, s, u in zip(name, location, size, unsize):
         if path_pkg in l and ktown_kde_repo[1:-1] in l and l.startswith(ver):
+            fname.append(n)
+            flocation.append(l)
+            fsize.append(s)
+            funsize.append(u)
+    return [fname, flocation, fsize, funsize]
+
+
+def multi_filter(name, location, size, unsize, version):
+    '''
+    Filter Alien's multilib repository data
+    '''
+    ver = slack_ver()
+    if version == "current":
+        ver = "current"
+    (fname, flocation, fsize, funsize) = ([] for i in range(4))
+    for n, l, s, u in zip(name, location, size, unsize):
+        if l.startswith(ver):
             fname.append(n)
             flocation.append(l)
             fsize.append(s)

@@ -59,7 +59,7 @@ class Repo(object):
 
     def alien(self):
         '''
-        Alien repository
+        Alien's slackbuilds repository
         '''
         return "http://www.slackware.com/~alien/slackbuilds/"
 
@@ -89,6 +89,12 @@ class Repo(object):
 
     def ktown(self):
         '''
-        Alien ktown repository
+        Alien's ktown repository
         '''
         return "http://alien.slackbook.org/ktown/"
+
+    def multi(self):
+        '''
+        Alien's multilib repository
+        '''
+        return "http://www.slackware.com/~alien/multilib/"

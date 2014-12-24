@@ -93,6 +93,9 @@ class Case(object):
     def ktown_install(self):
         OthersInstall(self.package, "ktown", self.release).start()
 
+    def multi_install(self):
+        OthersInstall(self.package, "multi", self.release).start()
+
     def sbo_upgrade(self):
         SBoCheck().start()
 
@@ -119,6 +122,9 @@ class Case(object):
 
     def ktown_upgrade(self):
         OthersUpgrade("ktown", self.release).start()
+
+    def multi_upgrade(self):
+        OthersUpgrade("multi", self.release).start()
 
 
 def main():
@@ -178,7 +184,8 @@ def main():
             'studio': pkg.studioware_upgrade,
             'slackr': pkg.slackers_upgrade,
             'slonly': pkg.slackonly_upgrade,
-            'ktown': pkg.ktown_upgrade
+            'ktown': pkg.ktown_upgrade,
+            'multi': pkg.multi_upgrade
         }
         if args[1] in repositories:
             upgrade[args[1]]()
@@ -195,7 +202,8 @@ def main():
             'studio': pkg.studioware_install,
             'slackr': pkg.slackers_install,
             'slonly': pkg.slackonly_install,
-            'ktown': pkg.ktown_install
+            'ktown': pkg.ktown_install,
+            'multi': pkg.multi_install
         }
         if args[1] in repositories:
             install[args[1]]()
