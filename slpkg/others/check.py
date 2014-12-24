@@ -178,16 +178,15 @@ class OthersUpgrade(object):
         Store and return packages for install
         '''
         dwn, install, comp_sum, uncomp_sum = ([] for i in range(4))
-        black = BlackList().packages()
         # name = data[0]
         # location = data[1]
         # size = data[2]
         # unsize = data[3]
         data = repo_data(self.PACKAGES_TXT, self.step, self.repo, self.version)
-        index, toolbar_width, step = 0, 700, 10
+        index, toolbar_width = 0, 700
         for pkg in self.installed():
             index += 1
-            toolbar_width = status(index, toolbar_width, step)
+            toolbar_width = status(index, toolbar_width, 10)
             for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
                                                data[3]):
                 inst_pkg = split_package(pkg)
@@ -195,7 +194,7 @@ class OthersUpgrade(object):
                     repo_pkg = split_package(name[:-4])
                 if (repo_pkg[0] == inst_pkg[0] and
                         repo_pkg[-3] > inst_pkg[-3] and
-                        inst_pkg[0] not in black):
+                        inst_pkg[0] not in BlackList().packages()):
                     # store downloads packages by repo
                     dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
                     install.append(name)
@@ -209,7 +208,7 @@ class OthersUpgrade(object):
         '''
         packages = []
         for pkg in os.listdir(pkg_path):
-                packages.append(pkg)
+            packages.append(pkg)
         return packages
 
 
