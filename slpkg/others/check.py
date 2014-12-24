@@ -54,50 +54,69 @@ class OthersUpgrade(object):
         self.repo = repo
         self.version = version
         self.tmp_path = slpkg_tmp_packages
-        repos = Repo()
         sys.stdout.write("{0}Reading package lists ...{1}".format(
             color['GREY'], color['ENDC']))
         sys.stdout.flush()
         self.step = 700
-        repos = Repo()
-        if self.repo == "rlw":
-            lib = lib_path + "rlw_repo/PACKAGES.TXT"
-            self.mirror = "{0}{1}/".format(repos.rlw(), slack_ver())
-        elif self.repo == "alien":
-            lib = lib_path + "alien_repo/PACKAGES.TXT"
-            self.mirror = repos.alien()
-            self.step = self.step * 2
-        elif self.repo == "slacky":
-            lib = lib_path + "slacky_repo/PACKAGES.TXT"
-            arch = ""
-            if os.uname()[4] == "x86_64":
-                arch = "64"
-            self.mirror = "{0}slackware{1}-{2}/".format(repos.slacky(), arch,
-                                                        slack_ver())
-            self.step = self.step * 2
-        elif self.repo == "studio":
-            lib = lib_path + "studio_repo/PACKAGES.TXT"
-            arch = ""
-            if os.uname()[4] == "x86_64":
-                arch = "64"
-            self.mirror = "{0}slackware{1}-{2}/".format(repos.studioware(),
-                                                        arch, slack_ver())
-            self.step = self.step * 2
-        elif self.repo == "slackr":
-            lib = lib_path + "slackr_repo/PACKAGES.TXT"
-            self.mirror = repos.slackers()
-            self.step = self.step * 2
-        elif self.repo == "slonly":
-            lib = lib_path + "slonly_repo/PACKAGES.TXT"
-            arch = "{0}-x86".format(slack_ver())
-            if os.uname()[4] == "x86_64":
-                arch = "{0}-x86_64".format(slack_ver())
-            self.mirror = "{0}{1}/".format(repos.slackonly(), arch)
-            self.step = self.step * 3
+        init_repos = {
+            'rlw': self._init_rlw,
+            'alien': self._init_alien,
+            'slacky': self._init_slacky,
+            'studio': self._init_studio,
+            'slackr': self._init_slackr,
+            'slonly': self._init_slonly,
+            'ktown': self._init_ktown
+        }
+        init_repos[self.repo]()
 
-        f = open(lib, "r")
+        f = open(self.lib, "r")
         self.PACKAGES_TXT = f.read()
         f.close()
+
+    def _init_rlw(self):
+        self.lib = lib_path + "rlw_repo/PACKAGES.TXT"
+        self.mirror = "{0}{1}/".format(Repo().rlw(), slack_ver())
+
+    def _init_alien(self):
+        self.lib = lib_path + "alien_repo/PACKAGES.TXT"
+        self.mirror = Repo().alien()
+        self.step = self.step * 2
+
+    def _init_slacky(self):
+        self.lib = lib_path + "slacky_repo/PACKAGES.TXT"
+        arch = ""
+        if os.uname()[4] == "x86_64":
+            arch = "64"
+        self.mirror = "{0}slackware{1}-{2}/".format(Repo().slacky(), arch,
+                                                    slack_ver())
+        self.step = self.step * 2
+
+    def _init_studio(self):
+        self.lib = lib_path + "studio_repo/PACKAGES.TXT"
+        arch = ""
+        if os.uname()[4] == "x86_64":
+            arch = "64"
+        self.mirror = "{0}slackware{1}-{2}/".format(Repo().studioware(),
+                                                    arch, slack_ver())
+        self.step = self.step * 2
+
+    def _init_slackr(self):
+        self.lib = lib_path + "slackr_repo/PACKAGES.TXT"
+        self.mirror = Repo().slackers()
+        self.step = self.step * 2
+
+    def _init_slonly(self):
+        self.lib = lib_path + "slonly_repo/PACKAGES.TXT"
+        arch = "{0}-x86".format(slack_ver())
+        if os.uname()[4] == "x86_64":
+            arch = "{0}-x86_64".format(slack_ver())
+        self.mirror = "{0}{1}/".format(Repo().slackonly(), arch)
+        self.step = self.step * 3
+
+    def _init_ktown(self):
+        self.lib = lib_path + "ktown_repo/PACKAGES.TXT"
+        self.mirror = Repo().ktown()
+        self.step = self.step * 2
 
     def start(self):
         '''
@@ -184,7 +203,8 @@ class OthersUpgrade(object):
             'slacky': 'sl',
             'studio': 'se',
             'slackr': 'cf',
-            'slonly': '_slack'
+            'slonly': '_slack',
+            'ktown': 'alien'
         }
         repo = repository[self.repo]
         for pkg in os.listdir(pkg_path):
@@ -205,7 +225,8 @@ def views(upgrade_all, comp_sum, repository):
         'slacky': '',
         'studio': '',
         'slackr': '',
-        'slonly': ''
+        'slonly': '',
+        'ktown': ' '
     }
     repository += align[repository]
     for pkg, comp in zip(upgrade_all, comp_sum):

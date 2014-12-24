@@ -56,7 +56,8 @@ class PkgDesc(object):
                 'slacky': 'slacky_repo/PACKAGES.TXT',
                 'studio': 'studio_repo/PACKAGES.TXT',
                 'slackr': 'slackr_repo/PACKAGES.TXT',
-                'slonly': 'slonly_repo/PACKAGES.TXT'
+                'slonly': 'slonly_repo/PACKAGES.TXT',
+                'ktown': 'ktown_repo/PACKAGES.TXT'
             }
             self.lib = lib_path + repos[self.repo]
 

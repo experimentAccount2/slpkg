@@ -37,7 +37,7 @@ Supported Repositories:
 - Slack - `Repository <http://www.slackware.com/>`_
   Arch: {x86, x86_64}
   Versions: {3.3, 8.1, 9.0, 9.1, 10.0, 10.1, 10.2, 11.0, 12.0, 12.2, 13.0, 13.37, 14.0, 14.1, current}
-- Alien - `Repository <http://www.slackware.com/~alien/slackbuilds/>`_
+- Alien's - `Repository <http://www.slackware.com/~alien/slackbuilds/>`_
   Arch: {x86, x86_64}
   Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1, current}
 - Slacky - `Repository <http://repository.slacky.eu/>`_
@@ -55,6 +55,9 @@ Supported Repositories:
 - Slackonly - `Repository <https://slackonly.com/>`_
   Arch: {x86, x86_64}
   Versions: {14.1}
+- Alien's ktown - `Repository <http://alien.slackbook.org/ktown/>`_
+  Arch: {x86, x86_64}
+  Versions: {13.37, 14.0, 14.1, current}
 
 * Choose repositories you need to work from file '/etc/slpkg/slpkg.conf' default is 
   'slack' and 'sbo' repositories and read REPOSITORIES file for each of the particularities.
@@ -239,7 +242,55 @@ Command Line Tool Usage
 Slpkg Examples
 --------------
 
-Find packages from slackbuilds.org download, 
+If you use slpkg for the first time will have to create 
+and update the package lists:
+
+.. code-block:: bash
+
+    $ slpkg update
+
+    Update repository slack .......................Done
+    Update repository sbo .............Done
+    Update repository alien ...Done
+    Update repository slacky .....................................Done
+    Update repository studio ...................Done
+    Update repository slackr .............................................Done
+    Update repository slonly ...Done
+    Update repository ktown ...Done
+
+Take information repositories with commands:
+    
+.. code-block:: bash
+
+    $ slpkg repolist
+
+    +==============================================================================
+    | Repo id          Repo name                                             Status
+    +==============================================================================
+      alien            http://www.slackware.com/~alien/slackbuilds/         enabled
+      ktown            http://alien.slackbook.org/ktown/                    enabled
+      rlw              http://rlworkman.net/pkgs/                           enabled
+      sbo              http://slackbuilds.org/slackbuilds/                  enabled
+      slack            http://ftp.cc.uoc.gr/mirrors/linux/slackware/        enabled
+      slackr           http://www.slackers.it/repository/                  disabled
+      slacky           http://repository.slacky.eu/                         enabled
+      slonly           https://slackonly.com/pub/packages/                  enabled
+      studio           http://studioware.org/files/packages/                enabled
+
+    For enable or disable repositories edit '/etc/slpkg/slpkg.conf' file
+
+    $ slpkg repoinfo alien
+
+    Last updated: Tue Dec 23 11:48:31 UTC 2014
+    Number of packages: 3149
+    Repo id: alien
+    Repo url: http://www.slackware.com/~alien/slackbuilds/
+    Status: enabled
+    Total compressed packages: 9.3 Gb
+    Total uncompressed packages: 36.31 Gb
+
+
+Find packages from repository download, 
 build and install with all dependencies :
 
 .. code-block:: bash

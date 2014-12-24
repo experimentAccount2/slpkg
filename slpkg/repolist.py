@@ -43,7 +43,8 @@ class RepoList(object):
             'slacky': Repo().slacky(),
             'studio': Repo().studioware(),
             'slackr': Repo().slackers(),
-            'slonly': Repo().slackonly()
+            'slonly': Repo().slackonly(),
+            'ktown': Repo().ktown()
         }
 
     def repos(self):

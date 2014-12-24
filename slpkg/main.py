@@ -90,6 +90,9 @@ class Case(object):
     def slackonly_install(self):
         OthersInstall(self.package, "slonly", self.release).start()
 
+    def ktown_install(self):
+        OthersInstall(self.package, "ktown", self.release).start()
+
     def sbo_upgrade(self):
         SBoCheck().start()
 
@@ -113,6 +116,9 @@ class Case(object):
 
     def slackonly_upgrade(self):
         OthersUpgrade("slonly", self.release).start()
+
+    def ktown_upgrade(self):
+        OthersUpgrade("ktown", self.release).start()
 
 
 def main():
@@ -150,6 +156,7 @@ def main():
 
     if (len(args) == 2 and args[0] == "repoinfo" and
             args[1] in RepoList().all_repos):
+        del RepoList().all_repos
         RepoInfo().view(args[1])
 
     if len(args) == 3 and args[0] == "-a":
@@ -170,7 +177,8 @@ def main():
             'slacky': pkg.slacky_upgrade,
             'studio': pkg.studioware_upgrade,
             'slackr': pkg.slackers_upgrade,
-            'slonly': pkg.slackonly_upgrade
+            'slonly': pkg.slackonly_upgrade,
+            'ktown': pkg.ktown_upgrade
         }
         if args[1] in repositories:
             upgrade[args[1]]()
@@ -186,7 +194,8 @@ def main():
             'slacky': pkg.slacky_install,
             'studio': pkg.studioware_install,
             'slackr': pkg.slackers_install,
-            'slonly': pkg.slackonly_install
+            'slonly': pkg.slackonly_install,
+            'ktown': pkg.ktown_install
         }
         if args[1] in repositories:
             install[args[1]]()

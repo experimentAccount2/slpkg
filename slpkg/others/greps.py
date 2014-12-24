@@ -24,9 +24,12 @@
 import os
 
 from slpkg.toolbar import status
-from slpkg.__metadata__ import lib_path
 from slpkg.splitting import split_package
 from slpkg.slack.slack_version import slack_ver
+from slpkg.__metadata__ import (
+    lib_path,
+    ktown_kde_repo
+)
 
 len_deps = 0
 
@@ -64,6 +67,12 @@ def repo_data(PACKAGES_TXT, step, repo, version):
          rsize,
          runsize
          ) = alien_filter(name, location, size, unsize, version)
+    elif repo == "ktown":
+        (rname,
+         rlocation,
+         rsize,
+         runsize
+         ) = ktown_filter(name, location, size, unsize, version)
     elif repo in ["slacky", "studio", "slackr", "slonly"]:
         rname, rlocation, rsize, runsize = name, location, size, unsize
     return [rname, rlocation, rsize, runsize]
@@ -100,6 +109,26 @@ def alien_filter(name, location, size, unsize, version):
     (fname, flocation, fsize, funsize) = ([] for i in range(4))
     for n, l, s, u in zip(name, location, size, unsize):
         if path_pkg == l.split("/")[-2] and ver == l.split("/")[-1]:
+            fname.append(n)
+            flocation.append(l)
+            fsize.append(s)
+            funsize.append(u)
+    return [fname, flocation, fsize, funsize]
+
+
+def ktown_filter(name, location, size, unsize, version):
+    '''
+    Filter alien repository data
+    '''
+    ver = slack_ver()
+    if version == "current":
+        ver = "current"
+    path_pkg = "x86"
+    if os.uname()[4] == "x86_64":
+        path_pkg = os.uname()[4]
+    (fname, flocation, fsize, funsize) = ([] for i in range(4))
+    for n, l, s, u in zip(name, location, size, unsize):
+        if path_pkg in l and ktown_kde_repo[1:-1] in l and l.startswith(ver):
             fname.append(n)
             flocation.append(l)
             fsize.append(s)

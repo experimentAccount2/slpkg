@@ -1,12 +1,13 @@
 Version 2.1.5-dev
-18-12-2014
+22-12-2014
 
-[Feature] - Added slacker.it and slackonly.com repositories.
+[Feature] - Added slacker.it, slackonly.com, Alien's ktown repositories.
           - Added command 're-create'.
           - Added command 'repolist'.
           - Added command 'repoinfo'. 
 
 [Updated] - Fix Slackware current upgrade checksums.
+          - Fix ingore hiden files in /var/log/packages/ path.
 
 Version 2.1.4-dev
 16-12-2014

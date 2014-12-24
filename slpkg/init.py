@@ -288,6 +288,31 @@ class Initialization(object):
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
+    def ktown(self):
+        '''
+        Creating alien ktown local library
+        '''
+        repo = Repo().ktown()
+        log = log_path + "ktown/"
+        lib = lib_path + "ktown_repo/"
+        lib_file = "PACKAGES.TXT"
+        lst_file = ""
+        md5_file = "CHECKSUMS.md5"
+        log_file = "ChangeLog.txt"
+        if not os.path.exists(log):
+            os.mkdir(log)
+        if not os.path.exists(lib):
+            os.mkdir(lib)
+        packages_txt = "{0}{1}".format(repo, lib_file)
+        filelist_txt = ""
+        checksums_md5 = "{0}{1}".format(repo, md5_file)
+        changelog_txt = "{0}{1}".format(repo, log_file)
+        self.write(lib, lib_file, packages_txt)
+        self.write(lib, md5_file, checksums_md5)
+        self.write(log, log_file, changelog_txt)
+        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
+                    md5_file, checksums_md5, lst_file, filelist_txt)
+
     @staticmethod
     def write(path, data_file, file_url):
         '''
@@ -401,7 +426,8 @@ class Update(object):
             'slacky': Initialization().slacky,
             'studio': Initialization().studioware,
             'slackr': Initialization().slackers,
-            'slonly': Initialization().slackonly
+            'slonly': Initialization().slackonly,
+            'ktown': Initialization().ktown
         }
 
     def repository(self):

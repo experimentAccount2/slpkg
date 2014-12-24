@@ -16,7 +16,7 @@ Rworkman's (rlw) repository use dependencies where displayed in central site
 'http://rlworkman.net/pkgs/' and only those. Unfortunately there is no fixed reference
 dependencies file PACKAGES.TXT.
 
-Studioware (studio) repository has no reference dependencies.
+Studioware (studio) and Alien's ktown (ktown)repository has no reference dependencies.
 
 Slackers.it (slackr) repository be used only from Slackware64 current users.
 Also find in some packages will not show package description when you run the command

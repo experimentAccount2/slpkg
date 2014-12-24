@@ -86,3 +86,9 @@ class Repo(object):
         Slackonly.com repository
         '''
         return "https://slackonly.com/pub/packages/"
+
+    def ktown(self):
+        '''
+        Alien ktown repository
+        '''
+        return "http://alien.slackbook.org/ktown/"
