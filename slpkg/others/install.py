@@ -77,7 +77,8 @@ class OthersInstall(object):
             'slonly': self._init_slonly,
             'ktown': self._init_ktown,
             'multi': self._init_multi,
-            'slacke': self._init_slacke
+            'slacke': self._init_slacke,
+            'salix': self._init_salix
         }
         init_repos[self.repo]()
 
@@ -145,6 +146,14 @@ class OthersInstall(object):
         self.lib = lib_path + "slacke_repo/PACKAGES.TXT"
         self.mirror = "{0}slacke{1}/slackware{2}-{3}/".format(
             Repo().slacke(), slacke_sub_repo[1:-1], arch, slack_ver())
+        self.step = self.step * 2
+
+    def _init_salix(self):
+        arch = "i486"
+        if os.uname()[4] == "x86_64":
+            arch = "x86_64"
+        self.lib = lib_path + "salix_repo/PACKAGES.TXT"
+        self.mirror = "{0}{1}/{2}/".format(Repo().salix(), arch, slack_ver())
         self.step = self.step * 2
 
     def start(self):
@@ -255,7 +264,8 @@ def views(install_all, comp_sum, repository, dependencies):
         'slonly': '',
         'ktown': ' ',
         'multi': ' ',
-        'slacke': ''
+        'slacke': '',
+        'salix': ' '
     }
     repository += align[repository]
     for pkg, comp in zip(install_all, comp_sum):

@@ -46,7 +46,8 @@ class RepoList(object):
             'slonly': Repo().slackonly(),
             'ktown': Repo().ktown(),
             'multi': Repo().multi(),
-            'slacke': Repo().slacke()
+            'slacke': Repo().slacke(),
+            'salix': Repo().salix()
         }
 
     def repos(self):

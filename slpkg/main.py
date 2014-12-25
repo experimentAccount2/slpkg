@@ -99,6 +99,9 @@ class Case(object):
     def slacke_install(self):
         OthersInstall(self.package, "slacke", self.release).start()
 
+    def salix_install(self):
+        OthersInstall(self.package, "salix", self.release).start()
+
     def sbo_upgrade(self):
         SBoCheck().start()
 
@@ -211,7 +214,8 @@ def main():
             'slonly': pkg.slackonly_install,
             'ktown': pkg.ktown_install,
             'multi': pkg.multi_install,
-            'slacke': pkg.slacke_install
+            'slacke': pkg.slacke_install,
+            'salix': pkg.salix_install
         }
         if args[1] in repositories:
             install[args[1]]()

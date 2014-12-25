@@ -77,7 +77,7 @@ def repo_data(PACKAGES_TXT, step, repo, version):
          rsize,
          runsize
          ) = multi_filter(name, location, size, unsize, version)
-    elif repo in ["slacky", "studio", "slackr", "slonly", "slacke"]:
+    elif repo in ["slacky", "studio", "slackr", "slonly", "slacke", "salix"]:
         rname, rlocation, rsize, runsize = name, location, size, unsize
     return [rname, rlocation, rsize, runsize]
 
@@ -186,11 +186,12 @@ class Requires(object):
         '''
         Grap package requirements from repositories
         '''
-        if self.repo in ["alien", "slacky", "slackr"]:
+        if self.repo in ["alien", "slacky", "slackr", "salix"]:
             lib = {
                 'alien': lib_path + 'alien_repo/PACKAGES.TXT',
                 'slacky': lib_path + 'slacky_repo/PACKAGES.TXT',
-                'slackr': lib_path + 'slackr_repo/PACKAGES.TXT'
+                'slackr': lib_path + 'slackr_repo/PACKAGES.TXT',
+                'salix': lib_path + 'salix_repo/PACKAGES.TXT'
             }
             f = open(lib[self.repo], "r")
             PACKAGES_TXT = f.read()
@@ -205,8 +206,8 @@ class Requires(object):
                 if line.startswith("PACKAGE REQUIRED: "):
                     if pkg_name == self.name:
                         if line[17:].strip():
-                            if self.repo == "slacky":
-                                return self.slacky_req_fix(line)
+                            if self.repo in ["slacky", "salix"]:
+                                return self._req_fix(line)
                             elif self.repo == "alien":
                                 return line[18:].strip().split(",")
                             else:
@@ -228,17 +229,17 @@ class Requires(object):
             else:
                 return ""
 
-    def slacky_req_fix(self, line):
+    def _req_fix(self, line):
         '''
-        Fix slacky requirements because many dependencies splitting
+        Fix slacky and salix requirements because many dependencies splitting
         with ',' and others with '|'
         '''
-        slacky_deps = []
+        deps = []
         for dep in line[18:].strip().split(","):
             dep = dep.split("|")
             if len(dep) > 1:
                 for d in dep:
-                    slacky_deps.append(d.split()[0])
+                    deps.append(d.split()[0])
             dep = "".join(dep)
-            slacky_deps.append(dep.split()[0])
-        return slacky_deps
+            deps.append(dep.split()[0])
+        return deps

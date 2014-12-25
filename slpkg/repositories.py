@@ -104,3 +104,9 @@ class Repo(object):
         Slacke slacke{17|18} repository
         '''
         return "http://ngc891.blogdns.net/pub/"
+
+    def salix(self):
+        '''
+        SalixOS salix repository
+        '''
+        return "http://download.salixos.org/"

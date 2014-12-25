@@ -341,7 +341,7 @@ class Initialization(object):
 
     def slacke(self):
         '''
-        Creating alien multilib local library
+        Creating Slacke local library
         '''
         ar = ""
         arch = os.uname()[4]
@@ -367,6 +367,35 @@ class Initialization(object):
             repo, slacke_sub_repo[1:-1], ar, slack_ver(), md5_file)
         changelog_txt = "{0}slacke{1}/slackware{2}-{3}/{4}".format(
             repo, slacke_sub_repo[1:-1], ar, slack_ver(), log_file)
+        self.write(lib, lib_file, packages_txt)
+        self.write(lib, md5_file, checksums_md5)
+        self.write(log, log_file, changelog_txt)
+        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
+                    md5_file, checksums_md5, lst_file, filelist_txt)
+
+    def salix(self):
+        '''
+        Creating SalixOS local library
+        '''
+        ar = "i486"
+        arch = os.uname()[4]
+        repo = Repo().salix()
+        log = log_path + "salix/"
+        lib = lib_path + "salix_repo/"
+        lib_file = "PACKAGES.TXT"
+        lst_file = ""
+        md5_file = "CHECKSUMS.md5"
+        log_file = "ChangeLog.txt"
+        if not os.path.exists(log):
+            os.mkdir(log)
+        if not os.path.exists(lib):
+            os.mkdir(lib)
+        if arch == "x86_64":
+            ar = "x86_64"
+        packages_txt = "{0}{1}/{2}/{3}".format(repo, ar, slack_ver(), lib_file)
+        filelist_txt = ""
+        checksums_md5 = "{0}{1}/{2}/{3}".format(repo, ar, slack_ver(), md5_file)
+        changelog_txt = "{0}{1}/{2}/{3}".format(repo, ar, slack_ver(), log_file)
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
@@ -489,7 +518,8 @@ class Update(object):
             'slonly': Initialization().slackonly,
             'ktown': Initialization().ktown,
             'multi': Initialization().multi,
-            'slacke': Initialization().slacke
+            'slacke': Initialization().slacke,
+            'salix': Initialization().salix
         }
 
     def repository(self):

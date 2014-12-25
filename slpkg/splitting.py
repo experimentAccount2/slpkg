@@ -21,8 +21,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from slack.slack_version import slack_ver
-
 
 def split_package(package):
     '''
@@ -30,43 +28,13 @@ def split_package(package):
     arch and build tag.
     '''
     split = package.split("-")
-    sbo = "_SBo"
-    slack = "_slack{0}".format(slack_ver())
-    rlw = "_rlw"
-    alien = "alien"
-    slacky = "sl"
-    studio = "se"
-    slackr = "cf"
-    slonly = "_slack"
-    # ktown = alien
-    # multi = alien
-    compat = "compat32"
-    slacke = "jp"
     build = split[-1]
+    build_a, build_b = '', ''
+    build_a = build[:1]
+    if build[1:2].isdigit():
+        build_b = build[1:2]
 
-    if build.endswith(sbo):
-        build = split[-1][:-4]   # and remove .t?z extension
-    if build.endswith(slack):
-        build = split[-1][:-len(slack)]
-    elif build.endswith(rlw):
-        build = split[-1][:-len(rlw)]
-    elif build.endswith(alien):
-        build = split[-1][:-len(alien)]
-    elif build.endswith(slacky):
-        build = split[-1][:-len(slacky)]
-    elif build.endswith(studio):
-        build = split[-1][:-len(studio)]
-    elif build.endswith(slackr):
-        build = split[-1][:-len(slackr)]
-    elif build.endswith(slonly):
-        build = split[-1][:-len(slonly)]
-    elif (slack + compat) in build:
-        build = split[-1][:-len(slack + compat)]
-    elif build.endswith(compat):
-        build = split[-1][:-len(compat)]
-    elif build.endswith(slacke):
-        build = split[-1][:-len(slacke)]
-
+    build = build_a + build_b
     arch = split[-2]
     ver = split[-3]
     name = "-".join(split[:-3])
