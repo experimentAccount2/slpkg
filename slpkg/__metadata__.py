@@ -45,7 +45,8 @@ repositories = [
     'slackr',
     'slonly',
     'ktown{latest}',
-    'multi'
+    'multi',
+    'slacke{18}'
 ]
 
 
@@ -58,6 +59,18 @@ def ktown_repo(repositories):
         if 'ktown' in repo:
             sub = repositories[i].replace('ktown', '')
             repositories[i] = 'ktown'
+            return sub
+
+
+def slacke_repo(repositories):
+    '''
+    Find if slacke repositories enabled then
+    take SUB_REPOSITORY
+    '''
+    for i, repo in enumerate(repositories):
+        if 'slacke' in repo:
+            sub = repositories[i].replace('slacke', '')
+            repositories[i] = 'slacke'
             return sub
 
 build_path = "/tmp/slpkg/build/"
@@ -111,6 +124,7 @@ if os.path.isfile("/etc/slpkg/slpkg.conf"):
             use_colors = line[11:].strip()
 
 ktown_kde_repo = ktown_repo(repositories)
+slacke_sub_repo = slacke_repo(repositories)
 
 color = {
     'RED': '\x1b[31m',

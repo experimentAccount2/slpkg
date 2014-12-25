@@ -98,3 +98,9 @@ class Repo(object):
         Alien's multilib repository
         '''
         return "http://www.slackware.com/~alien/multilib/"
+
+    def slacke(self):
+        '''
+        Slacke slacke{17|18} repository
+        '''
+        return "http://ngc891.blogdns.net/pub/"

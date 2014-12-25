@@ -49,7 +49,8 @@ def pkg_checksum(binary, repo):
             'slackr': 'slackr_repo/CHECKSUMS.md5',
             'slonly': 'slonly_repo/CHECKSUMS.md5',
             'ktown': 'ktown_repo/CHECKSUMS.md5',
-            'multi': 'multi_repo/CHECKSUMS.md5'
+            'multi': 'multi_repo/CHECKSUMS.md5',
+            'slacke': 'slacke_repo/CHECKSUMS.md5'
         }
         lib = repos[repo]
         f = open(lib_path + lib, "r")

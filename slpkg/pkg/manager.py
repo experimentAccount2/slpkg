@@ -298,6 +298,7 @@ class PackageManager(object):
                 'slonly': '_slack',
                 'ktown': 'alien',
                 'multi': 'compat32',
+                'slacke': 'jp',
                 'all': ''
             }
             search = pkg_list[pattern]

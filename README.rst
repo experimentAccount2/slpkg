@@ -61,6 +61,9 @@ Supported Repositories:
 - Alien's multi - `Repository <http://www.slackware.com/~alien/multilib/>`_
   Arch: {x86_64}
   Versions: {13.0, 13.1, 13.37, 14.0, 14.1, current}
+- Slacke E17 and E18 - `Repository <http://ngc891.blogdns.net/pub/>`_
+  Arch: {x86, x86_64, arm}
+  Versions: {14.1}
 
 * Choose repositories you need to work from file '/etc/slpkg/slpkg.conf' default is 
   'slack' and 'sbo' repositories and read REPOSITORIES file for each of the particularities.

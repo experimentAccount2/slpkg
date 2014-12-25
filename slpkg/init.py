@@ -35,7 +35,8 @@ from __metadata__ import (
     build_path,
     repositories,
     slpkg_tmp_packages,
-    slpkg_tmp_patches
+    slpkg_tmp_patches,
+    slacke_sub_repo
 )
 
 from slack.mirrors import mirrors
@@ -338,6 +339,40 @@ class Initialization(object):
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
+    def slacke(self):
+        '''
+        Creating alien multilib local library
+        '''
+        ar = ""
+        arch = os.uname()[4]
+        repo = Repo().slacke()
+        log = log_path + "slacke/"
+        lib = lib_path + "slacke_repo/"
+        lib_file = "PACKAGES.TXT"
+        lst_file = ""
+        md5_file = "CHECKSUMS.md5"
+        log_file = "ChangeLog.txt"
+        if not os.path.exists(log):
+            os.mkdir(log)
+        if not os.path.exists(lib):
+            os.mkdir(lib)
+        if arch == "x86_64":
+            ar = "64"
+        elif arch == "arm":
+            ar = "arm"
+        packages_txt = "{0}slacke{1}/slackware{2}-{3}/{4}".format(
+            repo, slacke_sub_repo[1:-1], ar, slack_ver(), lib_file)
+        filelist_txt = ""
+        checksums_md5 = "{0}slacke{1}/slackware{2}-{3}/{4}".format(
+            repo, slacke_sub_repo[1:-1], ar, slack_ver(), md5_file)
+        changelog_txt = "{0}slacke{1}/slackware{2}-{3}/{4}".format(
+            repo, slacke_sub_repo[1:-1], ar, slack_ver(), log_file)
+        self.write(lib, lib_file, packages_txt)
+        self.write(lib, md5_file, checksums_md5)
+        self.write(log, log_file, changelog_txt)
+        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
+                    md5_file, checksums_md5, lst_file, filelist_txt)
+
     @staticmethod
     def write(path, data_file, file_url):
         '''
@@ -453,7 +488,8 @@ class Update(object):
             'slackr': Initialization().slackers,
             'slonly': Initialization().slackonly,
             'ktown': Initialization().ktown,
-            'multi': Initialization().multi
+            'multi': Initialization().multi,
+            'slacke': Initialization().slacke
         }
 
     def repository(self):

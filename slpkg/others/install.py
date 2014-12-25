@@ -42,7 +42,8 @@ from slpkg.__metadata__ import (
     log_path,
     slpkg_tmp_packages,
     default_answer,
-    color
+    color,
+    slacke_sub_repo
 )
 
 from slpkg.pkg.find import find_package
@@ -75,7 +76,8 @@ class OthersInstall(object):
             'slackr': self._init_slackr,
             'slonly': self._init_slonly,
             'ktown': self._init_ktown,
-            'multi': self._init_multi
+            'multi': self._init_multi,
+            'slacke': self._init_slacke
         }
         init_repos[self.repo]()
 
@@ -132,6 +134,17 @@ class OthersInstall(object):
     def _init_multi(self):
         self.lib = lib_path + "multi_repo/PACKAGES.TXT"
         self.mirror = Repo().multi()
+        self.step = self.step * 2
+
+    def _init_slacke(self):
+        arch = ""
+        if os.uname()[4] == "x86_64":
+            arch = "64"
+        elif os.uname()[4] == "arm":
+            arch = "arm"
+        self.lib = lib_path + "slacke_repo/PACKAGES.TXT"
+        self.mirror = "{0}slacke{1}/slackware{2}-{3}/".format(
+            Repo().slacke(), slacke_sub_repo[1:-1], arch, slack_ver())
         self.step = self.step * 2
 
     def start(self):
@@ -241,7 +254,8 @@ def views(install_all, comp_sum, repository, dependencies):
         'slackr': '',
         'slonly': '',
         'ktown': ' ',
-        'multi': ' '
+        'multi': ' ',
+        'slacke': ''
     }
     repository += align[repository]
     for pkg, comp in zip(install_all, comp_sum):
@@ -255,7 +269,7 @@ def views(install_all, comp_sum, repository, dependencies):
         else:
             COLOR = color['RED']
             uni_sum += 1
-        print(" {0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11:>11}{12}".format(
+        print(" {0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11:>10}{12}".format(
             COLOR, pkg_split[0], color['ENDC'],
             " " * (25-len(pkg_split[0])), pkg_split[1],
             " " * (19-len(pkg_split[1])), pkg_split[2],

@@ -41,6 +41,7 @@ def split_package(package):
     # ktown = alien
     # multi = alien
     compat = "compat32"
+    slacke = "jp"
     build = split[-1]
 
     if build.endswith(sbo):
@@ -63,6 +64,8 @@ def split_package(package):
         build = split[-1][:-len(slack + compat)]
     elif build.endswith(compat):
         build = split[-1][:-len(compat)]
+    elif build.endswith(slacke):
+        build = split[-1][:-len(slacke)]
 
     arch = split[-2]
     ver = split[-3]

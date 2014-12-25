@@ -96,6 +96,9 @@ class Case(object):
     def multi_install(self):
         OthersInstall(self.package, "multi", self.release).start()
 
+    def slacke_install(self):
+        OthersInstall(self.package, "slacke", self.release).start()
+
     def sbo_upgrade(self):
         SBoCheck().start()
 
@@ -125,6 +128,9 @@ class Case(object):
 
     def multi_upgrade(self):
         OthersUpgrade("multi", self.release).start()
+
+    def slacke_upgrade(self):
+        OthersUpgrade("slacke", self.release).start()
 
 
 def main():
@@ -185,7 +191,8 @@ def main():
             'slackr': pkg.slackers_upgrade,
             'slonly': pkg.slackonly_upgrade,
             'ktown': pkg.ktown_upgrade,
-            'multi': pkg.multi_upgrade
+            'multi': pkg.multi_upgrade,
+            'slacke': pkg.slacke_upgrade
         }
         if args[1] in repositories:
             upgrade[args[1]]()
@@ -203,7 +210,8 @@ def main():
             'slackr': pkg.slackers_install,
             'slonly': pkg.slackonly_install,
             'ktown': pkg.ktown_install,
-            'multi': pkg.multi_install
+            'multi': pkg.multi_install,
+            'slacke': pkg.slacke_install
         }
         if args[1] in repositories:
             install[args[1]]()
