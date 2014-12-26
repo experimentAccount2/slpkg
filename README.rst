@@ -64,6 +64,9 @@ Supported Repositories:
 - Slacke E17 and E18 - `Repository <http://ngc891.blogdns.net/pub/>`_
   Arch: {x86, x86_64, arm}
   Versions: {14.1}
+- SalixOS - `Repository <http://download.salixos.org/>`_
+  Arch: {x86, x86_64}
+  Versions: {13.0, 13.1, 13.37, 14.0, 14.1}
 
 * Choose repositories you need to work from file '/etc/slpkg/slpkg.conf' default is 
   'slack' and 'sbo' repositories and read REPOSITORIES file for each of the particularities.
@@ -277,8 +280,10 @@ Take information repositories with commands:
       ktown            http://alien.slackbook.org/ktown/                    enabled
       multi            http://www.slackware.com/~alien/multilib/            enabled
       rlw              http://rlworkman.net/pkgs/                           enabled
+      salix            http://download.salixos.org/                         enabled
       sbo              http://slackbuilds.org/slackbuilds/                  enabled
       slack            http://ftp.cc.uoc.gr/mirrors/linux/slackware/        enabled
+      slacke           http://ngc891.blogdns.net/pub/                       enabled
       slackr           http://www.slackers.it/repository/                  disabled
       slacky           http://repository.slacky.eu/                         enabled
       slonly           https://slackonly.com/pub/packages/                  enabled
@@ -440,9 +445,9 @@ Check if your Slackware distribution is up to date:
     | Package                   Version          Arch     Build  Repos         Size
     +==============================================================================
     Upgrading:
-      dhcpcd                    6.0.5            x86_64   3      Slack         92 K
-      samba                     4.1.11           x86_64   1      Slack       9928 K
-      xscreensaver              5.29             x86_64   1      Slack       3896 K
+      dhcpcd-6.0.5              6.0.5            x86_64   3      Slack         92 K
+      samba-4.1.0               4.1.11           x86_64   1      Slack       9928 K
+      xscreensaver-5.22         5.29             x86_64   1      Slack       3896 K
 
     Installing summary
     ===============================================================================

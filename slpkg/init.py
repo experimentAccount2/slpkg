@@ -200,7 +200,7 @@ class Initialization(object):
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
-    def studioware(self):
+    def studio(self):
         '''
         Creating alien local library
         '''
@@ -232,7 +232,7 @@ class Initialization(object):
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
-    def slackers(self):
+    def slackr(self):
         '''
         Creating slackers local library
         '''
@@ -258,7 +258,7 @@ class Initialization(object):
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
-    def slackonly(self):
+    def slonly(self):
         '''
         Creating slackers local library
         '''
@@ -507,20 +507,7 @@ class Initialization(object):
 class Update(object):
 
     def __init__(self):
-        self.repos = {
-            'sbo': Initialization().sbo,
-            'slack': Initialization().slack,
-            'rlw': Initialization().rlw,
-            'alien': Initialization().alien,
-            'slacky': Initialization().slacky,
-            'studio': Initialization().studioware,
-            'slackr': Initialization().slackers,
-            'slonly': Initialization().slackonly,
-            'ktown': Initialization().ktown,
-            'multi': Initialization().multi,
-            'slacke': Initialization().slacke,
-            'salix': Initialization().salix
-        }
+        self.repos = 'Initialization()'
 
     def repository(self):
         '''
@@ -531,7 +518,7 @@ class Update(object):
             sys.stdout.write("{0}Update repository {1} ...{2}".format(
                 color['GREY'], repo, color['ENDC']))
             sys.stdout.flush()
-            self.repos[repo]()
+            exec('{0}.{1}()'.format(self.repos, repo))
             sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
                                                    color['ENDC']))
         print("")   # new line at end

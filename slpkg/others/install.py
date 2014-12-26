@@ -68,19 +68,8 @@ class OthersInstall(object):
             color['GREY'], color['ENDC']))
         sys.stdout.flush()
         self.step = 700
-        init_repos = {
-            'rlw': self._init_rlw,
-            'alien': self._init_alien,
-            'slacky': self._init_slacky,
-            'studio': self._init_studio,
-            'slackr': self._init_slackr,
-            'slonly': self._init_slonly,
-            'ktown': self._init_ktown,
-            'multi': self._init_multi,
-            'slacke': self._init_slacke,
-            'salix': self._init_salix
-        }
-        init_repos[self.repo]()
+
+        exec('self._init_{0}()'.format(self.repo))
 
         f = open(self.lib, "r")
         self.PACKAGES_TXT = f.read()
@@ -255,19 +244,7 @@ def views(install_all, comp_sum, repository, dependencies):
     '''
     count = pkg_sum = uni_sum = upg_sum = 0
     # fix repositories align
-    align = {
-        'rlw': ' ' * 3,
-        'alien': ' ',
-        'slacky': '',
-        'studio': '',
-        'slackr': '',
-        'slonly': '',
-        'ktown': ' ',
-        'multi': ' ',
-        'slacke': '',
-        'salix': ' '
-    }
-    repository += align[repository]
+    repository = repository + (' ' * (6 - (len(repository))))
     for pkg, comp in zip(install_all, comp_sum):
         pkg_split = split_package(pkg[:-4])
         if find_package(pkg_split[0] + "-" + pkg_split[1], pkg_path):
@@ -279,10 +256,10 @@ def views(install_all, comp_sum, repository, dependencies):
         else:
             COLOR = color['RED']
             uni_sum += 1
-        print(" {0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11:>10}{12}".format(
+        print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>11}{12}".format(
             COLOR, pkg_split[0], color['ENDC'],
-            " " * (25-len(pkg_split[0])), pkg_split[1],
-            " " * (19-len(pkg_split[1])), pkg_split[2],
+            " " * (24-len(pkg_split[0])), pkg_split[1],
+            " " * (18-len(pkg_split[1])), pkg_split[2],
             " " * (8-len(pkg_split[2])), pkg_split[3],
             " " * (7-len(pkg_split[3])), repository,
             comp, " K"))

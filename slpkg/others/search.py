@@ -24,8 +24,10 @@
 import sys
 
 from slpkg.blacklist import BlackList
-from slpkg.__metadata__ import lib_path
 from slpkg.splitting import split_package
+from slpkg.__metadata__ import (
+    lib_path
+)
 
 
 def search_pkg(name, repo):
@@ -35,18 +37,8 @@ def search_pkg(name, repo):
     '''
     try:
         blacklist = BlackList().packages()
-        repo_dir = {
-            'rlw': 'rlw_repo/PACKAGES.TXT',
-            'alien': 'alien_repo/PACKAGES.TXT',
-            'slacky': 'slacky_repo/PACKAGES.TXT',
-            'studio': 'studio_repo/PACKAGES.TXT',
-            'slackr': 'slackr_repo/PACKAGES.TXT',
-            'slonly': 'slonly_repo/PACKAGES.TXT',
-            'ktown': 'ktown_repo/PACKAGES.TXT',
-            'multi': 'multi_repo/PACKAGES.TXT',
-            'slacke': 'slacke_repo/PACKAGES.TXT'
-        }
-        with open(lib_path + repo_dir[repo], "r") as PACKAGES_TXT:
+        with open(lib_path + '{0}_repo/PACKAGES.TXT'.format(
+                repo), "r") as PACKAGES_TXT:
             for line in PACKAGES_TXT:
                 if line.startswith("PACKAGE NAME:  ") and len(line) > 16:
                     if repo == 'slackr':

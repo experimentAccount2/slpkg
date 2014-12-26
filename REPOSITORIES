@@ -25,6 +25,6 @@ Users with Slackware x86_64 will use this repository should establish from the b
 the list of packages with the command 'slpkg re-create' to be updated with new packages 
 and it's because the repository has not 'ChangeLog.txt' file.
 
-Studioware (studio), Alien's ktown (ktown), Alien's multilib (multi) repository has no 
-reference dependencies.
+Studioware (studio), Alien's ktown (ktown), Alien's multilib (multi), Slacke E17 and E18
+repository has no reference dependencies.
 

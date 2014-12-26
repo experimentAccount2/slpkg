@@ -1,8 +1,8 @@
 Version 2.1.5-dev
-24-12-2014
+26-12-2014
 
 [Feature] - Added slacker.it, slackonly.com, Alien's ktown, Alien's multilib,
-            Slacke E17 and E18 repositories.
+            Slacke E17 and E18, SalixOS, repositories.
           - Added command 're-create'.
           - Added command 'repolist'.
           - Added command 'repoinfo'. 

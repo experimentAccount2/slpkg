@@ -60,18 +60,8 @@ class OthersUpgrade(object):
             color['GREY'], color['ENDC']))
         sys.stdout.flush()
         self.step = 700
-        init_repos = {
-            'rlw': self._init_rlw,
-            'alien': self._init_alien,
-            'slacky': self._init_slacky,
-            'studio': self._init_studio,
-            'slackr': self._init_slackr,
-            'slonly': self._init_slonly,
-            'ktown': self._init_ktown,
-            'multi': self._init_multi,
-            'slacke': self._init_slacke
-        }
-        init_repos[self.repo]()
+
+        exec('self._init_{0}()'.format(self.repo))
 
         f = open(self.lib, "r")
         self.PACKAGES_TXT = f.read()
@@ -138,12 +128,21 @@ class OthersUpgrade(object):
             Repo().slacke(), slacke_sub_repo[1:-1], arch, slack_ver())
         self.step = self.step * 2
 
+    def _init_salix(self):
+        arch = "i486"
+        if os.uname()[4] == "x86_64":
+            arch = "x86_64"
+        self.lib = lib_path + "salix_repo/PACKAGES.TXT"
+        self.mirror = "{0}{1}/{2}/".format(Repo().salix(), arch, slack_ver())
+        self.step = self.step * 2
+
     def start(self):
         '''
         Install packages from official Slackware distribution
         '''
         try:
-            dwn_links, upgrade_all, comp_sum, uncomp_sum = self.store()
+            (pkg_for_upgrade, dwn_links, upgrade_all, comp_sum,
+             uncomp_sum) = self.store()
             sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
                                                    color['ENDC']))
             print("")   # new line at start
@@ -151,14 +150,14 @@ class OthersUpgrade(object):
                 template(78)
                 print("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
                     "| Package", " " * 17,
-                    "New version", " " * 8,
+                    "New version", " " * 9,
                     "Arch", " " * 4,
                     "Build", " " * 2,
-                    "Repos", " " * 10,
+                    "Repos", " " * 9,
                     "Size"))
                 template(78)
                 print("Upgrading:")
-                views(upgrade_all, comp_sum, self.repo)
+                views(pkg_for_upgrade, upgrade_all, comp_sum, self.repo)
                 unit, size = units(comp_sum, uncomp_sum)
                 msg = msgs(upgrade_all)
                 print("\nInstalling summary")
@@ -190,7 +189,8 @@ class OthersUpgrade(object):
         '''
         Store and return packages for install
         '''
-        dwn, install, comp_sum, uncomp_sum = ([] for i in range(4))
+        pkg_for_upgrade, dwn, install, comp_sum, uncomp_sum = (
+            [] for i in range(5))
         # name = data[0]
         # location = data[1]
         # size = data[2]
@@ -206,14 +206,16 @@ class OthersUpgrade(object):
                 if name:    # this tips because some pkg_name is empty
                     repo_pkg = split_package(name[:-4])
                 if (repo_pkg[0] == inst_pkg[0] and
-                        repo_pkg[-3] > inst_pkg[-3] and
+                        repo_pkg[1] > inst_pkg[1] and
                         inst_pkg[0] not in BlackList().packages()):
                     # store downloads packages by repo
                     dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
                     install.append(name)
                     comp_sum.append(comp)
                     uncomp_sum.append(uncomp)
-        return [dwn, install, comp_sum, uncomp_sum]
+                    pkg_for_upgrade.append('{0}-{1}'.format(
+                        inst_pkg[0], inst_pkg[1]))
+        return [pkg_for_upgrade, dwn, install, comp_sum, uncomp_sum]
 
     def installed(self):
         '''
@@ -225,30 +227,19 @@ class OthersUpgrade(object):
         return packages
 
 
-def views(upgrade_all, comp_sum, repository):
+def views(pkg_for_upgrade, upgrade_all, comp_sum, repository):
     '''
     Views packages
     '''
     upg_sum = 0
     # fix repositories align
-    align = {
-        'rlw': ' ' * 3,
-        'alien': ' ',
-        'slacky': '',
-        'studio': '',
-        'slackr': '',
-        'slonly': '',
-        'ktown': ' ',
-        'multi': ' ',
-        'slacke': ''
-    }
-    repository += align[repository]
-    for pkg, comp in zip(upgrade_all, comp_sum):
+    repository = repository + (' ' * (6 - (len(repository))))
+    for upg, pkg, comp in zip(pkg_for_upgrade, upgrade_all, comp_sum):
         pkg_split = split_package(pkg[:-4])
         upg_sum += 1
-        print(" {0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11:>11}{12}".format(
-            color['YELLOW'], pkg_split[0], color['ENDC'],
-            " " * (25-len(pkg_split[0])), pkg_split[1],
+        print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>10}{12}".format(
+            color['YELLOW'], upg, color['ENDC'],
+            " " * (24-len(upg)), pkg_split[1],
             " " * (19-len(pkg_split[1])), pkg_split[2],
             " " * (8-len(pkg_split[2])), pkg_split[3],
             " " * (7-len(pkg_split[3])), repository,

@@ -40,20 +40,8 @@ def pkg_checksum(binary, repo):
     elif repo == "slack_patches" and slack_rel == "current":
         CHECKSUMS_md5 = URL(mirrors("CHECKSUMS.md5", "")).reading()
     else:
-        repos = {
-            'slack': 'slack_repo/CHECKSUMS.md5',
-            'rlw': 'rlw_repo/CHECKSUMS.md5',
-            'alien': 'alien_repo/CHECKSUMS.md5',
-            'slacky': 'slacky_repo/CHECKSUMS.md5',
-            'studio': 'studio_repo/CHECKSUMS.md5',
-            'slackr': 'slackr_repo/CHECKSUMS.md5',
-            'slonly': 'slonly_repo/CHECKSUMS.md5',
-            'ktown': 'ktown_repo/CHECKSUMS.md5',
-            'multi': 'multi_repo/CHECKSUMS.md5',
-            'slacke': 'slacke_repo/CHECKSUMS.md5'
-        }
-        lib = repos[repo]
-        f = open(lib_path + lib, "r")
+        lib = '{0}{1}_repo/CHECKSUMS.md5'.format(lib_path, repo)
+        f = open(lib, "r")
         CHECKSUMS_md5 = f.read()
         f.close()
     for line in CHECKSUMS_md5.splitlines():

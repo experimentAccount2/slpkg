@@ -237,9 +237,15 @@ class Requires(object):
         deps = []
         for dep in line[18:].strip().split(","):
             dep = dep.split("|")
-            if len(dep) > 1:
-                for d in dep:
-                    deps.append(d.split()[0])
-            dep = "".join(dep)
-            deps.append(dep.split()[0])
+            if self.repo == 'slacky':
+                if len(dep) > 1:
+                    for d in dep:
+                        deps.append(d.split()[0])
+                dep = "".join(dep)
+                deps.append(dep.split()[0])
+            else:
+                if len(dep) > 1:
+                    for d in dep:
+                        deps.append(d)
+                deps.append(dep[0])
         return deps

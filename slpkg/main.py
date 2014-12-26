@@ -135,6 +135,9 @@ class Case(object):
     def slacke_upgrade(self):
         OthersUpgrade("slacke", self.release).start()
 
+    def salix_upgrade(self):
+        OthersUpgrade("salix", self.release).start()
+
 
 def main():
 
@@ -184,41 +187,14 @@ def main():
             usage()
     elif len(args) == 3 and args[0] == "-c" and args[2] == "--upgrade":
         pkg = Case("")
-        upgrade = {
-            'sbo': pkg.sbo_upgrade,
-            'slack': pkg.slack_upgrade,
-            'rlw': pkg.rlw_upgrade,
-            'alien': pkg.alien_upgrade,
-            'slacky': pkg.slacky_upgrade,
-            'studio': pkg.studioware_upgrade,
-            'slackr': pkg.slackers_upgrade,
-            'slonly': pkg.slackonly_upgrade,
-            'ktown': pkg.ktown_upgrade,
-            'multi': pkg.multi_upgrade,
-            'slacke': pkg.slacke_upgrade
-        }
         if args[1] in repositories:
-            upgrade[args[1]]()
+            exec('pkg.{0}_upgrade()'.format(args[1]))
         else:
             usage()
     elif len(args) == 3 and args[0] == "-s":
         pkg = Case(args[2])
-        install = {
-            'sbo': pkg.sbo_install,
-            'slack': pkg.slack_install,
-            'rlw': pkg.rlw_install,
-            'alien': pkg.alien_install,
-            'slacky': pkg.slacky_install,
-            'studio': pkg.studioware_install,
-            'slackr': pkg.slackers_install,
-            'slonly': pkg.slackonly_install,
-            'ktown': pkg.ktown_install,
-            'multi': pkg.multi_install,
-            'slacke': pkg.slacke_install,
-            'salix': pkg.salix_install
-        }
         if args[1] in repositories:
-            install[args[1]]()
+            exec('{0}.{1}_install()'.format(pkg, args[1]))
         else:
             usage()
     elif (len(args) == 3 and args[0] == "-t" and args[1] in repositories

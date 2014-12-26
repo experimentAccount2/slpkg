@@ -70,7 +70,8 @@ class Patches(object):
         Install new patches from official Slackware mirrors
         '''
         try:
-            dwn_links, upgrade_all, comp_sum, uncomp_sum = self.store()
+            (pkg_for_upgrade, dwn_links, upgrade_all, comp_sum,
+             uncomp_sum) = self.store()
             sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
                                                    color['ENDC']))
             if upgrade_all:
@@ -85,7 +86,7 @@ class Patches(object):
                     "Size"))
                 template(78)
                 print("Upgrading:")
-                views(upgrade_all, comp_sum)
+                views(pkg_for_upgrade, upgrade_all, comp_sum)
                 unit, size = units(comp_sum, uncomp_sum)
                 print("\nInstalling summary")
                 print("=" * 79)
@@ -119,30 +120,34 @@ class Patches(object):
         '''
         Store and return packages for upgrading
         '''
-        (dwn, upgrade, comp_sum, uncomp_sum) = ([] for i in range(4))
+        (pkg_for_upgrade, dwn, upgrade, comp_sum,
+         uncomp_sum) = ([] for i in range(5))
         data = slack_data(self.PACKAGES_TXT, self.step)
         black = BlackList().packages()
         for name, loc, comp, uncomp in zip(data[0], data[1], data[2], data[3]):
-            if find_package(split_package(name)[0] + "-", pkg_path):
-                if (not os.path.isfile(pkg_path + name[:-4]) and
-                        split_package(name)[0] not in black):
-                    dwn.append("{0}{1}/{2}".format(mirrors("", ""), loc, name))
-                    comp_sum.append(comp)
-                    uncomp_sum.append(uncomp)
-                    upgrade.append(name)
-        return [dwn, upgrade, comp_sum, uncomp_sum]
+            inst_pkg = find_package(split_package(name)[0] + "-", pkg_path)
+            if (inst_pkg[0] and not os.path.isfile(pkg_path + name[:-4]) and
+                    split_package(''.join(inst_pkg[0])) not in black):
+                dwn.append("{0}{1}/{2}".format(mirrors("", ""), loc, name))
+                comp_sum.append(comp)
+                uncomp_sum.append(uncomp)
+                upgrade.append(name)
+                pkg_for_upgrade.append('{0}-{1}'.format(
+                    split_package(''.join(inst_pkg[0]))[0],
+                    split_package(''.join(inst_pkg[0]))[1]))
+        return [pkg_for_upgrade, dwn, upgrade, comp_sum, uncomp_sum]
 
 
-def views(upgrade_all, comp_sum):
+def views(pkg_for_upgrade, upgrade_all, comp_sum):
     '''
     Views packages
     '''
-    for upgrade, size in zip(upgrade_all, comp_sum):
+    for upg, upgrade, size in zip(pkg_for_upgrade, upgrade_all, comp_sum):
         pkg_split = split_package(upgrade[:-4])
-        print(" {0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11:>12}{12}".format(
-            color['YELLOW'], pkg_split[0], color['ENDC'],
-            " " * (25-len(pkg_split[0])), pkg_split[1],
-            " " * (19-len(pkg_split[1])), pkg_split[2],
+        print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>12}{12}".format(
+            color['YELLOW'], upg, color['ENDC'],
+            " " * (24-len(upg)), pkg_split[1],
+            " " * (18-len(pkg_split[1])), pkg_split[2],
             " " * (8-len(pkg_split[2])), pkg_split[3],
             " " * (7-len(pkg_split[3])), "Slack",
             size, " K"))
