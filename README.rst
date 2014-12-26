@@ -67,6 +67,10 @@ Supported Repositories:
 - SalixOS - `Repository <http://download.salixos.org/>`_
   Arch: {x86, x86_64}
   Versions: {13.0, 13.1, 13.37, 14.0, 14.1}
+- Slackel - `Repository <http://www.slackel.gr/repo/>`_
+  Arch: {x86, x86_64}
+  Versions: {current}
+
 
 * Choose repositories you need to work from file '/etc/slpkg/slpkg.conf' default is 
   'slack' and 'sbo' repositories and read REPOSITORIES file for each of the particularities.
@@ -234,7 +238,7 @@ Command Line Tool Usage
       -q, --list, [package...] --add, --remove  add, remove SBo packages in queue
           --build, --install, --build-install   build, install packages from queue
       -g, --config, --config=[editor]           configuration file management
-      -l, [repository], all, noarch             list of installed packages
+      -l, [repository], all                     list of installed packages
       -c, [repository] --upgrade                check for updated packages
       -s, [repository] [package]                download, build & install
       -t, [repository] [package]                tracking dependencies
@@ -266,6 +270,8 @@ and update the package lists:
     Update repository slackr .............................................Done
     Update repository slonly ...Done
     Update repository ktown ...Done
+    Update repository salix ..................Done
+
 
 Take information repositories with commands:
     
@@ -284,6 +290,7 @@ Take information repositories with commands:
       sbo              http://slackbuilds.org/slackbuilds/                  enabled
       slack            http://ftp.cc.uoc.gr/mirrors/linux/slackware/        enabled
       slacke           http://ngc891.blogdns.net/pub/                       enabled
+      slackl           http://www.slackel.gr/repo/                          enabled
       slackr           http://www.slackers.it/repository/                  disabled
       slacky           http://repository.slacky.eu/                         enabled
       slonly           https://slackonly.com/pub/packages/                  enabled

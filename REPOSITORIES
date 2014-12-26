@@ -10,7 +10,7 @@ Rworkman's (rlw) repository use dependencies where displayed in central site
 'http://rlworkman.net/pkgs/' and only those. Unfortunately there is no fixed reference
 dependencies file PACKAGES.TXT.
 
-Slackers.it (slackr) repository be used only from Slackware64 current users.
+Slackers.it (slackr) repository must be used only from Slackware64 current users.
 Also find in some packages will not show package description when you run the command
 'slpkg -p slackr <package>' and this is because there is not constant reference to the
 description of the file 'PACKAGES.TXT' as in other repositories. Some packages reference
@@ -28,3 +28,5 @@ and it's because the repository has not 'ChangeLog.txt' file.
 Studioware (studio), Alien's ktown (ktown), Alien's multilib (multi), Slacke E17 and E18
 repository has no reference dependencies.
 
+Slackel.gr (slackl) repository must be used only from Slackware current users and has the
+same peculiarities in the repository 'slackr'.

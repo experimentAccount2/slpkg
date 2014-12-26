@@ -94,4 +94,7 @@ class RepoInfo(object):
                 size.append(line[28:-2].strip())
             if line.startswith('PACKAGE SIZE (uncompressed):  '):
                 unsize.append(line[30:-2].strip())
+        if repo in ['salix', 'slackl']:
+            with open(log_path + '{0}/ChangeLog.txt'.format(repo), 'r') as log:
+                last_upd = log.readline().replace('\n', '')
         return [sum_pkgs, size, unsize, last_upd]

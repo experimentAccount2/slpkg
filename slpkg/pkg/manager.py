@@ -289,7 +289,6 @@ class PackageManager(object):
             pkg_list = {
                 'sbo': ['_SBo'],
                 'slack': ['_slack{0}'.format(slack_ver())],
-                'noarch': ['-noarch-'],
                 'rlw': ['_rlw'],
                 'alien': ['alien'],
                 'slacky': ['sl'],
@@ -301,12 +300,11 @@ class PackageManager(object):
                           'compat32'],
                 'slacke': ['jp'],
                 'salix': ['gv', 'rl', 'msb', 'dj', 'tg', 'cp', 'tjb', 'alien'],
+                'slackl': [''],
                 'all': ['']
             }
             search = pkg_list[pattern]
             index, page = 0, row
-            if search == "-noarch-":
-                search = ""
             for pkg in find_package("", pkg_path):
                 for tag in search:
                     if pkg.endswith(tag):

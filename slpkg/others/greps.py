@@ -77,7 +77,8 @@ def repo_data(PACKAGES_TXT, step, repo, version):
          rsize,
          runsize
          ) = multi_filter(name, location, size, unsize, version)
-    elif repo in ["slacky", "studio", "slackr", "slonly", "slacke", "salix"]:
+    elif repo in ["slacky", "studio", "slackr", "slonly", "slacke",
+                  "salix", "slackl"]:
         rname, rlocation, rsize, runsize = name, location, size, unsize
     return [rname, rlocation, rsize, runsize]
 
@@ -186,14 +187,9 @@ class Requires(object):
         '''
         Grap package requirements from repositories
         '''
-        if self.repo in ["alien", "slacky", "slackr", "salix"]:
-            lib = {
-                'alien': lib_path + 'alien_repo/PACKAGES.TXT',
-                'slacky': lib_path + 'slacky_repo/PACKAGES.TXT',
-                'slackr': lib_path + 'slackr_repo/PACKAGES.TXT',
-                'salix': lib_path + 'salix_repo/PACKAGES.TXT'
-            }
-            f = open(lib[self.repo], "r")
+        if self.repo in ["alien", "slacky", "slackr", "salix", "slackl"]:
+            lib = '{0}{1}_repo/PACKAGES.TXT'.format(lib_path, self.repo)
+            f = open(lib, "r")
             PACKAGES_TXT = f.read()
             f.close()
             for line in PACKAGES_TXT.splitlines():
@@ -206,7 +202,7 @@ class Requires(object):
                 if line.startswith("PACKAGE REQUIRED: "):
                     if pkg_name == self.name:
                         if line[17:].strip():
-                            if self.repo in ["slacky", "salix"]:
+                            if self.repo in ["slacky", "salix", "slackl"]:
                                 return self._req_fix(line)
                             elif self.repo == "alien":
                                 return line[18:].strip().split(",")

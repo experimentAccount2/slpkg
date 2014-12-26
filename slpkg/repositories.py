@@ -110,3 +110,9 @@ class Repo(object):
         SalixOS salix repository
         '''
         return "http://download.salixos.org/"
+
+    def slackel(self):
+        '''
+        Slackel.gr slackel repository
+        '''
+        return "http://www.slackel.gr/repo/"

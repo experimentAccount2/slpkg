@@ -47,7 +47,8 @@ repositories = [
     'ktown{latest}',
     'multi',
     'slacke{18}',
-    'salix'
+    'salix',
+    'slackl'
 ]
 
 

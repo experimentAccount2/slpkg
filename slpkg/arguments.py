@@ -25,6 +25,7 @@ import sys
 
 from __metadata__ import (
     __version__,
+    repositories
 )
 
 
@@ -53,7 +54,7 @@ def options():
         "from queue",
         "  -g, --config, --config=[editor]           configuration file " +
         "management",
-        "  -l, [repository], all, noarch             list of installed " +
+        "  -l, [repository], all                     list of installed " +
         "packages",
         "  -c, [repository] --upgrade                check for updated " +
         "packages",
@@ -74,7 +75,11 @@ def options():
     sys.exit(0)
 
 
-def usage():
+def usage(repo):
+    error_repo = ""
+    if repo and repo not in repositories:
+        error_repo = ("slpkg: error: repository '{0}' is not activated or "
+                      "does not exist\n".format(repo))
     view = [
         "slpkg - version {0}\n".format(__version__),
         "Usage: slpkg [-h] [-v] [-a script.tar.gz [sources...]]",
@@ -82,13 +87,14 @@ def usage():
         "             [-q --list, [...] --add, --remove]",
         "             [   --build, --install, --build-install]",
         "             [-g --config, --config=[editor]]",
-        "             [-l [repository], all, noarch]",
+        "             [-l [repository], all]",
         "             [-c [repository] --upgrade]",
         "             [-s [repository] [package]",
         "             [-t [repository] [package]",
         "             [-p [repository] [package], --color=[]]",
         "             [-f] [-n] [-i [...]] [-u [...]]",
         "             [-o  [...]] [-r [...]] [-d [...]]\n",
+        error_repo,
         "For more information try 'slpkg --help' or view manpage\n"
     ]
     for usg in view:

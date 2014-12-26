@@ -72,35 +72,8 @@ class Case(object):
     def slack_install(self):
         Slack(self.package).start()
 
-    def rlw_install(self):
-        OthersInstall(self.package, "rlw", self.release).start()
-
-    def alien_install(self):
-        OthersInstall(self.package, "alien", self.release).start()
-
-    def slacky_install(self):
-        OthersInstall(self.package, "slacky", self.release).start()
-
-    def studioware_install(self):
-        OthersInstall(self.package, "studio", self.release).start()
-
-    def slackers_install(self):
-        OthersInstall(self.package, "slackr", self.release).start()
-
-    def slackonly_install(self):
-        OthersInstall(self.package, "slonly", self.release).start()
-
-    def ktown_install(self):
-        OthersInstall(self.package, "ktown", self.release).start()
-
-    def multi_install(self):
-        OthersInstall(self.package, "multi", self.release).start()
-
-    def slacke_install(self):
-        OthersInstall(self.package, "slacke", self.release).start()
-
-    def salix_install(self):
-        OthersInstall(self.package, "salix", self.release).start()
+    def others_install(self, repo):
+        OthersInstall(self.package, repo, slack_rel).start()
 
     def sbo_upgrade(self):
         SBoCheck().start()
@@ -108,35 +81,8 @@ class Case(object):
     def slack_upgrade(self):
         Patches(self.release).start()
 
-    def rlw_upgrade(self):
-        OthersUpgrade("rlw", self.release).start()
-
-    def alien_upgrade(self):
-        OthersUpgrade("alien", self.release).start()
-
-    def slacky_upgrade(self):
-        OthersUpgrade("slacky", self.release).start()
-
-    def studioware_upgrade(self):
-        OthersUpgrade("studio", self.release).start()
-
-    def slackers_upgrade(self):
-        OthersUpgrade("slackr", self.release).start()
-
-    def slackonly_upgrade(self):
-        OthersUpgrade("slonly", self.release).start()
-
-    def ktown_upgrade(self):
-        OthersUpgrade("ktown", self.release).start()
-
-    def multi_upgrade(self):
-        OthersUpgrade("multi", self.release).start()
-
-    def slacke_upgrade(self):
-        OthersUpgrade("slacke", self.release).start()
-
-    def salix_upgrade(self):
-        OthersUpgrade("salix", self.release).start()
+    def others_upgrade(self, repo):
+        OthersUpgrade(repo, self.release).start()
 
 
 def main():
@@ -146,6 +92,19 @@ def main():
     args.pop(0)
     blacklist = BlackList()
     queue = QueuePkgs()
+
+    # all_args = [
+    #     'update', 're-create', 'repolist', 'repoinfo',
+    #     '-h', '--help', '-v', '-a', '-b',
+    #     '-q', '-g', '-l', '-c', '-s', '-t', '-p', '-f',
+    #     '-n', '-i', '-u', '-o', '-r', '-d'
+    # ]
+
+    without_repos = [
+        '-h', '--help', '-v', '-a', '-b',
+        '-q', '-g', '-f', '-n', '-i', '-u',
+        '-o', '-r', '-d'
+    ]
 
     if len(args) == 1 and args[0] == "update":
         Update().repository()
@@ -157,7 +116,7 @@ def main():
         RepoList().repos()
 
     if len(args) == 0:
-        usage()
+        usage('')
     elif (len(args) == 1 and args[0] == "-h" or
             args[0] == "--help" and args[1:] == []):
         options()
@@ -176,29 +135,41 @@ def main():
             args[1] in RepoList().all_repos):
         del RepoList().all_repos
         RepoInfo().view(args[1])
+    elif (len(args) == 2 and args[0] == "repoinfo" and
+          args[1] not in RepoList().all_repos):
+        usage(args[1])
 
     if len(args) == 3 and args[0] == "-a":
         BuildPackage(args[1], args[2:], path).build()
     elif len(args) == 2 and args[0] == "-l":
-        pkg_list = ["all", "noarch"] + repositories
+        pkg_list = ["all"] + repositories
         if args[1] in pkg_list:
             PackageManager(None).list(args[1])
         else:
-            usage()
+            usage('')
     elif len(args) == 3 and args[0] == "-c" and args[2] == "--upgrade":
-        pkg = Case("")
-        if args[1] in repositories:
-            exec('pkg.{0}_upgrade()'.format(args[1]))
+        if args[1] in repositories and args[1] not in ['slack', 'sbo']:
+            Case('').others_upgrade(args[1])
+        elif args[1] in ['slack', 'sbo']:
+            upgrade = {
+                'sbo': Case(args[2]).sbo_upgrade,
+                'slack': Case(args[2]).slack_upgrade
+            }
+            upgrade[args[1]]()
         else:
-            usage()
+            usage(args[1])
     elif len(args) == 3 and args[0] == "-s":
-        pkg = Case(args[2])
-        if args[1] in repositories:
-            exec('{0}.{1}_install()'.format(pkg, args[1]))
+        if args[1] in repositories and args[1] not in ['slack', 'sbo']:
+            Case(args[2]).others_install(args[1])
+        elif args[1] in ['slack', 'sbo']:
+            install = {
+                'sbo': Case(args[2]).sbo_install,
+                'slack': Case(args[2]).slack_install
+            }
+            install[args[1]]()
         else:
-            usage()
-    elif (len(args) == 3 and args[0] == "-t" and args[1] in repositories
-          and args[1] != "slack"):
+            usage(args[1])
+    elif (len(args) == 3 and args[0] == "-t" and args[1] in repositories):
         track_dep(args[2], args[1])
     elif len(args) == 2 and args[0] == "-n" and "sbo" in repositories:
         SBoNetwork(args[1]).view()
@@ -239,7 +210,7 @@ def main():
         if args[1] in repositories and tag in colors:
             PkgDesc(args[2], args[1], tag).view()
         else:
-            usage()
+            usage(args[1])
     elif len(args) > 1 and args[0] == "-d":
         PackageManager(args[1:]).display()
     elif len(args) == 2 and args[0] == "-g" and args[1].startswith("--config"):
@@ -249,9 +220,12 @@ def main():
         elif editor:
             Config().edit(editor)
         else:
-            usage()
+            usage('')
     else:
-        usage()
+        if len(args) > 1 and args[0] not in without_repos:
+            usage(args[1])
+        else:
+            usage('')
 
 if __name__ == "__main__":
     main()

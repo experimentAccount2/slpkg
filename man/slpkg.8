@@ -20,7 +20,7 @@ Usage: slpkg [-h] [-v] [-a script.tar.gz [sources...]]
               [-q --list, [...] --add, --remove]
               [   --build, --install, --build-install]
               [-g --config, --config=[editor]]
-              [-l [repository], all, noarch]
+              [-l [repository], all]
               [-c [repository] --upgrade]
               [-s [repository] [package][
               [-t [repository] [package]]
@@ -50,7 +50,7 @@ Optional arguments:
   -q, --list, [package...] --add, --remove  add, remove SBo packages in queue
       --build, --install, --build-install   build, install packages from queue
   -g, --config, --config=<editor>           configuration file management
-  -l, [repository], all, noarch             list of installed packages
+  -l, [repository], all                     list of installed packages
   -c, [repository] --upgrade                check for updated packages
   -s, [repository] [package]                download, build & install
   -t, [repository] [package]                tracking dependencies
@@ -75,6 +75,8 @@ Optional arguments:
  Alien's ktown = 'ktown{latest}'
  Alien's multilib = 'multi'
  Slacke E17 and E18 = 'slacke{18}'
+ SalixOS = 'salix'
+ Slackel.gr = 'slackel'
    
  Default enable repository is 'slack' and 'sbo'.
  Add or remove repository in configuration file '/etc/slpkg/slpkg.conf'

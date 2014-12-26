@@ -136,6 +136,14 @@ class OthersUpgrade(object):
         self.mirror = "{0}{1}/{2}/".format(Repo().salix(), arch, slack_ver())
         self.step = self.step * 2
 
+    def _init_slackl(self):
+        arch = "i486"
+        if os.uname()[4] == "x86_64":
+            arch = "x86_64"
+        self.lib = lib_path + "slackl_repo/PACKAGES.TXT"
+        self.mirror = "{0}{1}/current/".format(Repo().slackel(), arch)
+        self.step = self.step * 2
+
     def start(self):
         '''
         Install packages from official Slackware distribution
