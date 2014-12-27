@@ -126,7 +126,7 @@ class Patches(object):
         black = BlackList().packages()
         for name, loc, comp, uncomp in zip(data[0], data[1], data[2], data[3]):
             inst_pkg = find_package(split_package(name)[0] + "-", pkg_path)
-            if (inst_pkg[0] and not os.path.isfile(pkg_path + name[:-4]) and
+            if (inst_pkg and not os.path.isfile(pkg_path + name[:-4]) and
                     split_package(''.join(inst_pkg[0])) not in black):
                 dwn.append("{0}{1}/{2}".format(mirrors("", ""), loc, name))
                 comp_sum.append(comp)
