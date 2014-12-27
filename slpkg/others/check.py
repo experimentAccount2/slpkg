@@ -230,10 +230,7 @@ class OthersUpgrade(object):
         '''
         Return all installed packages
         '''
-        packages = []
-        for pkg in find_package('', pkg_path):
-            packages.append(pkg)
-        return packages
+        return find_package('', pkg_path)
 
 
 def views(pkg_for_upgrade, upgrade_all, comp_sum, repository):
