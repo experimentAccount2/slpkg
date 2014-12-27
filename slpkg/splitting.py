@@ -33,7 +33,6 @@ def split_package(package):
     build_a = build[:1]
     if build[1:2].isdigit():
         build_b = build[1:2]
-
     build = build_a + build_b
     arch = split[-2]
     ver = split[-3]

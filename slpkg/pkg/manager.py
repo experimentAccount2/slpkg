@@ -228,12 +228,11 @@ class PackageManager(object):
         '''
         Find installed Slackware packages
         '''
-        self.binary = "".join(self.binary)
         matching = size = 0
         print("\nPackages with matching name [ {0}{1}{2} ]\n".format(
-              color['CYAN'], self.binary, color['ENDC']))
-        for match in find_package(self.binary, pkg_path):
-            if self.binary in match:
+              color['CYAN'], ''.join(self.binary), color['ENDC']))
+        for match in find_package(''.join(self.binary), pkg_path):
+            if ''.join(self.binary) in match:
                 matching += 1
                 print("[ {0}installed{1} ] - {2}".format(
                       color['GREEN'], color['ENDC'], match))

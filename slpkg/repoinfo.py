@@ -21,7 +21,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-
+import os
 import sys
 
 from sizes import units
@@ -37,7 +37,16 @@ from __metadata__ import (
 class RepoInfo(object):
 
     def __init__(self):
-        self.form = {}
+        self.form = {
+            'Last updated:': '',
+            'Number of packages:': '',
+            'Repo id:': '',
+            'Repo url:': '',
+            'Status:': '',
+            'Total compressed packages:': '',
+            'Total uncompressed packages:': ''
+        }
+
         self.all_repos = RepoList().all_repos
         del RepoList().all_repos
 
@@ -46,34 +55,36 @@ class RepoInfo(object):
         View repository information
         '''
         status = '{0}disabled{1}'.format(color['RED'], color['ENDC'])
-        if repo in repositories:
+        self.form['Status:'] = status
+        if (repo in repositories and
+                os.path.isfile(log_path + '{0}/ChangeLog.txt'.format(repo))):
             status = '{0}enabled{1}'.format(color['GREEN'], color['ENDC'])
-        if repo != 'sbo':
-            data = self.repository_data(repo)
-            size = units(data[1], data[2])
-            self.form['Repo id:'] = repo
-            self.form['Repo url:'] = self.all_repos[repo]
-            self.form['Total compressed packages:'] = '{0} {1}'.format(
-                str(size[1][0]), str(size[0][0]))
-            self.form['Total uncompressed packages:'] = '{0} {1}'.format(
-                str(size[1][1]), str(size[0][1]))
-            self.form['Number of packages:'] = data[0]
-            self.form['Status:'] = status
-            self.form['Last updated:'] = data[3]
-        elif repo == 'sbo':
-            sum_sbo_pkgs = 0
-            for line in open(lib_path + 'sbo_repo/SLACKBUILDS.TXT', 'r'):
-                if line.startswith('SLACKBUILD NAME: '):
-                    sum_sbo_pkgs += 1
-            with open(log_path + 'sbo/ChangeLog.txt', 'r') as changelog_txt:
-                last_upd = changelog_txt.readline().replace('\n', '')
-            self.form['Repo id:'] = repo
-            self.form['Repo url:'] = self.all_repos[repo]
-            self.form['Total compressed packages:'] = ''
-            self.form['Total uncompressed packages:'] = ''
-            self.form['Number of packages:'] = sum_sbo_pkgs
-            self.form['Status:'] = status
-            self.form['Last updated:'] = last_upd
+            if repo != 'sbo':
+                data = self.repository_data(repo)
+                size = units(data[1], data[2])
+                self.form['Repo id:'] = repo
+                self.form['Repo url:'] = self.all_repos[repo]
+                self.form['Total compressed packages:'] = '{0} {1}'.format(
+                    str(size[1][0]), str(size[0][0]))
+                self.form['Total uncompressed packages:'] = '{0} {1}'.format(
+                    str(size[1][1]), str(size[0][1]))
+                self.form['Number of packages:'] = data[0]
+                self.form['Status:'] = status
+                self.form['Last updated:'] = data[3]
+            elif repo == 'sbo':
+                sum_sbo_pkgs = 0
+                for line in open(lib_path + 'sbo_repo/SLACKBUILDS.TXT', 'r'):
+                    if line.startswith('SLACKBUILD NAME: '):
+                        sum_sbo_pkgs += 1
+                with open(log_path + 'sbo/ChangeLog.txt', 'r') as changelog_txt:
+                    last_upd = changelog_txt.readline().replace('\n', '')
+                self.form['Repo id:'] = repo
+                self.form['Repo url:'] = self.all_repos[repo]
+                self.form['Total compressed packages:'] = ''
+                self.form['Total uncompressed packages:'] = ''
+                self.form['Number of packages:'] = sum_sbo_pkgs
+                self.form['Status:'] = status
+                self.form['Last updated:'] = last_upd
         print('')
         for key, value in sorted(self.form.iteritems()):
             print color['GREY'] + key + color['ENDC'], value

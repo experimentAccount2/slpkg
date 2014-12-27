@@ -536,7 +536,7 @@ class Initialization(object):
 class Update(object):
 
     def __init__(self):
-        self.repos = 'Initialization()'
+        self._init = 'Initialization()'
 
     def repository(self):
         '''
@@ -547,7 +547,7 @@ class Update(object):
             sys.stdout.write("{0}Update repository {1} ...{2}".format(
                 color['GREY'], repo, color['ENDC']))
             sys.stdout.flush()
-            exec('{0}.{1}()'.format(self.repos, repo))
+            exec('{0}.{1}()'.format(self._init, repo))
             sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
                                                    color['ENDC']))
         print("")   # new line at end

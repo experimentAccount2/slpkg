@@ -23,6 +23,7 @@
 
 import sys
 
+from repolist import RepoList
 from __metadata__ import (
     __version__,
     repositories
@@ -78,8 +79,14 @@ def options():
 def usage(repo):
     error_repo = ""
     if repo and repo not in repositories:
-        error_repo = ("slpkg: error: repository '{0}' is not activated or "
-                      "does not exist\n".format(repo))
+        all_repos = RepoList().all_repos
+        del RepoList().all_repos
+        if repo in all_repos:
+            error_repo = ("slpkg: error: repository '{0}' is not activated"
+                          "\n".format(repo))
+        else:
+            error_repo = ("slpkg: error: repository '{0}' does not exist"
+                          "\n".format(repo))
     view = [
         "slpkg - version {0}\n".format(__version__),
         "Usage: slpkg [-h] [-v] [-a script.tar.gz [sources...]]",

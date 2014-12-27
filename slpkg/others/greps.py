@@ -174,7 +174,7 @@ def fix_slackers_pkg(name):
     # This trick fix spliting 'NoneType' packages
     # reference wrong name between PACKAGE.TXT and
     # FILELIST.TXT
-    return "WRONG_FILE-0-noarch-0.txz"
+    return ""
 
 
 class Requires(object):

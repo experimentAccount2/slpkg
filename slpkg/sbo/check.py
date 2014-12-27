@@ -225,7 +225,7 @@ def order_list(upgrade_names):
 
 def store(dependencies):
     '''
-    In the end lest a check of the packages that are on the list
+    In the end last a check of the packages that are on the list
     are already installed.
     '''
     (upgrade_name,

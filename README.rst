@@ -89,10 +89,9 @@ The big advantages is resolving dependencies packages from repositories and moni
 upgraded packages.
 
 Also you can install official packages of your favorite distribution directly from the 
-official repositories
-of Slackware. Even you can check for the official updates and install them.
+official repositories of Slackware. Even you can check for the official updates and install them.
 
-And as we say Slackers, Keep it Simple Stupid!
+More features come ...
 
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/slpkg_package.png
     :target: https://github.com/dslackw/slpkg
@@ -273,6 +272,9 @@ and update the package lists:
     Update repository slonly ...Done
     Update repository ktown ...Done
     Update repository salix ..................Done
+    Update repository slacke ...Done
+    Update repository slackl ...Done
+    Update repository multi ...Done
 
 
 Take information repositories with commands:
@@ -290,7 +292,7 @@ Take information repositories with commands:
       rlw              http://rlworkman.net/pkgs/                           enabled
       salix            http://download.salixos.org/                         enabled
       sbo              http://slackbuilds.org/slackbuilds/                  enabled
-      slack            http://ftp.cc.uoc.gr/mirrors/linux/slackware/        enabled
+      slack            http://mirrors.slackware.com/slackware/              enabled
       slacke           http://ngc891.blogdns.net/pub/                       enabled
       slackl           http://www.slackel.gr/repo/                          enabled
       slackr           http://www.slackers.it/repository/                  disabled
