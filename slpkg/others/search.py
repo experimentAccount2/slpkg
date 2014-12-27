@@ -6,7 +6,7 @@
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
 
-# Utility for easy management packages in Slackware
+# Slpkg is a user-friendly package manager for Slackware installations
 
 # https://github.com/dslackw/slpkg
 
@@ -24,8 +24,10 @@
 import sys
 
 from slpkg.blacklist import BlackList
-from slpkg.__metadata__ import lib_path
 from slpkg.splitting import split_package
+from slpkg.__metadata__ import (
+    lib_path
+)
 
 
 def search_pkg(name, repo):
@@ -35,16 +37,14 @@ def search_pkg(name, repo):
     '''
     try:
         blacklist = BlackList().packages()
-        repo_dir = {
-            "rlw": "rlw_repo/PACKAGES.TXT",
-            "alien": "alien_repo/PACKAGES.TXT",
-            "slacky": "slacky_repo/PACKAGES.TXT",
-            "studio": "studio_repo/PACKAGES.TXT"
-        }
-        with open(lib_path + repo_dir[repo], "r") as PACKAGES_TXT:
+        with open(lib_path + '{0}_repo/PACKAGES.TXT'.format(
+                repo), "r") as PACKAGES_TXT:
             for line in PACKAGES_TXT:
-                if line.startswith("PACKAGE NAME:  "):
-                    pkg_name = split_package(line[15:])[0].strip()
+                if line.startswith("PACKAGE NAME:  ") and len(line) > 16:
+                    if repo == 'slackr':
+                        pkg_name = line[15:].strip()
+                    else:
+                        pkg_name = split_package(line[15:])[0].strip()
                     if name == pkg_name and name not in blacklist:
                         PACKAGES_TXT.close()
                         return pkg_name

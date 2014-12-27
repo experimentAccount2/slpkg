@@ -6,7 +6,7 @@
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
 
-# Utility for easy management packages in Slackware
+# Slpkg is a user-friendly package manager for Slackware installations
 
 # https://github.com/dslackw/slpkg
 
@@ -33,7 +33,6 @@ from slpkg.downloader import Download
 from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
 from slpkg.messages import (
-    slacky_error,
     pkg_not_found,
     template
 )
@@ -43,7 +42,8 @@ from slpkg.__metadata__ import (
     log_path,
     slpkg_tmp_packages,
     default_answer,
-    color
+    color,
+    slacke_sub_repo
 )
 
 from slpkg.pkg.find import find_package
@@ -62,46 +62,96 @@ class OthersInstall(object):
         self.repo = repo
         self.version = version
         self.tmp_path = slpkg_tmp_packages
-        if (not os.path.isfile(lib_path + "slack_repo/PACKAGES.TXT") and
-                repo == "slacky"):
-            slacky_error()
-            sys.exit(0)
-        repos = Repo()
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
               color['CYAN'], self.package, color['ENDC']))
         sys.stdout.write("{0}Reading package lists ...{1}".format(
             color['GREY'], color['ENDC']))
         sys.stdout.flush()
         self.step = 700
-        repos = Repo()
-        if self.repo == "rlw":
-            lib = lib_path + "rlw_repo/PACKAGES.TXT"
-            self.mirror = "{0}{1}/".format(repos.rlw(), slack_ver())
-        elif self.repo == "alien":
-            lib = lib_path + "alien_repo/PACKAGES.TXT"
-            self.mirror = repos.alien()
-            self.step = self.step * 2
-        elif self.repo == "slacky":
-            lib = lib_path + "slacky_repo/PACKAGES.TXT"
-            arch = ""
-            if os.uname()[4] == "x86_64":
-                arch = "64"
-            self.mirror = "{0}slackware{1}-{2}/".format(repos.slacky(), arch,
-                                                        slack_ver())
-            self.step = self.step * 2
-        elif self.repo == "studio":
-            lib = lib_path + "studio_repo/PACKAGES.TXT"
-            arch = ""
-            if os.uname()[4] == "x86_64":
-                arch = "64"
-            self.mirror = "{0}slackware{1}-{2}/".format(repos.studioware(),
-                                                        arch, slack_ver())
-            self.step = self.step * 2
 
-        f = open(lib, "r")
+        exec('self._init_{0}()'.format(self.repo))
+
+        f = open(self.lib, "r")
         self.PACKAGES_TXT = f.read()
         f.close()
         sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))
+
+    def _init_rlw(self):
+        self.lib = lib_path + "rlw_repo/PACKAGES.TXT"
+        self.mirror = "{0}{1}/".format(Repo().rlw(), slack_ver())
+
+    def _init_alien(self):
+        self.lib = lib_path + "alien_repo/PACKAGES.TXT"
+        self.mirror = Repo().alien()
+        self.step = self.step * 2
+
+    def _init_slacky(self):
+        self.lib = lib_path + "slacky_repo/PACKAGES.TXT"
+        arch = ""
+        if os.uname()[4] == "x86_64":
+            arch = "64"
+        self.mirror = "{0}slackware{1}-{2}/".format(Repo().slacky(), arch,
+                                                    slack_ver())
+        self.step = self.step * 2
+
+    def _init_studio(self):
+        self.lib = lib_path + "studio_repo/PACKAGES.TXT"
+        arch = ""
+        if os.uname()[4] == "x86_64":
+            arch = "64"
+        self.mirror = "{0}slackware{1}-{2}/".format(Repo().studioware(),
+                                                    arch, slack_ver())
+        self.step = self.step * 2
+
+    def _init_slackr(self):
+        self.lib = lib_path + "slackr_repo/PACKAGES.TXT"
+        self.mirror = Repo().slackers()
+        self.step = self.step * 2
+
+    def _init_slonly(self):
+        self.lib = lib_path + "slonly_repo/PACKAGES.TXT"
+        arch = "{0}-x86".format(slack_ver())
+        if os.uname()[4] == "x86_64":
+            arch = "{0}-x86_64".format(slack_ver())
+        self.mirror = "{0}{1}/".format(Repo().slackonly(), arch)
+        self.step = self.step * 3
+
+    def _init_ktown(self):
+        self.lib = lib_path + "ktown_repo/PACKAGES.TXT"
+        self.mirror = Repo().ktown()
+        self.step = self.step * 2
+
+    def _init_multi(self):
+        self.lib = lib_path + "multi_repo/PACKAGES.TXT"
+        self.mirror = Repo().multi()
+        self.step = self.step * 2
+
+    def _init_slacke(self):
+        arch = ""
+        if os.uname()[4] == "x86_64":
+            arch = "64"
+        elif os.uname()[4] == "arm":
+            arch = "arm"
+        self.lib = lib_path + "slacke_repo/PACKAGES.TXT"
+        self.mirror = "{0}slacke{1}/slackware{2}-{3}/".format(
+            Repo().slacke(), slacke_sub_repo[1:-1], arch, slack_ver())
+        self.step = self.step * 2
+
+    def _init_salix(self):
+        arch = "i486"
+        if os.uname()[4] == "x86_64":
+            arch = "x86_64"
+        self.lib = lib_path + "salix_repo/PACKAGES.TXT"
+        self.mirror = "{0}{1}/{2}/".format(Repo().salix(), arch, slack_ver())
+        self.step = self.step * 2
+
+    def _init_slackl(self):
+        arch = "i486"
+        if os.uname()[4] == "x86_64":
+            arch = "x86_64"
+        self.lib = lib_path + "slackl_repo/PACKAGES.TXT"
+        self.mirror = "{0}{1}/current/".format(Repo().slackel(), arch)
+        self.step = self.step * 2
 
     def start(self):
         '''
@@ -109,8 +159,8 @@ class OthersInstall(object):
         '''
         try:
             dependencies = resolving_deps(self.package, self.repo)
-            (dwn_links, install_all, comp_sum, uncomp_sum,
-                matching) = self.store(dependencies)
+            (dwn_links, install_all, comp_sum, uncomp_sum
+             ) = self.store(dependencies)
             sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
                                                    color['ENDC']))
             print("")   # new line at start
@@ -124,46 +174,34 @@ class OthersInstall(object):
                     "Repos", " " * 10,
                     "Size"))
                 template(78)
-                if not matching:
-                    print("Installing:")
-                    sums = views(install_all, comp_sum, self.repo, dependencies)
-                    unit, size = units(comp_sum, uncomp_sum)
-                    msg = msgs(install_all, sums[2])
-                    print("\nInstalling summary")
-                    print("=" * 79)
-                    print("{0}Total {1} {2}.".format(color['GREY'],
-                                                     len(install_all), msg[0]))
-                    print("{0} {1} will be installed, {2} will be upgraded and "
-                          "{3} will be resettled.".format(sums[2], msg[1],
-                                                          sums[1], sums[0]))
-                    print("Need to get {0} {1} of archives.".format(size[0],
-                                                                    unit[0]))
-                    print("After this process, {0} {1} of additional disk "
-                          "space will be used.{2}".format(size[1], unit[1],
-                                                          color['ENDC']))
-                    if default_answer == "y":
-                        answer = default_answer
-                    else:
-                        answer = raw_input("\nWould you like to continue " +
-                                           "[Y/n]? ")
-                    if answer in ['y', 'Y']:
-                        install_all.reverse()
-                        Download(self.tmp_path, dwn_links).start()
-                        install(self.tmp_path, install_all, self.repo,
-                                self.version)
-                        write_deps(dependencies)
-                        delete(self.tmp_path, install_all)
+                print("Installing:")
+                sums = views(install_all, comp_sum, self.repo, dependencies)
+                unit, size = units(comp_sum, uncomp_sum)
+                msg = msgs(install_all, sums[2])
+                print("\nInstalling summary")
+                print("=" * 79)
+                print("{0}Total {1} {2}.".format(color['GREY'],
+                                                 len(install_all), msg[0]))
+                print("{0} {1} will be installed, {2} will be upgraded and "
+                      "{3} will be resettled.".format(sums[2], msg[1],
+                                                      sums[1], sums[0]))
+                print("Need to get {0} {1} of archives.".format(size[0],
+                                                                unit[0]))
+                print("After this process, {0} {1} of additional disk "
+                      "space will be used.{2}".format(size[1], unit[1],
+                                                      color['ENDC']))
+                if default_answer == "y":
+                    answer = default_answer
                 else:
-                    print("Matching:")
-                    sums = views(install_all, comp_sum, self.repo, dependencies)
-                    msg = msgs(install_all, sums[2])
-                    print("\nInstalling summary")
-                    print("=" * 79)
-                    print("{0}Total found {1} matching {2}.".format(
-                        color['GREY'], len(install_all), msg[1]))
-                    print("{0} installed {1} and {2} uninstalled {3}.{4}"
-                          "\n".format(sums[0] + sums[1], msg[0], sums[2],
-                                      msg[1], color['ENDC']))
+                    answer = raw_input("\nWould you like to continue " +
+                                       "[Y/n]? ")
+                if answer in ['y', 'Y']:
+                    install_all.reverse()
+                    Download(self.tmp_path, dwn_links).start()
+                    install(self.tmp_path, install_all, self.repo,
+                            self.version)
+                    write_deps(dependencies)
+                    delete(self.tmp_path, install_all)
             else:
                 pkg_not_found("", self.package, "No matching", "\n")
         except KeyboardInterrupt:
@@ -176,7 +214,6 @@ class OthersInstall(object):
         '''
         dwn, install, comp_sum, uncomp_sum = ([] for i in range(4))
         black = BlackList().packages()
-        matching = False
         # name = data[0]
         # location = data[1]
         # size = data[2]
@@ -202,13 +239,11 @@ class OthersInstall(object):
                     install.append(name)
                     comp_sum.append(comp)
                     uncomp_sum.append(uncomp)
-                    if len(install) > 1:
-                        matching = True
         dwn.reverse()
         install.reverse()
         comp_sum.reverse()
         uncomp_sum.reverse()
-        return [dwn, install, comp_sum, uncomp_sum, matching]
+        return [dwn, install, comp_sum, uncomp_sum]
 
 
 def views(install_all, comp_sum, repository, dependencies):
@@ -217,13 +252,7 @@ def views(install_all, comp_sum, repository, dependencies):
     '''
     count = pkg_sum = uni_sum = upg_sum = 0
     # fix repositories align
-    align = {
-        'rlw': ' ' * 3,
-        'alien': ' ',
-        'slacky': '',
-        'studio': ''
-    }
-    repository += align[repository]
+    repository = repository + (' ' * (6 - (len(repository))))
     for pkg, comp in zip(install_all, comp_sum):
         pkg_split = split_package(pkg[:-4])
         if find_package(pkg_split[0] + "-" + pkg_split[1], pkg_path):
@@ -235,10 +264,10 @@ def views(install_all, comp_sum, repository, dependencies):
         else:
             COLOR = color['RED']
             uni_sum += 1
-        print(" {0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11:>11}{12}".format(
+        print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>11}{12}".format(
             COLOR, pkg_split[0], color['ENDC'],
-            " " * (25-len(pkg_split[0])), pkg_split[1],
-            " " * (19-len(pkg_split[1])), pkg_split[2],
+            " " * (24-len(pkg_split[0])), pkg_split[1],
+            " " * (18-len(pkg_split[1])), pkg_split[2],
             " " * (8-len(pkg_split[2])), pkg_split[3],
             " " * (7-len(pkg_split[3])), repository,
             comp, " K"))

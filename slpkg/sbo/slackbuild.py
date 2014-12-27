@@ -6,7 +6,7 @@
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
 
-# Utility for easy management packages in Slackware
+# Slpkg is a user-friendly package manager for Slackware installations
 
 # https://github.com/dslackw/slpkg
 
@@ -260,10 +260,10 @@ def view_packages(*args):
     '''
     View slackbuild packages with version and arch
     '''
-    print(" {0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
+    print(" {0}{1}{2}{3} {4}{5}{6} {7}{8}{9}{10}".format(
         args[0], args[1], color['ENDC'],
-        " " * (38-len(args[1])), args[2],
-        " " * (17-len(args[2])), args[3], args[4], color['ENDC'],
+        " " * (37-len(args[1])), args[2],
+        " " * (16-len(args[2])), args[3], args[4], color['ENDC'],
         " " * (13-len(args[4])), "SBo"))
 
 

@@ -6,7 +6,7 @@
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
 
-# Utility for easy management packages in Slackware
+# Slpkg is a user-friendly package manager for Slackware installations
 
 # https://github.com/dslackw/slpkg
 
@@ -59,7 +59,7 @@ class Repo(object):
 
     def alien(self):
         '''
-        Alien repository
+        Alien's slackbuilds repository
         '''
         return "http://www.slackware.com/~alien/slackbuilds/"
 
@@ -74,3 +74,45 @@ class Repo(object):
         Studioware repository
         '''
         return "http://studioware.org/files/packages/"
+
+    def slackers(self):
+        '''
+        Slackers.it repository
+        '''
+        return "http://www.slackers.it/repository/"
+
+    def slackonly(self):
+        '''
+        Slackonly.com repository
+        '''
+        return "https://slackonly.com/pub/packages/"
+
+    def ktown(self):
+        '''
+        Alien's ktown repository
+        '''
+        return "http://alien.slackbook.org/ktown/"
+
+    def multi(self):
+        '''
+        Alien's multilib repository
+        '''
+        return "http://www.slackware.com/~alien/multilib/"
+
+    def slacke(self):
+        '''
+        Slacke slacke{17|18} repository
+        '''
+        return "http://ngc891.blogdns.net/pub/"
+
+    def salix(self):
+        '''
+        SalixOS salix repository
+        '''
+        return "http://download.salixos.org/"
+
+    def slackel(self):
+        '''
+        Slackel.gr slackel repository
+        '''
+        return "http://www.slackel.gr/repo/"

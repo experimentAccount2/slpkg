@@ -6,7 +6,7 @@
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
 
-# Utility for easy management packages in Slackware
+# Slpkg is a user-friendly package manager for Slackware installations
 
 # https://github.com/dslackw/slpkg
 
@@ -225,7 +225,7 @@ def order_list(upgrade_names):
 
 def store(dependencies):
     '''
-    In the end lest a check of the packages that are on the list
+    In the end last a check of the packages that are on the list
     are already installed.
     '''
     (upgrade_name,
@@ -276,9 +276,9 @@ def view_packages(package_for_upgrade, upgrade_version, upgrade_arch):
         else:
             COLOR = color['RED']
             count_installed += 1
-        print(" {0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
-            COLOR, upg, color['ENDC'], " " * (38-len(upg)), color['GREEN'],
-            ver, color['ENDC'], " " * (17-len(ver)), arch,
+        print(" {0}{1}{2}{3} {4}{5}{6} {7}{8}{9}{10}".format(
+            COLOR, upg, color['ENDC'], " " * (37-len(upg)), color['GREEN'],
+            ver, color['ENDC'], " " * (16-len(ver)), arch,
             " " * (13-len(arch)), "SBo"))
     msg_upg = "package"
     msg_ins = msg_upg

@@ -6,7 +6,7 @@
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
 
-# Utility for easy management packages in Slackware
+# Slpkg is a user-friendly package manager for Slackware installations
 
 # https://github.com/dslackw/slpkg
 
@@ -34,6 +34,7 @@ def find_package(find_pkg, directory):
     pkgs = []
     blacklist = BlackList().packages()
     for pkg in sorted(os.listdir(directory)):
-        if pkg.startswith(find_pkg)and split_package(pkg)[0] not in blacklist:
+        if (not pkg.startswith('.') and pkg.startswith(find_pkg)
+                and split_package(pkg)[0] not in blacklist):
             pkgs.append(pkg)
     return pkgs

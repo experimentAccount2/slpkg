@@ -6,7 +6,7 @@
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
 
-# Utility for easy management packages in Slackware
+# Slpkg is a user-friendly package manager for Slackware installations
 
 # https://github.com/dslackw/slpkg
 
@@ -26,6 +26,7 @@ import sys
 
 from slpkg.sizes import units
 from slpkg.remove import delete
+from slpkg.toolbar import status
 from slpkg.repositories import Repo
 from slpkg.messages import template
 from slpkg.checksum import check_md5
@@ -38,9 +39,11 @@ from slpkg.__metadata__ import (
     lib_path,
     slpkg_tmp_packages,
     default_answer,
-    color
+    color,
+    slacke_sub_repo
 )
 
+from slpkg.pkg.find import find_package
 from slpkg.pkg.manager import PackageManager
 
 from slpkg.slack.slack_version import slack_ver
@@ -54,46 +57,101 @@ class OthersUpgrade(object):
         self.repo = repo
         self.version = version
         self.tmp_path = slpkg_tmp_packages
-        repos = Repo()
         sys.stdout.write("{0}Reading package lists ...{1}".format(
             color['GREY'], color['ENDC']))
         sys.stdout.flush()
         self.step = 700
-        repos = Repo()
-        if self.repo == "rlw":
-            lib = lib_path + "rlw_repo/PACKAGES.TXT"
-            self.mirror = "{0}{1}/".format(repos.rlw(), slack_ver())
-        elif self.repo == "alien":
-            lib = lib_path + "alien_repo/PACKAGES.TXT"
-            self.mirror = repos.alien()
-            self.step = self.step * 2
-        elif self.repo == "slacky":
-            lib = lib_path + "slacky_repo/PACKAGES.TXT"
-            arch = ""
-            if os.uname()[4] == "x86_64":
-                arch = "64"
-            self.mirror = "{0}slackware{1}-{2}/".format(repos.slacky(), arch,
-                                                        slack_ver())
-            self.step = self.step * 2
-        elif self.repo == "studio":
-            lib = lib_path + "studio_repo/PACKAGES.TXT"
-            arch = ""
-            if os.uname()[4] == "x86_64":
-                arch = "64"
-            self.mirror = "{0}slackware{1}-{2}/".format(repos.studioware(),
-                                                        arch, slack_ver())
-            self.step = self.step * 2
 
-        f = open(lib, "r")
+        exec('self._init_{0}()'.format(self.repo))
+
+        f = open(self.lib, "r")
         self.PACKAGES_TXT = f.read()
         f.close()
+
+    def _init_rlw(self):
+        self.lib = lib_path + "rlw_repo/PACKAGES.TXT"
+        self.mirror = "{0}{1}/".format(Repo().rlw(), slack_ver())
+
+    def _init_alien(self):
+        self.lib = lib_path + "alien_repo/PACKAGES.TXT"
+        self.mirror = Repo().alien()
+        self.step = self.step * 2
+
+    def _init_slacky(self):
+        self.lib = lib_path + "slacky_repo/PACKAGES.TXT"
+        arch = ""
+        if os.uname()[4] == "x86_64":
+            arch = "64"
+        self.mirror = "{0}slackware{1}-{2}/".format(Repo().slacky(), arch,
+                                                    slack_ver())
+        self.step = self.step * 2
+
+    def _init_studio(self):
+        self.lib = lib_path + "studio_repo/PACKAGES.TXT"
+        arch = ""
+        if os.uname()[4] == "x86_64":
+            arch = "64"
+        self.mirror = "{0}slackware{1}-{2}/".format(Repo().studioware(),
+                                                    arch, slack_ver())
+        self.step = self.step * 2
+
+    def _init_slackr(self):
+        self.lib = lib_path + "slackr_repo/PACKAGES.TXT"
+        self.mirror = Repo().slackers()
+        self.step = self.step * 2
+
+    def _init_slonly(self):
+        self.lib = lib_path + "slonly_repo/PACKAGES.TXT"
+        arch = "{0}-x86".format(slack_ver())
+        if os.uname()[4] == "x86_64":
+            arch = "{0}-x86_64".format(slack_ver())
+        self.mirror = "{0}{1}/".format(Repo().slackonly(), arch)
+        self.step = self.step * 3
+
+    def _init_ktown(self):
+        self.lib = lib_path + "ktown_repo/PACKAGES.TXT"
+        self.mirror = Repo().ktown()
+        self.step = self.step * 2
+
+    def _init_multi(self):
+        self.lib = lib_path + "multi_repo/PACKAGES.TXT"
+        self.mirror = Repo().multi()
+        self.step = self.step * 2
+
+    def _init_slacke(self):
+        arch = ""
+        if os.uname()[4] == "x86_64":
+            arch = "64"
+        elif os.uname()[4] == "arm":
+            arch = "arm"
+        self.lib = lib_path + "slacke_repo/PACKAGES.TXT"
+        self.mirror = "{0}slacke{1}/slackware{2}-{3}/".format(
+            Repo().slacke(), slacke_sub_repo[1:-1], arch, slack_ver())
+        self.step = self.step * 2
+
+    def _init_salix(self):
+        arch = "i486"
+        if os.uname()[4] == "x86_64":
+            arch = "x86_64"
+        self.lib = lib_path + "salix_repo/PACKAGES.TXT"
+        self.mirror = "{0}{1}/{2}/".format(Repo().salix(), arch, slack_ver())
+        self.step = self.step * 2
+
+    def _init_slackl(self):
+        arch = "i486"
+        if os.uname()[4] == "x86_64":
+            arch = "x86_64"
+        self.lib = lib_path + "slackl_repo/PACKAGES.TXT"
+        self.mirror = "{0}{1}/current/".format(Repo().slackel(), arch)
+        self.step = self.step * 2
 
     def start(self):
         '''
         Install packages from official Slackware distribution
         '''
         try:
-            dwn_links, upgrade_all, comp_sum, uncomp_sum = self.store()
+            (pkg_for_upgrade, dwn_links, upgrade_all, comp_sum,
+             uncomp_sum) = self.store()
             sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
                                                    color['ENDC']))
             print("")   # new line at start
@@ -101,14 +159,14 @@ class OthersUpgrade(object):
                 template(78)
                 print("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
                     "| Package", " " * 17,
-                    "New version", " " * 8,
+                    "New version", " " * 9,
                     "Arch", " " * 4,
                     "Build", " " * 2,
-                    "Repos", " " * 10,
+                    "Repos", " " * 9,
                     "Size"))
                 template(78)
                 print("Upgrading:")
-                views(upgrade_all, comp_sum, self.repo)
+                views(pkg_for_upgrade, upgrade_all, comp_sum, self.repo)
                 unit, size = units(comp_sum, uncomp_sum)
                 msg = msgs(upgrade_all)
                 print("\nInstalling summary")
@@ -130,7 +188,7 @@ class OthersUpgrade(object):
                     upgrade(self.tmp_path, upgrade_all, self.repo, self.version)
                     delete(self.tmp_path, upgrade_all)
             else:
-                print("No new updates in the repository '{0}'\n".format(
+                print("No new updates from repository '{0}'\n".format(
                     self.repo))
         except KeyboardInterrupt:
             print("")   # new line at exit
@@ -140,65 +198,54 @@ class OthersUpgrade(object):
         '''
         Store and return packages for install
         '''
-        dwn, install, comp_sum, uncomp_sum = ([] for i in range(4))
-        black = BlackList().packages()
+        pkg_for_upgrade, dwn, install, comp_sum, uncomp_sum = (
+            [] for i in range(5))
         # name = data[0]
         # location = data[1]
         # size = data[2]
         # unsize = data[3]
-        installed = self.installed()
         data = repo_data(self.PACKAGES_TXT, self.step, self.repo, self.version)
-        for pkg in installed:
+        index, toolbar_width = 0, 700
+        for pkg in self.installed():
+            index += 1
+            toolbar_width = status(index, toolbar_width, 10)
             for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
                                                data[3]):
                 inst_pkg = split_package(pkg)
-                repo_pkg = split_package(name[:-4])
+                if name:    # this tips because some pkg_name is empty
+                    repo_pkg = split_package(name[:-4])
                 if (repo_pkg[0] == inst_pkg[0] and
-                        name[:-4] > pkg and inst_pkg[0] not in black):
+                        repo_pkg[1] > inst_pkg[1] and
+                        inst_pkg[0] not in BlackList().packages()):
                     # store downloads packages by repo
                     dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
                     install.append(name)
                     comp_sum.append(comp)
                     uncomp_sum.append(uncomp)
-        return [dwn, install, comp_sum, uncomp_sum]
+                    pkg_for_upgrade.append('{0}-{1}'.format(
+                        inst_pkg[0], inst_pkg[1]))
+        return [pkg_for_upgrade, dwn, install, comp_sum, uncomp_sum]
 
     def installed(self):
         '''
-        Return all installed packages by repository
+        Return all installed packages
         '''
-        packages = []
-        repository = {
-            'rlw': '_rlw',
-            'alien': 'alien',
-            'slacky': 'sl',
-            'studio': 'se'
-        }
-        repo = repository[self.repo]
-        for pkg in os.listdir(pkg_path):
-            if pkg.endswith(repo):
-                packages.append(pkg)
-        return packages
+        return find_package('', pkg_path)
 
 
-def views(upgrade_all, comp_sum, repository):
+def views(pkg_for_upgrade, upgrade_all, comp_sum, repository):
     '''
     Views packages
     '''
     upg_sum = 0
     # fix repositories align
-    align = {
-        'rlw': ' ' * 3,
-        'alien': ' ',
-        'slacky': '',
-        'studio': ''
-    }
-    repository += align[repository]
-    for pkg, comp in zip(upgrade_all, comp_sum):
+    repository = repository + (' ' * (6 - (len(repository))))
+    for upg, pkg, comp in zip(pkg_for_upgrade, upgrade_all, comp_sum):
         pkg_split = split_package(pkg[:-4])
         upg_sum += 1
-        print(" {0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11:>11}{12}".format(
-            color['YELLOW'], pkg_split[0], color['ENDC'],
-            " " * (25-len(pkg_split[0])), pkg_split[1],
+        print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>10}{12}".format(
+            color['YELLOW'], upg, color['ENDC'],
+            " " * (24-len(upg)), pkg_split[1],
             " " * (19-len(pkg_split[1])), pkg_split[2],
             " " * (8-len(pkg_split[2])), pkg_split[3],
             " " * (7-len(pkg_split[3])), repository,

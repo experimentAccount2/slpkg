@@ -6,11 +6,11 @@
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
 
-# Utility for easy management packages in Slackware
+# Slpkg is a user-friendly package manager for Slackware installations
 
 # https://github.com/dslackw/slpkg
 
-# This program is free software: you can redistribute it and/or modify
+# Slpkg is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
@@ -23,10 +23,9 @@
 
 import os
 
-
 __all__ = "slpkg"
 __author__ = "dslackw"
-__version_info__ = (2, 1, 4)
+__version_info__ = (2, 1, 5)
 __version__ = "{0}.{1}.{2}".format(*__version_info__)
 __license__ = "GNU General Public License v3 (GPLv3)"
 __email__ = "d.zlatanidis@gmail.com"
@@ -42,8 +41,40 @@ repositories = [
     'rlw',
     'alien',
     'slacky',
-    'studio'
+    'studio',
+    'slackr',
+    'slonly',
+    'ktown{latest}',
+    'multi',
+    'slacke{18}',
+    'salix',
+    'slackl'
 ]
+
+
+def ktown_repo(repositories):
+    '''
+    Find if ktown repositories enabled then
+    take SUB_REPOSITORY
+    '''
+    for i, repo in enumerate(repositories):
+        if 'ktown' in repo:
+            sub = repositories[i].replace('ktown', '')
+            repositories[i] = 'ktown'
+            return sub
+
+
+def slacke_repo(repositories):
+    '''
+    Find if slacke repositories enabled then
+    take SUB_REPOSITORY
+    '''
+    for i, repo in enumerate(repositories):
+        if 'slacke' in repo:
+            sub = repositories[i].replace('slacke', '')
+            repositories[i] = 'slacke'
+            return sub
+
 build_path = "/tmp/slpkg/build/"
 slpkg_tmp_packages = tmp + "slpkg/packages/"
 slpkg_tmp_patches = tmp + "slpkg/patches/"
@@ -94,16 +125,19 @@ if os.path.isfile("/etc/slpkg/slpkg.conf"):
         if line.startswith("USE_COLORS"):
             use_colors = line[11:].strip()
 
-if use_colors == "on":
-    color = {
-        'RED': '\x1b[31m',
-        'GREEN': '\x1b[32m',
-        'YELLOW': '\x1b[33m',
-        'CYAN': '\x1b[36m',
-        'GREY': '\x1b[38;5;247m',
-        'ENDC': '\x1b[0m'
-    }
-else:
+ktown_kde_repo = ktown_repo(repositories)
+slacke_sub_repo = slacke_repo(repositories)
+
+color = {
+    'RED': '\x1b[31m',
+    'GREEN': '\x1b[32m',
+    'YELLOW': '\x1b[33m',
+    'CYAN': '\x1b[36m',
+    'GREY': '\x1b[38;5;247m',
+    'ENDC': '\x1b[0m'
+}
+
+if use_colors == "off":
     color = {
         'RED': '',
         'GREEN': '',

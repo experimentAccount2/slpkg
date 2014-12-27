@@ -6,7 +6,7 @@
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
 
-# Utility for easy management packages in Slackware
+# Slpkg is a user-friendly package manager for Slackware installations
 
 # https://github.com/dslackw/slpkg
 
@@ -20,6 +20,8 @@
 # GNU General Public License for more details.
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+import sys
 
 from __metadata__ import (
     __version__,
@@ -35,3 +37,4 @@ def prog_version():
     print("Version : {0}".format(__version__))
     print("Licence : {0}".format(__license__))
     print("Email   : {0}".format(__email__))
+    sys.exit(0)

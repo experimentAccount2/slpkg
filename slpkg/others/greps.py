@@ -6,7 +6,7 @@
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
 
-# Utility for easy management packages in Slackware
+# Slpkg is a user-friendly package manager for Slackware installations
 
 # https://github.com/dslackw/slpkg
 
@@ -24,11 +24,12 @@
 import os
 
 from slpkg.toolbar import status
-from slpkg.__metadata__ import lib_path
 from slpkg.splitting import split_package
 from slpkg.slack.slack_version import slack_ver
-
-len_deps = 0
+from slpkg.__metadata__ import (
+    lib_path,
+    ktown_kde_repo
+)
 
 
 def repo_data(PACKAGES_TXT, step, repo, version):
@@ -42,7 +43,10 @@ def repo_data(PACKAGES_TXT, step, repo, version):
         index += 1
         toolbar_width = status(index, toolbar_width, step)
         if line.startswith("PACKAGE NAME"):
-            name.append(line[15:].strip())
+            if repo == "slackr":
+                name.append(fix_slackers_pkg(line[15:]))
+            else:
+                name.append(line[15:].strip())
         if line.startswith("PACKAGE LOCATION"):
             location.append(line[21:].strip())
         if line.startswith("PACKAGE SIZE (compressed):  "):
@@ -61,7 +65,20 @@ def repo_data(PACKAGES_TXT, step, repo, version):
          rsize,
          runsize
          ) = alien_filter(name, location, size, unsize, version)
-    elif repo in ["slacky", "studio"]:
+    elif repo == "ktown":
+        (rname,
+         rlocation,
+         rsize,
+         runsize
+         ) = ktown_filter(name, location, size, unsize, version)
+    elif repo == "multi":
+        (rname,
+         rlocation,
+         rsize,
+         runsize
+         ) = multi_filter(name, location, size, unsize, version)
+    elif repo in ["slacky", "studio", "slackr", "slonly", "slacke",
+                  "salix", "slackl"]:
         rname, rlocation, rsize, runsize = name, location, size, unsize
     return [rname, rlocation, rsize, runsize]
 
@@ -86,7 +103,7 @@ def rlw_filter(name, location, size, unsize):
 
 def alien_filter(name, location, size, unsize, version):
     '''
-    Filter alien repository data
+    Filter Alien's repository data
     '''
     ver = slack_ver()
     if version == "current":
@@ -104,40 +121,94 @@ def alien_filter(name, location, size, unsize, version):
     return [fname, flocation, fsize, funsize]
 
 
+def ktown_filter(name, location, size, unsize, version):
+    '''
+    Filter Alien's ktown repository data
+    '''
+    ver = slack_ver()
+    if version == "current":
+        ver = "current"
+    path_pkg = "x86"
+    if os.uname()[4] == "x86_64":
+        path_pkg = os.uname()[4]
+    (fname, flocation, fsize, funsize) = ([] for i in range(4))
+    for n, l, s, u in zip(name, location, size, unsize):
+        if path_pkg in l and ktown_kde_repo[1:-1] in l and l.startswith(ver):
+            fname.append(n)
+            flocation.append(l)
+            fsize.append(s)
+            funsize.append(u)
+    return [fname, flocation, fsize, funsize]
+
+
+def multi_filter(name, location, size, unsize, version):
+    '''
+    Filter Alien's multilib repository data
+    '''
+    ver = slack_ver()
+    if version == "current":
+        ver = "current"
+    (fname, flocation, fsize, funsize) = ([] for i in range(4))
+    for n, l, s, u in zip(name, location, size, unsize):
+        if l.startswith(ver):
+            fname.append(n)
+            flocation.append(l)
+            fsize.append(s)
+            funsize.append(u)
+    return [fname, flocation, fsize, funsize]
+
+
+def fix_slackers_pkg(name):
+    '''
+    Fix 'PACKAGE NAME:' from PACKAGES.TXT file
+    Beacause repository slackers.it not report the full
+    name in PACKAGES.TXT file use FILELIST.TXT to
+    get.
+    '''
+    f = open(lib_path + "slackr_repo/FILELIST.TXT", "r")
+    FILELIST_TXT = f.read()
+    f.close()
+    for line in FILELIST_TXT.splitlines():
+        if name in line and line.endswith(".txz"):
+            return line.split("/")[-1].strip()
+    # This trick fix spliting 'NoneType' packages
+    # reference wrong name between PACKAGE.TXT and
+    # FILELIST.TXT
+    return ""
+
+
 class Requires(object):
 
     def __init__(self, name, repo):
         self.name = name
         self.repo = repo
-        lib = lib_path + "slack_repo/PACKAGES.TXT"
-        f = open(lib, "r")
-        self.SLACK_PACKAGES_TXT = f.read()
-        f.close()
 
     def get_deps(self):
         '''
         Grap package requirements from repositories
         '''
-        if self.repo in ["alien", "slacky"]:
-            lib = {
-                'alien': lib_path + "alien_repo/PACKAGES.TXT",
-                'slacky': lib_path + "slacky_repo/PACKAGES.TXT"
-            }
-            f = open(lib[self.repo], "r")
+        if self.repo in ["alien", "slacky", "slackr", "salix", "slackl"]:
+            lib = '{0}{1}_repo/PACKAGES.TXT'.format(lib_path, self.repo)
+            f = open(lib, "r")
             PACKAGES_TXT = f.read()
             f.close()
             for line in PACKAGES_TXT.splitlines():
                 if line.startswith("PACKAGE NAME: "):
-                    pkg = line[14:].strip()
-                    pkg_name = split_package(pkg)[0]
+                    if self.repo == "slackr":
+                        pkg_name = line[14:].strip()
+                    else:
+                        pkg = line[14:].strip()
+                        pkg_name = split_package(pkg)[0]
                 if line.startswith("PACKAGE REQUIRED: "):
                     if pkg_name == self.name:
                         if line[17:].strip():
-                            if self.repo == "slacky":
-                                return self.slacky_req_fix(line)
-
-                            else:
+                            if self.repo in ["slacky", "salix", "slackl"]:
+                                return self._req_fix(line)
+                            elif self.repo == "alien":
                                 return line[18:].strip().split(",")
+                            else:
+                                return line[18:].strip().split()
+
         elif self.repo == "rlw":
             # Robby's repository dependencies as shown in the central page
             # http://rlworkman.net/pkgs/
@@ -154,38 +225,23 @@ class Requires(object):
             else:
                 return ""
 
-    def slacky_req_fix(self, line):
+    def _req_fix(self, line):
         '''
-        Fix slacky requirements because many dependencies splitting
+        Fix slacky and salix requirements because many dependencies splitting
         with ',' and others with '|'
         '''
-        slacky_deps = []
+        deps = []
         for dep in line[18:].strip().split(","):
             dep = dep.split("|")
-            if len(dep) > 1:
-                for d in dep:
-                    slacky_deps.append(d.split()[0])
-            dep = "".join(dep)
-            slacky_deps.append(dep.split()[0])
-        slacky_deps = self.remove_slack_deps(slacky_deps)
-        return slacky_deps
-
-    def remove_slack_deps(self, dependencies):
-        '''
-        Because the repository slacky mentioned packages and dependencies
-        that exist in the distribution Slackware, this feature is intended
-        to remove them and return only those needed.
-        '''
-        global len_deps
-        len_deps += len(dependencies)
-        name, slacky_deps = [], []
-        index, toolbar_width, step = 0, 700, (len_deps * 500)
-        for line in self.SLACK_PACKAGES_TXT.splitlines():
-            index += 1
-            toolbar_width = status(index, toolbar_width, step)
-            if line.startswith("PACKAGE NAME:"):
-                name.append("-".join(line[15:].split("-")[:-3]))
-        for deps in dependencies:
-            if deps not in name:
-                slacky_deps.append(deps)
-        return slacky_deps
+            if self.repo == 'slacky':
+                if len(dep) > 1:
+                    for d in dep:
+                        deps.append(d.split()[0])
+                dep = "".join(dep)
+                deps.append(dep.split()[0])
+            else:
+                if len(dep) > 1:
+                    for d in dep:
+                        deps.append(d)
+                deps.append(dep[0])
+        return deps

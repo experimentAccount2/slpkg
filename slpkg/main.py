@@ -6,7 +6,7 @@
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
 
-# Utility for easy management packages in Slackware
+# Slpkg is a user-friendly package manager for Slackware installations
 
 # https://github.com/dslackw/slpkg
 
@@ -24,7 +24,8 @@
 import sys
 import getpass
 
-from slpkg_update import it_self_update
+from repoinfo import RepoInfo
+from repolist import RepoList
 
 from desc import PkgDesc
 from config import Config
@@ -34,7 +35,9 @@ from tracking import track_dep
 from blacklist import BlackList
 from version import prog_version
 from arguments import options, usage
+from slpkg_update import it_self_update
 from init import (
+    Initialization,
     Update,
     check_exists_repositories
 )
@@ -69,17 +72,8 @@ class Case(object):
     def slack_install(self):
         Slack(self.package).start()
 
-    def rlw_install(self):
-        OthersInstall(self.package, "rlw", self.release).start()
-
-    def alien_install(self):
-        OthersInstall(self.package, "alien", self.release).start()
-
-    def slacky_install(self):
-        OthersInstall(self.package, "slacky", self.release).start()
-
-    def studioware_install(self):
-        OthersInstall(self.package, "studio", self.release).start()
+    def others_install(self, repo):
+        OthersInstall(self.package, repo, slack_rel).start()
 
     def sbo_upgrade(self):
         SBoCheck().start()
@@ -87,17 +81,8 @@ class Case(object):
     def slack_upgrade(self):
         Patches(self.release).start()
 
-    def rlw_upgrade(self):
-        OthersUpgrade("rlw", self.release).start()
-
-    def alien_upgrade(self):
-        OthersUpgrade("alien", self.release).start()
-
-    def slacky_upgrade(self):
-        OthersUpgrade("slacky", self.release).start()
-
-    def studioware_upgrade(self):
-        OthersUpgrade("studio", self.release).start()
+    def others_upgrade(self, repo):
+        OthersUpgrade(repo, self.release).start()
 
 
 def main():
@@ -108,61 +93,83 @@ def main():
     blacklist = BlackList()
     queue = QueuePkgs()
 
+    # all_args = [
+    #     'update', 're-create', 'repolist', 'repoinfo',
+    #     '-h', '--help', '-v', '-a', '-b',
+    #     '-q', '-g', '-l', '-c', '-s', '-t', '-p', '-f',
+    #     '-n', '-i', '-u', '-o', '-r', '-d'
+    # ]
+
+    without_repos = [
+        '-h', '--help', '-v', '-a', '-b',
+        '-q', '-g', '-f', '-n', '-i', '-u',
+        '-o', '-r', '-d'
+    ]
+
     if len(args) == 1 and args[0] == "update":
         Update().repository()
 
     if len(args) == 2 and args[0] == "update" and args[1] == "slpkg":
         it_self_update()
 
-    # checking if repositories exists
-    check_exists_repositories()
+    if len(args) == 1 and args[0] == "repolist":
+        RepoList().repos()
 
     if len(args) == 0:
-        usage()
+        usage('')
     elif (len(args) == 1 and args[0] == "-h" or
             args[0] == "--help" and args[1:] == []):
         options()
-    elif (len(args) == 1 and args[0] == "-v" or
+
+    if (len(args) == 1 and args[0] == "-v" or
             args[0] == "--version" and args[1:] == []):
         prog_version()
-    elif len(args) == 3 and args[0] == "-a":
+
+    # checking if repositories exists
+    check_exists_repositories()
+
+    if len(args) == 1 and args[0] == "re-create":
+        Initialization().re_create()
+
+    if (len(args) == 2 and args[0] == "repoinfo" and
+            args[1] in RepoList().all_repos):
+        del RepoList().all_repos
+        RepoInfo().view(args[1])
+    elif (len(args) == 2 and args[0] == "repoinfo" and
+          args[1] not in RepoList().all_repos):
+        usage(args[1])
+
+    if len(args) == 3 and args[0] == "-a":
         BuildPackage(args[1], args[2:], path).build()
     elif len(args) == 2 and args[0] == "-l":
-        pkg_list = ["all", "noarch"] + repositories
+        pkg_list = ["all"] + repositories
         if args[1] in pkg_list:
             PackageManager(None).list(args[1])
         else:
-            usage()
+            usage('')
     elif len(args) == 3 and args[0] == "-c" and args[2] == "--upgrade":
-        pkg = Case("")
-        upgrade = {
-            'sbo': pkg.sbo_upgrade,
-            'slack': pkg.slack_upgrade,
-            'rlw': pkg.rlw_upgrade,
-            'alien': pkg.alien_upgrade,
-            'slacky': pkg.slacky_upgrade,
-            'studio': pkg.studioware_upgrade
-        }
-        if args[1] in repositories:
+        if args[1] in repositories and args[1] not in ['slack', 'sbo']:
+            Case('').others_upgrade(args[1])
+        elif args[1] in ['slack', 'sbo']:
+            upgrade = {
+                'sbo': Case(args[2]).sbo_upgrade,
+                'slack': Case(args[2]).slack_upgrade
+            }
             upgrade[args[1]]()
         else:
-            usage()
+            usage(args[1])
     elif len(args) == 3 and args[0] == "-s":
-        pkg = Case(args[2])
-        install = {
-            'sbo': pkg.sbo_install,
-            'slack': pkg.slack_install,
-            'rlw': pkg.rlw_install,
-            'alien': pkg.alien_install,
-            'slacky': pkg.slacky_install,
-            'studio': pkg.studioware_install
-        }
-        if args[1] in repositories:
+        if args[1] in repositories and args[1] not in ['slack', 'sbo']:
+            Case(args[2]).others_install(args[1])
+        elif args[1] in ['slack', 'sbo']:
+            install = {
+                'sbo': Case(args[2]).sbo_install,
+                'slack': Case(args[2]).slack_install
+            }
             install[args[1]]()
         else:
-            usage()
-    elif (len(args) == 3 and args[0] == "-t" and args[1] in repositories
-          and args[1] != "slack"):
+            usage(args[1])
+    elif (len(args) == 3 and args[0] == "-t" and args[1] in repositories):
         track_dep(args[2], args[1])
     elif len(args) == 2 and args[0] == "-n" and "sbo" in repositories:
         SBoNetwork(args[1]).view()
@@ -193,7 +200,7 @@ def main():
         PackageManager(args[1:]).reinstall()
     elif len(args) > 1 and args[0] == "-r":
         PackageManager(args[1:]).remove()
-    elif len(args) > 1 and args[0] == "-f":
+    elif len(args) == 2 and args[0] == "-f":
         PackageManager(args[1:]).find()
     elif len(args) == 3 and args[0] == "-p" and args[1] in repositories:
         PkgDesc(args[2], args[1], "").view()
@@ -203,7 +210,7 @@ def main():
         if args[1] in repositories and tag in colors:
             PkgDesc(args[2], args[1], tag).view()
         else:
-            usage()
+            usage(args[1])
     elif len(args) > 1 and args[0] == "-d":
         PackageManager(args[1:]).display()
     elif len(args) == 2 and args[0] == "-g" and args[1].startswith("--config"):
@@ -213,9 +220,12 @@ def main():
         elif editor:
             Config().edit(editor)
         else:
-            usage()
+            usage('')
     else:
-        usage()
+        if len(args) > 1 and args[0] not in without_repos:
+            usage(args[1])
+        else:
+            usage('')
 
 if __name__ == "__main__":
     main()

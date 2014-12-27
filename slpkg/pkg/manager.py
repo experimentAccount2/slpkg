@@ -6,7 +6,7 @@
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
 
-# Utility for easy management packages in Slackware
+# Slpkg is a user-friendly package manager for Slackware installations
 
 # https://github.com/dslackw/slpkg
 
@@ -40,6 +40,7 @@ from slpkg.__metadata__ import (
 )
 
 from slpkg.pkg.find import find_package
+from slpkg.slack.slack_version import slack_ver
 
 
 class PackageManager(object):
@@ -227,12 +228,11 @@ class PackageManager(object):
         '''
         Find installed Slackware packages
         '''
-        self.binary = "".join(self.binary)
         matching = size = 0
         print("\nPackages with matching name [ {0}{1}{2} ]\n".format(
-              color['CYAN'], self.binary, color['ENDC']))
-        for match in find_package(self.binary, pkg_path):
-            if self.binary in match:
+              color['CYAN'], ''.join(self.binary), color['ENDC']))
+        for match in find_package(''.join(self.binary), pkg_path):
+            if ''.join(self.binary) in match:
                 matching += 1
                 print("[ {0}installed{1} ] - {2}".format(
                       color['GREEN'], color['ENDC'], match))
@@ -286,33 +286,38 @@ class PackageManager(object):
         row = int(tty_size[0]) - 2
         try:
             pkg_list = {
-                'sbo': '_SBo',
-                'slack': '_slack',
-                'noarch': '-noarch-',
-                'rlw': '_rlw',
-                'alien': 'alien',
-                'slacky': 'sl',
-                'studio': 'se',
-                'all': ''
+                'sbo': ['_SBo'],
+                'slack': ['_slack{0}'.format(slack_ver())],
+                'rlw': ['_rlw'],
+                'alien': ['alien'],
+                'slacky': ['sl'],
+                'studio': ['se'],
+                'slackr': ['cf'],
+                'slonly': ['_slack'],
+                'ktown': ['alien'],
+                'multi': ['alien', 'alien_slack{0}'.format(slack_ver()),
+                          'compat32'],
+                'slacke': ['jp'],
+                'salix': ['gv', 'rl', 'msb', 'dj', 'tg', 'cp', 'tjb', 'alien'],
+                'slackl': [''],
+                'all': ['']
             }
             search = pkg_list[pattern]
             index, page = 0, row
-            sl = search
-            if search == "-noarch-":
-                search = ""
             for pkg in find_package("", pkg_path):
-                if pkg.endswith(search) and sl in pkg:
-                    index += 1
-                    print("{0}{1}:{2} {3}".format(color['GREY'], index,
-                                                  color['ENDC'], pkg))
-                    if index == page:
-                        read = raw_input("\nPress {0}Enter{1} to "
-                                         "continue... ".format(color['CYAN'],
-                                                               color['ENDC']))
-                        if read in ['Q', 'q']:
-                            break
-                        print("")   # new line after page
-                        page += row
+                for tag in search:
+                    if pkg.endswith(tag):
+                        index += 1
+                        print("{0}{1}:{2} {3}".format(color['GREY'], index,
+                                                      color['ENDC'], pkg))
+                        if index == page:
+                            read = raw_input("\nPress {0}Enter{1} to "
+                                             "continue... ".format(
+                                                 color['CYAN'], color['ENDC']))
+                            if read in ['Q', 'q']:
+                                break
+                            print("")   # new line after page
+                            page += row
             print("")   # new line at end
         except KeyboardInterrupt:
             print("")   # new line at exit

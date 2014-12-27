@@ -6,7 +6,7 @@
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
 #
-# Utility for easy management packages in Slackware
+# Slpkg is a user-friendly package manager for Slackware installations.
 #
 # https://github.com/dslackw/slpkg
 #
@@ -29,9 +29,9 @@
 # please uncomment (remove the '#' character) only one mirror from
 # the list available below. You can also add a new mirror in the list
 # below. Be careful is the template that the rest.
-#
-#
-# Last Updated: Mon Dec 15 02:47:02 UTC 2014
+# 
+# 
+# Last Updated: Sat Dec 27 09:47:02 UTC 2014
 # 
 # Available http mirrors:
 # 
@@ -106,6 +106,7 @@
 # us		 http://mirrors2.kernel.org/slackware/ 
 # us		 http://mirrors3.kernel.org/slackware/ 
 # us		 http://mirrors4.kernel.org/slackware/ 
+# us		 http://reflect.cs.princeton.edu/slackware/ 
 # us		 http://slackblog.com/slackware/ 
 # us		 http://slackbuilds.org/mirror/slackware/ 
 # us		 http://slackware.cs.utah.edu/ 
@@ -182,4 +183,4 @@
 # us		 ftp://taper.alienbase.nl/ 
 # za		 ftp://ftp.is.co.za/mirror/ftp.slackware.com/pub/ 
 # za		 ftp://ftp.wa.co.za/pub/slackware/ 
-# za		 ftp://slackware.mirror.ac.za/ 
+# za		 ftp://slackware.mirror.ac.za/

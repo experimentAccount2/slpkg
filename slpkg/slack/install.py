@@ -6,7 +6,7 @@
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
 
-# Utility for easy management packages in Slackware
+# Slpkg is a user-friendly package manager for Slackware installations
 
 # https://github.com/dslackw/slpkg
 
@@ -145,10 +145,10 @@ def views(install_all, comp_sum):
         else:
             COLOR = color['RED']
             uni_sum += 1
-        print(" {0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11:>12}{12}".format(
+        print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>12}{12}".format(
             COLOR, pkg_split[0], color['ENDC'],
-            " " * (25-len(pkg_split[0])), pkg_split[1],
-            " " * (19-len(pkg_split[1])), pkg_split[2],
+            " " * (24-len(pkg_split[0])), pkg_split[1],
+            " " * (18-len(pkg_split[1])), pkg_split[2],
             " " * (8-len(pkg_split[2])), pkg_split[3],
             " " * (7-len(pkg_split[3])), "Slack",
             comp, " K"))

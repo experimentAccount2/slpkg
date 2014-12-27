@@ -6,7 +6,7 @@
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
 
-# Utility for easy management packages in Slackware
+# Slpkg is a user-friendly package manager for Slackware installations
 
 # https://github.com/dslackw/slpkg
 
@@ -24,7 +24,10 @@
 from slack.mirrors import mirrors
 
 from url_read import URL
-from __metadata__ import lib_path
+from __metadata__ import (
+    lib_path,
+    slack_rel
+)
 
 
 def pkg_checksum(binary, repo):
@@ -32,18 +35,13 @@ def pkg_checksum(binary, repo):
     Return checksum from CHECKSUMS.md5 file by repository
     '''
     md5 = "None"
-    if repo == "slack_patches":
+    if repo == "slack_patches" and slack_rel == "stable":
         CHECKSUMS_md5 = URL(mirrors("CHECKSUMS.md5", "patches/")).reading()
+    elif repo == "slack_patches" and slack_rel == "current":
+        CHECKSUMS_md5 = URL(mirrors("CHECKSUMS.md5", "")).reading()
     else:
-        repos = {
-            'slack': 'slack_repo/CHECKSUMS.md5',
-            'rlw': 'rlw_repo/CHECKSUMS.md5',
-            'alien': 'alien_repo/CHECKSUMS.md5',
-            'slacky': 'slacky_repo/CHECKSUMS.md5',
-            'studio': 'studio_repo/CHECKSUMS.md5'
-        }
-        lib = repos[repo]
-        f = open(lib_path + lib, "r")
+        lib = '{0}{1}_repo/CHECKSUMS.md5'.format(lib_path, repo)
+        f = open(lib, "r")
         CHECKSUMS_md5 = f.read()
         f.close()
     for line in CHECKSUMS_md5.splitlines():

@@ -6,7 +6,7 @@
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
 
-# Utility for easy management packages in Slackware
+# Slpkg is a user-friendly package manager for Slackware installations
 
 # https://github.com/dslackw/slpkg
 
@@ -21,8 +21,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from slack.slack_version import slack_ver
-
 
 def split_package(package):
     '''
@@ -30,25 +28,12 @@ def split_package(package):
     arch and build tag.
     '''
     split = package.split("-")
-    sbo = "_SBo"
-    slack = "_slack{0}".format(slack_ver())
-    rlw = "_rlw"
-    alien = "alien"
-    slacky = "sl"
-    studio = "se"
     build = split[-1]
-    if build.endswith(sbo):
-        build = split[-1][:-4]   # and remove .t?z extension
-    if build.endswith(slack):
-        build = split[-1][:-len(slack)]
-    elif build.endswith(rlw):
-        build = split[-1][:-len(rlw)]
-    elif build.endswith(alien):
-        build = split[-1][:-len(alien)]
-    elif build.endswith(slacky):
-        build = split[-1][:-len(slacky)]
-    elif build.endswith(studio):
-        build = split[-1][:-len(studio)]
+    build_a, build_b = '', ''
+    build_a = build[:1]
+    if build[1:2].isdigit():
+        build_b = build[1:2]
+    build = build_a + build_b
     arch = split[-2]
     ver = split[-3]
     name = "-".join(split[:-3])

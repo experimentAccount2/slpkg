@@ -6,7 +6,7 @@
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
 
-# Utility for easy management packages in Slackware
+# Slpkg is a user-friendly package manager for Slackware installations
 
 # https://github.com/dslackw/slpkg
 
@@ -21,19 +21,26 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+import sys
 
+from repolist import RepoList
 from __metadata__ import (
     __version__,
+    repositories
 )
 
 
 def options():
     arguments = [
         "\nslpkg - version {0}\n".format(__version__),
-        "Utility for easy management packages in Slackware\n",
+        "Slpkg is a user-friendly package manager for Slackware " +
+        "installations\n",
         "Commands:",
         "   update                                   update all package " +
         "lists",
+        "   re-create                                recreate package lists",
+        "   repolist                                 list all repositories",
+        "   repoinfo [repository]                    repository information",
         "   update slpkg                             check and update slpkg\n",
         "Optional arguments:",
         "  -h, --help                                show this help message " +
@@ -48,7 +55,7 @@ def options():
         "from queue",
         "  -g, --config, --config=[editor]           configuration file " +
         "management",
-        "  -l, [repository], all, noarch             list of installed " +
+        "  -l, [repository], all                     list of installed " +
         "packages",
         "  -c, [repository] --upgrade                check for updated " +
         "packages",
@@ -66,9 +73,20 @@ def options():
     ]
     for opt in arguments:
         print(opt)
+    sys.exit(0)
 
 
-def usage():
+def usage(repo):
+    error_repo = ""
+    if repo and repo not in repositories:
+        all_repos = RepoList().all_repos
+        del RepoList().all_repos
+        if repo in all_repos:
+            error_repo = ("slpkg: error: repository '{0}' is not activated"
+                          "\n".format(repo))
+        else:
+            error_repo = ("slpkg: error: repository '{0}' does not exist"
+                          "\n".format(repo))
     view = [
         "slpkg - version {0}\n".format(__version__),
         "Usage: slpkg [-h] [-v] [-a script.tar.gz [sources...]]",
@@ -76,14 +94,16 @@ def usage():
         "             [-q --list, [...] --add, --remove]",
         "             [   --build, --install, --build-install]",
         "             [-g --config, --config=[editor]]",
-        "             [-l [repository], all, noarch]",
+        "             [-l [repository], all]",
         "             [-c [repository] --upgrade]",
         "             [-s [repository] [package]",
         "             [-t [repository] [package]",
         "             [-p [repository] [package], --color=[]]",
         "             [-f] [-n] [-i [...]] [-u [...]]",
         "             [-o  [...]] [-r [...]] [-d [...]]\n",
+        error_repo,
         "For more information try 'slpkg --help' or view manpage\n"
     ]
     for usg in view:
         print(usg)
+    sys.exit(0)

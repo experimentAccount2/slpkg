@@ -6,7 +6,7 @@
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
 
-# Utility for easy management packages in Slackware
+# Slpkg is a user-friendly package manager for Slackware installations
 
 # https://github.com/dslackw/slpkg
 
@@ -26,7 +26,7 @@ from messages import pkg_not_found
 from __metadata__ import (
     lib_path,
     repositories,
-    color
+    color,
 )
 
 
@@ -48,15 +48,7 @@ class PkgDesc(object):
         }
         self.COLOR = color_text[self.paint]
         if self.repo in repositories:
-            repos = {
-                'sbo': 'sbo_repo/SLACKBUILDS.TXT',
-                'slack': 'slack_repo/PACKAGES.TXT',
-                'rlw': 'rlw_repo/PACKAGES.TXT',
-                'alien': 'alien_repo/PACKAGES.TXT',
-                'slacky': 'slacky_repo/PACKAGES.TXT',
-                'studio': 'studio_repo/PACKAGES.TXT'
-            }
-            self.lib = lib_path + repos[self.repo]
+            self.lib = lib_path + '{0}_repo/PACKAGES.TXT'.format(self.repo)
 
     def view(self):
         f = open(self.lib, "r")

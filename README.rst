@@ -11,9 +11,9 @@
 
 Latest Release:
 
-- Version: 2.1.4
+- Version: 2.1.5
 - `Package <https://sourceforge.net/projects/slpkg/files/slpkg/binary/>`_
-- `Source <https://github.com/dslackw/slpkg/archive/v2.1.4.tar.gz>`_
+- `Source <https://github.com/dslackw/slpkg/archive/v2.1.5.tar.gz>`_
 - `CHANGELOG <https://github.com/dslackw/slpkg/blob/master/CHANGELOG>`_
  
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/logo.png
@@ -37,7 +37,7 @@ Supported Repositories:
 - Slack - `Repository <http://www.slackware.com/>`_
   Arch: {x86, x86_64}
   Versions: {3.3, 8.1, 9.0, 9.1, 10.0, 10.1, 10.2, 11.0, 12.0, 12.2, 13.0, 13.37, 14.0, 14.1, current}
-- Alien - `Repository <http://www.slackware.com/~alien/slackbuilds/>`_
+- Alien's - `Repository <http://www.slackware.com/~alien/slackbuilds/>`_
   Arch: {x86, x86_64}
   Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1, current}
 - Slacky - `Repository <http://repository.slacky.eu/>`_
@@ -49,13 +49,37 @@ Supported Repositories:
 - Studioware - `Repository <http://studioware.org/packages>`_
   Arch: {x86, x86_64}
   Versions: {13.37, 14.0, 14.1}
+- Slackers - `Repository <http://www.slackers.it/repository/>`_
+  Arch: {x86_64}
+  Versions: {current}
+- Slackonly - `Repository <https://slackonly.com/>`_
+  Arch: {x86, x86_64}
+  Versions: {14.1}
+- Alien's ktown - `Repository <http://alien.slackbook.org/ktown/>`_
+  Arch: {x86, x86_64}
+  Versions: {13.37, 14.0, 14.1, current}
+- Alien's multi - `Repository <http://www.slackware.com/~alien/multilib/>`_
+  Arch: {x86_64}
+  Versions: {13.0, 13.1, 13.37, 14.0, 14.1, current}
+- Slacke E17 and E18 - `Repository <http://ngc891.blogdns.net/pub/>`_
+  Arch: {x86, x86_64, arm}
+  Versions: {14.1}
+- SalixOS - `Repository <http://download.salixos.org/>`_
+  Arch: {x86, x86_64}
+  Versions: {13.0, 13.1, 13.37, 14.0, 14.1}
+- Slackel - `Repository <http://www.slackel.gr/repo/>`_
+  Arch: {x86, x86_64}
+  Versions: {current}
+
 
 * Choose repositories you need to work from file '/etc/slpkg/slpkg.conf' default is 
-  all repositories.
+  'slack' and 'sbo' repositories and read REPOSITORIES file for each of the particularities.
 
 Slpkg works in accordance with the standards of the organization slackbuilds.org 
 to builds packages. Also uses the Slackware linux instructions for installation,
 upgrading or removing packages. 
+
+Slpkg must work with any Slackware based distribution such Salix and Slackel or Slax etc.
 
 What makes slpkg to distinguish it from other tools; The user friendliness is its primary 
 target as well as easy to understand and use, also use color to highlight packages and 
@@ -65,10 +89,9 @@ The big advantages is resolving dependencies packages from repositories and moni
 upgraded packages.
 
 Also you can install official packages of your favorite distribution directly from the 
-official repositories
-of Slackware. Even you can check for the official updates and install them.
+official repositories of Slackware. Even you can check for the official updates and install them.
 
-And as we say Slackers, Keep it Simple Stupid!
+More features come ...
 
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/slpkg_package.png
     :target: https://github.com/dslackw/slpkg
@@ -112,8 +135,8 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.1.4.tar.gz
-    $ cd slpkg-2.1.4
+    $ tar xvf slpkg-2.1.5.tar.gz
+    $ cd slpkg-2.1.5
     $ ./install.sh
 
 From SourceForge:
@@ -203,6 +226,9 @@ Command Line Tool Usage
 
     Commands:
        update                                   update all package lists
+       re-create                                recreate package lists
+       repolist                                 list all repositories
+       repoinfo [repository]                    repository information
        update slpkg                             check and update slpkg
 
     Optional arguments:
@@ -213,7 +239,7 @@ Command Line Tool Usage
       -q, --list, [package...] --add, --remove  add, remove SBo packages in queue
           --build, --install, --build-install   build, install packages from queue
       -g, --config, --config=[editor]           configuration file management
-      -l, [repository], all, noarch             list of installed packages
+      -l, [repository], all                     list of installed packages
       -c, [repository] --upgrade                check for updated packages
       -s, [repository] [package]                download, build & install
       -t, [repository] [package]                tracking dependencies
@@ -230,7 +256,64 @@ Command Line Tool Usage
 Slpkg Examples
 --------------
 
-Find packages from slackbuilds.org download, 
+If you use slpkg for the first time will have to create 
+and update the package lists:
+
+.. code-block:: bash
+
+    $ slpkg update
+
+    Update repository slack .......................Done
+    Update repository sbo .............Done
+    Update repository alien ...Done
+    Update repository slacky .....................................Done
+    Update repository studio ...................Done
+    Update repository slackr .............................................Done
+    Update repository slonly ...Done
+    Update repository ktown ...Done
+    Update repository salix ..................Done
+    Update repository slacke ...Done
+    Update repository slackl ...Done
+    Update repository multi ...Done
+
+
+Take information repositories with commands:
+    
+.. code-block:: bash
+
+    $ slpkg repolist
+
+    +==============================================================================
+    | Repo id          Repo name                                             Status
+    +==============================================================================
+      alien            http://www.slackware.com/~alien/slackbuilds/         enabled
+      ktown            http://alien.slackbook.org/ktown/                    enabled
+      multi            http://www.slackware.com/~alien/multilib/            enabled
+      rlw              http://rlworkman.net/pkgs/                           enabled
+      salix            http://download.salixos.org/                         enabled
+      sbo              http://slackbuilds.org/slackbuilds/                  enabled
+      slack            http://mirrors.slackware.com/slackware/              enabled
+      slacke           http://ngc891.blogdns.net/pub/                       enabled
+      slackl           http://www.slackel.gr/repo/                          enabled
+      slackr           http://www.slackers.it/repository/                  disabled
+      slacky           http://repository.slacky.eu/                         enabled
+      slonly           https://slackonly.com/pub/packages/                  enabled
+      studio           http://studioware.org/files/packages/                enabled
+
+    For enable or disable repositories edit '/etc/slpkg/slpkg.conf' file
+
+    $ slpkg repoinfo alien
+
+    Last updated: Tue Dec 23 11:48:31 UTC 2014
+    Number of packages: 3149
+    Repo id: alien
+    Repo url: http://www.slackware.com/~alien/slackbuilds/
+    Status: enabled
+    Total compressed packages: 9.3 Gb
+    Total uncompressed packages: 36.31 Gb
+
+
+Find packages from repository download, 
 build and install with all dependencies :
 
 .. code-block:: bash
@@ -373,9 +456,9 @@ Check if your Slackware distribution is up to date:
     | Package                   Version          Arch     Build  Repos         Size
     +==============================================================================
     Upgrading:
-      dhcpcd                    6.0.5            x86_64   3      Slack         92 K
-      samba                     4.1.11           x86_64   1      Slack       9928 K
-      xscreensaver              5.29             x86_64   1      Slack       3896 K
+      dhcpcd-6.0.5              6.0.5            x86_64   3      Slack         92 K
+      samba-4.1.0               4.1.11           x86_64   1      Slack       9928 K
+      xscreensaver-5.22         5.29             x86_64   1      Slack       3896 K
 
     Installing summary
     ===============================================================================
@@ -746,3 +829,9 @@ Man page it is available for full support:
 .. code-block:: bash
 
     $ man slpkg
+
+
+Donate
+--------
+If you feel satisfied with this project and want to thank me go
+to `Slackware <https://store.slackware.com/cgi-bin/store/slackdonation>`_ and make a donation or visit the `store <https://store.slackware.com/cgi-bin/store>`_.
