@@ -43,6 +43,7 @@ from slpkg.__metadata__ import (
     slacke_sub_repo
 )
 
+from slpkg.pkg.find import find_package
 from slpkg.pkg.manager import PackageManager
 
 from slpkg.slack.slack_version import slack_ver
@@ -227,10 +228,10 @@ class OthersUpgrade(object):
 
     def installed(self):
         '''
-        Return all installed packages by repository
+        Return all installed packages
         '''
         packages = []
-        for pkg in os.listdir(pkg_path):
+        for pkg in find_package('', pkg_path):
             packages.append(pkg)
         return packages
 
