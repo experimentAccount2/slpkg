@@ -161,6 +161,7 @@ class OthersInstall(object):
             dependencies = resolving_deps(self.package, self.repo)
             (dwn_links, install_all, comp_sum, uncomp_sum
              ) = self.store(dependencies)
+            dependencies = equal_deps_and_install(dependencies, install_all)
             sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
                                                    color['ENDC']))
             print("")   # new line at start
@@ -244,6 +245,21 @@ class OthersInstall(object):
         comp_sum.reverse()
         uncomp_sum.reverse()
         return [dwn, install, comp_sum, uncomp_sum]
+
+
+def equal_deps_and_install(dependencies, install_all):
+    '''
+    This fixes be written dependencies equal to those that
+    will be installed because some repositories like 'salix'
+    said dependencies that exist in the distribution but not
+    in the repository itself.
+    '''
+    deps = []
+    for dep in dependencies:
+        for inst in install_all:
+            if inst.startswith(dep + '-'):
+                deps.append(dep)
+    return deps
 
 
 def views(install_all, comp_sum, repository, dependencies):
