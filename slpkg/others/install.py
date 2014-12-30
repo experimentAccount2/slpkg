@@ -363,15 +363,16 @@ def write_deps(dependencies):
     Write dependencies in a log file
     into directory `/var/log/slpkg/dep/`
     '''
-    name = dependencies[-1]
-    if find_package(name + "-", pkg_path):
-        dep_path = log_path + "dep/"
-        if not os.path.exists(dep_path):
-            os.mkdir(dep_path)
-        if os.path.isfile(dep_path + name):
-            os.remove(dep_path + name)
-        if len(dependencies[:-1]) > 0:
-            with open(dep_path + name, "w") as f:
-                for dep in dependencies[:-1]:
-                    f.write(dep + "\n")
+    if len(dependencies) > 1:
+        name = dependencies[-1]
+        if find_package(name + "-", pkg_path):
+            dep_path = log_path + "dep/"
+            if not os.path.exists(dep_path):
+                os.mkdir(dep_path)
+            if os.path.isfile(dep_path + name):
+                os.remove(dep_path + name)
+            if len(dependencies[:-1]) > 0:
+                with open(dep_path + name, "w") as f:
+                    for dep in dependencies[:-1]:
+                        f.write(dep + "\n")
                 f.close()
