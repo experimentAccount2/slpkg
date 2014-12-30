@@ -200,7 +200,7 @@ def main():
         PackageManager(args[1:]).reinstall()
     elif len(args) > 1 and args[0] == "-r":
         PackageManager(args[1:]).remove()
-    elif len(args) == 2 and args[0] == "-f":
+    elif len(args) > 1 and args[0] == "-f":
         PackageManager(args[1:]).find()
     elif len(args) == 3 and args[0] == "-p" and args[1] in repositories:
         PkgDesc(args[2], args[1], "").view()

@@ -230,34 +230,35 @@ class PackageManager(object):
         '''
         matching = size = 0
         print("\nPackages with matching name [ {0}{1}{2} ]\n".format(
-              color['CYAN'], ''.join(self.binary), color['ENDC']))
-        for match in find_package(''.join(self.binary), pkg_path):
-            if ''.join(self.binary) in match:
-                matching += 1
-                print("[ {0}installed{1} ] - {2}".format(
-                      color['GREEN'], color['ENDC'], match))
-                with open(pkg_path + match, "r") as f:
-                    data = f.read()
-                    f.close()
-                for line in data.splitlines():
-                    if line.startswith("UNCOMPRESSED PACKAGE SIZE:"):
-                        if "M" in line[26:]:
-                            size += float(line[26:-1]) * 1024
-                        else:
-                            size += float(line[26:-1])
-                        break
+              color['CYAN'], ', '.join(self.binary), color['ENDC']))
+        for pkg in self.binary:
+            for match in find_package(pkg, pkg_path):
+                if pkg in match:
+                    matching += 1
+                    print("[ {0}installed{1} ] - {2}".format(
+                        color['GREEN'], color['ENDC'], match))
+                    with open(pkg_path + match, "r") as f:
+                        data = f.read()
+                        f.close()
+                    for line in data.splitlines():
+                        if line.startswith("UNCOMPRESSED PACKAGE SIZE:"):
+                            if "M" in line[26:]:
+                                size += float(line[26:-1]) * 1024
+                            else:
+                                size += float(line[26:-1])
+                            break
         if matching == 0:
             message = "Can't find"
-            pkg_not_found("", self.binary, message, "\n")
+            pkg_not_found("", pkg, message, "\n")
         else:
             print("\n{0}Total found {1} matching packages.{2}".format(
-                  color['GREY'], matching, color['ENDC']))
+                color['GREY'], matching, color['ENDC']))
             unit = "Kb"
             if size > 1024:
                 unit = "Mb"
                 size = (size / 1024)
             print("{0}Size of installed packages {1} {2}.{3}\n".format(
-                  color['GREY'], round(size, 2), unit, color['ENDC']))
+                color['GREY'], round(size, 2), unit, color['ENDC']))
 
     def display(self):
         '''

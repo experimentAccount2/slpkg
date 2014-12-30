@@ -30,8 +30,6 @@ __version__ = "{0}.{1}.{2}".format(*__version_info__)
 __license__ = "GNU General Public License v3 (GPLv3)"
 __email__ = "d.zlatanidis@gmail.com"
 
-# temponary path
-tmp = "/tmp/"
 
 # Default configuration values
 slack_rel = "stable"
@@ -75,6 +73,7 @@ def slacke_repo(repositories):
             repositories[i] = 'slacke'
             return sub
 
+tmp = "/tmp/"
 build_path = "/tmp/slpkg/build/"
 slpkg_tmp_packages = tmp + "slpkg/packages/"
 slpkg_tmp_patches = tmp + "slpkg/patches/"
