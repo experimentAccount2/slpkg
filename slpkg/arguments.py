@@ -36,35 +36,35 @@ def options():
         "Slpkg is a user-friendly package manager for Slackware " +
         "installations\n",
         "Commands:",
-        "   update                                   update all package " +
+        "   update                                   update all package "
         "lists",
         "   re-create                                recreate package lists",
         "   repolist                                 list all repositories",
         "   repoinfo [repository]                    repository information",
         "   update slpkg                             check and update slpkg\n",
         "Optional arguments:",
-        "  -h, --help                                show this help message " +
+        "  -h, --help                                show this help message "
         "and exit",
         "  -v, --version                             print version and exit",
         "  -a, script.tar.gz [source...]             auto build SBo packages",
-        "  -b, --list, [package...] --add, --remove  add, remove packages in " +
+        "  -b, --list, [package...] --add, --remove  add, remove packages in "
         "blacklist",
         "  -q, --list, [package...] --add, --remove  add, remove SBo packages "
         "in queue",
         "      --build, --install, --build-install   build, install packages "
         "from queue",
-        "  -g, --config, --config=[editor]           configuration file " +
+        "  -g, --config, --config=[editor]           configuration file "
         "management",
-        "  -l, [repository], all                     list of installed " +
+        "  -l, [repository], all                     list of installed "
         "packages",
-        "  -c, [repository] --upgrade                check for updated " +
+        "  -c, [repository] --upgrade                check for updated "
         "packages",
         "  -s, [repository] [package]                download, build & install",
         "  -t, [repository] [package]                tracking dependencies",
         "  -p, [repository] [package], --color=[]    print package description",
-        "  -f, [package...]                          find installed packages",
         "  -n, [package]                             view SBo packages "
         "through network",
+        "  -f, [package...]                          find installed packages",
         "  -i, [package...]                          install binary packages",
         "  -u, [package...]                          upgrade binary packages",
         "  -o, [package...]                          reinstall binary packages",
@@ -99,7 +99,7 @@ def usage(repo):
         "             [-s [repository] [package]",
         "             [-t [repository] [package]",
         "             [-p [repository] [package], --color=[]]",
-        "             [-f] [-n] [-i [...]] [-u [...]]",
+        "             [-n] [-f] [-i [...]] [-u [...]]",
         "             [-o  [...]] [-r [...]] [-d [...]]\n",
         error_repo,
         "For more information try 'slpkg --help' or view manpage\n"

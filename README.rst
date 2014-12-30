@@ -244,8 +244,8 @@ Command Line Tool Usage
       -s, [repository] [package]                download, build & install
       -t, [repository] [package]                tracking dependencies
       -p, [repository] [package], --color=[]    print package description
-      -f, [package...]                          find installed packages
       -n, [package]                             view SBo packages through network
+      -f, [package...]                          find installed packages
       -i, [package...]                          install binary packages
       -u, [package...]                          upgrade binary packages
       -o, [package...]                          reinstall binary packages
