@@ -33,6 +33,7 @@ __email__ = "d.zlatanidis@gmail.com"
 
 # Default configuration values
 slack_rel = "stable"
+
 repositories = [
     'slack',
     'sbo',
@@ -48,6 +49,22 @@ repositories = [
     'salix',
     'slackl'
 ]
+
+default_repositories = repositories[8] = 'ktown'
+default_repositories = repositories[10] = 'slacke'
+default_repositories = repositories
+
+
+def update_repositories(repositories):
+    repo_file = "/etc/slpkg/repositories"
+    f = open(repo_file, "r")
+    repositories_list = f.read()
+    f.close()
+    for line in repositories_list.splitlines():
+            line = line.lstrip()
+            if not line.startswith("#"):
+                repositories.append(line.split()[0])
+    return repositories
 
 
 def ktown_repo(repositories):
@@ -126,6 +143,7 @@ if os.path.isfile("/etc/slpkg/slpkg.conf"):
 
 ktown_kde_repo = ktown_repo(repositories)
 slacke_sub_repo = slacke_repo(repositories)
+update_repositories(repositories)
 
 color = {
     'RED': '\x1b[31m',

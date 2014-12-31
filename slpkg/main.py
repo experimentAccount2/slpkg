@@ -26,6 +26,7 @@ import getpass
 
 from repoinfo import RepoInfo
 from repolist import RepoList
+from repositories import Repo
 
 from desc import PkgDesc
 from config import Config
@@ -127,6 +128,9 @@ def main():
 
     # checking if repositories exists
     check_exists_repositories()
+
+    if len(args) == 3 and args[0] == "repo-add":
+        Repo().add(args[1], args[2])
 
     if len(args) == 1 and args[0] == "re-create":
         Initialization().re_create()

@@ -151,7 +151,7 @@ class SBoCheck(object):
 
     def exists(self):
         '''
-        search packages if exists in the repository
+        Search packages if exists in the repository
         and it gets to avoidable modified packages
         from the user with the tag _SBo
         '''

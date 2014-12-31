@@ -39,6 +39,8 @@ def options():
         "   update                                   update all package "
         "lists",
         "   re-create                                recreate package lists",
+        "   repo-add [name] [URL]                    add repository",
+        "   repo-remove [name]                       remove repository",
         "   repolist                                 list all repositories",
         "   repoinfo [repository]                    repository information",
         "   update slpkg                             check and update slpkg\n",

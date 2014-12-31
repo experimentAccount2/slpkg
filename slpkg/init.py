@@ -36,7 +36,8 @@ from __metadata__ import (
     repositories,
     slpkg_tmp_packages,
     slpkg_tmp_patches,
-    slacke_sub_repo
+    slacke_sub_repo,
+    default_repositories
 )
 
 from slack.mirrors import mirrors
@@ -60,6 +61,24 @@ class Initialization(object):
             os.makedirs(slpkg_tmp_packages)
         if not os.path.exists(slpkg_tmp_patches):
             os.makedirs(slpkg_tmp_patches)
+
+    def user(self):
+        '''
+        Creating user select repository local library
+        '''
+        for name, repo in Repo().user_repository().items():
+            log = log_path + name + "/"
+            lib = lib_path + "{0}_repo/".format(name)
+            lib_file = "PACKAGES.TXT"
+            md5_file = "CHECKSUMS.md5"
+            if not os.path.exists(log):
+                os.mkdir(log)
+            if not os.path.exists(lib):
+                os.mkdir(lib)
+            packages_txt = "{0}{1}".format(repo, lib_file)
+            checksums_md5 = "{0}{1}".format(repo, md5_file)
+            self.write(lib, lib_file, packages_txt)
+            self.write(lib, md5_file, checksums_md5)
 
     def slack(self):
         '''
@@ -547,7 +566,10 @@ class Update(object):
             sys.stdout.write("{0}Update repository {1} ...{2}".format(
                 color['GREY'], repo, color['ENDC']))
             sys.stdout.flush()
-            exec('{0}.{1}()'.format(self._init, repo))
+            if repo in default_repositories:
+                exec('{0}.{1}()'.format(self._init, repo))
+            else:
+                exec('{0}.{1}()'.format(self._init, 'user'))
             sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
                                                    color['ENDC']))
         print("")   # new line at end
@@ -556,12 +578,16 @@ class Update(object):
 
 def check_exists_repositories():
     '''
-    Checking if repositories exists by ChangeLog.txt file
+    Checking if repositories exists by PACKAGES.TXT file
     '''
     update = False
+    pkg_list = "PACKAGES.TXT"
     for repo in repositories:
-        if not os.path.isfile("{0}{1}{2}".format(log_path, repo,
-                                                 "/ChangeLog.txt")):
+        pkg_list = "PACKAGES.TXT"
+        if repo == "sbo":
+            pkg_list = "SLACKBUILDS.TXT"
+        if not os.path.isfile("{0}{1}{2}".format(lib_path, repo,
+                                                 "_repo/{0}".format(pkg_list))):
             update = True
     if update:
         print("\n  Please update packages lists. Run 'slpkg update'.\n" +

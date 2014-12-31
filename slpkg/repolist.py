@@ -50,6 +50,7 @@ class RepoList(object):
             'salix': Repo().salix(),
             'slackl': Repo().slackel()
         }
+        self.all_repos.update(Repo().user_repository())
 
     def repos(self):
         '''

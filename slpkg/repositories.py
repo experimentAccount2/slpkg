@@ -23,12 +23,54 @@
 
 
 import os
+import sys
+
+from __metadata__ import (
+    repositories
+)
 
 
 class Repo(object):
 
     def __init__(self):
-        pass
+        self.repo_file = "/etc/slpkg/repositories"
+        f = open(self.repo_file, "r")
+        self.repositories_list = f.read()
+        f.close()
+
+    def add(self, repo, url):
+        '''
+        Write repository name and url in a file
+        '''
+        repo_name = []
+        for line in self.repositories_list.splitlines():
+            line = line.lstrip()
+            if not line.startswith("#"):
+                repo_name.append(line.split()[0])
+        if repo in repositories or repo in repo_name:
+            print("\nRepository name '{0}' exist, select different name.\n"
+                  "View all repositories with command 'repolist'.\n".format(
+                      repo))
+            sys.exit(0)
+        elif len(repo) > 6:
+            print("\nMaximum reository name lenght must be six (6) "
+                  "characters\n")
+            sys.exit(0)
+        with open(self.repo_file, "a") as repos:
+            new_line = "  {0}{1}{2}\n".format(repo, ' ' * (10 - len(repo)), url)
+            repos.write(new_line)
+        repos.close()
+
+    def user_repository(self):
+        '''
+        Return repo name nad url
+        '''
+        dict_repo = {}
+        for line in self.repositories_list.splitlines():
+            line = line.lstrip()
+            if not line.startswith("#"):
+                dict_repo[line.split()[0]] = line.split()[1]
+        return dict_repo
 
     def slack(self):
         '''
