@@ -49,7 +49,7 @@ class RepoInfo(object):
         }
 
         self.all_repos = RepoList().all_repos
-        self.all_repos.update(Repo().user_repository())
+        self.all_repos.update(Repo().custom_repository())
         del RepoList().all_repos
 
     def view(self, repo):

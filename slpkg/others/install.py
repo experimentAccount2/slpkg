@@ -73,16 +73,16 @@ class OthersInstall(object):
         if repo in default_repositories:
             exec('self._init_{0}()'.format(self.repo))
         else:
-            exec('self._init_user()')
+            exec('self._init_custom()')
 
         f = open(self.lib, "r")
         self.PACKAGES_TXT = f.read()
         f.close()
         sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))
 
-    def _init_user(self):
+    def _init_custom(self):
         self.lib = lib_path + "{0}_repo/PACKAGES.TXT".format(self.repo)
-        self.mirror = "{0}".format(Repo().user_repository()[self.repo])
+        self.mirror = "{0}".format(Repo().custom_repository()[self.repo])
 
     def _init_rlw(self):
         self.lib = lib_path + "rlw_repo/PACKAGES.TXT"

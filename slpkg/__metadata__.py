@@ -34,6 +34,9 @@ __email__ = "d.zlatanidis@gmail.com"
 # Default configuration values
 slack_rel = "stable"
 
+# Configuration path
+conf_path = "/etc/{0}/".format(__all__)
+
 repositories = [
     'slack',
     'sbo',
@@ -56,13 +59,16 @@ default_repositories = repositories
 
 
 def update_repositories(repositories):
-    repo_file = "/etc/slpkg/repositories"
+    '''
+    Upadate with user custom repositories
+    '''
+    repo_file = "{0}repositories".format(conf_path)
     f = open(repo_file, "r")
     repositories_list = f.read()
     f.close()
     for line in repositories_list.splitlines():
             line = line.lstrip()
-            if not line.startswith("#"):
+            if line and not line.startswith("#"):
                 repositories.append(line.split()[0])
     return repositories
 
@@ -91,6 +97,7 @@ def slacke_repo(repositories):
             return sub
 
 tmp = "/tmp/"
+tmp_path = "{0}{1}/".format(tmp, __all__)
 build_path = "/tmp/slpkg/build/"
 slpkg_tmp_packages = tmp + "slpkg/packages/"
 slpkg_tmp_patches = tmp + "slpkg/patches/"

@@ -126,11 +126,14 @@ def main():
             args[0] == "--version" and args[1:] == []):
         prog_version()
 
-    # checking if repositories exists
-    check_exists_repositories()
-
     if len(args) == 3 and args[0] == "repo-add":
         Repo().add(args[1], args[2])
+
+    if len(args) == 2 and args[0] == "repo-remove":
+        Repo().remove(args[1])
+
+    # checking if repositories exists
+    check_exists_repositories()
 
     if len(args) == 1 and args[0] == "re-create":
         Initialization().re_create()

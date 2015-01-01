@@ -32,6 +32,8 @@ from __metadata__ import (
     color,
     log_path,
     lib_path,
+    tmp_path,
+    conf_path,
     build_path,
     repositories,
     slpkg_tmp_packages,
@@ -47,14 +49,14 @@ from slack.slack_version import slack_ver
 class Initialization(object):
 
     def __init__(self):
-        if not os.path.exists("/etc/slpkg/"):
-            os.mkdir("/etc/slpkg/")
+        if not os.path.exists(conf_path):
+            os.mkdir(conf_path)
         if not os.path.exists(log_path):
             os.mkdir(log_path)
         if not os.path.exists(lib_path):
             os.mkdir(lib_path)
-        if not os.path.exists("/tmp/slpkg/"):
-            os.mkdir("/tmp/slpkg/")
+        if not os.path.exists(tmp_path):
+            os.mkdir(tmp_path)
         if not os.path.exists(build_path):
             os.makedirs(build_path)
         if not os.path.exists(slpkg_tmp_packages):
@@ -62,11 +64,11 @@ class Initialization(object):
         if not os.path.exists(slpkg_tmp_patches):
             os.makedirs(slpkg_tmp_patches)
 
-    def user(self):
+    def custom(self):
         '''
         Creating user select repository local library
         '''
-        for name, repo in Repo().user_repository().items():
+        for name, repo in Repo().custom_repository().items():
             log = log_path + name + "/"
             lib = lib_path + "{0}_repo/".format(name)
             lib_file = "PACKAGES.TXT"
@@ -569,7 +571,7 @@ class Update(object):
             if repo in default_repositories:
                 exec('{0}.{1}()'.format(self._init, repo))
             else:
-                exec('{0}.{1}()'.format(self._init, 'user'))
+                exec('{0}.{1}()'.format(self._init, 'custom'))
             sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
                                                    color['ENDC']))
         print("")   # new line at end
