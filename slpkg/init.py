@@ -64,23 +64,32 @@ class Initialization(object):
         if not os.path.exists(slpkg_tmp_patches):
             os.makedirs(slpkg_tmp_patches)
 
-    def custom(self):
+    def custom(self, name):
         '''
         Creating user select repository local library
         '''
-        for name, repo in Repo().custom_repository().items():
-            log = log_path + name + "/"
-            lib = lib_path + "{0}_repo/".format(name)
-            lib_file = "PACKAGES.TXT"
-            md5_file = "CHECKSUMS.md5"
-            if not os.path.exists(log):
-                os.mkdir(log)
-            if not os.path.exists(lib):
-                os.mkdir(lib)
-            packages_txt = "{0}{1}".format(repo, lib_file)
-            checksums_md5 = "{0}{1}".format(repo, md5_file)
-            self.write(lib, lib_file, packages_txt)
-            self.write(lib, md5_file, checksums_md5)
+        repo = Repo().custom_repository()[name]
+        log = log_path + name + "/"
+        lib = lib_path + "{0}_repo/".format(name)
+        lib_file = "PACKAGES.TXT"
+        lst_file = ""
+        md5_file = "CHECKSUMS.md5"
+        log_file = "ChangeLog.txt"
+        if not os.path.exists(log):
+            os.mkdir(log)
+        if not os.path.exists(lib):
+            os.mkdir(lib)
+        packages_txt = "{0}{1}".format(repo, lib_file)
+        filelist_txt = ""
+        checksums_md5 = "{0}{1}".format(repo, md5_file)
+        changelog_txt = "{0}{1}".format(repo, log_file)
+        self.write(lib, lib_file, packages_txt)
+        self.write(lib, md5_file, checksums_md5)
+        if URL(changelog_txt).reading() != ' ':
+            self.write(log, log_file, changelog_txt)
+            self.remote(log, log_file, changelog_txt, lib, lib_file,
+                        packages_txt, md5_file, checksums_md5, lst_file,
+                        filelist_txt)
 
     def slack(self):
         '''
@@ -571,7 +580,7 @@ class Update(object):
             if repo in default_repositories:
                 exec('{0}.{1}()'.format(self._init, repo))
             else:
-                exec('{0}.{1}()'.format(self._init, 'custom'))
+                Initialization().custom(repo)
             sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
                                                    color['ENDC']))
         print("")   # new line at end

@@ -43,6 +43,8 @@ class Repo(object):
         Write custom repository name and url in a file
         '''
         repo_name = []
+        if not url.endswith('/'):
+            url = url + '/'
         for line in self.repositories_list.splitlines():
             line = line.lstrip()
             if line and not line.startswith("#"):
@@ -67,14 +69,19 @@ class Repo(object):
         '''
         Remove custom repository
         '''
+        rem_repo = False
         with open(self.repo_file, "w") as repos:
             for line in self.repositories_list.splitlines():
                 repo_name = line.split()[0]
                 if repo_name != repo:
                     repos.write(line + "\n")
-                    print("Repository '{0}' successfully "
+                else:
+                    print("\nRepository '{0}' successfully "
                           "removed\n".format(repo))
+                    rem_repo = True
             repos.close()
+        if not rem_repo:
+            print("\nRepository '{0}' doesn't exist\n".format(repo))
         sys.exit(0)
 
     def custom_repository(self):

@@ -24,6 +24,8 @@
 import sys
 import urllib2
 
+from __metadata__ import color
+
 
 class URL(object):
 
@@ -38,8 +40,9 @@ class URL(object):
             f = urllib2.urlopen(self.link)
             return f.read()
         except (urllib2.URLError, ValueError):
-            print("\nslpkg: error: connection refused\n")
-            sys.exit(0)
+            print("\n{0}Can't read file '{1}'{2}".format(
+                color['RED'], self.link.split('/')[-1], color['ENDC']))
+            return ' '
         except KeyboardInterrupt:
             print("")   # new line at exit
             sys.exit(0)

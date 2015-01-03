@@ -1,9 +1,10 @@
 Version 2.1.6
-30-12-2014
+02-1-2015
 
 [Updated] - Fix queue downloads.
           - Update find argument.
 
+[Feature] - Added custom binary repository.
 
 
 Version 2.1.5
