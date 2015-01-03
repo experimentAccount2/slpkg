@@ -41,8 +41,8 @@ def options():
         "   re-create                                recreate package lists",
         "   repo-add [name] [URL]                    add custom repository",
         "   repo-remove [name]                       remove custom repository",
-        "   repolist                                 list all repositories",
-        "   repoinfo [repository]                    repository information",
+        "   repo-list                                list all repositories",
+        "   repo-info [repository]                   repository information",
         "   update slpkg                             check and update slpkg\n",
         "Optional arguments:",
         "  -h, --help                                show this help message "
@@ -57,7 +57,7 @@ def options():
         "from queue",
         "  -g, --config, --config=[editor]           configuration file "
         "management",
-        "  -l, [repository], all                     list of installed "
+        "  -l, all, official, non-official, --index  list of installed "
         "packages",
         "  -c, [repository] --upgrade                check for updated "
         "packages",

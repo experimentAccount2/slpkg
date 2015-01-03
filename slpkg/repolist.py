@@ -71,6 +71,6 @@ class RepoList(object):
                 repo_id, ' ' * (17 - len(repo_id)),
                 repo_name, ' ' * (45 - len(repo_name)),
                 COLOR, status, color['ENDC']))
-        print("\nFor enable or disable repositories edit "
+        print("\nFor enable or disable default repositories edit "
               "'/etc/slpkg/slpkg.conf' file\n")
         sys.exit(0)

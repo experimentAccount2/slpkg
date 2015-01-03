@@ -113,7 +113,7 @@ def main():
     if len(args) == 2 and args[0] == "update" and args[1] == "slpkg":
         it_self_update()
 
-    if len(args) == 1 and args[0] == "repolist":
+    if len(args) == 1 and args[0] == "repo-list":
         RepoList().repos()
 
     if len(args) == 0:
@@ -138,20 +138,24 @@ def main():
     if len(args) == 1 and args[0] == "re-create":
         Initialization().re_create()
 
-    if (len(args) == 2 and args[0] == "repoinfo" and
+    if (len(args) == 2 and args[0] == "repo-info" and
             args[1] in RepoList().all_repos):
         del RepoList().all_repos
         RepoInfo().view(args[1])
-    elif (len(args) == 2 and args[0] == "repoinfo" and
+    elif (len(args) == 2 and args[0] == "repo-info" and
           args[1] not in RepoList().all_repos):
         usage(args[1])
 
     if len(args) == 3 and args[0] == "-a":
         BuildPackage(args[1], args[2:], path).build()
     elif len(args) == 2 and args[0] == "-l":
-        pkg_list = ["all"] + repositories
-        if args[1] in pkg_list:
-            PackageManager(None).list(args[1])
+        if args[1] in ['all', 'official', 'non-official']:
+            PackageManager(None).list(args[1], False)
+        else:
+            usage('')
+    elif len(args) == 3 and args[0] == "-l" and args[2] == '--index':
+        if args[1] in ['all', 'official', 'non-official']:
+            PackageManager(None).list(args[1], True)
         else:
             usage('')
     elif len(args) == 3 and args[0] == "-c" and args[2] == "--upgrade":

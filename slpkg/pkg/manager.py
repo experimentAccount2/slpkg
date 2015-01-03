@@ -30,6 +30,7 @@ from slpkg.messages import (
     template
 )
 from slpkg.__metadata__ import (
+    lib_path,
     pkg_path,
     sp,
     log_path,
@@ -40,7 +41,6 @@ from slpkg.__metadata__ import (
 )
 
 from slpkg.pkg.find import find_package
-from slpkg.slack.slack_version import slack_ver
 
 
 class PackageManager(object):
@@ -279,46 +279,44 @@ class PackageManager(object):
                     bol = eol = "\n"
                 pkg_not_found(bol, pkg, message, eol)
 
-    def list(self, pattern):
+    def list(self, pattern, INDEX):
         '''
         List with the installed packages
         '''
         tty_size = os.popen('stty size', 'r').read().split()
         row = int(tty_size[0]) - 2
+        pkg_list = []
         try:
-            pkg_list = {
-                'sbo': ['_SBo'],
-                'slack': ['_slack{0}'.format(slack_ver())],
-                'rlw': ['_rlw'],
-                'alien': ['alien'],
-                'slacky': ['sl'],
-                'studio': ['se'],
-                'slackr': ['cf'],
-                'slonly': ['_slack'],
-                'ktown': ['alien'],
-                'multi': ['alien', 'alien_slack{0}'.format(slack_ver()),
-                          'compat32'],
-                'slacke': ['jp'],
-                'salix': ['gv', 'rl', 'msb', 'dj', 'tg', 'cp', 'tjb', 'alien'],
-                'slackl': [''],
-                'all': ['']
-            }
-            search = pkg_list[pattern]
-            index, page = 0, row
+            index, page, official = 0, row, []
+            if os.path.isfile(lib_path + 'slack_repo/PACKAGES.TXT'):
+                f = open(lib_path + 'slack_repo/PACKAGES.TXT', 'r')
+                r = f.read()
+                f.close()
+            for line in r.splitlines():
+                if line.startswith("PACKAGE NAME:"):
+                    official.append(line[15:-4].strip())
             for pkg in find_package("", pkg_path):
-                for tag in search:
-                    if pkg.endswith(tag):
-                        index += 1
-                        print("{0}{1}:{2} {3}".format(color['GREY'], index,
-                                                      color['ENDC'], pkg))
-                        if index == page:
-                            read = raw_input("\nPress {0}Enter{1} to "
-                                             "continue... ".format(
-                                                 color['CYAN'], color['ENDC']))
-                            if read in ['Q', 'q']:
-                                break
-                            print("")   # new line after page
-                            page += row
+                if pattern == 'all':
+                    pkg_list.append(pkg)
+                elif pattern == 'official' and pkg in official:
+                    pkg_list.append(pkg)
+                elif pattern == 'non-official' and pkg not in official:
+                    pkg_list.append(pkg)
+            for pkg in pkg_list:
+                if INDEX:
+                    index += 1
+                    print("{0}{1}:{2} {3}".format(color['GREY'], index,
+                                                  color['ENDC'], pkg))
+                    if index == page:
+                        read = raw_input("\nPress {0}Enter{1} to "
+                                         "continue... ".format(color['CYAN'],
+                                                               color['ENDC']))
+                        if read in ['Q', 'q']:
+                            break
+                        print("")   # new line after page
+                        page += row
+                else:
+                    print pkg
             print("")   # new line at end
         except KeyboardInterrupt:
             print("")   # new line at exit

@@ -72,8 +72,9 @@ Supported Repositories:
   Versions: {current}
 
 
-* Choose repositories you need to work from file '/etc/slpkg/slpkg.conf' default is 
+* Choose default repositories you need to work from file '/etc/slpkg/slpkg.conf' default is 
   'slack' and 'sbo' repositories and read REPOSITORIES file for each of the particularities.
+  Manage custom repositories with commands 'repo-add' and 'repo-remove'.
 
 Slpkg works in accordance with the standards of the organization slackbuilds.org 
 to builds packages. Also uses the Slackware linux instructions for installation,
@@ -277,7 +278,21 @@ and update the package lists:
     Update repository multi ...Done
 
 
-Take information repositories with commands:
+Add and remove custom repositories:
+
+.. code-block:: bash
+
+    $ slpkg repo-add ponce http://ponce.cc/slackware/slackware64-14.1/packages/
+
+    Repository 'ponce' successfully added
+
+
+    $ slpkg repo-remove ponce
+
+    Repository 'ponce' successfully removed
+
+    
+Take information repositories:
     
 .. code-block:: bash
 
