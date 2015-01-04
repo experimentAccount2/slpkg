@@ -33,7 +33,7 @@ from __metadata__ import (
 def options():
     arguments = [
         "\nslpkg - version {0}\n".format(__version__),
-        "Slpkg is a user-friendly package manager for Slackware " +
+        "Slpkg is a user-friendly package manager for Slackware "
         "installations\n",
         "Commands:",
         "   update                                   update all package "
@@ -53,7 +53,7 @@ def options():
         "blacklist",
         "  -q, --list, [package...] --add, --remove  add, remove SBo packages "
         "in queue",
-        "      --build, --install, --build-install   build, install packages "
+        "  -q, --build, --install, --build-install   build, install packages "
         "from queue",
         "  -g, --config, --config=[editor]           configuration file "
         "management",
@@ -91,17 +91,22 @@ def usage(repo):
                           "\n".format(repo))
     view = [
         "slpkg - version {0}\n".format(__version__),
-        "Usage: slpkg [-h] [-v] [-a script.tar.gz [sources...]]",
+        "Usage: slpkg Commands:",
+        "             [update] [re-create] [repo-add [name] [URL]]",
+        "             [repo-remove [name]] [repo-list]",
+        "             [repo-info [repository]] [update [slpkg]]\n",
+        "             Optional arguments:",
+        "             [-h] [-v] [-a script.tar.gz [sources...]]",
         "             [-b --list, [...] --add, --remove]",
         "             [-q --list, [...] --add, --remove]",
-        "             [   --build, --install, --build-install]",
+        "             [-q --build, --install, --build-install]",
         "             [-g --config, --config=[editor]]",
-        "             [-l [repository], all]",
+        "             [-l all, official, non-official, --index]",
         "             [-c [repository] --upgrade]",
         "             [-s [repository] [package]",
         "             [-t [repository] [package]",
         "             [-p [repository] [package], --color=[]]",
-        "             [-n] [-f] [-i [...]] [-u [...]]",
+        "             [-n] [-f [...]] [-i [...]] [-u [...]]",
         "             [-o  [...]] [-r [...]] [-d [...]]\n",
         error_repo,
         "For more information try 'slpkg --help' or view manpage\n"

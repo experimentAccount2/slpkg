@@ -33,7 +33,7 @@ from __metadata__ import (
 class Repo(object):
 
     def __init__(self):
-        self.repo_file = "/etc/slpkg/repositories"
+        self.repo_file = "/etc/slpkg/custom-repositories"
         f = open(self.repo_file, "r")
         self.repositories_list = f.read()
         f.close()

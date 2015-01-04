@@ -15,18 +15,24 @@
 .SH NAME
 Slpkg is a user-friendly package manager for Slackware installations
 .SH SYNOPSIS
-Usage: slpkg [-h] [-v] [-a script.tar.gz [sources...]]
-              [-b --list, --add, --remove [...]]
-              [-q --list, [...] --add, --remove]
-              [   --build, --install, --build-install]
-              [-g --config, --config=[editor]]
-              [-l [repository], all]
-              [-c [repository] --upgrade]
-              [-s [repository] [package][
-              [-t [repository] [package]]
-              [-p [repository] [package], --color=[]]
-              [-n] [-f] [-i [...]] [-u [...]]
-              [-o  [...]] [-r [...]] [-d [...]]
+Usage: slpkg Commands:
+             [update] [re-create] [repo-add [name] [URL]]
+             [repo-remove [name]] [repo-list]
+             [repo-info [repository]] [update [slpkg]]
+
+             Optional arguments:
+             [-h] [-v] [-a script.tar.gz [sources...]]
+             [-b --list, [...] --add, --remove]
+             [-q --list, [...] --add, --remove]
+             [-q --build, --install, --build-install]
+             [-g --config, --config=[editor]]
+             [-l all, official, non-official, --index]
+             [-c [repository] --upgrade]
+             [-s [repository] [package]
+             [-t [repository] [package]
+             [-p [repository] [package], --color=[]]
+             [-n] [-f [...]] [-i [...]] [-u [...]]
+             [-o  [...]] [-r [...]] [-d [...]]
 
 .SH DESCRIPTION
 \fBslpkg\fP is a terminal multitool in order to easy use Slackware packages.
@@ -38,6 +44,8 @@ Slpkg is a user-friendly package manager for Slackware installations
 Commands:
    update                                   update all package lists
    re-create                                recreate package lists  
+   repo-add [name] [URL]                    add custom repository
+   repo-remove [name]                       remove custom repository 
    repolist                                 list all repositories
    repoinfo [repository]                    repository information
    update slpkg                             check and update slpkg
@@ -48,9 +56,9 @@ Optional arguments:
   -a, script.tar.gz [source...]             auto build SBo packages
   -b, --list, [package...] --add, --remove  add, remove packages in blacklist
   -q, --list, [package...] --add, --remove  add, remove SBo packages in queue
-      --build, --install, --build-install   build, install packages from queue
+  -q, --build, --install, --build-install   build, install packages from queue
   -g, --config, --config=<editor>           configuration file management
-  -l, [repository], all                     list of installed packages
+  -l, all, official, non-official, --index  list of installed packages
   -c, [repository] --upgrade                check for updated packages
   -s, [repository] [package]                download, build & install
   -t, [repository] [package]                tracking dependencies
@@ -79,7 +87,8 @@ Optional arguments:
  Slackel.gr = 'slackel'
    
  Default enable repository is 'slack' and 'sbo'.
- Add or remove repository in configuration file '/etc/slpkg/slpkg.conf'
+ Add or remove default repository in configuration file '/etc/slpkg/slpkg.conf'.
+ Read REPOSITORIES file for explanations.
 
 .SH COLORS
  red, green, yellow, cyan, grey
@@ -92,25 +101,37 @@ Print the version of program and exit.
 .PP
 The following commands are available.
 
-.SS update
+.SS update, create and update packages list
 \fBslpkg\fP \fBupdate\fP
 .PP
 Used to re-synchronize the package lists and create some important files.
 This command must run every new repository is added or new updates is available.
 
-.SS re-create
+.SS re-create, recreate packages list
 \fBslpkg\fP \fBre-create\fP
 .PP
 It is sometimes useful to create all of the base file from the beginning so this 
 command deletes all the packages lists and re-created.
 
-.SS repolist
-\fBslpkg\fP \fBrepolist\fP
+.SS repo-add, add custom repository
+\fBslpkg\fP \fBrepo-add\fP <\fIname\fP> <\fIURL\fP>
+.PP
+Add custom repository. The repositories will be added to this command should 
+contain at least the files 'PACKAGES.TXT' and 'CHECKSUMS.md5' and optional file
+ChangeLog.txt.
+
+.SS repo-remove, remove custom repository
+\fBslpkg\fP \fBrepo-remove\fP <\fIname\fP> 
+.PP
+Remove custom repository by name.
+
+.SS repo-list, repositories list
+\fBslpkg\fP \fBrepo-list\fP
 .PP
 Lists all enabled or disabled repositories.
 
-.SS repoinfo
-\fBslpkg\fP \fBrepoinfo\fP <\fBrepository\fP>
+.SS repo-info, repository information
+\fBslpkg\fP \fBrepo-info\fP <\fBrepository\fP>
 .PP
 View repository information.
 
@@ -144,10 +165,11 @@ Build or install or build and install packages are queued.
 .PP
 Print configuration file or edit with editor.
 
-.SS -l , list of installed packages per repository
-\fBslpkg\fP \fB-l\fP <\fIrepository\fP> \fIall\fP \fInoarch\fP
+.SS -l , list of installed packages
+\fBslpkg\fP \fB-l\fP <\fIall\fP> \fIofficial\fP \fInon-official\fP \fI--index\fP
 .PP
-List of installed packages per repository or all.
+List of installed packages by category official or non-official. The repository 'slack' must
+be enabled to work properly 'official' and 'non-official' lists.
 
 .SS -c , check if your packages is up to date
 \fBslpkg\fP \fB-c\fP <\fIrepository\fP> \fI--upgrade\f
@@ -174,7 +196,7 @@ The sequence shown is that you must follow to correctly install package.
 Print package description with color. Available colors: red, green, yellow, cyan, grey
 
 .SS -f find packages
-\fBslpkg\fP \fB-f\fP <\fIname of package\fP>
+\fBslpkg\fP \fB-f\fP <\fIname of packages\fP>
 .PP
 Find installed packages with view total file size. 
 
@@ -241,12 +263,18 @@ For example:
 /etc/slpkg/slackware-mirrors
      List of Slackware Mirrors
 
+/etc/slpkg/custom-repositories
+     List of custom repositories
+
 /var/log/slpkg
      ChangeLog.txt repositories files
      SlackBuilds logs and dependencies files
 
 /var/lib/slpkg
-     PACKAGES.TXT files and SLACKBUILDS.TXT file
+     PACKAGES.TXT files 
+     SLACKBUILDS.TXT files
+     CHECKSUMS.md5 files
+     FILELIST.TXT files
 
 /tmp/slpkg
      Slpkg temponary donwloaded files and build packages

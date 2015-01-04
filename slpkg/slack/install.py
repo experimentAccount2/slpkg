@@ -134,7 +134,7 @@ def views(install_all, comp_sum):
     Views packages
     '''
     pkg_sum = uni_sum = upg_sum = 0
-    for pkg, comp in zip(install_all, comp_sum):
+    for pkg, comp in sorted(zip(install_all, comp_sum)):
         pkg_split = split_package(pkg[:-4])
         if os.path.isfile(pkg_path + pkg[:-4]):
             pkg_sum += 1

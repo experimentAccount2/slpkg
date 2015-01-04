@@ -287,7 +287,7 @@ class PackageManager(object):
         row = int(tty_size[0]) - 2
         pkg_list = []
         try:
-            index, page, official = 0, row, []
+            index, page, official, r = 0, row, [], ''
             if os.path.isfile(lib_path + 'slack_repo/PACKAGES.TXT'):
                 f = open(lib_path + 'slack_repo/PACKAGES.TXT', 'r')
                 r = f.read()
@@ -302,7 +302,7 @@ class PackageManager(object):
                     pkg_list.append(pkg)
                 elif pattern == 'non-official' and pkg not in official:
                     pkg_list.append(pkg)
-            for pkg in pkg_list:
+            for pkg in sorted(pkg_list):
                 if INDEX:
                     index += 1
                     print("{0}{1}:{2} {3}".format(color['GREY'], index,

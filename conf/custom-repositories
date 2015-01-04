@@ -1,6 +1,6 @@
 # List File Repositories:
 #
-# repositories file is part of slpkg.
+# custom-repositories file is part of slpkg.
 #
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
@@ -22,7 +22,10 @@
 #
 # END OF LEGAL NOTICE
 #
-#
-# This file is used to read, write and remove repositories by the user.
+# This file is used to read, write and remove custom repositories by
+# the user. The repositories will be added here should have a different
+# name from existing repositories and the default. Also, the link must
+# contain the PACKAGES.TXT files, CHECKSUMS.md5 and optional ChangeLog.txt.
+# -------------------------------------------------------------------------
 #
 # NAME      URL

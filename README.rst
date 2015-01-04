@@ -228,8 +228,10 @@ Command Line Tool Usage
     Commands:
        update                                   update all package lists
        re-create                                recreate package lists
-       repolist                                 list all repositories
-       repoinfo [repository]                    repository information
+       repo-add [name] [URL]                    add custom repository
+       repo-remove [name]                       remove custom repository
+       repo-list                                list all repositories
+       repo-info [repository]                   repository information
        update slpkg                             check and update slpkg
 
     Optional arguments:
@@ -238,7 +240,7 @@ Command Line Tool Usage
       -a, script.tar.gz [source...]             auto build SBo packages
       -b, --list, [package...] --add, --remove  add, remove packages in blacklist
       -q, --list, [package...] --add, --remove  add, remove SBo packages in queue
-          --build, --install, --build-install   build, install packages from queue
+      -q, --build, --install, --build-install   build, install packages from queue
       -g, --config, --config=[editor]           configuration file management
       -l, [repository], all                     list of installed packages
       -c, [repository] --upgrade                check for updated packages
@@ -296,7 +298,7 @@ Take information repositories:
     
 .. code-block:: bash
 
-    $ slpkg repolist
+    $ slpkg repo-list
 
     +==============================================================================
     | Repo id          Repo name                                             Status
@@ -315,9 +317,9 @@ Take information repositories:
       slonly           https://slackonly.com/pub/packages/                  enabled
       studio           http://studioware.org/files/packages/                enabled
 
-    For enable or disable repositories edit '/etc/slpkg/slpkg.conf' file
+    For enable or disable default repositories edit '/etc/slpkg/slpkg.conf' file
 
-    $ slpkg repoinfo alien
+    $ slpkg repo-info alien
 
     Last updated: Tue Dec 23 11:48:31 UTC 2014
     Number of packages: 3149

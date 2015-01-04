@@ -62,7 +62,7 @@ def update_repositories(repositories):
     '''
     Upadate with user custom repositories
     '''
-    repo_file = "{0}repositories".format(conf_path)
+    repo_file = "{0}custom-repositories".format(conf_path)
     f = open(repo_file, "r")
     repositories_list = f.read()
     f.close()

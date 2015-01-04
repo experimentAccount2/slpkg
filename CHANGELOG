@@ -4,6 +4,7 @@ Version 2.1.6
 [Updated] - Fix queue downloads.
           - Update find argument.
           - Rename commands repolist and repoinfo to repo-list, repo-info.
+          - Update installed package list.
 
 [Feature] - Added custom binary repository.
 
