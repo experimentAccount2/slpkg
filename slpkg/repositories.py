@@ -26,6 +26,7 @@ import os
 import sys
 
 from __metadata__ import (
+    default_repositories,
     repositories
 )
 
@@ -49,7 +50,8 @@ class Repo(object):
             line = line.lstrip()
             if line and not line.startswith("#"):
                 repo_name.append(line.split()[0])
-        if repo in repositories or repo in repo_name:
+        if (repo in repositories or repo in repo_name or
+                repo in default_repositories):
             print("\nRepository name '{0}' exist, select different name.\n"
                   "View all repositories with command 'repolist'.\n".format(
                       repo))
@@ -57,6 +59,9 @@ class Repo(object):
         elif len(repo) > 6:
             print("\nMaximum repository name length must be six (6) "
                   "characters\n")
+            sys.exit(0)
+        elif not url.startswith('http') or url.startswith('ftp'):
+            print("\nWrong type URL '{0}'\n".format(url))
             sys.exit(0)
         with open(self.repo_file, "a") as repos:
             new_line = "  {0}{1}{2}\n".format(repo, ' ' * (10 - len(repo)), url)
