@@ -22,6 +22,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import os
+from collections import OrderedDict
 
 from downloader import Download
 from __metadata__ import (
@@ -96,7 +97,7 @@ class QueuePkgs(object):
         Add packages in queue if not exist
         '''
         queue_list = self.packages()
-        pkgs = set(pkgs)
+        pkgs = list(OrderedDict.fromkeys(pkgs))
         print("\nAdd packages in queue:\n")
         with open(self.queue_list, "a") as queue:
             for pkg in pkgs:
