@@ -38,9 +38,11 @@ same peculiarities in the repository 'slackr'.
 Custom repositories:
 --------------------
 There is the possibility of adding the repository directly from the user enough to address
-up to be the PACKAGES.TXT files and CHECKSUMS.md5 least. If not is there for file 
-ChangeLog.txt should run the command 're-create' instead of 'update' to update the package 
-lists. 
+up to be the 'PACKAGES.TXT' files and 'CHECKSUMS.md5' least. If not is there for file 
+'ChangeLog.txt' will get warning messages that the 'ChangeLog.txt' file can not be read but do
+not worry, the process is completed normally have each time you run the command 'slpkg update'
+the package lists for such a repository will be recreated from start automatically.
+
 Sometimes you may experience some problems with these repositories such as the not correctly
 resolve dependencies, and this may happen some specificities separate list which unfortunately
 can not be calculated sometimes good is the purpose of mentioning these problems.

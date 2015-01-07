@@ -85,11 +85,10 @@ class Initialization(object):
         changelog_txt = "{0}{1}".format(repo, log_file)
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)
-        if URL(changelog_txt).reading() != ' ':
-            self.write(log, log_file, changelog_txt)
-            self.remote(log, log_file, changelog_txt, lib, lib_file,
-                        packages_txt, md5_file, checksums_md5, lst_file,
-                        filelist_txt)
+        self.write(log, log_file, changelog_txt)
+        self.remote(log, log_file, changelog_txt, lib, lib_file,
+                    packages_txt, md5_file, checksums_md5, lst_file,
+                    filelist_txt)
 
     def slack(self):
         '''

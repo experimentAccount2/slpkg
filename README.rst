@@ -217,9 +217,6 @@ To add or remove repositories must edit the file '/etc/slpkg/slpkg.conf'.
 Also it is good to update the list of packages by running the command '# slpkg update'
 before proceeding to any installation or upgrade a new package.
 
-Some repositories lack the file 'ChangeLog.txt' should run the command 'slpkg re-create'
-instead of 'slpkg update' to update the package lists when you premiums prove necessary to update.
-
 
 Issues
 ------
@@ -303,29 +300,30 @@ Add and remove custom repositories:
     Repository 'ponce' successfully removed
 
     
-Take information repositories:
+View information about the repositories:
     
 .. code-block:: bash
 
     $ slpkg repo-list
-
+    
     +==============================================================================
-    | Repo id          Repo name                                             Status
+    | Repo id  Repo URL                                            Default   Status
     +==============================================================================
-      alien            http://www.slackware.com/~alien/slackbuilds/         enabled
-      ktown            http://alien.slackbook.org/ktown/                    enabled
-      multi            http://www.slackware.com/~alien/multilib/            enabled
-      rlw              http://rlworkman.net/pkgs/                           enabled
-      rested           http://taper.alienbase.nl/mirrors/people/ali~        enabled
-      salix            http://download.salixos.org/                         enabled
-      sbo              http://slackbuilds.org/slackbuilds/                  enabled
-      slack            http://mirrors.slackware.com/slackware/              enabled
-      slacke           http://ngc891.blogdns.net/pub/                       enabled
-      slackl           http://www.slackel.gr/repo/                          enabled
-      slackr           http://www.slackers.it/repository/                  disabled
-      slacky           http://repository.slacky.eu/                         enabled
-      slonly           https://slackonly.com/pub/packages/                  enabled
-      studio           http://studioware.org/files/packages/                enabled
+      alien    http://www.slackware.com/~alien/slackbuilds/        yes     disabled
+      ktown    http://alien.slackbook.org/ktown/                   yes     disabled
+      multi    http://www.slackware.com/~alien/multilib/           yes     disabled
+      ponce    http://ponce.cc/slackware/slackware64-14.1/packa~   no       enabled
+      rested   http://taper.alienbase.nl/mirrors/people/alien/r~   yes     disabled
+      rlw      http://rlworkman.net/pkgs/                          yes     disabled
+      salix    http://download.salixos.org/                        yes     disabled
+      sbo      http://slackbuilds.org/slackbuilds/                 yes      enabled
+      slack    http://ftp.cc.uoc.gr/mirrors/linux/slackware/       yes      enabled
+      slacke   http://ngc891.blogdns.net/pub/                      yes     disabled
+      slackl   http://www.slackel.gr/repo/                         yes     disabled
+      slackr   http://www.slackers.it/repository/                  yes     disabled
+      slacky   http://repository.slacky.eu/                        yes     disabled
+      slonly   https://slackonly.com/pub/packages/                 yes     disabled
+      studio   http://studioware.org/files/packages/               yes     disabled
 
     For enable or disable default repositories edit '/etc/slpkg/slpkg.conf' file
 

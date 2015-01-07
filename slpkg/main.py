@@ -24,14 +24,13 @@
 import sys
 import getpass
 
-from repoinfo import RepoInfo
-from repolist import RepoList
-from repositories import Repo
-
 from desc import PkgDesc
 from config import Config
 from queue import QueuePkgs
 from messages import s_user
+from repoinfo import RepoInfo
+from repolist import RepoList
+from repositories import Repo
 from tracking import track_dep
 from blacklist import BlackList
 from version import prog_version

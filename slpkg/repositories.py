@@ -53,7 +53,7 @@ class Repo(object):
         if (repo in repositories or repo in repo_name or
                 repo in default_repositories):
             print("\nRepository name '{0}' exist, select different name.\n"
-                  "View all repositories with command 'repolist'.\n".format(
+                  "View all repositories with command 'repo-list'.\n".format(
                       repo))
             sys.exit(0)
         elif len(repo) > 6:
