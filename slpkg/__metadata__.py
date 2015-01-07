@@ -111,6 +111,7 @@ remove_deps_answer = "n"
 skip_unst = "n"
 del_deps = "on"
 use_colors = "on"
+wget_option = '-c -N'
 
 if os.path.isfile("/etc/slpkg/slpkg.conf"):
     f = open("/etc/slpkg/slpkg.conf", "r")
@@ -148,6 +149,9 @@ if os.path.isfile("/etc/slpkg/slpkg.conf"):
             del_deps = line[9:].strip()
         if line.startswith("USE_COLORS"):
             use_colors = line[11:].strip()
+        if line.startswith("WGET_OPTION"):
+            wget_option = line[12:].strip()
+
 
 ktown_kde_repo = ktown_repo(repositories)
 slacke_sub_repo = slacke_repo(repositories)

@@ -24,7 +24,10 @@
 import sys
 import subprocess
 
-from __metadata__ import color
+from __metadata__ import (
+    color,
+    wget_option
+)
 
 
 class Download(object):
@@ -45,8 +48,8 @@ class Download(object):
                                                              color['ENDC'],
                                                              file_name))
             try:
-                subprocess.call("wget -c -N --directory-prefix={0} {1}".format(
-                                self.path, dwn), shell=True)
+                subprocess.call("wget {0} --directory-prefix={1} {2}".format(
+                                wget_option, self.path, dwn), shell=True)
             except KeyboardInterrupt:
                 print   # new line at cancel
                 sys.exit(0)
