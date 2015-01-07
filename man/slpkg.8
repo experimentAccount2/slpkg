@@ -16,8 +16,8 @@
 Slpkg is a user-friendly package manager for Slackware installations
 .SH SYNOPSIS
 Usage: slpkg Commands:
-             [update] [re-create] [repo-add [name] [URL]]
-             [repo-remove [name]] [repo-list]
+             [update] [re-create] [repo-add [repository name] [URL]]
+             [repo-remove [repository]] [repo-list]
              [repo-info [repository]] [update [slpkg]]
 
              Optional arguments:
@@ -44,8 +44,8 @@ Slpkg is a user-friendly package manager for Slackware installations
 Commands:
    update                                   update all package lists
    re-create                                recreate package lists  
-   repo-add [name] [URL]                    add custom repository
-   repo-remove [name]                       remove custom repository 
+   repo-add [repository name] [URL]         add custom repository
+   repo-remove [repository]                 remove custom repository 
    repolist                                 list all repositories
    repoinfo [repository]                    repository information
    update slpkg                             check and update slpkg
@@ -114,14 +114,15 @@ It is sometimes useful to create all of the base file from the beginning so this
 command deletes all the packages lists and re-created.
 
 .SS repo-add, add custom repository
-\fBslpkg\fP \fBrepo-add\fP <\fIname\fP> <\fIURL\fP>
+\fBslpkg\fP \fBrepo-add\fP <\fIrepository name\fP> <\fIURL\fP>
 .PP
-Add custom repository. The repositories will be added to this command should 
+Add custom binary repository. The repositories will be added to this command should 
 contain at least the files 'PACKAGES.TXT' and 'CHECKSUMS.md5' and optional file
-ChangeLog.txt.
+ChangeLog.txt. If the file 'ChangeLog.txt' not found to be running 'slpkg-re-create'
+instead of 'slpkg update' when you want to update the package list.
 
 .SS repo-remove, remove custom repository
-\fBslpkg\fP \fBrepo-remove\fP <\fIname\fP> 
+\fBslpkg\fP \fBrepo-remove\fP <\fIrepository\fP> 
 .PP
 Remove custom repository by name.
 
