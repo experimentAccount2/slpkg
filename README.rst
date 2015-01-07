@@ -177,6 +177,8 @@ Configuration files
     /etc/slpkg/slackware-mirrors
          List of Slackware Mirrors
 
+    /etc/slpkg/custom-repositories
+         List of custom repositories
 
 Slackware Current
 -----------------
@@ -215,11 +217,14 @@ To add or remove repositories must edit the file '/etc/slpkg/slpkg.conf'.
 Also it is good to update the list of packages by running the command '# slpkg update'
 before proceeding to any installation or upgrade a new package.
 
+Some repositories lack the file 'ChangeLog.txt' should run the command 'slpkg re-create'
+instead of 'slpkg update' to update the package lists when you premiums prove necessary to update.
+
 
 Issues
 ------
 
-Please report any bugs in "https://github.com/dslackw/slpkg/issues"
+Please report any bugs in `ISSUES <https://github.com/dslackw/slpkg/issues>`_
 
 
 Command Line Tool Usage
@@ -241,7 +246,7 @@ Command Line Tool Usage
     Optional arguments:
       -h, --help                                show this help message and exit
       -v, --version                             print version and exit
-      -a, script.tar.gz [source...]             auto build SBo packages
+      -a, [script.tar.gz] [source...]           auto build SBo packages
       -b, --list, [package...] --add, --remove  add, remove packages in blacklist
       -q, --list, [package...] --add, --remove  add, remove SBo packages in queue
       -q, --build, --install, --build-install   build, install packages from queue
@@ -326,6 +331,7 @@ Take information repositories:
 
     $ slpkg repo-info alien
 
+    Default: yes
     Last updated: Tue Dec 23 11:48:31 UTC 2014
     Number of packages: 3149
     Repo id: alien

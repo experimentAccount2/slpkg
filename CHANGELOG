@@ -9,6 +9,7 @@ Version 2.1.6
 [Feature] - Added custom binary repository.
           - Added Slackware 'patches' repository in PACKAGES.txt file.
           - Added Alien's restricted repository.
+          - Added wget option.
 
 Version 2.1.5
 27-12-2014

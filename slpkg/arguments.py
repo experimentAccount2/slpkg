@@ -48,7 +48,7 @@ def options():
         "  -h, --help                                show this help message "
         "and exit",
         "  -v, --version                             print version and exit",
-        "  -a, script.tar.gz [source...]             auto build SBo packages",
+        "  -a, [script.tar.gz] [source...]           auto build SBo packages",
         "  -b, --list, [package...] --add, --remove  add, remove packages in "
         "blacklist",
         "  -q, --list, [package...] --add, --remove  add, remove SBo packages "
@@ -96,7 +96,7 @@ def usage(repo):
         "             [repo-remove [repository]] [repo-list]",
         "             [repo-info [repository]] [update [slpkg]]\n",
         "             Optional arguments:",
-        "             [-h] [-v] [-a script.tar.gz [sources...]]",
+        "             [-h] [-v] [-a [script.tar.gz] [sources...]]",
         "             [-b --list, [...] --add, --remove]",
         "             [-q --list, [...] --add, --remove]",
         "             [-q --build, --install, --build-install]",
