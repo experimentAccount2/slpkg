@@ -39,8 +39,8 @@ def options():
         "   update                                   update all package "
         "lists",
         "   re-create                                recreate package lists",
-        "   repo-add [name] [URL]                    add custom repository",
-        "   repo-remove [name]                       remove custom repository",
+        "   repo-add [repository name] [URL]         add custom repository",
+        "   repo-remove [repository]                 remove custom repository",
         "   repo-list                                list all repositories",
         "   repo-info [repository]                   repository information",
         "   update slpkg                             check and update slpkg\n",
@@ -92,8 +92,8 @@ def usage(repo):
     view = [
         "slpkg - version {0}\n".format(__version__),
         "Usage: slpkg Commands:",
-        "             [update] [re-create] [repo-add [name] [URL]]",
-        "             [repo-remove [name]] [repo-list]",
+        "             [update] [re-create] [repo-add [repository name] [URL]]",
+        "             [repo-remove [repository]] [repo-list]",
         "             [repo-info [repository]] [update [slpkg]]\n",
         "             Optional arguments:",
         "             [-h] [-v] [-a script.tar.gz [sources...]]",

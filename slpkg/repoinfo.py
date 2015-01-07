@@ -28,6 +28,7 @@ from repositories import Repo
 from sizes import units
 from repolist import RepoList
 from __metadata__ import (
+    default_repositories,
     lib_path,
     log_path,
     repositories,
@@ -42,6 +43,7 @@ class RepoInfo(object):
             'Last updated:': '',
             'Number of packages:': '',
             'Repo id:': '',
+            'Default:': '',
             'Repo url:': '',
             'Status:': '',
             'Total compressed packages:': '',
@@ -58,6 +60,9 @@ class RepoInfo(object):
         '''
         status = '{0}disabled{1}'.format(color['RED'], color['ENDC'])
         self.form['Status:'] = status
+        self.form['Default:'] = 'no'
+        if repo in default_repositories:
+            self.form['Default:'] = 'yes'
         if (repo in repositories and
                 os.path.isfile(lib_path + '{0}_repo/PACKAGES.TXT'.format(
                     repo))):

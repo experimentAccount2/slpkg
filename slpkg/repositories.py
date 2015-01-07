@@ -186,3 +186,10 @@ class Repo(object):
         Slackel.gr slackel repository
         '''
         return "http://www.slackel.gr/repo/"
+
+    def restricted(self):
+        '''
+        Slackel.gr slackel repository
+        '''
+        return ("http://taper.alienbase.nl/mirrors/people/alien/"
+                "restricted_slackbuilds/")

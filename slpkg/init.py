@@ -112,12 +112,12 @@ class Initialization(object):
         ext_checksums = mirrors(md5_file, "extra/")
         pasture = mirrors(lib_file, "pasture/")
         pas_checksums = mirrors(md5_file, "pasture/")
-        patches = mirrors(lib_file, "patches/")
-        pat_checksums = mirrors(md5_file, "patches/")
+        patches_txt = mirrors(lib_file, "patches/")
+        patches_md5 = mirrors(md5_file, "patches/")
         packages_txt = ("{0} {1} {2} {3}".format(packages, extra, pasture,
-                                                 patches))
+                                                 patches_txt))
         checksums_md5 = ("{0} {1} {2} {3}".format(pkg_checksums, ext_checksums,
-                                                  pas_checksums, pat_checksums))
+                                                  pas_checksums, patches_md5))
         changelog_txt = mirrors(log_file, "")
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)
@@ -463,6 +463,31 @@ class Initialization(object):
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
+    def rested(self):
+        '''
+        Creating alien local library
+        '''
+        repo = Repo().restricted()
+        log = log_path + "rested/"
+        lib = lib_path + "rested_repo/"
+        lib_file = "PACKAGES.TXT"
+        lst_file = ""
+        md5_file = "CHECKSUMS.md5"
+        log_file = "ChangeLog.txt"
+        if not os.path.exists(log):
+            os.mkdir(log)
+        if not os.path.exists(lib):
+            os.mkdir(lib)
+        packages_txt = "{0}{1}".format(repo, lib_file)
+        filelist_txt = ""
+        checksums_md5 = "{0}{1}".format(repo, md5_file)
+        changelog_txt = "{0}{1}".format(repo, log_file)
+        self.write(lib, lib_file, packages_txt)
+        self.write(lib, md5_file, checksums_md5)
+        self.write(log, log_file, changelog_txt)
+        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
+                    md5_file, checksums_md5, lst_file, filelist_txt)
+
     @staticmethod
     def write(path, data_file, file_url):
         '''
@@ -513,6 +538,7 @@ class Initialization(object):
             # remove FILELIST.TXT
             if args[8]:
                 os.remove("{0}{1}".format(args[3], args[8]))
+            # read URL's
             for fu in args[5].split():
                 PACKAGES_TXT += URL(fu).reading()
             CHANGELOG_TXT = URL(args[2]).reading()

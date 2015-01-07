@@ -161,6 +161,11 @@ class OthersInstall(object):
         self.mirror = "{0}{1}/current/".format(Repo().slackel(), arch)
         self.step = self.step * 2
 
+    def _init_rested(self):
+        self.lib = lib_path + "rested_repo/PACKAGES.TXT"
+        self.mirror = Repo().restricted()
+        self.step = self.step * 2
+
     def start(self):
         '''
         Install packages from official Slackware distribution

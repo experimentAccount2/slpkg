@@ -29,11 +29,11 @@ packages.
 
 Slpkg is `Open Source <http://en.wikipedia.org/wiki/Open_source>`_ software written in 
 Python language. It's use is for managing packages in Slackware linux distribution.
-Supported Repositories:
+Default available Repositories:
 
 - SBo - `Reposiory <http://slackbuilds.org/>`_
   Arch: {x86, x86_64}
-  Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1}
+  Versions: {13.1, 13.37, 14.0, 14.1}
 - Slack - `Repository <http://www.slackware.com/>`_
   Arch: {x86, x86_64}
   Versions: {3.3, 8.1, 9.0, 9.1, 10.0, 10.1, 10.2, 11.0, 12.0, 12.2, 13.0, 13.37, 14.0, 14.1, current}
@@ -70,11 +70,15 @@ Supported Repositories:
 - Slackel - `Repository <http://www.slackel.gr/repo/>`_
   Arch: {x86, x86_64}
   Versions: {current}
+- Restricted - `Repository <http://taper.alienbase.nl/mirrors/people/alien/restricted_slackbuilds/>`_
+  Arch: {x86, x86_64}
+  Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14,1, current}
 
 
 * Choose default repositories you need to work from file '/etc/slpkg/slpkg.conf' default is 
   'slack' and 'sbo' repositories and read REPOSITORIES file for each of the particularities.
-  Manage custom repositories with commands 'repo-add' and 'repo-remove'.
+  If a repository is not in the above list, manage custom repositories with commands 'repo-add'
+  and 'repo-remove'.
 
 Slpkg works in accordance with the standards of the organization slackbuilds.org 
 to builds packages. Also uses the Slackware linux instructions for installation,
@@ -228,8 +232,8 @@ Command Line Tool Usage
     Commands:
        update                                   update all package lists
        re-create                                recreate package lists
-       repo-add [name] [URL]                    add custom repository
-       repo-remove [name]                       remove custom repository
+       repo-add [repository name] [URL]         add custom repository
+       repo-remove [repository]                 remove custom repository
        repo-list                                list all repositories
        repo-info [repository]                   repository information
        update slpkg                             check and update slpkg
@@ -307,6 +311,7 @@ Take information repositories:
       ktown            http://alien.slackbook.org/ktown/                    enabled
       multi            http://www.slackware.com/~alien/multilib/            enabled
       rlw              http://rlworkman.net/pkgs/                           enabled
+      rested           http://taper.alienbase.nl/mirrors/people/ali~        enabled
       salix            http://download.salixos.org/                         enabled
       sbo              http://slackbuilds.org/slackbuilds/                  enabled
       slack            http://mirrors.slackware.com/slackware/              enabled

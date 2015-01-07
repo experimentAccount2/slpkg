@@ -29,7 +29,7 @@ the list of packages with the command 'slpkg re-create' to be updated with new p
 and it's because the repository has not 'ChangeLog.txt' file.
 
 Studioware (studio), Alien's ktown (ktown), Alien's multilib (multi), Slacke E17 and E18
-repository has no reference dependencies.
+and Alien's restricted repository has no reference dependencies.
 
 Slackel.gr (slackl) repository must be used only from Slackware current users and has the
 same peculiarities in the repository 'slackr'.

@@ -293,7 +293,7 @@ class PackageManager(object):
                 r = f.read()
                 f.close()
             for line in r.splitlines():
-                if line.startswith("PACKAGE NAME:"):
+                if line.startswith("PACKAGE NAME: "):
                     official.append(line[15:-4].strip())
             for pkg in find_package("", pkg_path):
                 if pattern == 'all':

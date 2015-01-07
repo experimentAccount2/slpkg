@@ -50,7 +50,8 @@ repositories = [
     'multi',
     'slacke{18}',
     'salix',
-    'slackl'
+    'slackl',
+    'rested'
 ]
 
 default_repositories = repositories[8] = 'ktown'

@@ -27,6 +27,7 @@ import sys
 from repositories import Repo
 from messages import template
 from __metadata__ import (
+    default_repositories,
     repositories,
     color
 )
@@ -48,7 +49,8 @@ class RepoList(object):
             'multi': Repo().multi(),
             'slacke': Repo().slacke(),
             'salix': Repo().salix(),
-            'slackl': Repo().slackel()
+            'slackl': Repo().slackel(),
+            'rested': Repo().restricted()
         }
         self.all_repos.update(Repo().custom_repository())
 
@@ -60,16 +62,20 @@ class RepoList(object):
         template(78)
         print('{0}{1}{2}{3}{4}'.format(
             '| Repo id', ' ' * 10,
-            'Repo name', ' ' * 45,
+            'Repo URL', ' ' * 45,
             'Status'))
         template(78)
-        for repo_id, repo_name in sorted(self.all_repos.iteritems()):
+        for repo_id, repo_URL in sorted(self.all_repos.iteritems()):
             status, COLOR = 'disabled', color['RED']
+            if repo_id not in default_repositories:
+                repo_id = repo_id + ' *'
+            if len(repo_URL) > 45:
+                repo_URL = repo_URL[:44] + '~'
             if repo_id in repositories:
                 status, COLOR = 'enabled', color['GREEN']
             print('  {0}{1}{2}{3}{4}{5:>15}{6}'.format(
                 repo_id, ' ' * (17 - len(repo_id)),
-                repo_name, ' ' * (45 - len(repo_name)),
+                repo_URL, ' ' * (45 - len(repo_URL)),
                 COLOR, status, color['ENDC']))
         print("\nFor enable or disable default repositories edit "
               "'/etc/slpkg/slpkg.conf' file\n")

@@ -24,7 +24,6 @@
 import os
 
 from slpkg.toolbar import status
-from slpkg.splitting import split_package
 from slpkg.slack.slack_version import slack_ver
 from slpkg.__metadata__ import (
     lib_path,
@@ -59,7 +58,7 @@ def repo_data(PACKAGES_TXT, step, repo, version):
          rsize,
          runsize
          ) = rlw_filter(name, location, size, unsize)
-    elif repo == "alien":
+    elif repo == "alien" or repo == "rested":
         (rname,
          rlocation,
          rsize,

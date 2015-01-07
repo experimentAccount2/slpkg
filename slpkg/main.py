@@ -95,7 +95,8 @@ def main():
     queue = QueuePkgs()
 
     # all_args = [
-    #     'update', 're-create', 'repolist', 'repoinfo',
+    #     'update', 're-create', 'repo-add', 'repo-remove',
+    #     'repo-list', 'repo-info',
     #     '-h', '--help', '-v', '-a', '-b',
     #     '-q', '-g', '-l', '-c', '-s', '-t', '-p', '-f',
     #     '-n', '-i', '-u', '-o', '-r', '-d'
