@@ -78,9 +78,9 @@ def it_self_update():
         tar.close()
         file_name = '{0}-{1}'.format(__all__, __new_version__)
         os.chdir(file_name)
-        check_md5(pkg_checksum(slpkg_tar_file, "slpkg"),
+        check_md5(pkg_checksum(slpkg_tar_file[1:], "slpkg"),
                   build_path + slpkg_tar_file)
-        subprocess.call('chmod +x {0}'.format(file_name), shell=True)
+        subprocess.call('chmod +x {0}'.format('install.sh'), shell=True)
         subprocess.call('sh install.sh', shell=True)
     else:
         print('\n{0}: There is no new version, already used the last !'
