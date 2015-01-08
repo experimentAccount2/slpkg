@@ -41,7 +41,7 @@ def check_md5(pkg_md5, src_file):
         print("| MD5SUM check for {0} [ {1}FAILED{2} ]".format(
             src_file.split("/")[-1], color['RED'], color['ENDC']))
         template(78)
-        print("| Expected: {0}".format(md5))
+        print("| Expected: {0}".format(md5s))
         print("| Found: {0}".format(pkg_md5))
         template(78)
         if default_answer == "y":
