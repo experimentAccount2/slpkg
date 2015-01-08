@@ -64,13 +64,14 @@ def update_repositories(repositories):
     Upadate with user custom repositories
     '''
     repo_file = "{0}custom-repositories".format(conf_path)
-    f = open(repo_file, "r")
-    repositories_list = f.read()
-    f.close()
-    for line in repositories_list.splitlines():
-            line = line.lstrip()
-            if line and not line.startswith("#"):
-                repositories.append(line.split()[0])
+    if os.path.isfile(repo_file):
+        f = open(repo_file, "r")
+        repositories_list = f.read()
+        f.close()
+        for line in repositories_list.splitlines():
+                line = line.lstrip()
+                if line and not line.startswith("#"):
+                    repositories.append(line.split()[0])
     return repositories
 
 
