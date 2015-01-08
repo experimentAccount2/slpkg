@@ -50,7 +50,8 @@ class Config(object):
             'REMOVE_DEPS_ANSWER',
             'SKIP_UNST',
             'DEL_DEPS',
-            'USE_COLORS'
+            'USE_COLORS',
+            'WGET_OPTION'
         ]
         f = open(self.config_file, "r")
         read_conf = f.read()

@@ -90,7 +90,8 @@ if "install" in sys.argv:
     conf_file = [
         'conf/slpkg.conf',
         'conf/blacklist',
-        'conf/slackware-mirrors'
+        'conf/slackware-mirrors',
+        'conf/custom-repositories'
     ]
     if not os.path.exists(conf_path):
         os.system("mkdir -p {0}".format(conf_path))

@@ -24,13 +24,13 @@
 import sys
 import getpass
 
-from repoinfo import RepoInfo
-from repolist import RepoList
-
 from desc import PkgDesc
 from config import Config
 from queue import QueuePkgs
 from messages import s_user
+from repoinfo import RepoInfo
+from repolist import RepoList
+from repositories import Repo
 from tracking import track_dep
 from blacklist import BlackList
 from version import prog_version
@@ -94,7 +94,8 @@ def main():
     queue = QueuePkgs()
 
     # all_args = [
-    #     'update', 're-create', 'repolist', 'repoinfo',
+    #     'update', 're-create', 'repo-add', 'repo-remove',
+    #     'repo-list', 'repo-info',
     #     '-h', '--help', '-v', '-a', '-b',
     #     '-q', '-g', '-l', '-c', '-s', '-t', '-p', '-f',
     #     '-n', '-i', '-u', '-o', '-r', '-d'
@@ -112,7 +113,7 @@ def main():
     if len(args) == 2 and args[0] == "update" and args[1] == "slpkg":
         it_self_update()
 
-    if len(args) == 1 and args[0] == "repolist":
+    if len(args) == 1 and args[0] == "repo-list":
         RepoList().repos()
 
     if len(args) == 0:
@@ -125,26 +126,36 @@ def main():
             args[0] == "--version" and args[1:] == []):
         prog_version()
 
+    if len(args) == 3 and args[0] == "repo-add":
+        Repo().add(args[1], args[2])
+
+    if len(args) == 2 and args[0] == "repo-remove":
+        Repo().remove(args[1])
+
     # checking if repositories exists
     check_exists_repositories()
 
     if len(args) == 1 and args[0] == "re-create":
         Initialization().re_create()
 
-    if (len(args) == 2 and args[0] == "repoinfo" and
+    if (len(args) == 2 and args[0] == "repo-info" and
             args[1] in RepoList().all_repos):
         del RepoList().all_repos
         RepoInfo().view(args[1])
-    elif (len(args) == 2 and args[0] == "repoinfo" and
+    elif (len(args) == 2 and args[0] == "repo-info" and
           args[1] not in RepoList().all_repos):
         usage(args[1])
 
     if len(args) == 3 and args[0] == "-a":
         BuildPackage(args[1], args[2:], path).build()
     elif len(args) == 2 and args[0] == "-l":
-        pkg_list = ["all"] + repositories
-        if args[1] in pkg_list:
-            PackageManager(None).list(args[1])
+        if args[1] in ['all', 'official', 'non-official']:
+            PackageManager(None).list(args[1], False)
+        else:
+            usage('')
+    elif len(args) == 3 and args[0] == "-l" and args[2] == '--index':
+        if args[1] in ['all', 'official', 'non-official']:
+            PackageManager(None).list(args[1], True)
         else:
             usage('')
     elif len(args) == 3 and args[0] == "-c" and args[2] == "--upgrade":
@@ -200,7 +211,7 @@ def main():
         PackageManager(args[1:]).reinstall()
     elif len(args) > 1 and args[0] == "-r":
         PackageManager(args[1:]).remove()
-    elif len(args) == 2 and args[0] == "-f":
+    elif len(args) > 1 and args[0] == "-f":
         PackageManager(args[1:]).find()
     elif len(args) == 3 and args[0] == "-p" and args[1] in repositories:
         PkgDesc(args[2], args[1], "").view()

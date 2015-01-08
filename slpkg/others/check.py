@@ -40,7 +40,8 @@ from slpkg.__metadata__ import (
     slpkg_tmp_packages,
     default_answer,
     color,
-    slacke_sub_repo
+    slacke_sub_repo,
+    default_repositories
 )
 
 from slpkg.pkg.find import find_package
@@ -62,11 +63,18 @@ class OthersUpgrade(object):
         sys.stdout.flush()
         self.step = 700
 
-        exec('self._init_{0}()'.format(self.repo))
+        if repo in default_repositories:
+            exec('self._init_{0}()'.format(self.repo))
+        else:
+            exec('self._init_custom()')
 
         f = open(self.lib, "r")
         self.PACKAGES_TXT = f.read()
         f.close()
+
+    def _init_custom(self):
+        self.lib = lib_path + "{0}_repo/PACKAGES.TXT".format(self.repo)
+        self.mirror = "{0}".format(Repo().custom_repository()[self.repo])
 
     def _init_rlw(self):
         self.lib = lib_path + "rlw_repo/PACKAGES.TXT"
@@ -143,6 +151,11 @@ class OthersUpgrade(object):
             arch = "x86_64"
         self.lib = lib_path + "slackl_repo/PACKAGES.TXT"
         self.mirror = "{0}{1}/current/".format(Repo().slackel(), arch)
+        self.step = self.step * 2
+
+    def _init_rested(self):
+        self.lib = lib_path + "rested_repo/PACKAGES.TXT"
+        self.mirror = Repo().restricted()
         self.step = self.step * 2
 
     def start(self):

@@ -11,9 +11,9 @@
 
 Latest Release:
 
-- Version: 2.1.5
+- Version: 2.1.dev
 - `Package <https://sourceforge.net/projects/slpkg/files/slpkg/binary/>`_
-- `Source <https://github.com/dslackw/slpkg/archive/v2.1.5.tar.gz>`_
+- `Source <https://github.com/dslackw/slpkg/archive/v2.1.dev.tar.gz>`_
 - `CHANGELOG <https://github.com/dslackw/slpkg/blob/master/CHANGELOG>`_
  
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/logo.png
@@ -29,11 +29,11 @@ packages.
 
 Slpkg is `Open Source <http://en.wikipedia.org/wiki/Open_source>`_ software written in 
 Python language. It's use is for managing packages in Slackware linux distribution.
-Supported Repositories:
+Default available Repositories:
 
 - SBo - `Reposiory <http://slackbuilds.org/>`_
   Arch: {x86, x86_64}
-  Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1}
+  Versions: {13.1, 13.37, 14.0, 14.1}
 - Slack - `Repository <http://www.slackware.com/>`_
   Arch: {x86, x86_64}
   Versions: {3.3, 8.1, 9.0, 9.1, 10.0, 10.1, 10.2, 11.0, 12.0, 12.2, 13.0, 13.37, 14.0, 14.1, current}
@@ -70,10 +70,15 @@ Supported Repositories:
 - Slackel - `Repository <http://www.slackel.gr/repo/>`_
   Arch: {x86, x86_64}
   Versions: {current}
+- Restricted - `Repository <http://taper.alienbase.nl/mirrors/people/alien/restricted_slackbuilds/>`_
+  Arch: {x86, x86_64}
+  Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14,1, current}
 
 
-* Choose repositories you need to work from file '/etc/slpkg/slpkg.conf' default is 
+* Choose default repositories you need to work from file '/etc/slpkg/slpkg.conf' default is 
   'slack' and 'sbo' repositories and read REPOSITORIES file for each of the particularities.
+  If a repository is not in the above list, manage custom repositories with commands 'repo-add'
+  and 'repo-remove'.
 
 Slpkg works in accordance with the standards of the organization slackbuilds.org 
 to builds packages. Also uses the Slackware linux instructions for installation,
@@ -135,8 +140,8 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.1.5.tar.gz
-    $ cd slpkg-2.1.5
+    $ tar xvf slpkg-2.1.dev.tar.gz
+    $ cd slpkg-2.1.dev
     $ ./install.sh
 
 From SourceForge:
@@ -172,6 +177,8 @@ Configuration files
     /etc/slpkg/slackware-mirrors
          List of Slackware Mirrors
 
+    /etc/slpkg/custom-repositories
+         List of custom repositories
 
 Slackware Current
 -----------------
@@ -214,7 +221,7 @@ before proceeding to any installation or upgrade a new package.
 Issues
 ------
 
-Please report any bugs in "https://github.com/dslackw/slpkg/issues"
+Please report any bugs in `ISSUES <https://github.com/dslackw/slpkg/issues>`_
 
 
 Command Line Tool Usage
@@ -227,25 +234,27 @@ Command Line Tool Usage
     Commands:
        update                                   update all package lists
        re-create                                recreate package lists
-       repolist                                 list all repositories
-       repoinfo [repository]                    repository information
+       repo-add [repository name] [URL]         add custom repository
+       repo-remove [repository]                 remove custom repository
+       repo-list                                list all repositories
+       repo-info [repository]                   repository information
        update slpkg                             check and update slpkg
 
     Optional arguments:
       -h, --help                                show this help message and exit
       -v, --version                             print version and exit
-      -a, script.tar.gz [source...]             auto build SBo packages
+      -a, [script.tar.gz] [source...]           auto build SBo packages
       -b, --list, [package...] --add, --remove  add, remove packages in blacklist
       -q, --list, [package...] --add, --remove  add, remove SBo packages in queue
-          --build, --install, --build-install   build, install packages from queue
+      -q, --build, --install, --build-install   build, install packages from queue
       -g, --config, --config=[editor]           configuration file management
       -l, [repository], all                     list of installed packages
       -c, [repository] --upgrade                check for updated packages
       -s, [repository] [package]                download, build & install
       -t, [repository] [package]                tracking dependencies
       -p, [repository] [package], --color=[]    print package description
-      -f, [package]                             find installed packages
       -n, [package]                             view SBo packages through network
+      -f, [package...]                          find installed packages
       -i, [package...]                          install binary packages
       -u, [package...]                          upgrade binary packages
       -o, [package...]                          reinstall binary packages
@@ -277,33 +286,50 @@ and update the package lists:
     Update repository multi ...Done
 
 
-Take information repositories with commands:
+Add and remove custom repositories:
+
+.. code-block:: bash
+
+    $ slpkg repo-add ponce http://ponce.cc/slackware/slackware64-14.1/packages/
+
+    Repository 'ponce' successfully added
+
+
+    $ slpkg repo-remove ponce
+
+    Repository 'ponce' successfully removed
+
+    
+View information about the repositories:
     
 .. code-block:: bash
 
-    $ slpkg repolist
-
+    $ slpkg repo-list
+    
     +==============================================================================
-    | Repo id          Repo name                                             Status
+    | Repo id  Repo URL                                            Default   Status
     +==============================================================================
-      alien            http://www.slackware.com/~alien/slackbuilds/         enabled
-      ktown            http://alien.slackbook.org/ktown/                    enabled
-      multi            http://www.slackware.com/~alien/multilib/            enabled
-      rlw              http://rlworkman.net/pkgs/                           enabled
-      salix            http://download.salixos.org/                         enabled
-      sbo              http://slackbuilds.org/slackbuilds/                  enabled
-      slack            http://mirrors.slackware.com/slackware/              enabled
-      slacke           http://ngc891.blogdns.net/pub/                       enabled
-      slackl           http://www.slackel.gr/repo/                          enabled
-      slackr           http://www.slackers.it/repository/                  disabled
-      slacky           http://repository.slacky.eu/                         enabled
-      slonly           https://slackonly.com/pub/packages/                  enabled
-      studio           http://studioware.org/files/packages/                enabled
+      alien    http://www.slackware.com/~alien/slackbuilds/        yes     disabled
+      ktown    http://alien.slackbook.org/ktown/                   yes     disabled
+      multi    http://www.slackware.com/~alien/multilib/           yes     disabled
+      ponce    http://ponce.cc/slackware/slackware64-14.1/packa~   no       enabled
+      rested   http://taper.alienbase.nl/mirrors/people/alien/r~   yes     disabled
+      rlw      http://rlworkman.net/pkgs/                          yes     disabled
+      salix    http://download.salixos.org/                        yes     disabled
+      sbo      http://slackbuilds.org/slackbuilds/                 yes      enabled
+      slack    http://ftp.cc.uoc.gr/mirrors/linux/slackware/       yes      enabled
+      slacke   http://ngc891.blogdns.net/pub/                      yes     disabled
+      slackl   http://www.slackel.gr/repo/                         yes     disabled
+      slackr   http://www.slackers.it/repository/                  yes     disabled
+      slacky   http://repository.slacky.eu/                        yes     disabled
+      slonly   https://slackonly.com/pub/packages/                 yes     disabled
+      studio   http://studioware.org/files/packages/               yes     disabled
 
-    For enable or disable repositories edit '/etc/slpkg/slpkg.conf' file
+    For enable or disable default repositories edit '/etc/slpkg/slpkg.conf' file
 
-    $ slpkg repoinfo alien
+    $ slpkg repo-info alien
 
+    Default: yes
     Last updated: Tue Dec 23 11:48:31 UTC 2014
     Number of packages: 3149
     Repo id: alien

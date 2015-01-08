@@ -24,9 +24,11 @@
 import os
 import sys
 
+from repositories import Repo
 from sizes import units
 from repolist import RepoList
 from __metadata__ import (
+    default_repositories,
     lib_path,
     log_path,
     repositories,
@@ -41,6 +43,7 @@ class RepoInfo(object):
             'Last updated:': '',
             'Number of packages:': '',
             'Repo id:': '',
+            'Default:': '',
             'Repo url:': '',
             'Status:': '',
             'Total compressed packages:': '',
@@ -48,6 +51,7 @@ class RepoInfo(object):
         }
 
         self.all_repos = RepoList().all_repos
+        self.all_repos.update(Repo().custom_repository())
         del RepoList().all_repos
 
     def view(self, repo):
@@ -56,8 +60,12 @@ class RepoInfo(object):
         '''
         status = '{0}disabled{1}'.format(color['RED'], color['ENDC'])
         self.form['Status:'] = status
+        self.form['Default:'] = 'no'
+        if repo in default_repositories:
+            self.form['Default:'] = 'yes'
         if (repo in repositories and
-                os.path.isfile(log_path + '{0}/ChangeLog.txt'.format(repo))):
+                os.path.isfile(lib_path + '{0}_repo/PACKAGES.TXT'.format(
+                    repo))):
             status = '{0}enabled{1}'.format(color['GREEN'], color['ENDC'])
             if repo != 'sbo':
                 data = self.repository_data(repo)
@@ -71,20 +79,22 @@ class RepoInfo(object):
                 self.form['Number of packages:'] = data[0]
                 self.form['Status:'] = status
                 self.form['Last updated:'] = data[3]
-            elif repo == 'sbo':
-                sum_sbo_pkgs = 0
-                for line in open(lib_path + 'sbo_repo/SLACKBUILDS.TXT', 'r'):
-                    if line.startswith('SLACKBUILD NAME: '):
-                        sum_sbo_pkgs += 1
-                with open(log_path + 'sbo/ChangeLog.txt', 'r') as changelog_txt:
-                    last_upd = changelog_txt.readline().replace('\n', '')
-                self.form['Repo id:'] = repo
-                self.form['Repo url:'] = self.all_repos[repo]
-                self.form['Total compressed packages:'] = ''
-                self.form['Total uncompressed packages:'] = ''
-                self.form['Number of packages:'] = sum_sbo_pkgs
-                self.form['Status:'] = status
-                self.form['Last updated:'] = last_upd
+        elif (repo == 'sbo' and os.path.isfile(lib_path + '{0}_repo/'
+                                               'SLACKBUILDS.TXT'.format(repo))):
+            status = '{0}enabled{1}'.format(color['GREEN'], color['ENDC'])
+            sum_sbo_pkgs = 0
+            for line in open(lib_path + 'sbo_repo/SLACKBUILDS.TXT', 'r'):
+                if line.startswith('SLACKBUILD NAME: '):
+                    sum_sbo_pkgs += 1
+            with open(log_path + 'sbo/ChangeLog.txt', 'r') as changelog_txt:
+                last_upd = changelog_txt.readline().replace('\n', '')
+            self.form['Repo id:'] = repo
+            self.form['Repo url:'] = self.all_repos[repo]
+            self.form['Total compressed packages:'] = ''
+            self.form['Total uncompressed packages:'] = ''
+            self.form['Number of packages:'] = sum_sbo_pkgs
+            self.form['Status:'] = status
+            self.form['Last updated:'] = last_upd
         print('')
         for key, value in sorted(self.form.iteritems()):
             print color['GREY'] + key + color['ENDC'], value

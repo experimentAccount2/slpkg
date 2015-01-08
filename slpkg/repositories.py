@@ -23,12 +23,82 @@
 
 
 import os
+import sys
+
+from __metadata__ import (
+    default_repositories,
+    repositories
+)
 
 
 class Repo(object):
 
     def __init__(self):
-        pass
+        self.repo_file = "/etc/slpkg/custom-repositories"
+        f = open(self.repo_file, "r")
+        self.repositories_list = f.read()
+        f.close()
+
+    def add(self, repo, url):
+        '''
+        Write custom repository name and url in a file
+        '''
+        repo_name = []
+        if not url.endswith('/'):
+            url = url + '/'
+        for line in self.repositories_list.splitlines():
+            line = line.lstrip()
+            if line and not line.startswith("#"):
+                repo_name.append(line.split()[0])
+        if (repo in repositories or repo in repo_name or
+                repo in default_repositories):
+            print("\nRepository name '{0}' exist, select different name.\n"
+                  "View all repositories with command 'repo-list'.\n".format(
+                      repo))
+            sys.exit(0)
+        elif len(repo) > 6:
+            print("\nMaximum repository name length must be six (6) "
+                  "characters\n")
+            sys.exit(0)
+        elif not url.startswith('http') or url.startswith('ftp'):
+            print("\nWrong type URL '{0}'\n".format(url))
+            sys.exit(0)
+        with open(self.repo_file, "a") as repos:
+            new_line = "  {0}{1}{2}\n".format(repo, ' ' * (10 - len(repo)), url)
+            repos.write(new_line)
+        repos.close()
+        print("\nRepository '{0}' successfully added\n".format(repo))
+        sys.exit(0)
+
+    def remove(self, repo):
+        '''
+        Remove custom repository
+        '''
+        rem_repo = False
+        with open(self.repo_file, "w") as repos:
+            for line in self.repositories_list.splitlines():
+                repo_name = line.split()[0]
+                if repo_name != repo:
+                    repos.write(line + "\n")
+                else:
+                    print("\nRepository '{0}' successfully "
+                          "removed\n".format(repo))
+                    rem_repo = True
+            repos.close()
+        if not rem_repo:
+            print("\nRepository '{0}' doesn't exist\n".format(repo))
+        sys.exit(0)
+
+    def custom_repository(self):
+        '''
+        Return dictionary with repo name and url
+        '''
+        dict_repo = {}
+        for line in self.repositories_list.splitlines():
+            line = line.lstrip()
+            if not line.startswith("#"):
+                dict_repo[line.split()[0]] = line.split()[1]
+        return dict_repo
 
     def slack(self):
         '''
@@ -116,3 +186,10 @@ class Repo(object):
         Slackel.gr slackel repository
         '''
         return "http://www.slackel.gr/repo/"
+
+    def restricted(self):
+        '''
+        Slackel.gr slackel repository
+        '''
+        return ("http://taper.alienbase.nl/mirrors/people/alien/"
+                "restricted_slackbuilds/")

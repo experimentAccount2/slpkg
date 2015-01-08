@@ -32,11 +32,14 @@ from __metadata__ import (
     color,
     log_path,
     lib_path,
+    tmp_path,
+    conf_path,
     build_path,
     repositories,
     slpkg_tmp_packages,
     slpkg_tmp_patches,
-    slacke_sub_repo
+    slacke_sub_repo,
+    default_repositories
 )
 
 from slack.mirrors import mirrors
@@ -46,20 +49,46 @@ from slack.slack_version import slack_ver
 class Initialization(object):
 
     def __init__(self):
-        if not os.path.exists("/etc/slpkg/"):
-            os.mkdir("/etc/slpkg/")
+        if not os.path.exists(conf_path):
+            os.mkdir(conf_path)
         if not os.path.exists(log_path):
             os.mkdir(log_path)
         if not os.path.exists(lib_path):
             os.mkdir(lib_path)
-        if not os.path.exists("/tmp/slpkg/"):
-            os.mkdir("/tmp/slpkg/")
+        if not os.path.exists(tmp_path):
+            os.mkdir(tmp_path)
         if not os.path.exists(build_path):
             os.makedirs(build_path)
         if not os.path.exists(slpkg_tmp_packages):
             os.makedirs(slpkg_tmp_packages)
         if not os.path.exists(slpkg_tmp_patches):
             os.makedirs(slpkg_tmp_patches)
+
+    def custom(self, name):
+        '''
+        Creating user select repository local library
+        '''
+        repo = Repo().custom_repository()[name]
+        log = log_path + name + "/"
+        lib = lib_path + "{0}_repo/".format(name)
+        lib_file = "PACKAGES.TXT"
+        lst_file = ""
+        md5_file = "CHECKSUMS.md5"
+        log_file = "ChangeLog.txt"
+        if not os.path.exists(log):
+            os.mkdir(log)
+        if not os.path.exists(lib):
+            os.mkdir(lib)
+        packages_txt = "{0}{1}".format(repo, lib_file)
+        filelist_txt = ""
+        checksums_md5 = "{0}{1}".format(repo, md5_file)
+        changelog_txt = "{0}{1}".format(repo, log_file)
+        self.write(lib, lib_file, packages_txt)
+        self.write(lib, md5_file, checksums_md5)
+        self.write(log, log_file, changelog_txt)
+        self.remote(log, log_file, changelog_txt, lib, lib_file,
+                    packages_txt, md5_file, checksums_md5, lst_file,
+                    filelist_txt)
 
     def slack(self):
         '''
@@ -82,10 +111,12 @@ class Initialization(object):
         ext_checksums = mirrors(md5_file, "extra/")
         pasture = mirrors(lib_file, "pasture/")
         pas_checksums = mirrors(md5_file, "pasture/")
-        packages_txt = ("{0} {1} {2}".format(packages, extra, pasture))
-
-        checksums_md5 = ("{0} {1} {2}".format(pkg_checksums, ext_checksums,
-                                              pas_checksums))
+        patches_txt = mirrors(lib_file, "patches/")
+        patches_md5 = mirrors(md5_file, "patches/")
+        packages_txt = ("{0} {1} {2} {3}".format(packages, extra, pasture,
+                                                 patches_txt))
+        checksums_md5 = ("{0} {1} {2} {3}".format(pkg_checksums, ext_checksums,
+                                                  pas_checksums, patches_md5))
         changelog_txt = mirrors(log_file, "")
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)
@@ -431,6 +462,31 @@ class Initialization(object):
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
+    def rested(self):
+        '''
+        Creating alien local library
+        '''
+        repo = Repo().restricted()
+        log = log_path + "rested/"
+        lib = lib_path + "rested_repo/"
+        lib_file = "PACKAGES.TXT"
+        lst_file = ""
+        md5_file = "CHECKSUMS.md5"
+        log_file = "ChangeLog.txt"
+        if not os.path.exists(log):
+            os.mkdir(log)
+        if not os.path.exists(lib):
+            os.mkdir(lib)
+        packages_txt = "{0}{1}".format(repo, lib_file)
+        filelist_txt = ""
+        checksums_md5 = "{0}{1}".format(repo, md5_file)
+        changelog_txt = "{0}{1}".format(repo, log_file)
+        self.write(lib, lib_file, packages_txt)
+        self.write(lib, md5_file, checksums_md5)
+        self.write(log, log_file, changelog_txt)
+        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
+                    md5_file, checksums_md5, lst_file, filelist_txt)
+
     @staticmethod
     def write(path, data_file, file_url):
         '''
@@ -481,6 +537,7 @@ class Initialization(object):
             # remove FILELIST.TXT
             if args[8]:
                 os.remove("{0}{1}".format(args[3], args[8]))
+            # read URL's
             for fu in args[5].split():
                 PACKAGES_TXT += URL(fu).reading()
             CHANGELOG_TXT = URL(args[2]).reading()
@@ -547,7 +604,10 @@ class Update(object):
             sys.stdout.write("{0}Update repository {1} ...{2}".format(
                 color['GREY'], repo, color['ENDC']))
             sys.stdout.flush()
-            exec('{0}.{1}()'.format(self._init, repo))
+            if repo in default_repositories:
+                exec('{0}.{1}()'.format(self._init, repo))
+            else:
+                Initialization().custom(repo)
             sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
                                                    color['ENDC']))
         print("")   # new line at end
@@ -556,12 +616,16 @@ class Update(object):
 
 def check_exists_repositories():
     '''
-    Checking if repositories exists by ChangeLog.txt file
+    Checking if repositories exists by PACKAGES.TXT file
     '''
     update = False
+    pkg_list = "PACKAGES.TXT"
     for repo in repositories:
-        if not os.path.isfile("{0}{1}{2}".format(log_path, repo,
-                                                 "/ChangeLog.txt")):
+        pkg_list = "PACKAGES.TXT"
+        if repo == "sbo":
+            pkg_list = "SLACKBUILDS.TXT"
+        if not os.path.isfile("{0}{1}{2}".format(lib_path, repo,
+                                                 "_repo/{0}".format(pkg_list))):
             update = True
     if update:
         print("\n  Please update packages lists. Run 'slpkg update'.\n" +

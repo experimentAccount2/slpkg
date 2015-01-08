@@ -30,11 +30,13 @@ __version__ = "{0}.{1}.{2}".format(*__version_info__)
 __license__ = "GNU General Public License v3 (GPLv3)"
 __email__ = "d.zlatanidis@gmail.com"
 
-# temponary path
-tmp = "/tmp/"
 
 # Default configuration values
 slack_rel = "stable"
+
+# Configuration path
+conf_path = "/etc/{0}/".format(__all__)
+
 repositories = [
     'slack',
     'sbo',
@@ -48,8 +50,29 @@ repositories = [
     'multi',
     'slacke{18}',
     'salix',
-    'slackl'
+    'slackl',
+    'rested'
 ]
+
+default_repositories = repositories[8] = 'ktown'
+default_repositories = repositories[10] = 'slacke'
+default_repositories = repositories
+
+
+def update_repositories(repositories):
+    '''
+    Upadate with user custom repositories
+    '''
+    repo_file = "{0}custom-repositories".format(conf_path)
+    if os.path.isfile(repo_file):
+        f = open(repo_file, "r")
+        repositories_list = f.read()
+        f.close()
+        for line in repositories_list.splitlines():
+                line = line.lstrip()
+                if line and not line.startswith("#"):
+                    repositories.append(line.split()[0])
+    return repositories
 
 
 def ktown_repo(repositories):
@@ -75,6 +98,8 @@ def slacke_repo(repositories):
             repositories[i] = 'slacke'
             return sub
 
+tmp = "/tmp/"
+tmp_path = "{0}{1}/".format(tmp, __all__)
 build_path = "/tmp/slpkg/build/"
 slpkg_tmp_packages = tmp + "slpkg/packages/"
 slpkg_tmp_patches = tmp + "slpkg/patches/"
@@ -87,6 +112,7 @@ remove_deps_answer = "n"
 skip_unst = "n"
 del_deps = "on"
 use_colors = "on"
+wget_option = '-c -N'
 
 if os.path.isfile("/etc/slpkg/slpkg.conf"):
     f = open("/etc/slpkg/slpkg.conf", "r")
@@ -124,9 +150,13 @@ if os.path.isfile("/etc/slpkg/slpkg.conf"):
             del_deps = line[9:].strip()
         if line.startswith("USE_COLORS"):
             use_colors = line[11:].strip()
+        if line.startswith("WGET_OPTION"):
+            wget_option = line[12:].strip()
+
 
 ktown_kde_repo = ktown_repo(repositories)
 slacke_sub_repo = slacke_repo(repositories)
+update_repositories(repositories)
 
 color = {
     'RED': '\x1b[31m',
@@ -146,6 +176,9 @@ if use_colors == "off":
         'GREY': '',
         'ENDC': ''
     }
+
+CHECKSUMS_link = ("https://raw.githubusercontent.com/{0}/{1}/"
+                  "master/CHECKSUMS.md5".format(__author__, __all__))
 
 # file spacer
 sp = "-"

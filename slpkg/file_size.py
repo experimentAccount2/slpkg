@@ -40,8 +40,7 @@ class FileSize(object):
             meta = tar.info()
             return int(meta.getheaders("Content-Length")[0])
         except (urllib2.URLError, IndexError):
-            print("\nError: connection refused\n")
-            sys.exit(0)
+            return ' '
         except KeyboardInterrupt:
             print("")   # new line at cancel
             sys.exit(0)

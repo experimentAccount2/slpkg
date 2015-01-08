@@ -1,3 +1,17 @@
+Version 2.2.0
+08-1-2015
+
+[Updated] - Fix queue downloads.
+          - Update find argument.
+          - Rename commands repolist and repoinfo to repo-list, repo-info.
+          - Update installed package list.
+
+[Feature] - Added custom binary repository.
+          - Added Slackware 'patches' repository in PACKAGES.txt file.
+          - Added Alien's restricted repository.
+          - Added wget option.
+          - Added view default repositories in repo-list.
+
 Version 2.1.5
 27-12-2014
 

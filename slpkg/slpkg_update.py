@@ -28,6 +28,8 @@ import sys
 import tarfile
 import subprocess
 
+from checksum import check_md5
+from grep_md5 import pkg_checksum
 from url_read import URL
 from downloader import Download
 from __metadata__ import (
@@ -60,7 +62,7 @@ def it_self_update():
         else:
             print("\nNew version '{0}-{1}' is available !\n".format(
                 __all__, __new_version__))
-            answer = raw_input("Would you like to continue [Y/n]? ")
+            answer = raw_input("Would you like to upgrade [Y/n]? ")
         if answer in ['y', 'Y']:
             print("")   # new line after answer
         else:
@@ -70,11 +72,14 @@ def it_self_update():
                                          __new_version__)]
         Download(build_path, dwn_link).start()
         os.chdir(build_path)
-        tar = tarfile.open('v' + __new_version__ + '.tar.gz')
+        slpkg_tar_file = 'v' + __new_version__ + '.tar.gz'
+        tar = tarfile.open(slpkg_tar_file)
         tar.extractall()
         tar.close()
         file_name = '{0}-{1}'.format(__all__, __new_version__)
         os.chdir(file_name)
+        check_md5(pkg_checksum(slpkg_tar_file, "slpkg"),
+                  build_path + slpkg_tar_file)
         subprocess.call('chmod +x {0}'.format(file_name), shell=True)
         subprocess.call('sh install.sh', shell=True)
     else:

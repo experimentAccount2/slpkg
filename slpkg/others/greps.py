@@ -24,7 +24,6 @@
 import os
 
 from slpkg.toolbar import status
-from slpkg.splitting import split_package
 from slpkg.slack.slack_version import slack_ver
 from slpkg.__metadata__ import (
     lib_path,
@@ -59,7 +58,7 @@ def repo_data(PACKAGES_TXT, step, repo, version):
          rsize,
          runsize
          ) = rlw_filter(name, location, size, unsize)
-    elif repo == "alien":
+    elif repo == "alien" or repo == "rested":
         (rname,
          rlocation,
          rsize,
@@ -77,8 +76,7 @@ def repo_data(PACKAGES_TXT, step, repo, version):
          rsize,
          runsize
          ) = multi_filter(name, location, size, unsize, version)
-    elif repo in ["slacky", "studio", "slackr", "slonly", "slacke",
-                  "salix", "slackl"]:
+    else:
         rname, rlocation, rsize, runsize = name, location, size, unsize
     return [rname, rlocation, rsize, runsize]
 
@@ -187,29 +185,7 @@ class Requires(object):
         '''
         Grap package requirements from repositories
         '''
-        if self.repo in ["alien", "slacky", "slackr", "salix", "slackl"]:
-            lib = '{0}{1}_repo/PACKAGES.TXT'.format(lib_path, self.repo)
-            f = open(lib, "r")
-            PACKAGES_TXT = f.read()
-            f.close()
-            for line in PACKAGES_TXT.splitlines():
-                if line.startswith("PACKAGE NAME: "):
-                    if self.repo == "slackr":
-                        pkg_name = line[14:].strip()
-                    else:
-                        pkg = line[14:].strip()
-                        pkg_name = split_package(pkg)[0]
-                if line.startswith("PACKAGE REQUIRED: "):
-                    if pkg_name == self.name:
-                        if line[17:].strip():
-                            if self.repo in ["slacky", "salix", "slackl"]:
-                                return self._req_fix(line)
-                            elif self.repo == "alien":
-                                return line[18:].strip().split(",")
-                            else:
-                                return line[18:].strip().split()
-
-        elif self.repo == "rlw":
+        if self.repo == "rlw":
             # Robby's repository dependencies as shown in the central page
             # http://rlworkman.net/pkgs/
             dependencies = {
@@ -224,6 +200,18 @@ class Requires(object):
                 return dependencies[self.name].split()
             else:
                 return ""
+        else:
+            lib = '{0}{1}_repo/PACKAGES.TXT'.format(lib_path, self.repo)
+            f = open(lib, "r")
+            PACKAGES_TXT = f.read()
+            f.close()
+            for line in PACKAGES_TXT.splitlines():
+                if line.startswith("PACKAGE NAME: "):
+                    pkg_name = line[14:].strip().split('-')[0]
+                if line.startswith("PACKAGE REQUIRED: "):
+                    if pkg_name == self.name:
+                        if line[17:].strip():
+                            return self._req_fix(line)
 
     def _req_fix(self, line):
         '''
@@ -231,7 +219,7 @@ class Requires(object):
         with ',' and others with '|'
         '''
         deps = []
-        for dep in line[18:].strip().split(","):
+        for dep in line[18:].strip().split(','):
             dep = dep.split("|")
             if self.repo == 'slacky':
                 if len(dep) > 1:

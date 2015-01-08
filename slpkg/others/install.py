@@ -43,7 +43,8 @@ from slpkg.__metadata__ import (
     slpkg_tmp_packages,
     default_answer,
     color,
-    slacke_sub_repo
+    slacke_sub_repo,
+    default_repositories
 )
 
 from slpkg.pkg.find import find_package
@@ -69,12 +70,19 @@ class OthersInstall(object):
         sys.stdout.flush()
         self.step = 700
 
-        exec('self._init_{0}()'.format(self.repo))
+        if repo in default_repositories:
+            exec('self._init_{0}()'.format(self.repo))
+        else:
+            exec('self._init_custom()')
 
         f = open(self.lib, "r")
         self.PACKAGES_TXT = f.read()
         f.close()
         sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))
+
+    def _init_custom(self):
+        self.lib = lib_path + "{0}_repo/PACKAGES.TXT".format(self.repo)
+        self.mirror = "{0}".format(Repo().custom_repository()[self.repo])
 
     def _init_rlw(self):
         self.lib = lib_path + "rlw_repo/PACKAGES.TXT"
@@ -153,6 +161,11 @@ class OthersInstall(object):
         self.mirror = "{0}{1}/current/".format(Repo().slackel(), arch)
         self.step = self.step * 2
 
+    def _init_rested(self):
+        self.lib = lib_path + "rested_repo/PACKAGES.TXT"
+        self.mirror = Repo().restricted()
+        self.step = self.step * 2
+
     def start(self):
         '''
         Install packages from official Slackware distribution
@@ -161,6 +174,7 @@ class OthersInstall(object):
             dependencies = resolving_deps(self.package, self.repo)
             (dwn_links, install_all, comp_sum, uncomp_sum
              ) = self.store(dependencies)
+            dependencies = equal_deps_and_install(dependencies, install_all)
             sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
                                                    color['ENDC']))
             print("")   # new line at start
@@ -244,6 +258,21 @@ class OthersInstall(object):
         comp_sum.reverse()
         uncomp_sum.reverse()
         return [dwn, install, comp_sum, uncomp_sum]
+
+
+def equal_deps_and_install(dependencies, install_all):
+    '''
+    This fixes be written dependencies equal to those that
+    will be installed because some repositories like 'salix'
+    said dependencies that exist in the distribution but not
+    in the repository itself.
+    '''
+    deps = []
+    for dep in dependencies:
+        for inst in install_all:
+            if inst.startswith(dep + '-'):
+                deps.append(dep)
+    return deps
 
 
 def views(install_all, comp_sum, repository, dependencies):
@@ -347,15 +376,16 @@ def write_deps(dependencies):
     Write dependencies in a log file
     into directory `/var/log/slpkg/dep/`
     '''
-    name = dependencies[-1]
-    if find_package(name + "-", pkg_path):
-        dep_path = log_path + "dep/"
-        if not os.path.exists(dep_path):
-            os.mkdir(dep_path)
-        if os.path.isfile(dep_path + name):
-            os.remove(dep_path + name)
-        if len(dependencies[:-1]) > 0:
-            with open(dep_path + name, "w") as f:
-                for dep in dependencies[:-1]:
-                    f.write(dep + "\n")
+    if len(dependencies) > 1:
+        name = dependencies[-1]
+        if find_package(name + "-", pkg_path):
+            dep_path = log_path + "dep/"
+            if not os.path.exists(dep_path):
+                os.mkdir(dep_path)
+            if os.path.isfile(dep_path + name):
+                os.remove(dep_path + name)
+            if len(dependencies[:-1]) > 0:
+                with open(dep_path + name, "w") as f:
+                    for dep in dependencies[:-1]:
+                        f.write(dep + "\n")
                 f.close()

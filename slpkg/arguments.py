@@ -33,38 +33,40 @@ from __metadata__ import (
 def options():
     arguments = [
         "\nslpkg - version {0}\n".format(__version__),
-        "Slpkg is a user-friendly package manager for Slackware " +
+        "Slpkg is a user-friendly package manager for Slackware "
         "installations\n",
         "Commands:",
-        "   update                                   update all package " +
+        "   update                                   update all package "
         "lists",
         "   re-create                                recreate package lists",
-        "   repolist                                 list all repositories",
-        "   repoinfo [repository]                    repository information",
+        "   repo-add [repository name] [URL]         add custom repository",
+        "   repo-remove [repository]                 remove custom repository",
+        "   repo-list                                list all repositories",
+        "   repo-info [repository]                   repository information",
         "   update slpkg                             check and update slpkg\n",
         "Optional arguments:",
-        "  -h, --help                                show this help message " +
+        "  -h, --help                                show this help message "
         "and exit",
         "  -v, --version                             print version and exit",
-        "  -a, script.tar.gz [source...]             auto build SBo packages",
-        "  -b, --list, [package...] --add, --remove  add, remove packages in " +
+        "  -a, [script.tar.gz] [source...]           auto build SBo packages",
+        "  -b, --list, [package...] --add, --remove  add, remove packages in "
         "blacklist",
         "  -q, --list, [package...] --add, --remove  add, remove SBo packages "
         "in queue",
-        "      --build, --install, --build-install   build, install packages "
+        "  -q, --build, --install, --build-install   build, install packages "
         "from queue",
-        "  -g, --config, --config=[editor]           configuration file " +
+        "  -g, --config, --config=[editor]           configuration file "
         "management",
-        "  -l, [repository], all                     list of installed " +
+        "  -l, all, official, non-official, --index  list of installed "
         "packages",
-        "  -c, [repository] --upgrade                check for updated " +
+        "  -c, [repository] --upgrade                check for updated "
         "packages",
         "  -s, [repository] [package]                download, build & install",
         "  -t, [repository] [package]                tracking dependencies",
         "  -p, [repository] [package], --color=[]    print package description",
-        "  -f, [package]                             find installed packages",
         "  -n, [package]                             view SBo packages "
         "through network",
+        "  -f, [package...]                          find installed packages",
         "  -i, [package...]                          install binary packages",
         "  -u, [package...]                          upgrade binary packages",
         "  -o, [package...]                          reinstall binary packages",
@@ -89,17 +91,22 @@ def usage(repo):
                           "\n".format(repo))
     view = [
         "slpkg - version {0}\n".format(__version__),
-        "Usage: slpkg [-h] [-v] [-a script.tar.gz [sources...]]",
+        "Usage: slpkg Commands:",
+        "             [update] [re-create] [repo-add [repository name] [URL]]",
+        "             [repo-remove [repository]] [repo-list]",
+        "             [repo-info [repository]] [update [slpkg]]\n",
+        "             Optional arguments:",
+        "             [-h] [-v] [-a [script.tar.gz] [sources...]]",
         "             [-b --list, [...] --add, --remove]",
         "             [-q --list, [...] --add, --remove]",
-        "             [   --build, --install, --build-install]",
+        "             [-q --build, --install, --build-install]",
         "             [-g --config, --config=[editor]]",
-        "             [-l [repository], all]",
+        "             [-l all, official, non-official, --index]",
         "             [-c [repository] --upgrade]",
         "             [-s [repository] [package]",
         "             [-t [repository] [package]",
         "             [-p [repository] [package], --color=[]]",
-        "             [-f] [-n] [-i [...]] [-u [...]]",
+        "             [-n] [-f [...]] [-i [...]] [-u [...]]",
         "             [-o  [...]] [-r [...]] [-d [...]]\n",
         error_repo,
         "For more information try 'slpkg --help' or view manpage\n"
