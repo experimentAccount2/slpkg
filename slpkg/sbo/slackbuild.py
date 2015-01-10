@@ -21,39 +21,63 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+import os
 import sys
 
 from dependency import sbo_dependencies_pkg
 from search import sbo_search_pkg
-from __metadata__ import color
+from __metadata__ import color, pkg_path
 from messages import template
+from greps import SBoGrep
+
+
+from slpkg.pkg.find import find_package
 
 
 class SBoInstall(object):
 
     def __init__(self, slackbuilds):
         self.slackbuilds = slackbuilds
+        self.unst = ["UNSUPPORTED", "UNTESTED"]
         sys.stdout.write("{0}Reading package lists ...{1}".format(
             color['GREY'], color['ENDC']))
         sys.stdout.flush()
 
     def start(self):
         self.slackbuilds = ['Flask', 'asdaf', 'PyAudio', 'PySDL2', 'flexget',
-                            'werwer']
+                            'werwer', 'skype']
 
-        self.deps = []
-        self.package_not_found = []
-        for dep in self.slackbuilds:
-            if sbo_search_pkg(dep):
-                self.deps += (sbo_dependencies_pkg(dep))
+        self.deps, dependencies = [], []
+        self.package_not_found, self.package_found = [], []
+        for sbo in self.slackbuilds:
+            if sbo_search_pkg(sbo):
+                self.deps += sbo_dependencies_pkg(sbo)
+                self.package_found.append(sbo)
             else:
-                self.package_not_found.append(dep)
+                self.package_not_found.append(sbo)
+        dependencies, dep_src = self.sbo_version_source(self.remove_dbs())
+        self.master_packages, mas_src = self.sbo_version_source(
+            self.package_found)
         sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))
         print("\nThe following packages will be automatically "
               "installed or upgraded \nwith new version:\n")
         self.top_view()
-        print self.package_not_found
-        print self.remove_dbs()
+        for sbo, ar in zip(self.master_packages, mas_src):
+            if sbo not in dependencies:
+                self.view_packages(self.tag(sbo), '-'.join(sbo.split('-')[:-1]),
+                                   sbo.split('-')[-1], self.select_arch(ar))
+        print("Installing for dependencies:")
+        for dep, ar in zip(dependencies, dep_src):
+            self.view_packages(self.tag(dep), '-'.join(dep.split('-')[:-1]),
+                               dep.split('-')[-1], self.select_arch(ar))
+
+    def sbo_version_source(self, slackbuilds):
+        sbo_versions, sources = [], []
+        for sbo in slackbuilds:
+            sbo_ver = '{0}-{1}'.format(sbo, SBoGrep(sbo).version())
+            sbo_versions.append(sbo_ver)
+            sources.append(SBoGrep(sbo).source())
+        return [sbo_versions, sources]
 
     def one_for_all(self):
         '''
@@ -92,3 +116,47 @@ class SBoInstall(object):
             "Arch", " " * 9,
             "Repository"))
         template(78)
+
+    def view_packages(self, *args):
+        '''
+        View slackbuild packages with version and arch
+        args[0] package color
+        args[1] package
+        args[2] version
+        args[3] arch
+        '''
+        color_arch = ''
+        if self.unst[0] in args[3] or self.unst[1] in args[3]:
+            color_arch = color['RED']
+        print(" {0}{1}{2}{3} {4}{5}{6} {7}{8}{9}{10}".format(
+            args[0], args[1], color['ENDC'], " " * (37-len(args[1])),
+            args[2], " " * (16-len(args[2])),
+            color_arch, args[3], color['ENDC'], " " * (13-len(args[3])),
+            "SBo"))
+
+    def tag(self, sbo):
+        '''
+        Tag with color green if package already installed,
+        color yellow for packages to upgrade and color red
+        if not installed.
+        '''
+        if find_package(sbo, pkg_path):
+            paint = color['GREEN']
+        elif find_package(sbo.split('-')[0] + '-', pkg_path):
+            paint = color['YELLOW']
+        else:
+            paint = color['RED']
+        return paint
+
+    def select_arch(self, src):
+        '''
+        Looks if sources unsupported or untested
+        from arch else select arch
+        '''
+        arch = os.uname()[4]
+        if arch.startswith("i") and arch.endswith("86"):
+            arch = "i486"
+        for item in self.unst:
+            if item in src:
+                arch = item
+        return arch
