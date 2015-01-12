@@ -249,7 +249,7 @@ class PackageManager(object):
                             break
         if matching == 0:
             message = "Can't find"
-            pkg_not_found("", pkg, message, "\n")
+            pkg_not_found("", self.binary, message, "\n")
         else:
             print("\n{0}Total found {1} matching packages.{2}".format(
                 color['GREY'], matching, color['ENDC']))

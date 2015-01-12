@@ -69,9 +69,9 @@ def update_repositories(repositories):
         repositories_list = f.read()
         f.close()
         for line in repositories_list.splitlines():
-                line = line.lstrip()
-                if line and not line.startswith("#"):
-                    repositories.append(line.split()[0])
+            line = line.lstrip()
+            if line and not line.startswith("#"):
+                repositories.append(line.split()[0])
     return repositories
 
 
