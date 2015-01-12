@@ -24,8 +24,15 @@
 import os
 import sys
 
-from downloader import Download
+from slpkg.downloader import Download
 from slpkg.toolbar import status
+from slpkg.splitting import split_package
+from slpkg.messages import (
+    template,
+    pkg_found,
+    build_FAILED
+)
+
 from slpkg.__metadata__ import (
     tmp,
     color,
@@ -43,13 +50,7 @@ from greps import SBoGrep
 from remove import delete
 from compressed import SBoLink
 from search import sbo_search_pkg
-from splitting import split_package
-from dependency import sbo_dependencies_pkg
-from messages import (
-    template,
-    pkg_found,
-    build_FAILED
-)
+from dependency import Requires
 
 
 class SBoInstall(object):
@@ -69,8 +70,7 @@ class SBoInstall(object):
         sys.stdout.flush()
 
     def start(self):
-        self.slackbuilds = ['brasero', 'pysed', 'Flask']
-
+        self.slackbuilds = ['Flask', 'pip']
         dependencies, tagc = [], ''
         count_ins = count_upg = count_uni = 0
         for sbo in self.slackbuilds:
@@ -78,7 +78,7 @@ class SBoInstall(object):
             self.index += 1
             self.toolbar_width = status(self.index, self.toolbar_width, 4)
             if sbo_search_pkg(sbo):
-                sbo_deps = sbo_dependencies_pkg(sbo)
+                sbo_deps = Requires().sbo(sbo)
                 self.deps += sbo_deps
                 self.deps_dict[sbo] = self.one_for_all(sbo_deps)
                 self.package_found.append(sbo)
@@ -345,8 +345,7 @@ class SBoInstall(object):
         Write dependencies in a log file
         into directory `/var/log/slpkg/dep/`
         '''
-        for name in self.master_packages:
-            dependencies = sbo_dependencies_pkg('-'.join(name.split('-')[:-1]))
+        for name, dependencies in self.deps_dict.iteritems():
             if find_package(name + '-', pkg_path):
                 dep_path = log_path + "dep/"
                 if not os.path.exists(dep_path):

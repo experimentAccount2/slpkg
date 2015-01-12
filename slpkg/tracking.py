@@ -35,7 +35,7 @@ from __metadata__ import (
 from pkg.find import find_package
 
 from sbo.search import sbo_search_pkg
-from sbo.dependency import sbo_dependencies_pkg
+from sbo.dependency import Requires
 
 from others.search import search_pkg
 from others.dependency import dependencies_pkg
@@ -52,7 +52,7 @@ def track_dep(name, repo):
                                                               color['ENDC']))
     sys.stdout.flush()
     if repo == "sbo":
-        dependencies_list = sbo_dependencies_pkg(name)
+        dependencies_list = Requires().sbo(name)
         find_pkg = sbo_search_pkg(name)
     else:
         dependencies_list = dependencies_pkg(name, repo)

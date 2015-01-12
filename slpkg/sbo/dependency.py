@@ -28,31 +28,34 @@ from slpkg.blacklist import BlackList
 
 from greps import SBoGrep
 
-dep_results = []
 
+class Requires(object):
 
-def sbo_dependencies_pkg(name):
-    '''
-    Build all dependencies of a package
-    '''
-    try:
-        dependencies = []
-        blacklist = BlackList().packages()
-        requires = SBoGrep(name).requires()
-        toolbar_width, index = 2, 0
-        if requires:
-            for req in requires:
-                index += 1
-                toolbar_width = status(index, toolbar_width, 1)
-                # avoid to add %README% as dependency and
-                # if require in blacklist
-                if "%README%" not in req and req not in blacklist:
-                    dependencies.append(req)
-            if dependencies:
-                dep_results.append(dependencies)
-                for dep in dependencies:
-                    sbo_dependencies_pkg(dep)
-        return dep_results
-    except KeyboardInterrupt:
-        print("")   # new line at exit
-        sys.exit(0)
+    def __init__(self):
+        self.dep_results = []
+
+    def sbo(self, name):
+        '''
+        Build all dependencies of a package
+        '''
+        try:
+            dependencies = []
+            blacklist = BlackList().packages()
+            requires = SBoGrep(name).requires()
+            toolbar_width, index = 2, 0
+            if requires:
+                for req in requires:
+                    index += 1
+                    toolbar_width = status(index, toolbar_width, 1)
+                    # avoid to add %README% as dependency and
+                    # if require in blacklist
+                    if "%README%" not in req and req not in blacklist:
+                        dependencies.append(req)
+                if dependencies:
+                    self.dep_results.append(dependencies)
+                    for dep in dependencies:
+                        self.sbo(dep)
+            return self.dep_results
+        except KeyboardInterrupt:
+            print("")   # new line at exit
+            sys.exit(0)

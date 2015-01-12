@@ -48,7 +48,7 @@ from greps import SBoGrep
 from remove import delete
 from compressed import SBoLink
 from search import sbo_search_pkg
-from dependency import sbo_dependencies_pkg
+from dependency import Requires
 
 
 class SBoCheck(object):
@@ -175,7 +175,7 @@ def deps(upgrade_names):
     file .info.
     '''
     for upg in upgrade_names:
-        dependencies = sbo_dependencies_pkg(upg)
+        dependencies = Requires().sbo(upg)
     return dependencies
 
 
