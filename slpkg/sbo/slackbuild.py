@@ -24,14 +24,32 @@
 import os
 import sys
 
-from dependency import sbo_dependencies_pkg
-from search import sbo_search_pkg
-from __metadata__ import color, pkg_path
-from messages import template
-from greps import SBoGrep
-
+from downloader import Download
+from slpkg.toolbar import status
+from slpkg.__metadata__ import (
+    tmp,
+    color,
+    log_path,
+    pkg_path,
+    build_path,
+    default_answer
+)
 
 from slpkg.pkg.find import find_package
+from slpkg.pkg.build import BuildPackage
+from slpkg.pkg.manager import PackageManager
+
+from greps import SBoGrep
+from remove import delete
+from compressed import SBoLink
+from search import sbo_search_pkg
+from splitting import split_package
+from dependency import sbo_dependencies_pkg
+from messages import (
+    template,
+    pkg_found,
+    build_FAILED
+)
 
 
 class SBoInstall(object):
@@ -39,33 +57,43 @@ class SBoInstall(object):
     def __init__(self, slackbuilds):
         self.slackbuilds = slackbuilds
         self.unst = ["UNSUPPORTED", "UNTESTED"]
+        self.master_packages = []
         self.deps = []
+        self.dependencies = []
         self.package_not_found = []
         self.package_found = []
-
+        self.deps_dict = {}
+        self.toolbar_width, self.index = 2, 0
         sys.stdout.write("{0}Reading package lists ...{1}".format(
             color['GREY'], color['ENDC']))
         sys.stdout.flush()
 
     def start(self):
-        self.slackbuilds = ['Flask', 'asdaf', 'PyAudio', 'PySDL2', 'flexget',
-                            'werwer', 'skype']
+        self.slackbuilds = ['brasero', 'pysed', 'Flask']
 
         dependencies, tagc = [], ''
         count_ins = count_upg = count_uni = 0
-        self.package_not_found, self.package_found = [], []
         for sbo in self.slackbuilds:
+            sbo_deps = []
+            self.index += 1
+            self.toolbar_width = status(self.index, self.toolbar_width, 4)
             if sbo_search_pkg(sbo):
-                self.deps += sbo_dependencies_pkg(sbo)
+                sbo_deps = sbo_dependencies_pkg(sbo)
+                self.deps += sbo_deps
+                self.deps_dict[sbo] = self.one_for_all(sbo_deps)
                 self.package_found.append(sbo)
             else:
                 self.package_not_found.append(sbo)
-        dependencies, dep_src = self.sbo_version_source(self.remove_dbs())
+        self.dependencies, dep_src = self.sbo_version_source(
+            self.one_for_all(self.deps))
         self.master_packages, mas_src = self.sbo_version_source(
             self.package_found)
         sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))
         print("\nThe following packages will be automatically "
               "installed or upgraded \nwith new version:\n")
+
+        print self.deps_dict
+
         self.top_view()
         for sbo, ar in zip(self.master_packages, mas_src):
             if sbo not in dependencies:
@@ -76,7 +104,7 @@ class SBoInstall(object):
                 self.view_packages(tagc, '-'.join(sbo.split('-')[:-1]),
                                    sbo.split('-')[-1], self.select_arch(ar))
         print("Installing for dependencies:")
-        for dep, ar in zip(dependencies, dep_src):
+        for dep, ar in zip(self.dependencies, dep_src):
             tagc, count_ins, count_upg, count_uni = self.tag(dep, count_ins,
                                                              count_upg,
                                                              count_uni)
@@ -92,37 +120,54 @@ class SBoInstall(object):
               "{3} {4}".format(count_uni, self.msg(count_uni), count_ins,
                                count_upg, self.msg(count_upg)))
         print("will be upgraded.{0}\n".format(color['ENDC']))
+        answer = self.continue_install()
+        if answer in['y', 'Y']:
+            # installs = b_ins[0]
+            # upgraded = b_ins[1]
+            # versions = b_ins[2]
+            b_ins = self.build_install()
+            self.reference(len(b_ins[0]), self.msg(len(b_ins[0])),
+                           len(b_ins[1]), self.msg(len(b_ins[1])),
+                           b_ins[0], b_ins[2], b_ins[1])
+            self.write_deps()
+            delete(build_path)
 
     def sbo_version_source(self, slackbuilds):
+        '''
+        Create sbo name with version
+        '''
         sbo_versions, sources = [], []
         for sbo in slackbuilds:
+            self.index += 1
+            self.toolbar_width = status(self.index, self.toolbar_width, 4)
             sbo_ver = '{0}-{1}'.format(sbo, SBoGrep(sbo).version())
             sbo_versions.append(sbo_ver)
             sources.append(SBoGrep(sbo).source())
         return [sbo_versions, sources]
 
-    def one_for_all(self):
+    def one_for_all(self, deps):
         '''
         Because there are dependencies that depend on other
         dependencies are created lists into other lists.
         Thus creating this loop create one-dimensional list.
         '''
-        requires = []
-        for dep in self.deps:
+        requires, dependencies = [], []
+        for dep in deps:
             requires += dep
         # Inverting the list brings the
         # dependencies in order to be installed.
         requires.reverse()
-        return requires
+        dependencies = self.remove_dbs(requires)
+        return dependencies
 
-    def remove_dbs(self):
+    def remove_dbs(self, requires):
         '''
         Many packages use the same dependencies, in this loop
         creates a new list by removing duplicate dependencies but
         without spoiling the line must be installed.
         '''
         dependencies = []
-        for duplicate in self.one_for_all():
+        for duplicate in requires:
             if duplicate not in dependencies:
                 dependencies.append(duplicate)
         return dependencies
@@ -194,3 +239,122 @@ class SBoInstall(object):
         if count > 1:
             message = message + "s"
         return message
+
+    def continue_install(self):
+        '''
+        Default answer
+        '''
+        if default_answer == "y":
+            answer = default_answer
+        else:
+            answer = raw_input("Would you like to continue [Y/n]? ")
+        return answer
+
+    def filenames(self, sources):
+        '''
+        Return filenames from sources
+        '''
+        filename = []
+        for src in sources:
+            # get file from source
+            filename.append(src.split("/")[-1])
+        return filename
+
+    def search_in_tmp(self, prgnam):
+        '''
+        Search for binary packages in /tmp directory
+        '''
+        binary = []
+        for search in find_package(prgnam, tmp):
+            if "_SBo" in search:
+                binary.append(search)
+        return binary
+
+    def build_install(self):
+        '''
+        Searches the package name and version in /tmp to
+        install. If find two or more packages e.g. to build
+        tag 2 or 3 will fit most
+        '''
+        slackbuilds = self.dependencies + self.master_packages
+        installs, upgraded, versions = [], [], []
+        os.chdir(build_path)
+        for sbo in slackbuilds:
+            pkg = '-'.join(sbo.split('-')[:-1])
+            ver = sbo.split('-')[-1]
+
+            prgnam = ("{0}-{1}".format(pkg, ver))
+            sbo_file = "".join(find_package(prgnam, pkg_path))
+            if sbo_file:
+                template(78)
+                pkg_found(pkg, split_package(sbo_file)[1])
+                template(78)
+            else:
+                sbo_url = sbo_search_pkg(pkg)
+                sbo_link = SBoLink(sbo_url).tar_gz()
+                src_link = SBoGrep(pkg).source().split()
+                script = sbo_link.split("/")[-1]
+                dwn_srcs = sbo_link.split() + src_link
+                Download(build_path, dwn_srcs).start()
+                sources = self.filenames(src_link)
+                BuildPackage(script, sources, build_path).build()
+                binary_list = self.search_in_tmp(prgnam)
+                try:
+                    binary = (tmp + max(binary_list)).split()
+                except ValueError:
+                    build_FAILED(sbo_url, prgnam)
+                    sys.exit(0)
+                if find_package(pkg + '-', pkg_path):
+                    print("{0}[ Upgrading ] --> {1}{2}".format(color['GREEN'],
+                                                               color['ENDC'],
+                                                               pkg))
+                    upgraded.append(pkg)
+                else:
+                    print("{0}[ Installing ] --> {1}{2}".format(color['GREEN'],
+                                                                color['ENDC'],
+                                                                pkg))
+                    PackageManager(binary).upgrade()
+                    installs.append(pkg)
+                    versions.append(ver)
+        return [installs, upgraded, versions]
+
+    def reference(self, *args):
+        '''
+        Reference list with packages installed
+        and upgraded
+        '''
+        template(78)
+        print("| Total {0} {1} installed and {2} {3} upgraded".format(
+            args[0], args[1], args[2], args[3]))
+        template(78)
+        for pkg, ver in zip(args[4], args[5]):
+            installed = ("{0}-{1}".format(pkg, ver))
+            if find_package(installed, pkg_path):
+                if pkg in args[6]:
+                    print("| Package {0} upgraded successfully".format(
+                        installed))
+                else:
+                    print("| Package {0} installed successfully".format(
+                        installed))
+            else:
+                print("| Package {0} NOT installed".format(installed))
+        template(78)
+
+    def write_deps(self):
+        '''
+        Write dependencies in a log file
+        into directory `/var/log/slpkg/dep/`
+        '''
+        for name in self.master_packages:
+            dependencies = sbo_dependencies_pkg('-'.join(name.split('-')[:-1]))
+            if find_package(name + '-', pkg_path):
+                dep_path = log_path + "dep/"
+                if not os.path.exists(dep_path):
+                    os.mkdir(dep_path)
+                if os.path.isfile(dep_path + name):
+                    os.remove(dep_path + name)
+                if len(dependencies) > 0:
+                    with open(dep_path + name, "w") as f:
+                        for dep in dependencies:
+                            f.write(dep + "\n")
+                        f.close()

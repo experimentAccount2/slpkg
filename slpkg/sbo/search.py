@@ -42,8 +42,8 @@ def sbo_search_pkg(name):
                   "r") as SLACKBUILDS_TXT:
             for line in SLACKBUILDS_TXT:
                 if line.startswith("SLACKBUILD LOCATION"):
-                    sbo_name = (line[23:].split("/")[-1].replace("\n",
-                                                                 "")).strip()
+                    sbo_name = (line[23:].split("/")[-1].replace("\n", "")
+                                ).strip()
                     if name == sbo_name and name not in blacklist:
                         SLACKBUILDS_TXT.close()
                         return (sbo_url + line[23:].strip() + "/")
