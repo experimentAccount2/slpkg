@@ -35,5 +35,5 @@ def status(index, width, step):
         sys.stdout.write("{0}.{1}".format(color['GREY'], color['ENDC']))
         sys.stdout.flush()
         width += step
-        time.sleep(0.05)
+        time.sleep(0.02)
     return width

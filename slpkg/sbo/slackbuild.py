@@ -37,6 +37,7 @@ from slpkg.__metadata__ import (
     tmp,
     color,
     log_path,
+    lib_path,
     pkg_path,
     build_path,
     default_answer
@@ -70,8 +71,7 @@ class SBoInstall(object):
         sys.stdout.flush()
 
     def start(self):
-        self.slackbuilds = ['Flask', 'pip']
-        dependencies, tagc = [], ''
+        dependencies, tagc, match = [], '', False
         count_ins = count_upg = count_uni = 0
         for sbo in self.slackbuilds:
             sbo_deps = []
@@ -84,6 +84,9 @@ class SBoInstall(object):
                 self.package_found.append(sbo)
             else:
                 self.package_not_found.append(sbo)
+        if not self.package_found:
+            match = True
+            self.package_found = self.matching(self.package_not_found)
         self.dependencies, dep_src = self.sbo_version_source(
             self.one_for_all(self.deps))
         self.master_packages, mas_src = self.sbo_version_source(
@@ -91,9 +94,6 @@ class SBoInstall(object):
         sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))
         print("\nThe following packages will be automatically "
               "installed or upgraded \nwith new version:\n")
-
-        print self.deps_dict
-
         self.top_view()
         for sbo, ar in zip(self.master_packages, mas_src):
             if sbo not in dependencies:
@@ -103,7 +103,8 @@ class SBoInstall(object):
                                                                  count_uni)
                 self.view_packages(tagc, '-'.join(sbo.split('-')[:-1]),
                                    sbo.split('-')[-1], self.select_arch(ar))
-        print("Installing for dependencies:")
+        if not match:
+            print("Installing for dependencies:")
         for dep, ar in zip(self.dependencies, dep_src):
             tagc, count_ins, count_upg, count_uni = self.tag(dep, count_ins,
                                                              count_upg,
@@ -120,17 +121,32 @@ class SBoInstall(object):
               "{3} {4}".format(count_uni, self.msg(count_uni), count_ins,
                                count_upg, self.msg(count_upg)))
         print("will be upgraded.{0}\n".format(color['ENDC']))
-        answer = self.continue_install()
-        if answer in['y', 'Y']:
-            # installs = b_ins[0]
-            # upgraded = b_ins[1]
-            # versions = b_ins[2]
-            b_ins = self.build_install()
-            self.reference(len(b_ins[0]), self.msg(len(b_ins[0])),
-                           len(b_ins[1]), self.msg(len(b_ins[1])),
-                           b_ins[0], b_ins[2], b_ins[1])
-            self.write_deps()
-            delete(build_path)
+        if self.master_packages:
+            answer = self.continue_install()
+            if answer in['y', 'Y']:
+                # installs = b_ins[0]
+                # upgraded = b_ins[1]
+                # versions = b_ins[2]
+                b_ins = self.build_install()
+                self.reference(len(b_ins[0]), self.msg(len(b_ins[0])),
+                               len(b_ins[1]), self.msg(len(b_ins[1])),
+                               b_ins[0], b_ins[2], b_ins[1])
+                self.write_deps()
+                delete(build_path)
+
+    def matching(self, sbo_not_found):
+        '''
+        Return matching SBo
+        '''
+        sbo_matching = []
+        f = open(lib_path + "sbo_repo/SLACKBUILDS.TXT", "r")
+        SLACKBUILDS_TXT = f.read()
+        f.close()
+        for sbo in sbo_not_found:
+            for line in SLACKBUILDS_TXT.splitlines():
+                if line.startswith("SLACKBUILD NAME: ") and sbo in line[17:]:
+                    sbo_matching.append(line[17:])
+        return sbo_matching
 
     def sbo_version_source(self, slackbuilds):
         '''

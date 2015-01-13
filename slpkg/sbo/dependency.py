@@ -39,6 +39,7 @@ class Requires(object):
         Build all dependencies of a package
         '''
         try:
+            sys.setrecursionlimit(10000)
             dependencies = []
             blacklist = BlackList().packages()
             requires = SBoGrep(name).requires()
