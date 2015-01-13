@@ -309,6 +309,8 @@ class SBoInstall(object):
                 sbo_url = sbo_search_pkg(pkg)
                 sbo_link = SBoLink(sbo_url).tar_gz()
                 src_link = SBoGrep(pkg).source().split()
+                if src_link[0] in self.unst:
+                    continue
                 script = sbo_link.split("/")[-1]
                 dwn_srcs = sbo_link.split() + src_link
                 Download(build_path, dwn_srcs).start()
