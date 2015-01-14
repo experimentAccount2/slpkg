@@ -298,19 +298,22 @@ class SBoInstall(object):
         for sbo in slackbuilds:
             pkg = '-'.join(sbo.split('-')[:-1])
             ver = sbo.split('-')[-1]
-
             prgnam = ("{0}-{1}".format(pkg, ver))
             sbo_file = "".join(find_package(prgnam, pkg_path))
+            src_link = SBoGrep(pkg).source().split()
             if sbo_file:
                 template(78)
                 pkg_found(pkg, split_package(sbo_file)[1])
                 template(78)
+            elif self.unst[0] or self.unst[1] in src_link:
+                template(78)
+                print("| Package {0} {1}{2}{3}".format(sbo, color['RED'],
+                                                       ''.join(src_link),
+                                                       color['ENDC']))
+                template(78)
             else:
                 sbo_url = sbo_search_pkg(pkg)
                 sbo_link = SBoLink(sbo_url).tar_gz()
-                src_link = SBoGrep(pkg).source().split()
-                if src_link[0] in self.unst:
-                    continue
                 script = sbo_link.split("/")[-1]
                 dwn_srcs = sbo_link.split() + src_link
                 Download(build_path, dwn_srcs).start()
@@ -331,9 +334,9 @@ class SBoInstall(object):
                     print("{0}[ Installing ] --> {1}{2}".format(color['GREEN'],
                                                                 color['ENDC'],
                                                                 pkg))
-                    PackageManager(binary).upgrade()
-                    installs.append(pkg)
-                    versions.append(ver)
+                PackageManager(binary).upgrade()
+                installs.append(pkg)
+                versions.append(ver)
         return [installs, upgraded, versions]
 
     def reference(self, *args):
