@@ -71,68 +71,75 @@ class SBoInstall(object):
         sys.stdout.flush()
 
     def start(self):
-        dependencies, tagc, match = [], '', False
-        count_ins = count_upg = count_uni = 0
-        for sbo in self.slackbuilds:
-            sbo_deps = []
-            self.index += 1
-            self.toolbar_width = status(self.index, self.toolbar_width, 4)
-            if sbo_search_pkg(sbo):
-                sbo_deps = Requires().sbo(sbo)
-                self.deps += sbo_deps
-                self.deps_dict[sbo] = self.one_for_all(sbo_deps)
-                self.package_found.append(sbo)
-            else:
-                self.package_not_found.append(sbo)
-        if not self.package_found:
-            match = True
-            self.package_found = self.matching(self.package_not_found)
-        self.dependencies, dep_src = self.sbo_version_source(
-            self.one_for_all(self.deps))
-        self.master_packages, mas_src = self.sbo_version_source(
-            self.package_found)
-        sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))
-        print("\nThe following packages will be automatically "
-              "installed or upgraded \nwith new version:\n")
-        self.top_view()
-        for sbo, ar in zip(self.master_packages, mas_src):
-            if sbo not in dependencies:
-                tagc, count_ins, count_upg, count_uni = self.tag(sbo,
-                                                                 count_ins,
-                                                                 count_upg,
-                                                                 count_uni)
-                self.view_packages(tagc, '-'.join(sbo.split('-')[:-1]),
-                                   sbo.split('-')[-1], self.select_arch(ar))
-        if not match:
-            print("Installing for dependencies:")
-        for dep, ar in zip(self.dependencies, dep_src):
-            tagc, count_ins, count_upg, count_uni = self.tag(dep, count_ins,
-                                                             count_upg,
-                                                             count_uni)
-            self.view_packages(tagc, '-'.join(dep.split('-')[:-1]),
-                               dep.split('-')[-1], self.select_arch(ar))
+        try:
+            dependencies, tagc, match = [], '', False
+            count_ins = count_upg = count_uni = 0
+            for sbo in self.slackbuilds:
+                sbo_deps = []
+                self.index += 1
+                self.toolbar_width = status(self.index, self.toolbar_width, 4)
+                if sbo_search_pkg(sbo):
+                    sbo_deps = Requires().sbo(sbo)
+                    self.deps += sbo_deps
+                    self.deps_dict[sbo] = self.one_for_all(sbo_deps)
+                    self.package_found.append(sbo)
+                else:
+                    self.package_not_found.append(sbo)
+            if not self.package_found:
+                match = True
+                self.package_found = self.matching(self.package_not_found)
+            self.dependencies, dep_src = self.sbo_version_source(
+                self.one_for_all(self.deps))
+            self.master_packages, mas_src = self.sbo_version_source(
+                self.package_found)
+            sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
+                                                   color['ENDC']))
+            if self.package_found:
+                print("\nThe following packages will be automatically "
+                      "installed or upgraded \nwith new version:\n")
+                self.top_view()
+                for sbo, ar in zip(self.master_packages, mas_src):
+                    if sbo not in dependencies:
+                        tagc, count_ins, count_upg, count_uni = self.tag(
+                            sbo, count_ins, count_upg, count_uni)
+                        self.view_packages(tagc, '-'.join(sbo.split('-')[:-1]),
+                                           sbo.split('-')[-1],
+                                           self.select_arch(ar))
+                if not match:
+                    print("Installing for dependencies:")
+                for dep, ar in zip(self.dependencies, dep_src):
+                    tagc, count_ins, count_upg, count_uni = self.tag(
+                        dep, count_ins, count_upg, count_uni)
+                    self.view_packages(tagc, '-'.join(dep.split('-')[:-1]),
+                                       dep.split('-')[-1], self.select_arch(ar))
 
-        count_total = (count_ins + count_upg + count_uni)
-        print("\nInstalling summary")
-        print("=" * 79)
-        print("{0}Total {1} {2}.".format(
-            color['GREY'], count_total, self.msg(count_total)))
-        print("{0} {1} will be installed, {2} allready installed and "
-              "{3} {4}".format(count_uni, self.msg(count_uni), count_ins,
-                               count_upg, self.msg(count_upg)))
-        print("will be upgraded.{0}\n".format(color['ENDC']))
-        if self.master_packages:
-            answer = self.continue_install()
-            if answer in['y', 'Y']:
-                # installs = b_ins[0]
-                # upgraded = b_ins[1]
-                # versions = b_ins[2]
-                b_ins = self.build_install()
-                self.reference(len(b_ins[0]), self.msg(len(b_ins[0])),
-                               len(b_ins[1]), self.msg(len(b_ins[1])),
-                               b_ins[0], b_ins[2], b_ins[1])
-                self.write_deps()
-                delete(build_path)
+                count_total = (count_ins + count_upg + count_uni)
+                print("\nInstalling summary")
+                print("=" * 79)
+                print("{0}Total {1} {2}.".format(
+                    color['GREY'], count_total, self.msg(count_total)))
+                print("{0} {1} will be installed, {2} allready installed and "
+                      "{3} {4}".format(count_uni, self.msg(count_uni),
+                                       count_ins, count_upg,
+                                       self.msg(count_upg)))
+                print("will be upgraded.{0}\n".format(color['ENDC']))
+                if self.master_packages:
+                    answer = self.continue_install()
+                    if answer in['y', 'Y']:
+                        # installs = b_ins[0]
+                        # upgraded = b_ins[1]
+                        # versions = b_ins[2]
+                        b_ins = self.build_install()
+                        self.reference(len(b_ins[0]), self.msg(len(b_ins[0])),
+                                       len(b_ins[1]), self.msg(len(b_ins[1])),
+                                       b_ins[0], b_ins[2], b_ins[1])
+                        self.write_deps()
+                        delete(build_path)
+            else:
+                print('\nNot found packages for installation\n')
+        except KeyboardInterrupt:
+            print("")   # new line at exit
+            sys.exit(0)
 
     def matching(self, sbo_not_found):
         '''

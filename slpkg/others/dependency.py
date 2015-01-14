@@ -27,28 +27,32 @@ from slpkg.toolbar import status
 
 from greps import Requires
 
-dep_results = []
 
+class Dependencies(object):
 
-def dependencies_pkg(name, repo):
-    '''
-    Build all dependencies of a package
-    '''
-    try:
-        dependencies = []
-        requires = Requires(name, repo).get_deps()
-        toolbar_width, index = 2, 0
-        if requires:
-            for req in requires:
-                index += 1
-                toolbar_width = status(index, toolbar_width, 1)
-                if req:
-                    dependencies.append(req)
-            if dependencies:
-                dep_results.append(dependencies)
-                for dep in dependencies:
-                    dependencies_pkg(dep, repo)
-        return dep_results
-    except KeyboardInterrupt:
-        print("")   # new line at exit
-        sys.exit(0)
+    def __init__(self):
+        self.dep_results = []
+
+    def others(self, name, repo):
+        '''
+        Build all dependencies of a package
+        '''
+        try:
+            sys.setrecursionlimit(10000)
+            dependencies = []
+            requires = Requires(name, repo).get_deps()
+            toolbar_width, index = 2, 0
+            if requires:
+                for req in requires:
+                    index += 1
+                    toolbar_width = status(index, toolbar_width, 1)
+                    if req:
+                        dependencies.append(req)
+                if dependencies:
+                    self.dep_results.append(dependencies)
+                    for dep in dependencies:
+                        self.others(dep, repo)
+            return self.dep_results
+        except KeyboardInterrupt:
+            print("")   # new line at exit
+            sys.exit(0)

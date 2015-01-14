@@ -42,21 +42,25 @@ def exists():
     and it gets to avoidable modified packages
     from the user with the tag _SBo
     '''
-    sys.stdout.write("{0}Checking ...{1}".format(color['GREY'],
-                                                 color['ENDC']))
-    upgrade_names = []
-    index, toolbar_width = 0, 3
-    for pkg in sbo_list():
-        index += 1
-        toolbar_width = status(index, toolbar_width, 4)
-        name = split_package(pkg)[0]
-        if sbo_search_pkg(name):
-            sbo_package = ("{0}-{1}".format(name, SBoGrep(name).version()))
-            package = ("{0}-{1}".format(name, split_package(pkg)[1]))
-            if sbo_package > package:
-                upgrade_names.append(name)
-    sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))
-    return upgrade_names
+    try:
+        sys.stdout.write("{0}Checking ...{1}".format(color['GREY'],
+                                                     color['ENDC']))
+        upgrade_names = []
+        index, toolbar_width = 0, 3
+        for pkg in sbo_list():
+            index += 1
+            toolbar_width = status(index, toolbar_width, 4)
+            name = split_package(pkg)[0]
+            if sbo_search_pkg(name):
+                sbo_package = ("{0}-{1}".format(name, SBoGrep(name).version()))
+                package = ("{0}-{1}".format(name, split_package(pkg)[1]))
+                if sbo_package > package:
+                    upgrade_names.append(name)
+        sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))
+        return upgrade_names
+    except KeyboardInterrupt:
+        print("")   # new line at exit
+        sys.exit(0)
 
 
 def sbo_list():

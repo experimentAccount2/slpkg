@@ -38,7 +38,7 @@ from sbo.search import sbo_search_pkg
 from sbo.dependency import Requires
 
 from others.search import search_pkg
-from others.dependency import dependencies_pkg
+from others.dependency import Dependencies
 
 
 def track_dep(name, repo):
@@ -55,7 +55,7 @@ def track_dep(name, repo):
         dependencies_list = Requires().sbo(name)
         find_pkg = sbo_search_pkg(name)
     else:
-        dependencies_list = dependencies_pkg(name, repo)
+        dependencies_list = Dependencies().others(name, repo)
         find_pkg = search_pkg(name, repo)
     sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))
     if find_pkg:
