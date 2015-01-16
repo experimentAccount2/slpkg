@@ -24,6 +24,7 @@
 import sys
 
 from slpkg.toolbar import status
+from slpkg.blacklist import BlackList
 
 from greps import Requires
 
@@ -40,13 +41,14 @@ class Dependencies(object):
         try:
             sys.setrecursionlimit(10000)
             dependencies = []
+            blacklist = BlackList().packages()
             requires = Requires(name, repo).get_deps()
             toolbar_width, index = 2, 0
             if requires:
                 for req in requires:
                     index += 1
                     toolbar_width = status(index, toolbar_width, 1)
-                    if req:
+                    if req and req not in blacklist:
                         dependencies.append(req)
                 if dependencies:
                     self.dep_results.append(dependencies)

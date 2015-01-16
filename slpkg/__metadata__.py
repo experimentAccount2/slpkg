@@ -59,6 +59,17 @@ default_repositories = repositories[10] = 'slacke'
 default_repositories = repositories
 
 
+def remove_repositories(repositories):
+    '''
+    Remove no default repositories
+    '''
+    repos = []
+    for repo in repositories:
+        if repo in default_repositories:
+            repos.append(repo)
+    return repos
+
+
 def update_repositories(repositories):
     '''
     Upadate with user custom repositories
@@ -156,6 +167,9 @@ if os.path.isfile("/etc/slpkg/slpkg.conf"):
 
 ktown_kde_repo = ktown_repo(repositories)
 slacke_sub_repo = slacke_repo(repositories)
+# remove no default repositories
+repositories = remove_repositories(repositories)
+# add custom repositories
 update_repositories(repositories)
 
 color = {

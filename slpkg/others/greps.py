@@ -37,20 +37,20 @@ def repo_data(PACKAGES_TXT, step, repo, version):
     '''
     (name, location, size, unsize,
      rname, rlocation, rsize, runsize) = ([] for i in range(8))
-    index, toolbar_width = 0, 700
+    index, toolbar_width = 0, 100
     for line in PACKAGES_TXT.splitlines():
         index += 1
         toolbar_width = status(index, toolbar_width, step)
-        if line.startswith("PACKAGE NAME"):
+        if line.startswith("PACKAGE NAME:"):
             if repo == "slackr":
                 name.append(fix_slackers_pkg(line[15:]))
             else:
                 name.append(line[15:].strip())
-        if line.startswith("PACKAGE LOCATION"):
+        if line.startswith("PACKAGE LOCATION:"):
             location.append(line[21:].strip())
-        if line.startswith("PACKAGE SIZE (compressed):  "):
+        if line.startswith("PACKAGE SIZE (compressed):"):
             size.append(line[28:-2].strip())
-        if line.startswith("PACKAGE SIZE (uncompressed):  "):
+        if line.startswith("PACKAGE SIZE (uncompressed):"):
             unsize.append(line[30:-2].strip())
     if repo == "rlw":
         (rname,
@@ -206,11 +206,11 @@ class Requires(object):
             PACKAGES_TXT = f.read()
             f.close()
             for line in PACKAGES_TXT.splitlines():
-                if line.startswith("PACKAGE NAME: "):
-                    pkg_name = line[14:].strip().split('-')[0]
-                if line.startswith("PACKAGE REQUIRED: "):
+                if line.startswith("PACKAGE NAME:"):
+                    pkg_name = line[13:].strip().split('-')[0]
+                if line.startswith("PACKAGE REQUIRED:"):
                     if pkg_name == self.name:
-                        if line[17:].strip():
+                        if line[16:].strip():
                             return self._req_fix(line)
 
     def _req_fix(self, line):

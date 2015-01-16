@@ -157,8 +157,10 @@ all repositories.
 .TP
 \fBslpkg\fP \fB-q\fP \fB--build\fP \fB--install\fP \fB--build-install\fP
 .PP
-List, add, or remove sbo packages from queue. If you want to remove all the packages
-from the list 'slpkg -q all --remove'. (these arguments only working for the sbo repository)
+List, add, or remove sbo packages from queue. This argument is very useful if you want
+to build and install multiple packages together. What to watch out for is the correct
+order if there are dependencies. If you want to remove all the packages from the list
+run '# slpkg -q all --remove'. (these arguments only working for the sbo repository)
 Build or install or build and install packages are queued.
 
 .SS -g , configuration file management

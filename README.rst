@@ -229,7 +229,7 @@ Command Line Tool Usage
 
 .. code-block:: bash
 
-    Utility for easy management packages in Slackware
+    Slpkg is a user-friendly package manager for Slackware installations
 
     Commands:
        update                                   update all package lists

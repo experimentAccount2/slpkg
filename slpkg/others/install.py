@@ -72,7 +72,7 @@ class OthersInstall(object):
         sys.stdout.write("{0}Reading package lists ...{1}".format(
             color['GREY'], color['ENDC']))
         sys.stdout.flush()
-        self.step = 700
+        self.step = 800 * len(packages)
 
         if repo in default_repositories:
             exec('self._init_{0}()'.format(self.repo))
@@ -82,6 +82,8 @@ class OthersInstall(object):
         f = open(self.lib, "r")
         self.PACKAGES_TXT = f.read()
         f.close()
+        num_lines = sum(1 for line in self.PACKAGES_TXT)
+        self.step = num_lines / 1000
 
     def _init_custom(self):
         self.lib = lib_path + "{0}_repo/PACKAGES.TXT".format(self.repo)
@@ -94,7 +96,6 @@ class OthersInstall(object):
     def _init_alien(self):
         self.lib = lib_path + "alien_repo/PACKAGES.TXT"
         self.mirror = Repo().alien()
-        self.step = self.step * 2
 
     def _init_slacky(self):
         self.lib = lib_path + "slacky_repo/PACKAGES.TXT"
@@ -103,7 +104,6 @@ class OthersInstall(object):
             arch = "64"
         self.mirror = "{0}slackware{1}-{2}/".format(Repo().slacky(), arch,
                                                     slack_ver())
-        self.step = self.step * 2
 
     def _init_studio(self):
         self.lib = lib_path + "studio_repo/PACKAGES.TXT"
@@ -112,12 +112,10 @@ class OthersInstall(object):
             arch = "64"
         self.mirror = "{0}slackware{1}-{2}/".format(Repo().studioware(),
                                                     arch, slack_ver())
-        self.step = self.step * 2
 
     def _init_slackr(self):
         self.lib = lib_path + "slackr_repo/PACKAGES.TXT"
         self.mirror = Repo().slackers()
-        self.step = self.step * 2
 
     def _init_slonly(self):
         self.lib = lib_path + "slonly_repo/PACKAGES.TXT"
@@ -125,17 +123,14 @@ class OthersInstall(object):
         if os.uname()[4] == "x86_64":
             arch = "{0}-x86_64".format(slack_ver())
         self.mirror = "{0}{1}/".format(Repo().slackonly(), arch)
-        self.step = self.step * 3
 
     def _init_ktown(self):
         self.lib = lib_path + "ktown_repo/PACKAGES.TXT"
         self.mirror = Repo().ktown()
-        self.step = self.step * 2
 
     def _init_multi(self):
         self.lib = lib_path + "multi_repo/PACKAGES.TXT"
         self.mirror = Repo().multi()
-        self.step = self.step * 2
 
     def _init_slacke(self):
         arch = ""
@@ -146,7 +141,6 @@ class OthersInstall(object):
         self.lib = lib_path + "slacke_repo/PACKAGES.TXT"
         self.mirror = "{0}slacke{1}/slackware{2}-{3}/".format(
             Repo().slacke(), slacke_sub_repo[1:-1], arch, slack_ver())
-        self.step = self.step * 2
 
     def _init_salix(self):
         arch = "i486"
@@ -154,7 +148,6 @@ class OthersInstall(object):
             arch = "x86_64"
         self.lib = lib_path + "salix_repo/PACKAGES.TXT"
         self.mirror = "{0}{1}/{2}/".format(Repo().salix(), arch, slack_ver())
-        self.step = self.step * 2
 
     def _init_slackl(self):
         arch = "i486"
@@ -162,17 +155,16 @@ class OthersInstall(object):
             arch = "x86_64"
         self.lib = lib_path + "slackl_repo/PACKAGES.TXT"
         self.mirror = "{0}{1}/current/".format(Repo().slackel(), arch)
-        self.step = self.step * 2
 
     def _init_rested(self):
         self.lib = lib_path + "rested_repo/PACKAGES.TXT"
         self.mirror = Repo().restricted()
-        self.step = self.step * 2
 
     def start(self):
         '''
         Install packages from official Slackware distribution
         '''
+        mas_sum = dep_sum = pkg_sum = [0, 0, 0]
         (self.dwn, self.install, self.comp_sum,
          self.uncomp_sum) = self.store(self.packages)
         sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))
@@ -185,10 +177,14 @@ class OthersInstall(object):
         if self.install:
             self.top_view()
             print("Installing:")
-            self.views(self.install, self.comp_sum)
+            mas_sum = self.views(self.install, self.comp_sum)
             if dependencies:
                 print("Installing for dependencies:")
-                self.views(self.dep_install, self.dep_comp_sum)
+                dep_sum = self.views(self.dep_install, self.dep_comp_sum)
+            pkg_sum = [sum(i) for i in zip(mas_sum, dep_sum)]
+            unit, size = units(self.comp_sum, self.uncomp_sum)
+            print unit, size
+
 
     def resolving_deps(self):
         '''
@@ -263,7 +259,7 @@ class OthersInstall(object):
             for pkg in packages:
                 for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
                                                    data[3]):
-                    if name.startswith(pkg + "-") and pkg not in black:
+                    if pkg in name and pkg not in black:
                         dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
                         install.append(name)
                         comp_sum.append(comp)
