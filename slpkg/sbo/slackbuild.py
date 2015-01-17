@@ -272,7 +272,7 @@ class SBoInstall(object):
             self.answer = default_answer
         else:
             self.answer = raw_input("Would you like to continue [Y/n]? ")
-        return self.nswer
+        return self.answer
 
     def filenames(self, sources):
         '''
