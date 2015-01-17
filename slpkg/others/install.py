@@ -344,37 +344,35 @@ class OthersInstall(object):
         template(78)
 
     def store(self, packages):
-            '''
-            Store and return packages for install
-            '''
-            dwn, install, comp_sum, uncomp_sum = ([] for i in range(4))
-            black = BlackList().packages()
-            # name = data[0]
-            # location = data[1]
-            # size = data[2]
-            # unsize = data[3]
-            data = repo_data(self.PACKAGES_TXT, self.step, self.repo,
-                             self.version)
+        '''
+        Store and return packages for install
+        '''
+        dwn, install, comp_sum, uncomp_sum = ([] for i in range(4))
+        black = BlackList().packages()
+        # name = data[0]
+        # location = data[1]
+        # size = data[2]
+        # unsize = data[3]
+        data = repo_data(self.PACKAGES_TXT, self.step, self.repo, self.version)
+        for pkg in packages:
+            for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
+                                               data[3]):
+                if pkg in name and pkg not in black:
+                    dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
+                    install.append(name)
+                    comp_sum.append(comp)
+                    uncomp_sum.append(uncomp)
+        if not install:
             for pkg in packages:
                 for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
                                                    data[3]):
-                    if pkg in name and pkg not in black:
+                    if pkg in split_package(name)[0] and not self.deps_pass:
                         dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
                         install.append(name)
                         comp_sum.append(comp)
                         uncomp_sum.append(uncomp)
-            if not install:
-                for pkg in packages:
-                    for name, loc, comp, uncomp in zip(data[0], data[1],
-                                                       data[2], data[3]):
-                        if pkg in split_package(name)[0] and not self.deps_pass:
-                            dwn.append("{0}{1}/{2}".format(self.mirror, loc,
-                                                           name))
-                            install.append(name)
-                            comp_sum.append(comp)
-                            uncomp_sum.append(uncomp)
-            dwn.reverse()
-            install.reverse()
-            comp_sum.reverse()
-            uncomp_sum.reverse()
-            return [dwn, install, comp_sum, uncomp_sum]
+        dwn.reverse()
+        install.reverse()
+        comp_sum.reverse()
+        uncomp_sum.reverse()
+        return [dwn, install, comp_sum, uncomp_sum]
