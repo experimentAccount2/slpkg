@@ -26,24 +26,21 @@ import sys
 
 from slpkg.sizes import units
 from slpkg.remove import delete
+from slpkg.messages import template
 from slpkg.repositories import Repo
 from slpkg.checksum import check_md5
 from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
 from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
-from slpkg.messages import (
-    pkg_not_found,
-    template
-)
 from slpkg.__metadata__ import (
+    color,
     pkg_path,
     lib_path,
     log_path,
-    slpkg_tmp_packages,
     default_answer,
-    color,
     slacke_sub_repo,
+    slpkg_tmp_packages,
     default_repositories
 )
 
@@ -62,11 +59,13 @@ class OthersInstall(object):
         self.packages = packages
         self.repo = repo
         self.version = version
+        self.tmp_path = slpkg_tmp_packages
         self.dwn, self.dep_dwn = [], []
         self.install, self.dep_install = [], []
         self.comp_sum, self.dep_comp_sum = [], []
         self.uncomp_sum, self.dep_uncomp_sum = [], []
         self.deps_pass = False
+        self.answer = ''
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
               color['CYAN'], ', '.join(self.packages), color['ENDC']))
         sys.stdout.write("{0}Reading package lists ...{1}".format(
@@ -164,27 +163,127 @@ class OthersInstall(object):
         '''
         Install packages from official Slackware distribution
         '''
-        mas_sum = dep_sum = pkg_sum = [0, 0, 0]
-        (self.dwn, self.install, self.comp_sum,
-         self.uncomp_sum) = self.store(self.packages)
-        sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))
-        dependencies = self.resolving_deps()
-        self.deps_pass = True
-        (self.dep_dwn, self.dep_install, self.dep_comp_sum,
-         self.dep_uncomp_sum) = self.store(dependencies)
-        sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))
-        print("")   # new line at start
-        if self.install:
-            self.top_view()
-            print("Installing:")
-            mas_sum = self.views(self.install, self.comp_sum)
-            if dependencies:
-                print("Installing for dependencies:")
-                dep_sum = self.views(self.dep_install, self.dep_comp_sum)
-            pkg_sum = [sum(i) for i in zip(mas_sum, dep_sum)]
-            unit, size = units(self.comp_sum, self.uncomp_sum)
-            print unit, size
+        try:
+            mas_sum = dep_sum = sums = [0, 0, 0]
+            (self.dwn, self.install, self.comp_sum,
+             self.uncomp_sum) = self.store(self.packages)
+            sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
+                                                   color['ENDC']))
+            dependencies = self.resolving_deps()
+            self.deps_pass = True
+            (self.dep_dwn, self.dep_install, self.dep_comp_sum,
+             self.dep_uncomp_sum) = self.store(dependencies)
+            sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
+                                                   color['ENDC']))
+            print("")   # new line at start
+            if self.install:
+                self.top_view()
+                print("Installing:")
+                mas_sum = self.views(self.install, self.comp_sum)
+                if dependencies:
+                    print("Installing for dependencies:")
+                    dep_sum = self.views(self.dep_install, self.dep_comp_sum)
+                sums = [sum(i) for i in zip(mas_sum, dep_sum)]
+                unit, size = units(self.comp_sum, self.uncomp_sum)
+                print("\nInstalling summary")
+                print("=" * 79)
+                print("{0}Total {1} {2}.".format(color['GREY'],
+                                                 len(self.install),
+                                                 self.msg(len(self.install))))
+                print("{0} {1} will be installed, {2} will be upgraded and "
+                      "{3} will be reinstalled.".format(sums[2],
+                                                        self.msg(sums[2]),
+                                                        sums[1], sums[0]))
+                print("Need to get {0} {1} of archives.".format(size[0],
+                                                                unit[0]))
+                print("After this process, {0} {1} of additional disk "
+                      "space will be used.{2}".format(size[1], unit[1],
+                                                      color['ENDC']))
+                self.answer = self.continue_install()
+                if self.answer in ['y', 'Y']:
+                    self.install.reverse()
+                    Download(self.tmp_path, self.dwn).start()
+                    self.install_packages()
+                    # self.write_deps(self, dependencies)
+                    delete(self.tmp_path, self.install)
+            else:
+                print('\nNot found packages for installation\n')
+        except KeyboardInterrupt:
+            print("")   # new line at exit
+            sys.exit(0)
 
+    def install_packages(self):
+        '''
+        Install or upgrade packages
+        '''
+        for inst in self.install:
+            package = (self.tmp_path + inst).split()
+            self.checksums(inst)
+            if os.path.isfile(pkg_path + inst[:-4]):
+                print("[ {0}reinstalling{1} ] --> {2}".format(color['GREEN'],
+                                                              color['ENDC'],
+                                                              inst))
+                PackageManager(package).reinstall()
+            elif find_package(split_package(inst)[0] + "-", pkg_path):
+                print("[ {0}upgrading{1} ] --> {2}".format(color['YELLOW'],
+                                                           color['ENDC'], inst))
+                PackageManager(package).upgrade()
+            else:
+                print("[ {0}installing{1} ] --> {2}".format(color['GREEN'],
+                                                            color['ENDC'],
+                                                            inst))
+                PackageManager(package).upgrade()
+
+    def checksums(self, install):
+        '''
+        Checksums before install
+        '''
+        if self.repo == "alien" and self.version == "stable":
+            check_md5(pkg_checksum("/" + slack_ver() + "/" + install,
+                                   self.repo), self.tmp_path + install)
+        elif self.repo == "alien" and self.version == "current":
+            check_md5(pkg_checksum("/" + self.version + "/" + install,
+                                   self.repo), self.tmp_path + install)
+        else:
+            check_md5(pkg_checksum(install, self.repo), self.tmp_path + install)
+
+    def write_deps(self, dependencies):
+        '''
+        Write dependencies in a log file
+        into directory `/var/log/slpkg/dep/`
+        '''
+        if len(dependencies) > 1:
+            name = dependencies[-1]
+            if find_package(name + "-", pkg_path):
+                dep_path = log_path + "dep/"
+                if not os.path.exists(dep_path):
+                    os.mkdir(dep_path)
+                if os.path.isfile(dep_path + name):
+                    os.remove(dep_path + name)
+                if len(dependencies[:-1]) > 0:
+                    with open(dep_path + name, "w") as f:
+                        for dep in dependencies[:-1]:
+                            f.write(dep + "\n")
+                    f.close()
+
+    def continue_install(self):
+        '''
+        Default answer
+        '''
+        if default_answer == "y":
+            self.answer = default_answer
+        else:
+            self.answer = raw_input("\nWould you like to continue [Y/n]? ")
+        return self.answer
+
+    def msg(self, count):
+        '''
+        Print singular plural
+        '''
+        message = "package"
+        if count > 1:
+            message = message + "s"
+        return message
 
     def resolving_deps(self):
         '''

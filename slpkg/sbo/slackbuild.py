@@ -66,6 +66,7 @@ class SBoInstall(object):
         self.package_found = []
         self.deps_dict = {}
         self.toolbar_width, self.index = 2, 0
+        self.answer = ''
         sys.stdout.write("{0}Reading package lists ...{1}".format(
             color['GREY'], color['ENDC']))
         sys.stdout.flush()
@@ -124,8 +125,8 @@ class SBoInstall(object):
                                        self.msg(count_upg)))
                 print("will be upgraded.{0}\n".format(color['ENDC']))
                 if self.master_packages:
-                    answer = self.continue_install()
-                    if answer in['y', 'Y']:
+                    self.answer = self.continue_install()
+                    if self.answer in['y', 'Y']:
                         # installs = b_ins[0]
                         # upgraded = b_ins[1]
                         # versions = b_ins[2]
@@ -268,10 +269,10 @@ class SBoInstall(object):
         Default answer
         '''
         if default_answer == "y":
-            answer = default_answer
+            self.answer = default_answer
         else:
-            answer = raw_input("Would you like to continue [Y/n]? ")
-        return answer
+            self.answer = raw_input("Would you like to continue [Y/n]? ")
+        return self.nswer
 
     def filenames(self, sources):
         '''

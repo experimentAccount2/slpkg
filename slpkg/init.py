@@ -464,7 +464,7 @@ class Initialization(object):
 
     def rested(self):
         '''
-        Creating alien local library
+        Creating alien restricted local library
         '''
         repo = Repo().restricted()
         log = log_path + "rested/"
