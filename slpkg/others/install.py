@@ -27,7 +27,6 @@ import sys
 from slpkg.sizes import units
 from slpkg.remove import delete
 from slpkg.messages import template
-from slpkg.repositories import Repo
 from slpkg.checksum import check_md5
 from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
@@ -40,12 +39,9 @@ from slpkg.utils import (
 from slpkg.__metadata__ import (
     color,
     pkg_path,
-    lib_path,
     log_path,
     default_answer,
-    slacke_sub_repo,
     slpkg_tmp_packages,
-    default_repositories
 )
 
 from slpkg.pkg.find import find_package
@@ -54,6 +50,7 @@ from slpkg.pkg.manager import PackageManager
 from slpkg.slack.slack_version import slack_ver
 
 from greps import repo_data
+from repo_init import RepoInit
 from dependency import Dependencies
 
 
@@ -76,93 +73,10 @@ class OthersInstall(object):
         sys.stdout.write("{0}Reading package lists ...{1}".format(
             color['GREY'], color['ENDC']))
         sys.stdout.flush()
-        self.step = 800 * len(packages)
 
-        if repo in default_repositories:
-            exec('self._init_{0}()'.format(self.repo))
-        else:
-            exec('self._init_custom()')
-
-        f = open(self.lib, "r")
-        self.PACKAGES_TXT = f.read()
-        f.close()
+        self.PACKAGES_TXT, self.mirror = RepoInit(self.repo).fetch()
         num_lines = sum(1 for line in self.PACKAGES_TXT)
         self.step = num_lines / 1000
-
-    def _init_custom(self):
-        self.lib = lib_path + "{0}_repo/PACKAGES.TXT".format(self.repo)
-        self.mirror = "{0}".format(Repo().custom_repository()[self.repo])
-
-    def _init_rlw(self):
-        self.lib = lib_path + "rlw_repo/PACKAGES.TXT"
-        self.mirror = "{0}{1}/".format(Repo().rlw(), slack_ver())
-
-    def _init_alien(self):
-        self.lib = lib_path + "alien_repo/PACKAGES.TXT"
-        self.mirror = Repo().alien()
-
-    def _init_slacky(self):
-        self.lib = lib_path + "slacky_repo/PACKAGES.TXT"
-        arch = ""
-        if os.uname()[4] == "x86_64":
-            arch = "64"
-        self.mirror = "{0}slackware{1}-{2}/".format(Repo().slacky(), arch,
-                                                    slack_ver())
-
-    def _init_studio(self):
-        self.lib = lib_path + "studio_repo/PACKAGES.TXT"
-        arch = ""
-        if os.uname()[4] == "x86_64":
-            arch = "64"
-        self.mirror = "{0}slackware{1}-{2}/".format(Repo().studioware(),
-                                                    arch, slack_ver())
-
-    def _init_slackr(self):
-        self.lib = lib_path + "slackr_repo/PACKAGES.TXT"
-        self.mirror = Repo().slackers()
-
-    def _init_slonly(self):
-        self.lib = lib_path + "slonly_repo/PACKAGES.TXT"
-        arch = "{0}-x86".format(slack_ver())
-        if os.uname()[4] == "x86_64":
-            arch = "{0}-x86_64".format(slack_ver())
-        self.mirror = "{0}{1}/".format(Repo().slackonly(), arch)
-
-    def _init_ktown(self):
-        self.lib = lib_path + "ktown_repo/PACKAGES.TXT"
-        self.mirror = Repo().ktown()
-
-    def _init_multi(self):
-        self.lib = lib_path + "multi_repo/PACKAGES.TXT"
-        self.mirror = Repo().multi()
-
-    def _init_slacke(self):
-        arch = ""
-        if os.uname()[4] == "x86_64":
-            arch = "64"
-        elif os.uname()[4] == "arm":
-            arch = "arm"
-        self.lib = lib_path + "slacke_repo/PACKAGES.TXT"
-        self.mirror = "{0}slacke{1}/slackware{2}-{3}/".format(
-            Repo().slacke(), slacke_sub_repo[1:-1], arch, slack_ver())
-
-    def _init_salix(self):
-        arch = "i486"
-        if os.uname()[4] == "x86_64":
-            arch = "x86_64"
-        self.lib = lib_path + "salix_repo/PACKAGES.TXT"
-        self.mirror = "{0}{1}/{2}/".format(Repo().salix(), arch, slack_ver())
-
-    def _init_slackl(self):
-        arch = "i486"
-        if os.uname()[4] == "x86_64":
-            arch = "x86_64"
-        self.lib = lib_path + "slackl_repo/PACKAGES.TXT"
-        self.mirror = "{0}{1}/current/".format(Repo().slackel(), arch)
-
-    def _init_rested(self):
-        self.lib = lib_path + "rested_repo/PACKAGES.TXT"
-        self.mirror = Repo().restricted()
 
     def start(self):
         '''
