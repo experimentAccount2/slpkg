@@ -73,7 +73,7 @@ class SBoInstall(object):
 
     def start(self):
         try:
-            dependencies, tagc, match = [], '', False
+            tagc, match = '', False
             count_ins = count_upg = count_uni = 0
             for sbo in self.slackbuilds:
                 sbo_deps = []
@@ -95,18 +95,17 @@ class SBoInstall(object):
                 self.package_found)
             sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
                                                    color['ENDC']))
+            self.master_packages = self.clear_masters()
             if self.package_found:
                 print("\nThe following packages will be automatically "
                       "installed or upgraded \nwith new version:\n")
                 self.top_view()
                 for sbo, ar in zip(self.master_packages, mas_src):
-                    if sbo not in dependencies:
-                        tagc, count_ins, count_upg, count_uni = self.tag(
-                            sbo, count_ins, count_upg, count_uni)
-                        self.view_packages(tagc, '-'.join(sbo.split('-')[:-1]),
-                                           sbo.split('-')[-1],
-                                           self.select_arch(ar))
-                if not match:
+                    tagc, count_ins, count_upg, count_uni = self.tag(
+                        sbo, count_ins, count_upg, count_uni)
+                    self.view_packages(tagc, '-'.join(sbo.split('-')[:-1]),
+                                       sbo.split('-')[-1], self.select_arch(ar))
+                if not match and self.dependencies:
                     print("Installing for dependencies:")
                 for dep, ar in zip(self.dependencies, dep_src):
                     tagc, count_ins, count_upg, count_uni = self.tag(
@@ -141,6 +140,17 @@ class SBoInstall(object):
         except KeyboardInterrupt:
             print("")   # new line at exit
             sys.exit(0)
+
+    def clear_masters(self):
+        '''
+        Clear master slackbuilds if already exist in dependencies
+        or if added to install two or more times
+        '''
+        slackbuilds = []
+        for mas in self.remove_dbs(self.master_packages):
+            if mas not in self.dependencies:
+                slackbuilds.append(mas)
+        return slackbuilds
 
     def matching(self, sbo_not_found):
         '''
@@ -313,7 +323,7 @@ class SBoInstall(object):
                 template(78)
                 pkg_found(pkg, split_package(sbo_file)[1])
                 template(78)
-            elif self.unst[0] or self.unst[1] in src_link:
+            elif self.unst[0] in src_link or self.unst[1] in src_link:
                 template(78)
                 print("| Package {0} {1}{2}{3}".format(sbo, color['RED'],
                                                        ''.join(src_link),
