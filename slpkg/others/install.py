@@ -311,7 +311,7 @@ class OthersInstall(object):
         '''
         pkg_sum = uni_sum = upg_sum = 0
         # fix repositories align
-        self.repo = self.repo + (' ' * (6 - (len(self.repo))))
+        repo = self.repo + (' ' * (6 - (len(self.repo))))
         for pkg, comp in zip(install, comp_sum):
             pkg_split = split_package(pkg[:-4])
             if find_package(pkg_split[0] + "-" + pkg_split[1], pkg_path):
@@ -328,7 +328,7 @@ class OthersInstall(object):
                 " " * (24-len(pkg_split[0])), pkg_split[1],
                 " " * (18-len(pkg_split[1])), pkg_split[2],
                 " " * (8-len(pkg_split[2])), pkg_split[3],
-                " " * (7-len(pkg_split[3])), self.repo,
+                " " * (7-len(pkg_split[3])), repo,
                 comp, " K"))
         return [pkg_sum, upg_sum, uni_sum]
 
