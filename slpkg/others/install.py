@@ -66,6 +66,7 @@ class OthersInstall(object):
         self.comp_sum, self.dep_comp_sum = [], []
         self.uncomp_sum, self.dep_uncomp_sum = [], []
         self.dependencies = []
+        self.deps_dict = {}
         self.deps_pass = False
         self.answer = ''
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
@@ -225,11 +226,10 @@ class OthersInstall(object):
             color['GREY'], color['ENDC']))
         sys.stdout.flush()
         for dep in self.packages:
-            deps = Dependencies().others(dep, self.repo)
-            requires = dimensional_list(deps)
-            requires.reverse()
-            dependencies = remove_dbs(requires)
-        return dependencies
+            requires += Dependencies().others(dep, self.repo)
+        dependencies = dimensional_list(requires)
+        dependencies.reverse()
+        return remove_dbs(dependencies)
 
     def views(self, install, comp_sum):
         '''
@@ -283,7 +283,7 @@ class OthersInstall(object):
         for pkg in packages:
             for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
                                                data[3]):
-                if pkg in name and pkg not in black:
+                if pkg == split_package(name)[0] and pkg not in black:
                     dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
                     install.append(name)
                     comp_sum.append(comp)
