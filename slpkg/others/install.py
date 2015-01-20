@@ -104,13 +104,15 @@ class OthersInstall(object):
                 if self.dependencies:
                     print("Installing for dependencies:")
                     dep_sum = self.views(self.dep_install, self.dep_comp_sum)
+                # sums[0] --> installed
+                # sums[1] --> upgraded
+                # sums[2] --> uninstall
                 sums = [sum(i) for i in zip(mas_sum, dep_sum)]
                 unit, size = units(self.comp_sum, self.uncomp_sum)
                 print("\nInstalling summary")
                 print("=" * 79)
-                print("{0}Total {1} {2}.".format(color['GREY'],
-                                                 len(self.install),
-                                                 self.msg(len(self.install))))
+                print("{0}Total {1} {2}.".format(color['GREY'], sum(sums),
+                                                 self.msg(sum(sums))))
                 print("{0} {1} will be installed, {2} will be upgraded and "
                       "{3} will be reinstalled.".format(sums[2],
                                                         self.msg(sums[2]),
