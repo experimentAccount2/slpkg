@@ -230,7 +230,7 @@ class OthersInstall(object):
         for dep in self.packages:
             requires += Dependencies().others(dep, self.repo)
         dependencies = dimensional_list(requires)
-        dependencies.reverse()
+        # dependencies.reverse()
         return remove_dbs(dependencies)
 
     def views(self, install, comp_sum):

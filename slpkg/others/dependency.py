@@ -47,7 +47,7 @@ class Dependencies(object):
             if requires:
                 for req in requires:
                     index += 1
-                    toolbar_width = status(index, toolbar_width, 1)
+                    toolbar_width = status(index, toolbar_width, 7)
                     if req and req not in blacklist:
                         dependencies.append(req)
                 if dependencies:

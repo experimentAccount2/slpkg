@@ -36,11 +36,9 @@ from greps import SBoGrep
 from search import sbo_search_pkg
 
 
-def exists():
+def sbo_upgrade():
     '''
-    Search packages if exists in the repository
-    and it gets to avoidable modified packages
-    from the user with the tag _SBo
+    Return packages for upgrade
     '''
     try:
         sys.stdout.write("{0}Checking ...{1}".format(color['GREY'],

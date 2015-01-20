@@ -24,6 +24,7 @@
 import os
 
 from slpkg.toolbar import status
+from slpkg.splitting import split_package
 from slpkg.slack.slack_version import slack_ver
 from slpkg.__metadata__ import (
     lib_path,
@@ -207,10 +208,10 @@ class Requires(object):
             f.close()
             for line in PACKAGES_TXT.splitlines():
                 if line.startswith("PACKAGE NAME:"):
-                    pkg_name = line[13:].strip().split('-')[0]
+                    pkg_name = split_package(line[14:].strip())[0]
                 if line.startswith("PACKAGE REQUIRED:"):
                     if pkg_name == self.name:
-                        if line[16:].strip():
+                        if line[18:].strip():
                             return self._req_fix(line)
 
     def _req_fix(self, line):

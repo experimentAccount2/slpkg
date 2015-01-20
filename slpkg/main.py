@@ -50,7 +50,7 @@ from __metadata__ import (
 from pkg.build import BuildPackage
 from pkg.manager import PackageManager
 
-from sbo.check import exists
+from sbo.check import sbo_upgrade
 from sbo.views import SBoNetwork
 from sbo.slackbuild import SBoInstall
 
@@ -76,7 +76,7 @@ class Case(object):
         OthersInstall(self.package, repo, self.release).start()
 
     def sbo_upgrade(self):
-        SBoInstall(exists()).start()
+        SBoInstall(sbo_upgrade()).start()
 
     def slack_upgrade(self):
         Patches(self.release).start()
