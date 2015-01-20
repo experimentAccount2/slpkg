@@ -25,8 +25,8 @@ import os
 import sys
 
 
-from slpkg.downloader import Download
 from slpkg.toolbar import status
+from slpkg.downloader import Download
 from slpkg.splitting import split_package
 from slpkg.utils import (
     dimensional_list,
@@ -37,7 +37,6 @@ from slpkg.messages import (
     pkg_found,
     build_FAILED
 )
-
 from slpkg.__metadata__ import (
     tmp,
     color,
@@ -55,8 +54,8 @@ from slpkg.pkg.manager import PackageManager
 from greps import SBoGrep
 from remove import delete
 from compressed import SBoLink
-from search import sbo_search_pkg
 from dependency import Requires
+from search import sbo_search_pkg
 
 
 class SBoInstall(object):

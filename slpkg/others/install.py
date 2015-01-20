@@ -33,6 +33,10 @@ from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
 from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
+from slpkg.utils import (
+    remove_dbs,
+    dimensional_list
+)
 from slpkg.__metadata__ import (
     color,
     pkg_path,
@@ -64,6 +68,7 @@ class OthersInstall(object):
         self.install, self.dep_install = [], []
         self.comp_sum, self.dep_comp_sum = [], []
         self.uncomp_sum, self.dep_uncomp_sum = [], []
+        self.dependencies = []
         self.deps_pass = False
         self.answer = ''
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
@@ -165,14 +170,15 @@ class OthersInstall(object):
         '''
         try:
             mas_sum = dep_sum = sums = [0, 0, 0]
+            self.packages = self.clear_masters()
             (self.dwn, self.install, self.comp_sum,
              self.uncomp_sum) = self.store(self.packages)
             sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
                                                    color['ENDC']))
-            dependencies = self.resolving_deps()
+            self.dependencies = self.resolving_deps()
             self.deps_pass = True
             (self.dep_dwn, self.dep_install, self.dep_comp_sum,
-             self.dep_uncomp_sum) = self.store(dependencies)
+             self.dep_uncomp_sum) = self.store(self.dependencies)
             sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
                                                    color['ENDC']))
             print("")   # new line at start
@@ -180,7 +186,7 @@ class OthersInstall(object):
                 self.top_view()
                 print("Installing:")
                 mas_sum = self.views(self.install, self.comp_sum)
-                if dependencies:
+                if self.dependencies:
                     print("Installing for dependencies:")
                     dep_sum = self.views(self.dep_install, self.dep_comp_sum)
                 sums = [sum(i) for i in zip(mas_sum, dep_sum)]
@@ -211,6 +217,17 @@ class OthersInstall(object):
         except KeyboardInterrupt:
             print("")   # new line at exit
             sys.exit(0)
+
+    def clear_masters(self):
+        '''
+        Clear master packages if already exist in dependencies
+        or if added to install two or more times
+        '''
+        packages = []
+        for mas in remove_dbs(self.packages):
+            if mas not in self.dependencies:
+                packages.append(mas)
+        return packages
 
     def install_packages(self):
         '''
@@ -295,14 +312,9 @@ class OthersInstall(object):
         sys.stdout.flush()
         for dep in self.packages:
             deps = Dependencies().others(dep, self.repo)
-            # Create one list for all packages
-            for pkg in deps:
-                requires += pkg
+            requires = dimensional_list(deps)
             requires.reverse()
-            # Remove double dependencies
-            for duplicate in requires:
-                if duplicate not in dependencies:
-                    dependencies.append(duplicate)
+            dependencies = remove_dbs(requires)
         return dependencies
 
     def views(self, install, comp_sum):
