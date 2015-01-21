@@ -56,7 +56,7 @@ from sbo.slackbuild import SBoInstall
 
 from slack.install import Slack
 from slack.patches import Patches
-from others.check import OthersUpgrade
+from others.check import pkg_upgrade
 from others.install import OthersInstall
 
 
@@ -82,7 +82,7 @@ class Case(object):
         Patches(self.release).start()
 
     def others_upgrade(self, repo):
-        OthersUpgrade(repo, self.release).start()
+        OthersInstall(pkg_upgrade(repo), repo, self.release).start()
 
 
 def main():

@@ -69,12 +69,9 @@ class OthersInstall(object):
         self.dependencies = []
         self.deps_dict = {}
         self.answer = ''
-        print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
-              color['CYAN'], ', '.join(self.packages), color['ENDC']))
         sys.stdout.write("{0}Reading package lists ...{1}".format(
             color['GREY'], color['ENDC']))
         sys.stdout.flush()
-
         self.PACKAGES_TXT, self.mirror = RepoInit(self.repo).fetch()
         num_lines = sum(1 for line in self.PACKAGES_TXT)
         self.step = (num_lines / 700)
