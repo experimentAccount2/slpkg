@@ -40,7 +40,6 @@ from slpkg.messages import (
 from slpkg.__metadata__ import (
     tmp,
     color,
-    log_path,
     lib_path,
     pkg_path,
     build_path,
@@ -52,6 +51,7 @@ from slpkg.pkg.build import BuildPackage
 from slpkg.pkg.manager import PackageManager
 
 from greps import SBoGrep
+from log_deps import write_deps
 from remove import delete
 from compressed import SBoLink
 from dependency import Requires
@@ -137,7 +137,7 @@ class SBoInstall(object):
                         self.reference(len(b_ins[0]), self.msg(len(b_ins[0])),
                                        len(b_ins[1]), self.msg(len(b_ins[1])),
                                        b_ins[0], b_ins[2], b_ins[1])
-                        self.write_deps()
+                        write_deps(self.deps_dict)
                         delete(build_path)
             else:
                 print('\nNot found packages for installation\n')
@@ -369,21 +369,3 @@ class SBoInstall(object):
             else:
                 print("| Package {0} NOT installed".format(installed))
         template(78)
-
-    def write_deps(self):
-        '''
-        Write dependencies in a log file
-        into directory `/var/log/slpkg/dep/`
-        '''
-        for name, dependencies in self.deps_dict.iteritems():
-            if find_package(name + '-', pkg_path):
-                dep_path = log_path + "dep/"
-                if not os.path.exists(dep_path):
-                    os.mkdir(dep_path)
-                if os.path.isfile(dep_path + name):
-                    os.remove(dep_path + name)
-                if len(dependencies) > 0:
-                    with open(dep_path + name, "w") as f:
-                        for dep in dependencies:
-                            f.write(dep + "\n")
-                        f.close()

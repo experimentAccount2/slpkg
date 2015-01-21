@@ -26,6 +26,7 @@ import sys
 
 from slpkg.sizes import units
 from slpkg.remove import delete
+from slpkg.log_deps import write_deps
 from slpkg.messages import template
 from slpkg.checksum import check_md5
 from slpkg.blacklist import BlackList
@@ -39,7 +40,6 @@ from slpkg.utils import (
 from slpkg.__metadata__ import (
     color,
     pkg_path,
-    log_path,
     default_answer,
     slpkg_tmp_packages,
 )
@@ -122,12 +122,12 @@ class OthersInstall(object):
                 self.answer = self.continue_install()
                 if self.answer in ['y', 'Y']:
                     self.install.reverse()
-                    Download(self.tmp_path, self.dwn).start()
+                    Download(self.tmp_path, (self.dep_dwn + self.dwn)).start()
                     self.install_packages()
-                    # self.write_deps(self, dependencies)
+                    write_deps(self.deps_dict)
                     delete(self.tmp_path, self.install)
             else:
-                print('\nNot found packages for installation\n')
+                print('Not found packages for installation\n')
         except KeyboardInterrupt:
             print("")   # new line at exit
             sys.exit(0)
@@ -162,7 +162,7 @@ class OthersInstall(object):
         '''
         Install or upgrade packages
         '''
-        for inst in self.install:
+        for inst in (self.dep_install + self.install):
             package = (self.tmp_path + inst).split()
             self.checksums(inst)
             if os.path.isfile(pkg_path + inst[:-4]):
@@ -193,25 +193,6 @@ class OthersInstall(object):
         else:
             check_md5(pkg_checksum(install, self.repo), self.tmp_path + install)
 
-    def write_deps(self, dependencies):
-        '''
-        Write dependencies in a log file
-        into directory `/var/log/slpkg/dep/`
-        '''
-        if len(dependencies) > 1:
-            name = dependencies[-1]
-            if find_package(name + "-", pkg_path):
-                dep_path = log_path + "dep/"
-                if not os.path.exists(dep_path):
-                    os.mkdir(dep_path)
-                if os.path.isfile(dep_path + name):
-                    os.remove(dep_path + name)
-                if len(dependencies[:-1]) > 0:
-                    with open(dep_path + name, "w") as f:
-                        for dep in dependencies[:-1]:
-                            f.write(dep + "\n")
-                    f.close()
-
     def continue_install(self):
         '''
         Default answer
@@ -235,15 +216,17 @@ class OthersInstall(object):
         '''
         Return package dependencies
         '''
-        requires, dependencies = [], []
+        requires = []
         sys.stdout.write("{0}Resolving dependencies ...{1}".format(
             color['GREY'], color['ENDC']))
         sys.stdout.flush()
         for dep in self.packages:
-            requires += Dependencies().others(dep, self.repo)
-        dependencies = dimensional_list(requires)
-        # dependencies.reverse()
-        return remove_dbs(dependencies)
+            dependencies = []
+            dependencies = dimensional_list(Dependencies().others(dep,
+                                                                  self.repo))
+            requires += dependencies
+            self.deps_dict[dep] = remove_dbs(dependencies)
+        return remove_dbs(requires)
 
     def views(self, install, comp_sum):
         '''
