@@ -23,6 +23,7 @@
 
 import sys
 
+from slpkg.toolbar import status
 from slpkg.blacklist import BlackList
 from slpkg.splitting import split_package
 from slpkg.__metadata__ import (
@@ -37,9 +38,12 @@ def search_pkg(name, repo):
     '''
     try:
         blacklist = BlackList().packages()
+        toolbar_width, index = 2, 0
         with open(lib_path + '{0}_repo/PACKAGES.TXT'.format(
                 repo), "r") as PACKAGES_TXT:
             for line in PACKAGES_TXT:
+                index += 1
+                toolbar_width = status(index, toolbar_width, 1400)
                 if line.startswith("PACKAGE NAME:  ") and len(line) > 16:
                     if repo == 'slackr':
                         pkg_name = line[15:].strip()

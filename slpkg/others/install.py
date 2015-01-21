@@ -50,6 +50,7 @@ from slpkg.pkg.manager import PackageManager
 from slpkg.slack.slack_version import slack_ver
 
 from greps import repo_data
+from search import search_pkg
 from repo_init import RepoInit
 from dependency import Dependencies
 
@@ -67,7 +68,6 @@ class OthersInstall(object):
         self.uncomp_sum, self.dep_uncomp_sum = [], []
         self.dependencies = []
         self.deps_dict = {}
-        self.deps_pass = False
         self.answer = ''
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
               color['CYAN'], ', '.join(self.packages), color['ENDC']))
@@ -77,7 +77,7 @@ class OthersInstall(object):
 
         self.PACKAGES_TXT, self.mirror = RepoInit(self.repo).fetch()
         num_lines = sum(1 for line in self.PACKAGES_TXT)
-        self.step = num_lines / 1000
+        self.step = (num_lines / 700)
 
     def start(self):
         '''
@@ -85,15 +85,15 @@ class OthersInstall(object):
         '''
         try:
             mas_sum = dep_sum = sums = [0, 0, 0]
-            self.packages = self.clear_masters()
-            (self.dwn, self.install, self.comp_sum,
-             self.uncomp_sum) = self.store(self.packages)
+            self.pkg_exist()
             sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
                                                    color['ENDC']))
             self.dependencies = self.resolving_deps()
-            self.deps_pass = True
             (self.dep_dwn, self.dep_install, self.dep_comp_sum,
              self.dep_uncomp_sum) = self.store(self.dependencies)
+            self.packages = self.clear_masters()
+            (self.dwn, self.install, self.comp_sum,
+             self.uncomp_sum) = self.store(self.packages)
             sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
                                                    color['ENDC']))
             print("")   # new line at start
@@ -134,6 +134,21 @@ class OthersInstall(object):
         except KeyboardInterrupt:
             print("")   # new line at exit
             sys.exit(0)
+
+    def pkg_exist(self):
+        '''
+        Search if package exist
+        '''
+        pkg_found, pkg_not_found = [], []
+        for pkg in self.packages:
+            if search_pkg(pkg, self.repo):
+                pkg_found.append(pkg)
+            else:
+                pkg_not_found.append(pkg)
+        if pkg_found:
+            self.packages = pkg_found
+        else:
+            self.packages = pkg_not_found
 
     def clear_masters(self):
         '''
@@ -294,7 +309,7 @@ class OthersInstall(object):
             for pkg in packages:
                 for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
                                                    data[3]):
-                    if pkg in split_package(name)[0] and not self.deps_pass:
+                    if pkg in split_package(name)[0]:
                         dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
                         install.append(name)
                         comp_sum.append(comp)
