@@ -222,8 +222,8 @@ class OthersInstall(object):
         sys.stdout.flush()
         for dep in self.packages:
             dependencies = []
-            dependencies = dimensional_list(Dependencies().others(dep,
-                                                                  self.repo))
+            dependencies = dimensional_list(Dependencies(self.PACKAGES_TXT,
+                                                         self.repo).others(dep))
             requires += dependencies
             self.deps_dict[dep] = remove_dbs(dependencies)
         return remove_dbs(requires)
@@ -280,7 +280,7 @@ class OthersInstall(object):
         for pkg in packages:
             for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
                                                data[3]):
-                if pkg == split_package(name)[0] and pkg not in black:
+                if name and pkg == split_package(name)[0] and pkg not in black:
                     dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
                     install.append(name)
                     comp_sum.append(comp)
@@ -289,7 +289,7 @@ class OthersInstall(object):
             for pkg in packages:
                 for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
                                                    data[3]):
-                    if pkg in split_package(name)[0]:
+                    if name and pkg in split_package(name)[0]:
                         dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
                         install.append(name)
                         comp_sum.append(comp)

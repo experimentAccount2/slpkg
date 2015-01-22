@@ -25,16 +25,27 @@ import sys
 
 from slpkg.toolbar import status
 from slpkg.blacklist import BlackList
+from slpkg.splitting import split_package
 
 from greps import Requires
 
 
 class Dependencies(object):
 
-    def __init__(self):
+    def __init__(self, PACKAGES_TXT, repo):
+        self.repo = repo
         self.dep_results = []
+        self.packages = []
+        for line in PACKAGES_TXT.splitlines():
+            # index += 1
+            # toolbar_width = status(index, toolbar_width, step)
+            if line.startswith("PACKAGE NAME:"):
+                if repo == "slackr":
+                    self.packages.append(line[15:].strip())
+                else:
+                    self.packages.append(split_package(line[15:].strip())[0])
 
-    def others(self, name, repo):
+    def others(self, name):
         '''
         Build all dependencies of a package
         '''
@@ -42,18 +53,18 @@ class Dependencies(object):
             sys.setrecursionlimit(10000)
             dependencies = []
             blacklist = BlackList().packages()
-            requires = Requires(name, repo).get_deps()
+            requires = Requires(name, self.repo).get_deps()
             toolbar_width, index = 2, 0
             if requires:
                 for req in requires:
                     index += 1
                     toolbar_width = status(index, toolbar_width, 7)
-                    if req and req not in blacklist:
+                    if req and req in self.packages and req not in blacklist:
                         dependencies.append(req)
                 if dependencies:
                     self.dep_results.append(dependencies)
                     for dep in dependencies:
-                        self.others(dep, repo)
+                        self.others(dep)
             return self.dep_results
         except KeyboardInterrupt:
             print("")   # new line at exit

@@ -208,7 +208,10 @@ class Requires(object):
             f.close()
             for line in PACKAGES_TXT.splitlines():
                 if line.startswith("PACKAGE NAME:"):
-                    pkg_name = split_package(line[14:].strip())[0]
+                    if self.repo == "slackr":
+                        pkg_name = fix_slackers_pkg(line[15:])
+                    else:
+                        pkg_name = split_package(line[14:].strip())[0]
                 if line.startswith("PACKAGE REQUIRED:"):
                     if pkg_name == self.name:
                         if line[18:].strip():
