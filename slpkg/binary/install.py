@@ -232,16 +232,21 @@ class BinaryInstall(object):
             self.deps_dict[dep] = remove_dbs(dependencies)
         return remove_dbs(requires)
 
+    def view_version(self, packages):
+        '''
+        Create empty seats if not upgrade
+        '''
+        if not self.if_upgrade:
+            i = 0
+            for i in range(len(packages)):
+                self.pkg_ver.append('')
+
     def views(self, install, comp_sum):
         '''
         Views packages
         '''
         pkg_sum = uni_sum = upg_sum = 0
-        # create empty seats if not upgrade
-        if not self.if_upgrade:
-            i = 0
-            for i in range(len(install)):
-                self.pkg_ver.append('')
+        self.view_version(install)
         # fix repositories align
         repo = self.repo + (' ' * (6 - (len(self.repo))))
         for pkg, ver, comp in zip(install, self.pkg_ver, comp_sum):
