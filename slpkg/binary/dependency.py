@@ -23,9 +23,9 @@
 
 import sys
 
+from utils import package_name
 from slpkg.toolbar import status
 from slpkg.blacklist import BlackList
-from slpkg.splitting import split_package
 
 from greps import Requires
 
@@ -35,17 +35,9 @@ class Dependencies(object):
     def __init__(self, PACKAGES_TXT, repo):
         self.repo = repo
         self.dep_results = []
-        self.packages = []
-        for line in PACKAGES_TXT.splitlines():
-            # index += 1
-            # toolbar_width = status(index, toolbar_width, step)
-            if line.startswith("PACKAGE NAME:"):
-                if repo == "slackr":
-                    self.packages.append(line[14:].strip())
-                else:
-                    self.packages.append(split_package(line[14:].strip())[0])
+        self.packages = package_name(PACKAGES_TXT, repo)
 
-    def others(self, name):
+    def binary(self, name):
         '''
         Build all dependencies of a package
         '''
@@ -64,7 +56,7 @@ class Dependencies(object):
                 if dependencies:
                     self.dep_results.append(dependencies)
                     for dep in dependencies:
-                        self.others(dep)
+                        self.binary(dep)
             return self.dep_results
         except KeyboardInterrupt:
             print("")   # new line at exit

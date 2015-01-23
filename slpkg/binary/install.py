@@ -223,7 +223,7 @@ class BinaryInstall(object):
         for dep in self.packages:
             dependencies = []
             dependencies = dimensional_list(Dependencies(self.PACKAGES_TXT,
-                                                         self.repo).others(dep))
+                                                         self.repo).binary(dep))
             requires += dependencies
             self.deps_dict[dep] = remove_dbs(dependencies)
         return remove_dbs(requires)

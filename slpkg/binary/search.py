@@ -26,6 +26,9 @@ import sys
 from slpkg.toolbar import status
 from slpkg.blacklist import BlackList
 from slpkg.splitting import split_package
+from slpkg.utils import (
+    read_file
+)
 from slpkg.__metadata__ import (
     lib_path
 )
@@ -39,19 +42,18 @@ def search_pkg(name, repo):
     try:
         blacklist = BlackList().packages()
         toolbar_width, index = 2, 0
-        with open(lib_path + '{0}_repo/PACKAGES.TXT'.format(
-                repo), "r") as PACKAGES_TXT:
-            for line in PACKAGES_TXT:
-                index += 1
-                toolbar_width = status(index, toolbar_width, 1400)
-                if line.startswith("PACKAGE NAME:  ") and len(line) > 16:
-                    if repo == 'slackr':
-                        pkg_name = line[15:].strip()
-                    else:
-                        pkg_name = split_package(line[15:])[0].strip()
-                    if name == pkg_name and name not in blacklist:
-                        PACKAGES_TXT.close()
-                        return pkg_name
+        PACKAGES_TXT = read_file(lib_path + '{0}_repo/PACKAGES.TXT'.format(
+            repo))
+        for line in PACKAGES_TXT.splitlines():
+            index += 1
+            toolbar_width = status(index, toolbar_width, 1400)
+            if line.startswith("PACKAGE NAME:  ") and len(line) > 16:
+                if repo == 'slackr':
+                    pkg_name = line[15:].strip()
+                else:
+                    pkg_name = split_package(line[15:])[0].strip()
+                if name == pkg_name and name not in blacklist:
+                    return pkg_name
     except KeyboardInterrupt:
         print("")   # new line at exit
         sys.exit(0)

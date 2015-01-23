@@ -36,9 +36,9 @@ from __metadata__ import (
     conf_path,
     build_path,
     repositories,
-    slpkg_tmp_packages,
-    slpkg_tmp_patches,
     slacke_sub_repo,
+    slpkg_tmp_patches,
+    slpkg_tmp_packages,
     default_repositories
 )
 

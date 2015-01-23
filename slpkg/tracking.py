@@ -23,10 +23,16 @@
 
 import sys
 
+from utils import (
+    read_file,
+    remove_dbs,
+    dimensional_list
+)
 from messages import (
     template
 )
 from __metadata__ import (
+    lib_path,
     pkg_path,
     color,
     sp
@@ -55,19 +61,16 @@ def track_dep(name, repo):
         dependencies_list = Requires().sbo(name)
         find_pkg = sbo_search_pkg(name)
     else:
-        dependencies_list = Dependencies().binary(name, repo)
+        PACKAGES_TXT = read_file(lib_path + '{0}_repo/PACKAGES.TXT'.format(
+            repo))
+        dependencies_list = Dependencies(PACKAGES_TXT, repo).binary(name)
         find_pkg = search_pkg(name, repo)
     sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))
     if find_pkg:
         requires, dependencies = [], []
-        # Create one list for all packages
-        for pkg in dependencies_list:
-            requires += pkg
+        requires = dimensional_list(dependencies_list)
         requires.reverse()
-        # Remove double dependencies
-        for duplicate in requires:
-            if duplicate not in dependencies:
-                dependencies.append(duplicate)
+        dependencies = remove_dbs(requires)
         if dependencies == []:
             dependencies = ["No dependencies"]
         pkg_len = len(name) + 24

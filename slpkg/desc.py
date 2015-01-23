@@ -22,6 +22,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+from utils import read_file
 from messages import pkg_not_found
 from __metadata__ import (
     lib_path,
@@ -51,9 +52,7 @@ class PkgDesc(object):
             self.lib = lib_path + '{0}_repo/PACKAGES.TXT'.format(self.repo)
 
     def view(self):
-        f = open(self.lib, "r")
-        PACKAGES_TXT = f.read()
-        f.close()
+        PACKAGES_TXT = read_file(self.lib)
         print("")   # new line at start
         count = 0
         if self.repo != "sbo":

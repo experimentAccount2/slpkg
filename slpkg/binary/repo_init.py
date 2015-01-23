@@ -23,6 +23,7 @@
 
 import os
 
+from utils import read_file
 from repositories import Repo
 from slpkg.__metadata__ import (
     lib_path,
@@ -48,30 +49,23 @@ class RepoInit(object):
             exec('self._init_{0}()'.format(self.repo))
         else:
             exec('self._init_custom()')
-
-        f = open(self.lib, "r")
-        PACKAGES_TXT = f.read()
-        f.close()
+        self.lib = lib_path + "{0}_repo/PACKAGES.TXT".format(self.repo)
+        PACKAGES_TXT = read_file(self.lib)
         return PACKAGES_TXT, self.mirror
 
     def _init_custom(self):
-        self.lib = lib_path + "{0}_repo/PACKAGES.TXT".format(self.repo)
         self.mirror = "{0}".format(Repo().custom_repository()[self.repo])
 
     def _init_slack(self):
-        self.lib = lib_path + "slack_repo/PACKAGES.TXT"
         self.mirror = mirrors('', '')
 
     def _init_rlw(self):
-        self.lib = lib_path + "rlw_repo/PACKAGES.TXT"
         self.mirror = "{0}{1}/".format(Repo().rlw(), slack_ver())
 
     def _init_alien(self):
-        self.lib = lib_path + "alien_repo/PACKAGES.TXT"
         self.mirror = Repo().alien()
 
     def _init_slacky(self):
-        self.lib = lib_path + "slacky_repo/PACKAGES.TXT"
         arch = ""
         if os.uname()[4] == "x86_64":
             arch = "64"
@@ -79,7 +73,6 @@ class RepoInit(object):
                                                     slack_ver())
 
     def _init_studio(self):
-        self.lib = lib_path + "studio_repo/PACKAGES.TXT"
         arch = ""
         if os.uname()[4] == "x86_64":
             arch = "64"
@@ -87,22 +80,18 @@ class RepoInit(object):
                                                     arch, slack_ver())
 
     def _init_slackr(self):
-        self.lib = lib_path + "slackr_repo/PACKAGES.TXT"
         self.mirror = Repo().slackers()
 
     def _init_slonly(self):
-        self.lib = lib_path + "slonly_repo/PACKAGES.TXT"
         arch = "{0}-x86".format(slack_ver())
         if os.uname()[4] == "x86_64":
             arch = "{0}-x86_64".format(slack_ver())
         self.mirror = "{0}{1}/".format(Repo().slackonly(), arch)
 
     def _init_ktown(self):
-        self.lib = lib_path + "ktown_repo/PACKAGES.TXT"
         self.mirror = Repo().ktown()
 
     def _init_multi(self):
-        self.lib = lib_path + "multi_repo/PACKAGES.TXT"
         self.mirror = Repo().multi()
 
     def _init_slacke(self):
@@ -111,7 +100,6 @@ class RepoInit(object):
             arch = "64"
         elif os.uname()[4] == "arm":
             arch = "arm"
-        self.lib = lib_path + "slacke_repo/PACKAGES.TXT"
         self.mirror = "{0}slacke{1}/slackware{2}-{3}/".format(
             Repo().slacke(), slacke_sub_repo[1:-1], arch, slack_ver())
 
@@ -119,16 +107,13 @@ class RepoInit(object):
         arch = "i486"
         if os.uname()[4] == "x86_64":
             arch = "x86_64"
-        self.lib = lib_path + "salix_repo/PACKAGES.TXT"
         self.mirror = "{0}{1}/{2}/".format(Repo().salix(), arch, slack_ver())
 
     def _init_slackl(self):
         arch = "i486"
         if os.uname()[4] == "x86_64":
             arch = "x86_64"
-        self.lib = lib_path + "slackl_repo/PACKAGES.TXT"
         self.mirror = "{0}{1}/current/".format(Repo().slackel(), arch)
 
     def _init_rested(self):
-        self.lib = lib_path + "rested_repo/PACKAGES.TXT"
         self.mirror = Repo().restricted()
