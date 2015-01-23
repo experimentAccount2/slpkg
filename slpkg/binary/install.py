@@ -76,11 +76,15 @@ class BinaryInstall(object):
         num_lines = sum(1 for line in self.PACKAGES_TXT)
         self.step = (num_lines / 700)
 
-    def start(self):
+    def start(self, if_upgrade):
         '''
         Install packages from official Slackware distribution
         '''
         try:
+            # fix if packages is for upgrade
+            self.if_upgrade, self.pkg_ver = if_upgrade, []
+            if self.if_upgrade:
+                self.packages, self.pkg_ver = self.packages[0], self.packages[1]
             mas_sum = dep_sum = sums = [0, 0, 0]
             self.pkg_exist()
             sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
@@ -233,9 +237,14 @@ class BinaryInstall(object):
         Views packages
         '''
         pkg_sum = uni_sum = upg_sum = 0
+        # create empty seats if not upgrade
+        if not self.if_upgrade:
+            i = 0
+            for i in range(len(install)):
+                self.pkg_ver.append('')
         # fix repositories align
         repo = self.repo + (' ' * (6 - (len(self.repo))))
-        for pkg, comp in zip(install, comp_sum):
+        for pkg, ver, comp in zip(install, self.pkg_ver, comp_sum):
             pkg_split = split_package(pkg[:-4])
             if find_package(pkg_split[0] + "-" + pkg_split[1], pkg_path):
                 pkg_sum += 1
@@ -247,8 +256,8 @@ class BinaryInstall(object):
                 COLOR = color['RED']
                 uni_sum += 1
             print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>11}{12}".format(
-                COLOR, pkg_split[0], color['ENDC'],
-                " " * (24-len(pkg_split[0])), pkg_split[1],
+                COLOR, pkg_split[0] + ver, color['ENDC'],
+                " " * (24-len(pkg_split[0] + ver)), pkg_split[1],
                 " " * (18-len(pkg_split[1])), pkg_split[2],
                 " " * (8-len(pkg_split[2])), pkg_split[3],
                 " " * (7-len(pkg_split[3])), repo,

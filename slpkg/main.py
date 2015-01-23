@@ -69,7 +69,7 @@ class Case(object):
         SBoInstall(self.package).start()
 
     def binary_install(self, repo):
-        BinaryInstall(self.package, repo, self.release).start()
+        BinaryInstall(self.package, repo, self.release).start(False)
 
     def sbo_upgrade(self):
         SBoInstall(sbo_upgrade()).start()
@@ -78,7 +78,7 @@ class Case(object):
         Patches(self.release).start()
 
     def binary_upgrade(self, repo):
-        BinaryInstall(pkg_upgrade(repo), repo, self.release).start()
+        BinaryInstall(pkg_upgrade(repo), repo, self.release).start(True)
 
 
 def main():

@@ -46,6 +46,7 @@ def pkg_upgrade(repo):
     sys.stdout.write("{0}Checking ...{1}".format(color['GREY'], color['ENDC']))
     PACKAGES_TXT = RepoInit(repo).fetch()[0]
     pkgs_for_upgrade = []
+    ver_for_upgrade = []
     # name = data[0]
     # location = data[1]
     # size = data[2]
@@ -62,8 +63,9 @@ def pkg_upgrade(repo):
             if (repo_pkg[0] == inst_pkg[0] and repo_pkg[1] > inst_pkg[1] and
                     inst_pkg[0] not in BlackList().packages()):
                 pkgs_for_upgrade.append(repo_pkg[0])
+                ver_for_upgrade.append('-' + inst_pkg[1])
     sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))
-    return pkgs_for_upgrade
+    return pkgs_for_upgrade, ver_for_upgrade
 
 
 def installed():
