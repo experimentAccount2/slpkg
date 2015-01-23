@@ -55,7 +55,7 @@ from repo_init import RepoInit
 from dependency import Dependencies
 
 
-class OthersInstall(object):
+class BinaryInstall(object):
 
     def __init__(self, packages, repo, version):
         self.packages = packages

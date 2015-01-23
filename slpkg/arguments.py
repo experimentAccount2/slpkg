@@ -57,11 +57,11 @@ def options():
         "from queue",
         "  -g, --config, --config=[editor]           configuration file "
         "management",
-        "  -l, all, official, non-official, --index  list of installed "
+        "  -l, [repository], --index                 list of repositories "
         "packages",
         "  -c, [repository] --upgrade                check for updated "
         "packages",
-        "  -s, [repository] [package]                download, build & install",
+        "  -s, [repository] [package...]             download, build & install",
         "  -t, [repository] [package]                tracking dependencies",
         "  -p, [repository] [package], --color=[]    print package description",
         "  -n, [package]                             view SBo packages "
@@ -101,9 +101,9 @@ def usage(repo):
         "             [-q --list, [...] --add, --remove]",
         "             [-q --build, --install, --build-install]",
         "             [-g --config, --config=[editor]]",
-        "             [-l all, official, non-official, --index]",
+        "             [-l [repository], --index]",
         "             [-c [repository] --upgrade]",
-        "             [-s [repository] [package]",
+        "             [-s [repository] [package...]",
         "             [-t [repository] [package]",
         "             [-p [repository] [package], --color=[]]",
         "             [-n] [-f [...]] [-i [...]] [-u [...]]",

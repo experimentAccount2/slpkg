@@ -111,12 +111,9 @@ class Initialization(object):
         ext_checksums = mirrors(md5_file, "extra/")
         pasture = mirrors(lib_file, "pasture/")
         pas_checksums = mirrors(md5_file, "pasture/")
-        patches_txt = mirrors(lib_file, "patches/")
-        patches_md5 = mirrors(md5_file, "patches/")
-        packages_txt = ("{0} {1} {2} {3}".format(packages, extra, pasture,
-                                                 patches_txt))
-        checksums_md5 = ("{0} {1} {2} {3}".format(pkg_checksums, ext_checksums,
-                                                  pas_checksums, patches_md5))
+        packages_txt = ("{0} {1} {2}".format(packages, extra, pasture))
+        checksums_md5 = ("{0} {1} {2}".format(pkg_checksums, ext_checksums,
+                                              pas_checksums))
         changelog_txt = mirrors(log_file, "")
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)

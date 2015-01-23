@@ -44,8 +44,9 @@ from slpkg.__metadata__ import (
 from slpkg.pkg.find import find_package
 from slpkg.pkg.manager import PackageManager
 
+from slpkg.binary.greps import repo_data
+
 from mirrors import mirrors
-from greps import slack_data
 from slack_version import slack_ver
 
 
@@ -122,7 +123,7 @@ class Patches(object):
         '''
         (pkg_for_upgrade, dwn, upgrade, comp_sum,
          uncomp_sum) = ([] for i in range(5))
-        data = slack_data(self.PACKAGES_TXT, self.step)
+        data = repo_data(self.PACKAGES_TXT, self.step, 'slack', slack_ver)
         black = BlackList().packages()
         for name, loc, comp, uncomp in zip(data[0], data[1], data[2], data[3]):
             inst_pkg = find_package(split_package(name)[0] + "-", pkg_path)

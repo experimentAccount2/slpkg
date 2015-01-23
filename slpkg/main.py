@@ -54,10 +54,9 @@ from sbo.check import sbo_upgrade
 from sbo.views import SBoNetwork
 from sbo.slackbuild import SBoInstall
 
-from slack.install import Slack
 from slack.patches import Patches
-from others.check import pkg_upgrade
-from others.install import OthersInstall
+from binary.check import pkg_upgrade
+from binary.install import BinaryInstall
 
 
 class Case(object):
@@ -69,11 +68,8 @@ class Case(object):
     def sbo_install(self):
         SBoInstall(self.package).start()
 
-    def slack_install(self):
-        Slack(self.package).start()
-
-    def others_install(self, repo):
-        OthersInstall(self.package, repo, self.release).start()
+    def binary_install(self, repo):
+        BinaryInstall(self.package, repo, self.release).start()
 
     def sbo_upgrade(self):
         SBoInstall(sbo_upgrade()).start()
@@ -81,8 +77,8 @@ class Case(object):
     def slack_upgrade(self):
         Patches(self.release).start()
 
-    def others_upgrade(self, repo):
-        OthersInstall(pkg_upgrade(repo), repo, self.release).start()
+    def binary_upgrade(self, repo):
+        BinaryInstall(pkg_upgrade(repo), repo, self.release).start()
 
 
 def main():
@@ -148,16 +144,11 @@ def main():
 
     if len(args) == 3 and args[0] == '-a':
         BuildPackage(args[1], args[2:], path).build()
-    elif len(args) == 2 and args[0] == '-l':
-        if args[1] in ['all', 'official', 'non-official']:
-            PackageManager(None).list(args[1], False)
-        else:
-            usage('')
-    elif len(args) == 3 and args[0] == '-l' and args[2] == '--index':
-        if args[1] in ['all', 'official', 'non-official']:
-            PackageManager(None).list(args[1], True)
-        else:
-            usage('')
+    elif (len(args) == 3 and args[0] == '-l' and args[2] == '--index' and
+            args[1] in repositories):
+        PackageManager(None).list(args[1], True)
+    elif len(args) == 2 and args[0] == '-l' and args[1] in repositories:
+        PackageManager(None).list(args[1], False)
     elif len(args) == 3 and args[0] == '-c' and args[2] == '--upgrade':
         if args[1] in repositories and args[1] not in ['slack', 'sbo']:
             Case('').others_upgrade(args[1])
@@ -170,14 +161,10 @@ def main():
         else:
             usage(args[1])
     elif len(args) >= 3 and args[0] == '-s':
-        if args[1] in repositories and args[1] not in ['slack', 'sbo']:
-            Case(args[2:]).others_install(args[1])
-        elif args[1] in ['slack', 'sbo']:
-            install = {
-                'sbo': Case(args[2:]).sbo_install,
-                'slack': Case(args[2]).slack_install
-            }
-            install[args[1]]()
+        if args[1] in repositories and args[1] not in ['sbo']:
+            Case(args[2:]).binary_install(args[1])
+        elif args[1] == 'sbo':
+            Case(args[2:]).sbo_install()
         else:
             usage(args[1])
     elif (len(args) == 3 and args[0] == '-t' and args[1] in repositories):

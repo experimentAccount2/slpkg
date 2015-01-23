@@ -30,6 +30,7 @@ from slpkg.__metadata__ import (
     default_repositories
 )
 
+from slpkg.slack.mirrors import mirrors
 from slpkg.slack.slack_version import slack_ver
 
 
@@ -56,6 +57,10 @@ class RepoInit(object):
     def _init_custom(self):
         self.lib = lib_path + "{0}_repo/PACKAGES.TXT".format(self.repo)
         self.mirror = "{0}".format(Repo().custom_repository()[self.repo])
+
+    def _init_slack(self):
+        self.lib = lib_path + "slack_repo/PACKAGES.TXT"
+        self.mirror = mirrors('', '')
 
     def _init_rlw(self):
         self.lib = lib_path + "rlw_repo/PACKAGES.TXT"

@@ -41,9 +41,9 @@ class Dependencies(object):
             # toolbar_width = status(index, toolbar_width, step)
             if line.startswith("PACKAGE NAME:"):
                 if repo == "slackr":
-                    self.packages.append(line[15:].strip())
+                    self.packages.append(line[14:].strip())
                 else:
-                    self.packages.append(split_package(line[15:].strip())[0])
+                    self.packages.append(split_package(line[14:].strip())[0])
 
     def others(self, name):
         '''
@@ -59,7 +59,7 @@ class Dependencies(object):
                 for req in requires:
                     index += 1
                     toolbar_width = status(index, toolbar_width, 7)
-                    if req and req in self.packages and req not in blacklist:
+                    if (req and req in self.packages and req not in blacklist):
                         dependencies.append(req)
                 if dependencies:
                     self.dep_results.append(dependencies)

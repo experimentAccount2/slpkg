@@ -279,29 +279,35 @@ class PackageManager(object):
                     bol = eol = "\n"
                 pkg_not_found(bol, pkg, message, eol)
 
-    def list(self, pattern, INDEX):
+    def list(self, repo, INDEX):
         '''
         List with the installed packages
         '''
         tty_size = os.popen('stty size', 'r').read().split()
         row = int(tty_size[0]) - 2
-        pkg_list = []
         try:
-            index, page, official, r = 0, row, [], ''
-            if os.path.isfile(lib_path + 'slack_repo/PACKAGES.TXT'):
-                f = open(lib_path + 'slack_repo/PACKAGES.TXT', 'r')
-                r = f.read()
-                f.close()
+            index, page, pkg_list = 0, row, []
+            if repo == 'sbo':
+                if os.path.isfile(lib_path + '{0}_repo/SLACKBUILDS.TXT'.format(
+                        repo)):
+                    f = open(lib_path + '{0}_repo/SLACKBUILDS.TXT'.format(repo),
+                             'r')
+                    r = f.read()
+                    f.close()
+            else:
+                if os.path.isfile(lib_path + '{0}_repo/PACKAGES.TXT'.format(
+                        repo)):
+                    f = open(lib_path + '{0}_repo/PACKAGES.TXT'.format(repo),
+                             'r')
+                    r = f.read()
+                    f.close()
             for line in r.splitlines():
-                if line.startswith("PACKAGE NAME: "):
-                    official.append(line[15:-4].strip())
-            for pkg in find_package("", pkg_path):
-                if pattern == 'all':
-                    pkg_list.append(pkg)
-                elif pattern == 'official' and pkg in official:
-                    pkg_list.append(pkg)
-                elif pattern == 'non-official' and pkg not in official:
-                    pkg_list.append(pkg)
+                if repo == 'sbo':
+                    if line.startswith("SLACKBUILD NAME: "):
+                        pkg_list.append(line[17:].strip())
+                else:
+                    if line.startswith("PACKAGE NAME: "):
+                        pkg_list.append(line[15:].strip())
             for pkg in sorted(pkg_list):
                 if INDEX:
                     index += 1
