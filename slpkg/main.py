@@ -151,7 +151,7 @@ def main():
         PackageManager(None).list(args[1], False)
     elif len(args) == 3 and args[0] == '-c' and args[2] == '--upgrade':
         if args[1] in repositories and args[1] not in ['slack', 'sbo']:
-            Case('').others_upgrade(args[1])
+            Case('').binary_upgrade(args[1])
         elif args[1] in ['slack', 'sbo']:
             upgrade = {
                 'sbo': Case('').sbo_upgrade,

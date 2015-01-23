@@ -44,7 +44,7 @@ def pkg_upgrade(repo):
     Checking packages fro upgrade
     '''
     sys.stdout.write("{0}Checking ...{1}".format(color['GREY'], color['ENDC']))
-    PACKAGES_TXT, mirror = RepoInit(repo).fetch()
+    PACKAGES_TXT = RepoInit(repo).fetch()[0]
     pkgs_for_upgrade = []
     # name = data[0]
     # location = data[1]
@@ -55,8 +55,7 @@ def pkg_upgrade(repo):
     for pkg in installed():
         index += 1
         toolbar_width = status(index, toolbar_width, 30)
-        for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
-                                           data[3]):
+        for name in data[0]:
             inst_pkg = split_package(pkg)
             if name:    # this tips because some pkg_name is empty
                 repo_pkg = split_package(name[:-4])
