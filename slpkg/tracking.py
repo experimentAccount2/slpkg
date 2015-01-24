@@ -84,7 +84,7 @@ def track_dep(name, repo):
                 print(" |")
                 print(" {0}{1}: {2}{3}{4}".format("+--", index,
                                                   _m.color['GREEN'],
-                                                  _m.pkg, _m.color['ENDC']))
+                                                  pkg, _m.color['ENDC']))
             else:
                 print(" |")
                 print(" {0}{1}: {2}{3}{4}".format("+--", index, _m.color['RED'],
