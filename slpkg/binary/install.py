@@ -236,7 +236,6 @@ class BinaryInstall(object):
         Create empty seats if not upgrade
         '''
         if not self.if_upgrade:
-            i = 0
             for i in range(len(packages)):
                 self.pkg_ver.append('')
 
