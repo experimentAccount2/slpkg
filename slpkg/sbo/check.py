@@ -43,19 +43,21 @@ def sbo_upgrade():
     try:
         sys.stdout.write("{0}Checking ...{1}".format(color['GREY'],
                                                      color['ENDC']))
-        upgrade_names = []
+        upgrade_names, pkg_ver = [], []
         index, toolbar_width = 0, 3
         for pkg in sbo_list():
             index += 1
             toolbar_width = status(index, toolbar_width, 4)
             name = split_package(pkg)[0]
+            ver = split_package(pkg)[1]
             if sbo_search_pkg(name):
                 sbo_package = ("{0}-{1}".format(name, SBoGrep(name).version()))
-                package = ("{0}-{1}".format(name, split_package(pkg)[1]))
+                package = ("{0}-{1}".format(name, ver))
                 if sbo_package > package:
                     upgrade_names.append(name)
+                    pkg_ver.append(ver)
         sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))
-        return upgrade_names
+        return upgrade_names, pkg_ver
     except KeyboardInterrupt:
         print("")   # new line at exit
         sys.exit(0)

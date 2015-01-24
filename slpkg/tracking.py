@@ -21,7 +21,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import sys
 
 from utils import (
     read_file,
@@ -29,7 +28,9 @@ from utils import (
     dimensional_list
 )
 from messages import (
-    template
+    template,
+    msg_done,
+    msg_resolving
 )
 from __metadata__ import (
     lib_path,
@@ -54,9 +55,7 @@ def track_dep(name, repo):
     if allready installed and color red
     if not installed.
     '''
-    sys.stdout.write("{0}Reading package lists ...{1}".format(color['GREY'],
-                                                              color['ENDC']))
-    sys.stdout.flush()
+    msg_resolving()
     if repo == "sbo":
         dependencies_list = Requires().sbo(name)
         find_pkg = sbo_search_pkg(name)
@@ -65,7 +64,7 @@ def track_dep(name, repo):
             repo))
         dependencies_list = Dependencies(PACKAGES_TXT, repo).binary(name)
         find_pkg = search_pkg(name, repo)
-    sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))
+    msg_done()
     if find_pkg:
         requires, dependencies = [], []
         requires = dimensional_list(dependencies_list)

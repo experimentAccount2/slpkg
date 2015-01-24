@@ -76,3 +76,19 @@ def template(max_len):
     Print template
     '''
     print("+" + "=" * max_len)
+
+
+def msg_reading():
+    sys.stdout.write("{0}Reading package lists ...{1}".format(color['GREY'],
+                                                              color['ENDC']))
+    sys.stdout.flush()
+
+
+def msg_resolving():
+    sys.stdout.write("{0}Resolving dependencies ...{1}".format(color['GREY'],
+                                                               color['ENDC']))
+    sys.stdout.flush()
+
+
+def msg_done():
+    sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))

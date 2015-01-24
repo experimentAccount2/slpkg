@@ -34,8 +34,11 @@ from slpkg.utils import (
 )
 from slpkg.messages import (
     template,
+    msg_done,
     pkg_found,
-    build_FAILED
+    msg_reading,
+    build_FAILED,
+    msg_resolving
 )
 from slpkg.__metadata__ import (
     tmp,
@@ -71,12 +74,15 @@ class SBoInstall(object):
         self.deps_dict = {}
         self.toolbar_width, self.index = 2, 0
         self.answer = ''
-        sys.stdout.write("{0}Reading package lists ...{1}".format(
-            color['GREY'], color['ENDC']))
-        sys.stdout.flush()
+        msg_reading()
 
-    def start(self):
+    def start(self, if_upgrade):
         try:
+            self.if_upgrade, self.pkg_ver = if_upgrade, []
+            self.view_version()
+            if self.if_upgrade:
+                self.slackbuilds, self.pkg_ver = (self.slackbuilds[0],
+                                                  self.slackbuilds[1])
             tagc, match = '', False
             count_ins = count_upg = count_uni = 0
             for sbo in self.slackbuilds:
@@ -93,30 +99,38 @@ class SBoInstall(object):
             if not self.package_found:
                 match = True
                 self.package_found = self.matching(self.package_not_found)
-            self.dependencies, dep_src = self.sbo_version_source(
-                self.one_for_all(self.deps))
+
             self.master_packages, mas_src = self.sbo_version_source(
                 self.package_found)
-            sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
-                                                   color['ENDC']))
+            msg_done()
+            msg_resolving()
+            self.dependencies, dep_src = self.sbo_version_source(
+                self.one_for_all(self.deps))
+            msg_done()
             self.master_packages = self.clear_masters()
             if self.package_found:
                 print("\nThe following packages will be automatically "
                       "installed or upgraded \nwith new version:\n")
                 self.top_view()
-                for sbo, ar in zip(self.master_packages, mas_src):
+                # view master packages
+                for sbo, ver, ar in zip(self.master_packages, self.pkg_ver,
+                                        mas_src):
                     tagc, count_ins, count_upg, count_uni = self.tag(
                         sbo, count_ins, count_upg, count_uni)
-                    self.view_packages(tagc, '-'.join(sbo.split('-')[:-1]),
-                                       sbo.split('-')[-1], self.select_arch(ar))
+                    name = '-'.join(sbo.split('-')[:-1]) + '-' + ver
+                    if not if_upgrade:
+                        name = '-'.join(sbo.split('-')[:-1])
+                    self.view_packages(tagc, name, sbo.split('-')[-1],
+                                       self.select_arch(ar))
                 if not match and self.dependencies:
                     print("Installing for dependencies:")
+                # view dependencies
                 for dep, ar in zip(self.dependencies, dep_src):
                     tagc, count_ins, count_upg, count_uni = self.tag(
                         dep, count_ins, count_upg, count_uni)
-                    self.view_packages(tagc, '-'.join(dep.split('-')[:-1]),
-                                       dep.split('-')[-1], self.select_arch(ar))
-
+                    name = '-'.join(dep.split('-')[:-1])
+                    self.view_packages(tagc, name, dep.split('-')[-1],
+                                       self.select_arch(ar))
                 count_total = (count_ins + count_upg + count_uni)
                 print("\nInstalling summary")
                 print("=" * 79)
@@ -211,6 +225,15 @@ class SBoInstall(object):
             "Size"))
         template(78)
 
+    def view_version(self):
+        '''
+        Create empty seats if not upgrade
+        '''
+        if not self.if_upgrade:
+            i = 0
+            for i in range(len(self.slackbuilds)):
+                self.pkg_ver.append('')
+
     def view_packages(self, *args):
         '''
         View slackbuild packages with version and arch
@@ -303,6 +326,8 @@ class SBoInstall(object):
         '''
         slackbuilds = self.dependencies + self.master_packages
         installs, upgraded, versions = [], [], []
+        if not os.path.exists(build_path):
+            os.makedirs(build_path)
         os.chdir(build_path)
         for sbo in slackbuilds:
             pkg = '-'.join(sbo.split('-')[:-1])

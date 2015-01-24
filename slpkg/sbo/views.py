@@ -203,6 +203,8 @@ class SBoNetwork(object):
                                                       color['ENDC']))
             sys.exit(0)
         sources = []
+        if not os.path.exists(build_path):
+            os.makedirs(build_path)
         os.chdir(build_path)
         Download(build_path, self.dwn_srcs).start()
         script = self.sbo_dwn.split("/")[-1]

@@ -28,12 +28,16 @@ import subprocess
 from slpkg.sizes import units
 from slpkg.url_read import URL
 from slpkg.remove import delete
-from slpkg.messages import template
 from slpkg.checksum import check_md5
 from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
 from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
+from slpkg.messages import (
+    template,
+    msg_done,
+    msg_reading
+)
 from slpkg.__metadata__ import (
     pkg_path,
     slpkg_tmp_patches,
@@ -55,13 +59,11 @@ class Patches(object):
     def __init__(self, version):
         self.version = version
         self.patch_path = slpkg_tmp_patches
-        sys.stdout.write("{0}Reading package lists ...{1}".format(
-            color['GREY'], color['ENDC']))
-        sys.stdout.flush()
+        msg_reading()
         if self.version == "stable":
             self.PACKAGES_TXT = URL(mirrors("PACKAGES.TXT",
                                             "patches/")).reading()
-            self.step = 10
+            self.step = 20
         else:
             self.PACKAGES_TXT = URL(mirrors("PACKAGES.TXT", "")).reading()
             self.step = 700
@@ -73,8 +75,7 @@ class Patches(object):
         try:
             (pkg_for_upgrade, dwn_links, upgrade_all, comp_sum,
              uncomp_sum) = self.store()
-            sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
-                                                   color['ENDC']))
+            msg_done()
             if upgrade_all:
                 print("\nThese packages need upgrading:\n")
                 template(78)

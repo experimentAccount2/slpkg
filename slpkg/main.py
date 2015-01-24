@@ -66,13 +66,13 @@ class Case(object):
         self.release = slack_rel
 
     def sbo_install(self):
-        SBoInstall(self.package).start()
+        SBoInstall(self.package).start(False)
 
     def binary_install(self, repo):
         BinaryInstall(self.package, repo, self.release).start(False)
 
     def sbo_upgrade(self):
-        SBoInstall(sbo_upgrade()).start()
+        SBoInstall(sbo_upgrade()).start(True)
 
     def slack_upgrade(self):
         Patches(self.release).start()

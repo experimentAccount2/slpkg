@@ -27,12 +27,17 @@ import sys
 from slpkg.sizes import units
 from slpkg.remove import delete
 from slpkg.log_deps import write_deps
-from slpkg.messages import template
 from slpkg.checksum import check_md5
 from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
 from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
+from slpkg.messages import (
+    template,
+    msg_done,
+    msg_reading,
+    msg_resolving
+)
 from slpkg.utils import (
     remove_dbs,
     dimensional_list
@@ -69,9 +74,7 @@ class BinaryInstall(object):
         self.dependencies = []
         self.deps_dict = {}
         self.answer = ''
-        sys.stdout.write("{0}Reading package lists ...{1}".format(
-            color['GREY'], color['ENDC']))
-        sys.stdout.flush()
+        msg_reading()
         self.PACKAGES_TXT, self.mirror = RepoInit(self.repo).fetch()
         num_lines = sum(1 for line in self.PACKAGES_TXT)
         self.step = (num_lines / 700)
@@ -87,16 +90,14 @@ class BinaryInstall(object):
                 self.packages, self.pkg_ver = self.packages[0], self.packages[1]
             mas_sum = dep_sum = sums = [0, 0, 0]
             self.pkg_exist()
-            sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
-                                                   color['ENDC']))
+            msg_done()
             self.dependencies = self.resolving_deps()
             (self.dep_dwn, self.dep_install, self.dep_comp_sum,
              self.dep_uncomp_sum) = self.store(self.dependencies)
             self.packages = self.clear_masters()
             (self.dwn, self.install, self.comp_sum,
              self.uncomp_sum) = self.store(self.packages)
-            sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
-                                                   color['ENDC']))
+            msg_done()
             print("")   # new line at start
             if self.install:
                 self.top_view()
@@ -221,9 +222,7 @@ class BinaryInstall(object):
         Return package dependencies
         '''
         requires = []
-        sys.stdout.write("{0}Resolving dependencies ...{1}".format(
-            color['GREY'], color['ENDC']))
-        sys.stdout.flush()
+        msg_resolving()
         for dep in self.packages:
             dependencies = []
             dependencies = dimensional_list(Dependencies(self.PACKAGES_TXT,
