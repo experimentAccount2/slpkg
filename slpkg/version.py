@@ -23,18 +23,14 @@
 
 import sys
 
-from __metadata__ import (
-    __version__,
-    __license__,
-    __email__
-)
+from __metadata__ import MetaData as _m
 
 
 def prog_version():
     '''
     Print version, license and email
     '''
-    print("Version : {0}".format(__version__))
-    print("Licence : {0}".format(__license__))
-    print("Email   : {0}".format(__email__))
+    print("Version : {0}".format(_m.__version__))
+    print("Licence : {0}".format(_m.__license__))
+    print("Email   : {0}".format(_m.__email__))
     sys.exit(0)

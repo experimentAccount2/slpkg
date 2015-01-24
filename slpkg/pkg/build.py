@@ -31,11 +31,7 @@ import subprocess
 
 from slpkg.checksum import check_md5
 from slpkg.messages import pkg_not_found
-from slpkg.__metadata__ import (
-    log_path,
-    sbo_build_log,
-    sbo_check_md5
-)
+from slpkg.__metadata__ import MetaData as _m
 
 from slpkg.sbo.greps import SBoGrep
 
@@ -48,12 +44,12 @@ class BuildPackage(object):
         self.path = path
         self.prgnam = self.script[:-7]
         self.log_file = "build_{0}_log".format(self.prgnam)
-        self.sbo_logs = log_path + "sbo/"
+        self.sbo_logs = _m.log_path + "sbo/"
         self.build_logs = self.sbo_logs + "build_logs/"
         self.start_log_time = time.strftime("%H:%M:%S")
         self.start_time = time.time()
-        if not os.path.exists(log_path):
-            os.mkdir(log_path)
+        if not os.path.exists(_m.log_path):
+            os.mkdir(_m.log_path)
         if not os.path.exists(self.sbo_logs):
             os.mkdir(self.sbo_logs)
         if not os.path.exists(self.build_logs):
@@ -73,14 +69,14 @@ class BuildPackage(object):
             for src, sbo_md5 in zip(self.sources, sbo_md5_list):
                 # fix build sources with spaces
                 src = src.replace("%20", " ")
-                if sbo_check_md5 == "on":
+                if _m.sbo_check_md5 == "on":
                     check_md5(sbo_md5, src)
                 shutil.copy2(src, self.prgnam)
             os.chdir(self.path + self.prgnam)
             # change permissions
             subprocess.call("chmod +x {0}.SlackBuild".format(self.prgnam),
                             shell=True)
-            if sbo_build_log == "on":
+            if _m.sbo_build_log == "on":
                 if os.path.isfile(self.build_logs + self.log_file):
                     os.remove(self.build_logs + self.log_file)
                 # start log write

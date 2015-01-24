@@ -28,19 +28,7 @@ from url_read import URL
 from toolbar import status
 from repositories import Repo
 from file_size import FileSize
-from __metadata__ import (
-    color,
-    log_path,
-    lib_path,
-    tmp_path,
-    conf_path,
-    build_path,
-    repositories,
-    slacke_sub_repo,
-    slpkg_tmp_patches,
-    slpkg_tmp_packages,
-    default_repositories
-)
+from __metadata__ import MetaData as _m
 
 from slack.mirrors import mirrors
 from slack.slack_version import slack_ver
@@ -49,28 +37,35 @@ from slack.slack_version import slack_ver
 class Initialization(object):
 
     def __init__(self):
-        if not os.path.exists(conf_path):
-            os.mkdir(conf_path)
-        if not os.path.exists(log_path):
-            os.mkdir(log_path)
-        if not os.path.exists(lib_path):
-            os.mkdir(lib_path)
-        if not os.path.exists(tmp_path):
-            os.mkdir(tmp_path)
-        if not os.path.exists(build_path):
-            os.makedirs(build_path)
-        if not os.path.exists(slpkg_tmp_packages):
-            os.makedirs(slpkg_tmp_packages)
-        if not os.path.exists(slpkg_tmp_patches):
-            os.makedirs(slpkg_tmp_patches)
+        self.conf_path = _m.conf_path
+        self.log_path = _m.log_path
+        self.lib_path = _m.lib_path
+        self.tmp_path = _m.tmp_path
+        self.build_path = _m.build_path
+        self.slpkg_tmp_packages = _m.slpkg_tmp_packages
+        self.slpkg_tmp_patches = _m.slpkg_tmp_patches
+        if not os.path.exists(self.conf_path):
+            os.mkdir(self.conf_path)
+        if not os.path.exists(self.log_path):
+            os.mkdir(self.log_path)
+        if not os.path.exists(self.lib_path):
+            os.mkdir(self.lib_path)
+        if not os.path.exists(self.tmp_path):
+            os.mkdir(self.tmp_path)
+        if not os.path.exists(self.build_path):
+            os.makedirs(self.build_path)
+        if not os.path.exists(self.slpkg_tmp_packages):
+            os.makedirs(self.slpkg_tmp_packages)
+        if not os.path.exists(self.slpkg_tmp_patches):
+            os.makedirs(self.slpkg_tmp_patches)
 
     def custom(self, name):
         '''
         Creating user select repository local library
         '''
         repo = Repo().custom_repository()[name]
-        log = log_path + name + "/"
-        lib = lib_path + "{0}_repo/".format(name)
+        log = self.log_path + name + "/"
+        lib = self.lib_path + "{0}_repo/".format(name)
         lib_file = "PACKAGES.TXT"
         lst_file = ""
         md5_file = "CHECKSUMS.md5"
@@ -94,8 +89,8 @@ class Initialization(object):
         '''
         Creating slack local libraries
         '''
-        log = log_path + "slack/"
-        lib = lib_path + "slack_repo/"
+        log = self.log_path + "slack/"
+        lib = self.lib_path + "slack_repo/"
         lib_file = "PACKAGES.TXT"
         lst_file = ""
         md5_file = "CHECKSUMS.md5"
@@ -126,8 +121,8 @@ class Initialization(object):
         Creating sbo local library
         '''
         repo = Repo().sbo()
-        log = log_path + "sbo/"
-        lib = lib_path + "sbo_repo/"
+        log = self.log_path + "sbo/"
+        lib = self.lib_path + "sbo_repo/"
         lib_file = "SLACKBUILDS.TXT"
         lst_file = ""
         md5_file = ""
@@ -150,8 +145,8 @@ class Initialization(object):
         Creating rlw local library
         '''
         repo = Repo().rlw()
-        log = log_path + "rlw/"
-        lib = lib_path + "rlw_repo/"
+        log = self.log_path + "rlw/"
+        lib = self.lib_path + "rlw_repo/"
         lib_file = "PACKAGES.TXT"
         lst_file = ""
         md5_file = "CHECKSUMS.md5"
@@ -175,8 +170,8 @@ class Initialization(object):
         Creating alien local library
         '''
         repo = Repo().alien()
-        log = log_path + "alien/"
-        lib = lib_path + "alien_repo/"
+        log = self.log_path + "alien/"
+        lib = self.lib_path + "alien_repo/"
         lib_file = "PACKAGES.TXT"
         lst_file = ""
         md5_file = "CHECKSUMS.md5"
@@ -202,8 +197,8 @@ class Initialization(object):
         ar = ""
         arch = os.uname()[4]
         repo = Repo().slacky()
-        log = log_path + "slacky/"
-        lib = lib_path + "slacky_repo/"
+        log = self.log_path + "slacky/"
+        lib = self.lib_path + "slacky_repo/"
         lib_file = "PACKAGES.TXT"
         lst_file = ""
         md5_file = "CHECKSUMS.md5"
@@ -235,8 +230,8 @@ class Initialization(object):
         ar = ""
         arch = os.uname()[4]
         repo = Repo().studioware()
-        log = log_path + "studio/"
-        lib = lib_path + "studio_repo/"
+        log = self.log_path + "studio/"
+        lib = self.lib_path + "studio_repo/"
         lib_file = "PACKAGES.TXT"
         lst_file = ""
         md5_file = "CHECKSUMS.md5"
@@ -265,8 +260,8 @@ class Initialization(object):
         Creating slackers local library
         '''
         repo = Repo().slackers()
-        log = log_path + "slackr/"
-        lib = lib_path + "slackr_repo/"
+        log = self.log_path + "slackr/"
+        lib = self.lib_path + "slackr_repo/"
         lib_file = "PACKAGES.TXT"
         lst_file = "FILELIST.TXT"
         md5_file = "CHECKSUMS.md5"
@@ -293,8 +288,8 @@ class Initialization(object):
         ar = "{0}-x86".format(slack_ver())
         arch = os.uname()[4]
         repo = Repo().slackonly()
-        log = log_path + "slonly/"
-        lib = lib_path + "slonly_repo/"
+        log = self.log_path + "slonly/"
+        lib = self.lib_path + "slonly_repo/"
         lib_file = "PACKAGES.TXT"
         lst_file = "FILELIST.TXT"
         md5_file = "CHECKSUMS.md5"
@@ -322,8 +317,8 @@ class Initialization(object):
         Creating alien ktown local library
         '''
         repo = Repo().ktown()
-        log = log_path + "ktown/"
-        lib = lib_path + "ktown_repo/"
+        log = self.log_path + "ktown/"
+        lib = self.lib_path + "ktown_repo/"
         lib_file = "PACKAGES.TXT"
         lst_file = ""
         md5_file = "CHECKSUMS.md5"
@@ -347,8 +342,8 @@ class Initialization(object):
         Creating alien multilib local library
         '''
         repo = Repo().multi()
-        log = log_path + "multi/"
-        lib = lib_path + "multi_repo/"
+        log = self.log_path + "multi/"
+        lib = self.lib_path + "multi_repo/"
         lib_file = "PACKAGES.TXT"
         lst_file = ""
         md5_file = "CHECKSUMS.md5"
@@ -374,8 +369,8 @@ class Initialization(object):
         ar = ""
         arch = os.uname()[4]
         repo = Repo().slacke()
-        log = log_path + "slacke/"
-        lib = lib_path + "slacke_repo/"
+        log = self.log_path + "slacke/"
+        lib = self.lib_path + "slacke_repo/"
         lib_file = "PACKAGES.TXT"
         lst_file = ""
         md5_file = "CHECKSUMS.md5"
@@ -389,12 +384,12 @@ class Initialization(object):
         elif arch == "arm":
             ar = "arm"
         packages_txt = "{0}slacke{1}/slackware{2}-{3}/{4}".format(
-            repo, slacke_sub_repo[1:-1], ar, slack_ver(), lib_file)
+            repo, _m.slacke_sub_repo[1:-1], ar, slack_ver(), lib_file)
         filelist_txt = ""
         checksums_md5 = "{0}slacke{1}/slackware{2}-{3}/{4}".format(
-            repo, slacke_sub_repo[1:-1], ar, slack_ver(), md5_file)
+            repo, _m.slacke_sub_repo[1:-1], ar, slack_ver(), md5_file)
         changelog_txt = "{0}slacke{1}/slackware{2}-{3}/{4}".format(
-            repo, slacke_sub_repo[1:-1], ar, slack_ver(), log_file)
+            repo, _m.slacke_sub_repo[1:-1], ar, slack_ver(), log_file)
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
@@ -408,8 +403,8 @@ class Initialization(object):
         ar = "i486"
         arch = os.uname()[4]
         repo = Repo().salix()
-        log = log_path + "salix/"
-        lib = lib_path + "salix_repo/"
+        log = self.log_path + "salix/"
+        lib = self.lib_path + "salix_repo/"
         lib_file = "PACKAGES.TXT"
         lst_file = ""
         md5_file = "CHECKSUMS.md5"
@@ -437,8 +432,8 @@ class Initialization(object):
         ar = "i486"
         arch = os.uname()[4]
         repo = Repo().slackel()
-        log = log_path + "slackl/"
-        lib = lib_path + "slackl_repo/"
+        log = self.log_path + "slackl/"
+        lib = self.lib_path + "slackl_repo/"
         lib_file = "PACKAGES.TXT"
         lst_file = ""
         md5_file = "CHECKSUMS.md5"
@@ -464,8 +459,8 @@ class Initialization(object):
         Creating alien restricted local library
         '''
         repo = Repo().restricted()
-        log = log_path + "rested/"
-        lib = lib_path + "rested_repo/"
+        log = self.log_path + "rested/"
+        lib = self.lib_path + "rested_repo/"
         lib_file = "PACKAGES.TXT"
         lst_file = ""
         md5_file = "CHECKSUMS.md5"
@@ -576,12 +571,13 @@ class Initialization(object):
         Remove all package lists with changelog and checksums files
         and create lists again
         '''
-        for repo in repositories:
-            changelogs = '{0}{1}{2}'.format(log_path, repo, '/ChangeLog.txt')
+        for repo in _m.repositories:
+            changelogs = '{0}{1}{2}'.format(self.log_path, repo,
+                                            '/ChangeLog.txt')
             if os.path.isfile(changelogs):
                 os.remove(changelogs)
-            for f in os.listdir(lib_path + '{0}_repo/'.format(repo)):
-                packages = '{0}{1}_repo/{2}'.format(lib_path, repo, f)
+            for f in os.listdir(self.lib_path + '{0}_repo/'.format(repo)):
+                packages = '{0}{1}_repo/{2}'.format(self.lib_path, repo, f)
                 if os.path.isfile(packages):
                     os.remove(packages)
         Update().repository()
@@ -597,16 +593,16 @@ class Update(object):
         Update all repositories lists
         '''
         print("\nCheck and update repositories:\n")
-        for repo in repositories:
+        for repo in _m.repositories:
             sys.stdout.write("{0}Update repository {1} ...{2}".format(
-                color['GREY'], repo, color['ENDC']))
+                _m.color['GREY'], repo, _m.color['ENDC']))
             sys.stdout.flush()
-            if repo in default_repositories:
+            if repo in _m.default_repositories:
                 exec('{0}.{1}()'.format(self._init, repo))
             else:
                 Initialization().custom(repo)
-            sys.stdout.write("{0}Done{1}\n".format(color['GREY'],
-                                                   color['ENDC']))
+            sys.stdout.write("{0}Done{1}\n".format(_m.color['GREY'],
+                                                   _m.color['ENDC']))
         print("")   # new line at end
         sys.exit(0)
 
@@ -617,11 +613,11 @@ def check_exists_repositories():
     '''
     update = False
     pkg_list = "PACKAGES.TXT"
-    for repo in repositories:
+    for repo in _m.repositories:
         pkg_list = "PACKAGES.TXT"
         if repo == "sbo":
             pkg_list = "SLACKBUILDS.TXT"
-        if not os.path.isfile("{0}{1}{2}".format(lib_path, repo,
+        if not os.path.isfile("{0}{1}{2}".format(_m.lib_path, repo,
                                                  "_repo/{0}".format(pkg_list))):
             update = True
     if update:

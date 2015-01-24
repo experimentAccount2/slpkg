@@ -23,43 +23,8 @@
 
 import os
 
-__all__ = "slpkg"
-__author__ = "dslackw"
-__version_info__ = (2, 2, 0)
-__version__ = "{0}.{1}.{2}".format(*__version_info__)
-__license__ = "GNU General Public License v3 (GPLv3)"
-__email__ = "d.zlatanidis@gmail.com"
 
-
-# Default configuration values
-slack_rel = "stable"
-
-# Configuration path
-conf_path = "/etc/{0}/".format(__all__)
-
-repositories = [
-    'slack',
-    'sbo',
-    'rlw',
-    'alien',
-    'slacky',
-    'studio',
-    'slackr',
-    'slonly',
-    'ktown{latest}',
-    'multi',
-    'slacke{18}',
-    'salix',
-    'slackl',
-    'rested'
-]
-
-default_repositories = repositories[8] = 'ktown'
-default_repositories = repositories[10] = 'slacke'
-default_repositories = repositories
-
-
-def remove_repositories(repositories):
+def remove_repositories(repositories, default_repositories):
     '''
     Remove no default repositories
     '''
@@ -70,7 +35,7 @@ def remove_repositories(repositories):
     return repos
 
 
-def update_repositories(repositories):
+def update_repositories(repositories, conf_path):
     '''
     Upadate with user custom repositories
     '''
@@ -109,105 +74,141 @@ def slacke_repo(repositories):
             repositories[i] = 'slacke'
             return sub
 
-tmp = "/tmp/"
-tmp_path = "{0}{1}/".format(tmp, __all__)
-build_path = "/tmp/slpkg/build/"
-slpkg_tmp_packages = tmp + "slpkg/packages/"
-slpkg_tmp_patches = tmp + "slpkg/patches/"
-del_all = "on"
-sbo_check_md5 = "on"
-del_build = "off"
-sbo_build_log = "on"
-default_answer = "n"
-remove_deps_answer = "n"
-skip_unst = "n"
-del_deps = "on"
-use_colors = "on"
-wget_option = '-c -N'
 
-if os.path.isfile("/etc/slpkg/slpkg.conf"):
-    f = open("/etc/slpkg/slpkg.conf", "r")
-    conf = f.read()
-    f.close()
-    for line in conf.splitlines():
-        line = line.lstrip()
-        if line.startswith("VERSION"):
-            slack_rel = line[8:].strip()
-            if not slack_rel:
-                slack_rel = "stable"
-        if line.startswith("REPOSITORIES"):
-            repositories = line[13:].strip().split(",")
-        if line.startswith("BUILD"):
-            build_path = line[6:].strip()
-        if line.startswith("PACKAGES"):
-            slpkg_tmp_packages = line[9:].strip()
-        if line.startswith("PATCHES"):
-            slpkg_tmp_patches = line[8:].strip()
-        if line.startswith("DEL_ALL"):
-            del_all = line[8:].strip()
-        if line.startswith("DEL_BUILD"):
-            del_build = line[10:].strip()
-        if line.startswith("SBO_CHECK_MD5"):
-            sbo_check_md5 = line[14:].strip()
-        if line.startswith("SBO_BUILD_LOG"):
-            sbo_build_log = line[14:].strip()
-        if line.startswith("DEFAULT_ANSWER"):
-            default_answer = line[15:].strip()
-        if line.startswith("REMOVE_DEPS_ANSWER"):
-            remove_deps_answer = line[19:].strip()
-        if line.startswith("SKIP_UNST"):
-            skip_unst = line[10:].strip()
-        if line.startswith("DEL_DEPS"):
-            del_deps = line[9:].strip()
-        if line.startswith("USE_COLORS"):
-            use_colors = line[11:].strip()
-        if line.startswith("WGET_OPTION"):
-            wget_option = line[12:].strip()
+class MetaData:
 
+    __all__ = "slpkg"
+    __author__ = "dslackw"
+    __version_info__ = (2, 2, 0)
+    __version__ = "{0}.{1}.{2}".format(*__version_info__)
+    __license__ = "GNU General Public License v3 (GPLv3)"
+    __email__ = "d.zlatanidis@gmail.com"
 
-ktown_kde_repo = ktown_repo(repositories)
-slacke_sub_repo = slacke_repo(repositories)
-# remove no default repositories
-repositories = remove_repositories(repositories)
-# add custom repositories
-update_repositories(repositories)
+    # Default configuration values
+    slack_rel = "stable"
 
-color = {
-    'RED': '\x1b[31m',
-    'GREEN': '\x1b[32m',
-    'YELLOW': '\x1b[33m',
-    'CYAN': '\x1b[36m',
-    'GREY': '\x1b[38;5;247m',
-    'ENDC': '\x1b[0m'
-}
+    # Configuration path
+    conf_path = "/etc/{0}/".format(__all__)
 
-if use_colors == "off":
+    repositories = [
+        'slack',
+        'sbo',
+        'rlw',
+        'alien',
+        'slacky',
+        'studio',
+        'slackr',
+        'slonly',
+        'ktown{latest}',
+        'multi',
+        'slacke{18}',
+        'salix',
+        'slackl',
+        'rested'
+    ]
+
+    default_repositories = repositories[8] = 'ktown'
+    default_repositories = repositories[10] = 'slacke'
+    default_repositories = repositories
+
+    tmp = "/tmp/"
+    tmp_path = "{0}{1}/".format(tmp, __all__)
+    build_path = "/tmp/slpkg/build/"
+    slpkg_tmp_packages = tmp + "slpkg/packages/"
+    slpkg_tmp_patches = tmp + "slpkg/patches/"
+    del_all = "on"
+    sbo_check_md5 = "on"
+    del_build = "off"
+    sbo_build_log = "on"
+    default_answer = "n"
+    remove_deps_answer = "n"
+    skip_unst = "n"
+    del_deps = "on"
+    use_colors = "on"
+    wget_option = '-c -N'
+
+    if os.path.isfile("/etc/slpkg/slpkg.conf"):
+        f = open("/etc/slpkg/slpkg.conf", "r")
+        conf = f.read()
+        f.close()
+        for line in conf.splitlines():
+            line = line.lstrip()
+            if line.startswith("VERSION"):
+                slack_rel = line[8:].strip()
+                if not slack_rel:
+                    slack_rel = "stable"
+            if line.startswith("REPOSITORIES"):
+                repositories = line[13:].strip().split(",")
+            if line.startswith("BUILD"):
+                build_path = line[6:].strip()
+            if line.startswith("PACKAGES"):
+                slpkg_tmp_packages = line[9:].strip()
+            if line.startswith("PATCHES"):
+                slpkg_tmp_patches = line[8:].strip()
+            if line.startswith("DEL_ALL"):
+                del_all = line[8:].strip()
+            if line.startswith("DEL_BUILD"):
+                del_build = line[10:].strip()
+            if line.startswith("SBO_CHECK_MD5"):
+                sbo_check_md5 = line[14:].strip()
+            if line.startswith("SBO_BUILD_LOG"):
+                sbo_build_log = line[14:].strip()
+            if line.startswith("DEFAULT_ANSWER"):
+                default_answer = line[15:].strip()
+            if line.startswith("REMOVE_DEPS_ANSWER"):
+                remove_deps_answer = line[19:].strip()
+            if line.startswith("SKIP_UNST"):
+                skip_unst = line[10:].strip()
+            if line.startswith("DEL_DEPS"):
+                del_deps = line[9:].strip()
+            if line.startswith("USE_COLORS"):
+                use_colors = line[11:].strip()
+            if line.startswith("WGET_OPTION"):
+                wget_option = line[12:].strip()
+
+    ktown_kde_repo = ktown_repo(repositories)
+    slacke_sub_repo = slacke_repo(repositories)
+    # remove no default repositories
+    repositories = remove_repositories(repositories, default_repositories)
+    # add custom repositories
+    update_repositories(repositories, conf_path)
+
     color = {
-        'RED': '',
-        'GREEN': '',
-        'YELLOW': '',
-        'CYAN': '',
-        'GREY': '',
-        'ENDC': ''
+        'RED': '\x1b[31m',
+        'GREEN': '\x1b[32m',
+        'YELLOW': '\x1b[33m',
+        'CYAN': '\x1b[36m',
+        'GREY': '\x1b[38;5;247m',
+        'ENDC': '\x1b[0m'
     }
 
-CHECKSUMS_link = ("https://raw.githubusercontent.com/{0}/{1}/"
-                  "master/CHECKSUMS.md5".format(__author__, __all__))
+    if use_colors == "off":
+        color = {
+            'RED': '',
+            'GREEN': '',
+            'YELLOW': '',
+            'CYAN': '',
+            'GREY': '',
+            'ENDC': ''
+        }
 
-# file spacer
-sp = "-"
+    CHECKSUMS_link = ("https://raw.githubusercontent.com/{0}/{1}/"
+                      "master/CHECKSUMS.md5".format(__author__, __all__))
 
-# current path
-path = os.getcwd() + "/"
+    # file spacer
+    sp = "-"
 
-# library path
-lib_path = "/var/lib/slpkg/"
+    # current path
+    path = os.getcwd() + "/"
 
-# log path
-log_path = "/var/log/slpkg/"
+    # library path
+    lib_path = "/var/lib/slpkg/"
 
-# packages log files path
-pkg_path = "/var/log/packages/"
+    # log path
+    log_path = "/var/log/slpkg/"
 
-# computer architecture
-arch = os.uname()[4]
+    # packages log files path
+    pkg_path = "/var/log/packages/"
+
+    # computer architecture
+    arch = os.uname()[4]

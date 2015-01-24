@@ -26,11 +26,7 @@ import sys
 import gzip
 import shutil
 
-from slpkg.__metadata__ import (
-    __version__,
-    __email__,
-    __author__
-)
+from slpkg.__metadata__ import MetaData as _m
 from slpkg.md5sum import md5
 
 
@@ -44,12 +40,12 @@ setup(
     packages=["slpkg", "slpkg/sbo", "slpkg/pkg", "slpkg/slack",
               "slpkg/others"],
     scripts=["bin/slpkg"],
-    version=__version__,
+    version=_m.__version__,
     description="Python tool to manage Slackware packages",
     keywords=["slackware", "slpkg", "upgrade", "install", "remove",
               "view", "slackpkg", "tool", "build"],
-    author=__author__,
-    author_email=__email__,
+    author=_m.__author__,
+    author_email=_m.__email__,
     url="https://github.com/dslackw/slpkg",
     package_data={"": ["LICENSE", "README.rst", "CHANGELOG"]},
     classifiers=[
@@ -86,22 +82,21 @@ if "install" in sys.argv:
         shutil.copy2(gzip_man, man_path)
         os.chmod(man_path, int("444", 8))
 
-    conf_path = "/etc/slpkg/"
     conf_file = [
         'conf/slpkg.conf',
         'conf/blacklist',
         'conf/slackware-mirrors',
         'conf/custom-repositories'
     ]
-    if not os.path.exists(conf_path):
-        os.system("mkdir -p {0}".format(conf_path))
+    if not os.path.exists(_m.conf_path):
+        os.system("mkdir -p {0}".format(_m.conf_path))
     for conf in conf_file:
         filename = conf.split("/")[-1]
         print("Installing '{0}' file".format(filename))
-        if os.path.isfile(conf_path + filename):
-            old = md5(conf_path + filename)
+        if os.path.isfile(_m.conf_path + filename):
+            old = md5(_m.conf_path + filename)
             new = md5(conf)
             if old != new:
-                shutil.copy2(conf, conf_path + filename + ".new")
+                shutil.copy2(conf, _m.conf_path + filename + ".new")
         else:
-            shutil.copy2(conf, conf_path)
+            shutil.copy2(conf, _m.conf_path)

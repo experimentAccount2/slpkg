@@ -29,9 +29,7 @@ from slpkg.splitting import split_package
 from slpkg.utils import (
     read_file
 )
-from slpkg.__metadata__ import (
-    lib_path
-)
+from slpkg.__metadata__ import MetaData as _m
 
 
 def search_pkg(name, repo):
@@ -42,7 +40,7 @@ def search_pkg(name, repo):
     try:
         blacklist = BlackList().packages()
         toolbar_width, index = 2, 0
-        PACKAGES_TXT = read_file(lib_path + '{0}_repo/PACKAGES.TXT'.format(
+        PACKAGES_TXT = read_file(_m.lib_path + '{0}_repo/PACKAGES.TXT'.format(
             repo))
         for line in PACKAGES_TXT.splitlines():
             index += 1

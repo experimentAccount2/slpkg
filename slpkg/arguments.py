@@ -24,15 +24,12 @@
 import sys
 
 from repolist import RepoList
-from __metadata__ import (
-    __version__,
-    repositories
-)
+from __metadata__ import MetaData as _m
 
 
 def options():
     arguments = [
-        "\nslpkg - version {0}\n".format(__version__),
+        "\nslpkg - version {0}\n".format(_m.__version__),
         "Slpkg is a user-friendly package manager for Slackware "
         "installations\n",
         "Commands:",
@@ -80,7 +77,7 @@ def options():
 
 def usage(repo):
     error_repo = ""
-    if repo and repo not in repositories:
+    if repo and repo not in _m.repositories:
         all_repos = RepoList().all_repos
         del RepoList().all_repos
         if repo in all_repos:
@@ -90,7 +87,7 @@ def usage(repo):
             error_repo = ("slpkg: error: repository '{0}' does not exist"
                           "\n".format(repo))
     view = [
-        "slpkg - version {0}\n".format(__version__),
+        "slpkg - version {0}\n".format(_m.__version__),
         "Usage: slpkg Commands:",
         "             [update] [re-create] [repo-add [repository name] [URL]]",
         "             [repo-remove [repository]] [repo-list]",

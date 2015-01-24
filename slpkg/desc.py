@@ -24,11 +24,7 @@
 
 from utils import read_file
 from messages import pkg_not_found
-from __metadata__ import (
-    lib_path,
-    repositories,
-    color,
-)
+from __metadata__ import MetaData as _m
 
 
 class PkgDesc(object):
@@ -40,16 +36,16 @@ class PkgDesc(object):
         self.COLOR = ""
         self.lib = ""
         color_text = {
-            'red': color['RED'],
-            'green': color['GREEN'],
-            'yellow': color['YELLOW'],
-            'cyan': color['CYAN'],
-            'grey': color['GREY'],
+            'red': _m.color['RED'],
+            'green': _m.color['GREEN'],
+            'yellow': _m.color['YELLOW'],
+            'cyan': _m.color['CYAN'],
+            'grey': _m.color['GREY'],
             '': ''
         }
         self.COLOR = color_text[self.paint]
-        if self.repo in repositories:
-            self.lib = lib_path + '{0}_repo/PACKAGES.TXT'.format(self.repo)
+        if self.repo in _m.repositories:
+            self.lib = _m.lib_path + '{0}_repo/PACKAGES.TXT'.format(self.repo)
 
     def view(self):
         PACKAGES_TXT = read_file(self.lib)
@@ -59,7 +55,7 @@ class PkgDesc(object):
             for line in PACKAGES_TXT.splitlines():
                 if line.startswith(self.name + ":"):
                     print(self.COLOR + line[len(self.name) + 1:] +
-                          color['ENDC'])
+                          _m.color['ENDC'])
                     count += 1
                     if count == 11:
                         break
@@ -68,7 +64,7 @@ class PkgDesc(object):
                 if (line.startswith("SLACKBUILD SHORT DESCRIPTION:  "
                                     + self.name + " (")):
                     count += 1
-                    print(self.COLOR + line[31:] + color['ENDC'])
+                    print(self.COLOR + line[31:] + _m.color['ENDC'])
         if count == 0:
             pkg_not_found("", self.name, "No matching", "\n")
         else:

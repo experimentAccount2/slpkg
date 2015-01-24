@@ -29,16 +29,7 @@ from slpkg.messages import (
     pkg_not_found,
     template
 )
-from slpkg.__metadata__ import (
-    lib_path,
-    pkg_path,
-    sp,
-    log_path,
-    default_answer,
-    remove_deps_answer,
-    del_deps,
-    color
-)
+from slpkg.__metadata__ import MetaData as _m
 
 from slpkg.pkg.find import find_package
 
@@ -99,7 +90,7 @@ class PackageManager(object):
         '''
         Remove Slackware binary packages
         '''
-        dep_path = log_path + "dep/"
+        dep_path = _m.log_path + "dep/"
         dependencies, rmv_list = [], []
         removed = self.view_removed(self.binary)
         if not removed:
@@ -109,8 +100,8 @@ class PackageManager(object):
             if len(removed) > 1:
                 msg = msg + "s"
             try:
-                if default_answer == "y":
-                    remove_pkg = default_answer
+                if _m.default_answer == "y":
+                    remove_pkg = _m.default_answer
                 else:
                     remove_pkg = raw_input(
                         "\nAre you sure to remove {0} {1} [Y/n]? ".format(
@@ -123,11 +114,11 @@ class PackageManager(object):
                     # If package build and install with 'slpkg -s sbo <package>'
                     # then look log file for dependencies in /var/log/slpkg/dep,
                     # read and remove all else remove only the package.
-                    if os.path.isfile(dep_path + rmv) and del_deps == "on":
+                    if os.path.isfile(dep_path + rmv) and _m.del_deps == "on":
                         dependencies = self.view_deps(dep_path, rmv)
                         try:
-                            if remove_deps_answer == "y":
-                                remove_dep = remove_deps_answer
+                            if _m.remove_deps_answer == "y":
+                                remove_dep = _m.remove_deps_answer
                             else:
                                 remove_dep = raw_input(
                                     "\nRemove dependencies (maybe used by "
@@ -154,12 +145,12 @@ class PackageManager(object):
         '''
         removed = []
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
-            color['CYAN'], ", ".join(binary), color['ENDC']))
+            _m.color['CYAN'], ", ".join(binary), _m.color['ENDC']))
         for pkg in binary:
-            pkgs = find_package(pkg + sp, pkg_path)
+            pkgs = find_package(pkg + _m.sp, _m.pkg_path)
             if pkgs:
                 print("[ {0}delete{1} ] --> {2}".format(
-                    color['RED'], color['ENDC'],
+                    _m.color['RED'], _m.color['ENDC'],
                     "\n               ".join(pkgs)))
                 removed.append(pkg)
             else:
@@ -179,7 +170,7 @@ class PackageManager(object):
         print("| Found dependencies for package {0}:".format(package))
         template(78)
         for dep in dependencies:
-            print("| {0}{1}{2}".format(color['RED'], dep, color['ENDC']))
+            print("| {0}{1}{2}".format(_m.color['RED'], dep, _m.color['ENDC']))
         template(78)
         return dependencies
 
@@ -191,7 +182,7 @@ class PackageManager(object):
         removes = []
         dependencies += binary
         for dep in dependencies:
-            if find_package(dep + sp, pkg_path):
+            if find_package(dep + _m.sp, _m.pkg_path):
                 print(subprocess.check_output("removepkg {0}".format(dep),
                                               shell=True))
                 removes.append(dep)
@@ -203,7 +194,7 @@ class PackageManager(object):
         '''
         Remove one signle package
         '''
-        if find_package(package + sp, pkg_path):
+        if find_package(package + _m.sp, _m.pkg_path):
             print(subprocess.check_output("removepkg {0}".format(package),
                                           shell=True))
         return package.split()
@@ -217,7 +208,7 @@ class PackageManager(object):
         print("| Total {0} packages removed".format(len(removes)))
         template(78)
         for pkg in removes:
-            if not find_package(pkg + sp, pkg_path):
+            if not find_package(pkg + _m.sp, _m.pkg_path):
                 print("| Package {0} removed".format(pkg))
             else:
                 print("| Package {0} not found".format(pkg))
@@ -230,14 +221,14 @@ class PackageManager(object):
         '''
         matching = size = 0
         print("\nPackages with matching name [ {0}{1}{2} ]\n".format(
-              color['CYAN'], ', '.join(self.binary), color['ENDC']))
+              _m.color['CYAN'], ', '.join(self.binary), _m.color['ENDC']))
         for pkg in self.binary:
-            for match in find_package(pkg, pkg_path):
+            for match in find_package(pkg, _m.pkg_path):
                 if pkg in match:
                     matching += 1
                     print("[ {0}installed{1} ] - {2}".format(
-                        color['GREEN'], color['ENDC'], match))
-                    with open(pkg_path + match, "r") as f:
+                        _m.color['GREEN'], _m.color['ENDC'], match))
+                    with open(_m.pkg_path + match, "r") as f:
                         data = f.read()
                         f.close()
                     for line in data.splitlines():
@@ -252,22 +243,22 @@ class PackageManager(object):
             pkg_not_found("", self.binary, message, "\n")
         else:
             print("\n{0}Total found {1} matching packages.{2}".format(
-                color['GREY'], matching, color['ENDC']))
+                _m.color['GREY'], matching, _m.color['ENDC']))
             unit = "Kb"
             if size > 1024:
                 unit = "Mb"
                 size = (size / 1024)
             print("{0}Size of installed packages {1} {2}.{3}\n".format(
-                color['GREY'], round(size, 2), unit, color['ENDC']))
+                _m.color['GREY'], round(size, 2), unit, _m.color['ENDC']))
 
     def display(self):
         '''
         Print the Slackware packages contents
         '''
         for pkg in self.binary:
-            find = find_package(pkg + sp, pkg_path)
+            find = find_package(pkg + _m.sp, _m.pkg_path)
             if find:
-                with open(pkg_path + "".join(find), "r") as package:
+                with open(_m.pkg_path + "".join(find), "r") as package:
                     for line in package:
                         print(line).strip()
                     print("")   # new line per file
@@ -288,16 +279,16 @@ class PackageManager(object):
         try:
             index, page, pkg_list = 0, row, []
             if repo == 'sbo':
-                if os.path.isfile(lib_path + '{0}_repo/SLACKBUILDS.TXT'.format(
-                        repo)):
-                    f = open(lib_path + '{0}_repo/SLACKBUILDS.TXT'.format(repo),
-                             'r')
+                if (os.path.isfile(
+                        _m.lib_path + '{0}_repo/SLACKBUILDS.TXT'.format(repo))):
+                    f = open(_m.lib_path + '{0}_repo/'
+                             'SLACKBUILDS.TXT'.format(repo), 'r')
                     r = f.read()
                     f.close()
             else:
-                if os.path.isfile(lib_path + '{0}_repo/PACKAGES.TXT'.format(
+                if os.path.isfile(_m.lib_path + '{0}_repo/PACKAGES.TXT'.format(
                         repo)):
-                    f = open(lib_path + '{0}_repo/PACKAGES.TXT'.format(repo),
+                    f = open(_m.lib_path + '{0}_repo/PACKAGES.TXT'.format(repo),
                              'r')
                     r = f.read()
                     f.close()
@@ -311,12 +302,13 @@ class PackageManager(object):
             for pkg in sorted(pkg_list):
                 if INDEX:
                     index += 1
-                    print("{0}{1}:{2} {3}".format(color['GREY'], index,
-                                                  color['ENDC'], pkg))
+                    print("{0}{1}:{2} {3}".format(_m.color['GREY'], index,
+                                                  _m.color['ENDC'], pkg))
                     if index == page:
                         read = raw_input("\nPress {0}Enter{1} to "
-                                         "continue... ".format(color['CYAN'],
-                                                               color['ENDC']))
+                                         "continue... ".format(
+                                             _m.color['CYAN'],
+                                             _m.color['ENDC']))
                         if read in ['Q', 'q']:
                             break
                         print("")   # new line after page

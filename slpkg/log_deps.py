@@ -24,10 +24,7 @@
 
 import os
 
-from slpkg.__metadata__ import (
-    pkg_path,
-    log_path
-)
+from slpkg.__metadata__ import MetaData as _m
 
 from slpkg.pkg.find import find_package
 
@@ -38,8 +35,8 @@ def write_deps(deps_dict):
     into directory `/var/log/slpkg/dep/`
     '''
     for name, dependencies in deps_dict.iteritems():
-        if find_package(name + '-', pkg_path):
-            dep_path = log_path + "dep/"
+        if find_package(name + '-', _m.pkg_path):
+            dep_path = _m.log_path + "dep/"
             if not os.path.exists(dep_path):
                 os.mkdir(dep_path)
             if os.path.isfile(dep_path + name):

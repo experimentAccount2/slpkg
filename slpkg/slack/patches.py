@@ -38,12 +38,7 @@ from slpkg.messages import (
     msg_done,
     msg_reading
 )
-from slpkg.__metadata__ import (
-    pkg_path,
-    slpkg_tmp_patches,
-    default_answer,
-    color
-)
+from slpkg.__metadata__ import MetaData as _m
 
 from slpkg.pkg.find import find_package
 from slpkg.pkg.manager import PackageManager
@@ -58,7 +53,7 @@ class Patches(object):
 
     def __init__(self, version):
         self.version = version
-        self.patch_path = slpkg_tmp_patches
+        self.patch_path = _m.slpkg_tmp_patches
         msg_reading()
         if self.version == "stable":
             self.PACKAGES_TXT = URL(mirrors("PACKAGES.TXT",
@@ -93,14 +88,14 @@ class Patches(object):
                 print("\nInstalling summary")
                 print("=" * 79)
                 print("{0}Total {1} {2} will be upgraded.".format(
-                    color['GREY'], len(upgrade_all), msgs(upgrade_all)))
+                    _m.color['GREY'], len(upgrade_all), msgs(upgrade_all)))
                 print("Need to get {0} {1} of archives.".format(size[0],
                                                                 unit[0]))
                 print("After this process, {0} {1} of additional disk space "
                       "will be used.{2}".format(size[1], unit[1],
-                                                color['ENDC']))
-                if default_answer == "y":
-                    answer = default_answer
+                                                _m.color['ENDC']))
+                if _m.default_answer == "y":
+                    answer = _m.default_answer
                 else:
                     answer = raw_input("\nWould you like to continue [Y/n]? ")
                 if answer in ['y', 'Y']:
@@ -127,8 +122,8 @@ class Patches(object):
         data = repo_data(self.PACKAGES_TXT, self.step, 'slack', slack_ver)
         black = BlackList().packages()
         for name, loc, comp, uncomp in zip(data[0], data[1], data[2], data[3]):
-            inst_pkg = find_package(split_package(name)[0] + "-", pkg_path)
-            if (inst_pkg and not os.path.isfile(pkg_path + name[:-4]) and
+            inst_pkg = find_package(split_package(name)[0] + "-", _m.pkg_path)
+            if (inst_pkg and not os.path.isfile(_m.pkg_path + name[:-4]) and
                     split_package(''.join(inst_pkg[0])) not in black):
                 dwn.append("{0}{1}/{2}".format(mirrors("", ""), loc, name))
                 comp_sum.append(comp)
@@ -148,7 +143,7 @@ def views(pkg_for_upgrade, upgrade_all, comp_sum):
                                          comp_sum)):
         pkg_split = split_package(upgrade[:-4])
         print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>12}{12}".format(
-            color['YELLOW'], upg, color['ENDC'],
+            _m.color['YELLOW'], upg, _m.color['ENDC'],
             " " * (24-len(upg)), pkg_split[1],
             " " * (18-len(pkg_split[1])), pkg_split[2],
             " " * (8-len(pkg_split[2])), pkg_split[3],
@@ -172,8 +167,8 @@ def upgrade(patch_path, upgrade_all):
     '''
     for pkg in upgrade_all:
         check_md5(pkg_checksum(pkg, "slack_patches"), patch_path + pkg)
-        print("[ {0}upgrading{1} ] --> {2}".format(color['YELLOW'],
-                                                   color['ENDC'], pkg[:-4]))
+        print("[ {0}upgrading{1} ] --> {2}".format(_m.color['YELLOW'],
+                                                   _m.color['ENDC'], pkg[:-4]))
         PackageManager((patch_path + pkg).split()).upgrade()
 
 
@@ -184,13 +179,13 @@ def kernel(upgrade_all):
     '''
     for core in upgrade_all:
         if "kernel" in core:
-            if default_answer == "y":
-                answer = default_answer
+            if _m.default_answer == "y":
+                answer = _m.default_answer
             else:
                 print("")
                 template(78)
                 print("| {0}*** HIGHLY recommended reinstall 'LILO' "
-                      "***{1}".format(color['RED'], color['ENDC']))
+                      "***{1}".format(_m.color['RED'], _m.color['ENDC']))
                 template(78)
                 answer = raw_input("\nThe kernel has been upgraded, "
                                    "reinstall `LILO` [Y/n]? ")

@@ -24,10 +24,7 @@
 import sys
 import subprocess
 
-from __metadata__ import (
-    color,
-    wget_option
-)
+from __metadata__ import MetaData as _m
 
 
 class Download(object):
@@ -44,12 +41,12 @@ class Download(object):
         '''
         for dwn in self.url:
             file_name = dwn.split("/")[-1]
-            print("\n[ {0}Download{1} ] -->{1} {2}\n".format(color['GREEN'],
-                                                             color['ENDC'],
+            print("\n[ {0}Download{1} ] -->{1} {2}\n".format(_m.color['GREEN'],
+                                                             _m.color['ENDC'],
                                                              file_name))
             try:
                 subprocess.call("wget {0} --directory-prefix={1} {2}".format(
-                                wget_option, self.path, dwn), shell=True)
+                                _m.wget_option, self.path, dwn), shell=True)
             except KeyboardInterrupt:
                 print   # new line at cancel
                 sys.exit(0)

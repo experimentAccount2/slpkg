@@ -32,13 +32,7 @@ from checksum import check_md5
 from grep_md5 import pkg_checksum
 from url_read import URL
 from downloader import Download
-from __metadata__ import (
-    __all__,
-    __version__,
-    __author__,
-    default_answer,
-    build_path
-)
+from __metadata__ import MetaData as _m
 
 
 def it_self_update():
@@ -50,39 +44,42 @@ def it_self_update():
     repository = 'github'
     branch = 'master'
     ver_link = ('https://raw.{0}usercontent.com/{1}/{2}/'
-                '{3}/{4}/__metadata__.py'.format(repository, __author__,
-                                                 __all__, branch, __all__))
+                '{3}/{4}/__metadata__.py'.format(repository, _m.__author__,
+                                                 _m.__all__, branch,
+                                                 _m.__all__))
     version_data = URL(ver_link).reading()
     for line in version_data.splitlines():
         if line.startswith('__version_info__'):
-            __new_version__ = '.'.join(re.findall(r'\d+', line))
-    if __new_version__ > __version__:
-        if default_answer == "y":
-            answer = default_answer
+            _m.__new_version__ = '.'.join(re.findall(r'\d+', line))
+    if __new_version__ > _m.__version__:
+        if _m.default_answer == "y":
+            answer = _m.default_answer
         else:
             print("\nNew version '{0}-{1}' is available !\n".format(
-                __all__, __new_version__))
+                _m.__all__, __new_version__))
             answer = raw_input("Would you like to upgrade [Y/n]? ")
         if answer in ['y', 'Y']:
             print("")   # new line after answer
         else:
             sys.exit(0)
         dwn_link = ['https://{0}.com/{1}/{2}/archive/'
-                    'v{3}.tar.gz'.format(repository, __author__, __all__,
+                    'v{3}.tar.gz'.format(repository, _m.__author__, _m.__all__,
                                          __new_version__)]
-        Download(build_path, dwn_link).start()
-        os.chdir(build_path)
+        if not os.path.exists(_m.build_path):
+            os.makedirs(_m.build_path)
+        Download(_m.build_path, dwn_link).start()
+        os.chdir(_m.build_path)
         slpkg_tar_file = 'v' + __new_version__ + '.tar.gz'
         tar = tarfile.open(slpkg_tar_file)
         tar.extractall()
         tar.close()
-        file_name = '{0}-{1}'.format(__all__, __new_version__)
+        file_name = '{0}-{1}'.format(_m.__all__, _m.__new_version__)
         os.chdir(file_name)
         check_md5(pkg_checksum(slpkg_tar_file[1:], "slpkg"),
-                  build_path + slpkg_tar_file)
+                  _m.build_path + slpkg_tar_file)
         subprocess.call('chmod +x {0}'.format('install.sh'), shell=True)
         subprocess.call('sh install.sh', shell=True)
     else:
         print('\n{0}: There is no new version, already used the last !'
-              '\n'.format(__all__))
+              '\n'.format(_m.__all__))
     sys.exit(0)

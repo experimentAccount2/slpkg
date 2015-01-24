@@ -23,12 +23,12 @@
 
 import shutil
 
-from slpkg.__metadata__ import del_build
+from slpkg.__metadata__ import MetaData as _m
 
 
 def delete(build_folder):
     '''
     Delete build directory and all its contents.
     '''
-    if del_build == "on":
+    if _m.del_build == "on":
         shutil.rmtree(build_folder)

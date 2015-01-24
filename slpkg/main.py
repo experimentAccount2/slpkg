@@ -41,11 +41,7 @@ from init import (
     Update,
     check_exists_repositories
 )
-from __metadata__ import (
-    path,
-    repositories,
-    slack_rel
-)
+from __metadata__ import MetaData as _m
 
 from pkg.build import BuildPackage
 from pkg.manager import PackageManager
@@ -63,7 +59,7 @@ class Case(object):
 
     def __init__(self, package):
         self.package = package
-        self.release = slack_rel
+        self.release = _m.slack_rel
 
     def sbo_install(self):
         SBoInstall(self.package).start(False)
@@ -143,14 +139,14 @@ def main():
         usage(args[1])
 
     if len(args) == 3 and args[0] == '-a':
-        BuildPackage(args[1], args[2:], path).build()
+        BuildPackage(args[1], args[2:], _m.path).build()
     elif (len(args) == 3 and args[0] == '-l' and args[2] == '--index' and
-            args[1] in repositories):
+            args[1] in _m.repositories):
         PackageManager(None).list(args[1], True)
-    elif len(args) == 2 and args[0] == '-l' and args[1] in repositories:
+    elif len(args) == 2 and args[0] == '-l' and args[1] in _m.repositories:
         PackageManager(None).list(args[1], False)
     elif len(args) == 3 and args[0] == '-c' and args[2] == '--upgrade':
-        if args[1] in repositories and args[1] not in ['slack', 'sbo']:
+        if args[1] in _m.repositories and args[1] not in ['slack', 'sbo']:
             Case('').binary_upgrade(args[1])
         elif args[1] in ['slack', 'sbo']:
             upgrade = {
@@ -161,15 +157,15 @@ def main():
         else:
             usage(args[1])
     elif len(args) >= 3 and args[0] == '-s':
-        if args[1] in repositories and args[1] not in ['sbo']:
+        if args[1] in _m.repositories and args[1] not in ['sbo']:
             Case(args[2:]).binary_install(args[1])
         elif args[1] == 'sbo':
             Case(args[2:]).sbo_install()
         else:
             usage(args[1])
-    elif (len(args) == 3 and args[0] == '-t' and args[1] in repositories):
+    elif (len(args) == 3 and args[0] == '-t' and args[1] in _m.repositories):
         track_dep(args[2], args[1])
-    elif len(args) == 2 and args[0] == '-n' and 'sbo' in repositories:
+    elif len(args) == 2 and args[0] == '-n' and 'sbo' in _m.repositories:
         SBoNetwork(args[1]).view()
     elif len(args) == 2 and args[0] == '-b' and args[1] == '--list':
         blacklist.listed()
@@ -200,12 +196,12 @@ def main():
         PackageManager(args[1:]).remove()
     elif len(args) > 1 and args[0] == '-f':
         PackageManager(args[1:]).find()
-    elif len(args) == 3 and args[0] == '-p' and args[1] in repositories:
+    elif len(args) == 3 and args[0] == '-p' and args[1] in _m.repositories:
         PkgDesc(args[2], args[1], '').view()
     elif len(args) == 4 and args[0] == '-p' and args[3].startswith('--color='):
         colors = ['red', 'green', 'yellow', 'cyan', 'grey']
         tag = args[3][len('--color='):]
-        if args[1] in repositories and tag in colors:
+        if args[1] in _m.repositories and tag in colors:
             PkgDesc(args[2], args[1], tag).view()
         else:
             usage(args[1])

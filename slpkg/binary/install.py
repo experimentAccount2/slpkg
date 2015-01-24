@@ -42,12 +42,7 @@ from slpkg.utils import (
     remove_dbs,
     dimensional_list
 )
-from slpkg.__metadata__ import (
-    color,
-    pkg_path,
-    default_answer,
-    slpkg_tmp_packages,
-)
+from slpkg.__metadata__ import MetaData as _m
 
 from slpkg.pkg.find import find_package
 from slpkg.pkg.manager import PackageManager
@@ -66,7 +61,7 @@ class BinaryInstall(object):
         self.packages = packages
         self.repo = repo
         self.version = version
-        self.tmp_path = slpkg_tmp_packages
+        self.tmp_path = _m.slpkg_tmp_packages
         self.dwn, self.dep_dwn = [], []
         self.install, self.dep_install = [], []
         self.comp_sum, self.dep_comp_sum = [], []
@@ -113,7 +108,7 @@ class BinaryInstall(object):
                 unit, size = units(self.comp_sum, self.uncomp_sum)
                 print("\nInstalling summary")
                 print("=" * 79)
-                print("{0}Total {1} {2}.".format(color['GREY'], sum(sums),
+                print("{0}Total {1} {2}.".format(_m.color['GREY'], sum(sums),
                                                  self.msg(sum(sums))))
                 print("{0} {1} will be installed, {2} will be upgraded and "
                       "{3} will be reinstalled.".format(sums[2],
@@ -123,7 +118,7 @@ class BinaryInstall(object):
                                                                 unit[0]))
                 print("After this process, {0} {1} of additional disk "
                       "space will be used.{2}".format(size[1], unit[1],
-                                                      color['ENDC']))
+                                                      _m.color['ENDC']))
                 self.answer = self.continue_install()
                 if self.answer in ['y', 'Y']:
                     self.install.reverse()
@@ -170,18 +165,19 @@ class BinaryInstall(object):
         for inst in (self.dep_install + self.install):
             package = (self.tmp_path + inst).split()
             self.checksums(inst)
-            if os.path.isfile(pkg_path + inst[:-4]):
-                print("[ {0}reinstalling{1} ] --> {2}".format(color['GREEN'],
-                                                              color['ENDC'],
+            if os.path.isfile(_m.pkg_path + inst[:-4]):
+                print("[ {0}reinstalling{1} ] --> {2}".format(_m.color['GREEN'],
+                                                              _m.color['ENDC'],
                                                               inst))
                 PackageManager(package).reinstall()
-            elif find_package(split_package(inst)[0] + "-", pkg_path):
-                print("[ {0}upgrading{1} ] --> {2}".format(color['YELLOW'],
-                                                           color['ENDC'], inst))
+            elif find_package(split_package(inst)[0] + "-", _m.pkg_path):
+                print("[ {0}upgrading{1} ] --> {2}".format(_m.color['YELLOW'],
+                                                           _m.color['ENDC'],
+                                                           inst))
                 PackageManager(package).upgrade()
             else:
-                print("[ {0}installing{1} ] --> {2}".format(color['GREEN'],
-                                                            color['ENDC'],
+                print("[ {0}installing{1} ] --> {2}".format(_m.color['GREEN'],
+                                                            _m.color['ENDC'],
                                                             inst))
                 PackageManager(package).upgrade()
 
@@ -202,8 +198,8 @@ class BinaryInstall(object):
         '''
         Default answer
         '''
-        if default_answer == "y":
-            self.answer = default_answer
+        if _m.default_answer == "y":
+            self.answer = _m.default_answer
         else:
             self.answer = raw_input("\nWould you like to continue [Y/n]? ")
         return self.answer
@@ -249,17 +245,17 @@ class BinaryInstall(object):
         repo = self.repo + (' ' * (6 - (len(self.repo))))
         for pkg, ver, comp in zip(install, self.pkg_ver, comp_sum):
             pkg_split = split_package(pkg[:-4])
-            if find_package(pkg_split[0] + "-" + pkg_split[1], pkg_path):
+            if find_package(pkg_split[0] + "-" + pkg_split[1], _m.pkg_path):
                 pkg_sum += 1
-                COLOR = color['GREEN']
-            elif find_package(pkg_split[0] + "-", pkg_path):
-                COLOR = color['YELLOW']
+                COLOR = _m.color['GREEN']
+            elif find_package(pkg_split[0] + "-", _m.pkg_path):
+                COLOR = _m.color['YELLOW']
                 upg_sum += 1
             else:
-                COLOR = color['RED']
+                COLOR = _m.color['RED']
                 uni_sum += 1
             print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>11}{12}".format(
-                COLOR, pkg_split[0] + ver, color['ENDC'],
+                COLOR, pkg_split[0] + ver, _m.color['ENDC'],
                 " " * (24-len(pkg_split[0] + ver)), pkg_split[1],
                 " " * (18-len(pkg_split[1])), pkg_split[2],
                 " " * (8-len(pkg_split[2])), pkg_split[3],

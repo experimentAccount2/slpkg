@@ -26,10 +26,7 @@ import os
 import sys
 
 from utils import read_file
-from __metadata__ import (
-    default_repositories,
-    repositories
-)
+from __metadata__ import MetaData as _m
 
 
 class Repo(object):
@@ -49,8 +46,8 @@ class Repo(object):
             line = line.lstrip()
             if line and not line.startswith("#"):
                 repo_name.append(line.split()[0])
-        if (repo in repositories or repo in repo_name or
-                repo in default_repositories):
+        if (repo in _m.repositories or repo in repo_name or
+                repo in _m.default_repositories):
             print("\nRepository name '{0}' exist, select different name.\n"
                   "View all repositories with command 'repo-list'.\n".format(
                       repo))

@@ -40,14 +40,7 @@ from slpkg.messages import (
     build_FAILED,
     msg_resolving
 )
-from slpkg.__metadata__ import (
-    tmp,
-    color,
-    lib_path,
-    pkg_path,
-    build_path,
-    default_answer
-)
+from slpkg.__metadata__ import MetaData as _m
 
 from slpkg.pkg.find import find_package
 from slpkg.pkg.build import BuildPackage
@@ -135,12 +128,12 @@ class SBoInstall(object):
                 print("\nInstalling summary")
                 print("=" * 79)
                 print("{0}Total {1} {2}.".format(
-                    color['GREY'], count_total, self.msg(count_total)))
+                    _m.color['GREY'], count_total, self.msg(count_total)))
                 print("{0} {1} will be installed, {2} allready installed and "
                       "{3} {4}".format(count_uni, self.msg(count_uni),
                                        count_ins, count_upg,
                                        self.msg(count_upg)))
-                print("will be upgraded.{0}\n".format(color['ENDC']))
+                print("will be upgraded.{0}\n".format(_m.color['ENDC']))
                 if self.master_packages:
                     self.answer = self.continue_install()
                     if self.answer in['y', 'Y']:
@@ -152,7 +145,7 @@ class SBoInstall(object):
                                        len(b_ins[1]), self.msg(len(b_ins[1])),
                                        b_ins[0], b_ins[2], b_ins[1])
                         write_deps(self.deps_dict)
-                        delete(build_path)
+                        delete(_m.build_path)
             else:
                 print('\nNot found packages for installation\n')
         except KeyboardInterrupt:
@@ -175,7 +168,7 @@ class SBoInstall(object):
         Return matching SBo
         '''
         sbo_matching = []
-        f = open(lib_path + "sbo_repo/SLACKBUILDS.TXT", "r")
+        f = open(_m.lib_path + "sbo_repo/SLACKBUILDS.TXT", "r")
         SLACKBUILDS_TXT = f.read()
         f.close()
         for sbo in sbo_not_found:
@@ -242,7 +235,7 @@ class SBoInstall(object):
         args[3] arch
         '''
         print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>11}{12}".format(
-            args[0], args[1], color['ENDC'],
+            args[0], args[1], _m.color['ENDC'],
             " " * (24-len(args[1])), args[2],
             " " * (18-len(args[2])), args[3],
             " " * (15-len(args[3])), "",
@@ -254,14 +247,14 @@ class SBoInstall(object):
         color yellow for packages to upgrade and color red
         if not installed.
         '''
-        if find_package(sbo, pkg_path):
-            paint = color['GREEN']
+        if find_package(sbo, _m.pkg_path):
+            paint = _m.color['GREEN']
             count_ins += 1
-        elif find_package('-'.join(sbo.split('-')[:-1]) + '-', pkg_path):
-            paint = color['YELLOW']
+        elif find_package('-'.join(sbo.split('-')[:-1]) + '-', _m.pkg_path):
+            paint = _m.color['YELLOW']
             count_upg += 1
         else:
-            paint = color['RED']
+            paint = _m.color['RED']
             count_uni += 1
         return paint, count_ins, count_upg, count_uni
 
@@ -291,8 +284,8 @@ class SBoInstall(object):
         '''
         Default answer
         '''
-        if default_answer == "y":
-            self.answer = default_answer
+        if _m.default_answer == "y":
+            self.answer = _m.default_answer
         else:
             self.answer = raw_input("Would you like to continue [Y/n]? ")
         return self.answer
@@ -312,7 +305,7 @@ class SBoInstall(object):
         Search for binary packages in /tmp directory
         '''
         binary = []
-        for search in find_package(prgnam, tmp):
+        for search in find_package(prgnam, _m.tmp):
             if "_SBo" in search:
                 binary.append(search)
         return binary
@@ -325,14 +318,14 @@ class SBoInstall(object):
         '''
         slackbuilds = self.dependencies + self.master_packages
         installs, upgraded, versions = [], [], []
-        if not os.path.exists(build_path):
-            os.makedirs(build_path)
-        os.chdir(build_path)
+        if not os.path.exists(_m.build_path):
+            os.makedirs(_m.build_path)
+        os.chdir(_m.build_path)
         for sbo in slackbuilds:
             pkg = '-'.join(sbo.split('-')[:-1])
             ver = sbo.split('-')[-1]
             prgnam = ("{0}-{1}".format(pkg, ver))
-            sbo_file = "".join(find_package(prgnam, pkg_path))
+            sbo_file = "".join(find_package(prgnam, _m.pkg_path))
             src_link = SBoGrep(pkg).source().split()
             if sbo_file:
                 template(78)
@@ -340,33 +333,31 @@ class SBoInstall(object):
                 template(78)
             elif self.unst[0] in src_link or self.unst[1] in src_link:
                 template(78)
-                print("| Package {0} {1}{2}{3}".format(sbo, color['RED'],
+                print("| Package {0} {1}{2}{3}".format(sbo, _m.color['RED'],
                                                        ''.join(src_link),
-                                                       color['ENDC']))
+                                                       _m.color['ENDC']))
                 template(78)
             else:
                 sbo_url = sbo_search_pkg(pkg)
                 sbo_link = SBoLink(sbo_url).tar_gz()
                 script = sbo_link.split("/")[-1]
                 dwn_srcs = sbo_link.split() + src_link
-                Download(build_path, dwn_srcs).start()
+                Download(_m.build_path, dwn_srcs).start()
                 sources = self.filenames(src_link)
-                BuildPackage(script, sources, build_path).build()
+                BuildPackage(script, sources, _m.build_path).build()
                 binary_list = self.search_in_tmp(prgnam)
                 try:
-                    binary = (tmp + max(binary_list)).split()
+                    binary = (_m.tmp + max(binary_list)).split()
                 except ValueError:
                     build_FAILED(sbo_url, prgnam)
                     sys.exit(0)
-                if find_package(pkg + '-', pkg_path):
-                    print("{0}[ Upgrading ] --> {1}{2}".format(color['GREEN'],
-                                                               color['ENDC'],
-                                                               pkg))
+                if find_package(pkg + '-', _m.pkg_path):
+                    print("{0}[ Upgrading ] --> {1}{2}".format(
+                        _m.color['GREEN'], _m.color['ENDC'], pkg))
                     upgraded.append(pkg)
                 else:
-                    print("{0}[ Installing ] --> {1}{2}".format(color['GREEN'],
-                                                                color['ENDC'],
-                                                                pkg))
+                    print("{0}[ Installing ] --> {1}{2}".format(
+                        _m.color['GREEN'], _m.color['ENDC'], pkg))
                 PackageManager(binary).upgrade()
                 installs.append(pkg)
                 versions.append(ver)
@@ -383,7 +374,7 @@ class SBoInstall(object):
         template(78)
         for pkg, ver in zip(args[4], args[5]):
             installed = ("{0}-{1}".format(pkg, ver))
-            if find_package(installed, pkg_path):
+            if find_package(installed, _m.pkg_path):
                 if pkg in args[6]:
                     print("| Package {0} upgraded successfully".format(
                         installed))

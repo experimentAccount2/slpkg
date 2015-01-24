@@ -25,11 +25,7 @@ import os
 
 from utils import read_file
 from repositories import Repo
-from slpkg.__metadata__ import (
-    lib_path,
-    slacke_sub_repo,
-    default_repositories
-)
+from slpkg.__metadata__ import MetaData as _m
 
 from slpkg.slack.mirrors import mirrors
 from slpkg.slack.slack_version import slack_ver
@@ -45,11 +41,11 @@ class RepoInit(object):
         self.mirror = ''
 
     def fetch(self):
-        if self.repo in default_repositories:
+        if self.repo in _m.default_repositories:
             exec('self._init_{0}()'.format(self.repo))
         else:
             exec('self._init_custom()')
-        self.lib = lib_path + "{0}_repo/PACKAGES.TXT".format(self.repo)
+        self.lib = _m.lib_path + "{0}_repo/PACKAGES.TXT".format(self.repo)
         PACKAGES_TXT = read_file(self.lib)
         return PACKAGES_TXT, self.mirror
 
@@ -101,7 +97,7 @@ class RepoInit(object):
         elif os.uname()[4] == "arm":
             arch = "arm"
         self.mirror = "{0}slacke{1}/slackware{2}-{3}/".format(
-            Repo().slacke(), slacke_sub_repo[1:-1], arch, slack_ver())
+            Repo().slacke(), _m.slacke_sub_repo[1:-1], arch, slack_ver())
 
     def _init_salix(self):
         arch = "i486"

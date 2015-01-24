@@ -21,11 +21,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from slpkg.__metadata__ import (
-    arch,
-    lib_path,
-    skip_unst
-)
+from slpkg.__metadata__ import MetaData as _m
 
 
 class SBoGrep(object):
@@ -43,7 +39,7 @@ class SBoGrep(object):
         self.line_md5 = "SLACKBUILD MD5SUM: "
         self.line_md5_64 = "SLACKBUILD MD5SUM_{0}: ".format(arch64)
         self.line_des = "SLACKBUILD SHORT DESCRIPTION:  "
-        self.sbo_txt = lib_path + "sbo_repo/SLACKBUILDS.TXT"
+        self.sbo_txt = _m.lib_path + "sbo_repo/SLACKBUILDS.TXT"
         self.answer = ['y', 'Y']
         self.unst = ['UNSUPPORTED', 'UNTESTED']
         # open an read SLACKBUILDS.TXT file
@@ -65,17 +61,17 @@ class SBoGrep(object):
             if line.startswith(self.line_down_64):
                 if sbo_name == self.name and line[28:].strip():
                     source64 = line[28:]
-        if arch == "x86_64":
+        if _m.arch == "x86_64":
             if source64:
                 src = source64
             else:
                 src = source
-            if skip_unst in self.answer and source64 in self.unst:
+            if _m.skip_unst in self.answer and source64 in self.unst:
                 src = source
         else:
             if source:
                 src = source
-            if skip_unst in self.answer and source in self.unst:
+            if _m.skip_unst in self.answer and source in self.unst:
                 src = source64
         return src
 
@@ -115,17 +111,17 @@ class SBoGrep(object):
             if line.startswith(self.line_md5):
                 if sbo_name == self.name and line[19:].strip():
                     md5sum = line[19:].strip().split()
-        if arch == "x86_64":
+        if _m.arch == "x86_64":
             if md5sum64:
                 md5 = md5sum64
             else:
                 md5 = md5sum
-            if skip_unst in self.answer:
+            if _m.skip_unst in self.answer:
                 md5 = md5sum
         else:
             if md5sum:
                 md5 = md5sum
-            if skip_unst in self.answer and not md5sum:
+            if _m.skip_unst in self.answer and not md5sum:
                 md5 = md5sum64
         return md5
 

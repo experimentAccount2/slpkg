@@ -22,10 +22,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 from slpkg.repositories import Repo
-from slpkg.__metadata__ import (
-    arch,
-    slack_rel
-)
+from slpkg.__metadata__ import MetaData as _m
 
 from slack_version import slack_ver
 
@@ -35,19 +32,17 @@ def mirrors(name, location):
     Select Slackware official mirror packages
     based architecture and version.
     '''
+    rel = _m.slack_rel
+    ver = slack_ver()
     repo = Repo().slack()
-    if arch == "x86_64":
-        if slack_rel == "stable":
-            http = repo + "slackware64-{0}/{1}{2}".format(slack_ver(),
-                                                          location, name)
+    if _m.arch == "x86_64":
+        if rel == "stable":
+            http = repo + "slackware64-{0}/{1}{2}".format(ver, location, name)
         else:
-            http = repo + "slackware64-{0}/{1}{2}".format(slack_rel,
-                                                          location, name)
+            http = repo + "slackware64-{0}/{1}{2}".format(rel, location, name)
     else:
-        if slack_rel == "stable":
-            http = repo + "slackware-{0}/{1}{2}".format(slack_ver(),
-                                                        location, name)
+        if rel == "stable":
+            http = repo + "slackware-{0}/{1}{2}".format(ver, location, name)
         else:
-            http = repo + "slackware-{0}/{1}{2}".format(slack_rel,
-                                                        location, name)
+            http = repo + "slackware-{0}/{1}{2}".format(rel, location, name)
     return http

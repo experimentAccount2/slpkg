@@ -26,10 +26,7 @@ import os
 from slpkg.toolbar import status
 from slpkg.splitting import split_package
 from slpkg.slack.slack_version import slack_ver
-from slpkg.__metadata__ import (
-    lib_path,
-    ktown_kde_repo
-)
+from slpkg.__metadata__ import MetaData as _m
 
 
 def repo_data(PACKAGES_TXT, step, repo, version):
@@ -132,7 +129,7 @@ def ktown_filter(name, location, size, unsize, version):
         path_pkg = os.uname()[4]
     (fname, flocation, fsize, funsize) = ([] for i in range(4))
     for n, l, s, u in zip(name, location, size, unsize):
-        if path_pkg in l and ktown_kde_repo[1:-1] in l and l.startswith(ver):
+        if path_pkg in l and _m.ktown_kde_repo[1:-1] in l and l.startswith(ver):
             fname.append(n)
             flocation.append(l)
             fsize.append(s)
@@ -164,7 +161,7 @@ def fix_slackers_pkg(name):
     name in PACKAGES.TXT file use FILELIST.TXT to
     get.
     '''
-    f = open(lib_path + "slackr_repo/FILELIST.TXT", "r")
+    f = open(_m.lib_path + "slackr_repo/FILELIST.TXT", "r")
     FILELIST_TXT = f.read()
     f.close()
     for line in FILELIST_TXT.splitlines():
@@ -202,7 +199,7 @@ class Requires(object):
             else:
                 return ""
         else:
-            lib = '{0}{1}_repo/PACKAGES.TXT'.format(lib_path, self.repo)
+            lib = '{0}{1}_repo/PACKAGES.TXT'.format(_m.lib_path, self.repo)
             f = open(lib, "r")
             PACKAGES_TXT = f.read()
             f.close()

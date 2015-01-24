@@ -23,7 +23,7 @@
 
 import sys
 
-from __metadata__ import color
+from __metadata__ import MetaData as _m
 
 
 def pkg_not_found(bol, pkg, message, eol):
@@ -61,11 +61,11 @@ def build_FAILED(sbo_url, prgnam):
     Print error message if build failed
     '''
     template(78)
-    print("| Build package {0} [ {1}FAILED{2} ]".format(prgnam, color['RED'],
-                                                        color['ENDC']))
+    print("| Build package {0} [ {1}FAILED{2} ]".format(prgnam, _m.color['RED'],
+                                                        _m.color['ENDC']))
     template(78)
     print("| See log file in '{0}/var/log/slpkg/sbo/build_logs{1}' directory"
-          "or read README file:".format(color['CYAN'], color['ENDC']))
+          "or read README file:".format(_m.color['CYAN'], _m.color['ENDC']))
     print("| {0}{1}".format(sbo_url, "README"))
     template(78)
     print   # new line at end
@@ -78,17 +78,23 @@ def template(max_len):
     print("+" + "=" * max_len)
 
 
+def msg_checking():
+    sys.stdout.write("{0}Checking ...{1}".format(_m.color['GREY'],
+                                                 _m.color['ENDC']))
+    sys.stdout.flush()
+
+
 def msg_reading():
-    sys.stdout.write("{0}Reading package lists ...{1}".format(color['GREY'],
-                                                              color['ENDC']))
+    sys.stdout.write("{0}Reading package lists ...{1}".format(_m.color['GREY'],
+                                                              _m.color['ENDC']))
     sys.stdout.flush()
 
 
 def msg_resolving():
-    sys.stdout.write("{0}Resolving dependencies ...{1}".format(color['GREY'],
-                                                               color['ENDC']))
+    sys.stdout.write("{0}Resolving dependencies ...{1}".format(
+        _m.color['GREY'], _m.color['ENDC']))
     sys.stdout.flush()
 
 
 def msg_done():
-    sys.stdout.write("{0}Done{1}\n".format(color['GREY'], color['ENDC']))
+    sys.stdout.write("{0}Done{1}\n".format(_m.color['GREY'], _m.color['ENDC']))

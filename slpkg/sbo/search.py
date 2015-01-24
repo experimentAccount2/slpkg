@@ -25,7 +25,7 @@ import sys
 
 from slpkg.repositories import Repo
 from slpkg.blacklist import BlackList
-from slpkg.__metadata__ import lib_path
+from slpkg.__metadata__ import MetaData as _m
 from utils import (
     read_file
 )
@@ -41,7 +41,7 @@ def sbo_search_pkg(name):
         repo = Repo().sbo()
         blacklist = BlackList().packages()
         sbo_url = "{0}{1}/".format(repo, slack_ver())
-        SLACKBUILDS_TXT = read_file(lib_path + "sbo_repo/SLACKBUILDS.TXT")
+        SLACKBUILDS_TXT = read_file(_m.lib_path + "sbo_repo/SLACKBUILDS.TXT")
         for line in SLACKBUILDS_TXT.splitlines():
             if line.startswith("SLACKBUILD LOCATION"):
                 sbo_name = (line[23:].split("/")[-1].replace("\n", "")).strip()
