@@ -75,7 +75,7 @@ def slacke_repo(repositories):
             return sub
 
 
-class MetaData():
+class MetaData(object):
 
     __all__ = "slpkg"
     __author__ = "dslackw"
