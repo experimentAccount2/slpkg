@@ -24,6 +24,7 @@
 import os
 from collections import OrderedDict
 
+from utils import read_file
 from downloader import Download
 from __metadata__ import (
     lib_path,
@@ -63,10 +64,7 @@ class QueuePkgs(object):
                 for line in queue_file:
                     queue.write(line)
                 queue.close()
-
-        f = open(self.queue_list, "r")
-        self.queued = f.read()
-        f.close()
+        self.queued = read_file(self.queue_list)
 
     def packages(self):
         '''

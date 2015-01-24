@@ -25,6 +25,7 @@
 import os
 import sys
 
+from utils import read_file
 from __metadata__ import (
     default_repositories,
     repositories
@@ -35,9 +36,7 @@ class Repo(object):
 
     def __init__(self):
         self.repo_file = "/etc/slpkg/custom-repositories"
-        f = open(self.repo_file, "r")
-        self.repositories_list = f.read()
-        f.close()
+        self.repositories_list = read_file(self.repo_file)
 
     def add(self, repo, url):
         '''

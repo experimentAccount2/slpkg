@@ -21,6 +21,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+from utils import read_file
 from __metadata__ import color
 
 
@@ -32,9 +33,7 @@ class BlackList(object):
     def __init__(self):
         self.quit = False
         self.blackfile = "/etc/slpkg/blacklist"
-        f = open(self.blackfile, "r")
-        self.black_conf = f.read()
-        f.close()
+        self.black_conf = read_file(self.blackfile)
 
     def packages(self):
         '''
