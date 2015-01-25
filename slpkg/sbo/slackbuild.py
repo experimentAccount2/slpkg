@@ -137,13 +137,8 @@ class SBoInstall(object):
                 if self.master_packages:
                     self.answer = self.continue_install()
                     if self.answer in['y', 'Y']:
-                        # installs = b_ins[0]
-                        # upgraded = b_ins[1]
-                        # versions = b_ins[2]
-                        b_ins = self.build_install()
-                        self.reference(len(b_ins[0]), self.msg(len(b_ins[0])),
-                                       len(b_ins[1]), self.msg(len(b_ins[1])),
-                                       b_ins[0], b_ins[2], b_ins[1])
+                        self.b_ins = self.build_install()
+                        self.reference()
                         write_deps(self.deps_dict)
                         delete(_m.build_path)
             else:
@@ -317,7 +312,7 @@ class SBoInstall(object):
         tag 2 or 3 will fit most
         '''
         slackbuilds = self.dependencies + self.master_packages
-        installs, upgraded, versions = [], [], []
+        installs, upgraded, = [], []
         if not os.path.exists(_m.build_path):
             os.makedirs(_m.build_path)
         os.chdir(_m.build_path)
@@ -354,33 +349,31 @@ class SBoInstall(object):
                 if find_package(pkg + '-', _m.pkg_path):
                     print("{0}[ Upgrading ] --> {1}{2}".format(
                         _m.color['GREEN'], _m.color['ENDC'], pkg))
-                    upgraded.append(pkg)
+                    upgraded.append(prgnam)
                 else:
                     print("{0}[ Installing ] --> {1}{2}".format(
                         _m.color['GREEN'], _m.color['ENDC'], pkg))
+                    installs.append(prgnam)
                 PackageManager(binary).upgrade()
-                installs.append(pkg)
-                versions.append(ver)
-        return [installs, upgraded, versions]
+        return [installs, upgraded]
 
-    def reference(self, *args):
+    def reference(self):
         '''
         Reference list with packages installed
         and upgraded
         '''
         template(78)
         print("| Total {0} {1} installed and {2} {3} upgraded".format(
-            args[0], args[1], args[2], args[3]))
+            len(self.b_ins[0]), self.msg(len(self.b_ins[0])),
+            len(self.b_ins[1]), self.msg(len(self.b_ins[1]))))
         template(78)
-        for pkg, ver in zip(args[4], args[5]):
-            installed = ("{0}-{1}".format(pkg, ver))
+        for installed in (self.b_ins[0] + self.b_ins[1]):
+            name = '-'.join(installed.split('-')[:-1])
             if find_package(installed, _m.pkg_path):
-                if pkg in args[6]:
-                    print("| Package {0} upgraded successfully".format(
-                        installed))
+                if installed in self.b_ins[1]:
+                    print("| Package {0} upgraded successfully".format(name))
                 else:
-                    print("| Package {0} installed successfully".format(
-                        installed))
+                    print("| Package {0} installed successfully".format(name))
             else:
                 print("| Package {0} NOT installed".format(installed))
         template(78)

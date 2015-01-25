@@ -123,7 +123,7 @@ class MetaData(object):
     default_answer = "n"
     remove_deps_answer = "n"
     skip_unst = "n"
-    del_deps = "on"
+    del_deps = "off"
     use_colors = "on"
     wget_option = '-c -N'
 
