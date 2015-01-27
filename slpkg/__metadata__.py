@@ -79,7 +79,7 @@ class MetaData(object):
 
     __all__ = "slpkg"
     __author__ = "dslackw"
-    __version_info__ = (2, 2, 0)
+    __version_info__ = (2, 2, 1)
     __version__ = "{0}.{1}.{2}".format(*__version_info__)
     __license__ = "GNU General Public License v3 (GPLv3)"
     __email__ = "d.zlatanidis@gmail.com"
@@ -139,8 +139,8 @@ class MetaData(object):
                     slack_rel = "stable"
             if line.startswith("REPOSITORIES"):
                 repositories = line[13:].strip().split(",")
-            if line.startswith("BUILD"):
-                build_path = line[6:].strip()
+            if line.startswith("BUILD_PATH"):
+                build_path = line[11:].strip()
             if line.startswith("PACKAGES"):
                 slpkg_tmp_packages = line[9:].strip()
             if line.startswith("PATCHES"):
