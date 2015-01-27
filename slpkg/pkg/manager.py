@@ -223,7 +223,7 @@ class PackageManager(object):
         print("\nPackages with matching name [ {0}{1}{2} ]\n".format(
               _m.color['CYAN'], ', '.join(self.binary), _m.color['ENDC']))
         for pkg in self.binary:
-            for match in find_package(pkg, _m.pkg_path):
+            for match in find_package('', _m.pkg_path):
                 if pkg in match:
                     matching += 1
                     print("[ {0}installed{1} ] - {2}".format(
