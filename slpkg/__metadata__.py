@@ -212,3 +212,11 @@ class MetaData(object):
 
     # computer architecture
     arch = os.uname()[4]
+
+    # get sbo OUTPUT enviroment variable
+    try:
+        output = os.environ['OUTPUT']
+    except KeyError:
+        output = tmp
+    if not output.endswith('/'):
+        output = output + '/'

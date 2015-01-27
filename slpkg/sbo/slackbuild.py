@@ -300,7 +300,7 @@ class SBoInstall(object):
         Search for binary packages in /tmp directory
         '''
         binary = []
-        for search in find_package(prgnam, _m.tmp):
+        for search in find_package(prgnam, _m.output):
             if "_SBo" in search:
                 binary.append(search)
         return binary
@@ -342,7 +342,7 @@ class SBoInstall(object):
                 BuildPackage(script, sources, _m.build_path).build()
                 binary_list = self.search_in_tmp(prgnam)
                 try:
-                    binary = (_m.tmp + max(binary_list)).split()
+                    binary = (_m.output + max(binary_list)).split()
                 except ValueError:
                     build_FAILED(sbo_url, prgnam)
                     sys.exit(0)

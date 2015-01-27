@@ -213,11 +213,11 @@ class SBoNetwork(object):
         directory.
         '''
         binary_list = []
-        for search in find_package(prgnam, _m.tmp):
+        for search in find_package(prgnam, _m.output):
             if "_SBo" in search:
                 binary_list.append(search)
             try:
-                binary = (_m.tmp + max(binary_list)).split()
+                binary = (_m.output + max(binary_list)).split()
             except ValueError:
                 build_FAILED(self.sbo_url, prgnam)
                 sys.exit(0)
