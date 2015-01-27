@@ -38,7 +38,8 @@ from slpkg.messages import (
     msg_done,
     reference,
     msg_reading,
-    msg_resolving
+    msg_resolving,
+    msg_not_found,
 )
 from slpkg.utils import (
     remove_dbs,
@@ -95,8 +96,8 @@ class BinaryInstall(object):
             (self.dwn, self.install, self.comp_sum,
              self.uncomp_sum) = self.store(self.packages)
             msg_done()
-            print("")   # new line at start
             if self.install:
+                print("")   # new line at start
                 self.top_view()
                 print("Installing:")
                 mas_sum = self.views(self.install, self.comp_sum)
@@ -130,7 +131,7 @@ class BinaryInstall(object):
                     write_deps(self.deps_dict)
                     delete(self.tmp_path, self.install)
             else:
-                print('Not found packages for installation\n')
+                msg_not_found(self.if_upgrade)
         except KeyboardInterrupt:
             print("")   # new line at exit
             sys.exit(0)

@@ -112,6 +112,13 @@ def msg_pkg(count):
     return message
 
 
+def msg_not_found(if_upgrade):
+    if if_upgrade:
+        print('\nNot found packages for upgrade\n')
+    else:
+        print('\nNot found packages for installation\n')
+
+
 def reference(install, upgrade):
     '''
     Reference list with packages installed

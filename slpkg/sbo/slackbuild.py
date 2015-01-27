@@ -40,6 +40,7 @@ from slpkg.messages import (
     reference,
     msg_reading,
     build_FAILED,
+    msg_not_found,
     msg_resolving
 )
 from slpkg.__metadata__ import MetaData as _m
@@ -144,7 +145,7 @@ class SBoInstall(object):
                         write_deps(self.deps_dict)
                         delete(_m.build_path)
             else:
-                print('\nNot found packages for installation\n')
+                msg_not_found(if_upgrade)
         except KeyboardInterrupt:
             print("")   # new line at exit
             sys.exit(0)
