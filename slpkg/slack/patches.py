@@ -34,8 +34,10 @@ from slpkg.downloader import Download
 from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
 from slpkg.messages import (
+    msg_pkg,
     template,
     msg_done,
+    reference,
     msg_reading
 )
 from slpkg.__metadata__ import MetaData as _m
@@ -88,7 +90,7 @@ class Patches(object):
                 print("\nInstalling summary")
                 print("=" * 79)
                 print("{0}Total {1} {2} will be upgraded.".format(
-                    _m.color['GREY'], len(upgrade_all), msgs(upgrade_all)))
+                    _m.color['GREY'], len(upgrade_all), msg_pkg(upgrade_all)))
                 print("Need to get {0} {1} of archives.".format(size[0],
                                                                 unit[0]))
                 print("After this process, {0} {1} of additional disk space "
@@ -100,8 +102,9 @@ class Patches(object):
                     answer = raw_input("\nWould you like to continue [Y/n]? ")
                 if answer in ['y', 'Y']:
                     Download(self.patch_path, dwn_links).start()
-                    upgrade(self.patch_path, upgrade_all)
+                    upg = upgrade(self.patch_path, upgrade_all)
                     kernel(upgrade_all)
+                    reference([], upg)
                     delete(self.patch_path, upgrade_all)
             else:
                 slack_arch = ""
@@ -151,25 +154,19 @@ def views(pkg_for_upgrade, upgrade_all, comp_sum):
             size, " K"))
 
 
-def msgs(upgrade_all):
-    '''
-    Print singular plural
-    '''
-    msg_pkg = "package"
-    if len(upgrade_all) > 1:
-        msg_pkg = msg_pkg + "s"
-    return msg_pkg
-
-
 def upgrade(patch_path, upgrade_all):
     '''
     Upgrade packages
     '''
+    upgraded = []
     for pkg in upgrade_all:
         check_md5(pkg_checksum(pkg, "slack_patches"), patch_path + pkg)
+        pkg_ver = '{0}-{1}'.format(split_package(pkg)[0], split_package(pkg)[1])
         print("[ {0}upgrading{1} ] --> {2}".format(_m.color['YELLOW'],
                                                    _m.color['ENDC'], pkg[:-4]))
         PackageManager((patch_path + pkg).split()).upgrade()
+        upgraded.append(pkg_ver)
+    return upgraded
 
 
 def kernel(upgrade_all):

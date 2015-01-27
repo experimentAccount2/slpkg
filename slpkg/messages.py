@@ -25,6 +25,8 @@ import sys
 
 from __metadata__ import MetaData as _m
 
+from slpkg.pkg.find import find_package
+
 
 def pkg_not_found(bol, pkg, message, eol):
     '''
@@ -64,7 +66,7 @@ def build_FAILED(sbo_url, prgnam):
     print("| Build package {0} [ {1}FAILED{2} ]".format(prgnam, _m.color['RED'],
                                                         _m.color['ENDC']))
     template(78)
-    print("| See log file in '{0}/var/log/slpkg/sbo/build_logs{1}' directory"
+    print("| See log file in '{0}/var/log/slpkg/sbo/build_logs{1}' directory "
           "or read README file:".format(_m.color['CYAN'], _m.color['ENDC']))
     print("| {0}{1}".format(sbo_url, "README"))
     template(78)
@@ -98,3 +100,35 @@ def msg_resolving():
 
 def msg_done():
     sys.stdout.write("{0}Done{1}\n".format(_m.color['GREY'], _m.color['ENDC']))
+
+
+def msg_pkg(count):
+    '''
+    Print singular plural
+    '''
+    message = "package"
+    if count > 1:
+        message = message + "s"
+    return message
+
+
+def reference(install, upgrade):
+    '''
+    Reference list with packages installed
+    and upgraded
+    '''
+    template(78)
+    print("| Total {0} {1} installed and {2} {3} upgraded".format(
+        len(install), msg_pkg(len(install)),
+        len(upgrade), msg_pkg(len(upgrade))))
+    template(78)
+    for installed in (install + upgrade):
+        name = '-'.join(installed.split('-')[:-1])
+        if find_package(installed, _m.pkg_path):
+            if installed in upgrade:
+                print("| Package {0} upgraded successfully".format(name))
+            else:
+                print("| Package {0} installed successfully".format(name))
+        else:
+            print("| Package {0} NOT installed".format(name))
+    template(78)

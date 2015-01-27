@@ -39,7 +39,7 @@ class Config(object):
         conf_args = [
             'VERSION',
             'REPOSITORIES',
-            'BUILD',
+            'BUILD_PATH',
             'SBO_CHECK_MD5',
             'PACKAGES',
             'PATCHES',

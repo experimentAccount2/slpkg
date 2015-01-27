@@ -33,9 +33,11 @@ from slpkg.utils import (
     remove_dbs
 )
 from slpkg.messages import (
+    msg_pkg,
     template,
     msg_done,
     pkg_found,
+    reference,
     msg_reading,
     build_FAILED,
     msg_resolving
@@ -128,17 +130,17 @@ class SBoInstall(object):
                 print("\nInstalling summary")
                 print("=" * 79)
                 print("{0}Total {1} {2}.".format(
-                    _m.color['GREY'], count_total, self.msg(count_total)))
+                    _m.color['GREY'], count_total, msg_pkg(count_total)))
                 print("{0} {1} will be installed, {2} allready installed and "
-                      "{3} {4}".format(count_uni, self.msg(count_uni),
+                      "{3} {4}".format(count_uni, msg_pkg(count_uni),
                                        count_ins, count_upg,
-                                       self.msg(count_upg)))
+                                       msg_pkg(count_upg)))
                 print("will be upgraded.{0}\n".format(_m.color['ENDC']))
                 if self.master_packages:
                     self.answer = self.continue_install()
                     if self.answer in['y', 'Y']:
-                        self.b_ins = self.build_install()
-                        self.reference()
+                        b_ins = self.build_install()
+                        reference(b_ins[0], b_ins[1])
                         write_deps(self.deps_dict)
                         delete(_m.build_path)
             else:
@@ -266,15 +268,6 @@ class SBoInstall(object):
                 arch = item
         return arch
 
-    def msg(self, count):
-        '''
-        Print singular plural
-        '''
-        message = "package"
-        if count > 1:
-            message = message + "s"
-        return message
-
     def continue_install(self):
         '''
         Default answer
@@ -356,24 +349,3 @@ class SBoInstall(object):
                     installs.append(prgnam)
                 PackageManager(binary).upgrade()
         return [installs, upgraded]
-
-    def reference(self):
-        '''
-        Reference list with packages installed
-        and upgraded
-        '''
-        template(78)
-        print("| Total {0} {1} installed and {2} {3} upgraded".format(
-            len(self.b_ins[0]), self.msg(len(self.b_ins[0])),
-            len(self.b_ins[1]), self.msg(len(self.b_ins[1]))))
-        template(78)
-        for installed in (self.b_ins[0] + self.b_ins[1]):
-            name = '-'.join(installed.split('-')[:-1])
-            if find_package(installed, _m.pkg_path):
-                if installed in self.b_ins[1]:
-                    print("| Package {0} upgraded successfully".format(name))
-                else:
-                    print("| Package {0} installed successfully".format(name))
-            else:
-                print("| Package {0} NOT installed".format(installed))
-        template(78)

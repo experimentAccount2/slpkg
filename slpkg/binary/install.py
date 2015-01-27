@@ -33,8 +33,10 @@ from slpkg.downloader import Download
 from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
 from slpkg.messages import (
+    msg_pkg,
     template,
     msg_done,
+    reference,
     msg_reading,
     msg_resolving
 )
@@ -109,10 +111,10 @@ class BinaryInstall(object):
                 print("\nInstalling summary")
                 print("=" * 79)
                 print("{0}Total {1} {2}.".format(_m.color['GREY'], sum(sums),
-                                                 self.msg(sum(sums))))
+                                                 msg_pkg(sum(sums))))
                 print("{0} {1} will be installed, {2} will be upgraded and "
                       "{3} will be reinstalled.".format(sums[2],
-                                                        self.msg(sums[2]),
+                                                        msg_pkg(sums[2]),
                                                         sums[1], sums[0]))
                 print("Need to get {0} {1} of archives.".format(size[0],
                                                                 unit[0]))
@@ -123,7 +125,8 @@ class BinaryInstall(object):
                 if self.answer in ['y', 'Y']:
                     self.install.reverse()
                     Download(self.tmp_path, (self.dep_dwn + self.dwn)).start()
-                    self.install_packages()
+                    ins, upg = self.install_packages()
+                    reference(ins, upg)
                     write_deps(self.deps_dict)
                     delete(self.tmp_path, self.install)
             else:
@@ -162,24 +165,31 @@ class BinaryInstall(object):
         '''
         Install or upgrade packages
         '''
+        installs, upgraded = [], []
         for inst in (self.dep_install + self.install):
             package = (self.tmp_path + inst).split()
+            pkg_ver = '{0}-{1}'.format(split_package(inst)[0],
+                                       split_package(inst)[1])
             self.checksums(inst)
             if os.path.isfile(_m.pkg_path + inst[:-4]):
                 print("[ {0}reinstalling{1} ] --> {2}".format(_m.color['GREEN'],
                                                               _m.color['ENDC'],
                                                               inst))
+                installs.append(pkg_ver)
                 PackageManager(package).reinstall()
             elif find_package(split_package(inst)[0] + "-", _m.pkg_path):
                 print("[ {0}upgrading{1} ] --> {2}".format(_m.color['YELLOW'],
                                                            _m.color['ENDC'],
                                                            inst))
+                upgraded.append(pkg_ver)
                 PackageManager(package).upgrade()
             else:
                 print("[ {0}installing{1} ] --> {2}".format(_m.color['GREEN'],
                                                             _m.color['ENDC'],
                                                             inst))
+                installs.append(pkg_ver)
                 PackageManager(package).upgrade()
+        return [installs, upgraded]
 
     def checksums(self, install):
         '''
@@ -203,15 +213,6 @@ class BinaryInstall(object):
         else:
             self.answer = raw_input("\nWould you like to continue [Y/n]? ")
         return self.answer
-
-    def msg(self, count):
-        '''
-        Print singular plural
-        '''
-        message = "package"
-        if count > 1:
-            message = message + "s"
-        return message
 
     def resolving_deps(self):
         '''

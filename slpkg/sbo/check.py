@@ -28,7 +28,7 @@ import sys
 from slpkg.toolbar import status
 from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _m
-from messages import (
+from slpkg.messages import (
     msg_done,
     msg_checking
 )
