@@ -44,8 +44,11 @@ class PkgDesc(object):
             '': ''
         }
         self.COLOR = color_text[self.paint]
-        if self.repo in _m.repositories:
+        if self.repo in _m.repositories and self.repo != "sbo":
             self.lib = _m.lib_path + '{0}_repo/PACKAGES.TXT'.format(self.repo)
+        else:
+            self.lib = _m.lib_path + '{0}_repo/SLACKBUILDS.TXT'.format(
+                self.repo)
 
     def view(self):
         PACKAGES_TXT = read_file(self.lib)
