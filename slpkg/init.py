@@ -290,7 +290,7 @@ class Initialization(object):
         log = self.log_path + "slonly/"
         lib = self.lib_path + "slonly_repo/"
         lib_file = "PACKAGES.TXT"
-        lst_file = "FILELIST.TXT"
+        # lst_file = "FILELIST.TXT"
         md5_file = "CHECKSUMS.md5"
         log_file = "ChangeLog.txt"
         if not os.path.exists(log):
@@ -300,16 +300,16 @@ class Initialization(object):
         if arch == "x86_64":
             ar = "{0}-x86_64".format(slack_ver())
         packages_txt = "{0}{1}/{2}".format(repo, ar, lib_file)
-        filelist_txt = "{0}{1}/{2}".format(repo, ar, lst_file)
+        # filelist_txt = "{0}{1}/{2}".format(repo, ar, lst_file)
         checksums_md5 = "{0}{1}/{2}".format(repo, ar, md5_file)
         # ChangeLog.txt file available only for x86 arch
         changelog_txt = "{0}{1}-x86/{2}".format(repo, slack_ver(), log_file)
         self.write(lib, lib_file, packages_txt)
-        self.write(lib, lst_file, filelist_txt)
+        # self.write(lib, lst_file, filelist_txt)
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, lst_file, filelist_txt)
+                    md5_file, checksums_md5, '', '')
 
     def ktown(self):
         '''
@@ -478,8 +478,19 @@ class Initialization(object):
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
                     md5_file, checksums_md5, '', '')
 
-    @staticmethod
-    def write(path, data_file, file_url):
+    def write_file(self, path, archive, contents_txt):
+        '''
+        Create local file
+        '''
+        toolbar_width, index = 2, 0
+        with open("{0}{1}".format(path, archive), "w") as f:
+            for line in contents_txt.splitlines():
+                index += 1
+                toolbar_width = status(index, toolbar_width, 700)
+                f.write(line + "\n")
+            f.close()
+
+    def write(self, path, data_file, file_url):
         '''
         Write repositories files in /var/lib/slpkg
         and /var/log/slpkg
@@ -488,33 +499,25 @@ class Initialization(object):
         if not os.path.isfile(path + data_file):
             for fu in file_url.split():
                 FILE_TXT += URL(fu).reading()
-            with open("{0}{1}".format(path, data_file), "w") as f:
-                toolbar_width, index = 2, 0
-                for line in FILE_TXT.splitlines():
-                    index += 1
-                    toolbar_width = status(index, toolbar_width, 1000)
-                    f.write(line + "\n")
-                f.close()
+            self.write_file(path, data_file, FILE_TXT)
 
-    @staticmethod
-    def remote(*args):
+    def remote(self, *args):
         '''
-        args[0] = log
+        args[0] = log path
         args[1] = log_file
-        args[2] = changelog_txt
-        args[3] = lib
+        args[2] = changelog_txt URL
+        args[3] = lib path
         args[4] = lib_file
-        args[5] = packages_txt
+        args[5] = packages_txt URL
         args[6] = md5_file
-        args[7] = checksums_md5
+        args[7] = checksums_md5 URL
         args[8] = lst_file
-        args[9] = filelist_txt
+        args[9] = filelist_txt URL
 
         We take the size of ChangeLog.txt from the server and locally.
         If the two files differ in size delete and replace all files with new.
         '''
         PACKAGES_TXT = ""
-        toolbar_width, index = 2, 0
         server = FileSize(args[2]).server()
         local = FileSize(args[0] + args[1]).local()
         if server != local:
@@ -528,42 +531,23 @@ class Initialization(object):
             # remove FILELIST.TXT
             if args[8]:
                 os.remove("{0}{1}".format(args[3], args[8]))
-            # read URL's
+            # read PACKAGES_TXT URL's
             for fu in args[5].split():
                 PACKAGES_TXT += URL(fu).reading()
+            # read CHANGELOG_TXX URL's
             CHANGELOG_TXT = URL(args[2]).reading()
+            # create PACKAGES.txt file
+            self.write_file(args[3], args[4], PACKAGES_TXT)
+            # create ChangeLog.txt file
+            self.write_file(args[0], args[1], CHANGELOG_TXT)
             # create CHECKSUMS.md5 file
             if args[6]:
                 CHECKSUMS_md5 = URL(args[7]).reading()
-                with open("{0}{1}".format(args[3], args[6]), "w") as f:
-                    for line in CHECKSUMS_md5.splitlines():
-                        index += 1
-                        toolbar_width = status(index, toolbar_width, 700)
-                        f.write(line + "\n")
-                    f.close()
-            # create PACKAGES.txt file
-            with open("{0}{1}".format(args[3], args[4]), "w") as f:
-                for line in PACKAGES_TXT.splitlines():
-                    index += 1
-                    toolbar_width = status(index, toolbar_width, 700)
-                    f.write(line + "\n")
-                f.close()
-            # create ChangeLog.txt file
-            with open("{0}{1}".format(args[0], args[1]), "w") as f:
-                for line in CHANGELOG_TXT.splitlines():
-                    index += 1
-                    toolbar_width = status(index, toolbar_width, 700)
-                    f.write(line + "\n")
-                f.close()
+                self.write_file(args[3], args[6], CHECKSUMS_md5)
             # create FILELIST.TXT file
             if args[8]:
                 FILELIST_TXT = URL(args[9]).reading()
-                with open("{0}{1}".format(args[3], args[8]), "w") as f:
-                    for line in FILELIST_TXT.splitlines():
-                        index += 1
-                        toolbar_width = status(index, toolbar_width, 700)
-                        f.write(line + "\n")
-                    f.close()
+                self.write_file(args[3], args[8], FILELIST_TXT)
 
     def re_create(self):
         '''
