@@ -127,8 +127,8 @@ class MetaData(object):
     use_colors = "on"
     wget_option = '-c -N'
 
-    if os.path.isfile("/etc/slpkg/slpkg.conf"):
-        f = open("/etc/slpkg/slpkg.conf", "r")
+    if os.path.isfile(conf_path + "slpkg.conf"):
+        f = open(conf_path + "slpkg.conf", "r")
         conf = f.read()
         f.close()
         for line in conf.splitlines():
