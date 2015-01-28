@@ -23,6 +23,7 @@
 
 import subprocess
 
+from utils import read_file
 from __metadata__ import MetaData as _m
 
 
@@ -53,9 +54,7 @@ class Config(object):
             'USE_COLORS',
             'WGET_OPTION'
         ]
-        f = open(self.config_file, "r")
-        read_conf = f.read()
-        f.close()
+        read_conf = read_file(self.config_file)
         for line in read_conf.splitlines():
             if not line.startswith("#") and line.split("=")[0] in conf_args:
                 print(line)

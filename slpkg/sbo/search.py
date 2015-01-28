@@ -26,7 +26,7 @@ import sys
 from slpkg.repositories import Repo
 from slpkg.blacklist import BlackList
 from slpkg.__metadata__ import MetaData as _m
-from utils import (
+from slpkg.utils import (
     read_file
 )
 

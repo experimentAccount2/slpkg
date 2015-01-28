@@ -102,9 +102,7 @@ class Repo(object):
         '''
         default = "http://mirrors.slackware.com/slackware/"
         if os.path.isfile("/etc/slpkg/slackware-mirrors"):
-            with open("/etc/slpkg/slackware-mirrors", "r") as slacks:
-                mirrors = slacks.read()
-                slacks.close()
+            mirrors = read_file(_m.conf_path + 'slackware-mirrors')
             for line in mirrors.splitlines():
                 line = line.rstrip()
                 if not line.startswith("#") and line:

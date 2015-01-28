@@ -25,6 +25,7 @@ import os
 import sys
 import subprocess
 
+from slpkg.utils import read_file
 from slpkg.messages import (
     pkg_not_found,
     template
@@ -162,14 +163,12 @@ class PackageManager(object):
         '''
         View dependencies for before remove
         '''
-        with open(path + package, "r") as f:
-            dependencies = f.read().split()
-            f.close()
+        dependencies = read_file(path + package)
         print("")   # new line at start
         template(78)
         print("| Found dependencies for package {0}:".format(package))
         template(78)
-        for dep in dependencies:
+        for dep in dependencies.splitlines():
             print("| {0}{1}{2}".format(_m.color['RED'], dep, _m.color['ENDC']))
         template(78)
         return dependencies
@@ -228,9 +227,7 @@ class PackageManager(object):
                     matching += 1
                     print("[ {0}installed{1} ] - {2}".format(
                         _m.color['GREEN'], _m.color['ENDC'], match))
-                    with open(_m.pkg_path + match, "r") as f:
-                        data = f.read()
-                        f.close()
+                    data = read_file(_m.pkg_path + match)
                     for line in data.splitlines():
                         if line.startswith("UNCOMPRESSED PACKAGE SIZE:"):
                             if "M" in line[26:]:
@@ -258,10 +255,10 @@ class PackageManager(object):
         for pkg in self.binary:
             find = find_package(pkg + _m.sp, _m.pkg_path)
             if find:
-                with open(_m.pkg_path + "".join(find), "r") as package:
-                    for line in package:
-                        print(line).strip()
-                    print("")   # new line per file
+                package = read_file(_m.pkg_path + "".join(find))
+                for line in package.splitlines():
+                    print(line).strip()
+                print("")   # new line per file
             else:
                 message = "Can't dislpay"
                 if len(self.binary) > 1:
@@ -281,17 +278,13 @@ class PackageManager(object):
             if repo == 'sbo':
                 if (os.path.isfile(
                         _m.lib_path + '{0}_repo/SLACKBUILDS.TXT'.format(repo))):
-                    f = open(_m.lib_path + '{0}_repo/'
-                             'SLACKBUILDS.TXT'.format(repo), 'r')
-                    r = f.read()
-                    f.close()
+                    r = read_file(_m.lib_path + '{0}_repo/'
+                                  'SLACKBUILDS.TXT'.format(repo))
             else:
                 if os.path.isfile(_m.lib_path + '{0}_repo/PACKAGES.TXT'.format(
                         repo)):
-                    f = open(_m.lib_path + '{0}_repo/PACKAGES.TXT'.format(repo),
-                             'r')
-                    r = f.read()
-                    f.close()
+                    r = read_file(_m.lib_path + '{0}_repo/PACKAGES.TXT'.format(
+                        repo))
             for line in r.splitlines():
                 if repo == 'sbo':
                     if line.startswith("SLACKBUILD NAME: "):
