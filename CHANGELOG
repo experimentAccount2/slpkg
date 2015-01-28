@@ -1,10 +1,12 @@
 Version 2.2.1
-27-1-2015
+28-1-2015
 
 [Feature] - Added support multipackages.
 
-[Updated] - Fix [key error] when you enter wrong repository as default.
+[Updated] - Fix [key error] when you enter wrong name repository as default.
           - Rename BUILD variable to BUILD_PATH in configuration file slpkg.conf.
+          - Change in view list of packages in option '-l'.
+          - Update option '-f' view installed packages.
 
 Version 2.2.0
 08-1-2015

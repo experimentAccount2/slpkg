@@ -58,8 +58,10 @@ def options():
         "packages",
         "  -c, [repository] --upgrade                check for updated "
         "packages",
-        "  -s, [repository] [package...]             download, build & install",
-        "  -t, [repository] [package]                tracking dependencies",
+        "  -s, [repository] [package...]             download, build & install "
+        "packages",
+        "  -t, [repository] [package]                package tracking "
+        "dependencies",
         "  -p, [repository] [package], --color=[]    print package description",
         "  -n, [package]                             view SBo packages "
         "through network",

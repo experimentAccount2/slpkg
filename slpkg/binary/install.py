@@ -289,7 +289,10 @@ class BinaryInstall(object):
         for pkg in packages:
             for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
                                                data[3]):
-                if name and pkg == split_package(name)[0] and pkg not in black:
+                if name:
+                    pkg_ver = '{0}-{1}'.format(split_package(name)[0],
+                                               split_package(name)[1])
+                if pkg in pkg_ver and pkg not in black:
                     dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
                     install.append(name)
                     comp_sum.append(comp)
@@ -298,7 +301,8 @@ class BinaryInstall(object):
             for pkg in packages:
                 for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
                                                    data[3]):
-                    if name and pkg in split_package(name)[0]:
+                    if (name and pkg in split_package(name)[0]
+                            and pkg not in black):
                         dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
                         install.append(name)
                         comp_sum.append(comp)
