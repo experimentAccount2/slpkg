@@ -21,6 +21,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+from utils import read_file
 from slpkg.__metadata__ import MetaData as _m
 
 
@@ -43,15 +44,13 @@ class SBoGrep(object):
         self.answer = ['y', 'Y']
         self.unst = ['UNSUPPORTED', 'UNTESTED']
         # open an read SLACKBUILDS.TXT file
-        f = open(self.sbo_txt, "r")
-        self.SLACKBUILDS_TXT = f.read()
-        f.close()
+        self.SLACKBUILDS_TXT = read_file(self.sbo_txt)
 
     def source(self):
         '''
         Grab sources downloads links
         '''
-        source, source64, src, = "", "", ""
+        source, source64, = '', ''
         for line in self.SLACKBUILDS_TXT.splitlines():
             if line.startswith(self.line_name):
                 sbo_name = line[17:].strip()
@@ -61,6 +60,10 @@ class SBoGrep(object):
             if line.startswith(self.line_down_64):
                 if sbo_name == self.name and line[28:].strip():
                     source64 = line[28:]
+        return self._select_source_arch(source, source64)
+
+    def _select_source_arch(self, source, source64):
+        src = ''
         if _m.arch == "x86_64":
             if source64:
                 src = source64
@@ -101,7 +104,7 @@ class SBoGrep(object):
         '''
         Grab checksum string
         '''
-        md5sum, md5sum64, md5 = [], [], []
+        md5sum, md5sum64, = [], []
         for line in self.SLACKBUILDS_TXT.splitlines():
             if line.startswith(self.line_name):
                 sbo_name = line[17:].strip()
@@ -111,6 +114,10 @@ class SBoGrep(object):
             if line.startswith(self.line_md5):
                 if sbo_name == self.name and line[19:].strip():
                     md5sum = line[19:].strip().split()
+        return self._select_md5sum_arch(md5sum, md5sum64)
+
+    def _select_md5sum_arch(self, md5sum, md5sum64):
+        md5 = ''
         if _m.arch == "x86_64":
             if md5sum64:
                 md5 = md5sum64
