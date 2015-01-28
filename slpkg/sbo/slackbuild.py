@@ -221,8 +221,7 @@ class SBoInstall(object):
         Create empty seats if not upgrade
         '''
         if not self.if_upgrade:
-            for i in range(len(self.slackbuilds)):
-                self.pkg_ver.append('')
+            self.pkg_ver = [''] * len(self.slackbuilds)
 
     def view_packages(self, *args):
         '''
