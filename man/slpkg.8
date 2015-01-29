@@ -11,7 +11,7 @@
 .\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 .\" GNU General Public License for more details.
 .\"
-.TH Slpkg "8" "5 2014" "slpkg"
+.TH Slpkg "8" "1 2015" "slpkg"
 .SH NAME
 Slpkg is a user-friendly package manager for Slackware installations
 .SH SYNOPSIS
@@ -147,15 +147,15 @@ You can check for new versions and update slpkg itself.
 With this argument, build slackware package from source quickly and easy.
 
 .SS -b , add, remove, view packages in blacklist
-\fBslpkg\fP \fB-b\fP \fB--list\fP <\fIpackages\fP> \fB--add\fP \fB--remove\fP
+\fBslpkg\fP \fB-b\fP \fB--list\fP, <\fIpackages\fP> \fB--add\fP, \fB--remove\fP
 .PP
 List, add or remove packages from blacklist file. The settings here affect 
 all repositories.
 
 .SS -q , add, remove, view packages in queue
-\fBslpkg\fP \fB-q\fP \fB--list\fP <\fIpackages\fP> \fB--add\fP \fB--remove\fP
+\fBslpkg\fP \fB-q\fP \fB--list\fP, <\fIpackages\fP> \fB--add\fP, \fB--remove\fP
 .TP
-\fBslpkg\fP \fB-q\fP \fB--build\fP \fB--install\fP \fB--build-install\fP
+\fBslpkg\fP \fB-q\fP \fB--build\fP, \fB--install\fP, \fB--build-install\fP
 .PP
 List, add, or remove sbo packages from queue. This argument is very useful if you want
 to build and install multiple packages together. What to watch out for is the correct
@@ -164,12 +164,12 @@ run '# slpkg -q all --remove'. (these arguments only working for the sbo reposit
 Build or install or build and install packages are queued.
 
 .SS -g , configuration file management
-\fBslpkg\fP \fB--config\fP \fB--config=[editor]\fP
+\fBslpkg\fP \fB--config\fP, \fB--config=[editor]\fP
 .PP
 Print configuration file or edit with editor.
 
 .SS -l , list of installed packages
-\fBslpkg\fP \fB-l\fP <\fIall\fP> \fIofficial\fP \fInon-official\fP \fI--index\fP
+\fBslpkg\fP \fB-l\fP <\fIrepository\fP>, \fI--index\fP
 .PP
 List of packages per repository. Support command 'grep' like '# slpkg -l sbo | grep "python"'.
 
@@ -177,14 +177,16 @@ List of packages per repository. Support command 'grep' like '# slpkg -l sbo | g
 \fBslpkg\fP \fB-c\fP <\fIrepository\fP> \fI--upgrade\f
 .PP
 Check your packages is up to date.
+Slackware 'patches' repository works independently of the others i.e not need before updating 
+the list of packages by choosing "# slpkg update", works directly with the official repository 
+and why always you can have updated your system. 
 
 .SS -s , download, build and install package with all dependencies
 \fBslpkg\fP \fB-s\fP <\fIrepository\fP> <\fIname of packages\fP>
 .PP
 Installs or upgrade packages from the repositories with automatically resolving all 
-dependencies of the package. Also installs the official distribution Slackware 
-packages. Sometimes to install a package have to pass part of the version of the 
-package as 'slpkg -s alien ffmpeg-2.4.3'.
+dependencies of the package. Sometimes to install a package have to pass part of the 
+version of the package as 'slpkg -s alien ffmpeg-2.4.3'.
 
 .SS -t , tracking dependencies
 \fBslpkg\fP \fB-t\fP <\fIrepository\fP> <\fIname of package\fP>
@@ -193,7 +195,7 @@ Tracking all dependencies of that package.
 The sequence shown is that you must follow to correctly install package.
 
 .SS -p , print packages description
-\fBslpkg\fP \fB-p\fP <\fIrepository\fP> <\fIname of package\fP> \fI--color=\fP
+\fBslpkg\fP \fB-p\fP <\fIrepository\fP> <\fIname of package\fP>, \fI--color=\fP
 .PP
 Print package description with color. Available colors: red, green, yellow, cyan, grey
 
@@ -203,11 +205,11 @@ Print package description with color. Available colors: red, green, yellow, cyan
 Find installed packages with view total file size. 
 Example you can view all installed sbo packages like '# slpkg -f _SBo'.
 
-.SS -n , find packages from SBo repositority
+.SS -n , view SBo packages
 \fBslpkg\fP \fB-n\fP <\fIname of package\fP>
 .PP
-With this method you can find the SBo script that interests you through
-the network. (www.slackbuilds.org)
+View complete slackbuilds.org site in your terminal. Read fies, download, 
+build or install.
 
 .SS -i , install binary packages
 \fBslpkg\fP \fB-i\fP <\fIpackages.t?z\fP>
@@ -287,7 +289,7 @@ Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 .SH HOMEPAGE
 https://github.com/dslackw/slpkg
 .SH COPYRIGHT
-Copyright \(co 2014 Dimitris Zlatanidis
+Copyright \(co 2014-2015 Dimitris Zlatanidis
 
 .SH SEE ALSO
 installpkg(8), upgradepkg(8), removepkg(8), pkgtool(8), slackpkg(8), explodepkg(8),
