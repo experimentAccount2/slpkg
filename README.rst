@@ -416,6 +416,7 @@ Installing packages from the repositories (supporting multi packages):
 
     Example from 'alien' repository:
 
+    $ slpkg -s alien atkmm
     Reading package lists .....Done
     Resolving dependencies .........Done
 
