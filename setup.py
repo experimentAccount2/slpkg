@@ -90,7 +90,8 @@ if "install" in sys.argv:
     ]
     if not os.path.exists(_m.conf_path):
         os.system("mkdir -p {0}".format(_m.conf_path))
-    for conf in conf_file:
+    shutil.copy2(conf_file[0], _m.conf_path + conf_file[0])
+    for conf in conf_file[1:]:
         filename = conf.split("/")[-1]
         print("Installing '{0}' file".format(filename))
         if os.path.isfile(_m.conf_path + filename):
