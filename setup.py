@@ -38,7 +38,7 @@ except ImportError:
 setup(
     name="slpkg",
     packages=["slpkg", "slpkg/sbo", "slpkg/pkg", "slpkg/slack",
-              "slpkg/others"],
+              "slpkg/binary"],
     scripts=["bin/slpkg"],
     version=_m.__version__,
     description="Python tool to manage Slackware packages",
