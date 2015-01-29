@@ -23,7 +23,7 @@
 
 import sys
 
-from utils import package_name
+from slpkg.utils import package_name
 from slpkg.toolbar import status
 from slpkg.blacklist import BlackList
 

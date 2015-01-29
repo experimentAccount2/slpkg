@@ -23,8 +23,8 @@
 
 import os
 
-from utils import read_file
-from repositories import Repo
+from slpkg.utils import read_file
+from slpkg.repositories import Repo
 from slpkg.__metadata__ import MetaData as _m
 
 from slpkg.slack.mirrors import mirrors

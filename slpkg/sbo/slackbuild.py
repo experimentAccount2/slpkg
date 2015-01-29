@@ -26,6 +26,7 @@ import sys
 
 
 from slpkg.toolbar import status
+from slpkg.log_deps import write_deps
 from slpkg.downloader import Download
 from slpkg.splitting import split_package
 from slpkg.utils import (
@@ -51,7 +52,6 @@ from slpkg.pkg.build import BuildPackage
 from slpkg.pkg.manager import PackageManager
 
 from greps import SBoGrep
-from log_deps import write_deps
 from remove import delete
 from compressed import SBoLink
 from dependency import Requires
