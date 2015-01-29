@@ -119,6 +119,13 @@ def msg_not_found(if_upgrade):
         print('\nNot found packages for installation\n')
 
 
+def msg_upg_inst(if_upgrade):
+    if not if_upgrade:
+        print("Installing:")
+    else:
+        print("Upgrading:")
+
+
 def reference(install, upgrade):
     '''
     Reference list with packages installed

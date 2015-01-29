@@ -39,6 +39,7 @@ from slpkg.messages import (
     pkg_found,
     reference,
     msg_reading,
+    msg_upg_inst,
     build_FAILED,
     msg_not_found,
     msg_resolving
@@ -107,6 +108,7 @@ class SBoInstall(object):
                 print("\nThe following packages will be automatically "
                       "installed or upgraded \nwith new version:\n")
                 self.top_view()
+                msg_upg_inst(self.if_upgrade)
                 # view master packages
                 for sbo, ver, ar in zip(self.master_packages, self.pkg_ver,
                                         mas_src):

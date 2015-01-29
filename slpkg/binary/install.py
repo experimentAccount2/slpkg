@@ -38,6 +38,7 @@ from slpkg.messages import (
     msg_done,
     reference,
     msg_reading,
+    msg_upg_inst,
     msg_resolving,
     msg_not_found,
 )
@@ -99,7 +100,7 @@ class BinaryInstall(object):
             if self.install:
                 print("")   # new line at start
                 self.top_view()
-                print("Installing:")
+                msg_upg_inst(self.if_upgrade)
                 mas_sum = self.views(self.install, self.comp_sum)
                 if self.dependencies:
                     print("Installing for dependencies:")
