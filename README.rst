@@ -11,9 +11,9 @@
 
 Latest Release:
 
-- Version: 2.1.dev
+- Version: 2.2.1
 - `Package <https://sourceforge.net/projects/slpkg/files/slpkg/binary/>`_
-- `Source <https://github.com/dslackw/slpkg/archive/v2.1.dev.tar.gz>`_
+- `Source <https://github.com/dslackw/slpkg/archive/v2.2.1.tar.gz>`_
 - `CHANGELOG <https://github.com/dslackw/slpkg/blob/master/CHANGELOG>`_
  
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/logo.png
@@ -102,6 +102,34 @@ More features come ...
     :target: https://github.com/dslackw/slpkg
 
 
+
+Usage
+-----
+
+Need to run '# slpkg update' for the first time to synchronize the list of packages,
+also every time you add a repository.
+To add or remove repositories must edit the file '/etc/slpkg/slpkg.conf'.
+
+Also it is good to update the list of packages by running the command '# slpkg update'
+before proceeding to any installation or upgrade a new package.
+
+
+Issues
+------
+
+Please report any bugs in `ISSUES <https://github.com/dslackw/slpkg/issues>`_
+
+
+Testing
+-------
+
+The majority of trials have been made in an environment Slackware x86_64 and x86 stable 
+version 14.1.
+Is logical tests are always to be latest versions of the distribution.
+Slpkg are supported version 'current' but it is minimal tests have been done on this 
+release.
+
+
 Features
 --------
 
@@ -140,8 +168,8 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.1.dev.tar.gz
-    $ cd slpkg-2.1.dev
+    $ tar xvf slpkg-2.2.1.tar.gz
+    $ cd slpkg-2.2.1
     $ ./install.sh
 
 From SourceForge:
@@ -163,6 +191,24 @@ In each slpkg upgrade should track the configuration files in the file '/etc/slp
 new updates.
 
 
+Slackware Current
+-----------------
+
+For Slackware 'current' users must change the variable VERSION in '/etc/slpkg.conf' file.
+
+.. code-block:: bash
+
+    $ slpkg -g --config=nano
+
+
+Slackware Mirrors
+-----------------
+
+Slpkg uses the central mirror "http://mirrors.slackware.com/slackware/" 
+to find the nearest one. If however for some reason this troublesome 
+please edit the file in '/etc/slpkg/slackware-mirrors'.
+
+
 Configuration files
 -------------------
 
@@ -179,49 +225,6 @@ Configuration files
 
     /etc/slpkg/custom-repositories
          List of custom repositories
-
-Slackware Current
------------------
-
-For Slackware 'current' users must change the variable VERSION in '/etc/slpkg.conf' file.
-
-.. code-block:: bash
-
-    $ slpkg -g --config=nano
-
-
-Testing
--------
-
-The majority of trials have been made in an environment Slackware x86_64 and x86 stable version 
-14.1.
-Is logical tests are always to be latest versions of the distribution.
-Slpkg are supported version 'current' but it is minimal tests have been done on this release.
-
-
-Slackware Mirrors
------------------
-
-Slpkg uses the central mirror "http://mirrors.slackware.com/slackware/" 
-to find the nearest one. If however for some reason this troublesome 
-please edit the file in '/etc/slpkg/slackware-mirrors'.
-
-
-Usage
------
-
-Need to run '# slpkg update' for the first time to synchronize the list of packages,
-also every time you add a repository.
-To add or remove repositories must edit the file '/etc/slpkg/slpkg.conf'.
-
-Also it is good to update the list of packages by running the command '# slpkg update'
-before proceeding to any installation or upgrade a new package.
-
-
-Issues
-------
-
-Please report any bugs in `ISSUES <https://github.com/dslackw/slpkg/issues>`_
 
 
 Command Line Tool Usage
@@ -248,10 +251,10 @@ Command Line Tool Usage
       -q, --list, [package...] --add, --remove  add, remove SBo packages in queue
       -q, --build, --install, --build-install   build, install packages from queue
       -g, --config, --config=[editor]           configuration file management
-      -l, [repository], all                     list of installed packages
+      -l, [repository], --index                 list of repositories packages
       -c, [repository] --upgrade                check for updated packages
-      -s, [repository] [package]                download, build & install
-      -t, [repository] [package]                tracking dependencies
+      -s, [repository] [package...]             download, build & install packages
+      -t, [repository] [package]                package tracking dependencies
       -p, [repository] [package], --color=[]    print package description
       -n, [package]                             view SBo packages through network
       -f, [package...]                          find installed packages
@@ -261,12 +264,12 @@ Command Line Tool Usage
       -r, [package...]                          remove binary packages
       -d, [package...]                          display the contents
 
-
 Slpkg Examples
 --------------
 
 If you use slpkg for the first time will have to create 
-and update the package lists:
+and update the package list. This command must be executed to update the 
+package lists:
 
 .. code-block:: bash
 
@@ -339,83 +342,103 @@ View information about the repositories:
     Total uncompressed packages: 36.31 Gb
 
 
-Find packages from repository download, 
-build and install with all dependencies :
+Installing packages from the repositories (supporting multi packages):
 
 .. code-block:: bash
     
     $ slpkg -s sbo brasero
-    Reading package lists ......Done
-    
+    Reading package lists .....Done
+    Resolving dependencies ....Done
+
     The following packages will be automatically installed or upgraded 
     with new version:
-    
-    +==============================================================================
-    | Package                                 Version         Arch       Repository
-    +==============================================================================
-    Installing:
-      brasero                                 3.11.3          x86_64     SBo
-    Installing for dependencies:
-      orc                                     0.4.19          x86_64     SBo
-      gstreamer1                              1.2.2           x86_64     SBo
-      gst1-plugins-base                       1.2.2           x86_64     SBo
-      gst1-plugins-bad                        1.2.2           x86_64     SBo
-      libunique                               1.1.6           x86_64     SBo
 
+    +==============================================================================
+    | Package                 Version            Arch    Build  Repos          Size
+    +==============================================================================
+    Installing: 
+     brasero                  3.12.0             x86_64         SBo           
+    Installing for dependencies:
+     orc                      0.4.22             x86_64         SBo           
+     gstreamer1               1.4.1              x86_64         SBo           
+     gst1-plugins-base        1.4.1              x86_64         SBo           
+     gst1-plugins-bad         1.4.1              x86_64         SBo           
+     libunique                1.1.6              x86_64         SBo           
+    
     Installing summary
     ===============================================================================
     Total 6 packages.
-    6 packages will be installed, 0 allready installed and 0 package
+    4 packages will be installed, 2 allready installed and 0 package
     will be upgraded.
 
-    Would you like to continue [Y/n]? y
-    
-    
-    $ slpkg -s sbo fmpeg
-    Reading package lists ....Done
+    Would you like to continue [Y/n]?
 
-    Packages with name matching [ fmpeg ]
+    
+    Example install multi packages:
+    
+    $ slpkg -s sbo brasero pylint bitfighter
+    Reading package lists ..........Done
+    Resolving dependencies ......Done
+
+    The following packages will be automatically installed or upgraded 
+    with new version:
 
     +==============================================================================
-    | Package                              Version          Arch         Repository
+    | Package                 Version            Arch    Build  Repos          Size
     +==============================================================================
-    Matching:
-     ffmpegthumbnailer                     2.0.8            x86_64       SBo
-     ffmpeg                                2.1.5            x86_64       SBo
-     ffmpeg2theora                         0.29             x86_64       SBo
-     gst-ffmpeg                            0.10.13          x86_64       SBo
+    Installing: 
+     brasero                  3.12.0             x86_64         SBo           
+     pylint                   1.3.1              x86_64         SBo           
+     bitfighter               019d               x86_64         SBo           
+    Installing for dependencies:
+     libmodplug               0.8.8.5            x86_64         SBo           
+     speex                    1.2rc1             x86_64         SBo           
+     SDL2                     2.0.3              x86_64         SBo           
+     OpenAL                   1.16.0             x86_64         SBo           
+     six                      1.8.0              x86_64         SBo           
+     logilab-common           0.63.2             x86_64         SBo           
+     pysetuptools             7.0                x86_64         SBo           
+     astroid                  1.3.4              x86_64         SBo           
+     orc                      0.4.22             x86_64         SBo           
+     gstreamer1               1.4.1              x86_64         SBo           
+     gst1-plugins-base        1.4.1              x86_64         SBo           
+     gst1-plugins-bad         1.4.1              x86_64         SBo           
+     libunique                1.1.6              x86_64         SBo           
 
     Installing summary
     ===============================================================================
-    Total found 4 matching packages.
-    0 installed package and 4 uninstalled packages.
-    
-    
-Install Slackware official packages:
-
-.. code-block:: bash
-
-    $ slpkg -s slack mozilla
-
-    Packages with name matching [ mozilla ]
-    Reading package lists ..............................Done
-
-    +==============================================================================
-    | Package                   Version          Arch     Build  Repos         Size
-    +==============================================================================
-    Installing:
-      mozilla-firefox           24.1.0esr        x86_64   1      Slack     23524  K
-      mozilla-nss               3.15.2           x86_64   2      Slack      1592  K
-      mozilla-thunderbird       24.1.0           x86_64   1      Slack     24208  K
-
-    Installing summary
-    ===============================================================================
-    Total 3 packages.
-    0 package will be installed, 3 will be upgraded and 0 will be resettled.
-    Need to get 48.17 Mb of archives.
-    After this process, 125.75 Mb of additional disk space will be used.
+    Total 16 packages.
+    4 packages will be installed, 12 allready installed and 0 package
+    will be upgraded.
 
     Would you like to continue [Y/n]?
+
+
+    Example from 'alien' repository:
+
+    Reading package lists .....Done
+    Resolving dependencies .........Done
+
+    +==============================================================================
+    | Package                 Version            Arch    Build  Repos          Size
+    +==============================================================================
+    Installing:
+     atkmm                    2.22.6             x86_64  1      alien         124 K
+    Installing for dependencies:
+     libsigc++                2.2.10             x86_64  2      alien         128 K
+     glibmm                   2.32.1             x86_64  1      alien        1012 K
+     cairomm                  1.10.0             x86_64  2      alien         124 K
+     pangomm                  2.28.4             x86_64  1      alien         124 K
+
+    Installing summary
+    ===============================================================================
+    Total 5 packages.
+    5 packages will be installed, 0 will be upgraded and 0 will be reinstalled.
+    Need to get 124 Kb of archives.
+    After this process, 620 Kb of additional disk space will be used.
+
+    Would you like to continue [Y/n]?
+
 
 Tracking all dependencies of packages,
 and also displays installed packages:
@@ -446,30 +469,58 @@ Check if your packages is up to date:
 .. code-block:: bash
 
     $ slpkg -c sbo --upgrade
-    Reading package lists ...Done
+    Checking ...................Done
+    Reading package lists ......Done
+    Resolving dependencies ...Done
 
-    These packages need upgrading:
+    The following packages will be automatically installed or upgraded 
+    with new version:
 
     +==============================================================================
-    | Package                             New version       Arch         Repository
+    | Package                 Version            Arch    Build  Repos          Size
     +==============================================================================
     Upgrading:
-      six-1.7.1                           1.7.3             x86_64       SBo
-      pysetuptools-3.4                    3.6               x86_64       SBo
-      Jinja2-2.7.0                        2.7.2             x86_64       SBo
-      pysed-0.3.0                         0.3.1             x86_64       SBo
-      Pafy-0.3.56                         0.3.58            x86_64       SBo
-      MarkupSafe-0.21                     0.23              x86_64       SBo
-      pip-1.5.3                           1.5.6             x86_64       SBo
-      colored-1.1.1                       1.1.4             x86_64       SBo
-                
+     astroid-1.7.0            1.3.4              x86_64         SBo           
+     jdk-1.3.3                8u31               x86_64         SBo           
+    Installing for dependencies:
+     six                      1.8.0              x86_64         SBo           
+     logilab-common           0.63.2             x86_64         SBo           
+     pysetuptools             7.0                x86_64         SBo           
+
     Installing summary
     ===============================================================================
-    Total 8 packages will be upgraded and 0 package will be installed.
-                
+    Total 5 packages.
+    0 package will be installed, 2 allready installed and 3 packages
+    will be upgraded.
+
     Would you like to continue [Y/n]?
 
-Check if your Slackware distribution is up to date:
+
+    $ slpkg -c slacky --upgrade
+    Checking ........................Done
+    Reading package lists ....Done
+    Resolving dependencies ..........Done
+
+    +==============================================================================
+    | Package                 Version            Arch    Build  Repos          Size
+    +==============================================================================
+    Upgrading:
+     gstreamer1-1.4.1         1.4.4              x86_64  1      slacky       1563 K
+
+    Installing summary
+    ===============================================================================
+    Total 1 package.
+    0 package will be installed, 1 will be upgraded and 0 will be reinstalled.
+    Need to get 1.53 Mb of archives.
+    After this process, 14.55 Mb of additional disk space will be used.
+
+    Would you like to continue [Y/n]? 
+
+
+Check if your Slackware distribution is up to date.
+This option works independently of the others i.e not need before updating the list of
+packages by choosing "# slpkg update", works directly with the official repository and
+why always you can have updated your system:
 
 .. code-block:: bash
 
@@ -482,9 +533,9 @@ Check if your Slackware distribution is up to date:
     | Package                   Version          Arch     Build  Repos         Size
     +==============================================================================
     Upgrading:
-      dhcpcd-6.0.5              6.0.5            x86_64   3      Slack         92 K
-      samba-4.1.0               4.1.11           x86_64   1      Slack       9928 K
-      xscreensaver-5.22         5.29             x86_64   1      Slack       3896 K
+     dhcpcd-6.0.5               6.0.5            x86_64   3      Slack         92 K
+     samba-4.1.0                4.1.11           x86_64   1      Slack       9928 K
+     xscreensaver-5.22          5.29             x86_64   1      Slack       3896 K
 
     Installing summary
     ===============================================================================
@@ -494,7 +545,8 @@ Check if your Slackware distribution is up to date:
     
     Would you like to continue [Y/n]?
 
-Find packages from slackbuilds.org:
+View complete slackbuilds.org site in your terminal.
+Read fies, download, build or install:
 
 .. code-block:: bash
 
@@ -599,7 +651,7 @@ Auto tool to build package:
 
     Total build time for package termcolor : 1 Sec
 
-Upgrade, install package:
+Upgrade, install packages like Slackware command '# upgradepkg --install-new':
 
 .. code-block:: bash
 
@@ -645,6 +697,12 @@ Find installed packages:
 
     Total found 4 matcing packages
     Size of installed packages 1.61 Mb
+
+    
+    Example view all sbo installed packages:
+
+    $ slpkg -f _SBo
+
 
 Display the contents of the packages:
 
@@ -858,6 +916,14 @@ Man page it is available for full support:
 
 
 Donate
---------
+------
 If you feel satisfied with this project and want to thank me go
 to `Slackware <https://store.slackware.com/cgi-bin/store/slackdonation>`_ and make a donation or visit the `store <https://store.slackware.com/cgi-bin/store>`_.
+
+
+Copyright 
+---------
+
+© Dimitris Zlatanidis
+Slackware® is a Registered Trademark of Slackware Linux, Inc.
+Linux is a Registered Trademark of Linus Torvalds.
