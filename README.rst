@@ -924,6 +924,6 @@ to `Slackware <https://store.slackware.com/cgi-bin/store/slackdonation>`_ and ma
 Copyright 
 ---------
 
-© Dimitris Zlatanidis
-Slackware® is a Registered Trademark of Slackware Linux, Inc.
-Linux is a Registered Trademark of Linus Torvalds.
+- Copyright © Dimitris Zlatanidis
+- Slackware® is a Registered Trademark of Slackware Linux, Inc.
+- Linux is a Registered Trademark of Linus Torvalds.
