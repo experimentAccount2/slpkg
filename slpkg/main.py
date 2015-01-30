@@ -24,10 +24,10 @@
 import sys
 import getpass
 
+from messages import Msg
 from desc import PkgDesc
 from config import Config
 from queue import QueuePkgs
-from messages import s_user
 from repoinfo import RepoInfo
 from repolist import RepoList
 from repositories import Repo
@@ -37,8 +37,8 @@ from version import prog_version
 from arguments import options, usage
 from slpkg_update import it_self_update
 from init import (
-    Initialization,
     Update,
+    Initialization,
     check_exists_repositories
 )
 from __metadata__ import MetaData as _m
@@ -79,7 +79,7 @@ class Case(object):
 
 def main():
 
-    s_user(getpass.getuser())
+    Msg().s_user(getpass.getuser())
     args = sys.argv
     args.pop(0)
     blacklist = BlackList()

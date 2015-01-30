@@ -25,16 +25,9 @@ import os
 import sys
 import pydoc
 
+from slpkg.messages import Msg
 from slpkg.downloader import Download
 from slpkg.__metadata__ import MetaData as _m
-from slpkg.messages import (
-    msg_done,
-    template,
-    pkg_found,
-    msg_reading,
-    build_FAILED,
-    pkg_not_found
-)
 
 from slpkg.pkg.find import find_package
 from slpkg.pkg.build import BuildPackage
@@ -51,7 +44,7 @@ class SBoNetwork(object):
 
     def __init__(self, name):
         self.name = name
-        msg_reading()
+        Msg().reading()
         grep = SBoGrep(self.name)
         self.sbo_url = sbo_search_pkg(self.name)
         if self.sbo_url:
@@ -62,7 +55,7 @@ class SBoNetwork(object):
             self.sbo_version = grep.version()
             self.dwn_srcs = self.sbo_dwn.split() + self.source_dwn
         self.space = ("\n" * 50)
-        msg_done()
+        Msg().done()
 
     def view(self):
         '''
@@ -106,14 +99,14 @@ class SBoNetwork(object):
                         delete(_m.build_path)
                         break
                     else:
-                        template(78)
-                        pkg_found(self.name, self.sbo_version)
-                        template(78)
+                        Msg().template(78)
+                        Msg().pkg_found(self.name, self.sbo_version)
+                        Msg().template(78)
                         break
                 else:
                     break
         else:
-            pkg_not_found("\n", self.name, "Can't view", "\n")
+            Msg().pkg_not_found("\n", self.name, "Can't view", "\n")
 
     @staticmethod
     def view_sbo(*args):
@@ -122,12 +115,12 @@ class SBoNetwork(object):
         '''
         color = _m.color
         print("")   # new line at start
-        template(78)
+        Msg().template(78)
         print("| {0}Package {1}{2}{3} --> {4}".format(color['GREEN'],
                                                       color['CYAN'], args[0],
                                                       color['GREEN'],
                                                       color['ENDC'] + args[1]))
-        template(78)
+        Msg().template(78)
         print("| {0}Description : {1}{2}".format(color['GREEN'],
                                                  color['ENDC'], args[2]))
         print("| {0}SlackBuild : {1}{2}".format(color['GREEN'], color['ENDC'],
@@ -137,7 +130,7 @@ class SBoNetwork(object):
         print("| {0}Requirements : {1}{2}".format(color['YELLOW'],
                                                   color['ENDC'],
                                                   ", ".join(args[5])))
-        template(78)
+        Msg().template(78)
         print(" {0}R{1}EADME               View the README file".format(
             color['RED'], color['ENDC']))
         print(" {0}S{1}lackBuild           View the SlackBuild file".format(
@@ -219,7 +212,7 @@ class SBoNetwork(object):
             try:
                 binary = (_m.output + max(binary_list)).split()
             except ValueError:
-                build_FAILED(self.sbo_url, prgnam)
+                Msg().build_FAILED(self.sbo_url, prgnam)
                 sys.exit(0)
             print("[ {0}Installing{1} ] --> {2}".format(_m.color['GREEN'],
                                                         _m.color['ENDC'],

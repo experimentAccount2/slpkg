@@ -22,8 +22,8 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+from messages import Msg
 from utils import read_file
-from messages import pkg_not_found
 from __metadata__ import MetaData as _m
 
 
@@ -69,6 +69,6 @@ class PkgDesc(object):
                     count += 1
                     print(self.COLOR + line[31:] + _m.color['ENDC'])
         if count == 0:
-            pkg_not_found("", self.name, "No matching", "\n")
+            Msg().pkg_not_found("", self.name, "No matching", "\n")
         else:
             print("")   # new line at end

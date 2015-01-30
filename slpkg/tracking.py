@@ -27,11 +27,7 @@ from utils import (
     remove_dbs,
     dimensional_list
 )
-from messages import (
-    template,
-    msg_done,
-    msg_resolving
-)
+from messages import Msg
 from __metadata__ import MetaData as _m
 
 from pkg.find import find_package
@@ -50,7 +46,7 @@ def track_dep(name, repo):
     if allready installed and color red
     if not installed.
     '''
-    msg_resolving()
+    Msg().resolving()
     if repo == "sbo":
         dependencies_list = Requires().sbo(name)
         find_pkg = sbo_search_pkg(name)
@@ -59,7 +55,7 @@ def track_dep(name, repo):
             repo))
         dependencies_list = Dependencies(PACKAGES_TXT, repo).binary(name)
         find_pkg = search_pkg(name, repo)
-    msg_done()
+    Msg().done()
     if find_pkg:
         requires, dependencies = [], []
         requires = dimensional_list(dependencies_list)
@@ -69,11 +65,11 @@ def track_dep(name, repo):
             dependencies = ["No dependencies"]
         pkg_len = len(name) + 24
         print("")    # new line at start
-        template(pkg_len)
+        Msg().template(pkg_len)
         print("| Package {0}{1}{2} dependencies :".format(_m.color['CYAN'],
                                                           name,
                                                           _m.color['ENDC']))
-        template(pkg_len)
+        Msg().template(pkg_len)
         print("\\")
         print(" +---{0}[ Tree of dependencies ]{1}".format(_m.color['YELLOW'],
                                                            _m.color['ENDC']))

@@ -26,6 +26,7 @@ import sys
 import subprocess
 
 from slpkg.sizes import units
+from slpkg.messages import Msg
 from slpkg.url_read import URL
 from slpkg.remove import delete
 from slpkg.checksum import check_md5
@@ -33,13 +34,6 @@ from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
 from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
-from slpkg.messages import (
-    msg_pkg,
-    template,
-    msg_done,
-    reference,
-    msg_reading
-)
 from slpkg.__metadata__ import MetaData as _m
 
 from slpkg.pkg.find import find_package
@@ -56,7 +50,7 @@ class Patches(object):
     def __init__(self, version):
         self.version = version
         self.patch_path = _m.slpkg_tmp_patches
-        msg_reading()
+        Msg().reading()
         if self.version == "stable":
             self.PACKAGES_TXT = URL(mirrors("PACKAGES.TXT",
                                             "patches/")).reading()
@@ -72,10 +66,10 @@ class Patches(object):
         try:
             (pkg_for_upgrade, dwn_links, upgrade_all, comp_sum,
              uncomp_sum) = self.store()
-            msg_done()
+            Msg().done()
             if upgrade_all:
                 print("\nThese packages need upgrading:\n")
-                template(78)
+                Msg().template(78)
                 print("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
                     "| Package", " " * 17,
                     "Version", " " * 12,
@@ -83,28 +77,25 @@ class Patches(object):
                     "Build", " " * 2,
                     "Repos", " " * 10,
                     "Size"))
-                template(78)
+                Msg().template(78)
                 print("Upgrading:")
                 views(pkg_for_upgrade, upgrade_all, comp_sum)
                 unit, size = units(comp_sum, uncomp_sum)
                 print("\nInstalling summary")
                 print("=" * 79)
                 print("{0}Total {1} {2} will be upgraded.".format(
-                    _m.color['GREY'], len(upgrade_all), msg_pkg(upgrade_all)))
+                    _m.color['GREY'], len(upgrade_all), Msg().pkg(upgrade_all)))
                 print("Need to get {0} {1} of archives.".format(size[0],
                                                                 unit[0]))
                 print("After this process, {0} {1} of additional disk space "
                       "will be used.{2}".format(size[1], unit[1],
                                                 _m.color['ENDC']))
-                if _m.default_answer == "y":
-                    answer = _m.default_answer
-                else:
-                    answer = raw_input("\nWould you like to continue [Y/n]? ")
-                if answer in ['y', 'Y']:
+                print('')
+                if Msg().answer() in ['y', 'Y']:
                     Download(self.patch_path, dwn_links).start()
                     upg = upgrade(self.patch_path, upgrade_all)
                     kernel(upgrade_all)
-                    reference([], upg)
+                    Msg().reference([], upg)
                     delete(self.patch_path, upgrade_all)
             else:
                 slack_arch = ""
@@ -180,10 +171,10 @@ def kernel(upgrade_all):
                 answer = _m.default_answer
             else:
                 print("")
-                template(78)
+                Msg().template(78)
                 print("| {0}*** HIGHLY recommended reinstall 'LILO' "
                       "***{1}".format(_m.color['RED'], _m.color['ENDC']))
-                template(78)
+                Msg().template(78)
                 answer = raw_input("\nThe kernel has been upgraded, "
                                    "reinstall `LILO` [Y/n]? ")
             if answer in ['y', 'Y']:

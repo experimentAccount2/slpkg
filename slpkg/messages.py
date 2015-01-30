@@ -28,121 +28,120 @@ from __metadata__ import MetaData as _m
 from slpkg.pkg.find import find_package
 
 
-def pkg_not_found(bol, pkg, message, eol):
-    '''
-    Print message when package not found
-    '''
-    print("{0}No such package {1}: {2}{3}".format(bol, pkg, message, eol))
+class Msg(object):
 
+    def pkg_not_found(self, bol, pkg, message, eol):
+        '''
+        Print message when package not found
+        '''
+        print("{0}No such package {1}: {2}{3}".format(bol, pkg, message, eol))
 
-def pkg_found(pkg, version):
-    '''
-    Print message when package found
-    '''
-    print("| Package {0}-{1} is already installed".format(pkg, version))
+    def pkg_found(self, pkg, version):
+        '''
+        Print message when package found
+        '''
+        print("| Package {0}-{1} is already installed".format(pkg, version))
 
+    def pkg_installed(self, pkg):
+        '''
+        Print message when package installed
+        '''
+        print("| Package {0} installed".format(pkg))
 
-def pkg_installed(pkg):
-    '''
-    Print message when package installed
-    '''
-    print("| Package {0} installed".format(pkg))
+    def s_user(self, user):
+        '''
+        Check for root user
+        '''
+        if user != "root":
+            print("\nslpkg: error: must have root privileges\n")
+            sys.exit(0)
 
+    def build_FAILED(self, sbo_url, prgnam):
+        '''
+        Print error message if build failed
+        '''
+        self.template(78)
+        print("| Build package {0} [ {1}FAILED{2} ]".format(prgnam,
+                                                            _m.color['RED'],
+                                                            _m.color['ENDC']))
+        self.template(78)
+        print("| See log file in '{0}/var/log/slpkg/sbo/build_logs{1}' "
+              "directory or read README file:".format(_m.color['CYAN'],
+                                                      _m.color['ENDC']))
+        print("| {0}{1}".format(sbo_url, "README"))
+        self.template(78)
+        print   # new line at end
 
-def s_user(user):
-    '''
-    Check for root user
-    '''
-    if user != "root":
-        print("\nslpkg: error: must have root privileges\n")
-        sys.exit(0)
+    def template(self, max_len):
+        '''
+        Print template
+        '''
+        print("+" + "=" * max_len)
 
+    def checking(self):
+        sys.stdout.write("{0}Checking ...{1}".format(_m.color['GREY'],
+                                                     _m.color['ENDC']))
+        sys.stdout.flush()
 
-def build_FAILED(sbo_url, prgnam):
-    '''
-    Print error message if build failed
-    '''
-    template(78)
-    print("| Build package {0} [ {1}FAILED{2} ]".format(prgnam, _m.color['RED'],
-                                                        _m.color['ENDC']))
-    template(78)
-    print("| See log file in '{0}/var/log/slpkg/sbo/build_logs{1}' directory "
-          "or read README file:".format(_m.color['CYAN'], _m.color['ENDC']))
-    print("| {0}{1}".format(sbo_url, "README"))
-    template(78)
-    print   # new line at end
+    def reading(self):
+        sys.stdout.write("{0}Reading package lists ...{1}".format(
+            _m.color['GREY'], _m.color['ENDC']))
+        sys.stdout.flush()
 
+    def resolving(self):
+        sys.stdout.write("{0}Resolving dependencies ...{1}".format(
+            _m.color['GREY'], _m.color['ENDC']))
+        sys.stdout.flush()
 
-def template(max_len):
-    '''
-    Print template
-    '''
-    print("+" + "=" * max_len)
+    def done(self):
+        sys.stdout.write("{0}Done{1}\n".format(_m.color['GREY'],
+                                               _m.color['ENDC']))
 
+    def pkg(self, count):
+        '''
+        Print singular plural
+        '''
+        message = "package"
+        if count > 1:
+            message = message + "s"
+        return message
 
-def msg_checking():
-    sys.stdout.write("{0}Checking ...{1}".format(_m.color['GREY'],
-                                                 _m.color['ENDC']))
-    sys.stdout.flush()
-
-
-def msg_reading():
-    sys.stdout.write("{0}Reading package lists ...{1}".format(_m.color['GREY'],
-                                                              _m.color['ENDC']))
-    sys.stdout.flush()
-
-
-def msg_resolving():
-    sys.stdout.write("{0}Resolving dependencies ...{1}".format(
-        _m.color['GREY'], _m.color['ENDC']))
-    sys.stdout.flush()
-
-
-def msg_done():
-    sys.stdout.write("{0}Done{1}\n".format(_m.color['GREY'], _m.color['ENDC']))
-
-
-def msg_pkg(count):
-    '''
-    Print singular plural
-    '''
-    message = "package"
-    if count > 1:
-        message = message + "s"
-    return message
-
-
-def msg_not_found(if_upgrade):
-    if if_upgrade:
-        print('\nNot found packages for upgrade\n')
-    else:
-        print('\nNot found packages for installation\n')
-
-
-def msg_upg_inst(if_upgrade):
-    if not if_upgrade:
-        print("Installing:")
-    else:
-        print("Upgrading:")
-
-
-def reference(install, upgrade):
-    '''
-    Reference list with packages installed
-    and upgraded
-    '''
-    template(78)
-    print("| Total {0} {1} installed and {2} {3} upgraded".format(
-        len(install), msg_pkg(len(install)),
-        len(upgrade), msg_pkg(len(upgrade))))
-    template(78)
-    for installed in (install + upgrade):
-        name = '-'.join(installed.split('-')[:-1])
-        if find_package(installed, _m.pkg_path):
-            if installed in upgrade:
-                print("| Package {0} upgraded successfully".format(name))
-            else:
-                print("| Package {0} installed successfully".format(name))
+    def not_found(self, if_upgrade):
+        if if_upgrade:
+            print('\nNot found packages for upgrade\n')
         else:
-            print("| Package {0} NOT installed".format(name))
-    template(78)
+            print('\nNot found packages for installation\n')
+
+    def upg_inst(self, if_upgrade):
+        if not if_upgrade:
+            print("Installing:")
+        else:
+            print("Upgrading:")
+
+    def answer(self):
+        if _m.default_answer == "y":
+            answer = _m.default_answer
+        else:
+            answer = raw_input("Would you like to continue [Y/n]? ")
+        return answer
+
+    def reference(self, install, upgrade):
+        '''
+        Reference list with packages installed
+        and upgraded
+        '''
+        self.template(78)
+        print("| Total {0} {1} installed and {2} {3} upgraded".format(
+            len(install), self.pkg(len(install)),
+            len(upgrade), self.pkg(len(upgrade))))
+        self.template(78)
+        for installed in (install + upgrade):
+            name = '-'.join(installed.split('-')[:-1])
+            if find_package(installed, _m.pkg_path):
+                if installed in upgrade:
+                    print("| Package {0} upgraded successfully".format(name))
+                else:
+                    print("| Package {0} installed successfully".format(name))
+            else:
+                print("| Package {0} NOT installed".format(name))
+        self.emplate(78)

@@ -25,6 +25,7 @@ import os
 import sys
 
 from slpkg.sizes import units
+from slpkg.messages import Msg
 from slpkg.remove import delete
 from slpkg.log_deps import write_deps
 from slpkg.checksum import check_md5
@@ -32,16 +33,6 @@ from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
 from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
-from slpkg.messages import (
-    msg_pkg,
-    template,
-    msg_done,
-    reference,
-    msg_reading,
-    msg_upg_inst,
-    msg_resolving,
-    msg_not_found,
-)
 from slpkg.utils import (
     remove_dbs,
     dimensional_list
@@ -73,7 +64,7 @@ class BinaryInstall(object):
         self.dependencies = []
         self.deps_dict = {}
         self.answer = ''
-        msg_reading()
+        Msg().reading()
         self.PACKAGES_TXT, self.mirror = RepoInit(self.repo).fetch()
         num_lines = sum(1 for line in self.PACKAGES_TXT)
         self.step = (num_lines / (100 * len(self.packages)))
@@ -89,18 +80,18 @@ class BinaryInstall(object):
                 self.packages, self.pkg_ver = self.packages[0], self.packages[1]
             mas_sum = dep_sum = sums = [0, 0, 0]
             self.pkg_exist()
-            msg_done()
+            Msg().done()
             self.dependencies = self.resolving_deps()
             (self.dep_dwn, self.dep_install, self.dep_comp_sum,
              self.dep_uncomp_sum) = self.store(self.dependencies)
             self.packages = self.clear_masters()
             (self.dwn, self.install, self.comp_sum,
              self.uncomp_sum) = self.store(self.packages)
-            msg_done()
+            Msg().done()
             if self.install:
                 print("")   # new line at start
                 self.top_view()
-                msg_upg_inst(self.if_upgrade)
+                Msg().upg_inst(self.if_upgrade)
                 mas_sum = self.views(self.install, self.comp_sum)
                 if self.dependencies:
                     print("Installing for dependencies:")
@@ -113,26 +104,26 @@ class BinaryInstall(object):
                 print("\nInstalling summary")
                 print("=" * 79)
                 print("{0}Total {1} {2}.".format(_m.color['GREY'], sum(sums),
-                                                 msg_pkg(sum(sums))))
+                                                 Msg().pkg(sum(sums))))
                 print("{0} {1} will be installed, {2} will be upgraded and "
                       "{3} will be reinstalled.".format(sums[2],
-                                                        msg_pkg(sums[2]),
+                                                        Msg().pkg(sums[2]),
                                                         sums[1], sums[0]))
                 print("Need to get {0} {1} of archives.".format(size[0],
                                                                 unit[0]))
                 print("After this process, {0} {1} of additional disk "
                       "space will be used.{2}".format(size[1], unit[1],
                                                       _m.color['ENDC']))
-                self.answer = self.continue_install()
-                if self.answer in ['y', 'Y']:
+                print('')
+                if Msg().answer() in ['y', 'Y']:
                     self.install.reverse()
                     Download(self.tmp_path, (self.dep_dwn + self.dwn)).start()
                     ins, upg = self.install_packages()
-                    reference(ins, upg)
+                    Msg().reference(ins, upg)
                     write_deps(self.deps_dict)
                     delete(self.tmp_path, self.install)
             else:
-                msg_not_found(self.if_upgrade)
+                Msg().not_found(self.if_upgrade)
         except KeyboardInterrupt:
             print("")   # new line at exit
             sys.exit(0)
@@ -206,22 +197,12 @@ class BinaryInstall(object):
         else:
             check_md5(pkg_checksum(install, self.repo), self.tmp_path + install)
 
-    def continue_install(self):
-        '''
-        Default answer
-        '''
-        if _m.default_answer == "y":
-            self.answer = _m.default_answer
-        else:
-            self.answer = raw_input("\nWould you like to continue [Y/n]? ")
-        return self.answer
-
     def resolving_deps(self):
         '''
         Return package dependencies
         '''
         requires = []
-        msg_resolving()
+        Msg().resolving()
         for dep in self.packages:
             dependencies = []
             dependencies = dimensional_list(Dependencies(self.PACKAGES_TXT,
@@ -266,7 +247,7 @@ class BinaryInstall(object):
         return [pkg_sum, upg_sum, uni_sum]
 
     def top_view(self):
-        template(78)
+        Msg().template(78)
         print("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
             "| Package", " " * 17,
             "Version", " " * 12,
@@ -274,7 +255,7 @@ class BinaryInstall(object):
             "Build", " " * 2,
             "Repos", " " * 10,
             "Size"))
-        template(78)
+        Msg().template(78)
 
     def store(self, packages):
         '''

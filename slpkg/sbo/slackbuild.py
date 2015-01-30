@@ -33,18 +33,7 @@ from slpkg.utils import (
     dimensional_list,
     remove_dbs
 )
-from slpkg.messages import (
-    msg_pkg,
-    template,
-    msg_done,
-    pkg_found,
-    reference,
-    msg_reading,
-    msg_upg_inst,
-    build_FAILED,
-    msg_not_found,
-    msg_resolving
-)
+from slpkg.messages import Msg
 from slpkg.__metadata__ import MetaData as _m
 
 from slpkg.pkg.find import find_package
@@ -71,7 +60,7 @@ class SBoInstall(object):
         self.deps_dict = {}
         self.toolbar_width, self.index = 2, 0
         self.answer = ''
-        msg_reading()
+        Msg().reading()
 
     def start(self, if_upgrade):
         try:
@@ -98,17 +87,17 @@ class SBoInstall(object):
                 self.package_found = self.matching(self.package_not_found)
             self.master_packages, mas_src = self.sbo_version_source(
                 self.package_found)
-            msg_done()
-            msg_resolving()
+            Msg().done()
+            Msg().resolving()
             self.dependencies, dep_src = self.sbo_version_source(
                 self.one_for_all(self.deps))
-            msg_done()
+            Msg().done()
             self.master_packages = self.clear_masters()
             if self.package_found:
                 print("\nThe following packages will be automatically "
                       "installed or upgraded \nwith new version:\n")
                 self.top_view()
-                msg_upg_inst(self.if_upgrade)
+                Msg().upg_inst(self.if_upgrade)
                 # view master packages
                 for sbo, ver, ar in zip(self.master_packages, self.pkg_ver,
                                         mas_src):
@@ -132,21 +121,19 @@ class SBoInstall(object):
                 print("\nInstalling summary")
                 print("=" * 79)
                 print("{0}Total {1} {2}.".format(
-                    _m.color['GREY'], count_total, msg_pkg(count_total)))
+                    _m.color['GREY'], count_total, Msg().pkg(count_total)))
                 print("{0} {1} will be installed, {2} allready installed and "
-                      "{3} {4}".format(count_uni, msg_pkg(count_uni),
+                      "{3} {4}".format(count_uni, Msg().pkg(count_uni),
                                        count_ins, count_upg,
-                                       msg_pkg(count_upg)))
+                                       Msg().pkg(count_upg)))
                 print("will be upgraded.{0}\n".format(_m.color['ENDC']))
-                if self.master_packages:
-                    self.answer = self.continue_install()
-                    if self.answer in['y', 'Y']:
-                        b_ins = self.build_install()
-                        reference(b_ins[0], b_ins[1])
-                        write_deps(self.deps_dict)
-                        delete(_m.build_path)
+                if self.master_packages and Msg().answer() in['y', 'Y']:
+                    b_ins = self.build_install()
+                    Msg().reference(b_ins[0], b_ins[1])
+                    write_deps(self.deps_dict)
+                    delete(_m.build_path)
             else:
-                msg_not_found(if_upgrade)
+                Msg().not_found(if_upgrade)
         except KeyboardInterrupt:
             print("")   # new line at exit
             sys.exit(0)
@@ -207,7 +194,7 @@ class SBoInstall(object):
         '''
         View top template
         '''
-        template(78)
+        Msg().template(78)
         print("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
             "| Package", " " * 17,
             "Version", " " * 12,
@@ -215,7 +202,7 @@ class SBoInstall(object):
             "Build", " " * 2,
             "Repos", " " * 10,
             "Size"))
-        template(78)
+        Msg().template(78)
 
     def view_version(self):
         '''
@@ -269,16 +256,6 @@ class SBoInstall(object):
                 arch = item
         return arch
 
-    def continue_install(self):
-        '''
-        Default answer
-        '''
-        if _m.default_answer == "y":
-            self.answer = _m.default_answer
-        else:
-            self.answer = raw_input("Would you like to continue [Y/n]? ")
-        return self.answer
-
     def filenames(self, sources):
         '''
         Return filenames from sources
@@ -317,15 +294,15 @@ class SBoInstall(object):
             sbo_file = "".join(find_package(prgnam, _m.pkg_path))
             src_link = SBoGrep(pkg).source().split()
             if sbo_file:
-                template(78)
-                pkg_found(pkg, split_package(sbo_file)[1])
-                template(78)
+                Msg().template(78)
+                Msg().pkg_found(pkg, split_package(sbo_file)[1])
+                Msg().template(78)
             elif self.unst[0] in src_link or self.unst[1] in src_link:
-                template(78)
+                Msg().template(78)
                 print("| Package {0} {1}{2}{3}".format(sbo, _m.color['RED'],
                                                        ''.join(src_link),
                                                        _m.color['ENDC']))
-                template(78)
+                Msg().template(78)
             else:
                 sbo_url = sbo_search_pkg(pkg)
                 sbo_link = SBoLink(sbo_url).tar_gz()
@@ -338,7 +315,7 @@ class SBoInstall(object):
                 try:
                     binary = (_m.output + max(binary_list)).split()
                 except ValueError:
-                    build_FAILED(sbo_url, prgnam)
+                    Msg().build_FAILED(sbo_url, prgnam)
                     sys.exit(0)
                 if find_package(pkg + '-', _m.pkg_path):
                     print("{0}[ Upgrading ] --> {1}{2}".format(

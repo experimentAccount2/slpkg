@@ -29,8 +29,8 @@ import shutil
 import tarfile
 import subprocess
 
+from slpkg.messages import Msg
 from slpkg.checksum import check_md5
-from slpkg.messages import pkg_not_found
 from slpkg.__metadata__ import MetaData as _m
 
 from slpkg.sbo.greps import SBoGrep
@@ -94,7 +94,7 @@ class BuildPackage(object):
                                                           shell=True))
             os.chdir(self.path)
         except (OSError, IOError):
-            pkg_not_found("\n", self.prgnam, "Wrong file", "\n")
+            Msg().pkg_not_found("\n", self.prgnam, "Wrong file", "\n")
         except KeyboardInterrupt:
             print("")   # new line at exit
             sys.exit(0)

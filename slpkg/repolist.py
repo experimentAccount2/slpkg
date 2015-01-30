@@ -24,8 +24,8 @@
 
 import sys
 
+from messages import Msg
 from repositories import Repo
-from messages import template
 from __metadata__ import MetaData as _m
 
 
@@ -55,13 +55,13 @@ class RepoList(object):
         View or enabled or disabled repositories
         '''
         print('')
-        template(78)
+        Msg().template(78)
         print('{0}{1}{2}{3}{4}{5}{6}'.format(
             '| Repo id', ' ' * 2,
             'Repo URL', ' ' * 44,
             'Default', ' ' * 3,
             'Status'))
-        template(78)
+        Msg().template(78)
         for repo_id, repo_URL in sorted(self.all_repos.iteritems()):
             status, COLOR = 'disabled', _m.color['RED']
             default = 'yes'

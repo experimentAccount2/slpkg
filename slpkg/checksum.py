@@ -24,7 +24,7 @@
 import sys
 
 from md5sum import md5
-from messages import template
+from messages import Msg
 from __metadata__ import MetaData as _m
 
 
@@ -34,24 +34,20 @@ def check_md5(pkg_md5, src_file):
     '''
     md5s = md5(src_file)
     if pkg_md5 != md5s:
-        template(78)
+        Msg().template(78)
         print("| MD5SUM check for {0} [ {1}FAILED{2} ]".format(
             src_file.split("/")[-1], _m.color['RED'], _m.color['ENDC']))
-        template(78)
+        Msg().template(78)
         print("| Expected: {0}".format(md5s))
         print("| Found: {0}".format(pkg_md5))
-        template(78)
-        if _m.default_answer == "y":
-            answer = _m.default_answer
-        else:
-            answer = raw_input("Would you like to continue [Y/n]? ")
-        if answer in ['y', 'Y']:
+        Msg().template(78)
+        if Msg().answer() in ['y', 'Y']:
             print("")   # new line after answer
         else:
             sys.exit(0)
     else:
-        template(78)
+        Msg().template(78)
         print("| MD5SUM check for {0} [ {1}PASSED{2} ]".format(
             src_file.split("/")[-1], _m.color['GREEN'], _m.color['ENDC']))
-        template(78)
+        Msg().template(78)
         print("")   # new line after pass checksum

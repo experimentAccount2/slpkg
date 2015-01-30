@@ -21,14 +21,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+from slpkg.messages import Msg
 from slpkg.toolbar import status
 from slpkg.blacklist import BlackList
 from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _m
-from slpkg.messages import (
-    msg_done,
-    msg_checking
-)
 
 from slpkg.pkg.find import find_package
 
@@ -42,7 +39,7 @@ def pkg_upgrade(repo):
     '''
     Checking packages fro upgrade
     '''
-    msg_checking()
+    Msg().checking()
     PACKAGES_TXT = RepoInit(repo).fetch()[0]
     pkgs_for_upgrade = []
     ver_for_upgrade = []
@@ -63,7 +60,7 @@ def pkg_upgrade(repo):
                     inst_pkg[0] not in BlackList().packages()):
                 pkgs_for_upgrade.append(repo_pkg[0])
                 ver_for_upgrade.append('-' + inst_pkg[1])
-    msg_done()
+    Msg().done()
     return pkgs_for_upgrade, ver_for_upgrade
 
 

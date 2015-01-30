@@ -25,13 +25,10 @@
 import os
 import sys
 
+from slpkg.messages import Msg
 from slpkg.toolbar import status
 from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _m
-from slpkg.messages import (
-    msg_done,
-    msg_checking
-)
 
 from greps import SBoGrep
 from search import sbo_search_pkg
@@ -42,7 +39,7 @@ def sbo_upgrade():
     Return packages for upgrade
     '''
     try:
-        msg_checking()
+        Msg().checking()
         upgrade_names, pkg_ver = [], []
         index, toolbar_width = 0, 3
         for pkg in sbo_list():
@@ -56,7 +53,7 @@ def sbo_upgrade():
                 if sbo_package > package:
                     upgrade_names.append(name)
                     pkg_ver.append(ver)
-        msg_done()
+        Msg().done()
         return upgrade_names, pkg_ver
     except KeyboardInterrupt:
         print("")   # new line at exit

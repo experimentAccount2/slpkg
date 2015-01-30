@@ -25,11 +25,8 @@ import os
 import sys
 import subprocess
 
+from slpkg.messages import Msg
 from slpkg.utils import read_file
-from slpkg.messages import (
-    pkg_not_found,
-    template
-)
 from slpkg.__metadata__ import MetaData as _m
 
 from slpkg.pkg.find import find_package
@@ -85,7 +82,7 @@ class PackageManager(object):
             bol = eol = ""
         else:
             bol = eol = "\n"
-        pkg_not_found(bol, pkg, message, eol)
+        Msg().pkg_not_found(bol, pkg, message, eol)
 
     def remove(self):
         '''
@@ -155,7 +152,7 @@ class PackageManager(object):
                     "\n               ".join(pkgs)))
                 removed.append(pkg)
             else:
-                pkg_not_found("", pkg, "Can't remove", "")
+                Msg().pkg_not_found("", pkg, "Can't remove", "")
         return removed
 
     @staticmethod
@@ -165,12 +162,12 @@ class PackageManager(object):
         '''
         dependencies = read_file(path + package)
         print("")   # new line at start
-        template(78)
+        Msg().template(78)
         print("| Found dependencies for package {0}:".format(package))
-        template(78)
+        Msg().template(78)
         for dep in dependencies.splitlines():
             print("| {0}{1}{2}".format(_m.color['RED'], dep, _m.color['ENDC']))
-        template(78)
+        Msg().template(78)
         return dependencies
 
     @staticmethod
@@ -203,15 +200,15 @@ class PackageManager(object):
         '''
         Prints all removed packages
         '''
-        template(78)
+        Msg().template(78)
         print("| Total {0} packages removed".format(len(removes)))
-        template(78)
+        Msg().template(78)
         for pkg in removes:
             if not find_package(pkg + _m.sp, _m.pkg_path):
                 print("| Package {0} removed".format(pkg))
             else:
                 print("| Package {0} not found".format(pkg))
-        template(78)
+        Msg().template(78)
         print("")   # new line at end
 
     def find(self):
@@ -237,7 +234,7 @@ class PackageManager(object):
                             break
         if matching == 0:
             message = "Can't find"
-            pkg_not_found("", self.binary, message, "\n")
+            Msg().pkg_not_found("", self.binary, message, "\n")
         else:
             print("\n{0}Total found {1} matching packages.{2}".format(
                 _m.color['GREY'], matching, _m.color['ENDC']))
@@ -265,7 +262,7 @@ class PackageManager(object):
                     bol = eol = ""
                 else:
                     bol = eol = "\n"
-                pkg_not_found(bol, pkg, message, eol)
+                Msg().pkg_not_found(bol, pkg, message, eol)
 
     def list(self, repo, INDEX):
         '''
