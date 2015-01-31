@@ -91,10 +91,11 @@ class BinaryInstall(object):
                 print("")   # new line at start
                 self.top_view()
                 Msg().upg_inst(self.if_upgrade)
-                mas_sum = self.views(self.install, self.comp_sum)
+                mas_sum = self.views(self.install, self.comp_sum, False)
                 if self.dependencies:
                     print("Installing for dependencies:")
-                    dep_sum = self.views(self.dep_install, self.dep_comp_sum)
+                    dep_sum = self.views(self.dep_install, self.dep_comp_sum,
+                                         True)
                 # sums[0] --> installed
                 # sums[1] --> upgraded
                 # sums[2] --> uninstall
@@ -207,6 +208,9 @@ class BinaryInstall(object):
         requires = []
         Msg().resolving()
         for dep in self.packages:
+            dep_ver = '-'.join(dep.split('-')[:-1])     # fix if input pkg with
+            if not len(dep_ver) == 0:                   # version
+                dep = dep_ver
             dependencies = []
             dependencies = Utils().dimensional_list(Dependencies(
                 self.PACKAGES_TXT, self.repo).binary(dep))
@@ -214,21 +218,23 @@ class BinaryInstall(object):
             self.deps_dict[dep] = Utils().remove_dbs(dependencies)
         return Utils().remove_dbs(requires)
 
-    def view_version(self, packages):
+    def view_masters(self, packages):
         '''
         Create empty seats if not upgrade
         '''
         if not self.if_upgrade:
             self.pkg_ver = [''] * len(packages)
 
-    def views(self, install, comp_sum):
+    def views(self, install, comp_sum, is_deps):
         '''
         Views packages
         '''
         pkg_sum = uni_sum = upg_sum = 0
-        self.view_version(install)
+        self.view_masters(install)
         # fix repositories align
         repo = self.repo + (' ' * (6 - (len(self.repo))))
+        if is_deps:     # fix avoid view version if dependencies
+            self.pkg_ver = [''] * len(install)
         for pkg, ver, comp in zip(install, self.pkg_ver, comp_sum):
             pkg_split = split_package(pkg[:-4])
             if find_package(pkg_split[0] + "-" + pkg_split[1], _m.pkg_path):
@@ -277,7 +283,7 @@ class BinaryInstall(object):
                 if name:
                     pkg_ver = '{0}-{1}'.format(split_package(name)[0],
                                                split_package(name)[1])
-                if pkg in pkg_ver and pkg not in black:
+                if pkg in pkg_ver and name not in install and pkg not in black:
                     dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
                     install.append(name)
                     comp_sum.append(comp)
