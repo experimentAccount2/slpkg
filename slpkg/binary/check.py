@@ -48,17 +48,21 @@ def pkg_upgrade(repo):
     # size = data[2]
     # unsize = data[3]
     data = repo_data(PACKAGES_TXT, 2000, repo, slack_ver)
-    index, toolbar_width = 0, 700
+    index, toolbar_width = 0, 1000
     for pkg in installed():
         index += 1
         toolbar_width = status(index, toolbar_width, 30)
+        inst_pkg = split_package(pkg)
         for name in data[0]:
-            inst_pkg = split_package(pkg)
             if name:    # this tips because some pkg_name is empty
                 repo_pkg = split_package(name[:-4])
-            if (repo_pkg[0] == inst_pkg[0] and repo_pkg[1] > inst_pkg[1] and
-                    inst_pkg[0] not in BlackList().packages()):
-                pkgs_for_upgrade.append(repo_pkg[0])
+            if (((repo_pkg[0] == inst_pkg[0] and repo_pkg[1] > inst_pkg[1]
+                    and repo_pkg[3] == inst_pkg[3]) or
+                    (repo_pkg[0] == inst_pkg[0] and repo_pkg[1] == inst_pkg[1]
+                        and repo_pkg[3] > inst_pkg[3]))
+                    and inst_pkg[0] not in BlackList().packages()):
+                pkgs_for_upgrade.append('{0}-{1}'.format(repo_pkg[0],
+                                                         repo_pkg[1]))
                 ver_for_upgrade.append('-' + inst_pkg[1])
     Msg().done()
     return pkgs_for_upgrade, ver_for_upgrade

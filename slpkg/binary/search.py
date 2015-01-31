@@ -37,12 +37,13 @@ def search_pkg(name, repo):
     '''
     try:
         blacklist = BlackList().packages()
-        toolbar_width, index = 2, 0
         PACKAGES_TXT = Utils().read_file(_m.lib_path + '{0}_repo/'
                                          'PACKAGES.TXT'.format(repo))
+        num_lines = sum(1 for line in PACKAGES_TXT)
+        toolbar_width, index, step = 2, 0, num_lines
         for line in PACKAGES_TXT.splitlines():
             index += 1
-            toolbar_width = status(index, toolbar_width, 1400)
+            toolbar_width = status(index, toolbar_width, step)
             if line.startswith("PACKAGE NAME:  ") and len(line) > 16:
                 if repo == 'slackr':
                     pkg_name = line[15:].strip()

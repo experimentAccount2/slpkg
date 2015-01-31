@@ -74,7 +74,9 @@ class BinaryInstall(object):
             # fix if packages is for upgrade
             self.if_upgrade, self.pkg_ver = if_upgrade, []
             if self.if_upgrade:
-                self.packages, self.pkg_ver = self.packages[0], self.packages[1]
+                self.packages, ver = self.packages[0], self.packages[1]
+                self.pkg_ver = ver
+                self.pkg_ver.reverse()
             mas_sum = dep_sum = sums = [0, 0, 0]
             self.pkg_exist()
             Msg().done()
