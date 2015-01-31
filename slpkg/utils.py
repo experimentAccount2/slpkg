@@ -22,6 +22,8 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+import os
+
 from splitting import split_package
 
 
@@ -61,3 +63,11 @@ class Utils(object):
                 else:
                     packages.append(split_package(line[14:].strip())[0])
         return packages
+
+    def check_downloaded(self, path, maybe_downloaded):
+        """ Return downloaded packages """
+        downloaded = []
+        for pkg in maybe_downloaded:
+            if os.path.isfile(path + pkg):
+                downloaded.append(pkg)
+        return downloaded

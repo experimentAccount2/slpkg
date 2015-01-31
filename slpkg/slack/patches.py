@@ -25,6 +25,7 @@ import os
 import sys
 import subprocess
 
+from slpkg.utils import Utils
 from slpkg.sizes import units
 from slpkg.messages import Msg
 from slpkg.url_read import URL
@@ -64,10 +65,10 @@ class Patches(object):
         Install new patches from official Slackware mirrors
         '''
         try:
-            (pkg_for_upgrade, dwn_links, upgrade_all, comp_sum,
-             uncomp_sum) = self.store()
+            (self.pkg_for_upgrade, self.dwn_links, self.upgrade_all,
+             self.comp_sum, self.uncomp_sum) = self.store()
             Msg().done()
-            if upgrade_all:
+            if self.upgrade_all:
                 print("\nThese packages need upgrading:\n")
                 Msg().template(78)
                 print("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
@@ -79,12 +80,13 @@ class Patches(object):
                     "Size"))
                 Msg().template(78)
                 print("Upgrading:")
-                views(pkg_for_upgrade, upgrade_all, comp_sum)
-                unit, size = units(comp_sum, uncomp_sum)
+                self.views()
+                unit, size = units(self.comp_sum, self.uncomp_sum)
                 print("\nInstalling summary")
                 print("=" * 79)
                 print("{0}Total {1} {2} will be upgraded.".format(
-                    _m.color['GREY'], len(upgrade_all), Msg().pkg(upgrade_all)))
+                    _m.color['GREY'], len(self.upgrade_all),
+                    Msg().pkg(self.upgrade_all)))
                 print("Need to get {0} {1} of archives.".format(size[0],
                                                                 unit[0]))
                 print("After this process, {0} {1} of additional disk space "
@@ -92,11 +94,13 @@ class Patches(object):
                                                 _m.color['ENDC']))
                 print('')
                 if Msg().answer() in ['y', 'Y']:
-                    Download(self.patch_path, dwn_links).start()
-                    upg = upgrade(self.patch_path, upgrade_all)
-                    kernel(upgrade_all)
+                    Download(self.patch_path, self.dwn_links).start()
+                    self.upgrade_all = Utils().check_downloaded(
+                        self.patch_path, self.upgrade_all)
+                    upg = self.upgrade()
+                    self.kernel()
                     Msg().reference([], upg)
-                    delete(self.patch_path, upgrade_all)
+                    delete(self.patch_path, self.upgrade_all)
             else:
                 slack_arch = ""
                 if os.uname()[4] == "x86_64":
@@ -128,55 +132,55 @@ class Patches(object):
                     split_package(''.join(inst_pkg[0]))[1]))
         return [pkg_for_upgrade, dwn, upgrade, comp_sum, uncomp_sum]
 
+    def views(self):
+        '''
+        Views packages
+        '''
+        for upg, upgrade, size in sorted(zip(self.pkg_for_upgrade,
+                                             self.upgrade_all,
+                                             self.comp_sum)):
+            pkg_split = split_package(upgrade[:-4])
+            print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>12}{12}".format(
+                _m.color['YELLOW'], upg, _m.color['ENDC'],
+                " " * (24-len(upg)), pkg_split[1],
+                " " * (18-len(pkg_split[1])), pkg_split[2],
+                " " * (8-len(pkg_split[2])), pkg_split[3],
+                " " * (7-len(pkg_split[3])), "Slack",
+                size, " K"))
 
-def views(pkg_for_upgrade, upgrade_all, comp_sum):
-    '''
-    Views packages
-    '''
-    for upg, upgrade, size in sorted(zip(pkg_for_upgrade, upgrade_all,
-                                         comp_sum)):
-        pkg_split = split_package(upgrade[:-4])
-        print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>12}{12}".format(
-            _m.color['YELLOW'], upg, _m.color['ENDC'],
-            " " * (24-len(upg)), pkg_split[1],
-            " " * (18-len(pkg_split[1])), pkg_split[2],
-            " " * (8-len(pkg_split[2])), pkg_split[3],
-            " " * (7-len(pkg_split[3])), "Slack",
-            size, " K"))
+    def upgrade(self):
+        '''
+        Upgrade packages
+        '''
+        upgraded = []
+        for pkg in self.upgrade_all:
+            check_md5(pkg_checksum(pkg, "slack_patches"), self.patch_path + pkg)
+            pkg_ver = '{0}-{1}'.format(split_package(pkg)[0],
+                                       split_package(pkg)[1])
+            print("[ {0}upgrading{1} ] --> {2}".format(_m.color['YELLOW'],
+                                                       _m.color['ENDC'],
+                                                       pkg[:-4]))
+            PackageManager((self.patch_path + pkg).split()).upgrade()
+            upgraded.append(pkg_ver)
+        return upgraded
 
-
-def upgrade(patch_path, upgrade_all):
-    '''
-    Upgrade packages
-    '''
-    upgraded = []
-    for pkg in upgrade_all:
-        check_md5(pkg_checksum(pkg, "slack_patches"), patch_path + pkg)
-        pkg_ver = '{0}-{1}'.format(split_package(pkg)[0], split_package(pkg)[1])
-        print("[ {0}upgrading{1} ] --> {2}".format(_m.color['YELLOW'],
-                                                   _m.color['ENDC'], pkg[:-4]))
-        PackageManager((patch_path + pkg).split()).upgrade()
-        upgraded.append(pkg_ver)
-    return upgraded
-
-
-def kernel(upgrade_all):
-    '''
-    Check if kernel upgraded if true
-    then reinstall 'lilo'
-    '''
-    for core in upgrade_all:
-        if "kernel" in core:
-            if _m.default_answer == "y":
-                answer = _m.default_answer
-            else:
-                print("")
-                Msg().template(78)
-                print("| {0}*** HIGHLY recommended reinstall 'LILO' "
-                      "***{1}".format(_m.color['RED'], _m.color['ENDC']))
-                Msg().template(78)
-                answer = raw_input("\nThe kernel has been upgraded, "
-                                   "reinstall `LILO` [Y/n]? ")
-            if answer in ['y', 'Y']:
-                subprocess.call("lilo", shell=True)
-                break
+    def kernel(self):
+        '''
+        Check if kernel upgraded if true
+        then reinstall 'lilo'
+        '''
+        for core in self.upgrade_all:
+            if "kernel" in core:
+                if _m.default_answer == "y":
+                    answer = _m.default_answer
+                else:
+                    print("")
+                    Msg().template(78)
+                    print("| {0}*** HIGHLY recommended reinstall 'LILO' "
+                          "***{1}".format(_m.color['RED'], _m.color['ENDC']))
+                    Msg().template(78)
+                    answer = raw_input("\nThe kernel has been upgraded, "
+                                       "reinstall `LILO` [Y/n]? ")
+                if answer in ['y', 'Y']:
+                    subprocess.call("lilo", shell=True)
+                    break

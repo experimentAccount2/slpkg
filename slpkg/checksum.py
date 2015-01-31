@@ -32,6 +32,7 @@ def check_md5(pkg_md5, src_file):
     '''
     MD5 Checksum
     '''
+    print('')
     md5s = md5(src_file)
     if pkg_md5 != md5s:
         Msg().template(78)
@@ -41,13 +42,12 @@ def check_md5(pkg_md5, src_file):
         print("| Expected: {0}".format(md5s))
         print("| Found: {0}".format(pkg_md5))
         Msg().template(78)
-        if Msg().answer() in ['y', 'Y']:
-            print("")   # new line after answer
-        else:
+        print('')
+        if not Msg().answer() in ['y', 'Y']:
             sys.exit(0)
     else:
         Msg().template(78)
         print("| MD5SUM check for {0} [ {1}PASSED{2} ]".format(
             src_file.split("/")[-1], _m.color['GREEN'], _m.color['ENDC']))
         Msg().template(78)
-        print("")   # new line after pass checksum
+    print('')   # new line after pass checksum

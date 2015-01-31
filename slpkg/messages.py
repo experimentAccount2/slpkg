@@ -144,4 +144,4 @@ class Msg(object):
                     print("| Package {0} installed successfully".format(name))
             else:
                 print("| Package {0} NOT installed".format(name))
-        self.emplate(78)
+        self.template(78)

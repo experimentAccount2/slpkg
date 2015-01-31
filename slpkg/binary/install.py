@@ -115,6 +115,10 @@ class BinaryInstall(object):
                 if Msg().answer() in ['y', 'Y']:
                     self.install.reverse()
                     Download(self.tmp_path, (self.dep_dwn + self.dwn)).start()
+                    self.dep_install = Utils().check_downloaded(
+                        self.tmp_path, self.dep_install)
+                    self.install = Utils().check_downloaded(
+                        self.tmp_path, self.install)
                     ins, upg = self.install_packages()
                     Msg().reference(ins, upg)
                     write_deps(self.deps_dict)

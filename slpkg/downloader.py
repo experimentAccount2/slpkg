@@ -58,3 +58,6 @@ class Download(object):
             print("| Download '{0}' file {1}[ FAILED ]{2}".format(
                 self.file_name, _m.color['RED'], _m.color['ENDC']))
             Msg().template(78)
+            print('')
+            if not Msg().answer() in ['y', 'Y']:
+                sys.exit(0)

@@ -124,7 +124,7 @@ class SBoInstall(object):
                                        count_ins, count_upg,
                                        Msg().pkg(count_upg)))
                 print("will be upgraded.{0}\n".format(_m.color['ENDC']))
-                if self.master_packages and Msg().answer() in['y', 'Y']:
+                if self.master_packages and Msg().answer() in ['y', 'Y']:
                     b_ins = self.build_install()
                     Msg().reference(b_ins[0], b_ins[1])
                     write_deps(self.deps_dict)
