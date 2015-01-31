@@ -22,11 +22,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-from utils import (
-    read_file,
-    remove_dbs,
-    dimensional_list
-)
+from utils import Utils
 from messages import Msg
 from __metadata__ import MetaData as _m
 
@@ -51,16 +47,16 @@ def track_dep(name, repo):
         dependencies_list = Requires().sbo(name)
         find_pkg = sbo_search_pkg(name)
     else:
-        PACKAGES_TXT = read_file(_m.lib_path + '{0}_repo/PACKAGES.TXT'.format(
-            repo))
+        PACKAGES_TXT = Utils().read_file(_m.lib_path + '{0}_repo/'
+                                         'PACKAGES.TXT'.format(repo))
         dependencies_list = Dependencies(PACKAGES_TXT, repo).binary(name)
         find_pkg = search_pkg(name, repo)
     Msg().done()
     if find_pkg:
         requires, dependencies = [], []
-        requires = dimensional_list(dependencies_list)
+        requires = Utils().dimensional_list(dependencies_list)
         requires.reverse()
-        dependencies = remove_dbs(requires)
+        dependencies = Utils().remove_dbs(requires)
         if dependencies == []:
             dependencies = ["No dependencies"]
         pkg_len = len(name) + 24

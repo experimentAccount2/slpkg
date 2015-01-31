@@ -23,7 +23,7 @@
 
 import os
 
-from slpkg.utils import read_file
+from slpkg.utils import Utils
 from slpkg.repositories import Repo
 from slpkg.__metadata__ import MetaData as _m
 
@@ -46,7 +46,7 @@ class RepoInit(object):
         else:
             exec('self._init_custom()')
         self.lib = _m.lib_path + "{0}_repo/PACKAGES.TXT".format(self.repo)
-        PACKAGES_TXT = read_file(self.lib)
+        PACKAGES_TXT = Utils().read_file(self.lib)
         return PACKAGES_TXT, self.mirror
 
     def _init_custom(self):

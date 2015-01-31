@@ -24,6 +24,7 @@
 import os
 import sys
 
+from slpkg.utils import Utils
 from slpkg.sizes import units
 from slpkg.messages import Msg
 from slpkg.remove import delete
@@ -33,10 +34,6 @@ from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
 from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
-from slpkg.utils import (
-    remove_dbs,
-    dimensional_list
-)
 from slpkg.__metadata__ import MetaData as _m
 
 from slpkg.pkg.find import find_package
@@ -149,7 +146,7 @@ class BinaryInstall(object):
         or if added to install two or more times
         '''
         packages = []
-        for mas in remove_dbs(self.packages):
+        for mas in Utils().remove_dbs(self.packages):
             if mas not in self.dependencies:
                 packages.append(mas)
         return packages
@@ -205,11 +202,11 @@ class BinaryInstall(object):
         Msg().resolving()
         for dep in self.packages:
             dependencies = []
-            dependencies = dimensional_list(Dependencies(self.PACKAGES_TXT,
-                                                         self.repo).binary(dep))
+            dependencies = Utils().dimensional_list(Dependencies(
+                self.PACKAGES_TXT, self.repo).binary(dep))
             requires += dependencies
-            self.deps_dict[dep] = remove_dbs(dependencies)
-        return remove_dbs(requires)
+            self.deps_dict[dep] = Utils().remove_dbs(dependencies)
+        return Utils().remove_dbs(requires)
 
     def view_version(self, packages):
         '''

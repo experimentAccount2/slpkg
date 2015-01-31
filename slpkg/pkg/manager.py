@@ -25,8 +25,8 @@ import os
 import sys
 import subprocess
 
+from slpkg.utils import Utils
 from slpkg.messages import Msg
-from slpkg.utils import read_file
 from slpkg.__metadata__ import MetaData as _m
 
 from slpkg.pkg.find import find_package
@@ -160,7 +160,7 @@ class PackageManager(object):
         '''
         View dependencies for before remove
         '''
-        dependencies = read_file(path + package)
+        dependencies = Utils().read_file(path + package)
         print("")   # new line at start
         Msg().template(78)
         print("| Found dependencies for package {0}:".format(package))
@@ -224,7 +224,7 @@ class PackageManager(object):
                     matching += 1
                     print("[ {0}installed{1} ] - {2}".format(
                         _m.color['GREEN'], _m.color['ENDC'], match))
-                    data = read_file(_m.pkg_path + match)
+                    data = Utils().read_file(_m.pkg_path + match)
                     for line in data.splitlines():
                         if line.startswith("UNCOMPRESSED PACKAGE SIZE:"):
                             if "M" in line[26:]:
@@ -252,7 +252,7 @@ class PackageManager(object):
         for pkg in self.binary:
             find = find_package(pkg + _m.sp, _m.pkg_path)
             if find:
-                package = read_file(_m.pkg_path + "".join(find))
+                package = Utils().read_file(_m.pkg_path + "".join(find))
                 for line in package.splitlines():
                     print(line).strip()
                 print("")   # new line per file
@@ -275,13 +275,13 @@ class PackageManager(object):
             if repo == 'sbo':
                 if (os.path.isfile(
                         _m.lib_path + '{0}_repo/SLACKBUILDS.TXT'.format(repo))):
-                    r = read_file(_m.lib_path + '{0}_repo/'
-                                  'SLACKBUILDS.TXT'.format(repo))
+                    r = Utils().read_file(_m.lib_path + '{0}_repo/'
+                                          'SLACKBUILDS.TXT'.format(repo))
             else:
                 if os.path.isfile(_m.lib_path + '{0}_repo/PACKAGES.TXT'.format(
                         repo)):
-                    r = read_file(_m.lib_path + '{0}_repo/PACKAGES.TXT'.format(
-                        repo))
+                    r = Utils().read_file(_m.lib_path + '{0}_repo/'
+                                          'PACKAGES.TXT'.format(repo))
             for line in r.splitlines():
                 if repo == 'sbo':
                     if line.startswith("SLACKBUILD NAME: "):

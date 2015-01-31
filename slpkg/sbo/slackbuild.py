@@ -25,15 +25,12 @@ import os
 import sys
 
 
+from slpkg.utils import Utils
+from slpkg.messages import Msg
 from slpkg.toolbar import status
 from slpkg.log_deps import write_deps
 from slpkg.downloader import Download
 from slpkg.splitting import split_package
-from slpkg.utils import (
-    dimensional_list,
-    remove_dbs
-)
-from slpkg.messages import Msg
 from slpkg.__metadata__ import MetaData as _m
 
 from slpkg.pkg.find import find_package
@@ -144,7 +141,7 @@ class SBoInstall(object):
         or if added to install two or more times
         '''
         slackbuilds = []
-        for mas in remove_dbs(self.master_packages):
+        for mas in Utils().remove_dbs(self.master_packages):
             if mas not in self.dependencies:
                 slackbuilds.append(mas)
         return slackbuilds
@@ -183,11 +180,11 @@ class SBoInstall(object):
         Thus creating this loop create one-dimensional list.
         '''
         requires, dependencies = [], []
-        requires = dimensional_list(deps)
+        requires = Utils().dimensional_list(deps)
         # Inverting the list brings the
         # dependencies in order to be installed.
         requires.reverse()
-        dependencies = remove_dbs(requires)
+        dependencies = Utils().remove_dbs(requires)
         return dependencies
 
     def top_view(self):

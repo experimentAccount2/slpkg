@@ -21,7 +21,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from slpkg.utils import read_file
+from slpkg.utils import Utils
 from slpkg.__metadata__ import MetaData as _m
 
 
@@ -43,7 +43,7 @@ class SBoGrep(object):
         self.sbo_txt = _m.lib_path + "sbo_repo/SLACKBUILDS.TXT"
         self.answer = ['y', 'Y']
         self.unst = ['UNSUPPORTED', 'UNTESTED']
-        self.SLACKBUILDS_TXT = read_file(self.sbo_txt)
+        self.SLACKBUILDS_TXT = Utils().read_file(self.sbo_txt)
 
     def source(self):
         '''

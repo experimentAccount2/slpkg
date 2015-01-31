@@ -25,7 +25,7 @@
 import os
 import sys
 
-from utils import read_file
+from utils import Utils
 from __metadata__ import MetaData as _m
 
 
@@ -33,7 +33,7 @@ class Repo(object):
 
     def __init__(self):
         self.repo_file = "/etc/slpkg/custom-repositories"
-        self.repositories_list = read_file(self.repo_file)
+        self.repositories_list = Utils().read_file(self.repo_file)
 
     def add(self, repo, url):
         '''
@@ -102,7 +102,7 @@ class Repo(object):
         '''
         default = "http://mirrors.slackware.com/slackware/"
         if os.path.isfile("/etc/slpkg/slackware-mirrors"):
-            mirrors = read_file(_m.conf_path + 'slackware-mirrors')
+            mirrors = Utils().read_file(_m.conf_path + 'slackware-mirrors')
             for line in mirrors.splitlines():
                 line = line.rstrip()
                 if not line.startswith("#") and line:

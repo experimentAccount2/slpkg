@@ -22,8 +22,8 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+from utils import Utils
 from messages import Msg
-from utils import read_file
 from __metadata__ import MetaData as _m
 
 
@@ -51,7 +51,7 @@ class PkgDesc(object):
                 self.repo)
 
     def view(self):
-        PACKAGES_TXT = read_file(self.lib)
+        PACKAGES_TXT = Utils().read_file(self.lib)
         print("")   # new line at start
         count = 0
         if self.repo != "sbo":

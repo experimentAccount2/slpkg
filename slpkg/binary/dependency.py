@@ -23,7 +23,7 @@
 
 import sys
 
-from slpkg.utils import package_name
+from slpkg.utils import Utils
 from slpkg.toolbar import status
 from slpkg.blacklist import BlackList
 
@@ -35,7 +35,7 @@ class Dependencies(object):
     def __init__(self, PACKAGES_TXT, repo):
         self.repo = repo
         self.dep_results = []
-        self.packages = package_name(PACKAGES_TXT, repo)
+        self.packages = Utils().package_name(PACKAGES_TXT, repo)
 
     def binary(self, name):
         '''

@@ -23,8 +23,8 @@
 
 import os
 
+from slpkg.utils import Utils
 from slpkg.toolbar import status
-from slpkg.utils import read_file
 from slpkg.splitting import split_package
 from slpkg.slack.slack_version import slack_ver
 from slpkg.__metadata__ import MetaData as _m
@@ -162,7 +162,7 @@ def fix_slackers_pkg(name):
     name in PACKAGES.TXT file use FILELIST.TXT to
     get.
     '''
-    FILELIST_TXT = read_file(_m.lib_path + 'slackr_repo/FILELIST.TXT')
+    FILELIST_TXT = Utils().read_file(_m.lib_path + 'slackr_repo/FILELIST.TXT')
     for line in FILELIST_TXT.splitlines():
         if name in line and line.endswith(".txz"):
             return line.split("/")[-1].strip()
@@ -198,7 +198,7 @@ class Requires(object):
             else:
                 return ""
         else:
-            PACKAGES_TXT = read_file('{0}{1}_repo/PACKAGES.TXT'.format(
+            PACKAGES_TXT = Utils().read_file('{0}{1}_repo/PACKAGES.TXT'.format(
                 _m.lib_path, self.repo))
             for line in PACKAGES_TXT.splitlines():
                 if line.startswith("PACKAGE NAME:"):

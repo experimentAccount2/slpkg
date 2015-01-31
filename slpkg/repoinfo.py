@@ -25,7 +25,7 @@ import os
 import sys
 
 from sizes import units
-from utils import read_file
+from utils import Utils
 from repositories import Repo
 from repolist import RepoList
 from __metadata__ import MetaData as _m
@@ -77,11 +77,11 @@ class RepoInfo(object):
                                                'SLACKBUILDS.TXT'.format(repo))):
             status = '{0}enabled{1}'.format(_m.color['GREEN'], _m.color['ENDC'])
             sum_sbo_pkgs = 0
-            for line in (read_file(
+            for line in (Utils().read_file(
                     _m.lib_path + 'sbo_repo/SLACKBUILDS.TXT').splitlines()):
                 if line.startswith('SLACKBUILD NAME: '):
                     sum_sbo_pkgs += 1
-            changelog_txt = read_file(_m.log_path + 'sbo/ChangeLog.txt')
+            changelog_txt = Utils().read_file(_m.log_path + 'sbo/ChangeLog.txt')
             last_upd = changelog_txt.split('\n', 1)[0]
             self.form['Repo id:'] = repo
             self.form['Repo url:'] = self.all_repos[repo]
@@ -101,7 +101,7 @@ class RepoInfo(object):
         Grap data packages
         '''
         sum_pkgs, size, unsize, last_upd = 0, [], [], ''
-        for line in (read_file(
+        for line in (Utils().read_file(
                 _m.lib_path + repo + '_repo/PACKAGES.TXT').splitlines()):
             if line.startswith('PACKAGES.TXT;'):
                 last_upd = line[14:].strip()
@@ -112,6 +112,7 @@ class RepoInfo(object):
             if line.startswith('PACKAGE SIZE (uncompressed):  '):
                 unsize.append(line[30:-2].strip())
         if repo in ['salix', 'slackl']:
-            log = read_file(_m.log_path + '{0}/ChangeLog.txt'.format(repo))
+            log = Utils().read_file(_m.log_path + '{0}/ChangeLog.txt'.format(
+                repo))
             last_upd = log.split('\n', 1)[0]
         return [sum_pkgs, size, unsize, last_upd]

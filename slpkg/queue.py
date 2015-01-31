@@ -24,7 +24,7 @@
 import os
 from collections import OrderedDict
 
-from utils import read_file
+from utils import Utils
 from downloader import Download
 from __metadata__ import MetaData as _m
 
@@ -59,7 +59,7 @@ class QueuePkgs(object):
                 for line in queue_file:
                     queue.write(line)
                 queue.close()
-        self.queued = read_file(self.queue_list)
+        self.queued = Utils().read_file(self.queue_list)
 
     def packages(self):
         '''
