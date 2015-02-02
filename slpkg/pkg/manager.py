@@ -92,7 +92,7 @@ class PackageManager(object):
         '''
         dep_path = _m.log_path + "dep/"
         dependencies, rmv_list = [], []
-        removed = self.view_removed(self.binary)
+        removed = self._view_removed(self.binary)
         if not removed:
             print("")   # new line at end
         else:
@@ -115,31 +115,36 @@ class PackageManager(object):
                     # then look log file for dependencies in /var/log/slpkg/dep,
                     # read and remove all else remove only the package.
                     if os.path.isfile(dep_path + rmv) and _m.del_deps == "on":
-                        dependencies = self.view_deps(dep_path, rmv)
-                        try:
-                            if _m.remove_deps_answer == "y":
-                                remove_dep = _m.remove_deps_answer
-                            else:
-                                remove_dep = raw_input(
-                                    "\nRemove dependencies (maybe used by "
-                                    "other packages) [Y/n]? ")
-                        except KeyboardInterrupt:
-                            print("")  # new line at exit
-                            sys.exit(0)
-                        if remove_dep in ['y', 'Y']:
-                            rmv_list += self.rmv_deps(self.binary,
-                                                      dependencies,
-                                                      dep_path, rmv)
+                        dependencies = self._view_deps(dep_path, rmv)
+                        if self._rmv_deps_answer() in ['y', 'Y']:
+                            rmv_list += self._rmv_deps(self.binary,
+                                                       dependencies,
+                                                       dep_path, rmv)
                         else:
-                            rmv_list += self.rmv_pkg(rmv)
+                            rmv_list += self._rmv_pkg(rmv)
                             os.remove(dep_path + rmv)
                     else:
-                        rmv_list += self.rmv_pkg(rmv)
+                        rmv_list += self._rmv_pkg(rmv)
                 # Prints all removed packages
-                self.reference_rmvs(rmv_list)
+                self._reference_rmvs(rmv_list)
 
-    @staticmethod
-    def view_removed(binary):
+    def _rmv_deps_answer(self):
+        '''
+        Remove dependencies answer
+        '''
+        if _m.remove_deps_answer == "y":
+            remove_dep = _m.remove_deps_answer
+        else:
+            try:
+                remove_dep = raw_input(
+                    "\nRemove dependencies (maybe used by "
+                    "other packages) [Y/n]? ")
+            except KeyboardInterrupt:
+                print("")  # new line at exit
+                sys.exit(0)
+        return remove_dep
+
+    def _view_removed(self, binary):
         '''
         View packages before removed
         '''
@@ -157,8 +162,7 @@ class PackageManager(object):
                 Msg().pkg_not_found("", pkg, "Can't remove", "")
         return removed
 
-    @staticmethod
-    def view_deps(path, package):
+    def _view_deps(self, path, package):
         '''
         View dependencies for before remove
         '''
@@ -172,14 +176,14 @@ class PackageManager(object):
         Msg().template(78)
         return dependencies
 
-    @staticmethod
-    def rmv_deps(binary, dependencies, path, package):
+    def _rmv_deps(self, binary, dependencies, path, package):
         '''
         Remove dependencies
         '''
         removes = []
-        dependencies += binary
-        for dep in dependencies:
+        deps = dependencies.split()
+        deps.append(''.join(binary))
+        for dep in deps:
             if find_package(dep + _m.sp, _m.pkg_path):
                 print(subprocess.check_output("removepkg {0}".format(dep),
                                               shell=True))
@@ -187,8 +191,7 @@ class PackageManager(object):
         os.remove(path + package)
         return removes
 
-    @staticmethod
-    def rmv_pkg(package):
+    def _rmv_pkg(self, package):
         '''
         Remove one signle package
         '''
@@ -197,8 +200,7 @@ class PackageManager(object):
                                           shell=True))
         return package.split()
 
-    @staticmethod
-    def reference_rmvs(removes):
+    def _reference_rmvs(self, removes):
         '''
         Prints all removed packages
         '''
@@ -274,27 +276,11 @@ class PackageManager(object):
         row = int(tty_size[0]) - 2
         try:
             index, page, pkg_list = 0, row, []
-            if repo == 'sbo':
-                if (os.path.isfile(
-                        _m.lib_path + '{0}_repo/SLACKBUILDS.TXT'.format(repo))):
-                    r = Utils().read_file(_m.lib_path + '{0}_repo/'
-                                          'SLACKBUILDS.TXT'.format(repo))
-            else:
-                if os.path.isfile(_m.lib_path + '{0}_repo/PACKAGES.TXT'.format(
-                        repo)):
-                    r = Utils().read_file(_m.lib_path + '{0}_repo/'
-                                          'PACKAGES.TXT'.format(repo))
-            for line in r.splitlines():
-                if repo == 'sbo':
-                    if line.startswith("SLACKBUILD NAME: "):
-                        pkg_list.append(line[17:].strip())
-                else:
-                    if line.startswith("PACKAGE NAME: "):
-                        pkg_list.append(line[15:].strip())
+            r = self._list_lib(repo)
+            pkg_list = self._list_greps(repo, r)
             print('')
             for pkg in sorted(pkg_list):
-                if repo == 'slackr':
-                    pkg = fix_slackers_pkg(pkg)
+                pkg = self._slackr_repo(repo, pkg)
                 if INDEX:
                     index += 1
                     pkg = self._list_color_tag(pkg)
@@ -319,6 +305,44 @@ class PackageManager(object):
         except KeyboardInterrupt:
             print("")   # new line at exit
             sys.exit(0)
+
+    def _list_greps(self, repo, packages):
+        '''
+        Grep packages
+        '''
+        pkg_list = []
+        for line in packages.splitlines():
+            if repo == 'sbo':
+                if line.startswith("SLACKBUILD NAME: "):
+                    pkg_list.append(line[17:].strip())
+            else:
+                if line.startswith("PACKAGE NAME: "):
+                    pkg_list.append(line[15:].strip())
+        return pkg_list
+
+    def _list_lib(self, repo):
+        '''
+        Return package lists
+        '''
+        if repo == 'sbo':
+            if (os.path.isfile(
+                    _m.lib_path + '{0}_repo/SLACKBUILDS.TXT'.format(repo))):
+                packages = Utils().read_file(_m.lib_path + '{0}_repo/'
+                                             'SLACKBUILDS.TXT'.format(repo))
+        else:
+            if (os.path.isfile(_m.lib_path + '{0}_repo/PACKAGES.TXT'.format(
+                    repo))):
+                packages = Utils().read_file(_m.lib_path + '{0}_repo/'
+                                             'PACKAGES.TXT'.format(repo))
+        return packages
+
+    def _slackr_repo(self, repo, pkg):
+        '''
+        Fix slackers packages
+        '''
+        if repo == 'slackr':
+            return fix_slackers_pkg(pkg)
+        return pkg
 
     def _list_color_tag(self, pkg):
         '''
