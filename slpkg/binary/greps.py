@@ -26,8 +26,9 @@ import os
 from slpkg.utils import Utils
 from slpkg.toolbar import status
 from slpkg.splitting import split_package
-from slpkg.slack.slack_version import slack_ver
 from slpkg.__metadata__ import MetaData as _m
+
+from slpkg.slack.slack_version import slack_ver
 
 
 def repo_data(PACKAGES_TXT, step, repo, version):

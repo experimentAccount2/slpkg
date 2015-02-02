@@ -31,6 +31,8 @@ from slpkg.__metadata__ import MetaData as _m
 
 from slpkg.pkg.find import find_package
 
+from slpkg.binary.greps import fix_slackers_pkg
+
 
 class PackageManager(object):
     '''
@@ -289,7 +291,10 @@ class PackageManager(object):
                 else:
                     if line.startswith("PACKAGE NAME: "):
                         pkg_list.append(line[15:].strip())
+            print('')
             for pkg in sorted(pkg_list):
+                if repo == 'slackr':
+                    pkg = fix_slackers_pkg(pkg)
                 if INDEX:
                     index += 1
                     pkg = self._list_color_tag(pkg)
