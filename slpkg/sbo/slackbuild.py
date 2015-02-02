@@ -105,8 +105,7 @@ class SBoInstall(object):
                         name = '-'.join(sbo.split('-')[:-1])
                     self.view_packages(tagc, name, sbo.split('-')[-1],
                                        self.select_arch(ar))
-                if not match and self.dependencies:
-                    print("Installing for dependencies:")
+                self._view_installing_for_deps(match)
                 # view dependencies
                 for dep, ar in zip(self.dependencies, dep_src):
                     tagc, count_ins, count_upg, count_uni = self.tag(
@@ -124,16 +123,29 @@ class SBoInstall(object):
                                        count_ins, count_upg,
                                        Msg().pkg(count_upg)))
                 print("will be upgraded.{0}\n".format(_m.color['ENDC']))
-                if self.master_packages and Msg().answer() in ['y', 'Y']:
-                    b_ins = self.build_install()
-                    Msg().reference(b_ins[0], b_ins[1])
-                    write_deps(self.deps_dict)
-                    delete(_m.build_path)
+                self._continue_to_install()
             else:
                 Msg().not_found(if_upgrade)
         except KeyboardInterrupt:
             print("")   # new line at exit
             sys.exit(0)
+
+    def _continue_to_install(self):
+        '''
+        Continue to install
+        '''
+        if self.master_packages and Msg().answer() in ['y', 'Y']:
+            b_ins = self.build_install()
+            Msg().reference(b_ins[0], b_ins[1])
+            write_deps(self.deps_dict)
+            delete(_m.build_path)
+
+    def _view_installing_for_deps(self, match):
+        '''
+        View installing for dependencies message
+        '''
+        if not match and self.dependencies:
+            print("Installing for dependencies:")
 
     def clear_masters(self):
         '''
