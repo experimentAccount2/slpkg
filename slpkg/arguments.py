@@ -54,7 +54,7 @@ def options():
         "from queue",
         "  -g, --config, --config=[editor]           configuration file "
         "management",
-        "  -l, [repository], --index                 list of repositories "
+        "  -l, [repository], --index, --installed    list of repositories "
         "packages",
         "  -c, [repository] --upgrade                check for updated "
         "packages",
@@ -100,7 +100,7 @@ def usage(repo):
         "             [-q --list, [...] --add, --remove]",
         "             [-q --build, --install, --build-install]",
         "             [-g --config, --config=[editor]]",
-        "             [-l [repository], --index]",
+        "             [-l [repository], --index, --installed]",
         "             [-c [repository] --upgrade]",
         "             [-s [repository] [package...]",
         "             [-t [repository] [package]",

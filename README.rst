@@ -251,7 +251,7 @@ Command Line Tool Usage
       -q, --list, [package...] --add, --remove  add, remove SBo packages in queue
       -q, --build, --install, --build-install   build, install packages from queue
       -g, --config, --config=[editor]           configuration file management
-      -l, [repository], --index                 list of repositories packages
+      -l, [repository], --index, --installed    list of repositories packages
       -c, [repository] --upgrade                check for updated packages
       -s, [repository] [package...]             download, build & install packages
       -t, [repository] [package]                package tracking dependencies
@@ -572,6 +572,7 @@ Read fies, download, build or install:
      
      Choose an option: _
 
+     
 Auto tool to build package:
 
 .. code-block:: bash

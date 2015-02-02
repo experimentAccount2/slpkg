@@ -264,7 +264,7 @@ class PackageManager(object):
                     bol = eol = "\n"
                 Msg().pkg_not_found(bol, pkg, message, eol)
 
-    def list(self, repo, INDEX):
+    def list(self, repo, INDEX, installed):
         '''
         List with the installed packages
         '''
@@ -290,9 +290,9 @@ class PackageManager(object):
                     if line.startswith("PACKAGE NAME: "):
                         pkg_list.append(line[15:].strip())
             for pkg in sorted(pkg_list):
-                pkg = self._list_color_tag(pkg)
                 if INDEX:
                     index += 1
+                    pkg = self._list_color_tag(pkg)
                     print("{0}{1}:{2} {3}".format(_m.color['GREY'], index,
                                                   _m.color['ENDC'], pkg))
                     if index == page:
@@ -304,8 +304,12 @@ class PackageManager(object):
                             break
                         print("")   # new line after page
                         page += row
+                elif installed:
+                    if self._list_of_installed(pkg):
+                        print('{0}{1}{2}'.format(_m.color['GREEN'], pkg,
+                                                 _m.color['ENDC']))
                 else:
-                    print pkg
+                    print(pkg)
             print("")   # new line at end
         except KeyboardInterrupt:
             print("")   # new line at exit
@@ -322,3 +326,13 @@ class PackageManager(object):
             pkg = '{0}{1}{2}'.format(_m.color['GREEN'], pkg,
                                      _m.color['ENDC'])
         return pkg
+
+    def _list_of_installed(self, pkg):
+        '''
+        Return installed packages
+        '''
+        find = pkg + '-'
+        if pkg.endswith('.txz') or pkg.endswith('.tgz'):
+            find = pkg[:-4]
+        if find_package(find, _m.pkg_path):
+            return pkg

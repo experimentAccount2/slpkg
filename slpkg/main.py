@@ -137,14 +137,17 @@ def main():
     elif (len(args) == 2 and args[0] == 'repo-info' and
           args[1] not in RepoList().all_repos):
         usage(args[1])
-
     if len(args) == 3 and args[0] == '-a':
         BuildPackage(args[1], args[2:], _m.path).build()
-    elif (len(args) == 3 and args[0] == '-l' and args[2] == '--index' and
-            args[1] in _m.repositories):
-        PackageManager(None).list(args[1], True)
+    elif (len(args) == 3 and args[0] == '-l' and args[1] in _m.repositories):
+        if args[2] == '--index':
+            PackageManager(None).list(args[1], True, False)
+        elif args[2] == '--installed':
+            PackageManager(None).list(args[1], False, True)
+        else:
+            usage(args[1])
     elif len(args) == 2 and args[0] == '-l' and args[1] in _m.repositories:
-        PackageManager(None).list(args[1], False)
+        PackageManager(None).list(args[1], False, False)
     elif len(args) == 3 and args[0] == '-c' and args[2] == '--upgrade':
         if args[1] in _m.repositories and args[1] not in ['slack', 'sbo']:
             Case('').binary_upgrade(args[1])
