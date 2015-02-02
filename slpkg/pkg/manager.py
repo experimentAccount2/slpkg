@@ -290,6 +290,7 @@ class PackageManager(object):
                     if line.startswith("PACKAGE NAME: "):
                         pkg_list.append(line[15:].strip())
             for pkg in sorted(pkg_list):
+                pkg = self._list_color_tag(pkg)
                 if INDEX:
                     index += 1
                     print("{0}{1}:{2} {3}".format(_m.color['GREY'], index,
@@ -309,3 +310,15 @@ class PackageManager(object):
         except KeyboardInterrupt:
             print("")   # new line at exit
             sys.exit(0)
+
+    def _list_color_tag(self, pkg):
+        '''
+        Tag with color installed packages
+        '''
+        find = pkg + '-'
+        if pkg.endswith('.txz') or pkg.endswith('.tgz'):
+            find = pkg[:-4]
+        if find_package(find, _m.pkg_path):
+            pkg = '{0}{1}{2}'.format(_m.color['GREEN'], pkg,
+                                     _m.color['ENDC'])
+        return pkg

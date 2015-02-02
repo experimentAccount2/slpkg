@@ -208,8 +208,8 @@ class BinaryInstall(object):
         requires = []
         Msg().resolving()
         for dep in self.packages:
-            dep_ver = '-'.join(dep.split('-')[:-1])     # fix if input pkg with
-            if not len(dep_ver) == 0:                   # version
+            dep_ver = '-'.join(dep.split('-')[:-1])     # fix if input pkg name
+            if not len(dep_ver) == 0:                   # with version
                 dep = dep_ver
             dependencies = []
             dependencies = Utils().dimensional_list(Dependencies(
