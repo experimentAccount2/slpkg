@@ -2,6 +2,7 @@ Version 2.2.1
 2-2-2015
 
 [Feature] - Added support multipackages.
+          - Added passing variables to the script.
 
 [Updated] - Fix [key error] when you enter wrong name repository as default.
           - Rename BUILD variable to BUILD_PATH in configuration file slpkg.conf.

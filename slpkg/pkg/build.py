@@ -76,28 +76,43 @@ class BuildPackage(object):
             # change permissions
             subprocess.call("chmod +x {0}.SlackBuild".format(self.prgnam),
                             shell=True)
+            pass_var = self.pass_variable()
             if _m.sbo_build_log == "on":
                 if os.path.isfile(self.build_logs + self.log_file):
                     os.remove(self.build_logs + self.log_file)
                 # start log write
                 log_head(self.build_logs, self.log_file, self.start_log_time)
-                subprocess.Popen("./{0}.SlackBuild 2>&1 | tee -a {1}{2}".format(
-                    self.prgnam, self.build_logs, self.log_file), shell=True,
-                    stdout=sys.stdout).communicate()
+                subprocess.Popen("{0} ./{1}.SlackBuild 2>&1 | tee -a "
+                                 "{2}{3}".format(' '.join(pass_var),
+                                                 self.prgnam, self.build_logs,
+                                                 self.log_file), shell=True,
+                                 stdout=sys.stdout).communicate()
                 sum_time = build_time(self.start_time)
                 # write end in log file
                 log_end(self.build_logs, self.log_file, sum_time)
                 print("Total build time for package {0} : {1}\n".format(
                     self.prgnam, sum_time))
             else:
-                subprocess.call("./{0}.SlackBuild".format(self.prgnam,
-                                                          shell=True))
+                subprocess.call("{0} ./{1}.SlackBuild".format(
+                    ' '.join(pass_var), self.prgnam, shell=True))
             os.chdir(self.path)
         except (OSError, IOError):
             Msg().pkg_not_found("\n", self.prgnam, "Wrong file", "\n")
         except KeyboardInterrupt:
             print("")   # new line at exit
             sys.exit(0)
+
+    def pass_variable(self):
+        '''
+        Grep slpkg bash variable
+        '''
+        pass_var = []
+        bash_var = subprocess.check_output("set | grep 'SLPKG'", shell=True)
+        for var in bash_var.split():
+            if (var.startswith('SLPKG') and
+                    var.split('_')[-2].lower() == self.prgnam.lower()):
+                pass_var.append(var[len('SLPKG') + len(self.prgnam) + 2:])
+        return pass_var
 
 
 def log_head(path, log_file, log_time):

@@ -267,6 +267,7 @@ Command Line Tool Usage
 Slpkg Examples
 --------------
 
+
 If you use slpkg for the first time will have to create 
 and update the package list. This command must be executed to update the 
 package lists:
@@ -441,6 +442,20 @@ Installing packages from the repositories (supporting multi packages):
     Would you like to continue [Y/n]?
 
 
+Build packages and passing variables to the script:
+
+.. code-block:: bash
+
+    First export variable(s) like:
+    
+    $ export SLPKG_FFMPEG_ASS=yes SLPKG_FFMPEG_X264=yes
+    
+    
+    And then run as you know:
+
+    $ slpkg -s sbo ffmpeg
+
+    
 Tracking all dependencies of packages,
 and also displays installed packages:
 
@@ -464,6 +479,7 @@ and also displays installed packages:
      +--4 gst1-plugins-bad
      |
      +--5 libunique
+
 
 Check if your packages is up to date:
 
@@ -653,6 +669,7 @@ Auto tool to build package:
 
     Total build time for package termcolor : 1 Sec
 
+
 Upgrade, install packages like Slackware command '# upgradepkg --install-new':
 
 .. code-block:: bash
@@ -683,6 +700,7 @@ Install mass-packages:
     or 
 
     $ slpkg -i *.t?z
+
 
 Find installed packages:
 
@@ -754,6 +772,7 @@ Display the contents of the packages:
     
     No such package lua: Cant find
 
+
 Remove packages:
 
 .. code-block:: bash
@@ -790,6 +809,7 @@ Remove packages:
     +==============================================================================
     | Package: termcolor removed
     +==============================================================================
+
 
 Remove packages with all dependencies:
 (presupposes facility with the option 'slpkg -s <repository> <package>)
@@ -828,7 +848,6 @@ Remove packages with all dependencies:
     +==============================================================================
 
 
-
 Build and install packages that have added to the queue:
 
 .. code-block:: bash
@@ -862,6 +881,7 @@ Build and install packages that have added to the queue:
     $ slpkg -q --install (install packages from queue)
 
     $ slpkg -q --build-install (build and install)
+
 
 Add packages in blacklist file manually from 
 /etc/slpkg/blacklist or with the following options:
