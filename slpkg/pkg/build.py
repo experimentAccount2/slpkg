@@ -76,7 +76,7 @@ class BuildPackage(object):
             # change permissions
             subprocess.call("chmod +x {0}.SlackBuild".format(self.prgnam),
                             shell=True)
-            pass_var = self.pass_variable()
+            pass_var = self._pass_variable()
             if _m.sbo_build_log == "on":
                 if os.path.isfile(self.build_logs + self.log_file):
                     os.remove(self.build_logs + self.log_file)
@@ -102,7 +102,7 @@ class BuildPackage(object):
             print("")   # new line at exit
             sys.exit(0)
 
-    def pass_variable(self):
+    def _pass_variable(self):
         '''
         Grep slpkg bash variable
         '''

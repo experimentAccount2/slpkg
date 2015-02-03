@@ -30,6 +30,9 @@ from __metadata__ import MetaData as _m
 
 
 class RepoList(object):
+    '''
+    List of repositories
+    '''
 
     def __init__(self):
         self.all_repos = {

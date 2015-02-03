@@ -31,7 +31,7 @@ from slpkg.__metadata__ import MetaData as _m
 from slpkg.slack.slack_version import slack_ver
 
 
-def repo_data(PACKAGES_TXT, step, repo, version):
+def repo_data(PACKAGES_TXT, step, repo):
     '''
     Grap data packages
     '''
@@ -63,19 +63,19 @@ def repo_data(PACKAGES_TXT, step, repo, version):
          rlocation,
          rsize,
          runsize
-         ) = alien_filter(name, location, size, unsize, version)
+         ) = alien_filter(name, location, size, unsize)
     elif repo == "ktown":
         (rname,
          rlocation,
          rsize,
          runsize
-         ) = ktown_filter(name, location, size, unsize, version)
+         ) = ktown_filter(name, location, size, unsize)
     elif repo == "multi":
         (rname,
          rlocation,
          rsize,
          runsize
-         ) = multi_filter(name, location, size, unsize, version)
+         ) = multi_filter(name, location, size, unsize)
     else:
         rname, rlocation, rsize, runsize = name, location, size, unsize
     return [rname, rlocation, rsize, runsize]
@@ -99,12 +99,12 @@ def rlw_filter(name, location, size, unsize):
     return [fname, flocation, fsize, funsize]
 
 
-def alien_filter(name, location, size, unsize, version):
+def alien_filter(name, location, size, unsize):
     '''
     Filter Alien's repository data
     '''
     ver = slack_ver()
-    if version == "current":
+    if _m.slack_rel == "current":
         ver = "current"
     path_pkg = "pkg"
     if os.uname()[4] == "x86_64":
@@ -119,12 +119,12 @@ def alien_filter(name, location, size, unsize, version):
     return [fname, flocation, fsize, funsize]
 
 
-def ktown_filter(name, location, size, unsize, version):
+def ktown_filter(name, location, size, unsize):
     '''
     Filter Alien's ktown repository data
     '''
     ver = slack_ver()
-    if version == "current":
+    if _m.slack_rel == "current":
         ver = "current"
     path_pkg = "x86"
     if os.uname()[4] == "x86_64":
@@ -139,12 +139,12 @@ def ktown_filter(name, location, size, unsize, version):
     return [fname, flocation, fsize, funsize]
 
 
-def multi_filter(name, location, size, unsize, version):
+def multi_filter(name, location, size, unsize):
     '''
     Filter Alien's multilib repository data
     '''
     ver = slack_ver()
-    if version == "current":
+    if _m.slack_rel == "current":
         ver = "current"
     (fname, flocation, fsize, funsize) = ([] for i in range(4))
     for n, l, s, u in zip(name, location, size, unsize):

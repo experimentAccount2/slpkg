@@ -79,21 +79,33 @@ class Msg(object):
         print("+" + "=" * max_len)
 
     def checking(self):
+        '''
+        Message checking
+        '''
         sys.stdout.write("{0}Checking ...{1}".format(_m.color['GREY'],
                                                      _m.color['ENDC']))
         sys.stdout.flush()
 
     def reading(self):
+        '''
+        Message reading
+        '''
         sys.stdout.write("{0}Reading package lists ...{1}".format(
             _m.color['GREY'], _m.color['ENDC']))
         sys.stdout.flush()
 
     def resolving(self):
+        '''
+        Message resolving
+        '''
         sys.stdout.write("{0}Resolving dependencies ...{1}".format(
             _m.color['GREY'], _m.color['ENDC']))
         sys.stdout.flush()
 
     def done(self):
+        '''
+        Message done
+        '''
         sys.stdout.write("{0}Done{1}\n".format(_m.color['GREY'],
                                                _m.color['ENDC']))
 
@@ -107,18 +119,27 @@ class Msg(object):
         return message
 
     def not_found(self, if_upgrade):
+        '''
+        Message not found packages
+        '''
         if if_upgrade:
             print('\nNot found packages for upgrade\n')
         else:
             print('\nNot found packages for installation\n')
 
     def upg_inst(self, if_upgrade):
+        '''
+        Message installing or upgrading
+        '''
         if not if_upgrade:
             print("Installing:")
         else:
             print("Upgrading:")
 
     def answer(self):
+        '''
+        Message answer
+        '''
         if _m.default_answer == "y":
             answer = _m.default_answer
         else:

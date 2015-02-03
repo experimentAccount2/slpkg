@@ -78,8 +78,7 @@ class PackageManager(object):
             except subprocess.CalledProcessError:
                 self.not_found("Can't reinstall", self.binary, pkg)
 
-    @staticmethod
-    def not_found(message, binary, pkg):
+    def _not_found(self, message, binary, pkg):
         if len(binary) > 1:
             bol = eol = ""
         else:

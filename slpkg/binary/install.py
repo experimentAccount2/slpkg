@@ -49,10 +49,10 @@ from dependency import Dependencies
 
 class BinaryInstall(object):
 
-    def __init__(self, packages, repo, version):
+    def __init__(self, packages, repo):
         self.packages = packages
         self.repo = repo
-        self.version = version
+        self.version = _m.slack_rel
         self.tmp_path = _m.slpkg_tmp_packages
         self.dwn, self.dep_dwn = [], []
         self.install, self.dep_install = [], []
@@ -114,7 +114,7 @@ class BinaryInstall(object):
                 print("After this process, {0} {1} of additional disk "
                       "space will be used.{2}".format(size[1], unit[1],
                                                       _m.color['ENDC']))
-                print('')
+                print("")
                 if Msg().answer() in ['y', 'Y']:
                     self.install.reverse()
                     Download(self.tmp_path, (self.dep_dwn + self.dwn)).start()
@@ -237,7 +237,7 @@ class BinaryInstall(object):
             self.pkg_ver = [''] * len(install)
         for pkg, ver, comp in zip(install, self.pkg_ver, comp_sum):
             pkg_split = split_package(pkg[:-4])
-            if find_package(pkg_split[0] + "-" + pkg_split[1], _m.pkg_path):
+            if find_package(pkg[:-4], _m.pkg_path):
                 pkg_sum += 1
                 COLOR = _m.color['GREEN']
             elif find_package(pkg_split[0] + "-", _m.pkg_path):
@@ -276,7 +276,7 @@ class BinaryInstall(object):
         # location = data[1]
         # size = data[2]
         # unsize = data[3]
-        data = repo_data(self.PACKAGES_TXT, self.step, self.repo, self.version)
+        data = repo_data(self.PACKAGES_TXT, self.step, self.repo)
         for pkg in packages:
             for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
                                                data[3]):

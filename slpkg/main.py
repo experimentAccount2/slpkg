@@ -59,22 +59,21 @@ class Case(object):
 
     def __init__(self, package):
         self.package = package
-        self.release = _m.slack_rel
 
     def sbo_install(self):
         SBoInstall(self.package).start(False)
 
     def binary_install(self, repo):
-        BinaryInstall(self.package, repo, self.release).start(False)
+        BinaryInstall(self.package, repo).start(False)
 
     def sbo_upgrade(self):
         SBoInstall(sbo_upgrade()).start(True)
 
     def slack_upgrade(self):
-        Patches(self.release).start()
+        Patches().start()
 
     def binary_upgrade(self, repo):
-        BinaryInstall(pkg_upgrade(repo), repo, self.release).start(True)
+        BinaryInstall(pkg_upgrade(repo), repo).start(True)
 
 
 def main():

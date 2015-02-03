@@ -48,8 +48,8 @@ from slack_version import slack_ver
 
 class Patches(object):
 
-    def __init__(self, version):
-        self.version = version
+    def __init__(self):
+        self.version = _m.slack_rel
         self.patch_path = _m.slpkg_tmp_patches
         Msg().reading()
         if self.version == "stable":
