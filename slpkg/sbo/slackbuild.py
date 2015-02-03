@@ -69,7 +69,6 @@ class SBoInstall(object):
             tagc, match = '', False
             count_ins = count_upg = count_uni = 0
             for sbo in self.slackbuilds:
-                sbo_deps = []
                 self.index += 1
                 self.toolbar_width = status(self.index, self.toolbar_width, 4)
                 if sbo_search_pkg(sbo):
