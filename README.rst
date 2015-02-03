@@ -455,6 +455,14 @@ Build packages and passing variables to the script:
 
     $ slpkg -s sbo ffmpeg
 
+    or
+
+    $ slpkg -n ffmpeg
+
+    or
+
+    $ slpkg -a ffmpeg.tar.gz ffmpeg-2.1.5.tar.bz2
+
     
 Tracking all dependencies of packages,
 and also displays installed packages:
