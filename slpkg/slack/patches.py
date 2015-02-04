@@ -117,7 +117,7 @@ class Patches(object):
         '''
         (pkg_for_upgrade, dwn, upgrade, comp_sum,
          uncomp_sum) = ([] for i in range(5))
-        data = repo_data(self.PACKAGES_TXT, self.step, 'slack', slack_ver)
+        data = repo_data(self.PACKAGES_TXT, self.step, 'slack')
         black = BlackList().packages()
         for name, loc, comp, uncomp in zip(data[0], data[1], data[2], data[3]):
             inst_pkg = find_package(split_package(name)[0] + "-", _m.pkg_path)
