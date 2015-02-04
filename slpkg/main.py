@@ -77,42 +77,24 @@ class Case(object):
         BinaryInstall(pkg_upgrade(repo), repo).start(True)
 
 
-def main():
-
-    Msg().s_user(getpass.getuser())
-    args = sys.argv
-    args.pop(0)
-    blacklist = BlackList()
-    queue = QueuePkgs()
-
-    # all_args = [
-    #     'update', 're-create', 'repo-add', 'repo-remove',
-    #     'repo-list', 'repo-info',
-    #     '-h', '--help', '-v', '-a', '-b',
-    #     '-q', '-g', '-l', '-c', '-s', '-t', '-p', '-f',
-    #     '-n', '-i', '-u', '-o', '-r', '-d'
-    # ]
+def _packages(args):
+    packages = args[1:]
+    if args[0] in ['-q', '-b']:
+        packages = args[1:-1]
 
     if (args[0] in ['-f', '-i', '-u', '-o', '-r', '-d'] and
             args[1].endswith('.pkg')):
         packages = Utils().read_file_pkg(args[1])
-    elif args[0] in ['-s'] and args[2].endswith('.pkg'):
+    elif (len(args) == 3 and args[0] in ['-s'] and
+            args[1] in _m.repositories and args[2].endswith('.pkg')):
         packages = Utils().read_file_pkg(args[2])
-    else:
-        packages = args[1:]
-
-    if args[0] in ['-q', '-b'] and args[1].endswith('.pkg'):
+    elif (len(args) == 3 and args[0] in ['-q', '-b'] and
+            args[1].endswith('.pkg')):
         packages = Utils().read_file_pkg(args[1])
-    else:
-        packages = args[1:-1]
+    return packages
 
-    without_repos = [
-        '-h', '--help', '-v', '-a', '-b',
-        '-q', '-g', '-f', '-n', '-i', '-u',
-        '-o', '-r', '-d'
-    ]
-    """ COMMANDS """
 
+def _commands(args):
     if len(args) == 1 and args[0] == 'update':
         Update().repository()
 
@@ -121,16 +103,6 @@ def main():
 
     if len(args) == 1 and args[0] == 'repo-list':
         RepoList().repos()
-
-    if len(args) == 0:
-        usage('')
-    elif (len(args) == 1 and args[0] == '-h' or
-            args[0] == '--help' and args[1:] == []):
-        options()
-
-    if (len(args) == 1 and args[0] == '-v' or
-            args[0] == '--version' and args[1:] == []):
-        prog_version()
 
     if len(args) == 3 and args[0] == 'repo-add':
         Repo().add(args[1], args[2])
@@ -152,8 +124,49 @@ def main():
           args[1] not in RepoList().all_repos):
         usage(args[1])
 
-    """  ARGUMENTS """
 
+def _help_version(args):
+    if len(args) == 0:
+        usage('')
+    elif (len(args) == 1 and args[0] == '-h' or
+            args[0] == '--help' and args[1:] == []):
+        options()
+
+    if (len(args) == 1 and args[0] == '-v' or
+            args[0] == '--version' and args[1:] == []):
+        prog_version()
+
+
+def main():
+
+    Msg().s_user(getpass.getuser())
+    args = sys.argv
+    args.pop(0)
+    blacklist = BlackList()
+    queue = QueuePkgs()
+
+    # Help and Version
+    _help_version(args)
+
+    # all_args = [
+    #     'update', 're-create', 'repo-add', 'repo-remove',
+    #     'repo-list', 'repo-info',
+    #     '-h', '--help', '-v', '-a', '-b',
+    #     '-q', '-g', '-l', '-c', '-s', '-t', '-p', '-f',
+    #     '-n', '-i', '-u', '-o', '-r', '-d'
+    # ]
+
+    packages = _packages(args)
+
+    without_repos = [
+        '-h', '--help', '-v', '-a', '-b',
+        '-q', '-g', '-f', '-n', '-i', '-u',
+        '-o', '-r', '-d'
+    ]
+    # Commands
+    _commands(args)
+
+    # Core arguments
     if len(args) == 3 and args[0] == '-a':
         BuildPackage(args[1], args[2:], _m.path).build()
     elif (len(args) == 3 and args[0] == '-l' and args[1] in _m.repositories):
