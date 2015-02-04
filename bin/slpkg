@@ -34,7 +34,7 @@ Slackware packages.It's a quick and easy way
 to manage your packages in slackware to a command.
 '''
 
-from slpkg import main
+from slpkg.main import main
 
 if __name__ == "__main__":
     main()

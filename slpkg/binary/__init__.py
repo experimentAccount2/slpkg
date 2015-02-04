@@ -1,1 +1,1 @@
-# [ others ] directory
+# [ binarys ] directory
