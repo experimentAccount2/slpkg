@@ -44,6 +44,6 @@ def pkg_checksum(binary, repo):
         CHECKSUMS_md5 = f.read()
         f.close()
     for line in CHECKSUMS_md5.splitlines():
-        if line.endswith(binary):
+        if line.split('/')[-1] == binary:
             md5 = line.split()[0]
     return md5
