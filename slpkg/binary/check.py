@@ -29,15 +29,13 @@ from slpkg.__metadata__ import MetaData as _m
 
 from slpkg.pkg.find import find_package
 
-from slpkg.slack.slack_version import slack_ver
-
 from repo_init import RepoInit
 from greps import repo_data
 
 
 def pkg_upgrade(repo):
     '''
-    Checking packages fro upgrade
+    Checking packages for upgrade
     '''
     Msg().checking()
     PACKAGES_TXT = RepoInit(repo).fetch()[0]
