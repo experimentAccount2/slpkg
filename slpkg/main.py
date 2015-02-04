@@ -24,6 +24,7 @@
 import sys
 import getpass
 
+from utils import Utils
 from messages import Msg
 from desc import PkgDesc
 from config import Config
@@ -92,11 +93,25 @@ def main():
     #     '-n', '-i', '-u', '-o', '-r', '-d'
     # ]
 
+    if (args[0] in ['-f', '-i', '-u', '-o', '-r', '-d'] and
+            args[1].endswith('.pkg')):
+        packages = Utils().read_file_pkg(args[1])
+    elif args[0] in ['-s'] and args[2].endswith('.pkg'):
+        packages = Utils().read_file_pkg(args[2])
+    else:
+        packages = args[1:]
+
+    if args[0] in ['-q', '-b'] and args[1].endswith('.pkg'):
+        packages = Utils().read_file_pkg(args[1])
+    else:
+        packages = args[1:-1]
+
     without_repos = [
         '-h', '--help', '-v', '-a', '-b',
         '-q', '-g', '-f', '-n', '-i', '-u',
         '-o', '-r', '-d'
     ]
+    """ COMMANDS """
 
     if len(args) == 1 and args[0] == 'update':
         Update().repository()
@@ -136,6 +151,9 @@ def main():
     elif (len(args) == 2 and args[0] == 'repo-info' and
           args[1] not in RepoList().all_repos):
         usage(args[1])
+
+    """  ARGUMENTS """
+
     if len(args) == 3 and args[0] == '-a':
         BuildPackage(args[1], args[2:], _m.path).build()
     elif (len(args) == 3 and args[0] == '-l' and args[1] in _m.repositories):
@@ -160,9 +178,9 @@ def main():
             usage(args[1])
     elif len(args) >= 3 and args[0] == '-s':
         if args[1] in _m.repositories and args[1] not in ['sbo']:
-            Case(args[2:]).binary_install(args[1])
+            Case(packages).binary_install(args[1])
         elif args[1] == 'sbo':
-            Case(args[2:]).sbo_install()
+            Case(packages).sbo_install()
         else:
             usage(args[1])
     elif (len(args) == 3 and args[0] == '-t' and args[1] in _m.repositories):
@@ -172,15 +190,15 @@ def main():
     elif len(args) == 2 and args[0] == '-b' and args[1] == '--list':
         blacklist.listed()
     elif len(args) > 2 and args[0] == '-b' and args[-1] == '--add':
-        blacklist.add(args[1:-1])
+        blacklist.add(packages)
     elif len(args) > 2 and args[0] == '-b' and args[-1] == '--remove':
-        blacklist.remove(args[1:-1])
+        blacklist.remove(packages)
     elif len(args) == 2 and args[0] == '-q' and args[1] == '--list':
         queue.listed()
     elif len(args) > 2 and args[0] == '-q' and args[-1] == '--add':
-        queue.add(args[1:-1])
+        queue.add(packages)
     elif len(args) > 2 and args[0] == '-q' and args[-1] == '--remove':
-        queue.remove(args[1:-1])
+        queue.remove(packages)
     elif len(args) == 2 and args[0] == '-q' and args[1] == '--build':
         queue.build()
     elif len(args) == 2 and args[0] == '-q' and args[1] == '--install':
@@ -189,15 +207,15 @@ def main():
         queue.build()
         queue.install()
     elif len(args) > 1 and args[0] == '-i':
-        PackageManager(args[1:]).install()
+        PackageManager(packages).install()
     elif len(args) > 1 and args[0] == '-u':
-        PackageManager(args[1:]).upgrade()
+        PackageManager(packages).upgrade()
     elif len(args) > 1 and args[0] == '-o':
-        PackageManager(args[1:]).reinstall()
+        PackageManager(packages).reinstall()
     elif len(args) > 1 and args[0] == '-r':
-        PackageManager(args[1:]).remove()
+        PackageManager(packages).remove()
     elif len(args) > 1 and args[0] == '-f':
-        PackageManager(args[1:]).find()
+        PackageManager(packages).find()
     elif len(args) == 3 and args[0] == '-p' and args[1] in _m.repositories:
         PkgDesc(args[2], args[1], '').view()
     elif len(args) == 4 and args[0] == '-p' and args[3].startswith('--color='):
@@ -208,7 +226,7 @@ def main():
         else:
             usage(args[1])
     elif len(args) > 1 and args[0] == '-d':
-        PackageManager(args[1:]).display()
+        PackageManager(packages).display()
     elif len(args) == 2 and args[0] == '-g' and args[1].startswith('--config'):
         editor = args[1][len('--config='):]
         if args[1] == '--config':

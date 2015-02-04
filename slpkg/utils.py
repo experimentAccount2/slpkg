@@ -71,3 +71,18 @@ class Utils(object):
             if os.path.isfile(path + pkg):
                 downloaded.append(pkg)
         return downloaded
+
+    def read_file_pkg(self, file_pkg):
+        '''
+        Return packages from file
+        '''
+        packages = []
+        if os.path.isfile(file_pkg):
+            packages = []
+            r_file = self.read_file(file_pkg)
+            for pkg in r_file.splitlines():
+                packages.append(pkg)
+        else:
+            print("\nThe '{0}' file not found\n".format(
+                file_pkg.split('/')[-1]))
+        return filter(lambda x: x != '', packages)

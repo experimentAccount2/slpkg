@@ -52,7 +52,7 @@ class PackageManager(object):
                                               pkg), shell=True))
                 print("Completed!\n")
             except subprocess.CalledProcessError:
-                self.not_found("Can't install", self.binary, pkg)
+                self._not_found("Can't install", self.binary, pkg)
 
     def upgrade(self):
         '''
@@ -64,7 +64,7 @@ class PackageManager(object):
                                               "{0}".format(pkg), shell=True))
                 print("Completed!\n")
             except subprocess.CalledProcessError:
-                self.not_found("Can't upgrade", self.binary, pkg)
+                self._not_found("Can't upgrade", self.binary, pkg)
 
     def reinstall(self):
         '''
@@ -76,7 +76,7 @@ class PackageManager(object):
                     "upgradepkg --reinstall {0}".format(pkg), shell=True))
                 print("Completed!\n")
             except subprocess.CalledProcessError:
-                self.not_found("Can't reinstall", self.binary, pkg)
+                self._not_found("Can't reinstall", self.binary, pkg)
 
     def _not_found(self, message, binary, pkg):
         if len(binary) > 1:
@@ -91,7 +91,7 @@ class PackageManager(object):
         '''
         dep_path = _m.log_path + "dep/"
         dependencies, rmv_list = [], []
-        removed = self._view_removed(self.binary)
+        removed = self._view_removed()
         if not removed:
             print("")   # new line at end
         else:
@@ -143,14 +143,14 @@ class PackageManager(object):
                 sys.exit(0)
         return remove_dep
 
-    def _view_removed(self, binary):
+    def _view_removed(self):
         '''
         View packages before removed
         '''
         removed = []
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
-            _m.color['CYAN'], ", ".join(binary), _m.color['ENDC']))
-        for pkg in binary:
+            _m.color['CYAN'], ", ".join(self.binary), _m.color['ENDC']))
+        for pkg in self.binary:
             pkgs = find_package(pkg + _m.sp, _m.pkg_path)
             if pkgs:
                 print("[ {0}delete{1} ] --> {2}".format(
