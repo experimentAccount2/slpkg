@@ -56,85 +56,246 @@ from binary.check import pkg_upgrade
 from binary.install import BinaryInstall
 
 
-class Case(object):
+class ArgParse(object):
 
-    def __init__(self, package):
-        self.package = package
+    def __init__(self, args):
+        self.args = args
+        self.packages = self.args[1:]
+        if len(self.args) > 1 and self.args[0] in ['-q', '-b']:
+            self.packages = self.args[1:-1]
+        if (len(self.args) > 1 and
+                self.args[0] in ['-f', '-i', '-u', '-o', '-r', '-d'] and
+                self.args[1].endswith('.pkg')):
+            self.packages = Utils().read_file_pkg(self.args[1])
+        elif (len(self.args) == 3 and self.args[0] in ['-s'] and
+                self.args[1] in _m.repositories and
+                self.args[2].endswith('.pkg')):
+            self.packages = Utils().read_file_pkg(self.args[2])
+        elif (len(self.args) == 3 and self.args[0] in ['-q', '-b'] and
+                self.args[1].endswith('.pkg')):
+            self.packages = Utils().read_file_pkg(self.args[1])
+        # checking if repositories exists
+        check_exists_repositories()
 
-    def sbo_install(self):
-        SBoInstall(self.package).start(False)
+    def help_version(self):
+        if len(self.args) == 0:
+            usage('')
+        elif (len(self.args) == 1 and self.args[0] == '-h' or
+                self.args[0] == '--help' and self.args[1:] == []):
+            options()
+        if (len(self.args) == 1 and self.args[0] == '-v' or
+                self.args[0] == '--version' and self.args[1:] == []):
+            prog_version()
 
-    def binary_install(self, repo):
-        BinaryInstall(self.package, repo).start(False)
+    def command_update(self):
+        if len(self.args) == 1 and self.args[0] == 'update':
+            Update().repository()
 
-    def sbo_upgrade(self):
-        SBoInstall(sbo_upgrade()).start(True)
+    def command_update_slpkg(self):
+        if len(self.args) == 2 and self.args[0] == 'update-slpkg':
+            it_self_update()
+        else:
+            usage('')
 
-    def slack_upgrade(self):
-        Patches().start()
+    def command_repo_list(self):
+        if len(self.args) == 1 and self.args[0] == 'repo-list':
+            RepoList().repos()
+        else:
+            usage('')
 
-    def binary_upgrade(self, repo):
-        BinaryInstall(pkg_upgrade(repo), repo).start(True)
+    def command_repo_add(self):
+        if len(self.args) == 3 and self.args[0] == 'repo-add':
+            Repo().add(self.args[1], self.args[2])
+        else:
+            usage('')
 
+    def command_repo_remove(self):
+        if len(self.args) == 2 and self.args[0] == 'repo-remove':
+            Repo().remove(self.args[1])
+        else:
+            usage('')
 
-def _packages(args):
-    packages = args[1:]
-    if args[0] in ['-q', '-b']:
-        packages = args[1:-1]
+    def command_re_create(self):
+        if len(self.args) == 1 and self.args[0] == 're-create':
+            Initialization().re_create()
+        else:
+            usage('')
 
-    if (args[0] in ['-f', '-i', '-u', '-o', '-r', '-d'] and
-            args[1].endswith('.pkg')):
-        packages = Utils().read_file_pkg(args[1])
-    elif (len(args) == 3 and args[0] in ['-s'] and
-            args[1] in _m.repositories and args[2].endswith('.pkg')):
-        packages = Utils().read_file_pkg(args[2])
-    elif (len(args) == 3 and args[0] in ['-q', '-b'] and
-            args[1].endswith('.pkg')):
-        packages = Utils().read_file_pkg(args[1])
-    return packages
+    def command_repo_info(self):
+        if (len(self.args) == 2 and self.args[0] == 'repo-info' and
+                self.args[1] in RepoList().all_repos):
+            del RepoList().all_repos
+            RepoInfo().view(self.args[1])
+        else:
+            usage(self.args[1])
 
+    def auto_build(self):
+        if len(self.args) == 3 and self.args[0] == '-a':
+            BuildPackage(self.args[1], self.args[2:], _m.path).build()
+        else:
+            usage('')
 
-def _commands(args):
-    if len(args) == 1 and args[0] == 'update':
-        Update().repository()
+    def pkg_list(self):
+        if (len(self.args) == 3 and self.args[0] == '-l' and
+                self.args[1] in _m.repositories):
+            if self.args[2] == '--index':
+                PackageManager(None).list(self.args[1], True, False)
+            elif self.args[2] == '--installed':
+                PackageManager(None).list(self.args[1], False, True)
+            else:
+                usage('')
+        elif (len(self.args) == 2 and self.args[0] == '-l' and
+                self.args[1] in _m.repositories):
+            PackageManager(None).list(self.args[1], False, False)
+        else:
+            usage(self.args[1])
 
-    if len(args) == 2 and args[0] == 'update' and args[1] == 'slpkg':
-        it_self_update()
+    def pkg_upgrade(self):
+        if (len(self.args) == 3 and self.args[0] == '-c' and
+                self.args[2] == '--upgrade'):
+            if (self.args[1] in _m.repositories and
+                    self.args[1] not in ['slack', 'sbo']):
+                BinaryInstall(pkg_upgrade(self.args[1]),
+                              self.args[1]).start(True)
+            elif self.args[1] == 'slack':
+                Patches().start()
+            elif self.args[1] == 'sbo':
+                SBoInstall(sbo_upgrade()).start(True)
+            else:
+                usage(self.args[1])
+        else:
+            usage('')
 
-    if len(args) == 1 and args[0] == 'repo-list':
-        RepoList().repos()
+    def pkg_install(self):
+        if len(self.args) >= 3 and self.args[0] == '-s':
+            if self.args[1] in _m.repositories and self.args[1] not in ['sbo']:
+                BinaryInstall(self.packages, self.args[1]).start(False)
+            elif self.args[1] == 'sbo':
+                SBoInstall(self.packages).start(False)
+            else:
+                usage(self.args[1])
+        else:
+            usage('')
 
-    if len(args) == 3 and args[0] == 'repo-add':
-        Repo().add(args[1], args[2])
+    def pkg_tracking(self):
+        if (len(self.args) == 3 and self.args[0] == '-t' and
+                self.args[1] in _m.repositories):
+            track_dep(self.args[2], self.args[1])
+        elif (len(self.args) > 1 and self.args[0] == '-t' and
+                self.args[1] not in _m.repositories):
+            usage(self.args[1])
+        else:
+            usage('')
 
-    if len(args) == 2 and args[0] == 'repo-remove':
-        Repo().remove(args[1])
+    def sbo_network(self):
+        if (len(self.args) == 2 and self.args[0] == '-n' and
+                'sbo' in _m.repositories):
+            SBoNetwork(self.args[1]).view()
+        else:
+            usage('')
 
-    # checking if repositories exists
-    check_exists_repositories()
+    def pkg_blacklist(self):
+        blacklist = BlackList()
+        if (len(self.args) == 2 and self.args[0] == '-b' and
+                self.args[1] == '--list'):
+            blacklist.listed()
+        elif (len(self.args) > 2 and self.args[0] == '-b' and
+                self.args[-1] == '--add'):
+            blacklist.add(self.packages)
+        elif (len(self.args) > 2 and self.args[0] == '-b' and
+                self.args[-1] == '--remove'):
+            blacklist.remove(self.packages)
+        else:
+            usage('')
 
-    if len(args) == 1 and args[0] == 're-create':
-        Initialization().re_create()
+    def pkg_queue(self):
+        queue = QueuePkgs()
+        if (len(self.args) == 2 and self.args[0] == '-q' and
+                self.args[1] == '--list'):
+            queue.listed()
+        elif (len(self.args) > 2 and self.args[0] == '-q' and
+                self.args[-1] == '--add'):
+            queue.add(self.packages)
+        elif (len(self.args) > 2 and self.args[0] == '-q' and
+                self.args[-1] == '--remove'):
+            queue.remove(self.packages)
+        elif (len(self.args) == 2 and self.args[0] == '-q' and
+                self.args[1] == '--build'):
+            queue.build()
+        elif (len(self.args) == 2 and self.args[0] == '-q' and
+                self.args[1] == '--install'):
+            queue.install()
+        elif (len(self.args) == 2 and self.args[0] == '-q' and
+                self.args[1] == '--build-install'):
+            queue.build()
+            queue.install()
+        else:
+            usage('')
 
-    if (len(args) == 2 and args[0] == 'repo-info' and
-            args[1] in RepoList().all_repos):
-        del RepoList().all_repos
-        RepoInfo().view(args[1])
-    elif (len(args) == 2 and args[0] == 'repo-info' and
-          args[1] not in RepoList().all_repos):
-        usage(args[1])
+    def bin_install(self):
+        if len(self.args) > 1 and self.args[0] == '-i':
+            PackageManager(self.packages).install()
+        else:
+            usage('')
 
+    def bin_upgrade(self):
+        if len(self.args) > 1 and self.args[0] == '-u':
+            PackageManager(self.packages).upgrade()
+        else:
+            usage('')
 
-def _help_version(args):
-    if len(args) == 0:
-        usage('')
-    elif (len(args) == 1 and args[0] == '-h' or
-            args[0] == '--help' and args[1:] == []):
-        options()
+    def bin_reinstall(self):
+        if len(self.args) > 1 and self.args[0] == '-o':
+            PackageManager(self.packages).reinstall()
+        else:
+            usage('')
 
-    if (len(args) == 1 and args[0] == '-v' or
-            args[0] == '--version' and args[1:] == []):
-        prog_version()
+    def bin_remove(self):
+        if len(self.args) > 1 and self.args[0] == '-r':
+            PackageManager(self.packages).remove()
+        else:
+            usage('')
+
+    def bin_find(self):
+        if len(self.args) > 1 and self.args[0] == '-f':
+            PackageManager(self.packages).find()
+        else:
+            usage('')
+
+    def pkg_desc(self):
+        if (len(self.args) == 3 and self.args[0] == '-p' and
+                self.args[1] in _m.repositories):
+            PkgDesc(self.args[2], self.args[1], '').view()
+        elif (len(self.args) == 4 and self.args[0] == '-p' and
+                self.args[3].startswith('--color=')):
+            colors = ['red', 'green', 'yellow', 'cyan', 'grey']
+            tag = self.args[3][len('--color='):]
+            if self.args[1] in _m.repositories and tag in colors:
+                PkgDesc(self.args[2], self.args[1], tag).view()
+        if (len(self.args) > 1 and self.args[0] == '-p' and
+                self.args[1] not in _m.repositories):
+            usage(self.args[1])
+        else:
+            usage('')
+
+    def pkg_contents(self):
+        if len(self.args) > 1 and self.args[0] == '-d':
+            PackageManager(self.packages).display()
+        else:
+            usage('')
+
+    def congiguration(self):
+        if (len(self.args) == 2 and self.args[0] == '-g' and
+                self.args[1].startswith('--config')):
+            editor = self.args[1][len('--config='):]
+            if self.args[1] == '--config':
+                Config().view()
+            elif editor:
+                Config().edit(editor)
+            else:
+                usage('')
+        else:
+            usage('')
 
 
 def main():
@@ -142,117 +303,46 @@ def main():
     Msg().s_user(getpass.getuser())
     args = sys.argv
     args.pop(0)
-    blacklist = BlackList()
-    queue = QueuePkgs()
 
-    # Help and Version
-    _help_version(args)
+    argparse = ArgParse(args)
 
-    # all_args = [
-    #     'update', 're-create', 'repo-add', 'repo-remove',
-    #     'repo-list', 'repo-info',
-    #     '-h', '--help', '-v', '-a', '-b',
-    #     '-q', '-g', '-l', '-c', '-s', '-t', '-p', '-f',
-    #     '-n', '-i', '-u', '-o', '-r', '-d'
-    # ]
+    if len(args) == 2 and args[0] == 'update' and args[1] == 'slpkg':
+        args[0] = 'update-slpkg'
 
-    packages = _packages(args)
+    arguments = {
+        '-h': argparse.help_version,
+        '--help': argparse.help_version,
+        '-v': argparse.help_version,
+        '--version': argparse.help_version,
+        'update': argparse.command_update,
+        'update-slpkg': argparse.command_update_slpkg,
+        'repo-list': argparse.command_repo_list,
+        'repo-add': argparse.command_repo_add,
+        'repo-remove': argparse.command_repo_remove,
+        're-create': argparse.command_re_create,
+        'repo-info': argparse.command_repo_info,
+        '-a': argparse.auto_build,
+        '-l': argparse.pkg_list,
+        '-c': argparse.pkg_upgrade,
+        '-s': argparse.pkg_install,
+        '-t': argparse.pkg_tracking,
+        '-n': argparse.sbo_network,
+        '-b': argparse.pkg_blacklist,
+        '-q': argparse.pkg_queue,
+        '-i': argparse.bin_install,
+        '-u': argparse.bin_upgrade,
+        '-o': argparse.bin_reinstall,
+        '-r': argparse.bin_remove,
+        '-f': argparse.bin_find,
+        '-p': argparse.pkg_desc,
+        '-d': argparse.pkg_contents,
+        '-g': argparse.congiguration
+    }
+    try:
+        arguments[args[0]]()
+    except KeyError:
+        usage('')
 
-    without_repos = [
-        '-h', '--help', '-v', '-a', '-b',
-        '-q', '-g', '-f', '-n', '-i', '-u',
-        '-o', '-r', '-d'
-    ]
-    # Commands
-    _commands(args)
-
-    # Core arguments
-    if len(args) == 3 and args[0] == '-a':
-        BuildPackage(args[1], args[2:], _m.path).build()
-    elif (len(args) == 3 and args[0] == '-l' and args[1] in _m.repositories):
-        if args[2] == '--index':
-            PackageManager(None).list(args[1], True, False)
-        elif args[2] == '--installed':
-            PackageManager(None).list(args[1], False, True)
-        else:
-            usage(args[1])
-    elif len(args) == 2 and args[0] == '-l' and args[1] in _m.repositories:
-        PackageManager(None).list(args[1], False, False)
-    elif len(args) == 3 and args[0] == '-c' and args[2] == '--upgrade':
-        if args[1] in _m.repositories and args[1] not in ['slack', 'sbo']:
-            Case('').binary_upgrade(args[1])
-        elif args[1] in ['slack', 'sbo']:
-            upgrade = {
-                'sbo': Case('').sbo_upgrade,
-                'slack': Case('').slack_upgrade
-            }
-            upgrade[args[1]]()
-        else:
-            usage(args[1])
-    elif len(args) >= 3 and args[0] == '-s':
-        if args[1] in _m.repositories and args[1] not in ['sbo']:
-            Case(packages).binary_install(args[1])
-        elif args[1] == 'sbo':
-            Case(packages).sbo_install()
-        else:
-            usage(args[1])
-    elif (len(args) == 3 and args[0] == '-t' and args[1] in _m.repositories):
-        track_dep(args[2], args[1])
-    elif len(args) == 2 and args[0] == '-n' and 'sbo' in _m.repositories:
-        SBoNetwork(args[1]).view()
-    elif len(args) == 2 and args[0] == '-b' and args[1] == '--list':
-        blacklist.listed()
-    elif len(args) > 2 and args[0] == '-b' and args[-1] == '--add':
-        blacklist.add(packages)
-    elif len(args) > 2 and args[0] == '-b' and args[-1] == '--remove':
-        blacklist.remove(packages)
-    elif len(args) == 2 and args[0] == '-q' and args[1] == '--list':
-        queue.listed()
-    elif len(args) > 2 and args[0] == '-q' and args[-1] == '--add':
-        queue.add(packages)
-    elif len(args) > 2 and args[0] == '-q' and args[-1] == '--remove':
-        queue.remove(packages)
-    elif len(args) == 2 and args[0] == '-q' and args[1] == '--build':
-        queue.build()
-    elif len(args) == 2 and args[0] == '-q' and args[1] == '--install':
-        queue.install()
-    elif len(args) == 2 and args[0] == '-q' and args[1] == '--build-install':
-        queue.build()
-        queue.install()
-    elif len(args) > 1 and args[0] == '-i':
-        PackageManager(packages).install()
-    elif len(args) > 1 and args[0] == '-u':
-        PackageManager(packages).upgrade()
-    elif len(args) > 1 and args[0] == '-o':
-        PackageManager(packages).reinstall()
-    elif len(args) > 1 and args[0] == '-r':
-        PackageManager(packages).remove()
-    elif len(args) > 1 and args[0] == '-f':
-        PackageManager(packages).find()
-    elif len(args) == 3 and args[0] == '-p' and args[1] in _m.repositories:
-        PkgDesc(args[2], args[1], '').view()
-    elif len(args) == 4 and args[0] == '-p' and args[3].startswith('--color='):
-        colors = ['red', 'green', 'yellow', 'cyan', 'grey']
-        tag = args[3][len('--color='):]
-        if args[1] in _m.repositories and tag in colors:
-            PkgDesc(args[2], args[1], tag).view()
-        else:
-            usage(args[1])
-    elif len(args) > 1 and args[0] == '-d':
-        PackageManager(packages).display()
-    elif len(args) == 2 and args[0] == '-g' and args[1].startswith('--config'):
-        editor = args[1][len('--config='):]
-        if args[1] == '--config':
-            Config().view()
-        elif editor:
-            Config().edit(editor)
-        else:
-            usage('')
-    else:
-        if len(args) > 1 and args[0] not in without_repos:
-            usage(args[1])
-        else:
-            usage('')
 
 if __name__ == '__main__':
     main()
