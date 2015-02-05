@@ -83,6 +83,7 @@ class ArgParse(object):
             check_exists_repositories()
 
     def help_version(self):
+        """ Help and version info """
         if (len(self.args) == 1 and self.args[0] == '-h' or
                 self.args[0] == '--help' and self.args[1:] == []):
             options()
@@ -93,40 +94,47 @@ class ArgParse(object):
             usage('')
 
     def command_update(self):
+        """ update package lists repositories """
         if len(self.args) == 1 and self.args[0] == 'update':
             Update().repository()
 
     def command_update_slpkg(self):
+        """ slpkg it self update """
         if len(self.args) == 2 and self.args[0] == 'update-slpkg':
             it_self_update()
         else:
             usage('')
 
     def command_repo_list(self):
+        """ repositories list """
         if len(self.args) == 1 and self.args[0] == 'repo-list':
             RepoList().repos()
         else:
             usage('')
 
     def command_repo_add(self):
+        """ add custom repositories """
         if len(self.args) == 3 and self.args[0] == 'repo-add':
             Repo().add(self.args[1], self.args[2])
         else:
             usage('')
 
     def command_repo_remove(self):
+        """ remove custom repositories """
         if len(self.args) == 2 and self.args[0] == 'repo-remove':
             Repo().remove(self.args[1])
         else:
             usage('')
 
     def command_re_create(self):
+        """ re create repositories package lists """
         if len(self.args) == 1 and self.args[0] == 're-create':
             Initialization().re_create()
         else:
             usage('')
 
     def command_repo_info(self):
+        """ repositories informations """
         if (len(self.args) == 2 and self.args[0] == 'repo-info' and
                 self.args[1] in RepoList().all_repos):
             del RepoList().all_repos
@@ -138,12 +146,14 @@ class ArgParse(object):
             usage('')
 
     def auto_build(self):
+        """ auto built tool """
         if len(self.args) == 3 and self.args[0] == '-a':
             BuildPackage(self.args[1], self.args[2:], _m.path).build()
         else:
             usage('')
 
     def pkg_list(self):
+        """ list of packages by repository """
         if (len(self.args) == 3 and self.args[0] == '-l' and
                 self.args[1] in _m.repositories):
             if self.args[2] == '--index':
@@ -162,6 +172,7 @@ class ArgParse(object):
             usage('')
 
     def pkg_upgrade(self):
+        """ check and upgrade packages by repository """
         if (len(self.args) == 3 and self.args[0] == '-c' and
                 self.args[2] == '--upgrade'):
             if (self.args[1] in _m.repositories and
@@ -178,6 +189,7 @@ class ArgParse(object):
             usage('')
 
     def pkg_install(self):
+        """ install packages by repository """
         if len(self.args) >= 3 and self.args[0] == '-s':
             if self.args[1] in _m.repositories and self.args[1] not in ['sbo']:
                 BinaryInstall(self.packages, self.args[1]).start(False)
@@ -189,6 +201,7 @@ class ArgParse(object):
             usage('')
 
     def pkg_tracking(self):
+        """ tracking package dependencies """
         if (len(self.args) == 3 and self.args[0] == '-t' and
                 self.args[1] in _m.repositories):
             track_dep(self.args[2], self.args[1])
@@ -199,6 +212,7 @@ class ArgParse(object):
             usage('')
 
     def sbo_network(self):
+        """ view slackbuilds packages """
         if (len(self.args) == 2 and self.args[0] == '-n' and
                 'sbo' in _m.repositories):
             SBoNetwork(self.args[1]).view()
@@ -206,6 +220,7 @@ class ArgParse(object):
             usage('')
 
     def pkg_blacklist(self):
+        """ manage blacklist packages """
         blacklist = BlackList()
         if (len(self.args) == 2 and self.args[0] == '-b' and
                 self.args[1] == '--list'):
@@ -220,6 +235,7 @@ class ArgParse(object):
             usage('')
 
     def pkg_queue(self):
+        """ manage packages in queue """
         queue = QueuePkgs()
         if (len(self.args) == 2 and self.args[0] == '-q' and
                 self.args[1] == '--list'):
@@ -244,36 +260,42 @@ class ArgParse(object):
             usage('')
 
     def bin_install(self):
+        """ install Slackware binary packages """
         if len(self.args) > 1 and self.args[0] == '-i':
             PackageManager(self.packages).install()
         else:
             usage('')
 
     def bin_upgrade(self):
+        """ install-upgrade Slackware binary packages """
         if len(self.args) > 1 and self.args[0] == '-u':
             PackageManager(self.packages).upgrade()
         else:
             usage('')
 
     def bin_reinstall(self):
+        """ reinstall Slackware binary packages """
         if len(self.args) > 1 and self.args[0] == '-o':
             PackageManager(self.packages).reinstall()
         else:
             usage('')
 
     def bin_remove(self):
+        """ remove Slackware packages """
         if len(self.args) > 1 and self.args[0] == '-r':
             PackageManager(self.packages).remove()
         else:
             usage('')
 
     def bin_find(self):
+        """ find installed packages """
         if len(self.args) > 1 and self.args[0] == '-f':
             PackageManager(self.packages).find()
         else:
             usage('')
 
     def pkg_desc(self):
+        """ print slack-desc by repository"""
         if (len(self.args) == 3 and self.args[0] == '-p' and
                 self.args[1] in _m.repositories):
             PkgDesc(self.args[2], self.args[1], '').view()
@@ -290,12 +312,14 @@ class ArgParse(object):
             usage('')
 
     def pkg_contents(self):
+        """ print packages contents """
         if len(self.args) > 1 and self.args[0] == '-d':
             PackageManager(self.packages).display()
         else:
             usage('')
 
     def congiguration(self):
+        """ manage slpkg configuration file """
         if (len(self.args) == 2 and self.args[0] == '-g' and
                 self.args[1].startswith('--config')):
             editor = self.args[1][len('--config='):]
