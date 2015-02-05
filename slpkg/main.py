@@ -305,7 +305,7 @@ class ArgParse(object):
             tag = self.args[3][len('--color='):]
             if self.args[1] in _m.repositories and tag in colors:
                 PkgDesc(self.args[2], self.args[1], tag).view()
-        if (len(self.args) > 1 and self.args[0] == '-p' and
+        elif (len(self.args) > 1 and self.args[0] == '-p' and
                 self.args[1] not in _m.repositories):
             usage(self.args[1])
         else:
