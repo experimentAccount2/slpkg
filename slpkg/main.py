@@ -64,7 +64,7 @@ class ArgParse(object):
         if len(self.args) > 1 and self.args[0] in ['-q', '-b']:
             self.packages = self.args[1:-1]
         if (len(self.args) > 1 and
-                self.args[0] in ['-f', '-i', '-u', '-o', '-r', '-d'] and
+                self.args[0] in ['-f', '-i', '-u', '-o', '-r', '-d', '-n'] and
                 self.args[1].endswith('.pkg')):
             self.packages = Utils().read_file_pkg(self.args[1])
         elif (len(self.args) >= 3 and self.args[0] in ['-s', '-t', '-p'] and
@@ -202,6 +202,7 @@ class ArgParse(object):
 
     def pkg_tracking(self):
         """ tracking package dependencies """
+        packages = ''.join(self.packages)
         if len(self.packages) > 1:
             packages = self.packages[1]
             if self.args[2].endswith('.pkg'):
@@ -217,9 +218,12 @@ class ArgParse(object):
 
     def sbo_network(self):
         """ view slackbuilds packages """
+        packages = ''.join(self.packages)
+        if len(self.packages) > 1:
+            packages = self.packages[0]
         if (len(self.args) == 2 and self.args[0] == '-n' and
                 'sbo' in _m.repositories):
-            SBoNetwork(self.args[1]).view()
+            SBoNetwork(packages).view()
         else:
             usage('')
 
@@ -300,6 +304,7 @@ class ArgParse(object):
 
     def pkg_desc(self):
         """ print slack-desc by repository"""
+        packages = ''.join(self.packages)
         if len(self.packages) > 1:
             packages = self.packages[1]
         if (len(self.args) == 3 and self.args[0] == '-p' and
