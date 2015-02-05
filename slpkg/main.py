@@ -67,7 +67,7 @@ class ArgParse(object):
                 self.args[0] in ['-f', '-i', '-u', '-o', '-r', '-d'] and
                 self.args[1].endswith('.pkg')):
             self.packages = Utils().read_file_pkg(self.args[1])
-        elif (len(self.args) == 3 and self.args[0] in ['-s'] and
+        elif (len(self.args) >= 3 and self.args[0] in ['-s', '-t', '-p'] and
                 self.args[1] in _m.repositories and
                 self.args[2].endswith('.pkg')):
             self.packages = Utils().read_file_pkg(self.args[2])
@@ -202,9 +202,13 @@ class ArgParse(object):
 
     def pkg_tracking(self):
         """ tracking package dependencies """
+        if len(self.packages) > 1:
+            packages = self.packages[1]
+            if self.args[2].endswith('.pkg'):
+                packages = self.packages[0]
         if (len(self.args) == 3 and self.args[0] == '-t' and
                 self.args[1] in _m.repositories):
-            track_dep(self.args[2], self.args[1])
+            track_dep(packages, self.args[1])
         elif (len(self.args) > 1 and self.args[0] == '-t' and
                 self.args[1] not in _m.repositories):
             usage(self.args[1])
@@ -296,15 +300,19 @@ class ArgParse(object):
 
     def pkg_desc(self):
         """ print slack-desc by repository"""
+        if len(self.packages) > 1:
+            packages = self.packages[1]
         if (len(self.args) == 3 and self.args[0] == '-p' and
                 self.args[1] in _m.repositories):
-            PkgDesc(self.args[2], self.args[1], '').view()
+            PkgDesc(packages, self.args[1], '').view()
         elif (len(self.args) == 4 and self.args[0] == '-p' and
                 self.args[3].startswith('--color=')):
             colors = ['red', 'green', 'yellow', 'cyan', 'grey']
             tag = self.args[3][len('--color='):]
             if self.args[1] in _m.repositories and tag in colors:
-                PkgDesc(self.args[2], self.args[1], tag).view()
+                PkgDesc(packages, self.args[1], tag).view()
+            else:
+                usage('')
         elif (len(self.args) > 1 and self.args[0] == '-p' and
                 self.args[1] not in _m.repositories):
             usage(self.args[1])
