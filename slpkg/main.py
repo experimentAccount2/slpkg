@@ -75,20 +75,22 @@ class ArgParse(object):
                 self.args[1].endswith('.pkg')):
             self.packages = Utils().read_file_pkg(self.args[1])
         # checking if repositories exists
-        if self.args[0] not in ['-h', '--help', '-v', '--version',
-                                're-create', 'repo-list', 'repo-add',
-                                'repo-remove', 'update', 'update-slpkg']:
+        if len(self.args) > 1 and self.args[0] not in ['-h', '--help', '-v',
+                                                       '--version', 're-create',
+                                                       'repo-list', 'repo-add',
+                                                       'repo-remove', 'update',
+                                                       'update-slpkg']:
             check_exists_repositories()
 
     def help_version(self):
-        if len(self.args) == 0:
-            usage('')
-        elif (len(self.args) == 1 and self.args[0] == '-h' or
+        if (len(self.args) == 1 and self.args[0] == '-h' or
                 self.args[0] == '--help' and self.args[1:] == []):
             options()
-        if (len(self.args) == 1 and self.args[0] == '-v' or
+        elif (len(self.args) == 1 and self.args[0] == '-v' or
                 self.args[0] == '--version' and self.args[1:] == []):
             prog_version()
+        else:
+            usage('')
 
     def command_update(self):
         if len(self.args) == 1 and self.args[0] == 'update':
@@ -314,6 +316,9 @@ def main():
     args.pop(0)
 
     argparse = ArgParse(args)
+
+    if len(args) == 0:
+        usage('')
 
     if len(args) == 2 and args[0] == 'update' and args[1] == 'slpkg':
         args[0] = 'update-slpkg'
