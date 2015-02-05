@@ -75,7 +75,10 @@ class ArgParse(object):
                 self.args[1].endswith('.pkg')):
             self.packages = Utils().read_file_pkg(self.args[1])
         # checking if repositories exists
-        check_exists_repositories()
+        if self.args[0] not in ['-h', '--help', '-v', '--version',
+                                're-create', 'repo-list', 'repo-add',
+                                'repo-remove', 'update', 'update-slpkg']:
+            check_exists_repositories()
 
     def help_version(self):
         if len(self.args) == 0:
@@ -126,8 +129,11 @@ class ArgParse(object):
                 self.args[1] in RepoList().all_repos):
             del RepoList().all_repos
             RepoInfo().view(self.args[1])
-        else:
+        elif (len(self.args) > 1 and self.args[0] == 'repo-info' and
+                self.args[1] not in RepoList().all_repos):
             usage(self.args[1])
+        else:
+            usage('')
 
     def auto_build(self):
         if len(self.args) == 3 and self.args[0] == '-a':
@@ -147,8 +153,11 @@ class ArgParse(object):
         elif (len(self.args) == 2 and self.args[0] == '-l' and
                 self.args[1] in _m.repositories):
             PackageManager(None).list(self.args[1], False, False)
-        else:
+        elif (len(self.args) > 1 and self.args[0] == '-l' and
+                self.args[1] not in _m.repositories):
             usage(self.args[1])
+        else:
+            usage('')
 
     def pkg_upgrade(self):
         if (len(self.args) == 3 and self.args[0] == '-c' and
