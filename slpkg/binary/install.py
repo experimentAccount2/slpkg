@@ -88,7 +88,8 @@ class BinaryInstall(object):
              self.uncomp_sum) = self.store(self.packages)
             Msg().done()
             if self.install:
-                print("")   # new line at start
+                print("\nThe following packages will be automatically "
+                      "installed or upgraded \nwith new version:\n")
                 self.top_view()
                 Msg().upg_inst(self.if_upgrade)
                 mas_sum = self.views(self.install, self.comp_sum, False)
