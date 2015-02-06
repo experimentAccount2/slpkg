@@ -441,6 +441,63 @@ Installing packages from the repositories (supporting multi packages):
 
     Would you like to continue [Y/n]?
 
+    
+    You can create a file with the extension '.pkg' with the names of the packages you 
+    want to manage and use it instead of [package...] like:
+
+    $ echo "brasero
+    > atkmm
+    > Flask
+    > pylint" > foo.pkg
+
+    $ cat foo.pkg
+    brasero
+    atkmm
+    Flask
+    pylint
+
+    $ slpkg -s sbo foo.pkg
+    Reading package lists .........Done
+    Resolving dependencies .......Done
+
+    The following packages will be automatically installed or upgraded 
+    with new version:
+
+    +==============================================================================
+    | Package                 Version            Arch    Build  Repos          Size
+    +==============================================================================
+    Installing:
+     brasero                  3.12.0             x86_64         SBo           
+     atkmm                    2.22.7             x86_64         SBo           
+     Flask                    0.10.1             x86_64         SBo           
+     pylint                   1.3.1              x86_64         SBo           
+    Installing for dependencies:
+     six                      1.8.0              x86_64         SBo           
+     logilab-common           0.63.2             x86_64         SBo           
+     pysetuptools             7.0                x86_64         SBo           
+     astroid                  1.3.4              x86_64         SBo           
+     MarkupSafe               0.23               x86_64         SBo           
+     itsdangerous             0.24               x86_64         SBo           
+     Jinja2                   2.7.3              x86_64         SBo           
+     werkzeug                 0.9.4              x86_64         SBo           
+     libsigc++                2.2.11             x86_64         SBo           
+     glibmm                   2.36.2             x86_64         SBo           
+     cairomm                  1.10.0             x86_64         SBo           
+     pangomm                  2.34.0             x86_64         SBo           
+     orc                      0.4.22             x86_64         SBo           
+     gstreamer1               1.4.1              x86_64         SBo           
+     gst1-plugins-base        1.4.1              x86_64         SBo           
+     gst1-plugins-bad         1.4.1              x86_64         SBo           
+     libunique                1.1.6              x86_64         SBo           
+
+    Installing summary
+    ===============================================================================
+    Total 21 packages.
+    15 packages will be installed, 6 allready installed and 0 package
+    will be upgraded.
+
+    Would you like to continue [Y/n]?    
+
 
 Build packages and passing variables to the script:
 
@@ -709,6 +766,15 @@ Install mass-packages:
 
     $ slpkg -i *.t?z
 
+    or use .pkg file like:
+
+    # cat foo.pkg
+    /tmp/x264-20131101-x86_64-1_SBo.tgz
+    /tmp/xtermcolor-1.3-x86_64-1_SBo.tgz
+    /tmp/python-urllib3-1.9.1-x86_64-1_SBo.tgz
+
+    $ slpkg -u foo.pkg
+
 
 Find installed packages:
 
@@ -730,6 +796,23 @@ Find installed packages:
     Example view all sbo installed packages:
 
     $ slpkg -f _SBo
+
+    from foo.pkg file
+
+    $ cat foo.pkg
+    brasero
+    atkmm
+    Flask
+    pylint
+
+    $ slpkg -f foo.pkg
+    
+    Packages with matching name [ brasero, atkmm, Flask, pylint ]
+
+    [ installed ] - pylint-1.3.1-x86_64-1_SBo
+
+    Total found 1 matching packages.
+    Size of installed packages 1.8 Mb.
 
 
 Display the contents of the packages:
@@ -855,6 +938,24 @@ Remove packages with all dependencies:
     | Package werkzeug removed
     +==============================================================================
 
+    Use list from file foo.pkg like:
+
+    $ cat foo.pkg
+    brasero
+    atkmm
+    Flask
+    pylint
+
+    $ slpkg -r foo.pkg
+
+    Packages with name matching [ brasero, atkmm, Flask, pylint ]
+
+    No such package brasero: Can't remove
+    No such package atkmm: Can't remove
+    No such package Flask: Can't remove
+    [ delete ] --> pylint-1.3.1-x86_64-1_SBo
+
+    Are you sure to remove 1 package [Y/n]?
 
 Build and install packages that have added to the queue:
 
