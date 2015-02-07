@@ -63,6 +63,8 @@ class ArgParse(object):
         self.packages = self.args[1:]
         if len(self.args) > 1 and self.args[0] in ['-q', '-b']:
             self.packages = self.args[1:-1]
+        elif len(self.packages) > 1 and self.args[0] in ['-s', '-t', '-p']:
+            self.packages = self.args[2:]
         if (len(self.args) > 1 and
                 self.args[0] in ['-f', '-i', '-u', '-o', '-r', '-d', '-n'] and
                 self.args[1].endswith('.pkg')):
