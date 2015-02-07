@@ -307,7 +307,7 @@ class ArgParse(object):
         """ print slack-desc by repository"""
         packages = ''.join(self.packages)
         if len(self.packages) > 1:
-            packages = self.packages[1]
+            packages = self.packages[0]
         if (len(self.args) == 3 and self.args[0] == '-p' and
                 self.args[1] in _m.repositories):
             PkgDesc(packages, self.args[1], '').view()
