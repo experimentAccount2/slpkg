@@ -562,8 +562,8 @@ Check if your packages is up to date:
     | Package                 Version            Arch    Build  Repos          Size
     +==============================================================================
     Upgrading:
-     astroid-1.7.0            1.3.4              x86_64         SBo           
-     jdk-1.3.3                8u31               x86_64         SBo           
+     astroid-1.3.3            1.3.4              x86_64         SBo           
+     jdk-7u51                 8u31               x86_64         SBo           
     Installing for dependencies:
      six                      1.8.0              x86_64         SBo           
      logilab-common           0.63.2             x86_64         SBo           
