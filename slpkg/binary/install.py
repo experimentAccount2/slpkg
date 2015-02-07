@@ -281,10 +281,8 @@ class BinaryInstall(object):
         for pkg in packages:
             for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
                                                data[3]):
-                if name:
-                    pkg_ver = '{0}-{1}'.format(split_package(name)[0],
-                                               split_package(name)[1])
-                if pkg in pkg_ver and name not in install and pkg not in black:
+                if (name and name.startswith(pkg) and name not in install and
+                        pkg not in black):
                     dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
                     install.append(name)
                     comp_sum.append(comp)
