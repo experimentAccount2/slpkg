@@ -109,7 +109,7 @@ class BuildPackage(object):
         pass_var = []
         bash_var = subprocess.check_output("set | grep 'SLPKG'", shell=True)
         for var in bash_var.splitlines():
-            if (var.startswith('SLPKG') and
+            if (var.startswith('SLPKG_') and
                     var.split('_')[-2].lower() == self.prgnam.lower()):
                 pass_var.append(var[len('SLPKG') + len(self.prgnam) + 2:])
         return pass_var
