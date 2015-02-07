@@ -28,6 +28,7 @@ import sys
 from slpkg.utils import Utils
 from slpkg.messages import Msg
 from slpkg.toolbar import status
+from slpkg.blacklist import BlackList
 from slpkg.log_deps import write_deps
 from slpkg.downloader import Download
 from slpkg.splitting import split_package
@@ -78,7 +79,7 @@ class SBoInstall(object):
                     self.package_found.append(sbo)
                 else:
                     self.package_not_found.append(sbo)
-            if not self.package_found:
+            if not self.package_found and sbo not in BlackList().packages():
                 match = True
                 self.package_found = self.matching(self.package_not_found)
             self.master_packages, mas_src = self.sbo_version_source(
