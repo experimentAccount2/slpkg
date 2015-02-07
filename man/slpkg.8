@@ -71,6 +71,28 @@ Optional arguments:
   -r, [package...]                          remove binary packages
   -d, [package...]                          display the contents
 
+
+.SH PACKAGE FILE
+Instead of [package...] you can create file with the suffix '.pkg' which was to 
+contain the packages you want to work like:
+
+ # echo "brasero
+ > bitfighter
+ > ffmpeg" > foo.pkg
+
+ # cat foo.pkg
+ > brasero
+ > bitfighter
+ > ffmpeg
+
+ Example:
+
+ # slpkg -s sbo foo.pkg
+
+ or
+
+ # slpkg -r foo.pkg 
+
 .SH DEFAULT REPOSITORIES 
  slackware.com = 'slack'
  SlackBuilds.org = 'sbo'
