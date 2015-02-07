@@ -559,10 +559,11 @@ class Initialization(object):
                                             '/ChangeLog.txt')
             if os.path.isfile(changelogs):
                 os.remove(changelogs)
-            for f in os.listdir(self.lib_path + '{0}_repo/'.format(repo)):
-                packages = '{0}{1}_repo/{2}'.format(self.lib_path, repo, f)
-                if os.path.isfile(packages):
-                    os.remove(packages)
+            if os.path.isdir(self.lib_path + '{0}_repo/'.format(repo)):
+                for f in os.listdir(self.lib_path + '{0}_repo/'.format(repo)):
+                    files = '{0}{1}_repo/{2}'.format(self.lib_path, repo, f)
+                    if os.path.isfile(files):
+                        os.remove(files)
         Update().repository()
 
 
