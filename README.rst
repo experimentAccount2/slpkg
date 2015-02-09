@@ -505,7 +505,7 @@ Build packages and passing variables to the script:
 
     First export variable(s) like:
     
-    $ export SLPKG_FFMPEG_ASS=yes SLPKG_FFMPEG_X264=yes
+    $ export FFMPEG_ASS=yes FFMPEG_X264=yes
     
     
     And then run as you know:

@@ -104,14 +104,15 @@ class BuildPackage(object):
 
     def _pass_variable(self):
         '''
-        Grep slpkg bash variable
+        Return enviroment variables
         '''
         pass_var = []
-        bash_var = subprocess.check_output("set | grep 'SLPKG'", shell=True)
-        for var in bash_var.splitlines():
-            if (var.startswith('SLPKG_') and
-                    var.split('_')[-2].lower() == self.prgnam.lower()):
-                pass_var.append(var[len('SLPKG') + len(self.prgnam) + 2:])
+        for var in os.environ.keys():
+            if (var.startswith('{0}_'.format(self.prgnam.upper())) and
+                    var.split('_')[-2] == self.prgnam.upper()):
+                pass_var.append('{0}={1}'.format(
+                    var[len(self.prgnam.upper()) + 1:],
+                    os.environ[var]))
         return pass_var
 
 
