@@ -1,5 +1,6 @@
 # Python 2.7+
 # GNU wget
-# Slackware 32 x86
-# Slackware 64 x86_64
+# GNU coreutils
+# Slackware x86
+# Slackware x86_64
 # Slackware current
