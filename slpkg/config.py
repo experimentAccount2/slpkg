@@ -52,7 +52,7 @@ class Config(object):
             'SKIP_UNST',
             'DEL_DEPS',
             'USE_COLORS',
-            'WGET_OPTION'
+            'WGET_OPTIONS'
         ]
         read_conf = Utils().read_file(self.config_file)
         for line in read_conf.splitlines():

@@ -125,7 +125,7 @@ class MetaData(object):
     skip_unst = "n"
     del_deps = "off"
     use_colors = "on"
-    wget_option = '-c -N'
+    wget_options = '-c -N'
 
     if os.path.isfile(conf_path + "slpkg.conf"):
         f = open(conf_path + "slpkg.conf", "r")
@@ -163,8 +163,8 @@ class MetaData(object):
                 del_deps = line[9:].strip()
             if line.startswith("USE_COLORS"):
                 use_colors = line[11:].strip()
-            if line.startswith("WGET_OPTION"):
-                wget_option = line[12:].strip()
+            if line.startswith("WGET_OPTIONS"):
+                wget_options = line[13:].strip()
 
     ktown_kde_repo = ktown_repo(repositories)
     slacke_sub_repo = slacke_repo(repositories)

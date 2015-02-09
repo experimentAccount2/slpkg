@@ -34,6 +34,7 @@ class Download(object):
     def __init__(self, path, url):
         self.path = path
         self.url = url
+        self.wget_options = _m.wget_options
 
     def start(self):
         '''
@@ -46,14 +47,15 @@ class Download(object):
                                                              self.file_name))
             try:
                 subprocess.call("wget {0} --directory-prefix={1} {2}".format(
-                                _m.wget_option, self.path, dwn), shell=True)
-                self.check()
+                                self.wget_options, self.path, dwn), shell=True)
+                self._check_if_downloaded()
             except KeyboardInterrupt:
                 print   # new line at cancel
                 sys.exit(0)
 
-    def check(self):
+    def _check_if_downloaded(self):
         if not os.path.isfile(self.path + self.file_name):
+            print('')
             Msg().template(78)
             print("| Download '{0}' file {1}[ FAILED ]{2}".format(
                 self.file_name, _m.color['RED'], _m.color['ENDC']))
