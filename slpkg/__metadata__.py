@@ -23,6 +23,9 @@
 
 import os
 
+# fix temponary to upgrade version 2.2.0 to 2.2.1
+__version_info__ = (2, 2, 1)
+
 
 def remove_repositories(repositories, default_repositories):
     '''
