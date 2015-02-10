@@ -66,9 +66,9 @@ class Msg(object):
                                                             _m.color['ENDC']))
         self.template(78)
         print("| See log file in '{0}/var/log/slpkg/sbo/build_logs{1}' "
-              "directory or read README file:".format(_m.color['CYAN'],
-                                                      _m.color['ENDC']))
-        print("| {0}{1}".format(sbo_url, "README"))
+              "directory or read README".format(_m.color['CYAN'],
+                                                _m.color['ENDC']))
+        print("| file: {0}{1}".format(sbo_url, "README"))
         self.template(78)
         print   # new line at end
 

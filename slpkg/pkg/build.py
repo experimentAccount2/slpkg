@@ -108,11 +108,9 @@ class BuildPackage(object):
         '''
         pass_var = []
         for var in os.environ.keys():
-            if (var.startswith('{0}_'.format(self.prgnam.upper())) and
-                    var.split('_')[-2] == self.prgnam.upper()):
+            if var.split('_')[0] == self.prgnam.upper():
                 pass_var.append('{0}={1}'.format(
-                    var[len(self.prgnam.upper()) + 1:],
-                    os.environ[var]))
+                    var.split('_')[1], os.environ[var]))
         return pass_var
 
 

@@ -65,6 +65,7 @@ class ArgParse(object):
             self.packages = self.args[1:-1]
         elif len(self.packages) > 1 and self.args[0] in ['-s', '-t', '-p']:
             self.packages = self.args[2:]
+
         if (len(self.args) > 1 and
                 self.args[0] in ['-f', '-i', '-u', '-o', '-r', '-d', '-n'] and
                 self.args[1].endswith('.pkg')):
@@ -76,6 +77,7 @@ class ArgParse(object):
         elif (len(self.args) == 3 and self.args[0] in ['-q', '-b'] and
                 self.args[1].endswith('.pkg')):
             self.packages = Utils().read_file_pkg(self.args[1])
+
         # checking if repositories exists
         if len(self.args) > 1 and self.args[0] not in [
             '-h', '--help', '-v', '--version', 're-create', 'repo-list',
