@@ -73,7 +73,7 @@ if "install" in sys.argv:
     if os.path.exists(man_path):
         man_page = "man/slpkg.8"
         gzip_man = "man/slpkg.8.gz"
-        print("Installing man pages")
+        print("Installing '{0}' man pages".format(gzip_man.split('/')[1]))
         f_in = open(man_page, "rb")
         f_out = gzip.open(gzip_man, 'wb')
         f_out.writelines(f_in)
@@ -90,7 +90,8 @@ if "install" in sys.argv:
     ]
     if not os.path.exists(_m.conf_path):
         os.system("mkdir -p {0}".format(_m.conf_path))
-    shutil.copy2(conf_file[0], _m.conf_path + conf_file[0])
+    print("Installing '{0}' file".format(conf_file[0].split('/')[1]))
+    shutil.copy2(conf_file[0], _m.conf_path + conf_file[0].split('/')[1])
     for conf in conf_file[1:]:
         filename = conf.split("/")[-1]
         print("Installing '{0}' file".format(filename))
