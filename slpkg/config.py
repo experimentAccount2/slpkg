@@ -23,12 +23,8 @@
 
 import subprocess
 
-<<<<<<< HEAD
 from utils import Utils
 from __metadata__ import MetaData as _m
-=======
-from __metadata__ import color
->>>>>>> master
 
 
 class Config(object):
@@ -44,11 +40,7 @@ class Config(object):
         conf_args = [
             'VERSION',
             'REPOSITORIES',
-<<<<<<< HEAD
             'BUILD_PATH',
-=======
-            'BUILD',
->>>>>>> master
             'SBO_CHECK_MD5',
             'PACKAGES',
             'PATCHES',
@@ -60,27 +52,15 @@ class Config(object):
             'SKIP_UNST',
             'DEL_DEPS',
             'USE_COLORS',
-<<<<<<< HEAD
             'WGET_OPTIONS'
         ]
         read_conf = Utils().read_file(self.config_file)
-=======
-            'WGET_OPTION'
-        ]
-        f = open(self.config_file, "r")
-        read_conf = f.read()
-        f.close()
->>>>>>> master
         for line in read_conf.splitlines():
             if not line.startswith("#") and line.split("=")[0] in conf_args:
                 print(line)
             else:
-<<<<<<< HEAD
                 print("{0}{1}{2}".format(_m.color['CYAN'], line,
                                          _m.color['ENDC']))
-=======
-                print("{0}{1}{2}".format(color['CYAN'], line, color['ENDC']))
->>>>>>> master
         print("")   # new line at end
 
     def edit(self, editor):

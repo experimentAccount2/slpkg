@@ -23,20 +23,12 @@
 
 import shutil
 
-<<<<<<< HEAD:slpkg/sbo/remove.py
 from slpkg.__metadata__ import MetaData as _m
-=======
-from slpkg.__metadata__ import del_build
->>>>>>> master:slpkg/sbo/remove.py
 
 
 def delete(build_folder):
     '''
     Delete build directory and all its contents.
     '''
-<<<<<<< HEAD:slpkg/sbo/remove.py
     if _m.del_build == "on":
-=======
-    if del_build == "on":
->>>>>>> master:slpkg/sbo/remove.py
         shutil.rmtree(build_folder)

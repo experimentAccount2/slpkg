@@ -23,16 +23,10 @@
 
 import sys
 
-<<<<<<< HEAD
 from slpkg.utils import Utils
 from slpkg.repositories import Repo
 from slpkg.blacklist import BlackList
 from slpkg.__metadata__ import MetaData as _m
-=======
-from slpkg.repositories import Repo
-from slpkg.blacklist import BlackList
-from slpkg.__metadata__ import lib_path
->>>>>>> master
 
 from slpkg.slack.slack_version import slack_ver
 
@@ -45,7 +39,6 @@ def sbo_search_pkg(name):
         repo = Repo().sbo()
         blacklist = BlackList().packages()
         sbo_url = "{0}{1}/".format(repo, slack_ver())
-<<<<<<< HEAD
         SLACKBUILDS_TXT = Utils().read_file(
             _m.lib_path + "sbo_repo/SLACKBUILDS.TXT")
         for line in SLACKBUILDS_TXT.splitlines():
@@ -53,17 +46,6 @@ def sbo_search_pkg(name):
                 sbo_name = (line[23:].split("/")[-1].replace("\n", "")).strip()
                 if name == sbo_name and name not in blacklist:
                     return (sbo_url + line[23:].strip() + "/")
-=======
-        with open(lib_path + "sbo_repo/SLACKBUILDS.TXT",
-                  "r") as SLACKBUILDS_TXT:
-            for line in SLACKBUILDS_TXT:
-                if line.startswith("SLACKBUILD LOCATION"):
-                    sbo_name = (line[23:].split("/")[-1].replace("\n",
-                                                                 "")).strip()
-                    if name == sbo_name and name not in blacklist:
-                        SLACKBUILDS_TXT.close()
-                        return (sbo_url + line[23:].strip() + "/")
->>>>>>> master
     except KeyboardInterrupt:
         print("")   # new line at exit
         sys.exit(0)

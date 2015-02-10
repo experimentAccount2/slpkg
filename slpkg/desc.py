@@ -22,18 +22,9 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-<<<<<<< HEAD
 from utils import Utils
 from messages import Msg
 from __metadata__ import MetaData as _m
-=======
-from messages import pkg_not_found
-from __metadata__ import (
-    lib_path,
-    repositories,
-    color,
-)
->>>>>>> master
 
 
 class PkgDesc(object):
@@ -45,7 +36,6 @@ class PkgDesc(object):
         self.COLOR = ""
         self.lib = ""
         color_text = {
-<<<<<<< HEAD
             'red': _m.color['RED'],
             'green': _m.color['GREEN'],
             'yellow': _m.color['YELLOW'],
@@ -62,34 +52,13 @@ class PkgDesc(object):
 
     def view(self):
         PACKAGES_TXT = Utils().read_file(self.lib)
-=======
-            'red': color['RED'],
-            'green': color['GREEN'],
-            'yellow': color['YELLOW'],
-            'cyan': color['CYAN'],
-            'grey': color['GREY'],
-            '': ''
-        }
-        self.COLOR = color_text[self.paint]
-        if self.repo in repositories:
-            self.lib = lib_path + '{0}_repo/PACKAGES.TXT'.format(self.repo)
-
-    def view(self):
-        f = open(self.lib, "r")
-        PACKAGES_TXT = f.read()
-        f.close()
->>>>>>> master
         print("")   # new line at start
         count = 0
         if self.repo != "sbo":
             for line in PACKAGES_TXT.splitlines():
                 if line.startswith(self.name + ":"):
                     print(self.COLOR + line[len(self.name) + 1:] +
-<<<<<<< HEAD
                           _m.color['ENDC'])
-=======
-                          color['ENDC'])
->>>>>>> master
                     count += 1
                     if count == 11:
                         break
@@ -98,14 +67,8 @@ class PkgDesc(object):
                 if (line.startswith("SLACKBUILD SHORT DESCRIPTION:  "
                                     + self.name + " (")):
                     count += 1
-<<<<<<< HEAD
                     print(self.COLOR + line[31:] + _m.color['ENDC'])
         if count == 0:
             Msg().pkg_not_found("", self.name, "No matching", "\n")
-=======
-                    print(self.COLOR + line[31:] + color['ENDC'])
-        if count == 0:
-            pkg_not_found("", self.name, "No matching", "\n")
->>>>>>> master
         else:
             print("")   # new line at end

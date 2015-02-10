@@ -21,22 +21,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-<<<<<<< HEAD
 import os
 import sys
 import subprocess
 
 from messages import Msg
 from __metadata__ import MetaData as _m
-=======
-import sys
-import subprocess
-
-from __metadata__ import (
-    color,
-    wget_option
-)
->>>>>>> master
 
 
 class Download(object):
@@ -44,15 +34,11 @@ class Download(object):
     def __init__(self, path, url):
         self.path = path
         self.url = url
-<<<<<<< HEAD
         self.wget_options = _m.wget_options
-=======
->>>>>>> master
 
     def start(self):
         '''
         Download files usign wget.
-<<<<<<< HEAD
         '''
         for dwn in self.url:
             self.file_name = dwn.split("/")[-1]
@@ -77,19 +63,3 @@ class Download(object):
             print('')
             if not Msg().answer() in ['y', 'Y']:
                 sys.exit(0)
-=======
-        Check if file already download and skip or continue
-        download if before stoped.
-        '''
-        for dwn in self.url:
-            file_name = dwn.split("/")[-1]
-            print("\n[ {0}Download{1} ] -->{1} {2}\n".format(color['GREEN'],
-                                                             color['ENDC'],
-                                                             file_name))
-            try:
-                subprocess.call("wget {0} --directory-prefix={1} {2}".format(
-                                wget_option, self.path, dwn), shell=True)
-            except KeyboardInterrupt:
-                print   # new line at cancel
-                sys.exit(0)
->>>>>>> master
