@@ -23,21 +23,13 @@
 
 import os
 
-<<<<<<< HEAD:slpkg/remove.py
 from __metadata__ import MetaData as _m
-=======
-from __metadata__ import del_all
->>>>>>> master:slpkg/remove.py
 
 
 def delete(path, packages):
     '''
     Remove downloaded packages
     '''
-<<<<<<< HEAD:slpkg/remove.py
     if _m.del_all == "on":
-=======
-    if del_all == "on":
->>>>>>> master:slpkg/remove.py
         for pkg in packages:
             os.remove(path + pkg)

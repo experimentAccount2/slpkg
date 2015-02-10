@@ -24,23 +24,14 @@
 import sys
 
 from md5sum import md5
-<<<<<<< HEAD
 from messages import Msg
 from __metadata__ import MetaData as _m
-=======
-from messages import template
-from __metadata__ import (
-    color,
-    default_answer
-)
->>>>>>> master
 
 
 def check_md5(pkg_md5, src_file):
     '''
     MD5 Checksum
     '''
-<<<<<<< HEAD
     print('')
     md5s = md5(src_file)
     if pkg_md5 != md5s:
@@ -60,28 +51,3 @@ def check_md5(pkg_md5, src_file):
             src_file.split("/")[-1], _m.color['GREEN'], _m.color['ENDC']))
         Msg().template(78)
     print('')   # new line after pass checksum
-=======
-    md5s = md5(src_file)
-    if pkg_md5 != md5s:
-        template(78)
-        print("| MD5SUM check for {0} [ {1}FAILED{2} ]".format(
-            src_file.split("/")[-1], color['RED'], color['ENDC']))
-        template(78)
-        print("| Expected: {0}".format(md5s))
-        print("| Found: {0}".format(pkg_md5))
-        template(78)
-        if default_answer == "y":
-            answer = default_answer
-        else:
-            answer = raw_input("Would you like to continue [Y/n]? ")
-        if answer in ['y', 'Y']:
-            print("")   # new line after answer
-        else:
-            sys.exit(0)
-    else:
-        template(78)
-        print("| MD5SUM check for {0} [ {1}PASSED{2} ]".format(
-            src_file.split("/")[-1], color['GREEN'], color['ENDC']))
-        template(78)
-        print("")   # new line after pass checksum
->>>>>>> master

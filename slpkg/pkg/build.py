@@ -29,19 +29,9 @@ import shutil
 import tarfile
 import subprocess
 
-<<<<<<< HEAD
 from slpkg.messages import Msg
 from slpkg.checksum import check_md5
 from slpkg.__metadata__ import MetaData as _m
-=======
-from slpkg.checksum import check_md5
-from slpkg.messages import pkg_not_found
-from slpkg.__metadata__ import (
-    log_path,
-    sbo_build_log,
-    sbo_check_md5
-)
->>>>>>> master
 
 from slpkg.sbo.greps import SBoGrep
 
@@ -54,21 +44,12 @@ class BuildPackage(object):
         self.path = path
         self.prgnam = self.script[:-7]
         self.log_file = "build_{0}_log".format(self.prgnam)
-<<<<<<< HEAD
         self.sbo_logs = _m.log_path + "sbo/"
         self.build_logs = self.sbo_logs + "build_logs/"
         self.start_log_time = time.strftime("%H:%M:%S")
         self.start_time = time.time()
         if not os.path.exists(_m.log_path):
             os.mkdir(_m.log_path)
-=======
-        self.sbo_logs = log_path + "sbo/"
-        self.build_logs = self.sbo_logs + "build_logs/"
-        self.start_log_time = time.strftime("%H:%M:%S")
-        self.start_time = time.time()
-        if not os.path.exists(log_path):
-            os.mkdir(log_path)
->>>>>>> master
         if not os.path.exists(self.sbo_logs):
             os.mkdir(self.sbo_logs)
         if not os.path.exists(self.build_logs):
@@ -88,62 +69,39 @@ class BuildPackage(object):
             for src, sbo_md5 in zip(self.sources, sbo_md5_list):
                 # fix build sources with spaces
                 src = src.replace("%20", " ")
-<<<<<<< HEAD
                 if _m.sbo_check_md5 == "on":
-=======
-                if sbo_check_md5 == "on":
->>>>>>> master
                     check_md5(sbo_md5, src)
                 shutil.copy2(src, self.prgnam)
             os.chdir(self.path + self.prgnam)
             # change permissions
             subprocess.call("chmod +x {0}.SlackBuild".format(self.prgnam),
                             shell=True)
-<<<<<<< HEAD
             pass_var = self._pass_variable()
             if _m.sbo_build_log == "on":
-=======
-            if sbo_build_log == "on":
->>>>>>> master
                 if os.path.isfile(self.build_logs + self.log_file):
                     os.remove(self.build_logs + self.log_file)
                 # start log write
                 log_head(self.build_logs, self.log_file, self.start_log_time)
-<<<<<<< HEAD
                 subprocess.Popen("{0} ./{1}.SlackBuild 2>&1 | tee -a "
                                  "{2}{3}".format(' '.join(pass_var),
                                                  self.prgnam, self.build_logs,
                                                  self.log_file), shell=True,
                                  stdout=sys.stdout).communicate()
-=======
-                subprocess.Popen("./{0}.SlackBuild 2>&1 | tee -a {1}{2}".format(
-                    self.prgnam, self.build_logs, self.log_file), shell=True,
-                    stdout=sys.stdout).communicate()
->>>>>>> master
                 sum_time = build_time(self.start_time)
                 # write end in log file
                 log_end(self.build_logs, self.log_file, sum_time)
                 print("Total build time for package {0} : {1}\n".format(
                     self.prgnam, sum_time))
             else:
-<<<<<<< HEAD
                 subprocess.call("{0} ./{1}.SlackBuild".format(
                     ' '.join(pass_var), self.prgnam, shell=True))
             os.chdir(self.path)
         except (OSError, IOError):
             Msg().pkg_not_found("\n", self.prgnam, "Wrong file", "\n")
-=======
-                subprocess.call("./{0}.SlackBuild".format(self.prgnam,
-                                                          shell=True))
-            os.chdir(self.path)
-        except (OSError, IOError):
-            pkg_not_found("\n", self.prgnam, "Wrong file", "\n")
->>>>>>> master
         except KeyboardInterrupt:
             print("")   # new line at exit
             sys.exit(0)
 
-<<<<<<< HEAD
     def _pass_variable(self):
         '''
         Return enviroment variables
@@ -155,8 +113,6 @@ class BuildPackage(object):
                     var.split('_')[1], os.environ[var]))
         return pass_var
 
-=======
->>>>>>> master
 
 def log_head(path, log_file, log_time):
     '''

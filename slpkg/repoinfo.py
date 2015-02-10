@@ -24,24 +24,11 @@
 import os
 import sys
 
-<<<<<<< HEAD
 from sizes import units
 from utils import Utils
 from repositories import Repo
 from repolist import RepoList
 from __metadata__ import MetaData as _m
-=======
-from repositories import Repo
-from sizes import units
-from repolist import RepoList
-from __metadata__ import (
-    default_repositories,
-    lib_path,
-    log_path,
-    repositories,
-    color
-)
->>>>>>> master
 
 
 class RepoInfo(object):
@@ -57,10 +44,6 @@ class RepoInfo(object):
             'Total compressed packages:': '',
             'Total uncompressed packages:': ''
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> master
         self.all_repos = RepoList().all_repos
         self.all_repos.update(Repo().custom_repository())
         del RepoList().all_repos
@@ -69,7 +52,6 @@ class RepoInfo(object):
         '''
         View repository information
         '''
-<<<<<<< HEAD
         status = '{0}disabled{1}'.format(_m.color['RED'], _m.color['ENDC'])
         self.form['Status:'] = status
         self.form['Default:'] = 'no'
@@ -79,17 +61,6 @@ class RepoInfo(object):
                 os.path.isfile(_m.lib_path + '{0}_repo/PACKAGES.TXT'.format(
                     repo))):
             status = '{0}enabled{1}'.format(_m.color['GREEN'], _m.color['ENDC'])
-=======
-        status = '{0}disabled{1}'.format(color['RED'], color['ENDC'])
-        self.form['Status:'] = status
-        self.form['Default:'] = 'no'
-        if repo in default_repositories:
-            self.form['Default:'] = 'yes'
-        if (repo in repositories and
-                os.path.isfile(lib_path + '{0}_repo/PACKAGES.TXT'.format(
-                    repo))):
-            status = '{0}enabled{1}'.format(color['GREEN'], color['ENDC'])
->>>>>>> master
             if repo != 'sbo':
                 data = self.repository_data(repo)
                 size = units(data[1], data[2])
@@ -102,7 +73,6 @@ class RepoInfo(object):
                 self.form['Number of packages:'] = data[0]
                 self.form['Status:'] = status
                 self.form['Last updated:'] = data[3]
-<<<<<<< HEAD
         elif (repo == 'sbo' and os.path.isfile(_m.lib_path + '{0}_repo/'
                                                'SLACKBUILDS.TXT'.format(repo))):
             status = '{0}enabled{1}'.format(_m.color['GREEN'], _m.color['ENDC'])
@@ -113,17 +83,6 @@ class RepoInfo(object):
                     sum_sbo_pkgs += 1
             changelog_txt = Utils().read_file(_m.log_path + 'sbo/ChangeLog.txt')
             last_upd = changelog_txt.split('\n', 1)[0]
-=======
-        elif (repo == 'sbo' and os.path.isfile(lib_path + '{0}_repo/'
-                                               'SLACKBUILDS.TXT'.format(repo))):
-            status = '{0}enabled{1}'.format(color['GREEN'], color['ENDC'])
-            sum_sbo_pkgs = 0
-            for line in open(lib_path + 'sbo_repo/SLACKBUILDS.TXT', 'r'):
-                if line.startswith('SLACKBUILD NAME: '):
-                    sum_sbo_pkgs += 1
-            with open(log_path + 'sbo/ChangeLog.txt', 'r') as changelog_txt:
-                last_upd = changelog_txt.readline().replace('\n', '')
->>>>>>> master
             self.form['Repo id:'] = repo
             self.form['Repo url:'] = self.all_repos[repo]
             self.form['Total compressed packages:'] = ''
@@ -133,11 +92,7 @@ class RepoInfo(object):
             self.form['Last updated:'] = last_upd
         print('')
         for key, value in sorted(self.form.iteritems()):
-<<<<<<< HEAD
             print _m.color['GREY'] + key + _m.color['ENDC'], value
-=======
-            print color['GREY'] + key + color['ENDC'], value
->>>>>>> master
         print('')
         sys.exit(0)
 
@@ -146,12 +101,8 @@ class RepoInfo(object):
         Grap data packages
         '''
         sum_pkgs, size, unsize, last_upd = 0, [], [], ''
-<<<<<<< HEAD
         for line in (Utils().read_file(
                 _m.lib_path + repo + '_repo/PACKAGES.TXT').splitlines()):
-=======
-        for line in open(lib_path + repo + '_repo/PACKAGES.TXT', 'r'):
->>>>>>> master
             if line.startswith('PACKAGES.TXT;'):
                 last_upd = line[14:].strip()
             if line.startswith('PACKAGE NAME:'):
@@ -161,12 +112,7 @@ class RepoInfo(object):
             if line.startswith('PACKAGE SIZE (uncompressed):  '):
                 unsize.append(line[30:-2].strip())
         if repo in ['salix', 'slackl']:
-<<<<<<< HEAD
             log = Utils().read_file(_m.log_path + '{0}/ChangeLog.txt'.format(
                 repo))
             last_upd = log.split('\n', 1)[0]
-=======
-            with open(log_path + '{0}/ChangeLog.txt'.format(repo), 'r') as log:
-                last_upd = log.readline().replace('\n', '')
->>>>>>> master
         return [sum_pkgs, size, unsize, last_upd]

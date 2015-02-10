@@ -21,12 +21,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-<<<<<<< HEAD
 from utils import Utils
 from __metadata__ import MetaData as _m
-=======
-from __metadata__ import color
->>>>>>> master
 
 
 class BlackList(object):
@@ -37,13 +33,7 @@ class BlackList(object):
     def __init__(self):
         self.quit = False
         self.blackfile = "/etc/slpkg/blacklist"
-<<<<<<< HEAD
         self.black_conf = Utils().read_file(self.blackfile)
-=======
-        f = open(self.blackfile, "r")
-        self.black_conf = f.read()
-        f.close()
->>>>>>> master
 
     def packages(self):
         '''
@@ -64,12 +54,8 @@ class BlackList(object):
         print("\nPackages in blacklist:\n")
         for black in self.packages():
             if black:
-<<<<<<< HEAD
                 print("{0}{1}{2}".format(_m.color['GREEN'], black,
                                          _m.color['ENDC']))
-=======
-                print("{0}{1}{2}".format(color['GREEN'], black, color['ENDC']))
->>>>>>> master
                 self.quit = True
         if self.quit:
             print("")   # new line at exit
@@ -84,13 +70,8 @@ class BlackList(object):
         with open(self.blackfile, "a") as black_conf:
             for pkg in pkgs:
                 if pkg not in blacklist:
-<<<<<<< HEAD
                     print("{0}{1}{2}".format(_m.color['GREEN'], pkg,
                                              _m.color['ENDC']))
-=======
-                    print("{0}{1}{2}".format(color['GREEN'], pkg,
-                                             color['ENDC']))
->>>>>>> master
                     black_conf.write(pkg + "\n")
                     self.quit = True
             black_conf.close()
@@ -107,12 +88,8 @@ class BlackList(object):
                 if line not in pkgs:
                     remove.write(line + "\n")
                 else:
-<<<<<<< HEAD
                     print("{0}{1}{2}".format(_m.color['RED'], line,
                                              _m.color['ENDC']))
-=======
-                    print("{0}{1}{2}".format(color['RED'], line, color['ENDC']))
->>>>>>> master
                     self.quit = True
             remove.close()
         if self.quit:

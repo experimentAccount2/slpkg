@@ -8,11 +8,7 @@ config() {
   fi
 }
 
-<<<<<<< HEAD
 CONFIGS="blacklist slackware-mirrors custom-repositories"
-=======
-CONFIGS="slpkg.conf blacklist slackware-mirrors custom-repositories"
->>>>>>> master
 for file in $CONFIGS; do
     config etc/slpkg/${file}.new
 done

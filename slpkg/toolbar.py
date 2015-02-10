@@ -24,11 +24,7 @@
 import sys
 import time
 
-<<<<<<< HEAD:slpkg/toolbar.py
 from __metadata__ import MetaData as _m
-=======
-from __metadata__ import color
->>>>>>> master:slpkg/toolbar.py
 
 
 def status(index, width, step):
@@ -36,15 +32,8 @@ def status(index, width, step):
     Print toolbar status
     '''
     if index == width:
-<<<<<<< HEAD:slpkg/toolbar.py
         sys.stdout.write("{0}.{1}".format(_m.color['GREY'], _m.color['ENDC']))
         sys.stdout.flush()
         width += step
         time.sleep(0.02)
-=======
-        sys.stdout.write("{0}.{1}".format(color['GREY'], color['ENDC']))
-        sys.stdout.flush()
-        width += step
-        time.sleep(0.05)
->>>>>>> master:slpkg/toolbar.py
     return width
