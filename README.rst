@@ -950,9 +950,9 @@ Remove packages with all dependencies:
 
     Packages with name matching [ brasero, atkmm, Flask, pylint ]
 
-    No such package brasero: Can't remove
-    No such package atkmm: Can't remove
-    No such package Flask: Can't remove
+    No such package brasero: Cant remove
+    No such package atkmm: Cant remove
+    No such package Flask: Cant remove
     [ delete ] --> pylint-1.3.1-x86_64-1_SBo
 
     Are you sure to remove 1 package [Y/n]?
