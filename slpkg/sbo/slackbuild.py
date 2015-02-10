@@ -69,6 +69,7 @@ class SBoInstall(object):
                                                   self.slackbuilds[1])
             tagc, match = '', False
             count_ins = count_upg = count_uni = 0
+            self._remove_blacklist()
             for sbo in self.slackbuilds:
                 self.index += 1
                 self.toolbar_width = status(self.index, self.toolbar_width, 4)
@@ -79,7 +80,7 @@ class SBoInstall(object):
                     self.package_found.append(sbo)
                 else:
                     self.package_not_found.append(sbo)
-            if not self.package_found and sbo not in BlackList().packages():
+            if not self.package_found:
                 match = True
                 self.package_found = self.matching(self.package_not_found)
             self.master_packages, mas_src = self.sbo_version_source(
@@ -129,6 +130,16 @@ class SBoInstall(object):
         except KeyboardInterrupt:
             print("")   # new line at exit
             sys.exit(0)
+
+    def _remove_blacklist(self):
+        '''
+        Remove packages in blacklist
+        '''
+        rmv_black = []
+        for sbo in self.slackbuilds:
+            if sbo not in BlackList().packages():
+                rmv_black.append(sbo)
+        self.slackbuilds = rmv_black
 
     def _continue_to_install(self):
         '''
