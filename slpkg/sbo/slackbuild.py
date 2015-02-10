@@ -328,7 +328,7 @@ class SBoInstall(object):
                     sys.exit(0)
                 if find_package(pkg + '-', _m.pkg_path):
                     print("{0}[ Upgrading ] --> {1}{2}".format(
-                        _m.color['GREEN'], _m.color['ENDC'], pkg))
+                        _m.color['YELLOW'], _m.color['ENDC'], pkg))
                     upgraded.append(prgnam)
                 else:
                     print("{0}[ Installing ] --> {1}{2}".format(
