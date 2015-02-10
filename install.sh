@@ -21,7 +21,11 @@
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 PRGNAM=slpkg
+<<<<<<< HEAD
 VERSION=${VERSION:-2.2.1}
+=======
+VERSION=${VERSION:-2.2.0}
+>>>>>>> master
 TAG=${TAG:-_dsw}
 
 # Installation script.

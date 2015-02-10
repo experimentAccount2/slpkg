@@ -23,6 +23,7 @@
 
 import sys
 
+<<<<<<< HEAD
 from __metadata__ import MetaData as _m
 
 from slpkg.pkg.find import find_package
@@ -166,3 +167,58 @@ class Msg(object):
             else:
                 print("| Package {0} NOT installed".format(name))
         self.template(78)
+=======
+from __metadata__ import color
+
+
+def pkg_not_found(bol, pkg, message, eol):
+    '''
+    Print message when package not found
+    '''
+    print("{0}No such package {1}: {2}{3}".format(bol, pkg, message, eol))
+
+
+def pkg_found(pkg, version):
+    '''
+    Print message when package found
+    '''
+    print("| Package {0}-{1} is already installed".format(pkg, version))
+
+
+def pkg_installed(pkg):
+    '''
+    Print message when package installed
+    '''
+    print("| Package {0} installed".format(pkg))
+
+
+def s_user(user):
+    '''
+    Check for root user
+    '''
+    if user != "root":
+        print("\nslpkg: error: must have root privileges\n")
+        sys.exit(0)
+
+
+def build_FAILED(sbo_url, prgnam):
+    '''
+    Print error message if build failed
+    '''
+    template(78)
+    print("| Build package {0} [ {1}FAILED{2} ]".format(prgnam, color['RED'],
+                                                        color['ENDC']))
+    template(78)
+    print("| See log file in '{0}/var/log/slpkg/sbo/build_logs{1}' directory"
+          "or read README file:".format(color['CYAN'], color['ENDC']))
+    print("| {0}{1}".format(sbo_url, "README"))
+    template(78)
+    print   # new line at end
+
+
+def template(max_len):
+    '''
+    Print template
+    '''
+    print("+" + "=" * max_len)
+>>>>>>> master

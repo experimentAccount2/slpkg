@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Version 2.2.1
 6-2-2015
 
@@ -12,6 +13,8 @@ Version 2.2.1
           - Update option '-f' view installed packages.
           - Update option '-l' view installed packages.
 
+=======
+>>>>>>> master
 Version 2.2.0
 08-1-2015
 

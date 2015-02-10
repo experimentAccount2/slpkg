@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# toolbar.py file is part of slpkg.
+# dependency.py file is part of slpkg.
 
 # Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
@@ -22,29 +22,33 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-import time
 
-<<<<<<< HEAD:slpkg/toolbar.py
-from __metadata__ import MetaData as _m
-=======
-from __metadata__ import color
->>>>>>> master:slpkg/toolbar.py
+from slpkg.toolbar import status
+
+from greps import Requires
+
+dep_results = []
 
 
-def status(index, width, step):
+def dependencies_pkg(name, repo):
     '''
-    Print toolbar status
+    Build all dependencies of a package
     '''
-    if index == width:
-<<<<<<< HEAD:slpkg/toolbar.py
-        sys.stdout.write("{0}.{1}".format(_m.color['GREY'], _m.color['ENDC']))
-        sys.stdout.flush()
-        width += step
-        time.sleep(0.02)
-=======
-        sys.stdout.write("{0}.{1}".format(color['GREY'], color['ENDC']))
-        sys.stdout.flush()
-        width += step
-        time.sleep(0.05)
->>>>>>> master:slpkg/toolbar.py
-    return width
+    try:
+        dependencies = []
+        requires = Requires(name, repo).get_deps()
+        toolbar_width, index = 2, 0
+        if requires:
+            for req in requires:
+                index += 1
+                toolbar_width = status(index, toolbar_width, 1)
+                if req:
+                    dependencies.append(req)
+            if dependencies:
+                dep_results.append(dependencies)
+                for dep in dependencies:
+                    dependencies_pkg(dep, repo)
+        return dep_results
+    except KeyboardInterrupt:
+        print("")   # new line at exit
+        sys.exit(0)

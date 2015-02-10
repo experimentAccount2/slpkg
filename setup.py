@@ -26,7 +26,15 @@ import sys
 import gzip
 import shutil
 
+<<<<<<< HEAD
 from slpkg.__metadata__ import MetaData as _m
+=======
+from slpkg.__metadata__ import (
+    __version__,
+    __email__,
+    __author__
+)
+>>>>>>> master
 from slpkg.md5sum import md5
 
 
@@ -38,6 +46,7 @@ except ImportError:
 setup(
     name="slpkg",
     packages=["slpkg", "slpkg/sbo", "slpkg/pkg", "slpkg/slack",
+<<<<<<< HEAD
               "slpkg/binary"],
     scripts=["bin/slpkg"],
     version=_m.__version__,
@@ -46,6 +55,16 @@ setup(
               "view", "slackpkg", "tool", "build"],
     author=_m.__author__,
     author_email=_m.__email__,
+=======
+              "slpkg/others"],
+    scripts=["bin/slpkg"],
+    version=__version__,
+    description="Python tool to manage Slackware packages",
+    keywords=["slackware", "slpkg", "upgrade", "install", "remove",
+              "view", "slackpkg", "tool", "build"],
+    author=__author__,
+    author_email=__email__,
+>>>>>>> master
     url="https://github.com/dslackw/slpkg",
     package_data={"": ["LICENSE", "README.rst", "CHANGELOG"]},
     classifiers=[
@@ -82,12 +101,17 @@ if "install" in sys.argv:
         shutil.copy2(gzip_man, man_path)
         os.chmod(man_path, int("444", 8))
 
+<<<<<<< HEAD
+=======
+    conf_path = "/etc/slpkg/"
+>>>>>>> master
     conf_file = [
         'conf/slpkg.conf',
         'conf/blacklist',
         'conf/slackware-mirrors',
         'conf/custom-repositories'
     ]
+<<<<<<< HEAD
     if not os.path.exists(_m.conf_path):
         os.system("mkdir -p {0}".format(_m.conf_path))
     shutil.copy2(conf_file[0], _m.conf_path + conf_file[0])
@@ -101,3 +125,17 @@ if "install" in sys.argv:
                 shutil.copy2(conf, _m.conf_path + filename + ".new")
         else:
             shutil.copy2(conf, _m.conf_path)
+=======
+    if not os.path.exists(conf_path):
+        os.system("mkdir -p {0}".format(conf_path))
+    for conf in conf_file:
+        filename = conf.split("/")[-1]
+        print("Installing '{0}' file".format(filename))
+        if os.path.isfile(conf_path + filename):
+            old = md5(conf_path + filename)
+            new = md5(conf)
+            if old != new:
+                shutil.copy2(conf, conf_path + filename + ".new")
+        else:
+            shutil.copy2(conf, conf_path)
+>>>>>>> master

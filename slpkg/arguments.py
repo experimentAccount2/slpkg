@@ -24,12 +24,23 @@
 import sys
 
 from repolist import RepoList
+<<<<<<< HEAD
 from __metadata__ import MetaData as _m
+=======
+from __metadata__ import (
+    __version__,
+    repositories
+)
+>>>>>>> master
 
 
 def options():
     arguments = [
+<<<<<<< HEAD
         "\nslpkg - version {0}\n".format(_m.__version__),
+=======
+        "\nslpkg - version {0}\n".format(__version__),
+>>>>>>> master
         "Slpkg is a user-friendly package manager for Slackware "
         "installations\n",
         "Commands:",
@@ -54,6 +65,7 @@ def options():
         "from queue",
         "  -g, --config, --config=[editor]           configuration file "
         "management",
+<<<<<<< HEAD
         "  -l, [repository], --index, --installed    list of repositories "
         "packages",
         "  -c, [repository] --upgrade                check for updated "
@@ -62,6 +74,14 @@ def options():
         "packages",
         "  -t, [repository] [package]                package tracking "
         "dependencies",
+=======
+        "  -l, all, official, non-official, --index  list of installed "
+        "packages",
+        "  -c, [repository] --upgrade                check for updated "
+        "packages",
+        "  -s, [repository] [package]                download, build & install",
+        "  -t, [repository] [package]                tracking dependencies",
+>>>>>>> master
         "  -p, [repository] [package], --color=[]    print package description",
         "  -n, [package]                             view SBo packages "
         "through network",
@@ -79,7 +99,11 @@ def options():
 
 def usage(repo):
     error_repo = ""
+<<<<<<< HEAD
     if repo and repo not in _m.repositories:
+=======
+    if repo and repo not in repositories:
+>>>>>>> master
         all_repos = RepoList().all_repos
         del RepoList().all_repos
         if repo in all_repos:
@@ -89,7 +113,11 @@ def usage(repo):
             error_repo = ("slpkg: error: repository '{0}' does not exist"
                           "\n".format(repo))
     view = [
+<<<<<<< HEAD
         "slpkg - version {0}\n".format(_m.__version__),
+=======
+        "slpkg - version {0}\n".format(__version__),
+>>>>>>> master
         "Usage: slpkg Commands:",
         "             [update] [re-create] [repo-add [repository name] [URL]]",
         "             [repo-remove [repository]] [repo-list]",
@@ -100,9 +128,15 @@ def usage(repo):
         "             [-q --list, [...] --add, --remove]",
         "             [-q --build, --install, --build-install]",
         "             [-g --config, --config=[editor]]",
+<<<<<<< HEAD
         "             [-l [repository], --index, --installed]",
         "             [-c [repository] --upgrade]",
         "             [-s [repository] [package...]",
+=======
+        "             [-l all, official, non-official, --index]",
+        "             [-c [repository] --upgrade]",
+        "             [-s [repository] [package]",
+>>>>>>> master
         "             [-t [repository] [package]",
         "             [-p [repository] [package], --color=[]]",
         "             [-n] [-f [...]] [-i [...]] [-u [...]]",

@@ -11,4 +11,8 @@ tail +13 CHECKSUMS.md5 | md5sum -c --quiet - | less
 
 MD5 message digest                Filename
 74d79364aef2717c00eae3a37c0e7479  ./slpkg-2.1.5.tar.gz
+<<<<<<< HEAD
 b37d59524be1ce9ef1c4e13e91ceb763  ./slpkg-2.2.0.tar.gz
+=======
+f260b370dd9b5835e688061cb39287fe  ./slpkg-2.2.0.tar.gz
+>>>>>>> master

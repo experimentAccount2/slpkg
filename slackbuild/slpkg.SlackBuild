@@ -23,7 +23,11 @@
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 PRGNAM=slpkg
+<<<<<<< HEAD
 VERSION=${VERSION:-2.2.1}
+=======
+VERSION=${VERSION:-2.2.0}
+>>>>>>> master
 BUILD=${BUILD:-1}
 TAG=${TAG:-_dsw}
 
@@ -79,8 +83,12 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 
 mkdir -p $PKG/etc/slpkg
 # install configurations files
+<<<<<<< HEAD
 install -D -m0644 conf/${PRGNAM}.conf $PKG/etc/slpkg/${PRGNAM}.conf
 CONFIGS="blacklist slackware-mirrors custom-repositories"
+=======
+CONFIGS="slpkg.conf blacklist slackware-mirrors custom-repositories"
+>>>>>>> master
 for file in $CONFIGS; do
     install -D -m0644 conf/$file $PKG/etc/slpkg/${file}.new
 done

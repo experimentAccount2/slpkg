@@ -24,6 +24,7 @@
 
 import sys
 
+<<<<<<< HEAD
 from messages import Msg
 from repositories import Repo
 from __metadata__ import MetaData as _m
@@ -33,6 +34,18 @@ class RepoList(object):
     '''
     List of repositories
     '''
+=======
+from repositories import Repo
+from messages import template
+from __metadata__ import (
+    default_repositories,
+    repositories,
+    color
+)
+
+
+class RepoList(object):
+>>>>>>> master
 
     def __init__(self):
         self.all_repos = {
@@ -58,12 +71,17 @@ class RepoList(object):
         View or enabled or disabled repositories
         '''
         print('')
+<<<<<<< HEAD
         Msg().template(78)
+=======
+        template(78)
+>>>>>>> master
         print('{0}{1}{2}{3}{4}{5}{6}'.format(
             '| Repo id', ' ' * 2,
             'Repo URL', ' ' * 44,
             'Default', ' ' * 3,
             'Status'))
+<<<<<<< HEAD
         Msg().template(78)
         for repo_id, repo_URL in sorted(self.all_repos.iteritems()):
             status, COLOR = 'disabled', _m.color['RED']
@@ -73,12 +91,27 @@ class RepoList(object):
             if repo_id in _m.repositories:
                 status, COLOR = 'enabled', _m.color['GREEN']
             if repo_id not in _m.default_repositories:
+=======
+        template(78)
+        for repo_id, repo_URL in sorted(self.all_repos.iteritems()):
+            status, COLOR = 'disabled', color['RED']
+            default = 'yes'
+            if len(repo_URL) > 49:
+                repo_URL = repo_URL[:48] + '~'
+            if repo_id in repositories:
+                status, COLOR = 'enabled', color['GREEN']
+            if repo_id not in default_repositories:
+>>>>>>> master
                 default = 'no'
             print('  {0}{1}{2}{3}{4}{5}{6}{7:>8}{8}'.format(
                 repo_id, ' ' * (9 - len(repo_id)),
                 repo_URL, ' ' * (52 - len(repo_URL)),
                 default, ' ' * (8 - len(default)),
+<<<<<<< HEAD
                 COLOR, status, _m.color['ENDC']))
+=======
+                COLOR, status, color['ENDC']))
+>>>>>>> master
         print("\nFor enable or disable default repositories edit "
               "'/etc/slpkg/slpkg.conf' file\n")
         sys.exit(0)

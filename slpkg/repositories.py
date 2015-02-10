@@ -25,15 +25,28 @@
 import os
 import sys
 
+<<<<<<< HEAD
 from utils import Utils
 from __metadata__ import MetaData as _m
+=======
+from __metadata__ import (
+    default_repositories,
+    repositories
+)
+>>>>>>> master
 
 
 class Repo(object):
 
     def __init__(self):
         self.repo_file = "/etc/slpkg/custom-repositories"
+<<<<<<< HEAD
         self.repositories_list = Utils().read_file(self.repo_file)
+=======
+        f = open(self.repo_file, "r")
+        self.repositories_list = f.read()
+        f.close()
+>>>>>>> master
 
     def add(self, repo, url):
         '''
@@ -46,8 +59,13 @@ class Repo(object):
             line = line.lstrip()
             if line and not line.startswith("#"):
                 repo_name.append(line.split()[0])
+<<<<<<< HEAD
         if (repo in _m.repositories or repo in repo_name or
                 repo in _m.default_repositories):
+=======
+        if (repo in repositories or repo in repo_name or
+                repo in default_repositories):
+>>>>>>> master
             print("\nRepository name '{0}' exist, select different name.\n"
                   "View all repositories with command 'repo-list'.\n".format(
                       repo))
@@ -102,7 +120,13 @@ class Repo(object):
         '''
         default = "http://mirrors.slackware.com/slackware/"
         if os.path.isfile("/etc/slpkg/slackware-mirrors"):
+<<<<<<< HEAD
             mirrors = Utils().read_file(_m.conf_path + 'slackware-mirrors')
+=======
+            with open("/etc/slpkg/slackware-mirrors", "r") as slacks:
+                mirrors = slacks.read()
+                slacks.close()
+>>>>>>> master
             for line in mirrors.splitlines():
                 line = line.rstrip()
                 if not line.startswith("#") and line:

@@ -21,8 +21,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+<<<<<<< HEAD
 from slpkg.utils import Utils
 from slpkg.__metadata__ import MetaData as _m
+=======
+from slpkg.__metadata__ import (
+    arch,
+    lib_path,
+    skip_unst
+)
+>>>>>>> master
 
 
 class SBoGrep(object):
@@ -40,16 +48,30 @@ class SBoGrep(object):
         self.line_md5 = "SLACKBUILD MD5SUM: "
         self.line_md5_64 = "SLACKBUILD MD5SUM_{0}: ".format(arch64)
         self.line_des = "SLACKBUILD SHORT DESCRIPTION:  "
+<<<<<<< HEAD
         self.sbo_txt = _m.lib_path + "sbo_repo/SLACKBUILDS.TXT"
         self.answer = ['y', 'Y']
         self.unst = ['UNSUPPORTED', 'UNTESTED']
         self.SLACKBUILDS_TXT = Utils().read_file(self.sbo_txt)
+=======
+        self.sbo_txt = lib_path + "sbo_repo/SLACKBUILDS.TXT"
+        self.answer = ['y', 'Y']
+        self.unst = ['UNSUPPORTED', 'UNTESTED']
+        # open an read SLACKBUILDS.TXT file
+        f = open(self.sbo_txt, "r")
+        self.SLACKBUILDS_TXT = f.read()
+        f.close()
+>>>>>>> master
 
     def source(self):
         '''
         Grab sources downloads links
         '''
+<<<<<<< HEAD
         source, source64, = '', ''
+=======
+        source, source64, src, = "", "", ""
+>>>>>>> master
         for line in self.SLACKBUILDS_TXT.splitlines():
             if line.startswith(self.line_name):
                 sbo_name = line[17:].strip()
@@ -59,6 +81,7 @@ class SBoGrep(object):
             if line.startswith(self.line_down_64):
                 if sbo_name == self.name and line[28:].strip():
                     source64 = line[28:]
+<<<<<<< HEAD
         return self._select_source_arch(source, source64)
 
     def _select_source_arch(self, source, source64):
@@ -88,6 +111,33 @@ class SBoGrep(object):
                 if sbo_name == self.name:
                     return line[21:].strip().split()
 
+=======
+        if arch == "x86_64":
+            if source64:
+                src = source64
+            else:
+                src = source
+            if skip_unst in self.answer and source64 in self.unst:
+                src = source
+        else:
+            if source:
+                src = source
+            if skip_unst in self.answer and source in self.unst:
+                src = source64
+        return src
+
+    def requires(self):
+        '''
+        Grab package requirements
+        '''
+        for line in self.SLACKBUILDS_TXT.splitlines():
+            if line.startswith(self.line_name):
+                sbo_name = line[17:].strip()
+            if line.startswith(self.line_req):
+                if sbo_name == self.name:
+                    return line[21:].strip().split()
+
+>>>>>>> master
     def version(self):
         '''
         Grab package version
@@ -103,7 +153,11 @@ class SBoGrep(object):
         '''
         Grab checksum string
         '''
+<<<<<<< HEAD
         md5sum, md5sum64, = [], []
+=======
+        md5sum, md5sum64, md5 = [], [], []
+>>>>>>> master
         for line in self.SLACKBUILDS_TXT.splitlines():
             if line.startswith(self.line_name):
                 sbo_name = line[17:].strip()
@@ -113,21 +167,33 @@ class SBoGrep(object):
             if line.startswith(self.line_md5):
                 if sbo_name == self.name and line[19:].strip():
                     md5sum = line[19:].strip().split()
+<<<<<<< HEAD
         return self._select_md5sum_arch(md5sum, md5sum64)
 
     def _select_md5sum_arch(self, md5sum, md5sum64):
         md5 = ''
         if _m.arch == "x86_64":
+=======
+        if arch == "x86_64":
+>>>>>>> master
             if md5sum64:
                 md5 = md5sum64
             else:
                 md5 = md5sum
+<<<<<<< HEAD
             if _m.skip_unst in self.answer:
+=======
+            if skip_unst in self.answer:
+>>>>>>> master
                 md5 = md5sum
         else:
             if md5sum:
                 md5 = md5sum
+<<<<<<< HEAD
             if _m.skip_unst in self.answer and not md5sum:
+=======
+            if skip_unst in self.answer and not md5sum:
+>>>>>>> master
                 md5 = md5sum64
         return md5
 
