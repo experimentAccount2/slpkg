@@ -158,7 +158,7 @@ Tutorial
 --------
 
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/screenshot-1.png
-    :target: https://asciinema.org/a/16246
+    :target: https://asciinema.org/a/16251
 
 
 Installation
