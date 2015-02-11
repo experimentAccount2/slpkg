@@ -83,6 +83,7 @@ class SBoInstall(object):
             if not self.package_found:
                 match = True
                 self.package_found = self.matching(self.package_not_found)
+                self.pkg_ver = [''] * len(self.package_found)
             self.master_packages, mas_src = self.sbo_version_source(
                 self.package_found)
             Msg().done()
