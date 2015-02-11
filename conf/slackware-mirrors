@@ -31,7 +31,7 @@
 # below. Be careful is the template that the rest.
 # 
 # 
-# Last Updated: Sat Dec 27 09:47:02 UTC 2014
+# Last Updated: Wed Feb 11 07:47:01 UTC 2015
 # 
 # Available http mirrors:
 # 
@@ -183,4 +183,4 @@
 # us		 ftp://taper.alienbase.nl/ 
 # za		 ftp://ftp.is.co.za/mirror/ftp.slackware.com/pub/ 
 # za		 ftp://ftp.wa.co.za/pub/slackware/ 
-# za		 ftp://slackware.mirror.ac.za/
+# za		 ftp://slackware.mirror.ac.za/ 
