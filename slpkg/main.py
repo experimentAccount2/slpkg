@@ -81,7 +81,7 @@ class ArgParse(object):
         # checking if repositories exists
         if len(self.args) > 1 and self.args[0] not in [
             '-h', '--help', '-v', '--version', 're-create', 'repo-list',
-            'repo-add', 'repo-remove', 'update', 'update-slpkg'
+            'repo-add', 'repo-remove', 'update', 'update-slpkg', '-g'
         ]:
             check_exists_repositories()
 
