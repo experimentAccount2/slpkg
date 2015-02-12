@@ -76,8 +76,8 @@ def it_self_update():
         tar.close()
         file_name = '{0}-{1}'.format(_m.__all__, __new_version__)
         os.chdir(file_name)
-        check_md5(pkg_checksum(slpkg_tar_file[1:], "slpkg"),
-                  _m.build_path + slpkg_tar_file)
+        check_md5(pkg_checksum(_m.__all__ + "-" + slpkg_tar_file[1:],
+                               _m.__all__), _m.build_path + slpkg_tar_file)
         subprocess.call('chmod +x {0}'.format('install.sh'), shell=True)
         subprocess.call('sh install.sh', shell=True)
     else:
