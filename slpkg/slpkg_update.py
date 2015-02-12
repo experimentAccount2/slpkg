@@ -51,7 +51,7 @@ def it_self_update():
     for line in version_data.splitlines():
         line = line.strip()
         if line.startswith('__version_info__'):
-            _m.__new_version__ = '.'.join(re.findall(r'\d+', line))
+            __new_version__ = '.'.join(re.findall(r'\d+', line))
     if __new_version__ > _m.__version__:
         if _m.default_answer == "y":
             answer = _m.default_answer
