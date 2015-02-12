@@ -1,11 +1,11 @@
-.. image:: https://badge.fury.io/py/slpkg.png
-    :target: http://badge.fury.io/py/slpkg
+.. image:: https://img.shields.io/badge/slpkg-version-green.svg
+    :target: https://github.com/dslackw/slpkg
 .. image:: https://travis-ci.org/dslackw/slpkg.svg?branch=master
     :target: https://travis-ci.org/dslackw/slpkg
 .. image:: https://landscape.io/github/dslackw/slpkg/master/landscape.png
     :target: https://landscape.io/github/dslackw/slpkg/master
-.. image:: https://pypip.in/d/slpkg/badge.png
-    :target: https://pypi.python.org/pypi/slpkg
+.. image:: https://img.shields.io/badge/slpkg-Downloads-orange.svg
+    :target: https://github.com/dslackw/slpkg
 .. image:: https://img.shields.io/badge/license-GPLv3-blue.svg
     :target: https://github.com/dslackw/slpkg
 .. image:: https://img.shields.io/github/stars/dslackw/slpkg.svg
