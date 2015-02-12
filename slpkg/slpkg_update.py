@@ -74,7 +74,7 @@ def it_self_update():
         tar = tarfile.open(slpkg_tar_file)
         tar.extractall()
         tar.close()
-        file_name = '{0}-{1}'.format(_m.__all__, _m.__new_version__)
+        file_name = '{0}-{1}'.format(_m.__all__, __new_version__)
         os.chdir(file_name)
         check_md5(pkg_checksum(slpkg_tar_file[1:], "slpkg"),
                   _m.build_path + slpkg_tar_file)
