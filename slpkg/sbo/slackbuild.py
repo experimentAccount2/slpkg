@@ -204,10 +204,10 @@ class SBoInstall(object):
         Thus creating this loop create one-dimensional list.
         '''
         requires, dependencies = [], []
+        deps.reverse()
         requires = Utils().dimensional_list(deps)
         # Inverting the list brings the
         # dependencies in order to be installed.
-        requires.reverse()
         dependencies = Utils().remove_dbs(requires)
         return dependencies
 
