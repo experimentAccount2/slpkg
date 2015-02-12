@@ -1,4 +1,4 @@
-.. image:: https://img.shields.io/release/slpkg/rubidium.svg
+.. image:: https://img.shields.io/pypi/v/slpkg.svg
     :target: https://pypi.python.org/pypi/slpkg
 .. image:: https://travis-ci.org/dslackw/slpkg.svg?branch=master
     :target: https://travis-ci.org/dslackw/slpkg
