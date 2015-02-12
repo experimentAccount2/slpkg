@@ -30,3 +30,13 @@ Test to upgrade Slackware Linux Distribution.
 Successful upgrade fresh full installation with command 'slpkg -c slack --upgrade'
 Total 66 packages upgraded and kernel, after auto-install 'lilo' reinstall successfully so.
 
+
+--------------------------------
+11-2-2015
+Slackware Arch: x86 Version 14.1 'current'
+
+Test to upgrade fresh installation Slackware Linux Distribution.
+Successful upgrade fresh full installation with command 'slpkg -c slack --upgrade'
+Total 78 packages upgraded and kernel, after auto-install 'lilo' reinstall successfully so.
+https://asciinema.org/a/16289
+
