@@ -1,5 +1,5 @@
-.. image:: https://img.shields.io/pypi/v/slpkg.svg
-    :target: https://pypi.python.org/pypi/slpkg
+.. image:: https://img.shields.io/github/release/dslackw/slpkg.svg
+    :target: https://github.com/dslackw/slpkg/releases
 .. image:: https://travis-ci.org/dslackw/slpkg.svg?branch=master
     :target: https://travis-ci.org/dslackw/slpkg
 .. image:: https://landscape.io/github/dslackw/slpkg/master/landscape.png
