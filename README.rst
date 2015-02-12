@@ -6,8 +6,14 @@
     :target: https://landscape.io/github/dslackw/slpkg/master
 .. image:: https://pypip.in/d/slpkg/badge.png
     :target: https://pypi.python.org/pypi/slpkg
-.. image:: https://pypip.in/license/slpkg/badge.png
-    :target: https://pypi.python.org/pypi/slpkg
+.. image:: https://img.shields.io/badge/license-GPLv3-blue.svg
+    :target: https://github.com/dslackw/slpkg
+.. image:: https://img.shields.io/github/stars/dslackw/slpkg.svg
+    :target: https://github.com/dslackw/slpkg
+.. image:: https://img.shields.io/github/forks/dslackw/slpkg.svg
+    :target: https://github.com/dslackw/slpkg
+.. image:: https://img.shields.io/github/issues/dslackw/slpkg.svg
+    :target: https://github.com/dslackw/slpkg
 
 Latest Release:
 
