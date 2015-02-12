@@ -1,10 +1,10 @@
-.. image:: https://img.shields.io/badge/slpkg-version-green.svg
+.. image:: https://img.shields.io/pypi/v/slpkg.svg
     :target: https://github.com/dslackw/slpkg
 .. image:: https://travis-ci.org/dslackw/slpkg.svg?branch=master
     :target: https://travis-ci.org/dslackw/slpkg
 .. image:: https://landscape.io/github/dslackw/slpkg/master/landscape.png
     :target: https://landscape.io/github/dslackw/slpkg/master
-.. image:: https://img.shields.io/badge/slpkg-Downloads-orange.svg
+.. image:: https://img.shields.io/pypi/dm/slpkg.svg
     :target: https://github.com/dslackw/slpkg
 .. image:: https://img.shields.io/badge/license-GPLv3-blue.svg
     :target: https://github.com/dslackw/slpkg
