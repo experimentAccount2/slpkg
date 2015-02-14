@@ -359,6 +359,7 @@ def main():
 
     if len(args) == 0:
         usage('')
+        sys.exit(0)
 
     if len(args) == 2 and args[0] == 'update' and args[1] == 'slpkg':
         args[0] = 'update-slpkg'
@@ -390,7 +391,7 @@ def main():
         '-f': argparse.bin_find,
         '-p': argparse.pkg_desc,
         '-d': argparse.pkg_contents,
-        '-g': argparse.congiguration
+        '-g': argparse.congiguration,
     }
     try:
         arguments[args[0]]()

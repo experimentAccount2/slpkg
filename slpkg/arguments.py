@@ -21,7 +21,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import sys
 
 from repolist import RepoList
 from __metadata__ import MetaData as _m
@@ -74,7 +73,6 @@ def options():
     ]
     for opt in arguments:
         print(opt)
-    sys.exit(0)
 
 
 def usage(repo):
@@ -112,4 +110,3 @@ def usage(repo):
     ]
     for usg in view:
         print(usg)
-    sys.exit(0)
