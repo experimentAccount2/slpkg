@@ -73,9 +73,7 @@ class Utils(object):
         return downloaded
 
     def read_file_pkg(self, file_pkg):
-        '''
-        Return packages from file
-        '''
+        """ Return packages from file """
         packages = []
         if os.path.isfile(file_pkg):
             packages = []

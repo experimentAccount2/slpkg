@@ -28,8 +28,8 @@ from __metadata__ import MetaData as _m
 
 from pkg.find import find_package
 
-from sbo.search import sbo_search_pkg
 from sbo.dependency import Requires
+from sbo.search import sbo_search_pkg
 
 from binary.search import search_pkg
 from binary.dependency import Dependencies
