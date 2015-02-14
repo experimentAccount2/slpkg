@@ -237,7 +237,7 @@ class PackageManager(object):
                             break
         if matching == 0:
             message = "Can't find"
-            Msg().pkg_not_found("", self.binary, message, "\n")
+            Msg().pkg_not_found("", ", ".join(self.binary), message, "\n")
         else:
             print("\n{0}Total found {1} matching packages.{2}".format(
                 _m.color['GREY'], matching, _m.color['ENDC']))
