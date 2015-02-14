@@ -13,7 +13,7 @@
 .. image:: https://img.shields.io/github/forks/dslackw/slpkg.svg
     :target: https://github.com/dslackw/slpkg
 .. image:: https://img.shields.io/github/issues/dslackw/slpkg.svg
-    :target: https://github.com/dslackw/slpkg
+    :target: https://github.com/dslackw/slpkg/issues
 
 Latest Release:
 
