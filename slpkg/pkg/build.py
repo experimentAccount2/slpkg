@@ -65,6 +65,7 @@ class BuildPackage(object):
             tar = tarfile.open(self.script)
             tar.extractall()
             tar.close()
+            self._delete_sbo()
             sbo_md5_list = SBoGrep(self.prgnam).checksum()
             for src, sbo_md5 in zip(self.sources, sbo_md5_list):
                 # fix build sources with spaces
@@ -112,6 +113,13 @@ class BuildPackage(object):
                 pass_var.append('{0}={1}'.format(
                     var.split('_')[1], os.environ[var]))
         return pass_var
+
+    def _delete_sbo(self):
+        '''
+        Delete slackbuild tar.gz file after untar
+        '''
+        if os.path.isfile(self.script):
+            os.remove(self.script)
 
 
 def log_head(path, log_file, log_time):
