@@ -18,7 +18,6 @@
 Latest Release:
 
 - Version: 2.2.3
-- `Package <https://sourceforge.net/projects/slpkg/files/slpkg/binary/>`_
 - `Source <https://github.com/dslackw/slpkg/archive/v2.2.3.tar.gz>`_
 - `CHANGELOG <https://github.com/dslackw/slpkg/blob/master/CHANGELOG>`_
  
@@ -178,10 +177,6 @@ Untar the archive and run install.sh script:
     $ cd slpkg-2.2.3
     $ ./install.sh
 
-From SourceForge:
-    
-Download binary package from `SourceForge <https://sourceforge.net/projects/slpkg/>`_
-    
 Using pip:
 
 .. code-block:: bash
