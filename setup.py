@@ -26,8 +26,8 @@ import sys
 import gzip
 import shutil
 
-from slpkg.__metadata__ import MetaData as _m
 from slpkg.md5sum import md5
+from slpkg.__metadata__ import MetaData as _m
 
 
 try:
@@ -69,18 +69,18 @@ setup(
 # file if not exists.
 if "install" in sys.argv:
     man_path = "/usr/man/man8/"
-    os.system("mkdir -p {0}".format(man_path))
-    if os.path.exists(man_path):
-        man_page = "man/slpkg.8"
-        gzip_man = "man/slpkg.8.gz"
-        print("Installing '{0}' man pages".format(gzip_man.split('/')[1]))
-        f_in = open(man_page, "rb")
-        f_out = gzip.open(gzip_man, 'wb')
-        f_out.writelines(f_in)
-        f_out.close()
-        f_in.close()
-        shutil.copy2(gzip_man, man_path)
-        os.chmod(man_path, int("444", 8))
+    if not os.path.exists(man_path):
+        os.makedirs(man_path)
+    man_page = "man/slpkg.8"
+    gzip_man = "man/slpkg.8.gz"
+    print("Installing '{0}' man pages".format(gzip_man.split('/')[1]))
+    f_in = open(man_page, "rb")
+    f_out = gzip.open(gzip_man, 'wb')
+    f_out.writelines(f_in)
+    f_out.close()
+    f_in.close()
+    shutil.copy2(gzip_man, man_path)
+    os.chmod(man_path, int("444", 8))
 
     conf_file = [
         'conf/slpkg.conf',
@@ -89,7 +89,7 @@ if "install" in sys.argv:
         'conf/custom-repositories'
     ]
     if not os.path.exists(_m.conf_path):
-        os.system("mkdir -p {0}".format(_m.conf_path))
+        os.makedirs(_m.conf_path)
     print("Installing '{0}' file".format(conf_file[0].split('/')[1]))
     shutil.copy2(conf_file[0], _m.conf_path + conf_file[0].split('/')[1])
     for conf in conf_file[1:]:
