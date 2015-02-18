@@ -21,8 +21,8 @@
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 PRGNAM=slpkg
-VERSION=${VERSION:-$(python -c "from slpkg.__metadata__ import MetaData; \
-    print MetaData.__version__")}
+VERSION=${VERSION:-$(cat slpkg/__metadata__.py | grep "__version_info__ = (" \
+    | cut -c25-31 | tr -d [[:space:]] | tr , .)} 
 TAG=${TAG:-_dsw}
 
 # Installation script.

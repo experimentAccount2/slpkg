@@ -23,7 +23,8 @@
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 PRGNAM=slpkg
-VERSION=${VERSION:-2.2.3}
+VERSION=${VERSION:-$(cat ../slpkg/__metadata__.py | grep "__version_info__ = (" \
+    | cut -c25-31 | tr -d [[:space:]] | tr , .)} 
 BUILD=${BUILD:-1}
 TAG=${TAG:-_dsw}
 
