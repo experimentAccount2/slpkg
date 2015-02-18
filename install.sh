@@ -21,7 +21,8 @@
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 PRGNAM=slpkg
-VERSION=${VERSION:-2.2.3}
+VERSION=${VERSION:-$(python -c "from slpkg.__metadata__ import MetaData; \
+    print MetaData.__version__")}
 TAG=${TAG:-_dsw}
 
 # Installation script.
