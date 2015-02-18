@@ -18,6 +18,7 @@
 Latest Release:
 
 - Version: 2.2.3
+- `Package <https://github.com/dslackw/slpkg/releases>`_
 - `Source <https://github.com/dslackw/slpkg/archive/v2.2.3.tar.gz>`_
 - `CHANGELOG <https://github.com/dslackw/slpkg/blob/master/CHANGELOG>`_
  
