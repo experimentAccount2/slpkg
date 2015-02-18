@@ -13,19 +13,7 @@
 .. image:: https://img.shields.io/github/forks/dslackw/slpkg.svg
     :target: https://github.com/dslackw/slpkg
 .. image:: https://img.shields.io/github/issues/dslackw/slpkg.svg
-<<<<<<< HEAD
-    :target: https://github.com/dslackw/slpkg
-
-
-Latest Release:
-
-- Version: 2.2.2
-- `Package <https://sourceforge.net/projects/slpkg/files/slpkg/binary/>`_
-- `Source <https://github.com/dslackw/slpkg/archive/v2.2.2.tar.gz>`_
-- `CHANGELOG <https://github.com/dslackw/slpkg/blob/master/CHANGELOG>`_
-=======
     :target: https://github.com/dslackw/slpkg/issues
->>>>>>> develop
  
 |
 
