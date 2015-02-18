@@ -15,6 +15,7 @@
 .. image:: https://img.shields.io/github/issues/dslackw/slpkg.svg
     :target: https://github.com/dslackw/slpkg/issues
 
+|
 
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/slpkg_package.png
     :target: https://github.com/dslackw/slpkg
