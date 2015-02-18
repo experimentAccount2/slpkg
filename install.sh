@@ -22,7 +22,7 @@
 
 PRGNAM=slpkg
 VERSION=${VERSION:-$(cat slpkg/__metadata__.py | grep "__version_info__ = (" \
-    | cut -c25-31 | tr -d [[:space:]] | tr , .)} 
+    | tr -d [[:space:]] | cut -c19-23 | tr , .)} 
 TAG=${TAG:-_dsw}
 
 # Installation script.
