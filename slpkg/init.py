@@ -607,5 +607,7 @@ def check_exists_repositories():
     if update:
         print("\n  Please update packages lists. Run 'slpkg update'.\n" +
               "  This command should be used to synchronize packages\n" +
-              "  lists from the repositories are enabled.\n")
+              "  lists from the repositories are enabled.\n" +
+              "  Make sure you change the VERSION from the file\n"
+              "  '/etc/slpkg/slpkg.conf'.\n")
         sys.exit(0)

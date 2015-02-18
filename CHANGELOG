@@ -1,3 +1,10 @@
+Version 2.2.3
+16-2-2015
+
+[Updated] - Fix slpkg.SlackBuild script support .zip archives.
+          - Fix can't overwrite new sbo scripts.
+          - Fix remove master package with dependencies.
+
 Version 2.2.2
 11-2-2015
 

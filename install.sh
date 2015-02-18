@@ -21,7 +21,7 @@
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 PRGNAM=slpkg
-VERSION=${VERSION:-2.2.2}
+VERSION=${VERSION:-2.2.3}
 TAG=${TAG:-_dsw}
 
 # Installation script.

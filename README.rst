@@ -13,6 +13,7 @@
 .. image:: https://img.shields.io/github/forks/dslackw/slpkg.svg
     :target: https://github.com/dslackw/slpkg
 .. image:: https://img.shields.io/github/issues/dslackw/slpkg.svg
+<<<<<<< HEAD
     :target: https://github.com/dslackw/slpkg
 
 
@@ -22,20 +23,24 @@ Latest Release:
 - `Package <https://sourceforge.net/projects/slpkg/files/slpkg/binary/>`_
 - `Source <https://github.com/dslackw/slpkg/archive/v2.2.2.tar.gz>`_
 - `CHANGELOG <https://github.com/dslackw/slpkg/blob/master/CHANGELOG>`_
+=======
+    :target: https://github.com/dslackw/slpkg/issues
+>>>>>>> develop
  
-.. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/logo.png
-    :target: https://github.com/dslackw/slpkg 
+|
+
+.. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/slpkg_package.png
+    :target: https://github.com/dslackw/slpkg
+|
 
 .. contents:: Table of Contents:
 
-`Slpkg <https://github.com/dslackw/slpkg>`_ is a terminal multitool in order to easy use `Slackware <http://www.slackware.com/>`_ 
-packages.
-
-.. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/open-source-logo.png
-    :target: https://github.com/dslackw/slpkg 
 
 Slpkg is `Open Source <http://en.wikipedia.org/wiki/Open_source>`_ software written in 
 Python language. It's use is for managing packages in Slackware linux distribution.
+
+|
+
 Default available Repositories:
 
 - SBo - `Reposiory <http://slackbuilds.org/>`_
@@ -97,17 +102,10 @@ What makes slpkg to distinguish it from other tools; The user friendliness is it
 target as well as easy to understand and use, also use color to highlight packages and 
 display warning messages, etc.
 
-The big advantages is resolving dependencies packages from repositories and monitored for 
-upgraded packages.
+Supports auto-resolve dependencies and monitoring of upgraded packages.
 
 Also you can install official packages of your favorite distribution directly from the 
 official repositories of Slackware. Even you can check for the official updates and install them.
-
-More features come ...
-
-.. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/slpkg_package.png
-    :target: https://github.com/dslackw/slpkg
-
 
 
 Usage
@@ -175,14 +173,10 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.2.2.tar.gz
-    $ cd slpkg-2.2.2
+    $ tar xvf slpkg-2.2.3.tar.gz
+    $ cd slpkg-2.2.3
     $ ./install.sh
 
-From SourceForge:
-    
-Download binary package from `SourceForge <https://sourceforge.net/projects/slpkg/>`_
-    
 Using pip:
 
 .. code-block:: bash

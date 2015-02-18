@@ -116,9 +116,8 @@ class PackageManager(object):
                     if os.path.isfile(dep_path + rmv) and _m.del_deps == "on":
                         dependencies = self._view_deps(dep_path, rmv)
                         if self._rmv_deps_answer() in ['y', 'Y']:
-                            rmv_list += self._rmv_deps(self.binary,
-                                                       dependencies,
-                                                       dep_path, rmv)
+                            rmv_list += (self._rmv_deps(dependencies, dep_path,
+                                                        rmv))
                         else:
                             rmv_list += self._rmv_pkg(rmv)
                             os.remove(dep_path + rmv)
@@ -175,13 +174,13 @@ class PackageManager(object):
         Msg().template(78)
         return dependencies
 
-    def _rmv_deps(self, binary, dependencies, path, package):
+    def _rmv_deps(self, dependencies, path, package):
         '''
         Remove dependencies
         '''
         removes = []
         deps = dependencies.split()
-        deps.append(''.join(binary))
+        deps.append(package)
         for dep in deps:
             if find_package(dep + _m.sp, _m.pkg_path):
                 print(subprocess.check_output("removepkg {0}".format(dep),
@@ -237,7 +236,7 @@ class PackageManager(object):
                             break
         if matching == 0:
             message = "Can't find"
-            Msg().pkg_not_found("", self.binary, message, "\n")
+            Msg().pkg_not_found("", ", ".join(self.binary), message, "\n")
         else:
             print("\n{0}Total found {1} matching packages.{2}".format(
                 _m.color['GREY'], matching, _m.color['ENDC']))

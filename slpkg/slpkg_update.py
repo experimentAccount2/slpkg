@@ -28,10 +28,10 @@ import sys
 import tarfile
 import subprocess
 
-from checksum import check_md5
-from grep_md5 import pkg_checksum
 from url_read import URL
+from checksum import check_md5
 from downloader import Download
+from grep_md5 import pkg_checksum
 from __metadata__ import MetaData as _m
 
 

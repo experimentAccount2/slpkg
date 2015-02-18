@@ -21,7 +21,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import sys
 
 from repolist import RepoList
 from __metadata__ import MetaData as _m
@@ -29,7 +28,8 @@ from __metadata__ import MetaData as _m
 
 def options():
     arguments = [
-        "\nslpkg - version {0}\n".format(_m.__version__),
+        "\nslpkg - version {0}, set: {1}\n".format(_m.__version__,
+                                                   _m.slack_rel),
         "Slpkg is a user-friendly package manager for Slackware "
         "installations\n",
         "Commands:",
@@ -74,7 +74,6 @@ def options():
     ]
     for opt in arguments:
         print(opt)
-    sys.exit(0)
 
 
 def usage(repo):
@@ -89,7 +88,8 @@ def usage(repo):
             error_repo = ("slpkg: error: repository '{0}' does not exist"
                           "\n".format(repo))
     view = [
-        "slpkg - version {0}\n".format(_m.__version__),
+        "\nslpkg - version {0}, set: {1}\n".format(_m.__version__,
+                                                   _m.slack_rel),
         "Usage: slpkg Commands:",
         "             [update] [re-create] [repo-add [repository name] [URL]]",
         "             [repo-remove [repository]] [repo-list]",
@@ -112,4 +112,3 @@ def usage(repo):
     ]
     for usg in view:
         print(usg)
-    sys.exit(0)
