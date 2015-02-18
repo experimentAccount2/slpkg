@@ -15,23 +15,12 @@
 .. image:: https://img.shields.io/github/issues/dslackw/slpkg.svg
     :target: https://github.com/dslackw/slpkg/issues
 
-Latest Release:
 
-- Version: 2.2.3
-- `Package <https://github.com/dslackw/slpkg/releases>`_
-- `Source <https://github.com/dslackw/slpkg/archive/v2.2.3.tar.gz>`_
-- `CHANGELOG <https://github.com/dslackw/slpkg/blob/master/CHANGELOG>`_
- 
-.. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/logo.png
-    :target: https://github.com/dslackw/slpkg 
+.. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/slpkg_package.png
+    :target: https://github.com/dslackw/slpkg
 
 .. contents:: Table of Contents:
 
-`Slpkg <https://github.com/dslackw/slpkg>`_ is a terminal multitool in order to easy use `Slackware <http://www.slackware.com/>`_ 
-packages.
-
-.. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/open-source-logo.png
-    :target: https://github.com/dslackw/slpkg 
 
 Slpkg is `Open Source <http://en.wikipedia.org/wiki/Open_source>`_ software written in 
 Python language. It's use is for managing packages in Slackware linux distribution.
