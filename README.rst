@@ -19,12 +19,14 @@
 
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/slpkg_package.png
     :target: https://github.com/dslackw/slpkg
+|
 
 .. contents:: Table of Contents:
 
 
 Slpkg is `Open Source <http://en.wikipedia.org/wiki/Open_source>`_ software written in 
 Python language. It's use is for managing packages in Slackware linux distribution.
+|
 Default available Repositories:
 
 - SBo - `Reposiory <http://slackbuilds.org/>`_
