@@ -44,6 +44,7 @@ class SBoNetwork(object):
 
     def __init__(self, name):
         self.name = name
+        self.build_folder = _m.build_path
         Msg().reading()
         grep = SBoGrep(self.name)
         self.sbo_url = sbo_search_pkg(self.name)
@@ -90,13 +91,13 @@ class SBoNetwork(object):
                     pydoc.pager(SlackBuild + fill)
                 elif choice in ['B', 'b']:
                     self.build(FAULT)
-                    delete(_m.build_path)
+                    delete(self.build_folder)
                     break
                 elif choice in ['I', 'i']:
                     if not find_package(prgnam + _m.sp, _m.pkg_path):
                         self.build(FAULT)
                         self.install(prgnam)
-                        delete(_m.build_path)
+                        delete(self.build_folder)
                         break
                     else:
                         Msg().template(78)

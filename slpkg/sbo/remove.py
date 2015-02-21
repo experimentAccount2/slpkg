@@ -21,6 +21,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+import os
 import shutil
 
 from slpkg.__metadata__ import MetaData as _m
@@ -30,5 +31,5 @@ def delete(build_folder):
     '''
     Delete build directory and all its contents.
     '''
-    if _m.del_build == "on":
+    if _m.del_build == "on" and os.path.exists(build_folder):
         shutil.rmtree(build_folder)

@@ -49,6 +49,7 @@ class SBoInstall(object):
 
     def __init__(self, slackbuilds):
         self.slackbuilds = slackbuilds
+        self.build_folder = _m.build_path
         self.unst = ["UNSUPPORTED", "UNTESTED"]
         self.master_packages = []
         self.deps = []
@@ -150,7 +151,7 @@ class SBoInstall(object):
             b_ins = self.build_install()
             Msg().reference(b_ins[0], b_ins[1])
             write_deps(self.deps_dict)
-            delete(_m.build_path)
+            delete(self.build_folder)
 
     def _view_installing_for_deps(self, match):
         '''
@@ -305,9 +306,9 @@ class SBoInstall(object):
         '''
         slackbuilds = self.dependencies + self.master_packages
         installs, upgraded, = [], []
-        if not os.path.exists(_m.build_path):
-            os.makedirs(_m.build_path)
-        os.chdir(_m.build_path)
+        if not os.path.exists(self.build_folder):
+            os.makedirs(self.build_folder)
+        os.chdir(self.build_folder)
         for sbo in slackbuilds:
             pkg = '-'.join(sbo.split('-')[:-1])
             ver = sbo.split('-')[-1]
@@ -329,9 +330,9 @@ class SBoInstall(object):
                 sbo_link = SBoLink(sbo_url).tar_gz()
                 script = sbo_link.split("/")[-1]
                 dwn_srcs = sbo_link.split() + src_link
-                Download(_m.build_path, dwn_srcs).start()
+                Download(self.build_folder, dwn_srcs).start()
                 sources = self.filenames(src_link)
-                BuildPackage(script, sources, _m.build_path).build()
+                BuildPackage(script, sources, self.build_folder).build()
                 binary_list = self.search_in_tmp(prgnam)
                 try:
                     binary = (_m.output + max(binary_list)).split()
