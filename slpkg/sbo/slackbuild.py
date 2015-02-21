@@ -71,16 +71,16 @@ class SBoInstall(object):
             tagc, match = '', False
             count_ins = count_upg = count_uni = 0
             self._remove_blacklist()
-            for sbo in self.slackbuilds:
+            for _sbo in self.slackbuilds:
                 self.index += 1
                 self.toolbar_width = status(self.index, self.toolbar_width, 4)
-                if sbo_search_pkg(sbo):
-                    sbo_deps = Requires().sbo(sbo)
+                if sbo_search_pkg(_sbo):
+                    sbo_deps = Requires().sbo(_sbo)
                     self.deps += sbo_deps
-                    self.deps_dict[sbo] = self.one_for_all(sbo_deps)
-                    self.package_found.append(sbo)
+                    self.deps_dict[_sbo] = self.one_for_all(sbo_deps)
+                    self.package_found.append(_sbo)
                 else:
-                    self.package_not_found.append(sbo)
+                    self.package_not_found.append(_sbo)
             if not self.package_found:
                 match = True
                 self.package_found = self.matching(self.package_not_found)
