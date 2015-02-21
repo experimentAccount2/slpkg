@@ -84,91 +84,78 @@ class MetaData(object):
     __license__ = "GNU General Public License v3 (GPLv3)"
     __email__ = "d.zlatanidis@gmail.com"
 
-    # Default configuration values
-    slack_rel = ''
+    # Default Slackware release
+    slack_rel = 'stable'
 
     # Configuration path
     conf_path = "/etc/{0}/".format(__all__)
 
-    repositories = [
-        'slack',
-        'sbo',
-        'rlw',
-        'alien',
-        'slacky',
-        'studio',
-        'slackr',
-        'slonly',
-        'ktown{latest}',
-        'multi',
-        'slacke{18}',
-        'salix',
-        'slackl',
-        'rested'
-    ]
-
-    default_repositories = repositories[8] = 'ktown'
-    default_repositories = repositories[10] = 'slacke'
-    default_repositories = repositories
-
+    # tmp paths
     tmp = "/tmp/"
     tmp_path = "{0}{1}/".format(tmp, __all__)
-    build_path = "/tmp/slpkg/build/"
-    slpkg_tmp_packages = tmp + "slpkg/packages/"
-    slpkg_tmp_patches = tmp + "slpkg/patches/"
-    del_all = "on"
-    sbo_check_md5 = "on"
-    del_build = "off"
-    sbo_build_log = "on"
-    default_answer = "n"
-    remove_deps_answer = "n"
-    skip_unst = "n"
-    del_deps = "off"
-    use_colors = "on"
-    wget_options = '-c -N'
 
-    if os.path.isfile(conf_path + "slpkg.conf"):
-        f = open(conf_path + "slpkg.conf", "r")
+    # Default configuration values
+    _conf_slpkg = {
+        'RELEASE': '',
+        'REPOSITORIES': ['slack', 'sbo', 'rlw', 'alien',
+                         'slacky', 'studio', 'slackr', 'slonly',
+                         'ktown{latest}', 'multi', 'slacke{18}',
+                         'salix', 'slackl', 'rested'],
+        'BUILD_PATH': '/tmp/slpkg/build/',
+        'SBO_CHECK_MD5': 'on',
+        'PACKAGES': '/tmp/slpkg/packages/',
+        'PATCHES': '/tmp/slpkg/patches/',
+        'DEL_ALL': 'on',
+        'DEL_BUILD': 'off',
+        'SBO_BUILD_LOG': 'on',
+        'DEFAULT_ANSWER': 'n',
+        'REMOVE_DEPS_ANSWER': 'n',
+        'SKIP_UNST': 'n',
+        'DEL_DEPS': 'off',
+        'USE_COLORS': 'on',
+        'WGET_OPTIONS': '-c -N'
+    }
+
+    default_repositories = ['slack', 'sbo', 'rlw', 'alien', 'slacky', 'studio',
+                            'slackr', 'slonly', 'ktown', 'multi', 'slacke',
+                            'salix', 'slackl', 'rested']
+
+    if os.path.isfile('%s%s' % (conf_path, 'slpkg.conf')):
+        f = open('%s%s' % (conf_path, 'slpkg.conf'), 'r')
         conf = f.read()
         f.close()
         for line in conf.splitlines():
             line = line.lstrip()
-            if line.startswith("RELEASE"):
-                slack_rel = line[8:].strip()
-                select_slack_release(slack_rel)
-            if line.startswith("REPOSITORIES"):
-                repositories = line[13:].strip().split(",")
-            if line.startswith("BUILD_PATH"):
-                build_path = line[11:].strip()
-            if line.startswith("PACKAGES"):
-                slpkg_tmp_packages = line[9:].strip()
-            if line.startswith("PATCHES"):
-                slpkg_tmp_patches = line[8:].strip()
-            if line.startswith("DEL_ALL"):
-                del_all = line[8:].strip()
-            if line.startswith("DEL_BUILD"):
-                del_build = line[10:].strip()
-            if line.startswith("SBO_CHECK_MD5"):
-                sbo_check_md5 = line[14:].strip()
-            if line.startswith("SBO_BUILD_LOG"):
-                sbo_build_log = line[14:].strip()
-            if line.startswith("DEFAULT_ANSWER"):
-                default_answer = line[15:].strip()
-            if line.startswith("REMOVE_DEPS_ANSWER"):
-                remove_deps_answer = line[19:].strip()
-            if line.startswith("SKIP_UNST"):
-                skip_unst = line[10:].strip()
-            if line.startswith("DEL_DEPS"):
-                del_deps = line[9:].strip()
-            if line.startswith("USE_COLORS"):
-                use_colors = line[11:].strip()
-            if line.startswith("WGET_OPTIONS"):
-                wget_options = line[13:].strip()
+            if line and not line.startswith('#'):
+                _conf_slpkg[line.split('=')[0]] = line.split('=')[1]
 
+    # Set values from configuration file
+    slack_rel = _conf_slpkg['RELEASE']
+    repositories = _conf_slpkg['REPOSITORIES'].split(',')
+    build_path = _conf_slpkg['BUILD_PATH']
+    slpkg_tmp_packages = _conf_slpkg['PACKAGES']
+    slpkg_tmp_patches = _conf_slpkg['PATCHES']
+    del_all = _conf_slpkg['DEL_ALL']
+    sbo_check_md5 = _conf_slpkg['SBO_CHECK_MD5']
+    del_build = _conf_slpkg['DEL_BUILD']
+    sbo_build_log = _conf_slpkg['SBO_BUILD_LOG']
+    default_answer = _conf_slpkg['DEFAULT_ANSWER']
+    remove_deps_answer = _conf_slpkg['REMOVE_DEPS_ANSWER']
+    skip_unst = _conf_slpkg['SKIP_UNST']
+    del_deps = _conf_slpkg['DEL_DEPS']
+    use_colors = _conf_slpkg['USE_COLORS']
+    wget_options = _conf_slpkg['WGET_OPTIONS']
+
+    # Check Slackware release
+    select_slack_release(slack_rel)
+
+    # Grap sub repositories
     ktown_kde_repo = grab_sub_repo(repositories, 'ktown')
     slacke_sub_repo = grab_sub_repo(repositories, 'slacke')
+
     # remove no default repositories
     repositories = remove_repositories(repositories, default_repositories)
+
     # add custom repositories
     update_repositories(repositories, conf_path)
 
