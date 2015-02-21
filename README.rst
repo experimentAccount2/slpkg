@@ -8,6 +8,8 @@
     :target: https://www.codacy.com/public/dzlatanidis/slpkg/dashboard
 .. image:: https://img.shields.io/pypi/dm/slpkg.svg
     :target: https://pypi.python.org/pypi/slpkg
+.. image:: https://img.shields.io/sourceforge/dt/slpkg.svg
+    :target: https://sourceforge.net/projects/slpkg/
 .. image:: https://img.shields.io/badge/license-GPLv3-blue.svg
     :target: https://github.com/dslackw/slpkg
 .. image:: https://img.shields.io/github/stars/dslackw/slpkg.svg
