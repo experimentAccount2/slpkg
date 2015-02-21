@@ -22,6 +22,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import os
+import sys
 
 
 def remove_repositories(repositories, default_repositories):
@@ -75,6 +76,18 @@ def slacke_repo(repositories):
             return sub
 
 
+def select_slack_release(slack_rel):
+    '''
+    Warning message if Slackware release not defined or
+    defined wrong
+    '''
+    if slack_rel not in ['stable', 'current']:
+        print("\n  You have not specified the Slackware release.\n"
+              "  Edit file '/etc/slpkg/slpkg.conf' and change the \n"
+              "  value of the variable RELEASE.\n")
+        sys.exit(0)
+
+
 class MetaData(object):
 
     __all__ = "slpkg"
@@ -85,7 +98,7 @@ class MetaData(object):
     __email__ = "d.zlatanidis@gmail.com"
 
     # Default configuration values
-    slack_rel = "stable"
+    slack_rel = ''
 
     # Configuration path
     conf_path = "/etc/{0}/".format(__all__)
@@ -133,10 +146,9 @@ class MetaData(object):
         f.close()
         for line in conf.splitlines():
             line = line.lstrip()
-            if line.startswith("VERSION"):
+            if line.startswith("RELEASE"):
                 slack_rel = line[8:].strip()
-                if not slack_rel:
-                    slack_rel = "stable"
+                select_slack_release(slack_rel)
             if line.startswith("REPOSITORIES"):
                 repositories = line[13:].strip().split(",")
             if line.startswith("BUILD_PATH"):

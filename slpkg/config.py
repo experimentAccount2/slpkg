@@ -38,7 +38,7 @@ class Config(object):
         '''
         print("")   # new line at start
         conf_args = [
-            'VERSION',
+            'RELEASE',
             'REPOSITORIES',
             'BUILD_PATH',
             'SBO_CHECK_MD5',
