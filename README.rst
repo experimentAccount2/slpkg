@@ -4,6 +4,8 @@
     :target: https://travis-ci.org/dslackw/slpkg
 .. image:: https://landscape.io/github/dslackw/slpkg/master/landscape.png
     :target: https://landscape.io/github/dslackw/slpkg/master
+.. image:: https://img.shields.io/codacy/6464ba0bd1e342e28388c71a34b3a5e8.svg
+    :target: https://www.codacy.com/public/dzlatanidis/slpkg/dashboard
 .. image:: https://img.shields.io/pypi/dm/slpkg.svg
     :target: https://pypi.python.org/pypi/slpkg
 .. image:: https://img.shields.io/badge/license-GPLv3-blue.svg
