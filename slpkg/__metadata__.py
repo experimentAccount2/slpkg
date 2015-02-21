@@ -131,7 +131,10 @@ class MetaData(object):
 
     # Set values from configuration file
     slack_rel = _conf_slpkg['RELEASE']
-    repositories = _conf_slpkg['REPOSITORIES'].split(',')
+    if isinstance(_conf_slpkg['REPOSITORIES'], basestring):
+        repositories = _conf_slpkg['REPOSITORIES'].split(',')
+    else:
+        repositories = _conf_slpkg['REPOSITORIES']
     build_path = _conf_slpkg['BUILD_PATH']
     slpkg_tmp_packages = _conf_slpkg['PACKAGES']
     slpkg_tmp_patches = _conf_slpkg['PATCHES']
