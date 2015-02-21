@@ -52,27 +52,14 @@ def update_repositories(repositories, conf_path):
     return repositories
 
 
-def ktown_repo(repositories):
+def grab_sub_repo(repositories, repos):
     '''
-    Find if ktown repositories enabled then
-    take SUB_REPOSITORY
-    '''
-    for i, repo in enumerate(repositories):
-        if 'ktown' in repo:
-            sub = repositories[i].replace('ktown', '')
-            repositories[i] = 'ktown'
-            return sub
-
-
-def slacke_repo(repositories):
-    '''
-    Find if slacke repositories enabled then
-    take SUB_REPOSITORY
+    Grab SUB_REPOSITORY
     '''
     for i, repo in enumerate(repositories):
-        if 'slacke' in repo:
-            sub = repositories[i].replace('slacke', '')
-            repositories[i] = 'slacke'
+        if repos in repo:
+            sub = repositories[i].replace(repos, '')
+            repositories[i] = repos
             return sub
 
 
@@ -178,8 +165,8 @@ class MetaData(object):
             if line.startswith("WGET_OPTIONS"):
                 wget_options = line[13:].strip()
 
-    ktown_kde_repo = ktown_repo(repositories)
-    slacke_sub_repo = slacke_repo(repositories)
+    ktown_kde_repo = grab_sub_repo(repositories, 'ktown')
+    slacke_sub_repo = grab_sub_repo(repositories, 'slacke')
     # remove no default repositories
     repositories = remove_repositories(repositories, default_repositories)
     # add custom repositories
