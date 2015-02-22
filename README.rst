@@ -84,17 +84,18 @@ Default available Repositories:
   If a repository is not in the above list, manage custom repositories with commands 'repo-add'
   and 'repo-remove'.
 
+Slpkg is a software package manager that installs, updates, and removes packages on Slackware 
+based systems. It automatically computes dependencies and figures out what things should occur
+to install packages. Slpkg makes it easier to maintain groups of machines without having to 
+manually update.
+
 Slpkg works in accordance with the standards of the organization slackbuilds.org 
 to builds packages. Also uses the Slackware linux instructions for installation,
 upgrading or removing packages. 
 
-Slpkg must work with any Slackware based distribution such Salix and Slackel or Slax etc.
-
 What makes slpkg to distinguish it from other tools; The user friendliness is its primary 
 target as well as easy to understand and use, also use color to highlight packages and 
 display warning messages, etc.
-
-Supports auto-resolve dependencies and monitoring of upgraded packages.
 
 Also you can install official packages of your favorite distribution directly from the 
 official repositories of Slackware. Even you can check for the official updates and install them.
