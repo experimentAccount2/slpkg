@@ -47,8 +47,8 @@ from __metadata__ import MetaData as _m
 from pkg.build import BuildPackage
 from pkg.manager import PackageManager
 
-from sbo.check import sbo_upgrade
 from sbo.views import SBoNetwork
+from sbo.check import sbo_upgrade
 from sbo.slackbuild import SBoInstall
 
 from slack.patches import Patches
@@ -80,7 +80,7 @@ class ArgParse(object):
 
         # checking if repositories exists
         if len(self.args) > 1 and self.args[0] not in [
-            '-h', '--help', '-v', '--version', 're-create', 'repo-list',
+            '-h', '--help', '-v', '--version', 'upgrade', 'repo-list',
             'repo-add', 'repo-remove', 'update', 'update-slpkg', '-g'
         ]:
             check_exists_repositories()
@@ -129,10 +129,10 @@ class ArgParse(object):
         else:
             usage('')
 
-    def command_re_create(self):
+    def command_upgrade(self):
         """ re create repositories package lists """
-        if len(self.args) == 1 and self.args[0] == 're-create':
-            Initialization().re_create()
+        if len(self.args) == 1 and self.args[0] == 'upgrade':
+            Initialization().upgrade()
         else:
             usage('')
 
@@ -370,11 +370,11 @@ def main():
         '-v': argparse.help_version,
         '--version': argparse.help_version,
         'update': argparse.command_update,
+        'upgrade': argparse.command_upgrade,
         'update-slpkg': argparse.command_update_slpkg,
         'repo-list': argparse.command_repo_list,
         'repo-add': argparse.command_repo_add,
         'repo-remove': argparse.command_repo_remove,
-        're-create': argparse.command_re_create,
         'repo-info': argparse.command_repo_info,
         '-a': argparse.auto_build,
         '-l': argparse.pkg_list,

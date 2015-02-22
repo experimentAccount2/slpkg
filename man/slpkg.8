@@ -16,7 +16,7 @@
 Slpkg is a user-friendly package manager for Slackware installations
 .SH SYNOPSIS
 Usage: slpkg Commands:
-             [update] [re-create] [repo-add [repository name] [URL]]
+             [update] [upgrade] [repo-add [repository name] [URL]]
              [repo-remove [repository]] [repo-list]
              [repo-info [repository]] [update [slpkg]]
 
@@ -43,7 +43,7 @@ Slpkg is a user-friendly package manager for Slackware installations
 
 Commands:
    update                                   update all package lists
-   re-create                                recreate package lists  
+   upgrade                                  upgrade package lists  
    repo-add [repository name] [URL]         add custom repository
    repo-remove [repository]                 remove custom repository 
    repo-list                                list all repositories
@@ -130,11 +130,11 @@ The following commands are available.
 Used to re-synchronize the package lists and create some important files.
 This command must run every new repository is added or new updates is available.
 
-.SS re-create, recreate packages list
-\fBslpkg\fP \fBre-create\fP
+.SS upgrade, recreate packages list
+\fBslpkg\fP \fBupgrade\fP
 .PP
 It is sometimes useful to create all of the base file from the beginning so this 
-command deletes all the packages lists and re-created.
+command delete all the package lists and recreated.
 
 .SS repo-add, add custom repository
 \fBslpkg\fP \fBrepo-add\fP <\fIrepository name\fP> <\fIURL\fP>

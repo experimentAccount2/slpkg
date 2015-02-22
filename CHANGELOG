@@ -1,8 +1,11 @@
 Version 2.2.4-dev
 21-2-2015
 
-[Updated] - Fix Error-prone
-
+[Updated] - Fix Error-prone.
+          - Rename variable name 'VERSION' to 'RELEASE' in configuration file.
+          - Merge functions and fix __metadata__ complexity.
+          - Update slackbulid and install script.
+          - Rename command 're-create' to 'upgrade'. 
 
 Version 2.2.3
 16-2-2015

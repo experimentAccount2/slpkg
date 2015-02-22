@@ -35,7 +35,7 @@ def options():
         "Commands:",
         "   update                                   update all package "
         "lists",
-        "   re-create                                recreate package lists",
+        "   upgrade                                  upgrade package lists",
         "   repo-add [repository name] [URL]         add custom repository",
         "   repo-remove [repository]                 remove custom repository",
         "   repo-list                                list all repositories",
@@ -91,7 +91,7 @@ def usage(repo):
         "\nslpkg - version {0} | set: {1}\n".format(_m.__version__,
                                                     _m.slack_rel),
         "Usage: slpkg Commands:",
-        "             [update] [re-create] [repo-add [repository name] [URL]]",
+        "             [update] [upgrade] [repo-add [repository name] [URL]]",
         "             [repo-remove [repository]] [repo-list]",
         "             [repo-info [repository]] [update [slpkg]]\n",
         "             Optional arguments:",
@@ -108,7 +108,7 @@ def usage(repo):
         "             [-n] [-f [...]] [-i [...]] [-u [...]]",
         "             [-o  [...]] [-r [...]] [-d [...]]\n",
         error_repo,
-        "For more information try 'slpkg -h or --help' or view manpage\n"
+        "For more information try 'slpkg -h, --help' or view manpage\n"
     ]
     for usg in view:
         print(usg)

@@ -231,7 +231,7 @@ Command Line Tool Usage
 
     Commands:
        update                                   update all package lists
-       re-create                                recreate package lists
+       upgrade                                  upgrade package lists
        repo-add [repository name] [URL]         add custom repository
        repo-remove [repository]                 remove custom repository
        repo-list                                list all repositories

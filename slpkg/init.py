@@ -549,7 +549,7 @@ class Initialization(object):
                 FILELIST_TXT = URL(args[9]).reading()
                 self.write_file(args[3], args[8], FILELIST_TXT)
 
-    def re_create(self):
+    def upgrade(self):
         '''
         Remove all package lists with changelog and checksums files
         and create lists again
