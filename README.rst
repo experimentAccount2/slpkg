@@ -46,7 +46,9 @@ display warning messages, etc.
 Also you can install official packages of your favorite distribution directly from the 
 official repositories of Slackware. Even you can check for the official updates and install them.
 
-|
+
+Repositories
+------------
 
 Default available Repositories:
 
