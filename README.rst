@@ -28,8 +28,21 @@
 .. contents:: Table of Contents:
 
 
-Slpkg is `Open Source <http://en.wikipedia.org/wiki/Open_source>`_ software written in 
-Python language. It's use is for managing packages in Slackware linux distribution.
+ Slpkg is a software package manager that installs, updates, and removes packages on Slackware 
+based systems. It automatically computes dependencies and figures out what things should occur
+to install packages. Slpkg makes it easier to maintain groups of machines without having to 
+manually update.
+
+Slpkg works in accordance with the standards of the organization slackbuilds.org 
+to builds packages. Also uses the Slackware linux instructions for installation,
+upgrading or removing packages. 
+
+What makes slpkg to distinguish it from other tools; The user friendliness is its primary 
+target as well as easy to understand and use, also use color to highlight packages and 
+display warning messages, etc.
+
+Also you can install official packages of your favorite distribution directly from the 
+official repositories of Slackware. Even you can check for the official updates and install them.
 
 |
 
@@ -83,22 +96,6 @@ Default available Repositories:
   'slack' and 'sbo' repositories and read REPOSITORIES file for each of the particularities.
   If a repository is not in the above list, manage custom repositories with commands 'repo-add'
   and 'repo-remove'.
-
-Slpkg is a software package manager that installs, updates, and removes packages on Slackware 
-based systems. It automatically computes dependencies and figures out what things should occur
-to install packages. Slpkg makes it easier to maintain groups of machines without having to 
-manually update.
-
-Slpkg works in accordance with the standards of the organization slackbuilds.org 
-to builds packages. Also uses the Slackware linux instructions for installation,
-upgrading or removing packages. 
-
-What makes slpkg to distinguish it from other tools; The user friendliness is its primary 
-target as well as easy to understand and use, also use color to highlight packages and 
-display warning messages, etc.
-
-Also you can install official packages of your favorite distribution directly from the 
-official repositories of Slackware. Even you can check for the official updates and install them.
 
 
 Usage
