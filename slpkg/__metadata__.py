@@ -149,6 +149,9 @@ class MetaData(object):
     use_colors = _conf_slpkg['USE_COLORS']
     wget_options = _conf_slpkg['WGET_OPTIONS']
 
+    # Remove any gaps
+    repositories = [repo.strip() for repo in repositories]
+
     # Check Slackware release
     select_slack_release(slack_rel)
 
