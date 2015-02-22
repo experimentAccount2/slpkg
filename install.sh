@@ -20,9 +20,15 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+
+grab_version() {
+# Grab version from __metadata_.py file
+cat slpkg/__metadata__.py | grep "__version_info__ = (" \
+    | tr -d [[:space:]] | cut -c19-23 | tr , .
+}
+
 PRGNAM=slpkg
-VERSION=${VERSION:-$(cat slpkg/__metadata__.py | grep "__version_info__ = (" \
-    | tr -d [[:space:]] | cut -c19-23 | tr , .)} 
+VERSION=${VERSION:-$(grab_version)} 
 TAG=${TAG:-_dsw}
 
 # Installation script.
