@@ -23,6 +23,16 @@
 
 import os
 import sys
+import getpass
+
+
+def s_user(user):
+        '''
+        Check for root user
+        '''
+        if user != "root":
+            print("\nslpkg: error: must have root privileges\n")
+            sys.exit(0)
 
 
 def remove_repositories(repositories, default_repositories):
@@ -83,6 +93,8 @@ class MetaData(object):
     __version__ = "{0}.{1}.{2}".format(*__version_info__)
     __license__ = "GNU General Public License v3 (GPLv3)"
     __email__ = "d.zlatanidis@gmail.com"
+
+    s_user(getpass.getuser())
 
     # Default Slackware release
     slack_rel = 'stable'
