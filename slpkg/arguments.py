@@ -35,7 +35,7 @@ def options():
         "Commands:",
         "   update                                   update all package "
         "lists",
-        "   upgrade                                  upgrade package lists",
+        "   upgrade                                  upgrade all package lists",
         "   repo-add [repository name] [URL]         add custom repository",
         "   repo-remove [repository]                 remove custom repository",
         "   repo-list                                list all repositories",

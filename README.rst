@@ -167,8 +167,8 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.2.3.tar.gz
-    $ cd slpkg-2.2.3
+    $ tar xvf slpkg-2.2.5.tar.gz
+    $ cd slpkg-2.2.5
     $ ./install.sh
 
 Using pip:
@@ -231,7 +231,7 @@ Command Line Tool Usage
 
     Commands:
        update                                   update all package lists
-       upgrade                                  upgrade package lists
+       upgrade                                  upgrade all package lists
        repo-add [repository name] [URL]         add custom repository
        repo-remove [repository]                 remove custom repository
        repo-list                                list all repositories

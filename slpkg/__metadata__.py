@@ -27,12 +27,12 @@ import getpass
 
 
 def s_user(user):
-        '''
-        Check for root user
-        '''
-        if user != "root":
-            print("\nslpkg: error: must have root privileges\n")
-            sys.exit(0)
+    '''
+    Check for root user
+    '''
+    if user != "root":
+        print("\nslpkg: error: must have root privileges\n")
+        sys.exit(0)
 
 
 def remove_repositories(repositories, default_repositories):
@@ -82,14 +82,13 @@ def select_slack_release(slack_rel):
         print("\n  You have not specified the Slackware release.\n"
               "  Edit file '/etc/slpkg/slpkg.conf' and change the \n"
               "  value of the variable RELEASE.\n")
-        sys.exit(0)
 
 
 class MetaData(object):
 
     __all__ = "slpkg"
     __author__ = "dslackw"
-    __version_info__ = (2, 2, 3)
+    __version_info__ = (2, 2, 5)
     __version__ = "{0}.{1}.{2}".format(*__version_info__)
     __license__ = "GNU General Public License v3 (GPLv3)"
     __email__ = "d.zlatanidis@gmail.com"
@@ -108,7 +107,7 @@ class MetaData(object):
 
     # Default configuration values
     _conf_slpkg = {
-        'RELEASE': '',
+        'RELEASE': 'stable',
         'REPOSITORIES': ['slack', 'sbo', 'rlw', 'alien',
                          'slacky', 'studio', 'slackr', 'slonly',
                          'ktown{latest}', 'multi', 'slacke{18}',

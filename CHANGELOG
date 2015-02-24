@@ -1,11 +1,13 @@
-Version 2.2.4-dev
-21-2-2015
+Version 2.2.5
+24-2-2015
 
 [Updated] - Fix Error-prone.
           - Rename variable name 'VERSION' to 'RELEASE' in configuration file.
           - Merge functions and fix __metadata__ complexity.
           - Update slackbulid and install script.
           - Rename command 're-create' to 'upgrade'. 
+          - Fix IOError: [Errno 13] Permission denied as user.
+          - Fix alien repository checksum.
 
 Version 2.2.3
 16-2-2015
