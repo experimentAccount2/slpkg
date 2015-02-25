@@ -28,8 +28,8 @@ from __metadata__ import MetaData as _m
 
 def options():
     arguments = [
-        "\nslpkg - version {0} | set: {1}\n".format(_m.__version__,
-                                                    _m.slack_rel),
+        "\nslpkg - version {0} | Slackware release: {1}\n".format(
+            _m.__version__, _m.slack_rel),
         "Slpkg is a user-friendly package manager for Slackware "
         "installations\n",
         "Commands:",
@@ -88,8 +88,8 @@ def usage(repo):
             error_repo = ("slpkg: error: repository '{0}' does not exist"
                           "\n".format(repo))
     view = [
-        "\nslpkg - version {0} | set: {1}\n".format(_m.__version__,
-                                                    _m.slack_rel),
+        "\nslpkg - version {0} | Slackware release: {1}\n".format(
+            _m.__version__, _m.slack_rel),
         "Usage: slpkg Commands:",
         "             [update] [upgrade] [repo-add [repository name] [URL]]",
         "             [repo-remove [repository]] [repo-list]",

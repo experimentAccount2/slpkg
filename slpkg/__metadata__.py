@@ -79,9 +79,8 @@ def select_slack_release(slack_rel):
     defined wrong
     '''
     if slack_rel not in ['stable', 'current']:
-        print("\n  You have not specified the Slackware release.\n"
-              "  Edit file '/etc/slpkg/slpkg.conf' and change the \n"
-              "  value of the variable RELEASE.\n")
+        return 'FAULT'
+    return slack_rel
 
 
 class MetaData(object):
@@ -131,6 +130,7 @@ class MetaData(object):
                             'slackr', 'slonly', 'ktown', 'multi', 'slacke',
                             'salix', 'slackl', 'rested']
 
+    # read value from configuration file
     if os.path.isfile('%s%s' % (conf_path, 'slpkg.conf')):
         f = open('%s%s' % (conf_path, 'slpkg.conf'), 'r')
         conf = f.read()
@@ -164,7 +164,7 @@ class MetaData(object):
     repositories = [repo.strip() for repo in repositories]
 
     # Check Slackware release
-    select_slack_release(slack_rel)
+    slack_rel = select_slack_release(slack_rel)
 
     # Grap sub repositories
     ktown_kde_repo = grab_sub_repo(repositories, 'ktown')
