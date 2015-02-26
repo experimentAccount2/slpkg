@@ -24,6 +24,8 @@
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/slpkg_package.png
     :target: https://github.com/dslackw/slpkg
 
+|
+
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/poweredbyslack.gif
     :target: http://www.slackware.com/
 |
