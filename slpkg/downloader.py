@@ -40,15 +40,17 @@ class Download(object):
         '''
         Download files usign wget.
         '''
+        dwn_count = 1
         for dwn in self.url:
             self.file_name = dwn.split("/")[-1]
-            print("\n[ {0}Download{1} ] -->{1} {2}\n".format(_m.color['GREEN'],
-                                                             _m.color['ENDC'],
-                                                             self.file_name))
+            print("\n[{0}/{1}][ {2}Download{3} ] --> {4}\n".format(
+                dwn_count, len(self.url), _m.color['GREEN'], _m.color['ENDC'],
+                self.file_name))
             try:
                 subprocess.call("wget {0} --directory-prefix={1} {2}".format(
                                 self.wget_options, self.path, dwn), shell=True)
                 self._check_if_downloaded()
+                dwn_count += 1
             except KeyboardInterrupt:
                 print   # new line at cancel
                 sys.exit(0)
