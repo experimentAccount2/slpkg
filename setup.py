@@ -80,7 +80,15 @@ if "install" in sys.argv:
     f_out.close()
     f_in.close()
     shutil.copy2(gzip_man, man_path)
-    os.chmod(man_path, int("444", 8))
+
+    bash_completion = "/etc/bash_completion.d/"
+    completion_file = "conf/slpkg.bash-completion"
+    if not os.path.exists(bash_completion):
+        os.makedirs(bash_completion)
+    print("Installing '{0}' bash completion file".format(
+        completion_file.split('/')[1]))
+    shutil.copy2(completion_file, bash_completion)
+    os.chmod(bash_completion + completion_file.split('/')[1], 744)
 
     conf_file = [
         'conf/slpkg.conf',

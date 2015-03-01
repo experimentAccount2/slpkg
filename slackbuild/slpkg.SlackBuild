@@ -92,6 +92,11 @@ for file in $CONFIGS; do
     install -D -m0644 conf/$file $PKG/etc/slpkg/${file}.new
 done
 
+# install bash completion file
+mkdir -p $PKG/etc/bash_completion.d
+install -D -m0744 conf/${PRGNAM}.bash-completion \
+    $PKG/etc/bash_completion.d/${PRGNAM}.bash-completion
+
 # install man page
 mkdir -p $PKG/usr/man/man8
 gzip -9 man/$PRGNAM.8
