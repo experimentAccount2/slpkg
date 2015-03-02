@@ -97,6 +97,12 @@ mkdir -p $PKG/etc/bash_completion.d
 install -D -m0744 conf/${PRGNAM}.bash-completion \
     $PKG/etc/bash_completion.d/${PRGNAM}.bash-completion
 
+# install fish completion file
+if [ -d "/etc/fish/completions" ]; then
+    install -D -m0744 conf/${PRGNAM}.fish \
+        $PKG/etc/fish/completions/${PRGNAM}.fish
+fi
+
 # install man page
 mkdir -p $PKG/usr/man/man8
 gzip -9 man/$PRGNAM.8
