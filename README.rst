@@ -32,7 +32,7 @@
 
 .. contents:: Table of Contents:
 
-Slpkg
+About
 -----
 
 Slpkg is a software package manager that installs, updates, and removes packages on Slackware 
@@ -172,8 +172,8 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.2.6.tar.gz
-    $ cd slpkg-2.2.6
+    $ tar xvf slpkg-2.2.7.tar.gz
+    $ cd slpkg-2.2.7
     $ ./install.sh
 
 Using pip:
