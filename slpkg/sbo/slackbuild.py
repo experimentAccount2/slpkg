@@ -92,7 +92,7 @@ class SBoInstall(object):
             self.dependencies, dep_src = self.sbo_version_source(
                 self.one_for_all(self.deps))
             Msg().done()
-            self.master_packages = self.clear_masters()
+            self.master_packages, self.pkg_ver = self.clear_masters()
             if self.package_found:
                 print("\nThe following packages will be automatically "
                       "installed or upgraded \nwith new version:\n")
@@ -165,11 +165,13 @@ class SBoInstall(object):
         Clear master slackbuilds if already exist in dependencies
         or if added to install two or more times
         '''
-        slackbuilds = []
-        for mas in Utils().remove_dbs(self.master_packages):
+        slackbuilds, version = [], []
+        for mas, ver in zip(Utils().remove_dbs(self.master_packages),
+                            self.pkg_ver):
             if mas not in self.dependencies:
                 slackbuilds.append(mas)
-        return slackbuilds
+                version.append(ver)
+        return slackbuilds, version
 
     def matching(self, sbo_not_found):
         '''
@@ -246,7 +248,7 @@ class SBoInstall(object):
             " " * (24-len(args[1])), args[2],
             " " * (18-len(args[2])), args[3],
             " " * (15-len(args[3])), "",
-            "", "SBo", "", ""))
+            "", "SBo", "", "")).rstrip()
 
     def tag(self, sbo, count_ins, count_upg, count_uni):
         '''

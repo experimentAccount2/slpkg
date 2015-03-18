@@ -253,7 +253,7 @@ class BinaryInstall(object):
                 " " * (18-len(pkg_split[1])), pkg_split[2],
                 " " * (8-len(pkg_split[2])), pkg_split[3],
                 " " * (7-len(pkg_split[3])), repo,
-                comp, " K"))
+                comp, " K")).rstrip()
         return [pkg_sum, upg_sum, uni_sum]
 
     def top_view(self):
