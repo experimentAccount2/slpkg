@@ -80,8 +80,22 @@ if "install" in sys.argv:
     f_out.close()
     f_in.close()
     shutil.copy2(gzip_man, man_path)
-    os.chmod(man_path, int("444", 8))
 
+    bash_completion = "/etc/bash_completion.d/"
+    fish_completion = "/etc/fish/completions/"
+    completion_file = [
+        'conf/slpkg.bash-completion',
+        'conf/slpkg.fish'
+    ]
+    if not os.path.exists(bash_completion):
+        os.makedirs(bash_completion)
+    print("Installing '{0}' file".format(completion_file[0].split('/')[1]))
+    shutil.copy2(completion_file[0], bash_completion)
+    os.chmod(bash_completion + completion_file[0].split('/')[1], 744)
+    if os.path.exists(fish_completion):
+        print("Installing '{0}' file".format(completion_file[1].split('/')[1]))
+        shutil.copy2(completion_file[1], fish_completion)
+        os.chmod(fish_completion + completion_file[1].split('/')[1], 744)
     conf_file = [
         'conf/slpkg.conf',
         'conf/blacklist',

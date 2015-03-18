@@ -146,7 +146,7 @@ class Patches(object):
                 " " * (18-len(pkg_split[1])), pkg_split[2],
                 " " * (8-len(pkg_split[2])), pkg_split[3],
                 " " * (7-len(pkg_split[3])), "Slack",
-                size, " K"))
+                size, " K")).rstrip()
 
     def upgrade(self):
         '''

@@ -1,3 +1,11 @@
+Version 2.2.7
+18-3-2015
+
+[Feature] - Added bash completion file.
+          - Added fish completion file.
+[Updated] - Fix synchronization issues when upgrading SBo repository.
+          - Fix remove to the right spaces on view.
+
 Version 2.2.6
 26-2-2015
 
