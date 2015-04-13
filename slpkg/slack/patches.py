@@ -51,6 +51,12 @@ class Patches(object):
     def __init__(self):
         self.version = _m.slack_rel
         self.patch_path = _m.slpkg_tmp_patches
+        self.pkg_for_upgrade = []
+        self.dwn_links = []
+        self.upgrade_all = []
+        self.upgraded = []
+        self.comp_sum = []
+        self.uncomp_sum = []
         Msg().reading()
         if self.version == "stable":
             self.PACKAGES_TXT = URL(mirrors("PACKAGES.TXT",
@@ -65,8 +71,7 @@ class Patches(object):
         Install new patches from official Slackware mirrors
         '''
         try:
-            (self.pkg_for_upgrade, self.dwn_links, self.upgrade_all,
-             self.comp_sum, self.uncomp_sum) = self.store()
+            self.store()
             Msg().done()
             if self.upgrade_all:
                 print("\nThese packages need upgrading:\n")
@@ -97,9 +102,9 @@ class Patches(object):
                     Download(self.patch_path, self.dwn_links).start()
                     self.upgrade_all = Utils().check_downloaded(
                         self.patch_path, self.upgrade_all)
-                    upg = self.upgrade()
+                    self.upgrade()
                     self.kernel()
-                    Msg().reference([], upg)
+                    Msg().reference([], self.upgraded)
                     delete(self.patch_path, self.upgrade_all)
             else:
                 slack_arch = ""
@@ -115,22 +120,20 @@ class Patches(object):
         '''
         Store and return packages for upgrading
         '''
-        (pkg_for_upgrade, dwn, upgrade, comp_sum,
-         uncomp_sum) = ([] for i in range(5))
         data = repo_data(self.PACKAGES_TXT, self.step, 'slack')
         black = BlackList().packages()
         for name, loc, comp, uncomp in zip(data[0], data[1], data[2], data[3]):
             inst_pkg = find_package(split_package(name)[0] + "-", _m.pkg_path)
             if (inst_pkg and not os.path.isfile(_m.pkg_path + name[:-4]) and
                     split_package(''.join(inst_pkg[0])) not in black):
-                dwn.append("{0}{1}/{2}".format(mirrors("", ""), loc, name))
-                comp_sum.append(comp)
-                uncomp_sum.append(uncomp)
-                upgrade.append(name)
-                pkg_for_upgrade.append('{0}-{1}'.format(
+                self.dwn_links.append("{0}{1}/{2}".format(mirrors("", ""),
+                                                          loc, name))
+                self.comp_sum.append(comp)
+                self.uncomp_sum.append(uncomp)
+                self.upgrade_all.append(name)
+                self.pkg_for_upgrade.append('{0}-{1}'.format(
                     split_package(''.join(inst_pkg[0]))[0],
                     split_package(''.join(inst_pkg[0]))[1]))
-        return [pkg_for_upgrade, dwn, upgrade, comp_sum, uncomp_sum]
 
     def views(self):
         '''
@@ -152,7 +155,6 @@ class Patches(object):
         '''
         Upgrade packages
         '''
-        upgraded = []
         for pkg in self.upgrade_all:
             check_md5(pkg_checksum(pkg, "slack_patches"), self.patch_path + pkg)
             pkg_ver = '{0}-{1}'.format(split_package(pkg)[0],
@@ -161,8 +163,7 @@ class Patches(object):
                                                        _m.color['ENDC'],
                                                        pkg[:-4]))
             PackageManager((self.patch_path + pkg).split()).upgrade()
-            upgraded.append(pkg_ver)
-        return upgraded
+            self.upgraded.append(pkg_ver)
 
     def kernel(self):
         '''
