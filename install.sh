@@ -21,14 +21,14 @@
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-grab_version() {
+__version() {
 # Grab version from __metadata_.py file
 cat slpkg/__metadata__.py | grep "__version_info__ = (" \
     | tr -d [[:space:]] | cut -c19-23 | tr , .
 }
 
 PRGNAM=slpkg
-VERSION=${VERSION:-$(grab_version)} 
+VERSION=${VERSION:-$(__version)} 
 TAG=${TAG:-_dsw}
 
 # Installation script.
