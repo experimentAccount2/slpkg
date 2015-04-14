@@ -59,6 +59,7 @@ class BinaryInstall(object):
         self.comp_sum, self.dep_comp_sum = [], []
         self.uncomp_sum, self.dep_uncomp_sum = [], []
         self.dependencies = []
+        self.pkg_ver = []
         self.deps_dict = {}
         self.answer = ''
         Msg().reading()
@@ -72,7 +73,7 @@ class BinaryInstall(object):
         '''
         try:
             # fix if packages is for upgrade
-            self.if_upgrade, self.pkg_ver = if_upgrade, []
+            self.if_upgrade = if_upgrade
             if self.if_upgrade:
                 self.packages, ver = self.packages[0], self.packages[1]
                 self.pkg_ver = ver
