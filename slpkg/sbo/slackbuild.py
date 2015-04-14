@@ -56,19 +56,21 @@ class SBoInstall(object):
         self.dependencies = []
         self.package_not_found = []
         self.package_found = []
+        self.pkg_ver = []
         self.deps_dict = {}
         self.toolbar_width, self.index = 2, 0
         self.answer = ''
+        self.match = False
         Msg().reading()
 
     def start(self, if_upgrade):
         try:
-            self.if_upgrade, self.pkg_ver = if_upgrade, []
+            self.if_upgrade = if_upgrade
             self.view_version()
             if self.if_upgrade:
                 self.slackbuilds, self.pkg_ver = (self.slackbuilds[0],
                                                   self.slackbuilds[1])
-            tagc, match = '', False
+            tagc = ''
             count_ins = count_upg = count_uni = 0
             self._remove_blacklist()
             for _sbo in self.slackbuilds:
@@ -82,8 +84,8 @@ class SBoInstall(object):
                 else:
                     self.package_not_found.append(_sbo)
             if not self.package_found:
-                match = True
-                self.package_found = self.matching(self.package_not_found)
+                self.match = True
+                self.matching()
                 self.pkg_ver = [''] * len(self.package_found)
             self.master_packages, mas_src = self.sbo_version_source(
                 self.package_found)
@@ -92,7 +94,7 @@ class SBoInstall(object):
             self.dependencies, dep_src = self.sbo_version_source(
                 self.one_for_all(self.deps))
             Msg().done()
-            self.master_packages, self.pkg_ver = self.clear_masters()
+            self.clear_masters()
             if self.package_found:
                 print("\nThe following packages will be automatically "
                       "installed or upgraded \nwith new version:\n")
@@ -108,7 +110,7 @@ class SBoInstall(object):
                         name = '-'.join(sbo.split('-')[:-1])
                     self.view_packages(tagc, name, sbo.split('-')[-1],
                                        self.select_arch(ar))
-                self._view_installing_for_deps(match)
+                self._view_installing_for_deps()
                 # view dependencies
                 for dep, ar in zip(self.dependencies, dep_src):
                     tagc, count_ins, count_upg, count_uni = self.tag(
@@ -148,16 +150,16 @@ class SBoInstall(object):
         Continue to install
         '''
         if self.master_packages and Msg().answer() in ['y', 'Y']:
-            b_ins = self.build_install()
-            Msg().reference(b_ins[0], b_ins[1])
+            installs, upgraded = self.build_install()
+            Msg().reference(installs, upgraded)
             write_deps(self.deps_dict)
             delete(self.build_folder)
 
-    def _view_installing_for_deps(self, match):
+    def _view_installing_for_deps(self):
         '''
         View installing for dependencies message
         '''
-        if not match and self.dependencies:
+        if not self.match and self.dependencies:
             print("Installing for dependencies:")
 
     def clear_masters(self):
@@ -165,27 +167,23 @@ class SBoInstall(object):
         Clear master slackbuilds if already exist in dependencies
         or if added to install two or more times
         '''
-        slackbuilds, version = [], []
         for mas, ver in zip(Utils().remove_dbs(self.master_packages),
                             self.pkg_ver):
             if mas not in self.dependencies:
-                slackbuilds.append(mas)
-                version.append(ver)
-        return slackbuilds, version
+                self.master_packages.append(mas)
+                self.pkg_ver.append(ver)
 
-    def matching(self, sbo_not_found):
+    def matching(self):
         '''
         Return matching SBo
         '''
-        sbo_matching = []
         f = open(_m.lib_path + "sbo_repo/SLACKBUILDS.TXT", "r")
         SLACKBUILDS_TXT = f.read()
         f.close()
-        for sbo in sbo_not_found:
+        for sbo in self.package_not_found:
             for line in SLACKBUILDS_TXT.splitlines():
                 if line.startswith("SLACKBUILD NAME: ") and sbo in line[17:]:
-                    sbo_matching.append(line[17:])
-        return sbo_matching
+                    self.package_found.append(line[17:])
 
     def sbo_version_source(self, slackbuilds):
         '''
