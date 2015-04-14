@@ -133,7 +133,7 @@ class Initialization(object):
         packages_txt = "{0}{1}/{2}".format(repo, slack_ver(), lib_file)
         filelist_txt = ""
         checksums_md5 = ""
-        changelog_txt = "{0}/{1}/{2}".format(repo, slack_ver(), log_file)
+        changelog_txt = "{0}{1}/{2}".format(repo, slack_ver(), log_file)
         self.write(lib, lib_file, packages_txt)
         self.write(log, log_file, changelog_txt)
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
