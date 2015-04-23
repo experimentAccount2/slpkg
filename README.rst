@@ -615,13 +615,13 @@ why always you can have updated your system:
     | Package                   Version          Arch     Build  Repos         Size
     +==============================================================================
     Upgrading:
-     dhcpcd-6.0.5               6.0.5            x86_64   3      Slack         92 K
-     samba-4.1.0                4.1.11           x86_64   1      Slack       9928 K
-     xscreensaver-5.22          5.29             x86_64   1      Slack       3896 K
+     dhcpcd                     6.0.5            x86_64   3      Slack         92 K
+     samba                      4.1.11           x86_64   1      Slack       9928 K
+     xscreensaver               5.29             x86_64   1      Slack       3896 K
 
     Installing summary
     ===============================================================================
-    Total 3 package will be upgrading.
+    Total 3 package will be upgrading and 0 will be installed.
     Need to get 13.58 Mb of archives.
     After this process, 76.10 Mb of additional disk space will be used.
     

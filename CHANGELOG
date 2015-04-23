@@ -1,3 +1,17 @@
+Version 2.2.8
+23-4-2015
+
+[Updated] - Fix added new packages when upgrad.
+          - Fix man page.
+          - Fix TypeError: 'NoneType' object has no attribute '__getitem__'
+            when no sbo link found. Many Thanks to 'R S Ananda Murthy' to report.
+          - Fix slackbuilds.org ChangeLog.txt url.
+          - Update install.sh script.
+          - Update binary/install.py, sbo/slackbuild.py and slack/patches.py 
+            clases.
+          - Update count packages the upgrading of distribution.
+
+
 Version 2.2.7
 18-3-2015
 
