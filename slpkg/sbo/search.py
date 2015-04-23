@@ -46,6 +46,7 @@ def sbo_search_pkg(name):
                 sbo_name = (line[23:].split("/")[-1].replace("\n", "")).strip()
                 if name == sbo_name and name not in blacklist:
                     return (sbo_url + line[23:].strip() + "/")
+        return ""
     except KeyboardInterrupt:
         print("")   # new line at exit
         sys.exit(0)
