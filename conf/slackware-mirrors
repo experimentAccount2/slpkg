@@ -31,7 +31,7 @@
 # below. Be careful is the template that the rest.
 # 
 # 
-# Last Updated: Wed Feb 11 07:47:01 UTC 2015
+# Last Updated: Thu Apr 23 09:47:01 UTC 2015
 # 
 # Available http mirrors:
 # 
@@ -45,6 +45,7 @@
 # bg		 http://x.ultranet.biz/slackware/ 
 # br		 http://linorg.usp.br/slackware/ 
 # br		 http://mirror.ic.ufmt.br/slackware/ 
+# br		 http://slackmirror.cbpf.br/pub/slackware/ 
 # ca		 http://mirror.csclub.uwaterloo.ca/slackware/ 
 # ca		 http://mirror.its.dal.ca/slackware/ 
 # cn		 http://mirror.bjtu.edu.cn/slackware/ 
@@ -66,7 +67,7 @@
 # ie		 http://ftp.heanet.ie/mirrors/ftp.slackware.com/pub/slackware/ 
 # it		 http://slackware.muzzy.it/ 
 # jp		 http://ftp.nara.wide.ad.jp/pub/Linux/slackware/ 
-# lt		 http://atviras.lt/veidrodziai/slackware/ 
+# lt		 http://mirrors.atviras.lt/slackware/ 
 # lt		 http://slackware.laukas.lt 
 # mk		 http://slackware.blizoo.mk/slackware/ 
 # nc		 http://mirror.lagoon.nc/pub/slackware/ 
@@ -98,7 +99,6 @@
 # us		 http://mirror.lug.udel.edu/pub/slackware/ 
 # us		 http://mirror.metrocast.net/slackware/ 
 # us		 http://mirror.nexcess.net/slackware/ 
-# us		 http://mirror.pw/slackware/ 
 # us		 http://mirror.quintex.com/slackware/ 
 # us		 http://mirrors.kingrst.com/slackware/ 
 # us		 http://mirrors.xmission.com/slackware/ 
@@ -183,4 +183,4 @@
 # us		 ftp://taper.alienbase.nl/ 
 # za		 ftp://ftp.is.co.za/mirror/ftp.slackware.com/pub/ 
 # za		 ftp://ftp.wa.co.za/pub/slackware/ 
-# za		 ftp://slackware.mirror.ac.za/ 
+# za		 ftp://slackware.mirror.ac.za/
