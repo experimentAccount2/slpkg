@@ -1056,5 +1056,5 @@ Copyright
 ---------
 
 - Copyright © Dimitris Zlatanidis
-- Slackware® is a Registered Trademark of Slackware Linux, Inc.
+- Slackware® is a Registered Trademark of Patrick Volkerding.
 - Linux is a Registered Trademark of Linus Torvalds.
