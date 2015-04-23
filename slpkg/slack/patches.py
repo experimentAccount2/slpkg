@@ -54,6 +54,8 @@ class Patches(object):
         self.pkg_for_upgrade = []
         self.dwn_links = []
         self.upgrade_all = []
+        self.count_added = 0
+        self.count_upg = 0
         self.upgraded = []
         self.comp_sum = []
         self.uncomp_sum = []
@@ -89,9 +91,11 @@ class Patches(object):
                 unit, size = units(self.comp_sum, self.uncomp_sum)
                 print("\nInstalling summary")
                 print("=" * 79)
-                print("{0}Total {1} {2} will be upgraded.".format(
-                    _m.color['GREY'], len(self.upgrade_all),
-                    Msg().pkg(self.upgrade_all)))
+                print("{0}Total {1} {2} will be upgraded and {3} will be "
+                      "installed.".format(_m.color['GREY'],
+                                          self.count_upg,
+                                          Msg().pkg(self.upgrade_all),
+                                          self.count_added))
                 print("Need to get {0} {1} of archives.".format(size[0],
                                                                 unit[0]))
                 print("After this process, {0} {1} of additional disk space "
@@ -123,13 +127,18 @@ class Patches(object):
         data = repo_data(self.PACKAGES_TXT, self.step, 'slack')
         black = BlackList().packages()
         for name, loc, comp, uncomp in zip(data[0], data[1], data[2], data[3]):
+            repo_pkg_name = split_package(name)[0]
             if (not os.path.isfile(_m.pkg_path + name[:-4]) and
-                    split_package(name)[0] not in black):
+                    repo_pkg_name not in black):
                 self.dwn_links.append("{0}{1}/{2}".format(mirrors("", ""),
                                                           loc, name))
                 self.comp_sum.append(comp)
                 self.uncomp_sum.append(uncomp)
                 self.upgrade_all.append(name)
+                self.count_upg += 1
+                if not find_package(repo_pkg_name, _m.pkg_path):
+                    self.count_added += 1
+                    self.count_upg -= 1
 
     def views(self):
         '''
