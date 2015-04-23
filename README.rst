@@ -172,8 +172,8 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.2.7.tar.gz
-    $ cd slpkg-2.2.7
+    $ tar xvf slpkg-2.2.8.tar.gz
+    $ cd slpkg-2.2.8
     $ ./install.sh
 
 Using pip:
@@ -256,7 +256,7 @@ Command Line Tool Usage
       -s, [repository] [package...]             download, build & install packages
       -t, [repository] [package]                package tracking dependencies
       -p, [repository] [package], --color=[]    print package description
-      -n, [package]                             view SBo packages through network
+      -n, [package]                             view SBo site package in terminal
       -f, [package...]                          find installed packages
       -i, [package...]                          install binary packages
       -u, [package...]                          upgrade binary packages

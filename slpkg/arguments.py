@@ -63,8 +63,8 @@ def options():
         "  -t, [repository] [package]                package tracking "
         "dependencies",
         "  -p, [repository] [package], --color=[]    print package description",
-        "  -n, [package]                             view SBo packages "
-        "through network",
+        "  -n, [package]                             view SBo site package "
+        "in terminal",
         "  -f, [package...]                          find installed packages",
         "  -i, [package...]                          install binary packages",
         "  -u, [package...]                          upgrade binary packages",
