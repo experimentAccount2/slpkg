@@ -37,7 +37,6 @@ from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _m
 
-from slpkg.pkg.find import find_package
 from slpkg.pkg.manager import PackageManager
 
 from slpkg.binary.greps import repo_data
@@ -123,29 +122,23 @@ class Patches(object):
         data = repo_data(self.PACKAGES_TXT, self.step, 'slack')
         black = BlackList().packages()
         for name, loc, comp, uncomp in zip(data[0], data[1], data[2], data[3]):
-            inst_pkg = find_package(split_package(name)[0] + "-", _m.pkg_path)
-            if (inst_pkg and not os.path.isfile(_m.pkg_path + name[:-4]) and
-                    split_package(''.join(inst_pkg[0])) not in black):
+            if (not os.path.isfile(_m.pkg_path + name[:-4]) and
+                    split_package(name)[0] not in black):
                 self.dwn_links.append("{0}{1}/{2}".format(mirrors("", ""),
                                                           loc, name))
                 self.comp_sum.append(comp)
                 self.uncomp_sum.append(uncomp)
                 self.upgrade_all.append(name)
-                self.pkg_for_upgrade.append('{0}-{1}'.format(
-                    split_package(''.join(inst_pkg[0]))[0],
-                    split_package(''.join(inst_pkg[0]))[1]))
 
     def views(self):
         '''
         Views packages
         '''
-        for upg, upgrade, size in sorted(zip(self.pkg_for_upgrade,
-                                             self.upgrade_all,
-                                             self.comp_sum)):
-            pkg_split = split_package(upgrade[:-4])
+        for upg, size in sorted(zip(self.upgrade_all, self.comp_sum)):
+            pkg_split = split_package(upg[:-4])
             print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>12}{12}".format(
-                _m.color['YELLOW'], upg, _m.color['ENDC'],
-                " " * (24-len(upg)), pkg_split[1],
+                _m.color['YELLOW'], pkg_split[0], _m.color['ENDC'],
+                " " * (24-len(pkg_split[0])), pkg_split[1],
                 " " * (18-len(pkg_split[1])), pkg_split[2],
                 " " * (8-len(pkg_split[2])), pkg_split[3],
                 " " * (7-len(pkg_split[3])), "Slack",
