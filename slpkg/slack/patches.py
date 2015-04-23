@@ -37,6 +37,7 @@ from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _m
 
+from slpkg.pkg.find import find_package
 from slpkg.pkg.manager import PackageManager
 
 from slpkg.binary.greps import repo_data
@@ -136,8 +137,11 @@ class Patches(object):
         '''
         for upg, size in sorted(zip(self.upgrade_all, self.comp_sum)):
             pkg_split = split_package(upg[:-4])
+            color = _m.color['YELLOW']
+            if not find_package(pkg_split[0], _m.pkg_path):
+                color = _m.color['RED']
             print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>12}{12}".format(
-                _m.color['YELLOW'], pkg_split[0], _m.color['ENDC'],
+                color, pkg_split[0], _m.color['ENDC'],
                 " " * (24-len(pkg_split[0])), pkg_split[1],
                 " " * (18-len(pkg_split[1])), pkg_split[2],
                 " " * (8-len(pkg_split[2])), pkg_split[3],
