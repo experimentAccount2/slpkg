@@ -167,10 +167,10 @@ class SBoInstall(object):
         Clear master slackbuilds if already exist in dependencies
         or if added to install two or more times
         '''
-        for mas, ver in zip(Utils().remove_dbs(self.master_packages),
-                            self.pkg_ver):
-            if mas not in self.dependencies:
-                self.master_packages.append(mas)
+        self.master_packages = Utils().remove_dbs(self.master_packages)
+        for mas, ver in zip(self.master_packages, self.pkg_ver):
+            if mas in self.dependencies:
+                self.master_packages.remove(mas)
                 self.pkg_ver.append(ver)
 
     def matching(self):
