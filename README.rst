@@ -172,8 +172,8 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.2.8.tar.gz
-    $ cd slpkg-2.2.8
+    $ tar xvf slpkg-<version>.tar.gz
+    $ cd slpkg-<version>
     $ ./install.sh
 
 Using pip:
