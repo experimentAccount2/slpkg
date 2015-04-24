@@ -54,10 +54,10 @@ class Patches(object):
         self.pkg_for_upgrade = []
         self.dwn_links = []
         self.upgrade_all = []
-        self.pkgs_added = []
         self.count_added = 0
         self.count_upg = 0
         self.upgraded = []
+        self.installed = []
         self.comp_sum = []
         self.uncomp_sum = []
         Msg().reading()
@@ -109,7 +109,7 @@ class Patches(object):
                         self.patch_path, self.upgrade_all)
                     self.upgrade()
                     self.kernel()
-                    Msg().reference(self.pkgs_added, self.upgraded)
+                    Msg().reference(self.installed, self.upgraded)
                     delete(self.patch_path, self.upgrade_all)
             else:
                 slack_arch = ""
@@ -138,7 +138,6 @@ class Patches(object):
                 self.upgrade_all.append(name)
                 self.count_upg += 1
                 if not find_package(repo_pkg_name, _m.pkg_path):
-                    self.pkgs_added.append(name)
                     self.count_added += 1
                     self.count_upg -= 1
 
@@ -167,11 +166,18 @@ class Patches(object):
             check_md5(pkg_checksum(pkg, "slack_patches"), self.patch_path + pkg)
             pkg_ver = '{0}-{1}'.format(split_package(pkg)[0],
                                        split_package(pkg)[1])
-            print("[ {0}upgrading{1} ] --> {2}".format(_m.color['YELLOW'],
-                                                       _m.color['ENDC'],
-                                                       pkg[:-4]))
-            PackageManager((self.patch_path + pkg).split()).upgrade()
-            self.upgraded.append(pkg_ver)
+            if find_package(split_package(pkg)[0] + "-", _m.pkg_path):
+                print("[ {0}upgrading{1} ] --> {2}".format(_m.color['YELLOW'],
+                                                           _m.color['ENDC'],
+                                                           pkg[:-4]))
+                PackageManager((self.patch_path + pkg).split()).upgrade()
+                self.upgraded.append(pkg_ver)
+            else:
+                print("[ {0}installing{1} ] --> {2}".format(_m.color['GREEN'],
+                                                            _m.color['ENDC'],
+                                                            pkg[:-4]))
+                PackageManager((self.patch_path + pkg).split()).upgrade()
+                self.installed.append(pkg_ver)
 
     def kernel(self):
         '''
