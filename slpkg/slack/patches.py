@@ -54,6 +54,7 @@ class Patches(object):
         self.pkg_for_upgrade = []
         self.dwn_links = []
         self.upgrade_all = []
+        self.pkgs_added = []
         self.count_added = 0
         self.count_upg = 0
         self.upgraded = []
@@ -108,7 +109,7 @@ class Patches(object):
                         self.patch_path, self.upgrade_all)
                     self.upgrade()
                     self.kernel()
-                    Msg().reference([], self.upgraded)
+                    Msg().reference(self.pkgs_added, self.upgraded)
                     delete(self.patch_path, self.upgrade_all)
             else:
                 slack_arch = ""
@@ -137,6 +138,7 @@ class Patches(object):
                 self.upgrade_all.append(name)
                 self.count_upg += 1
                 if not find_package(repo_pkg_name, _m.pkg_path):
+                    self.pkgs_added.append(name)
                     self.count_added += 1
                     self.count_upg -= 1
 
