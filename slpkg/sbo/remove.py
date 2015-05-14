@@ -31,5 +31,5 @@ def delete(build_folder):
     '''
     Delete build directory and all its contents.
     '''
-    if _m.del_build == "on" and os.path.exists(build_folder):
+    if _m.del_build in ["on", "ON"] and os.path.exists(build_folder):
         shutil.rmtree(build_folder)

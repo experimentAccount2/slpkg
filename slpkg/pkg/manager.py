@@ -113,7 +113,8 @@ class PackageManager(object):
                     # If package build and install with 'slpkg -s sbo <package>'
                     # then look log file for dependencies in /var/log/slpkg/dep,
                     # read and remove all else remove only the package.
-                    if os.path.isfile(dep_path + rmv) and _m.del_deps == "on":
+                    if os.path.isfile(dep_path + rmv) and _m.del_deps in ["on",
+                                                                          "ON"]:
                         dependencies = self._view_deps(dep_path, rmv)
                         if self._rmv_deps_answer() in ['y', 'Y']:
                             rmv_list += (self._rmv_deps(dependencies, dep_path,

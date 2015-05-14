@@ -187,7 +187,7 @@ class MetaData(object):
         'ENDC': '\x1b[0m'
     }
 
-    if use_colors == "off":
+    if use_colors in ["off", "OFF"]:
         color = {
             'RED': '',
             'GREEN': '',
