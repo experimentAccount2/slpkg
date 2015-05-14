@@ -57,7 +57,7 @@ Repositories
 
 Default available Repositories:
 
-- SBo - `Reposiory <http://slackbuilds.org/>`_
+- SBo - `Repository <http://slackbuilds.org/>`_
   Arch: {x86, x86_64}
   Versions: {13.1, 13.37, 14.0, 14.1}
 - Slack - `Repository <http://www.slackware.com/>`_
