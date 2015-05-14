@@ -60,6 +60,8 @@ class Patches(object):
         self.installed = []
         self.comp_sum = []
         self.uncomp_sum = []
+        self.utils = Utils()
+        self.slackpkg_update()
         Msg().reading()
         if self.version == "stable":
             self.PACKAGES_TXT = URL(mirrors("PACKAGES.TXT",
@@ -105,7 +107,7 @@ class Patches(object):
                 print('')
                 if Msg().answer() in ['y', 'Y']:
                     Download(self.patch_path, self.dwn_links).start()
-                    self.upgrade_all = Utils().check_downloaded(
+                    self.upgrade_all = self.utils.check_downloaded(
                         self.patch_path, self.upgrade_all)
                     self.upgrade()
                     self.kernel()
@@ -199,3 +201,26 @@ class Patches(object):
                 if answer in ['y', 'Y']:
                     subprocess.call("lilo", shell=True)
                     break
+
+    def slackpkg_update(self):
+        '''
+        This replace slackpkg ChangeLog.txt file with new
+        from Slackware official mirrors after update distribution.
+        '''
+        changelog_txt = "ChangeLog.txt"
+        arch = "64" if os.uname()[4] == "x86_64" else ""
+        slackware_mirror = self.utils.read_config(self.utils.read_file(
+            _m.conf_path + "slackware-changelog-mirrors"))
+        slackpkg_mirror = self.utils.read_config(
+            self.utils.read_file("{0}{1}".format(_m.slackpkg_conf, "mirrors")))
+        if slackpkg_mirror and "current" in slackpkg_mirror:
+            log_mirror = "{0}slackware{1}-current/{2}".format(slackware_mirror,
+                                                              arch,
+                                                              changelog_txt)
+        else:
+            log_mirror = "{0}slackware{1}-{2}/{3}".format(slackware_mirror,
+                                                          arch,
+                                                          slack_ver(),
+                                                          changelog_txt)
+        self.slackpkg_log = URL(log_mirror).reading()
+        print _m.slackpkg_log

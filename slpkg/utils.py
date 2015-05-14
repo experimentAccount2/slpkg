@@ -84,3 +84,10 @@ class Utils(object):
             print("\nThe '{0}' file not found\n".format(
                 file_pkg.split('/')[-1]))
         return filter(lambda x: x != '', packages)
+
+    def read_config(self, config):
+        """ Read config file and return uncomment line """
+        for line in config.splitlines():
+            line = line.lstrip()
+            if line and not line.startswith('#'):
+                return line

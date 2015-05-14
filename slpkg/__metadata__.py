@@ -123,7 +123,8 @@ class MetaData(object):
         'SKIP_UNST': 'n',
         'DEL_DEPS': 'off',
         'USE_COLORS': 'on',
-        'WGET_OPTIONS': '-c -N'
+        'WGET_OPTIONS': '-c -N',
+        'SLACKPKG_LOG': 'on'
     }
 
     default_repositories = ['slack', 'sbo', 'rlw', 'alien', 'slacky', 'studio',
@@ -159,6 +160,7 @@ class MetaData(object):
     del_deps = _conf_slpkg['DEL_DEPS']
     use_colors = _conf_slpkg['USE_COLORS']
     wget_options = _conf_slpkg['WGET_OPTIONS']
+    slackpkg_log = _conf_slpkg['SLACKPKG_LOG']
 
     # Remove any gaps
     repositories = [repo.strip() for repo in repositories]
@@ -212,6 +214,12 @@ class MetaData(object):
 
     # packages log files path
     pkg_path = "/var/log/packages/"
+
+    # slackpkg lib path
+    slackpkg_lib_path = "/var/lib/slackpkg/"
+
+    # slackpkg conf path
+    slackpkg_conf = "/etc/slackpkg/"
 
     # computer architecture
     arch = os.uname()[4]
