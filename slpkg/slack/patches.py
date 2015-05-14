@@ -213,7 +213,7 @@ class Patches(object):
         changelog_old = changelog_txt + ".old"
         arch = "64" if os.uname()[4] == "x86_64" else ""
         slackware_mirror = self.utils.read_config(self.utils.read_file(
-            _m.conf_path + "slackware-changelog-mirrors"))
+            _m.conf_path + "slackware-changelogs-mirror"))
         slackpkg_mirror = self.utils.read_config(
             self.utils.read_file("{0}{1}".format(_m.slackpkg_conf, "mirrors")))
         if slackpkg_mirror and "current" in slackpkg_mirror:

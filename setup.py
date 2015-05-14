@@ -101,7 +101,7 @@ if "install" in sys.argv:
         'conf/blacklist',
         'conf/slackware-mirrors',
         'conf/custom-repositories',
-        'conf/slackware-changelog-mirrors'
+        'conf/slackware-changelogs-mirror'
     ]
     if not os.path.exists(_m.conf_path):
         os.makedirs(_m.conf_path)
