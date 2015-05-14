@@ -25,10 +25,8 @@ import os
 import sys
 import gzip
 import shutil
-
 from slpkg.md5sum import md5
 from slpkg.__metadata__ import MetaData as _m
-
 
 try:
     from setuptools import setup
@@ -65,8 +63,7 @@ setup(
     long_description=open("README.rst").read()
     )
 
-# install man page and blacklist configuration
-# file if not exists.
+# install man page and configuration files
 if "install" in sys.argv:
     man_path = "/usr/man/man8/"
     if not os.path.exists(man_path):
