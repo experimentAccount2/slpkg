@@ -23,6 +23,7 @@
 
 import os
 import sys
+import shutil
 import subprocess
 
 from slpkg.utils import Utils
@@ -61,7 +62,6 @@ class Patches(object):
         self.comp_sum = []
         self.uncomp_sum = []
         self.utils = Utils()
-        self.slackpkg_update()
         Msg().reading()
         if self.version == "stable":
             self.PACKAGES_TXT = URL(mirrors("PACKAGES.TXT",
@@ -111,6 +111,8 @@ class Patches(object):
                         self.patch_path, self.upgrade_all)
                     self.upgrade()
                     self.kernel()
+                    if _m.slackpkg_log in ["on", "ON"]:
+                        self.slackpkg_update()
                     Msg().reference(self.installed, self.upgraded)
                     delete(self.patch_path, self.upgrade_all)
             else:
@@ -208,6 +210,7 @@ class Patches(object):
         from Slackware official mirrors after update distribution.
         '''
         changelog_txt = "ChangeLog.txt"
+        changelog_old = changelog_txt + ".old"
         arch = "64" if os.uname()[4] == "x86_64" else ""
         slackware_mirror = self.utils.read_config(self.utils.read_file(
             _m.conf_path + "slackware-changelog-mirrors"))
@@ -222,5 +225,13 @@ class Patches(object):
                                                           arch,
                                                           slack_ver(),
                                                           changelog_txt)
-        self.slackpkg_log = URL(log_mirror).reading()
-        print _m.slackpkg_log
+        slackware_log = URL(log_mirror).reading()
+        if os.path.isfile(_m.slackpkg_lib_path + changelog_txt):
+            if os.path.isfile(_m.slackpkg_lib_path + changelog_old):
+                os.remove(_m.slackpkg_lib_path + changelog_old)
+            shutil.copy2(_m.slackpkg_lib_path + changelog_txt,
+                         _m.slackpkg_lib_path + changelog_old)
+            os.remove(_m.slackpkg_lib_path + changelog_txt)
+            with open(_m.slackpkg_lib_path + changelog_txt, "w") as log:
+                log.write(slackware_log)
+                log.close()
