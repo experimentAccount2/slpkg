@@ -227,6 +227,16 @@ class BinaryInstall(object):
         if not self.if_upgrade:
             self.pkg_ver = [''] * len(packages)
 
+    def package_ver(self, package):
+        '''
+        Return package version if package already installed
+        '''
+        name = "-".join(package[:-4].split("-")[:-3]) + "-"
+        pkg = "".join(find_package(name, _m.pkg_path)[0])
+        if pkg:
+            return split_package(pkg)[1]
+        return ""
+
     def views(self, install, comp_sum, is_deps):
         '''
         Views packages
@@ -240,9 +250,11 @@ class BinaryInstall(object):
         for pkg, ver, comp in zip(install, self.pkg_ver, comp_sum):
             pkg_split = split_package(pkg[:-4])
             if find_package(pkg[:-4], _m.pkg_path):
+                ver = '-' + self.package_ver(pkg)
                 pkg_sum += 1
                 COLOR = _m.color['GREEN']
             elif find_package(pkg_split[0] + "-", _m.pkg_path):
+                ver = '-' + self.package_ver(pkg)
                 COLOR = _m.color['YELLOW']
                 upg_sum += 1
             else:

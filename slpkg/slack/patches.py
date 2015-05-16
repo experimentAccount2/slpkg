@@ -145,6 +145,16 @@ class Patches(object):
                     self.count_added += 1
                     self.count_upg -= 1
 
+    def package_ver(self, package):
+        '''
+        Return package version if package already installed
+        '''
+        name = "-".join(package[:-4].split("-")[:-3]) + "-"
+        pkg = "".join(find_package(name, _m.pkg_path)[0])
+        if pkg:
+            return split_package(pkg)[1]
+        return ""
+
     def views(self):
         '''
         Views packages
@@ -152,11 +162,12 @@ class Patches(object):
         for upg, size in sorted(zip(self.upgrade_all, self.comp_sum)):
             pkg_split = split_package(upg[:-4])
             color = _m.color['YELLOW']
+            ver = "-" + self.package_ver(upg)
             if not find_package(pkg_split[0], _m.pkg_path):
                 color = _m.color['RED']
             print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>12}{12}".format(
-                color, pkg_split[0], _m.color['ENDC'],
-                " " * (24-len(pkg_split[0])), pkg_split[1],
+                color, pkg_split[0] + ver, _m.color['ENDC'],
+                " " * (24-len(pkg_split[0] + ver)), pkg_split[1],
                 " " * (18-len(pkg_split[1])), pkg_split[2],
                 " " * (8-len(pkg_split[2])), pkg_split[3],
                 " " * (7-len(pkg_split[3])), "Slack",

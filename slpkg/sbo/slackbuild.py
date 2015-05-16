@@ -230,7 +230,7 @@ class SBoInstall(object):
 
     def package_ver(self, sbo):
         '''
-        Return package version if package exist
+        Return package version if package already installed
         '''
         pkg = "".join(find_package(sbo.split("-")[0] + "-", _m.pkg_path))
         if pkg:
