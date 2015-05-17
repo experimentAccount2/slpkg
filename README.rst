@@ -226,6 +226,9 @@ Configuration files
     /etc/slpkg/custom-repositories
          List of custom repositories
 
+    /etc/slpkg/slackware-changelogs-mirror
+         Slackware changelogs mirror
+
 
 Command Line Tool Usage
 -----------------------
