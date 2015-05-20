@@ -3,7 +3,7 @@
 
 # slackbuild.py file is part of slpkg.
 
-# Copyright 2014 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
+# Copyright 2014-2015 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
 
 # Slpkg is a user-friendly package manager for Slackware installations
@@ -23,7 +23,6 @@
 
 import os
 import sys
-
 
 from slpkg.utils import Utils
 from slpkg.messages import Msg

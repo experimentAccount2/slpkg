@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright 2014 Dimitris Zlatanidis Greece-Orestiada
+# Copyright 2014-2015 Dimitris Zlatanidis Greece-Orestiada
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
