@@ -31,7 +31,7 @@
 # below. Be careful is the template that the rest.
 # 
 # 
-# Last Updated: Thu Apr 23 09:47:01 UTC 2015
+# Last Updated: Wed May 20 22:47:01 UTC 2015
 # 
 # Available http mirrors:
 # 
@@ -183,4 +183,90 @@
 # us		 ftp://taper.alienbase.nl/ 
 # za		 ftp://ftp.is.co.za/mirror/ftp.slackware.com/pub/ 
 # za		 ftp://ftp.wa.co.za/pub/slackware/ 
-# za		 ftp://slackware.mirror.ac.za/
+# za		 ftp://slackware.mirror.ac.za/ 
+# 
+# 
+# 
+# Available rsync mirrors:
+# 
+# au		 rsync://ftp.swin.edu.au/slackware/ 
+# au		 rsync://mirror.aarnet.edu.au/slackware/ 
+# au		 rsync://mirror.internode.on.net/slackware/ 
+# au		 rsync://syd.mirror.rackspace.com/slackware/ 
+# be		 rsync://rsync.belnet.be/slackware/ 
+# bg		 rsync://mirrors.unixsol.org/slackware/ 
+# bg		 rsync://slackware.telecoms.bg/slackware/ 
+# bg		 rsync://x.ultranet.biz/slackware/ 
+# br		 rsync://linorg.usp.br/slackware/ 
+# br		 rsync://mirror.ic.ufmt.br/files/slackware/ 
+# br		 rsync://slackmirror.cbpf.br/pub/slackware/ 
+# ca		 rsync://mirror.csclub.uwaterloo.ca/slackware/ 
+# ca		 rsync://mirror.its.dal.ca/slackware/ 
+# cn		 rsync://mirror.bjtu.edu.cn/slackware/ 
+# cz		 rsync://mirror.oss.maxcdn.com/mirrors/slackware/ 
+# de		 rsync://ftp5.gwdg.de/pub/linux/slackware/ 
+# de		 rsync://mirror.netcologne.de/slackware/ 
+# ec		 rsync://mirror.cedia.org.ec/slackware/ 
+# fr		 rsync://slackware.mirrors.ovh.net/ftp.slackware.com/ 
+# gb		 rsync://lon.mirror.rackspace.com/slackware/ 
+# gb		 rsync://mirror.bytemark.co.uk/slackware/ 
+# gb		 rsync://rsync.mirrorservice.org/ftp.slackware.com/pub/slackware/ 
+# gb		 rsync://slackware.org.uk/slackware/ 
+# gr		 rsync://ftp.cc.uoc.gr/slackware/ 
+# hk		 rsync://hkg.mirror.rackspace.com/slackware/ 
+# hr		 rsync://mirror.slackware.hr/slackware/ 
+# id		 rsync://iso.ukdw.ac.id/iso/slackware/ 
+# id		 rsync://mirrors.gudangteknologi.com/slackware/ 
+# id		 rsync://repo.ukdw.ac.id/slackware/ 
+# ie		 rsync://ftp.heanet.ie/mirrors/ftp.slackware.com/pub/slackware/ 
+# it		 rsync://slackware.muzzy.it/slackware/ 
+# jp		 rsync://ftp.nara.wide.ad.jp/slackware/ 
+# lt		 rsync://mirrors.atviras.lt/slackware/ 
+# lt		 rsync://slackware.laukas.lt/slackware/ 
+# mk		 rsync://mirror.blizoo.mk/slackware/ 
+# nc		 rsync://mirror.lagoon.nc/pub/slackware/ 
+# nl		 rsync://ftp.bit.nl/mirror/slackware/ 
+# nl		 rsync://mirror.nl.leaseweb.net/slackware/ 
+# nl		 rsync://slackware.bokxing-it.nl/slackware/ 
+# no		 rsync://rsync.slackware.no/slackware/ 
+# nz		 rsync://ftp.slackware.org.nz/slackware/ 
+# ph		 rsync://mirror.pregi.net/pub/Linux/slackware/ 
+# pl		 rsync://rsync.piotrkosoft.net/slackware/pub/slackware/ 
+# pl		 rsync://slackware.pl/slackware/ 
+# pl		 rsync://sunsite.icm.edu.pl/slackware/ 
+# pt		 rsync://darkstar.ist.utl.pt/pub/slackware/ 
+# pt		 rsync://ftp.rnl.tecnico.ulisboa.pt/pub/slackware/ 
+# ru		 rsync://mirror.corbina.net/slackware/ 
+# ru		 rsync://mirror.yandex.ru/slackware/ 
+# ru		 rsync://slackware.tsu.ru/slackware/ 
+# sk		 rsync://mirror.wheel.sk/slackware/ 
+# tr		 rsync://ftp.linux.org.tr/slackware/ 
+# tw		 rsync://ftp.yzu.edu.tw/Linux/Slackware/ 
+# ua		 rsync://ifconfig.com.ua/slackware/ 
+# ua		 rsync://mirror.linux.lg.ua/slackware/ 
+# ua		 rsync://mirrors.nix.org.ua/slackware/ 
+# us		 rsync://carroll.cac.psu.edu/slackware/ 
+# us		 rsync://dfw.mirror.rackspace.com/slackware/ 
+# us		 rsync://ftp.slackware.com/slackware/ 
+# us		 rsync://lug.mtu.edu/slackware/ 
+# us		 rsync://mirror.metrocast.net/slackware/ 
+# us		 rsync://mirror.nexcess.net/slackware/ 
+# us		 rsync://mirror.quintex.com/slackware/ 
+# us		 rsync://mirrors.kingrst.com/slackware 
+# us		 rsync://mirrors.xmission.com/slackware/ 
+# us		 rsync://mirrors1.kernel.org/slackware/ 
+# us		 rsync://mirrors2.kernel.org/slackware/ 
+# us		 rsync://mirrors3.kernel.org/slackware/ 
+# us		 rsync://mirrors4.kernel.org/slackware/ 
+# us		 rsync://reflect.cs.princeton.edu/slackware/ 
+# us		 rsync://rsync.gtlib.gatech.edu/slackware/ 
+# us		 rsync://rsync.lug.udel.edu/slackware/ 
+# us		 rsync://slackblog.com/slackware/ 
+# us		 rsync://slackbuilds.org/slackware/ 
+# us		 rsync://slackware.cs.utah.edu/slackware/ 
+# us		 rsync://slackware.mirrorcatalogs.com/slackware/ 
+# us		 rsync://slackware.mirrors.tds.net/slackware/ 
+# us		 rsync://taper.alienbase.nl/mirrors/slackware/ 
+# za		 rsync://ftp.is.co.za/IS-Mirror/ftp.slackware.com/pub/ 
+# za		 rsync://ftp.wa.co.za/pub/slackware/ 
+# za		 rsync://mirror.ac.za/slackware/
