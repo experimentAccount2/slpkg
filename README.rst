@@ -198,7 +198,7 @@ For Slackware 'current' users must change the variable VERSION in '/etc/slpkg.co
 
 .. code-block:: bash
 
-    $ slpkg -g --config=nano
+    $ slpkg -g config=nano
 
 
 Slackware Mirrors
@@ -214,6 +214,9 @@ Configuration files
 
 .. code-block:: bash
 
+    /tmp/slpkg
+         Slpkg temponary donwloaded files and build packages
+
     /etc/slpkg/slpkg.conf
          General configuration of slpkg
 
@@ -226,10 +229,20 @@ Configuration files
     /etc/slpkg/custom-repositories
          List of custom repositories
 
+    /var/log/slpkg
+         ChangeLog.txt repositories files
+         SlackBuilds logs and dependencies files
+
+    /var/lib/slpkg
+         PACKAGES.TXT files 
+         SLACKBUILDS.TXT files
+         CHECKSUMS.md5 files
+         FILELIST.TXT files
+
     /etc/slpkg/slackware-changelogs-mirror
          Slackware changelogs mirror
 
-
+     
 Command Line Tool Usage
 -----------------------
 
@@ -250,10 +263,10 @@ Command Line Tool Usage
       -h, --help                                show this help message and exit
       -v, --version                             print version and exit
       -a, [script.tar.gz] [source...]           auto build SBo packages
-      -b, --list, [package...] --add, --remove  add, remove packages in blacklist
-      -q, --list, [package...] --add, --remove  add, remove SBo packages in queue
-      -q, --build, --install, --build-install   build, install packages from queue
-      -g, --config, --config=[editor]           configuration file management
+      -b, list, [package...] --add, --remove    add, remove packages in blacklist
+      -q, list, [package...] --add, --remove    add, remove SBo packages in queue
+      -q, build, install, build-install         build, install packages from queue
+      -g, config, config=[editor]               configuration file management
       -l, [repository], --index, --installed    list of repositories packages
       -c, [repository] --upgrade                check for updated packages
       -s, [repository] [package...]             download, build & install packages
@@ -980,7 +993,7 @@ Build and install packages that have added to the queue:
     roxterm
 
     
-    $ slpkg -q --list
+    $ slpkg -q list
 
     Packages in queue:
 
@@ -988,11 +1001,11 @@ Build and install packages that have added to the queue:
     CEGUI
     
     
-    $ slpkg -q --build (build only packages from queue)
+    $ slpkg -q build (build only packages from queue)
 
-    $ slpkg -q --install (install packages from queue)
+    $ slpkg -q install (install packages from queue)
 
-    $ slpkg -q --build-install (build and install)
+    $ slpkg -q build-install (build and install)
 
 
 Add packages in blacklist file manually from 
@@ -1016,7 +1029,7 @@ Add packages in blacklist file manually from
     speex
 
 
-    $ slpkg -b --list
+    $ slpkg -b list
 
     Packages in blacklist:
 

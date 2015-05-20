@@ -46,13 +46,13 @@ def options():
         "and exit",
         "  -v, --version                             print version and exit",
         "  -a, [script.tar.gz] [source...]           auto build SBo packages",
-        "  -b, --list, [package...] --add, --remove  add, remove packages in "
+        "  -b, list, [package...] --add, --remove    add, remove packages in "
         "blacklist",
-        "  -q, --list, [package...] --add, --remove  add, remove SBo packages "
+        "  -q, list, [package...] --add, --remove    add, remove SBo packages "
         "in queue",
-        "  -q, --build, --install, --build-install   build, install packages "
+        "  -q, build, install, build-install         build, install packages "
         "from queue",
-        "  -g, --config, --config=[editor]           configuration file "
+        "  -g, config, config=[editor]               configuration file "
         "management",
         "  -l, [repository], --index, --installed    list of repositories "
         "packages",
@@ -96,10 +96,10 @@ def usage(repo):
         "             [repo-info [repository]] [update [slpkg]]\n",
         "             Optional arguments:",
         "             [-h] [-v] [-a [script.tar.gz] [sources...]]",
-        "             [-b --list, [...] --add, --remove]",
-        "             [-q --list, [...] --add, --remove]",
-        "             [-q --build, --install, --build-install]",
-        "             [-g --config, --config=[editor]]",
+        "             [-b list, [...] --add, --remove]",
+        "             [-q list, [...] --add, --remove]",
+        "             [-q build, install, build-install]",
+        "             [-g config, config=[editor]]",
         "             [-l [repository], --index, --installed]",
         "             [-c [repository] --upgrade]",
         "             [-s [repository] [package...]",

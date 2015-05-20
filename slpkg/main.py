@@ -234,7 +234,7 @@ class ArgParse(object):
         """ manage blacklist packages """
         blacklist = BlackList()
         if (len(self.args) == 2 and self.args[0] == '-b' and
-                self.args[1] == '--list'):
+                self.args[1] == 'list'):
             blacklist.listed()
         elif (len(self.args) > 2 and self.args[0] == '-b' and
                 self.args[-1] == '--add'):
@@ -249,7 +249,7 @@ class ArgParse(object):
         """ manage packages in queue """
         queue = QueuePkgs()
         if (len(self.args) == 2 and self.args[0] == '-q' and
-                self.args[1] == '--list'):
+                self.args[1] == 'list'):
             queue.listed()
         elif (len(self.args) > 2 and self.args[0] == '-q' and
                 self.args[-1] == '--add'):
@@ -258,13 +258,13 @@ class ArgParse(object):
                 self.args[-1] == '--remove'):
             queue.remove(self.packages)
         elif (len(self.args) == 2 and self.args[0] == '-q' and
-                self.args[1] == '--build'):
+                self.args[1] == 'build'):
             queue.build()
         elif (len(self.args) == 2 and self.args[0] == '-q' and
-                self.args[1] == '--install'):
+                self.args[1] == 'install'):
             queue.install()
         elif (len(self.args) == 2 and self.args[0] == '-q' and
-                self.args[1] == '--build-install'):
+                self.args[1] == 'build-install'):
             queue.build()
             queue.install()
         else:
@@ -337,9 +337,9 @@ class ArgParse(object):
     def congiguration(self):
         """ manage slpkg configuration file """
         if (len(self.args) == 2 and self.args[0] == '-g' and
-                self.args[1].startswith('--config')):
-            editor = self.args[1][len('--config='):]
-            if self.args[1] == '--config':
+                self.args[1].startswith('config')):
+            editor = self.args[1][len('config='):]
+            if self.args[1] == 'config':
                 Config().view()
             elif editor:
                 Config().edit(editor)
