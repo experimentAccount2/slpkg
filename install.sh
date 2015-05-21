@@ -32,8 +32,7 @@ VERSION=${VERSION:-$(__version)}
 TAG=${TAG:-_dsw}
 
 # Installation script.
-# With this script allows you to install the slpkg as a package SlackBuild.
-# Select archive to copy in slackbuild directory
+# With this script allows you to install the slpkg as a Slackware package binary file.
 # support wget download.
 
 ARCHIVES="$PRGNAM-$VERSION.tar.gz $PRGNAM-$VERSION.zip v$VERSION.tar.gz v$VERSION.zip"
