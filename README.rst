@@ -32,6 +32,7 @@
 
 .. contents:: Table of Contents:
 
+
 About
 -----
 
@@ -50,6 +51,14 @@ display warning messages, etc.
 
 Also you can install official packages of your favorite distribution directly from the 
 official repositories of Slackware. Even you can check for the official updates and install them.
+
+
+Download binary packages
+------------------------
+
+For x86 architecture - `slpkg-2.3.2-i486-1_dsw.tgz <https://github.com/dslackw/slpkg/releases/download/v2.3.2/slpkg-2.3.2-i486-1_dsw.tgz>`_
+
+For x86_64 architecture - `slpkg-2.3.2-x86_64-1_dsw.tgz <https://github.com/dslackw/slpkg/releases/download/v2.3.2/slpkg-2.3.2-x86_64-1_dsw.tgz>`_
 
 
 Repositories
