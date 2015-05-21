@@ -55,7 +55,6 @@ class SBoInstall(object):
         self.dependencies = []
         self.package_not_found = []
         self.package_found = []
-        self.pkg_ver = []
         self.deps_dict = {}
         self.toolbar_width, self.index = 2, 0
         self.answer = ''
@@ -64,11 +63,6 @@ class SBoInstall(object):
 
     def start(self, if_upgrade):
         try:
-            self.if_upgrade = if_upgrade
-            self.view_version()
-            if self.if_upgrade:
-                self.slackbuilds, self.pkg_ver = (self.slackbuilds[0],
-                                                  self.slackbuilds[1])
             tagc = ''
             count_ins = count_upg = count_uni = 0
             self._remove_blacklist()
@@ -85,7 +79,6 @@ class SBoInstall(object):
             if not self.package_found:
                 self.match = True
                 self.matching()
-                self.pkg_ver = [''] * len(self.package_found)
             self.master_packages, mas_src = self.sbo_version_source(
                 self.package_found)
             Msg().done()
@@ -98,15 +91,12 @@ class SBoInstall(object):
                 print("\nThe following packages will be automatically "
                       "installed or upgraded \nwith new version:\n")
                 self.top_view()
-                Msg().upg_inst(self.if_upgrade)
+                Msg().upg_inst(if_upgrade)
                 # view master packages
-                for sbo, ver, ar in zip(self.master_packages, self.pkg_ver,
-                                        mas_src):
+                for sbo, ar in zip(self.master_packages, mas_src):
                     tagc, count_ins, count_upg, count_uni = self.tag(
                         sbo, count_ins, count_upg, count_uni)
-                    name = '-'.join(sbo.split('-')[:-1]) + '-' + ver
-                    if not if_upgrade:
-                        name = '-'.join(sbo.split('-')[:-1])
+                    name = '-'.join(sbo.split('-')[:-1])
                     self.view_packages(tagc, name, sbo.split('-')[-1],
                                        self.select_arch(ar))
                 self._view_installing_for_deps()
@@ -167,10 +157,9 @@ class SBoInstall(object):
         or if added to install two or more times
         '''
         self.master_packages = Utils().remove_dbs(self.master_packages)
-        for mas, ver in zip(self.master_packages, self.pkg_ver):
+        for mas in self.master_packages:
             if mas in self.dependencies:
                 self.master_packages.remove(mas)
-                self.pkg_ver.append(ver)
 
     def matching(self):
         '''
@@ -224,13 +213,6 @@ class SBoInstall(object):
             "Repos", " " * 10,
             "Size"))
         Msg().template(78)
-
-    def view_version(self):
-        '''
-        Create empty seats if not upgrade
-        '''
-        if not self.if_upgrade:
-            self.pkg_ver = [''] * len(self.slackbuilds)
 
     def view_packages(self, *args):
         '''

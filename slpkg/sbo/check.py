@@ -40,7 +40,7 @@ def sbo_upgrade():
     '''
     try:
         Msg().checking()
-        upgrade_names, pkg_ver = [], []
+        upgrade_names = []
         index, toolbar_width = 0, 3
         for pkg in sbo_list():
             index += 1
@@ -52,9 +52,8 @@ def sbo_upgrade():
                 package = ("{0}-{1}".format(name, ver))
                 if sbo_package > package:
                     upgrade_names.append(name)
-                    pkg_ver.append(ver)
         Msg().done()
-        return upgrade_names, pkg_ver
+        return upgrade_names
     except KeyboardInterrupt:
         print("")   # new line at exit
         sys.exit(0)

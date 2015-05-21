@@ -40,7 +40,6 @@ def pkg_upgrade(repo):
     Msg().checking()
     PACKAGES_TXT = RepoInit(repo).fetch()[0]
     pkgs_for_upgrade = []
-    ver_for_upgrade = []
     # name = data[0]
     # location = data[1]
     # size = data[2]
@@ -61,9 +60,8 @@ def pkg_upgrade(repo):
                     and inst_pkg[0] not in BlackList().packages()):
                 pkgs_for_upgrade.append('{0}-{1}'.format(repo_pkg[0],
                                                          repo_pkg[1]))
-                ver_for_upgrade.append('-' + inst_pkg[1])
     Msg().done()
-    return pkgs_for_upgrade, ver_for_upgrade
+    return pkgs_for_upgrade
 
 
 def installed():

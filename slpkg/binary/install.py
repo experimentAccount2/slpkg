@@ -59,7 +59,6 @@ class BinaryInstall(object):
         self.comp_sum, self.dep_comp_sum = [], []
         self.uncomp_sum, self.dep_uncomp_sum = [], []
         self.dependencies = []
-        self.pkg_ver = []
         self.deps_dict = {}
         self.answer = ''
         Msg().reading()
@@ -74,10 +73,6 @@ class BinaryInstall(object):
         try:
             # fix if packages is for upgrade
             self.if_upgrade = if_upgrade
-            if self.if_upgrade:
-                self.packages, ver = self.packages[0], self.packages[1]
-                self.pkg_ver = ver
-                self.pkg_ver.reverse()
             mas_sum = dep_sum = sums = [0, 0, 0]
             self.pkg_exist()
             Msg().done()
@@ -93,11 +88,10 @@ class BinaryInstall(object):
                       "installed or upgraded \nwith new version:\n")
                 self.top_view()
                 Msg().upg_inst(self.if_upgrade)
-                mas_sum = self.views(self.install, self.comp_sum, False)
+                mas_sum = self.views(self.install, self.comp_sum)
                 if self.dependencies:
                     print("Installing for dependencies:")
-                    dep_sum = self.views(self.dep_install, self.dep_comp_sum,
-                                         True)
+                    dep_sum = self.views(self.dep_install, self.dep_comp_sum)
                 # sums[0] --> installed
                 # sums[1] --> upgraded
                 # sums[2] --> uninstall
@@ -220,24 +214,14 @@ class BinaryInstall(object):
             self.deps_dict[dep] = Utils().remove_dbs(dependencies)
         return Utils().remove_dbs(requires)
 
-    def view_masters(self, packages):
-        '''
-        Create empty seats if not upgrade
-        '''
-        if not self.if_upgrade:
-            self.pkg_ver = [''] * len(packages)
-
-    def views(self, install, comp_sum, is_deps):
+    def views(self, install, comp_sum):
         '''
         Views packages
         '''
         pkg_sum = uni_sum = upg_sum = 0
-        self.view_masters(install)
         # fix repositories align
         repo = self.repo + (' ' * (6 - (len(self.repo))))
-        if is_deps:     # fix avoid view version if dependencies
-            self.pkg_ver = [''] * len(install)
-        for pkg, ver, comp in zip(install, self.pkg_ver, comp_sum):
+        for pkg, comp in zip(install, comp_sum):
             pkg_split = split_package(pkg[:-4])
             if find_package(pkg[:-4], _m.pkg_path):
                 pkg_sum += 1
@@ -249,8 +233,8 @@ class BinaryInstall(object):
                 COLOR = _m.color['RED']
                 uni_sum += 1
             print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>11}{12}".format(
-                COLOR, pkg_split[0] + ver, _m.color['ENDC'],
-                " " * (24-len(pkg_split[0] + ver)), pkg_split[1],
+                COLOR, pkg_split[0], _m.color['ENDC'],
+                " " * (24-len(pkg_split[0])), pkg_split[1],
                 " " * (18-len(pkg_split[1])), pkg_split[2],
                 " " * (8-len(pkg_split[2])), pkg_split[3],
                 " " * (7-len(pkg_split[3])), repo,
