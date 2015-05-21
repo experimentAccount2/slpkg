@@ -53,12 +53,12 @@ Also you can install official packages of your favorite distribution directly fr
 official repositories of Slackware. Even you can check for the official updates and install them.
 
 
-Download binary packages
-------------------------
+Binary packages
+---------------
 
-For x86 architecture - `slpkg-2.3.2-i486-1_dsw.tgz <https://github.com/dslackw/slpkg/releases/download/v2.3.2/slpkg-2.3.2-i486-1_dsw.tgz>`_
+Download for x86 `slpkg-2.3.2-i486-1_dsw.tgz <https://github.com/dslackw/slpkg/releases/download/v2.3.2/slpkg-2.3.2-i486-1_dsw.tgz>`_
 
-For x86_64 architecture - `slpkg-2.3.2-x86_64-1_dsw.tgz <https://github.com/dslackw/slpkg/releases/download/v2.3.2/slpkg-2.3.2-x86_64-1_dsw.tgz>`_
+Download for x86_64 `slpkg-2.3.2-x86_64-1_dsw.tgz <https://github.com/dslackw/slpkg/releases/download/v2.3.2/slpkg-2.3.2-x86_64-1_dsw.tgz>`_
 
 
 Repositories
