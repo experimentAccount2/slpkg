@@ -1,3 +1,11 @@
+Version 2.3.2
+21-05-2015
+
+[Updated] - Update arguments and options.
+          - Remove view package version when upgrade because conflict with
+            some packages with the same name.
+          - Update file license.
+
 Version 2.3.1
 14-05-2015
 
