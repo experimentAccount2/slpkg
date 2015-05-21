@@ -171,8 +171,7 @@ You can check for new versions and update slpkg itself.
 \fBslpkg\fP \fB-a\fP <\fIscript\fP> <\fIsources\fP>
 .PP
 With this argument, build slackware package from source quickly and easy.
-If you want to pass variables to the script exported as:
-# export FFMPEG_X264=yes FFMPEG_LAME=yes
+(If you want to pass variables to the script exported as: '# export FFMPEG_X264=yes FFMPEG_LAME=yes')
 
 .SS -b , add, remove, view packages in blacklist
 \fBslpkg\fP \fB-b\fP \fBlist\fP, <\fIpackages\fP> \fB--add\fP, \fB--remove\fP
@@ -186,9 +185,9 @@ all repositories.
 \fBslpkg\fP \fB-q\fP \fBbuild\fP, \fBinstall\fP, \fBbuild-install\fP
 .PP
 List, add, or remove sbo packages from queue. This argument is very useful if you want
-to build and install multiple packages together. What to watch out for is the correct
-order if there are dependencies. If you want to remove all the packages from the list
-run '# slpkg -q all --remove'. (these arguments only working for the sbo repository)
+to build and install multiple packages together. Note the correct order if there are 
+dependencies. If you want to remove all the packages from the list run '# slpkg -q all --remove'. 
+(these arguments only working for the sbo repository)
 Build or install or build and install packages are queued.
 
 .SS -g , configuration file management
@@ -204,10 +203,10 @@ List of packages per repository. Support command 'grep' like '# slpkg -l sbo | g
 .SS -c , check if your packages is up to date
 \fBslpkg\fP \fB-c\fP <\fIrepository\fP> \fB--upgrade\fP
 .PP
-Check your packages is up to date.
+Check your packages if up to date.
 Slackware 'patches' repository works independently of the others i.e not need before updating 
 the list of packages by choosing "# slpkg update", works directly with the official repository 
-and why always you can have updated your system. 
+and so always you can have updated your system. 
 
 .SS -s , download, build and install package with all dependencies
 \fBslpkg\fP \fB-s\fP <\fIrepository\fP> <\fIname of packages\fP>
@@ -215,12 +214,14 @@ and why always you can have updated your system.
 Installs or upgrade packages from the repositories with automatically resolving all 
 dependencies of the package. Sometimes to install a package have to pass part of the 
 version of the package as 'slpkg -s alien ffmpeg-2.4.3'.
+(If you want to pass variables to the script exported as: '# export FFMPEG_X264=yes FFMPEG_LAME=yes')
 
 .SS -t , tracking dependencies
 \fBslpkg\fP \fB-t\fP <\fIrepository\fP> <\fIname of package\fP>
 .PP
 Tracking all dependencies of that package.
 The sequence shown is that you must follow to correctly install package.
+Also you can check if the package has installed all the required dependencies.
 
 .SS -p , print packages description
 \fBslpkg\fP \fB-p\fP <\fIrepository\fP> <\fIname of package\fP>, \fB--color=\fP
@@ -236,42 +237,38 @@ Example you can view all installed sbo packages like '# slpkg -f _SBo'.
 .SS -n , view SBo packages
 \fBslpkg\fP \fB-n\fP <\fIname of package\fP>
 .PP
-View complete slackbuilds.org site in your terminal. Read fies, download, 
-build or install.
+View complete slackbuilds.org site in your terminal. Read file, download, 
+build or install etc.
 
 .SS -i , install binary packages
 \fBslpkg\fP \fB-i\fP <\fIpackages.t?z\fP>
 .PP
-Installs single binary packages designed for use with the 
-Slackware Linux distribution into your system.
+Installs single binary packages designed for use with the Slackware Linux 
+distribution into your system.
 
 .SS -u , install-upgrade packages with new
 \fBslpkg\fP \fB-u\fP <\fIpackages.t?z\fP>
 .PP
-Normally upgrade only upgrades packages that are already
-installed on the system, and will skip any packages that do not
-already have a version installed. 'Requires root privileges'
+Normally upgrade only upgrades packages that are already installed on the system, 
+and will skip any packages that do not already have a version installed. 
 (like slackware command upgradepkg --install-new)
 
 .SS -o , reinstall binary packages
 \fBslpkg\fP \fB-o\fP <\fIpackages.t?z\fP>
 .PP
-Upgradepkg usually skips packages if the exact same package
-(matching name, version, arch, and build number) is already
-installed on the system.'Requires root privileges' (like 
-slackware command upgradepkg --reinstall)
+Upgradepkg usually skips packages if the exact same package (matching name, version, 
+arch, and build number) is already installed on the system. 
+(like slackware command upgradepkg --reinstall)
 
 .SS -r , remove packages
 \fBslpkg\fP \fB-r\fP <\fIname of packages\fP>
 .PP
-Removes a previously installed Slackware package, while writing
-a progress report to the standard output. A package may be 
-specified either by the full package name (as you'd see listed in
-/var/log/packages/), or by the base package name. If installed
-packages with command 'slpkg -s sbo <package>' then write a file
-in /var/log/slpkg/dep/ with all dependencies and it allows you  
-can remove them all together. 'Requires root
-privileges' (like slackware command removepkg)
+Removes a previously installed Slackware package, while writing a progress report to 
+the standard output. A package may be specified either by the full package name (as 
+you'd see listed in /var/log/packages/), or by the base package name. If installed
+packages with command 'slpkg -s sbo <package>' then write a file in /var/log/slpkg/dep/ 
+with all dependencies and it allows you can remove them all together. 
+(like slackware command removepkg)
 
 .SS -d , display contents
 \fBslpkg\fP \fB-d\fP <\fIname of packages\fP>
