@@ -35,10 +35,10 @@
 About
 -----
 
-Slpkg is a software package manager that installs, updates, and removes packages on Slackware 
-based systems. It automatically computes dependencies and figures out what things should occur
-to install packages. Slpkg makes it easier to maintain groups of machines without having to 
-manually update.
+Slpkg is a powerful software package manager that installs, updates, and removes packages on 
+Slackware based systems. It automatically computes dependencies and figures out what things 
+should occurto install packages. Slpkg makes it easier to maintain groups of machines without 
+having to manually update.
 
 Slpkg works in accordance with the standards of the organization slackbuilds.org 
 to builds packages. Also uses the Slackware linux instructions for installation,
@@ -114,9 +114,6 @@ Need to run '# slpkg update' for the first time to synchronize the list of packa
 also every time you add a repository.
 To add or remove repositories must edit the file '/etc/slpkg/slpkg.conf'.
 
-Also it is good to update the list of packages by running the command '# slpkg update'
-before proceeding to any installation or upgrade a new package.
-
 
 Issues
 ------
@@ -127,11 +124,8 @@ Please report any bugs in `ISSUES <https://github.com/dslackw/slpkg/issues>`_
 Testing
 -------
 
-The majority of trials have been made in an environment Slackware x86_64 and x86 stable 
-version 14.1.
-Is logical tests are always to be latest versions of the distribution.
-Slpkg are supported version 'current' but it is minimal tests have been done on this 
-release.
+The majority of trials have been made in an environment Slackware x86_64 'stable' 
+and x86 'current' version 14.1.
 
 
 Features
@@ -187,8 +181,8 @@ Upgrade
 -------
 
 From version '2.1.4' you can update slpkg itself with '# slpkg update slpkg'.
-In each slpkg upgrade should track the configuration files in the file '/etc/slpkg' for 
-new updates.
+In each slpkg upgrade should track the configuration files in the folder '/etc/slpkg' 
+for changes.
 
 
 Slackware Current
@@ -204,9 +198,9 @@ For Slackware 'current' users must change the variable VERSION in '/etc/slpkg.co
 Slackware Mirrors
 -----------------
 
-Slpkg uses the central mirror "http://mirrors.slackware.com/slackware/" 
-to find the nearest one. If however for some reason this troublesome 
-please edit the file in '/etc/slpkg/slackware-mirrors'.
+Slpkg uses the central mirror "http://mirrors.slackware.com/slackware/" to find the 
+nearest one. If however for some reason this troublesome please edit the file in 
+'/etc/slpkg/slackware-mirrors'.
 
 
 Configuration files
@@ -284,9 +278,8 @@ Slpkg Examples
 --------------
 
 
-If you use slpkg for the first time will have to create 
-and update the package list. This command must be executed to update the 
-package lists:
+If you use slpkg for the first time will have to create and update the package 
+list. This command must be executed to update the package lists:
 
 .. code-block:: bash
 
@@ -1065,7 +1058,8 @@ Man page it is available for full support:
 Donate
 ------
 If you feel satisfied with this project and want to thank me go
-to `Slackware <https://store.slackware.com/cgi-bin/store/slackdonation>`_ and make a donation or visit the `store <https://store.slackware.com/cgi-bin/store>`_.
+to `Slackware <https://store.slackware.com/cgi-bin/store/slackdonation>`_ and make a donation or 
+visit the `store <https://store.slackware.com/cgi-bin/store>`_.
 
 
 Copyright 
