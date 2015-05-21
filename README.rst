@@ -53,14 +53,6 @@ Also you can install official packages of your favorite distribution directly fr
 official repositories of Slackware. Even you can check for the official updates and install them.
 
 
-Binary packages
----------------
-
-Download for x86 `slpkg-2.3.2-i486-1_dsw.tgz <https://github.com/dslackw/slpkg/releases/download/v2.3.2/slpkg-2.3.2-i486-1_dsw.tgz>`_
-
-Download for x86_64 `slpkg-2.3.2-x86_64-1_dsw.tgz <https://github.com/dslackw/slpkg/releases/download/v2.3.2/slpkg-2.3.2-x86_64-1_dsw.tgz>`_
-
-
 Repositories
 ------------
 
@@ -184,6 +176,13 @@ Using pip:
 .. code-block:: bash
     
     $ pip install slpkg --upgrade
+
+
+Already binary packages:
+
+Download for x86 `slpkg-2.3.2-i486-1_dsw.tgz <https://github.com/dslackw/slpkg/releases/download/v2.3.2/slpkg-2.3.2-i486-1_dsw.tgz>`_
+
+Download for x86_64 `slpkg-2.3.2-x86_64-1_dsw.tgz <https://github.com/dslackw/slpkg/releases/download/v2.3.2/slpkg-2.3.2-x86_64-1_dsw.tgz>`_
 
 
 Upgrade
