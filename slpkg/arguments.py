@@ -105,7 +105,7 @@ def usage(repo):
         "             [-s [repository] [package...]",
         "             [-t [repository] [package]",
         "             [-p [repository] [package], --color=[]]",
-        "             [-n] [-f [...]] [-i [...]] [-u [...]]",
+        "             [-n [SBo package]] [-f [...]] [-i [...]] [-u [...]]",
         "             [-o  [...]] [-r [...]] [-d [...]]\n",
         error_repo,
         "For more information try 'slpkg -h, --help' or view manpage\n"
