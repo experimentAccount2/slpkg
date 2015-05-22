@@ -1,3 +1,9 @@
+Version 2.3.3
+23-05-2015
+
+[Updated] - Fix 'ZeroDivisionError:' for binary package install.
+          - Fix 'OSError:' if path not exist.
+
 Version 2.3.2
 21-05-2015
 

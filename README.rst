@@ -180,9 +180,9 @@ Using pip:
 
 Already binary packages:
 
-Download for x86 `slpkg-2.3.2-i486-1_dsw.tgz <https://github.com/dslackw/slpkg/releases/download/v2.3.2/slpkg-2.3.2-i486-1_dsw.tgz>`_
+Download for x86: `slpkg-2.3.3-i486-1_dsw.tgz <https://github.com/dslackw/slpkg/releases/download/v2.3.3/slpkg-2.3.3-i486-1_dsw.tgz>`_
 
-Download for x86_64 `slpkg-2.3.2-x86_64-1_dsw.tgz <https://github.com/dslackw/slpkg/releases/download/v2.3.2/slpkg-2.3.2-x86_64-1_dsw.tgz>`_
+Download for x86_64: `slpkg-2.3.3-x86_64-1_dsw.tgz <https://github.com/dslackw/slpkg/releases/download/v2.3.3/slpkg-2.3.3-x86_64-1_dsw.tgz>`_
 
 
 Upgrade
