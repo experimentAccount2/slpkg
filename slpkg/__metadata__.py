@@ -204,7 +204,10 @@ class MetaData(object):
     sp = "-"
 
     # current path
-    path = os.getcwd() + "/"
+    try:
+        path = os.getcwd() + "/"
+    except OSError:
+        path = ""
 
     # library path
     lib_path = "/var/lib/slpkg/"
