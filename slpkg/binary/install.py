@@ -63,8 +63,7 @@ class BinaryInstall(object):
         self.answer = ''
         Msg().reading()
         self.PACKAGES_TXT, self.mirror = RepoInit(self.repo).fetch()
-        num_lines = sum(1 for line in self.PACKAGES_TXT)
-        self.step = (num_lines / (100 * len(self.packages)))
+        self.step = 0
 
     def start(self, if_upgrade):
         '''
