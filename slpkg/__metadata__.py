@@ -207,7 +207,7 @@ class MetaData(object):
     try:
         path = os.getcwd() + "/"
     except OSError:
-        path = ""
+        path = tmp_path
 
     # library path
     lib_path = "/var/lib/slpkg/"
