@@ -58,46 +58,46 @@ Repositories
 
 Default available Repositories:
 
-- SBo - `Repository <http://slackbuilds.org/>`_
+- `SBo <http://slackbuilds.org/>`_
   Arch: {x86, x86_64}
   Versions: {13.1, 13.37, 14.0, 14.1}
-- Slack - `Repository <http://www.slackware.com/>`_
+- `Slack <http://www.slackware.com/>`_
   Arch: {x86, x86_64}
   Versions: {3.3, 8.1, 9.0, 9.1, 10.0, 10.1, 10.2, 11.0, 12.0, 12.2, 13.0, 13.37, 14.0, 14.1, current}
-- Alien's - `Repository <http://www.slackware.com/~alien/slackbuilds/>`_
+- `Alien's <http://www.slackware.com/~alien/slackbuilds/>`_
   Arch: {x86, x86_64}
   Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1, current}
-- Slacky - `Repository <http://repository.slacky.eu/>`_
+- `Slacky <http://repository.slacky.eu/>`_
   Arch: {x86, x86_64}
   Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1}
-- Robby's - `Repository <http://rlworkman.net/pkgs/>`_
+- `Robby's <http://rlworkman.net/pkgs/>`_
   Arch: {x86, x86_64}
   Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1}
-- Studioware - `Repository <http://studioware.org/packages>`_
+- `Studioware <http://studioware.org/packages>`_
   Arch: {x86, x86_64}
   Versions: {13.37, 14.0, 14.1}
-- Slackers - `Repository <http://www.slackers.it/repository/>`_
+- `Slackers <http://www.slackers.it/repository/>`_
   Arch: {x86_64}
   Versions: {current}
-- Slackonly - `Repository <https://slackonly.com/>`_
+- `Slackonly <https://slackonly.com/>`_
   Arch: {x86, x86_64}
   Versions: {14.1}
-- Alien's ktown - `Repository <http://alien.slackbook.org/ktown/>`_
+- `Alien's ktown <http://alien.slackbook.org/ktown/>`_
   Arch: {x86, x86_64}
   Versions: {13.37, 14.0, 14.1, current}
-- Alien's multi - `Repository <http://www.slackware.com/~alien/multilib/>`_
+- `Alien's multi <http://www.slackware.com/~alien/multilib/>`_
   Arch: {x86_64}
   Versions: {13.0, 13.1, 13.37, 14.0, 14.1, current}
-- Slacke E17 and E18 - `Repository <http://ngc891.blogdns.net/pub/>`_
+- `Slacke E17 and E18 <http://ngc891.blogdns.net/pub/>`_
   Arch: {x86, x86_64, arm}
   Versions: {14.1}
-- SalixOS - `Repository <http://download.salixos.org/>`_
+- `SalixOS <http://download.salixos.org/>`_
   Arch: {x86, x86_64}
   Versions: {13.0, 13.1, 13.37, 14.0, 14.1}
-- Slackel - `Repository <http://www.slackel.gr/repo/>`_
+- `Slackel <http://www.slackel.gr/repo/>`_
   Arch: {x86, x86_64}
   Versions: {current}
-- Restricted - `Repository <http://taper.alienbase.nl/mirrors/people/alien/restricted_slackbuilds/>`_
+- `Restricted <http://taper.alienbase.nl/mirrors/people/alien/restricted_slackbuilds/>`_
   Arch: {x86, x86_64}
   Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14,1, current}
 
