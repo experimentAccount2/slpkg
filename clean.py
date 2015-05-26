@@ -34,42 +34,27 @@ class Clean(object):
     keep this script if you want to remove data some time.
     """
     def __init__(self):
-        self.man_path = "/usr/man/man8/"
-        self.bash_completion = "/etc/bash_completion.d/"
-        self.fish_completion = "/etc/fish/completions/"
-        self.conf_path = "/etc/slpkg/"
-        self.log_path = "/var/log/slpkg/"
-        self.lib_path = "/var/lib/slpkg/"
-        self.tmp_path = "/tmp/slpkg/"
-        self.man_file = "slpkg.8.gz"
-        self.bash_completion_file = "slpkg.bash-completion"
-        self.fish_completion_file = "slpkg.fish"
+        self.files = [
+            "/usr/man/man8/slpkg.8.gz",
+            "/etc/bash_completion.d/slpkg.bash-completion",
+            "/etc/fish/completions/slpkg.fish"
+        ]
+        self.dirs = [
+            "/etc/slpkg/",
+            "/var/log/slpkg/",
+            "/var/lib/slpkg/",
+            "/tmp/slpkg/"
+        ]
 
     def start(self):
-        if os.path.isfile(self.man_path + self.man_file):
-            print("Remove man page --> {0}".format(self.man_file))
-            os.remove(self.man_path + self.man_file)
-        if os.path.isfile(self.bash_completion + self.bash_completion_file):
-            print("Remove bash completion file --> {0}".format(
-                self.bash_completion_file))
-            os.remove(self.bash_completion + self.bash_completion_file)
-        if os.path.isfile(self.fish_completion + self.fish_completion_file):
-            print("Remove fish completion file --> {0}".format(
-                self.fish_completion_file))
-            os.remove(self.fish_completion + self.fish_completion_file)
-        if os.path.exists(self.conf_path):
-            print("Remove configuration directory --> {0}".format(
-                self.conf_path))
-            shutil.rmtree(self.conf_path)
-        if os.path.exists(self.log_path):
-            print("Remove log data directory --> {0}".format(self.log_path))
-            shutil.rmtree(self.log_path)
-        if os.path.exists(self.lib_path):
-            print("Remove library data directory --> {0}".format(self.lib_path))
-            shutil.rmtree(self.lib_path)
-        if os.path.exists(self.tmp_path):
-            print("Remove temponary directory --> {0}".format(self.tmp_path))
-            shutil.rmtree(self.tmp_path)
+        for f in self.files:
+            if os.path.isfile(f):
+                print("Remove file --> {0}".format(f))
+                os.remove(f)
+        for d in self.dirs:
+            if os.path.exists(d):
+                print("Remove directory --> {0}".format(d))
+                shutil.rmtree(d)
 
 if __name__ == '__main__':
     Clean().start()
