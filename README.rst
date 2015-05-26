@@ -176,7 +176,14 @@ Using pip:
 .. code-block:: bash
     
     $ pip install slpkg --upgrade
+    
+    Uninstall:
 
+    $ pip uninstall slpkg
+
+    and clean data run clean.py from source
+
+    $ python clean.py
 
 Already binary packages:
 
