@@ -224,13 +224,6 @@ class MetaData(object):
     # slackpkg conf path
     slackpkg_conf = "/etc/slackpkg/"
 
-    # slpkg man path
-    man_path = "/usr/man/man8/"
-
-    # bash and fish completion files
-    bash_completion = "/etc/bash_completion.d/"
-    fish_completion = "/etc/fish/completions/"
-
     # computer architecture
     arch = os.uname()[4]
 
