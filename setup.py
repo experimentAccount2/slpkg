@@ -65,9 +65,8 @@ setup(
 
 # install man page and configuration files
 if "install" in sys.argv:
-    man_path = "/usr/man/man8/"
-    if not os.path.exists(man_path):
-        os.makedirs(man_path)
+    if not os.path.exists(_m.man_path):
+        os.makedirs(_m.man_path)
     man_page = "man/slpkg.8"
     gzip_man = "man/slpkg.8.gz"
     print("Installing '{0}' man pages".format(gzip_man.split('/')[1]))
@@ -76,23 +75,21 @@ if "install" in sys.argv:
     f_out.writelines(f_in)
     f_out.close()
     f_in.close()
-    shutil.copy2(gzip_man, man_path)
+    shutil.copy2(gzip_man, _m.man_path)
 
-    bash_completion = "/etc/bash_completion.d/"
-    fish_completion = "/etc/fish/completions/"
     completion_file = [
         'conf/slpkg.bash-completion',
         'conf/slpkg.fish'
     ]
-    if not os.path.exists(bash_completion):
-        os.makedirs(bash_completion)
+    if not os.path.exists(_m.bash_completion):
+        os.makedirs(_m.bash_completion)
     print("Installing '{0}' file".format(completion_file[0].split('/')[1]))
-    shutil.copy2(completion_file[0], bash_completion)
-    os.chmod(bash_completion + completion_file[0].split('/')[1], 744)
-    if os.path.exists(fish_completion):
+    shutil.copy2(completion_file[0], _m.bash_completion)
+    os.chmod(_m.bash_completion + completion_file[0].split('/')[1], 744)
+    if os.path.exists(_m.fish_completion):
         print("Installing '{0}' file".format(completion_file[1].split('/')[1]))
-        shutil.copy2(completion_file[1], fish_completion)
-        os.chmod(fish_completion + completion_file[1].split('/')[1], 744)
+        shutil.copy2(completion_file[1], _m.fish_completion)
+        os.chmod(_m.fish_completion + completion_file[1].split('/')[1], 744)
     conf_file = [
         'conf/slpkg.conf',
         'conf/blacklist',
