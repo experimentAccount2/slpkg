@@ -112,5 +112,3 @@ if "install" in sys.argv:
                 shutil.copy2(conf, _m.conf_path + filename + ".new")
         else:
             shutil.copy2(conf, _m.conf_path)
-elif "uninstall" in sys.argv:
-    print "xaxaxaxaxaxaxa"
