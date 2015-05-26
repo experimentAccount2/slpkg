@@ -23,7 +23,6 @@
 
 import os
 import shutil
-from slpkg.__metadata__ import MetaData as _m
 
 
 class Clean(object):
@@ -32,15 +31,16 @@ class Clean(object):
     'pip' because pip uninstalls only Python packages and script
     and not data. So after run '# pip uninstall slpkg' after run
     '# python clean.py' to remove all data and configuration file.
+    keep this script if you want to remove data some time.
     """
     def __init__(self):
-        self.man_path = _m.man_path
-        self.bash_completion = _m.bash_completion
-        self.fish_completion = _m.fish_completion
-        self.conf_path = _m.conf_path
-        self.log_path = _m.log_path
-        self.lib_path = _m.lib_path
-        self.tmp_path = _m.tmp_path
+        self.man_path = "/usr/man/man8/"
+        self.bash_completion = "/etc/bash_completion.d/"
+        self.fish_completion = "/etc/fish/completions/"
+        self.conf_path = "/etc/slpkg/"
+        self.log_path = "/var/log/slpkg/"
+        self.lib_path = "/var/lib/slpkg/"
+        self.tmp_path = "/tmp/slpkg/"
         self.man_file = "slpkg.8.gz"
         self.bash_completion_file = "slpkg.bash-completion"
         self.fish_completion_file = "slpkg.fish"
