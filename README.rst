@@ -141,6 +141,7 @@ Features
 - Display the contents of the packages
 - Install-upgrade Slackware packages
 - Build and install all in a command
+- Find packages from repositories
 - Checking for updated packages
 - List all installed packages
 - Support MD5SUM file check
