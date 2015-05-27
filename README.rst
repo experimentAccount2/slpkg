@@ -287,7 +287,7 @@ Command Line Tool Usage
       -u, [package...]                          upgrade binary packages
       -o, [package...]                          reinstall binary packages
       -r, [package...]                          remove binary packages
-      -d, [package...]                          display the contents
+      -d, [package...]                          display the package contents
 
 Slpkg Examples
 --------------

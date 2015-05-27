@@ -70,7 +70,8 @@ def options():
         "  -u, [package...]                          upgrade binary packages",
         "  -o, [package...]                          reinstall binary packages",
         "  -r, [package...]                          remove binary packages",
-        "  -d, [package...]                          display the contents\n",
+        "  -d, [package...]                          display the package "
+        "contents\n",
     ]
     for opt in arguments:
         print(opt)
