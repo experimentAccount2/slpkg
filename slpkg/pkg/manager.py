@@ -276,7 +276,7 @@ class PackageManager(object):
         try:
             index, page, pkg_list = 0, row, []
             r = self._list_lib(repo)
-            pkg_list = self._list_greps(repo, r)
+            pkg_list = self._list_greps(repo, r)[0]
             print('')
             for pkg in sorted(pkg_list):
                 pkg = self._slackr_repo(repo, pkg)
@@ -309,15 +309,18 @@ class PackageManager(object):
         '''
         Grep packages
         '''
-        pkg_list = []
+        pkg_list, pkg_size = [], []
         for line in packages.splitlines():
             if repo == 'sbo':
                 if line.startswith("SLACKBUILD NAME: "):
                     pkg_list.append(line[17:].strip())
+                    pkg_size.append("0 K")
             else:
                 if line.startswith("PACKAGE NAME: "):
                     pkg_list.append(line[15:].strip())
-        return pkg_list
+                if line.startswith("PACKAGE SIZE (compressed): "):
+                    pkg_size.append(line[26:].strip())
+        return pkg_list, pkg_size
 
     def _list_lib(self, repo):
         '''

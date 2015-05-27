@@ -282,6 +282,7 @@ Command Line Tool Usage
       -t, [repository] [package]                package tracking dependencies
       -p, [repository] [package], --color=[]    print package description
       -n, [package]                             view SBo site package in terminal
+      -F, [package...]                          find packages from repositories
       -f, [package...]                          find installed packages
       -i, [package...]                          install binary packages
       -u, [package...]                          upgrade binary packages
@@ -800,6 +801,25 @@ Install mass-packages:
     $ slpkg -u foo.pkg
 
 
+Find packages from all enabled repositories:
+
+.. code-block:: bash
+   
+    $ slpkg -F aria2
+
+    Packages with name matching [ aria2 ]
+
+    +==============================================================================
+    | Repository  Package                                                      Size
+    +==============================================================================
+      sbo         aria2                                                         0 K
+      slonly      aria2-1.18.10-x86_64-1_slack.txz                           1124 K
+      salix       aria2-1.18.1-x86_64-1rl.txz                                1052 K
+      slackr      aria2-1.18.10-x86_64-1cf.txz                               1140 K
+    
+    Total found 4 packages in 4 repositories.
+
+    
 Find installed packages:
 
 .. code-block:: bash

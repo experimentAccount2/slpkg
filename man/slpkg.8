@@ -31,8 +31,8 @@ Usage: slpkg Commands:
              [-s [repository] [package...]
              [-t [repository] [package]
              [-p [repository] [package], --color=[]]
-             [-n [SBo package]] [-f [...]] [-i [...]] [-u [...]]
-             [-o  [...]] [-r [...]] [-d [...]]
+             [-n [SBo package]] [-F [...]] [-f [...]] [-i [...]] 
+             [-u [...]] [-o  [...]] [-r [...]] [-d [...]]
 
 .SH DESCRIPTION
 Slpkg is a powerful software package manager that installs, updates, and
@@ -69,6 +69,7 @@ Optional arguments:
   -p, [repository] [package], --color=[]    print package description
   -n, [package]                             view SBo site package in terminal
   -f, [package...]                          find installed packages
+  -F, [package...]                          find packages from repositories
   -i, [package...]                          install binary packages
   -u, [package...]                          upgrade binary packages
   -o, [package...]                          reinstall binary packages
@@ -228,7 +229,12 @@ Also you can check if the package has installed all the required dependencies.
 .PP
 Print package description with color. Available colors: red, green, yellow, cyan, grey
 
-.SS -f , find packages
+.SS -F , find packages from repositories
+\fBslpkg\fP \fB-F\fP <\fIname of packages\fP>
+.PP
+Find packages from repositories are enabled.
+
+.SS -f , find istalled packages
 \fBslpkg\fP \fB-f\fP <\fIname of packages\fP>
 .PP
 Find installed packages with view total file size. 

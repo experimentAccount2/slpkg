@@ -35,6 +35,7 @@ from repositories import Repo
 from tracking import track_dep
 from blacklist import BlackList
 from version import prog_version
+from pkg_find import find_from_repos
 from arguments import options, usage
 from slpkg_update import it_self_update
 from init import (
@@ -63,16 +64,17 @@ class ArgParse(object):
         self.packages = self.args[1:]
         if len(self.args) > 1 and self.args[0] in ['-q', '-b']:
             self.packages = self.args[1:-1]
-        elif len(self.packages) > 1 and self.args[0] in ['-s', '-t', '-p']:
+        elif len(self.packages) > 1 and self.args[0] in ['-s', '-t',
+                                                         '-p', '-F']:
             self.packages = self.args[2:]
 
         if (len(self.args) > 1 and
-                self.args[0] in ['-f', '-i', '-u', '-o', '-r', '-d', '-n'] and
-                self.args[1].endswith('.pkg')):
+                self.args[0] in ['-f', '-i', '-u', '-o', '-r', '-d', '-n']
+                and self.args[1].endswith('.pkg')):
             self.packages = Utils().read_file_pkg(self.args[1])
-        elif (len(self.args) >= 3 and self.args[0] in ['-s', '-t', '-p'] and
-                self.args[1] in _m.repositories and
-                self.args[2].endswith('.pkg')):
+        elif (len(self.args) >= 3 and self.args[0] in ['-s', '-t', '-p', '-F']
+              and self.args[1] in _m.repositories
+              and self.args[2].endswith('.pkg')):
             self.packages = Utils().read_file_pkg(self.args[2])
         elif (len(self.args) == 3 and self.args[0] in ['-q', '-b'] and
                 self.args[1].endswith('.pkg')):
@@ -327,6 +329,13 @@ class ArgParse(object):
         else:
             usage('')
 
+    def pkg_find(self):
+        """find packages from all enabled repositories"""
+        if len(self.args) > 1 and self.args[0] == '-F':
+            find_from_repos(self.packages)
+        else:
+            usage('')
+
     def pkg_contents(self):
         """ print packages contents """
         if len(self.args) > 1 and self.args[0] == '-d':
@@ -389,6 +398,7 @@ def main():
         '-o': argparse.bin_reinstall,
         '-r': argparse.bin_remove,
         '-f': argparse.bin_find,
+        '-F': argparse.pkg_find,
         '-p': argparse.pkg_desc,
         '-d': argparse.pkg_contents,
         '-g': argparse.congiguration,

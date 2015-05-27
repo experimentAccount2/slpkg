@@ -11,6 +11,7 @@ complete --command slpkg --short-option t --description 'package tracking depend
 complete --command slpkg --short-option p --description 'print package description'
 complete --command slpkg --short-option n --description 'view SBo packages through network'
 complete --command slpkg --short-option f --description 'find installed packages'
+complete --command slpkg --short-option F --description 'find packages from repositories'
 complete --command slpkg --short-option i --description 'install binary packages'
 complete --command slpkg --short-option u --description 'upgrade binary packages'
 complete --command slpkg --short-option o --description 'reinstall binary packages'

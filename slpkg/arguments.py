@@ -63,8 +63,10 @@ def options():
         "  -t, [repository] [package]                package tracking "
         "dependencies",
         "  -p, [repository] [package], --color=[]    print package description",
-        "  -n, [package]                             view SBo site package "
+        "  -n, [package]                             view SBo site packages "
         "in terminal",
+        "  -F, [package...]                          find packages from "
+        "repositories",
         "  -f, [package...]                          find installed packages",
         "  -i, [package...]                          install binary packages",
         "  -u, [package...]                          upgrade binary packages",
@@ -106,8 +108,8 @@ def usage(repo):
         "             [-s [repository] [package...]",
         "             [-t [repository] [package]",
         "             [-p [repository] [package], --color=[]]",
-        "             [-n [SBo package]] [-f [...]] [-i [...]] [-u [...]]",
-        "             [-o  [...]] [-r [...]] [-d [...]]\n",
+        "             [-n [SBo package]] [-F [...]] [-f [...]] [-i [...]]",
+        "             [-u [...]] [-o  [...]] [-r [...]] [-d [...]]\n",
         error_repo,
         "For more information try 'slpkg -h, --help' or view manpage\n"
     ]
