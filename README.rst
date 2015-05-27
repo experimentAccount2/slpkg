@@ -801,7 +801,7 @@ Install mass-packages:
     $ slpkg -u foo.pkg
 
 
-Find packages from all enabled repositories:
+Find packages from repositories are enabled:
 
 .. code-block:: bash
    
