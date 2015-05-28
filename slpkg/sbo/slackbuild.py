@@ -329,4 +329,4 @@ class SBoInstall(object):
                         _m.color['GREEN'], _m.color['ENDC'], pkg))
                     installs.append(prgnam)
                 PackageManager(binary).upgrade()
-        return [installs, upgraded]
+        return installs, upgraded
