@@ -95,7 +95,8 @@ class BinaryInstall(object):
                 # sums[1] --> upgraded
                 # sums[2] --> uninstall
                 sums = [sum(i) for i in zip(mas_sum, dep_sum)]
-                unit, size = units(self.comp_sum, self.uncomp_sum)
+                unit, size = units(self.comp_sum + self.dep_comp_sum,
+                                   self.uncomp_sum + self.dep_uncomp_sum)
                 print("\nInstalling summary")
                 print("=" * 79)
                 print("{0}Total {1} {2}.".format(_m.color['GREY'], sum(sums),
@@ -203,9 +204,6 @@ class BinaryInstall(object):
         requires = []
         Msg().resolving()
         for dep in self.packages:
-            dep_ver = '-'.join(dep.split('-')[:-1])     # fix if input pkg name
-            if not len(dep_ver) == 0:                   # with version
-                dep = dep_ver
             dependencies = []
             dependencies = Utils().dimensional_list(Dependencies(
                 self.PACKAGES_TXT, self.repo).binary(dep))
