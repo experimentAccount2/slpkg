@@ -64,8 +64,8 @@ class PkgDesc(object):
                         break
         else:
             for line in PACKAGES_TXT.splitlines():
-                if (line.startswith("SLACKBUILD SHORT DESCRIPTION:  "
-                                    + self.name + " (")):
+                if (line.startswith(
+                        "SLACKBUILD SHORT DESCRIPTION:  " + self.name + " (")):
                     count += 1
                     print(self.COLOR + line[31:] + _m.color['ENDC'])
         if count == 0:
