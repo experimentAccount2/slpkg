@@ -4,6 +4,8 @@ Version 2.3.4
 [Updated] - Fix arguments comments.
           - Update compression slackbuild package.
           - Fix binary dependencies and sizes.
+          - Fix pylint errors.
+          - Update 'rlw' repository package dependencies.
 
 [Feature] - Added to find packages from enabled repositories.
           - Added script to remove data. (clean.py)
