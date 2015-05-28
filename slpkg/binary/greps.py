@@ -188,7 +188,7 @@ class Requires(object):
             # http://rlworkman.net/pkgs/
             dependencies = {
                 "abiword": "wv",
-                "claws-mail": "libetpan bogofilter html2ps",
+                "claws-mail": "libetpan",
                 "inkscape": "gtkmm atkmm pangomm cairomm mm-common libsigc++ "
                             "libwpg lxml gsl numpy BeautifulSoup",
                 "texlive": "libsigsegv texi2html",
