@@ -188,9 +188,9 @@ Using pip:
 
 Already binary packages:
 
-Slackware: `slpkg-2.3.4-i486-1_dsw.tgz <https://github.com/dslackw/slpkg/releases/download/v2.3.4/slpkg-2.3.4-i486-1_dsw.txz>`_
+Slackware: `slpkg-2.3.4-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.3.4/slpkg-2.3.4-i486-1_dsw.txz>`_
 
-Slackware64: `slpkg-2.3.4-x86_64-1_dsw.tgz <https://github.com/dslackw/slpkg/releases/download/v2.3.4/slpkg-2.3.4-x86_64-1_dsw.txz>`_
+Slackware64: `slpkg-2.3.4-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.3.4/slpkg-2.3.4-x86_64-1_dsw.txz>`_
 
 
 Upgrade
