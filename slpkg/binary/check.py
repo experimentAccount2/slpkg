@@ -21,6 +21,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
 from slpkg.messages import Msg
 from slpkg.toolbar import status
 from slpkg.blacklist import BlackList
