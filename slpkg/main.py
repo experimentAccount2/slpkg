@@ -69,12 +69,12 @@ class ArgParse(object):
             self.packages = self.args[2:]
 
         if (len(self.args) > 1 and
-                self.args[0] in ['-f', '-i', '-u', '-o', '-r', '-d', '-n']
-                and self.args[1].endswith('.pkg')):
+                self.args[0] in ['-f', '-i', '-u', '-o', '-r', '-d', '-n'] and
+                self.args[1].endswith('.pkg')):
             self.packages = Utils().read_file_pkg(self.args[1])
         elif (len(self.args) >= 3 and self.args[0] in ['-s', '-t', '-p', '-F']
-              and self.args[1] in _m.repositories
-              and self.args[2].endswith('.pkg')):
+                and self.args[1] in _m.repositories
+                and self.args[2].endswith('.pkg')):
             self.packages = Utils().read_file_pkg(self.args[2])
         elif (len(self.args) == 3 and self.args[0] in ['-q', '-b'] and
                 self.args[1].endswith('.pkg')):

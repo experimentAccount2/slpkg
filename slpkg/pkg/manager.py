@@ -275,14 +275,14 @@ class PackageManager(object):
         row = int(tty_size[0]) - 2
         try:
             index, page, pkg_list = 0, row, []
-            r = self._list_lib(repo)
-            pkg_list = self._list_greps(repo, r)[0]
+            r = self.list_lib(repo)
+            pkg_list = self.list_greps(repo, r)[0]
             print('')
             for pkg in sorted(pkg_list):
                 pkg = self._slackr_repo(repo, pkg)
                 if INDEX:
                     index += 1
-                    pkg = self._list_color_tag(pkg)
+                    pkg = self.list_color_tag(pkg)
                     print("{0}{1}:{2} {3}".format(_m.color['GREY'], index,
                                                   _m.color['ENDC'], pkg))
                     if index == page:
@@ -295,7 +295,7 @@ class PackageManager(object):
                         print("")   # new line after page
                         page += row
                 elif installed:
-                    if self._list_of_installed(pkg):
+                    if self.list_of_installed(pkg):
                         print('{0}{1}{2}'.format(_m.color['GREEN'], pkg,
                                                  _m.color['ENDC']))
                 else:
@@ -305,7 +305,7 @@ class PackageManager(object):
             print("")   # new line at exit
             sys.exit(0)
 
-    def _list_greps(self, repo, packages):
+    def list_greps(self, repo, packages):
         '''
         Grep packages
         '''
@@ -322,7 +322,7 @@ class PackageManager(object):
                     pkg_size.append(line[26:].strip())
         return pkg_list, pkg_size
 
-    def _list_lib(self, repo):
+    def list_lib(self, repo):
         '''
         Return package lists
         '''
@@ -346,7 +346,7 @@ class PackageManager(object):
             return fix_slackers_pkg(pkg)
         return pkg
 
-    def _list_color_tag(self, pkg):
+    def list_color_tag(self, pkg):
         '''
         Tag with color installed packages
         '''
@@ -358,7 +358,7 @@ class PackageManager(object):
                                      _m.color['ENDC'])
         return pkg
 
-    def _list_of_installed(self, pkg):
+    def list_of_installed(self, pkg):
         '''
         Return installed packages
         '''

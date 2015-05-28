@@ -39,8 +39,8 @@ def find_from_repos(pkg):
     print("| {0}  {1}{2}{3}".format("Repository", "Package", " " * 54, "Size"))
     Msg().template(78)
     for repo in _m.repositories:
-        PACKAGES_TXT = PackageManager(pkg)._list_lib(repo)
-        packages, sizes = PackageManager(pkg)._list_greps(repo, PACKAGES_TXT)
+        PACKAGES_TXT = PackageManager(pkg).list_lib(repo)
+        packages, sizes = PackageManager(pkg).list_greps(repo, PACKAGES_TXT)
         for find, size in zip(packages, sizes):
             for p in pkg:
                 if p in find:
