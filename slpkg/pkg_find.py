@@ -48,13 +48,11 @@ def find_from_repos(pkg):
             for find, size in zip(packages, sizes):
                 for p in pkg:
                     if p in find:
-                        ver = ""
                         if cache != repo:
                             count_repo += 1
                         cache = repo
                         count_pkg += 1
-                        if repo == "sbo":
-                            ver = "-" + SBoGrep(find).version()
+                        ver = sbo_version(repo, find)
                         print("  {0}{1}{2} {3}{4:>11}".format(
                             repo, " " * (12 - len(repo)),
                             find + ver, " " * (53 - len(find + ver)),
@@ -64,3 +62,13 @@ def find_from_repos(pkg):
     except KeyboardInterrupt:
         print("")   # new line at exit
         sys.exit(0)
+
+
+def sbo_version(repo, find):
+    '''
+    Add version to SBo packages
+    '''
+    ver = ""
+    if repo == "sbo":
+        ver = "-" + SBoGrep(find).version()
+    return ver
