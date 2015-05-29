@@ -22,7 +22,10 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+import sys
+
 from messages import Msg
+from sbo.greps import SBoGrep
 from pkg.manager import PackageManager
 from __metadata__ import MetaData as _m
 
@@ -38,19 +41,26 @@ def find_from_repos(pkg):
     Msg().template(78)
     print("| {0}  {1}{2}{3}".format("Repository", "Package", " " * 54, "Size"))
     Msg().template(78)
-    for repo in _m.repositories:
-        PACKAGES_TXT = PackageManager(pkg).list_lib(repo)
-        packages, sizes = PackageManager(pkg).list_greps(repo, PACKAGES_TXT)
-        for find, size in zip(packages, sizes):
-            for p in pkg:
-                if p in find:
-                    if cache != repo:
-                        count_repo += 1
-                    cache = repo
-                    count_pkg += 1
-                    print("  {0}{1}{2} {3}{4:>11}".format(
-                        repo, " " * (12 - len(repo)),
-                        find, " " * (53 - len(find)),
-                        size))
-    print("\n{0}Total found {1} packages in {2} repositories.{3}\n".format(
-        _m.color['GREY'], count_pkg, count_repo, _m.color['ENDC']))
+    try:
+        for repo in _m.repositories:
+            PACKAGES_TXT = PackageManager(pkg).list_lib(repo)
+            packages, sizes = PackageManager(pkg).list_greps(repo, PACKAGES_TXT)
+            for find, size in zip(packages, sizes):
+                for p in pkg:
+                    if p in find:
+                        ver = ""
+                        if cache != repo:
+                            count_repo += 1
+                        cache = repo
+                        count_pkg += 1
+                        if repo == "sbo":
+                            ver = "-" + SBoGrep(find).version()
+                        print("  {0}{1}{2} {3}{4:>11}".format(
+                            repo, " " * (12 - len(repo)),
+                            find + ver, " " * (53 - len(find + ver)),
+                            size))
+        print("\n{0}Total found {1} packages in {2} repositories.{3}\n".format(
+            _m.color['GREY'], count_pkg, count_repo, _m.color['ENDC']))
+    except KeyboardInterrupt:
+        print("")   # new line at exit
+        sys.exit(0)
