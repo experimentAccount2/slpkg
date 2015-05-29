@@ -111,9 +111,61 @@ Default available Repositories:
 Usage
 -----
 
-Need to run '# slpkg update' for the first time to synchronize the list of packages,
-also every time you add a repository.
+Need to run '$ slpkg update' for the first time to synchronize the list of packages,
+also every time you add a new repository.
 To add or remove repositories must edit the file '/etc/slpkg/slpkg.conf'.
+
+Add custom repositories with the command '$ slpkg add-repo <repository name> <URL>' and after
+run '$ slpkg update' to update package list.
+
+View list of repositories with command '$ slpkg repo-list' or get repository information with
+command '$ slpkg repo-info <repository>.
+
+If you have already downloaded the script and the source code you can build the package with 
+the command '$ slpkg <script.tar.gz> <sources>'.
+
+Manage packages in the black list with the command '$ slpkg -b <packages> --add or --remove'.
+
+Add SBo packages to queue with command '$ slpkg -q <packages> --add or --remove' and manage as 
+build, install or build and install with command '$ slpkg build or install or build-install'.
+This is very useful if you want to install multiple packages together suffice to add in the right 
+order if there are dependent packages.
+
+View list of packages from specific repository with command '$ slpkg -l <repository>'.
+Combine with the command 'grep' to catch the results you want.
+
+Check and upgrade the distribution of your upgrade your packages with command '$ slpkg -c <repository> 
+--upgrade'. Don't forget to update packages list before (for 'slack' repository don't is necessary).
+This command except upgrade packages will correct packages with broken dependencies.
+
+The most famous command is "$ slpkg -s <repository> <packages>" , this command downloads and 
+installs packages with resolve all the dependencies.
+
+Watch the dependencies of a package with command '$ slpkg -t <repository> <package>'.
+Displays a package dependency tree and also tells you which ones are installed on your system events.
+
+Get information description of a package with command '$ slpkg -p <repository> <package>' and change
+color text with additional flag '--color=[]'.
+
+View a page SBo package on your terminal with command '$ slpkg -n <package>' and then manage multiple 
+choices such read, download, build, install etc.
+
+If you want to find packages from all repositories, this command will solve your hands '$ slpkg -F 
+<packages>'. It will search in all enabled repositories will find the configuration file 
+'/etc/slpkg/slpkg.conf' will print all the packages that match the description that you enter.
+
+If you want to see if any packages are installed on your system enter the command '$ slpkg -f <packages>'.
+The surprise in the end is the reporting of packages sum and size found.
+
+The next four commands '$ slpkg -i, -u, -o, -r <packages>' The next four commands install, upgrade, 
+reinstall, or remove packages from your system events.
+Notable mention must give the command '$ slpkg -r <packages>' which can remove a package with all 
+dependencies together after editing configuration file '/etc/slpkg/slpkg.conf' (default is disable).
+
+The last command is useful to print the entire contents of a package installed on the system with the
+command '$ slpkg -d <packages>'.
+
+Some examples you will see below.
 
 
 Issues
@@ -186,11 +238,11 @@ Using pip:
 
     $ python clean.py
 
-Already binary packages:
+Bbinary packages:
 
-Slackware: `slpkg-2.3.4-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.3.4/slpkg-2.3.4-i486-1_dsw.txz>`_
+Slackware: `slpkg-2.3.5-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.3.5/slpkg-2.3.5-i486-1_dsw.txz>`_
 
-Slackware64: `slpkg-2.3.4-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.3.4/slpkg-2.3.4-x86_64-1_dsw.txz>`_
+Slackware64: `slpkg-2.3.5-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.3.5/slpkg-2.3.5-x86_64-1_dsw.txz>`_
 
 
 Upgrade
