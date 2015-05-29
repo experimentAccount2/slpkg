@@ -136,7 +136,7 @@ Combine with the command 'grep' to catch the results you want.
 
 Check and upgrade the distribution of your upgrade your packages with command '$ slpkg -c <repository> 
 --upgrade'. Don't forget to update packages list before (for 'slack' repository don't is necessary).
-This command except upgrade packages will correct packages with broken dependencies.
+This command except upgrade packages will fix packages with broken dependencies.
 
 The most famous command is "$ slpkg -s <repository> <packages>" , this command downloads and 
 installs packages with resolve all the dependencies.
@@ -157,9 +157,9 @@ If you want to find packages from all repositories, this command will solve your
 If you want to see if any packages are installed on your system enter the command '$ slpkg -f <packages>'.
 The surprise in the end is the reporting of packages sum and size found.
 
-The next four commands '$ slpkg -i, -u, -o, -r <packages>' The next four commands install, upgrade, 
-reinstall, or remove packages from your system events.
-Notable mention must give the command '$ slpkg -r <packages>' which can remove a package with all 
+The next four commands '$ slpkg -i, -u, -o, -r <packages>' install, upgrade, reinstall, or remove 
+packages from your system events.
+Notable mention must give the command '$ slpkg -r <packages>' which can remove a packages with all 
 dependencies together after editing configuration file '/etc/slpkg/slpkg.conf' (default is disable).
 
 The last command is useful to print the entire contents of a package installed on the system with the
