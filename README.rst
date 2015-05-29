@@ -854,7 +854,7 @@ Install mass-packages:
     $ slpkg -u foo.pkg
 
 
-Find packages from repositories are enabled:
+Search and find packages from repositories are enabled:
 
 .. code-block:: bash
    
@@ -865,7 +865,7 @@ Find packages from repositories are enabled:
     +==============================================================================
     | Repository  Package                                                      Size
     +==============================================================================
-      sbo         aria2                                                         0 K
+      sbo         aria2-1.18.10                                                 0 K
       slonly      aria2-1.18.10-x86_64-1_slack.txz                           1124 K
       salix       aria2-1.18.1-x86_64-1rl.txz                                1052 K
       slackr      aria2-1.18.10-x86_64-1cf.txz                               1140 K
