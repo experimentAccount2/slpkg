@@ -334,7 +334,7 @@ class ArgParse(object):
     def pkg_find(self):
         """find packages from all enabled repositories"""
         if len(self.args) > 1 and self.args[0] == '-F':
-            find_from_repos(self.packages)
+            find_from_repos(self.args[1:])
         else:
             usage('')
 
