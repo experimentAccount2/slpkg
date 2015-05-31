@@ -27,10 +27,7 @@ from __metadata__ import MetaData as _m
 
 
 def options():
-    """
-slpkg - version 2.3.6 | Slackware release: stable
-
-Slpkg is a user-friendly package manager for Slackware installations
+    """Slpkg is a user-friendly package manager for Slackware installations
 
 Commands:
    update                                   Run this command to update all
