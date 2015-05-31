@@ -28,6 +28,12 @@ from __metadata__ import MetaData as _m
 
 def options():
     """Slpkg is a user-friendly package manager for Slackware installations
+                                                 _       _
+                                             ___| |_ __ | | ____ _
+                                            / __| | '_ \| |/ / _` |
+                                            \__ \ | |_) |   < (_| |
+                                            |___/_| .__/|_|\_\__, |
+                                                |_|          |___/
 
 Commands:
    update                                   Run this command to update all
@@ -44,8 +50,8 @@ Commands:
                                             repository.
 
 Optional arguments:
-  -h, --help                                print this help message and exit
-  -v, --version                             print program version and exit.
+  -h, --help                                Print this help message and exit
+  -v, --version                             Print program version and exit.
   -a, [script.tar.gz] [source...]           Auto build SBo packages.
                                             If you already have downloaded the
                                             script and the source code you can
@@ -103,6 +109,7 @@ Optional arguments:
                                             file list.
 
 You can read more about slpkg from manpage or see examples from readme file.
+Homepage: https://github.com/dslackw/slpkg
 """
     print("\nslpkg - version {0} | Slackware release: {1}\n".format(
         _m.__version__, _m.slack_rel))
