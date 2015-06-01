@@ -40,87 +40,7 @@ removes packages on Slackware based systems. It automatically computes
 dependencies and figures out what things should occurto install packages. 
 Slpkg makes it easier to maintain groups of machines without having to 
 manually update.
-.PP
-It's a quick and easy way to manage your packages in slackware to a command.
-.SH EXAMPLES
-Slpkg is a user-friendly package manager for Slackware installations
 
-Commands:
-   update                                   update all package lists
-   upgrade                                  upgrade all package lists  
-   repo-add [repository name] [URL]         add custom repository
-   repo-remove [repository]                 remove custom repository 
-   repo-list                                list all repositories
-   repo-info [repository]                   repository information
-   update slpkg                             check and update slpkg
-
-Optional arguments:
-  -h, --help                                show this help message and exit
-  -v, --version                             print version and exit
-  -a, [script.tar.gz] [source...]           auto build SBo packages
-  -b, list, [package...] --add, --remove    add, remove packages in blacklist
-  -q, list, [package...] --add, --remove    add, remove SBo packages in queue
-  -q, build, install, build-install         build, install packages from queue
-  -g, config, config=<editor>               configuration file management
-  -l, [repository], --index, --installed    list of repositories packages
-  -c, [repository] --upgrade                check for updated packages
-  -s, [repository] [package...]             download, build & install packages
-  -t, [repository] [package]                package tracking dependencies
-  -p, [repository] [package], --color=[]    print package description
-  -n, [package]                             view SBo site package in terminal
-  -f, [package...]                          find installed packages
-  -F, [package...]                          find packages from repositories
-  -i, [package...]                          install binary packages
-  -u, [package...]                          upgrade binary packages
-  -o, [package...]                          reinstall binary packages
-  -r, [package...]                          remove binary packages
-  -d, [package...]                          display the package contents
-
-
-.SH PACKAGE FILE
-Instead of [package...] you can create file with the suffix '.pkg' which was to 
-contain the packages you want to work like:
-
- # echo "brasero
- > bitfighter
- > ffmpeg" > foo.pkg
-
- # cat foo.pkg
- > brasero
- > bitfighter
- > ffmpeg
-
- Example:
-
- # slpkg -s sbo foo.pkg
-
- or
-
- # slpkg -r foo.pkg 
-
-.SH DEFAULT REPOSITORIES 
- slackware.com = 'slack'
- SlackBuilds.org = 'sbo'
- Alien's = 'alien'
- slacky.eu = 'slacky'
- rworkman's = 'rlw'
- studioware.org = 'studio'
- slacker.it = 'slackr'
- slackonly.com = 'slonly'
- Alien's ktown = 'ktown{latest}'
- Alien's multilib = 'multi'
- Slacke E17 and E18 = 'slacke{18}'
- SalixOS = 'salix'
- Slackel.gr = 'slackel'
- Alien's restricted = 'rested'
-   
- Default enable repository is 'slack' and 'sbo'.
- Add or remove default repository in configuration file '/etc/slpkg/slpkg.conf'.
- Read REPOSITORIES file for explanations.
-
-.SH COLORS
- red, green, yellow, cyan, grey
-.PP
 .SH GLOBAL OPTIONS
 .TP
 \fB\-v\fP, \fB\-\-version\fP
@@ -287,6 +207,50 @@ command.
 .br
 For example:
   \fBslpkg \-\-help\fP - display help for slpkg
+
+.SH DEFAULT REPOSITORIES 
+ slackware.com = 'slack'
+ SlackBuilds.org = 'sbo'
+ Alien's = 'alien'
+ slacky.eu = 'slacky'
+ rworkman's = 'rlw'
+ studioware.org = 'studio'
+ slacker.it = 'slackr'
+ slackonly.com = 'slonly'
+ Alien's ktown = 'ktown{latest}'
+ Alien's multilib = 'multi'
+ Slacke E17 and E18 = 'slacke{18}'
+ SalixOS = 'salix'
+ Slackel.gr = 'slackel'
+ Alien's restricted = 'rested'
+   
+ Default enable repository is 'slack' and 'sbo'.
+ Add or remove default repository in configuration file '/etc/slpkg/slpkg.conf'.
+ Read REPOSITORIES file for explanations.
+
+.SH PACKAGE FILE
+Instead of [package...] you can create file with the suffix '.pkg' which was to 
+contain the packages you want to work like:
+
+ # echo "brasero
+ > bitfighter
+ > ffmpeg" > foo.pkg
+
+ # cat foo.pkg
+ > brasero
+ > bitfighter
+ > ffmpeg
+
+ Example:
+
+ # slpkg -s sbo foo.pkg
+
+ or
+
+ # slpkg -r foo.pkg 
+
+.SH COLORS
+ red, green, yellow, cyan, grey
 
 .SH FILES
 /etc/slpkg/slpkg.conf

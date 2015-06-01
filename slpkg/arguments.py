@@ -33,7 +33,7 @@ def options():
                                             / __| | '_ \| |/ / _` |
                                             \__ \ | |_) |   < (_| |
                                             |___/_| .__/|_|\_\__, |
-                                                |_|          |___/
+                                                  |_|        |___/
 
 Commands:
    update                                   Run this command to update all
@@ -92,8 +92,7 @@ Optional arguments:
   -F, [package...]                          Find packages from repositories and
                                             search at each enabled repository
                                             and prints results.
-  -f, [package...]                          Find installed packages. Print
-                                            installed packages matching,
+  -f, [package...]                          Find and print installed packages
                                             reporting the size and the sum.
   -i, [package...]                          Installs single or multiple
                                             Slackware binary packages (*.t?z).

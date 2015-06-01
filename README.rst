@@ -309,39 +309,86 @@ Command Line Tool Usage
 -----------------------
 
 .. code-block:: bash
-
+    
     Slpkg is a user-friendly package manager for Slackware installations
-
+                                                     _       _
+                                                 ___| |_ __ | | ____ _
+                                                / __| | '_ \| |/ / _` |
+                                                \__ \ | |_) |   < (_| |
+                                                |___/_| .__/|_|\_\__, |
+                                                      |_|        |___/
+                                                        
     Commands:
-       update                                   update all package lists
-       upgrade                                  upgrade all package lists
-       repo-add [repository name] [URL]         add custom repository
-       repo-remove [repository]                 remove custom repository
-       repo-list                                list all repositories
-       repo-info [repository]                   repository information
-       update slpkg                             check and update slpkg
+       update                                   Run this command to update all
+                                                the packages list.
+       upgrade                                  Delete and recreate all packages
+                                                lists.
+       repo-add [repository name] [URL]         Add custom repository.
+       repo-remove [repository]                 Remove custom repository.
+       repo-list                                Print a list of all the
+                                                repositories.
+       repo-info [repository]                   Get information about a
+                                                repository.
+       update slpkg                             Upgrade the program directly from
+                                                repository.
 
     Optional arguments:
-      -h, --help                                show this help message and exit
-      -v, --version                             print version and exit
-      -a, [script.tar.gz] [source...]           auto build SBo packages
-      -b, list, [package...] --add, --remove    add, remove packages in blacklist
-      -q, list, [package...] --add, --remove    add, remove SBo packages in queue
-      -q, build, install, build-install         build, install packages from queue
-      -g, config, config=[editor]               configuration file management
-      -l, [repository], --index, --installed    list of repositories packages
-      -c, [repository] --upgrade                check for updated packages
-      -s, [repository] [package...]             download, build & install packages
-      -t, [repository] [package]                package tracking dependencies
-      -p, [repository] [package], --color=[]    print package description
-      -n, [package]                             view SBo site package in terminal
-      -F, [package...]                          find packages from repositories
-      -f, [package...]                          find installed packages
-      -i, [package...]                          install binary packages
-      -u, [package...]                          upgrade binary packages
-      -o, [package...]                          reinstall binary packages
-      -r, [package...]                          remove binary packages
-      -d, [package...]                          display the package contents
+      -h, --help                                Print this help message and exit
+      -v, --version                             Print program version and exit.
+      -a, [script.tar.gz] [source...]           Auto build SBo packages.
+                                                If you already have downloaded the
+                                                script and the source code you can
+                                                build a new package with this
+                                                command.
+      -b, [package...] --add, --remove          Manage packages in the blacklist.
+          list                                  Add or remove packages and print
+                                                the list. Each package is added
+                                                here will not be accessible by the
+                                                program.
+      -q, [package...] --add, --remove          Manage SBo packages in the queue.
+          list, build, install, build-install   Add or remove and print the list
+                                                of packages. Build and then install
+                                                the packages from the queue.
+      -g, config, config=[editor]               Configuration file management.
+                                                Print the configuration file or
+                                                edit.
+      -l, [repository], --index, --installed    List of repositories packages.
+                                                Print a list of all available
+                                                packages repository, index or print
+                                                only packages installed on the
+                                                system.
+      -c, [repository] --upgrade                Check and print of available
+                                                packages for upgrade.
+      -s, [repository] [package...]             Sync packages. Install packages
+                                                directly from remote repositories
+                                                with all dependencies.
+      -t, [repository] [package]                Track package dependencies and
+                                                print package dependenies tree with
+                                                highlight if packages is installed.
+      -p, [repository] [package], --color=[]    Print description of a package
+                                                directly from the repository and
+                                                change color text.
+      -n, [package]                             View a standard of SBo page in
+                                                terminal and manage multiple options
+                                                like reading, downloading, building
+                                                installation, etc.
+      -F, [package...]                          Find packages from repositories and
+                                                search at each enabled repository
+                                                and prints results.
+      -f, [package...]                          Find and print installed packages
+                                                reporting the size and the sum.
+      -i, [package...]                          Installs single or multiple
+                                                Slackware binary packages (*.t?z).
+      -u, [package...]                          Upgrade single or multiple Slackware
+                                                binary packages from a older to a
+                                                newer one.
+      -o, [package...]                          Reinstall signle or multiple
+                                                Slackware binary packages with the
+                                                same packages if the exact.
+      -r, [package...]                          Removes a previously installed
+                                                Slackware binary packages.
+      -d, [package...]                          Display the packages contents and
+                                                file list.
 
 Slpkg Examples
 --------------
