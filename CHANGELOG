@@ -1,24 +1,26 @@
 Version 2.4.0
+02-06-2015
 
 [Updated] - Updated comments arguments to '--help' option.
 
+[Feature] - Added additional option to skip packages when upgrading.
 
 Version 2.3.6
-30-05-2014
+30-05-2015
 
 [Updated] - Fixed to avoid input the first package for searching when input multiple 
             packages together with the option '-F'.
 
 
 Version 2.3.5
-30-05-2014
+30-05-2015
 
 [Updated] - Added version for SBo packages when search with option
             '-F'.
 
 
 Version 2.3.4
-28-05-2014
+28-05-2015
 
 [Updated] - Fix arguments comments.
           - Update compression slackbuild package.

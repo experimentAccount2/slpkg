@@ -122,9 +122,9 @@ Print configuration file or edit with editor.
 List of packages per repository. Support command 'grep' like '# slpkg -l sbo | grep "python"'.
 
 .SS -c , check if your packages is up to date
-\fBslpkg\fP \fB-c\fP <\fIrepository\fP> \fB--upgrade\fP
+\fBslpkg\fP \fB-c\fP <\fIrepository\fP> \fB--upgrade\fP \fB--skip=[packages...]\fP
 .PP
-Check your packages if up to date.
+Check your packages if up to date. Option '--skip' help to skip packages when upgrading.
 Slackware 'patches' repository works independently of the others i.e not need before updating 
 the list of packages by choosing "# slpkg update", works directly with the official repository 
 and so always you can have updated your system. 

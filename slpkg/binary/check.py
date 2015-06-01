@@ -22,6 +22,8 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+import sys
+
 from slpkg.messages import Msg
 from slpkg.toolbar import status
 from slpkg.blacklist import BlackList
@@ -34,36 +36,42 @@ from repo_init import RepoInit
 from greps import repo_data
 
 
-def pkg_upgrade(repo):
+def pkg_upgrade(repo, skip):
     '''
     Checking packages for upgrade
     '''
-    Msg().checking()
-    PACKAGES_TXT = RepoInit(repo).fetch()[0]
-    pkgs_for_upgrade = []
-    # name = data[0]
-    # location = data[1]
-    # size = data[2]
-    # unsize = data[3]
-    data = repo_data(PACKAGES_TXT, 2000, repo)
-    index, toolbar_width = 0, 1000
-    for pkg in installed():
-        index += 1
-        toolbar_width = status(index, toolbar_width, 30)
-        inst_pkg = split_package(pkg)
-        for name in data[0]:
-            if name:    # this tips because some pkg_name is empty
-                repo_pkg = split_package(name[:-4])
-            if (((repo_pkg[0] == inst_pkg[0] and repo_pkg[1] > inst_pkg[1] and
-                    repo_pkg[3] == inst_pkg[3]) or
-                    (repo_pkg[0] == inst_pkg[0] and
-                     repo_pkg[1] == inst_pkg[1] and
-                     repo_pkg[3] > inst_pkg[3])) and
-                    inst_pkg[0] not in BlackList().packages()):
-                pkgs_for_upgrade.append('{0}-{1}'.format(repo_pkg[0],
-                                                         repo_pkg[1]))
-    Msg().done()
-    return pkgs_for_upgrade
+    try:
+        Msg().checking()
+        PACKAGES_TXT = RepoInit(repo).fetch()[0]
+        pkgs_for_upgrade = []
+        # name = data[0]
+        # location = data[1]
+        # size = data[2]
+        # unsize = data[3]
+        data = repo_data(PACKAGES_TXT, 2000, repo)
+        index, toolbar_width = 0, 1000
+        for pkg in installed():
+            index += 1
+            toolbar_width = status(index, toolbar_width, 30)
+            inst_pkg = split_package(pkg)
+            for name in data[0]:
+                if name:    # this tips because some pkg_name is empty
+                    repo_pkg = split_package(name[:-4])
+                if (((repo_pkg[0] == inst_pkg[0] and
+                      repo_pkg[1] > inst_pkg[1] and
+                      repo_pkg[3] == inst_pkg[3]) or
+                     (repo_pkg[0] == inst_pkg[0] and
+                      repo_pkg[1] == inst_pkg[1] and
+                      repo_pkg[3] > inst_pkg[3])) and
+                    inst_pkg[0] not in BlackList().packages() and
+                        inst_pkg[0] not in skip):
+                    pkgs_for_upgrade.append('{0}-{1}'.format(repo_pkg[0],
+                                                             repo_pkg[1]))
+        Msg().done()
+        return pkgs_for_upgrade
+    except KeyboardInterrupt:
+        print("")   # new line at exit
+        sys.exit(0)
 
 
 def installed():

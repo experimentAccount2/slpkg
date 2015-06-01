@@ -34,7 +34,7 @@ from greps import SBoGrep
 from search import sbo_search_pkg
 
 
-def sbo_upgrade():
+def sbo_upgrade(skip):
     '''
     Return packages for upgrade
     '''
@@ -47,7 +47,7 @@ def sbo_upgrade():
             toolbar_width = status(index, toolbar_width, 4)
             name = split_package(pkg)[0]
             ver = split_package(pkg)[1]
-            if sbo_search_pkg(name):
+            if sbo_search_pkg(name) and name not in skip:
                 sbo_package = ("{0}-{1}".format(name, SBoGrep(name).version()))
                 package = ("{0}-{1}".format(name, ver))
                 if sbo_package > package:

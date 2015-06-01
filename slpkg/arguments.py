@@ -69,13 +69,12 @@ Optional arguments:
   -g, config, config=[editor]               Configuration file management.
                                             Print the configuration file or
                                             edit.
-  -l, [repository], --index, --installed    List of repositories packages.
-                                            Print a list of all available
+  -l, [repository], --index, --installed    Print a list of all available
                                             packages repository, index or print
                                             only packages installed on the
                                             system.
-  -c, [repository] --upgrade                Check and print of available
-                                            packages for upgrade.
+  -c, [repository] --upgrade, --skip=[]     Check the install upgraded packages
+                                            from repositories.
   -s, [repository] [package...]             Sync packages. Install packages
                                             directly from remote repositories
                                             with all dependencies.

@@ -50,7 +50,8 @@ from slack_version import slack_ver
 
 class Patches(object):
 
-    def __init__(self):
+    def __init__(self, skip):
+        self.skip = skip
         self.version = _m.slack_rel
         self.patch_path = _m.slpkg_tmp_patches
         self.pkg_for_upgrade = []
@@ -135,7 +136,8 @@ class Patches(object):
         for name, loc, comp, uncomp in zip(data[0], data[1], data[2], data[3]):
             repo_pkg_name = split_package(name)[0]
             if (not os.path.isfile(_m.pkg_path + name[:-4]) and
-                    repo_pkg_name not in black):
+                    repo_pkg_name not in black and
+                    repo_pkg_name not in self.skip):
                 self.dwn_links.append("{0}{1}/{2}".format(mirrors("", ""),
                                                           loc, name))
                 self.comp_sum.append(comp)

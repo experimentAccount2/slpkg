@@ -317,7 +317,7 @@ Command Line Tool Usage
                                                 \__ \ | |_) |   < (_| |
                                                 |___/_| .__/|_|\_\__, |
                                                       |_|        |___/
-                                                        
+
     Commands:
        update                                   Run this command to update all
                                                 the packages list.
@@ -352,13 +352,12 @@ Command Line Tool Usage
       -g, config, config=[editor]               Configuration file management.
                                                 Print the configuration file or
                                                 edit.
-      -l, [repository], --index, --installed    List of repositories packages.
-                                                Print a list of all available
+      -l, [repository], --index, --installed    Print a list of all available
                                                 packages repository, index or print
                                                 only packages installed on the
                                                 system.
-      -c, [repository] --upgrade                Check and print of available
-                                                packages for upgrade.
+      -c, [repository] --upgrade, --skip=[]     Check the install upgraded packages
+                                                from repositories.
       -s, [repository] [package...]             Sync packages. Install packages
                                                 directly from remote repositories
                                                 with all dependencies.
@@ -752,6 +751,37 @@ why always you can have updated your system:
     
     Would you like to continue [Y/n]?
 
+
+Skip packages when upgrading:
+
+.. code-block:: bash
+
+    $ slpkg -c sbo --upgrade --skip=pip,jdk
+    Checking ...................Done
+    Reading package lists ......Done
+    Resolving dependencies ...Done
+
+    The following packages will be automatically installed or upgraded 
+    with new version:
+
+    +==============================================================================
+    | Package                 Version            Arch    Build  Repos          Size
+    +==============================================================================
+    Upgrading:
+     cffi                     1.1.0              x86_64         SBo
+    Installing for dependencies:
+     pysetuptools             17.0               x86_64         SBo
+     pycparser                2.13               x86_64         SBo
+
+    Installing summary
+    ===============================================================================
+    Total 3 packages.
+    0 package will be installed, 1 allready installed and 2 packages
+    will be upgraded.
+
+    Would you like to continue [Y/n]?
+
+    
 View complete slackbuilds.org site in your terminal.
 Read fies, download, build or install:
 

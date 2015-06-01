@@ -180,16 +180,22 @@ class ArgParse(object):
 
     def pkg_upgrade(self):
         """ check and upgrade packages by repository """
+        skip = ''
+        if (len(self.args) == 4 and self.args[0] == '-c' and
+                self.args[2] == '--upgrade' and
+                self.args[3].startswith('--skip=')):
+            skip = ''.join(self.args[3].split("=")[1:]).split(',')
+            self.args.pop(3)
         if (len(self.args) == 3 and self.args[0] == '-c' and
                 self.args[2] == '--upgrade'):
             if (self.args[1] in _m.repositories and
                     self.args[1] not in ['slack', 'sbo']):
-                BinaryInstall(pkg_upgrade(self.args[1]),
+                BinaryInstall(pkg_upgrade(self.args[1], skip),
                               self.args[1]).start(True)
             elif self.args[1] == 'slack':
-                Patches().start()
+                Patches(skip).start()
             elif self.args[1] == 'sbo':
-                SBoInstall(sbo_upgrade()).start(True)
+                SBoInstall(sbo_upgrade(skip)).start(True)
             else:
                 usage(self.args[1])
         else:
