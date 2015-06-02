@@ -73,7 +73,7 @@ Optional arguments:
                                             packages repository, index or print
                                             only packages installed on the
                                             system.
-  -c, [repository] --upgrade, --skip=[]     Check the install upgraded packages
+  -c, [repository] --upgrade --skip=[]      Check the install upgraded packages
                                             from repositories.
   -s, [repository] [package...]             Sync packages. Install packages
                                             directly from remote repositories
