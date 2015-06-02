@@ -139,7 +139,7 @@ def usage(repo):
         "             [-q build, install, build-install]",
         "             [-g config, config=[editor]]",
         "             [-l [repository], --index, --installed]",
-        "             [-c [repository] --upgrade]",
+        "             [-c [repository] --upgrade --skip=[]]",
         "             [-s [repository] [package...]",
         "             [-t [repository] [package]",
         "             [-p [repository] [package], --color=[]]",
