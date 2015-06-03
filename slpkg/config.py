@@ -51,6 +51,7 @@ class Config(object):
             'DEFAULT_ANSWER',
             'REMOVE_DEPS_ANSWER',
             'SKIP_UNST',
+            'RSL_DEPS',
             'DEL_DEPS',
             'USE_COLORS',
             'WGET_OPTIONS',

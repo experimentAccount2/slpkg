@@ -26,6 +26,7 @@ import sys
 
 from slpkg.toolbar import status
 from slpkg.blacklist import BlackList
+from slpkg.__metadata__ import MetaData as _m
 
 from greps import SBoGrep
 
@@ -39,25 +40,28 @@ class Requires(object):
         '''
         Build all dependencies of a package
         '''
-        try:
-            sys.setrecursionlimit(10000)
-            dependencies = []
-            blacklist = BlackList().packages()
-            requires = SBoGrep(name).requires()
-            toolbar_width, index = 2, 0
-            if requires:
-                for req in requires:
-                    index += 1
-                    toolbar_width = status(index, toolbar_width, 1)
-                    # avoid to add %README% as dependency and
-                    # if require in blacklist
-                    if "%README%" not in req and req not in blacklist:
-                        dependencies.append(req)
-                if dependencies:
-                    self.dep_results.append(dependencies)
-                    for dep in dependencies:
-                        self.sbo(dep)
-            return self.dep_results
-        except KeyboardInterrupt:
-            print("")   # new line at exit
-            sys.exit(0)
+        if _m.rsl_deps in ['on', 'ON']:
+            try:
+                sys.setrecursionlimit(10000)
+                dependencies = []
+                blacklist = BlackList().packages()
+                requires = SBoGrep(name).requires()
+                toolbar_width, index = 2, 0
+                if requires:
+                    for req in requires:
+                        index += 1
+                        toolbar_width = status(index, toolbar_width, 1)
+                        # avoid to add %README% as dependency and
+                        # if require in blacklist
+                        if "%README%" not in req and req not in blacklist:
+                            dependencies.append(req)
+                    if dependencies:
+                        self.dep_results.append(dependencies)
+                        for dep in dependencies:
+                            self.sbo(dep)
+                return self.dep_results
+            except KeyboardInterrupt:
+                print("")   # new line at exit
+                sys.exit(0)
+        else:
+            return []

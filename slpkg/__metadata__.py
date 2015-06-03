@@ -122,6 +122,7 @@ class MetaData(object):
         'DEFAULT_ANSWER': 'n',
         'REMOVE_DEPS_ANSWER': 'n',
         'SKIP_UNST': 'n',
+        'RSL_DEPS': 'on',
         'DEL_DEPS': 'off',
         'USE_COLORS': 'on',
         'WGET_OPTIONS': '-c -N',
@@ -159,6 +160,7 @@ class MetaData(object):
     default_answer = _conf_slpkg['DEFAULT_ANSWER']
     remove_deps_answer = _conf_slpkg['REMOVE_DEPS_ANSWER']
     skip_unst = _conf_slpkg['SKIP_UNST']
+    rsl_deps = _conf_slpkg['RSL_DEPS']
     del_deps = _conf_slpkg['DEL_DEPS']
     use_colors = _conf_slpkg['USE_COLORS']
     wget_options = _conf_slpkg['WGET_OPTIONS']
