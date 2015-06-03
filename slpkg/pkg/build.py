@@ -71,8 +71,7 @@ class BuildPackage(object):
             for src, sbo_md5 in zip(self.sources, sbo_md5_list):
                 # fix build sources with spaces
                 src = src.replace("%20", " ")
-                if _m.sbo_check_md5 in ["on", "ON"]:
-                    check_md5(sbo_md5, src)
+                check_md5(sbo_md5, src)
                 shutil.copy2(src, self.prgnam)
             os.chdir(self.path + self.prgnam)
             # change permissions

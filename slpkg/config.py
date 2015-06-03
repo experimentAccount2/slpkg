@@ -42,7 +42,7 @@ class Config(object):
             'RELEASE',
             'REPOSITORIES',
             'BUILD_PATH',
-            'SBO_CHECK_MD5',
+            'CHECKMD5',
             'PACKAGES',
             'PATCHES',
             'DEL_ALL',
