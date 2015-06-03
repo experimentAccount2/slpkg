@@ -125,7 +125,8 @@ class MetaData(object):
         'DEL_DEPS': 'off',
         'USE_COLORS': 'on',
         'WGET_OPTIONS': '-c -N',
-        'SLACKPKG_LOG': 'on'
+        'SLACKPKG_LOG': 'on',
+        'ONLY_INSTALLED': 'off'
     }
 
     default_repositories = ['slack', 'sbo', 'rlw', 'alien', 'slacky', 'studio',
@@ -162,6 +163,7 @@ class MetaData(object):
     use_colors = _conf_slpkg['USE_COLORS']
     wget_options = _conf_slpkg['WGET_OPTIONS']
     slackpkg_log = _conf_slpkg['SLACKPKG_LOG']
+    only_installed = _conf_slpkg['ONLY_INSTALLED']
 
     # Remove any gaps
     repositories = [repo.strip() for repo in repositories]

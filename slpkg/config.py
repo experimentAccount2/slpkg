@@ -54,7 +54,8 @@ class Config(object):
             'DEL_DEPS',
             'USE_COLORS',
             'WGET_OPTIONS',
-            'SLACKPKG_LOG'
+            'SLACKPKG_LOG',
+            'ONLY_INSTALLED'
         ]
         read_conf = Utils().read_file(self.config_file)
         for line in read_conf.splitlines():

@@ -193,7 +193,11 @@ class ArgParse(object):
                 BinaryInstall(pkg_upgrade(self.args[1], skip),
                               self.args[1]).start(True)
             elif self.args[1] == 'slack':
-                Patches(skip).start()
+                if _m.only_installed in ['on', 'ON']:
+                    BinaryInstall(pkg_upgrade('slack', skip),
+                                  'slack').start(True)
+                else:
+                    Patches(skip).start()
             elif self.args[1] == 'sbo':
                 SBoInstall(sbo_upgrade(skip)).start(True)
             else:
