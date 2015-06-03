@@ -88,7 +88,7 @@ class MetaData(object):
 
     __all__ = "slpkg"
     __author__ = "dslackw"
-    __version_info__ = (2, 4, 0)
+    __version_info__ = (2, 4, 1)
     __version__ = "{0}.{1}.{2}".format(*__version_info__)
     __license__ = "GNU General Public License v3 (GPLv3)"
     __email__ = "d.zlatanidis@gmail.com"
@@ -113,9 +113,9 @@ class MetaData(object):
                          'ktown{latest}', 'multi', 'slacke{18}',
                          'salix', 'slackl', 'rested'],
         'BUILD_PATH': '/tmp/slpkg/build/',
-        'SBO_CHECK_MD5': 'on',
         'PACKAGES': '/tmp/slpkg/packages/',
         'PATCHES': '/tmp/slpkg/patches/',
+        'CHECKMD5': 'on',
         'DEL_ALL': 'on',
         'DEL_BUILD': 'off',
         'SBO_BUILD_LOG': 'on',
@@ -151,8 +151,8 @@ class MetaData(object):
     build_path = _conf_slpkg['BUILD_PATH']
     slpkg_tmp_packages = _conf_slpkg['PACKAGES']
     slpkg_tmp_patches = _conf_slpkg['PATCHES']
+    checkmd5 = _conf_slpkg['CHECKMD5']
     del_all = _conf_slpkg['DEL_ALL']
-    sbo_check_md5 = _conf_slpkg['SBO_CHECK_MD5']
     del_build = _conf_slpkg['DEL_BUILD']
     sbo_build_log = _conf_slpkg['SBO_BUILD_LOG']
     default_answer = _conf_slpkg['DEFAULT_ANSWER']
