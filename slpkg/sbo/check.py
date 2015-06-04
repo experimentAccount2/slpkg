@@ -24,6 +24,7 @@
 
 import os
 import sys
+from distutils.version import LooseVersion
 
 from slpkg.messages import Msg
 from slpkg.toolbar import status
@@ -50,7 +51,7 @@ def sbo_upgrade(skip):
             if sbo_search_pkg(name) and name not in skip:
                 sbo_package = ("{0}-{1}".format(name, SBoGrep(name).version()))
                 package = ("{0}-{1}".format(name, ver))
-                if sbo_package > package:
+                if LooseVersion(sbo_package) > LooseVersion(package):
                     upgrade_names.append(name)
         Msg().done()
         return upgrade_names
