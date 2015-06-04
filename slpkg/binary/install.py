@@ -83,7 +83,8 @@ class BinaryInstall(object):
             self.packages = self.clear_masters()
             (self.dwn, self.install, self.comp_sum,
              self.uncomp_sum) = self.store(self.packages)
-            Msg().done()
+            if _m.rsl_deps in ['on', 'ON'] and self.resolve:
+                Msg().done()
             if self.install:
                 print("\nThe following packages will be automatically "
                       "installed or upgraded \nwith new version:\n")
@@ -204,7 +205,8 @@ class BinaryInstall(object):
         Return package dependencies
         '''
         requires = []
-        Msg().resolving()
+        if _m.rsl_deps in ['on', 'ON'] and self.resolve:
+            Msg().resolving()
         for dep in self.packages:
             if self.if_upgrade:
                 dep = dep.split("-")[0]
@@ -263,7 +265,7 @@ class BinaryInstall(object):
         # location = data[1]
         # size = data[2]
         # unsize = data[3]
-        data = repo_data(self.PACKAGES_TXT, self.step, self.repo)
+        data = repo_data(self.PACKAGES_TXT, self.step, self.repo, self.resolve)
         for pkg in packages:
             for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
                                                data[3]):

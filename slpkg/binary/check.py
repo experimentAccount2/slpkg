@@ -49,7 +49,7 @@ def pkg_upgrade(repo, skip):
         # location = data[1]
         # size = data[2]
         # unsize = data[3]
-        data = repo_data(PACKAGES_TXT, 2000, repo)
+        data = repo_data(PACKAGES_TXT, 2000, repo, True)
         index, toolbar_width = 0, 1000
         for pkg in installed():
             index += 1

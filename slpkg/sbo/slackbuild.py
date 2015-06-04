@@ -84,10 +84,12 @@ class SBoInstall(object):
             self.master_packages, mas_src = self.sbo_version_source(
                 self.package_found)
             Msg().done()
-            Msg().resolving()
+            if _m.rsl_deps in ['on', 'ON'] and self.resolve:
+                Msg().resolving()
             self.dependencies, dep_src = self.sbo_version_source(
                 self.one_for_all(self.deps))
-            Msg().done()
+            if _m.rsl_deps in ['on', 'ON'] and self.resolve:
+                Msg().done()
             self.clear_masters()
             if self.package_found:
                 print("\nThe following packages will be automatically "
