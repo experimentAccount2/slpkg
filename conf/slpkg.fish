@@ -24,6 +24,7 @@ complete --command slpkg --short-option p --long-option color --description 'add
 complete --command slpkg --long-option add --description 'additional options for blacklist and queue'
 complete --command slpkg --long-option remove --description 'additional options for blacklist and queue'
 complete --command slpkg --long-option skip --description 'additional options for upgrade packages'
+complete --command slpkg --long-option resolve-off --description 'additional options to on/off automatic resolve dependencies'
 complete --command slpkg -a list --description 'option for print list to blacklist and queue'
 complete --command slpkg -a build --description 'build packages from queue'
 complete --command slpkg -a install --description 'install packages from queue'
