@@ -164,14 +164,17 @@ class ArgParse(object):
         if (len(self.args) == 3 and self.args[0] == '-l' and
                 self.args[1] in _m.repositories):
             if self.args[2] == '--index':
-                PackageManager(None).list(self.args[1], True, False)
+                PackageManager(binary=None).list(self.args[1], index=True,
+                                                 installed=False)
             elif self.args[2] == '--installed':
-                PackageManager(None).list(self.args[1], False, True)
+                PackageManager(binary=None).list(self.args[1], index=False,
+                                                 installed=True)
             else:
                 usage('')
         elif (len(self.args) == 2 and self.args[0] == '-l' and
                 self.args[1] in _m.repositories):
-            PackageManager(None).list(self.args[1], False, False)
+            PackageManager(None).list(self.args[1], index=False,
+                                      installed=False)
         elif (len(self.args) > 1 and self.args[0] == '-l' and
                 self.args[1] not in _m.repositories):
             usage(self.args[1])
@@ -196,15 +199,15 @@ class ArgParse(object):
             if (self.args[1] in _m.repositories and
                     self.args[1] not in ['slack', 'sbo']):
                 BinaryInstall(pkg_upgrade(self.args[1], skip),
-                              self.args[1], resolve).start(True)
+                              self.args[1], resolve).start(if_upgrade=True)
             elif self.args[1] == 'slack':
                 if _m.only_installed in ['on', 'ON']:
                     BinaryInstall(pkg_upgrade('slack', skip),
-                                  'slack', resolve).start(True)
+                                  'slack', resolve).start(if_upgrade=True)
                 else:
                     Patches(skip).start()
             elif self.args[1] == 'sbo':
-                SBoInstall(sbo_upgrade(skip), resolve).start(True)
+                SBoInstall(sbo_upgrade(skip), resolve).start(if_upgrade=True)
             else:
                 usage(self.args[1])
         else:
@@ -218,9 +221,11 @@ class ArgParse(object):
             resolve = False
         if len(self.args) >= 3 and self.args[0] == '-s':
             if self.args[1] in _m.repositories and self.args[1] not in ['sbo']:
-                BinaryInstall(self.packages, self.args[1], resolve).start(False)
+                BinaryInstall(self.packages, self.args[1], resolve).start(
+                    if_upgrade=False)
             elif self.args[1] == 'sbo':
-                SBoInstall(self.packages, resolve).start(False)
+                SBoInstall(self.packages, resolve).start(
+                    if_upgrade=False)
             else:
                 usage(self.args[1])
         else:

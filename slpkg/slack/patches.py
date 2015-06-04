@@ -131,7 +131,7 @@ class Patches(object):
         '''
         Store and return packages for upgrading
         '''
-        data = repo_data(self.PACKAGES_TXT, self.step, 'slack')
+        data = repo_data(self.PACKAGES_TXT, self.step, 'slack', resolve=True)
         black = BlackList().packages()
         for name, loc, comp, uncomp in zip(data[0], data[1], data[2], data[3]):
             repo_pkg_name = split_package(name)[0]
