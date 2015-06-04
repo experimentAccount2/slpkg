@@ -356,10 +356,10 @@ Command Line Tool Usage
                                                 packages repository, index or print
                                                 only packages installed on the
                                                 system.
-      -c, [repository] --upgrade --skip=[]      Check the install upgraded packages
-                                                from repositories.
-      -s, [repository] [package...]             Sync packages. Install packages
-                                                directly from remote repositories
+      -c, [repository] --upgrade --skip=[],     Check, view and install updated
+          --resolve-off                         packages from repositories.
+      -s, [repository] [package...],            Sync packages. Install packages
+          --resolve-off                         directly from remote repositories
                                                 with all dependencies.
       -t, [repository] [package]                Track package dependencies and
                                                 print package dependenies tree with

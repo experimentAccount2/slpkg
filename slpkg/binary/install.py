@@ -50,9 +50,10 @@ from dependency import Dependencies
 
 class BinaryInstall(object):
 
-    def __init__(self, packages, repo):
+    def __init__(self, packages, repo, resolve):
         self.packages = packages
         self.repo = repo
+        self.resolve = resolve
         self.version = _m.slack_rel
         self.tmp_path = _m.slpkg_tmp_packages
         self.dwn, self.dep_dwn = [], []
@@ -209,7 +210,7 @@ class BinaryInstall(object):
                 dep = dep.split("-")[0]
             dependencies = []
             dependencies = Utils().dimensional_list(Dependencies(
-                self.PACKAGES_TXT, self.repo).binary(dep))
+                self.PACKAGES_TXT, self.repo).binary(dep, self.resolve))
             requires += dependencies
             self.deps_dict[dep] = Utils().remove_dbs(dependencies)
         return Utils().remove_dbs(requires)

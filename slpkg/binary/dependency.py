@@ -39,11 +39,11 @@ class Dependencies(object):
         self.dep_results = []
         self.packages = Utils().package_name(PACKAGES_TXT, repo)
 
-    def binary(self, name):
+    def binary(self, name, resolve):
         '''
         Build all dependencies of a package
         '''
-        if _m.rsl_deps in ['on', 'ON']:
+        if _m.rsl_deps in ['on', 'ON'] and resolve:
             try:
                 sys.setrecursionlimit(10000)
                 dependencies = []
@@ -60,7 +60,7 @@ class Dependencies(object):
                     if dependencies:
                         self.dep_results.append(dependencies)
                         for dep in dependencies:
-                            self.binary(dep)
+                            self.binary(dep, resolve)
                 return self.dep_results
             except KeyboardInterrupt:
                 print("")   # new line at exit

@@ -33,14 +33,15 @@ from greps import SBoGrep
 
 class Requires(object):
 
-    def __init__(self):
+    def __init__(self, resolve):
+        self.resolve = resolve
         self.dep_results = []
 
     def sbo(self, name):
         '''
         Build all dependencies of a package
         '''
-        if _m.rsl_deps in ['on', 'ON']:
+        if _m.rsl_deps in ['on', 'ON'] and self.resolve:
             try:
                 sys.setrecursionlimit(10000)
                 dependencies = []

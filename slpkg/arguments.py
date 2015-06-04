@@ -73,10 +73,10 @@ Optional arguments:
                                             packages repository, index or print
                                             only packages installed on the
                                             system.
-  -c, [repository] --upgrade --skip=[]      Check the install upgraded packages
-                                            from repositories.
-  -s, [repository] [package...]             Sync packages. Install packages
-                                            directly from remote repositories
+  -c, [repository] --upgrade --skip=[],     Check, view and install updated
+      --resolve-off                         packages from repositories.
+  -s, [repository] [package...],            Sync packages. Install packages
+      --resolve-off                         directly from remote repositories
                                             with all dependencies.
   -t, [repository] [package]                Track package dependencies and
                                             print package dependenies tree with
@@ -139,9 +139,9 @@ def usage(repo):
         "             [-q build, install, build-install]",
         "             [-g config, config=[editor]]",
         "             [-l [repository], --index, --installed]",
-        "             [-c [repository] --upgrade --skip=[]]",
-        "             [-s [repository] [package...]",
-        "             [-t [repository] [package]",
+        "             [-c [repository] --upgrade --skip=[], --resolve-off]",
+        "             [-s [repository] [package...], --resolve-off]",
+        "             [-t [repository] [package]]",
         "             [-p [repository] [package], --color=[]]",
         "             [-n [SBo package]] [-F [...]] [-f [...]] [-i [...]]",
         "             [-u [...]] [-o  [...]] [-r [...]] [-d [...]]\n",

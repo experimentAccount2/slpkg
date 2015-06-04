@@ -2,9 +2,11 @@ Version 2.4.1
 03-06-2015
 
 [Feature] - Added option to upgrade only the distribution packages installed.
+          - Added option to on/off resolve dependencies.
 
 [Updated] - Fixed upgrade packages.
           - Fixed checksum on/off.
+          - Fixed upgrade Slackware binary packages resolve dependencies.
 
 
 Version 2.4.0

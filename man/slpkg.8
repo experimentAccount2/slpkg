@@ -27,9 +27,9 @@ Usage: slpkg Commands:
              [-q build, install, build-install]
              [-g config, config=[editor]]
              [-l [repository], --index, --installed]
-             [-c [repository] --upgrade --skip[]]
-             [-s [repository] [package...]
-             [-t [repository] [package]
+             [-c [repository] --upgrade --skip[], --resolve-off]
+             [-s [repository] [package...], --resolve-off]
+             [-t [repository] [package]]
              [-p [repository] [package], --color=[]]
              [-n [SBo package]] [-F [...]] [-f [...]] [-i [...]] 
              [-u [...]] [-o  [...]] [-r [...]] [-d [...]]
@@ -122,20 +122,23 @@ Print configuration file or edit with editor.
 List of packages per repository. Support command 'grep' like '# slpkg -l sbo | grep "python"'.
 
 .SS -c , check if your packages is up to date
-\fBslpkg\fP \fB-c\fP <\fIrepository\fP> \fB--upgrade\fP \fB--skip=[packages...]\fP
+\fBslpkg\fP \fB-c\fP <\fIrepository\fP> \fB--upgrade\fP \fB--skip=[packages...]\fP, 
+\fB--resolve-off\fP
 .PP
-Check your packages if up to date. Option '--skip' help to skip packages when upgrading.
+Check your packages if up to date. Option '--skip' help to skip packages when upgrading and
+additional option '--resolve-off' switch off automatic resolve dependensies.
 Slackware 'patches' repository works independently of the others i.e not need before updating 
 the list of packages by choosing "# slpkg update", works directly with the official repository 
 and so always you can have updated your system. 
 
 .SS -s , download, build and install package with all dependencies
-\fBslpkg\fP \fB-s\fP <\fIrepository\fP> <\fIname of packages\fP>
+\fBslpkg\fP \fB-s\fP <\fIrepository\fP> <\fIname of packages\fP>, \fB--resolve-off\fP
 .PP
 Installs or upgrade packages from the repositories with automatically resolving all 
 dependencies of the package. Sometimes to install a package have to pass part of the 
 version of the package as 'slpkg -s alien ffmpeg-2.4.3'.
 (If you want to pass variables to the script exported as: '# export FFMPEG_X264=yes FFMPEG_LAME=yes')
+Switch off automatic resolve dependencies with additional option '--resolve-off'.
 
 .SS -t , tracking dependencies
 \fBslpkg\fP \fB-t\fP <\fIrepository\fP> <\fIname of package\fP>

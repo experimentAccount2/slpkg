@@ -47,8 +47,9 @@ from search import sbo_search_pkg
 
 class SBoInstall(object):
 
-    def __init__(self, slackbuilds):
+    def __init__(self, slackbuilds, resolve):
         self.slackbuilds = slackbuilds
+        self.resolve = resolve
         self.build_folder = _m.build_path
         self.unst = ["UNSUPPORTED", "UNTESTED"]
         self.master_packages = []
@@ -71,7 +72,7 @@ class SBoInstall(object):
                 self.index += 1
                 self.toolbar_width = status(self.index, self.toolbar_width, 4)
                 if sbo_search_pkg(_sbo):
-                    sbo_deps = Requires().sbo(_sbo)
+                    sbo_deps = Requires(self.resolve).sbo(_sbo)
                     self.deps += sbo_deps
                     self.deps_dict[_sbo] = self.one_for_all(sbo_deps)
                     self.package_found.append(_sbo)
