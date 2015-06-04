@@ -1,3 +1,10 @@
+Version 2.4.2
+04-06-2015
+
+[Updated] - BugFix TypeError: repo_data() function.
+          - Fix code style.
+
+
 Version 2.4.1
 04-06-2015
 
