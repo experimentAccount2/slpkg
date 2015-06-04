@@ -205,6 +205,8 @@ class BinaryInstall(object):
         requires = []
         Msg().resolving()
         for dep in self.packages:
+            if self.if_upgrade:
+                dep = dep.split("-")[0]
             dependencies = []
             dependencies = Utils().dimensional_list(Dependencies(
                 self.PACKAGES_TXT, self.repo).binary(dep))
