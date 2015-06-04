@@ -164,17 +164,19 @@ class ArgParse(object):
         if (len(self.args) == 3 and self.args[0] == '-l' and
                 self.args[1] in _m.repositories):
             if self.args[2] == '--index':
-                PackageManager(binary=None).list(self.args[1], indexing=True,
-                                                 installed=False)
+                PackageManager(binary=None).package_list(self.args[1],
+                                                         INDEX=True,
+                                                         installed=False)
             elif self.args[2] == '--installed':
-                PackageManager(binary=None).list(self.args[1], indexing=False,
-                                                 installed=True)
+                PackageManager(binary=None).package_list(self.args[1],
+                                                         INDEX=False,
+                                                         installed=True)
             else:
                 usage('')
         elif (len(self.args) == 2 and self.args[0] == '-l' and
                 self.args[1] in _m.repositories):
-            PackageManager(None).list(self.args[1], indexing=False,
-                                      installed=False)
+            PackageManager(None).package_list(self.args[1], INDEX=False,
+                                              installed=False)
         elif (len(self.args) > 1 and self.args[0] == '-l' and
                 self.args[1] not in _m.repositories):
             usage(self.args[1])

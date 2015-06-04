@@ -268,7 +268,7 @@ class PackageManager(object):
                     bol = eol = "\n"
                 Msg().pkg_not_found(bol, pkg, message, eol)
 
-    def list(self, repo, INDEX, installed):
+    def package_list(self, repo, INDEX, installed):
         '''
         List with the installed packages
         '''
