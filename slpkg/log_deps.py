@@ -30,12 +30,12 @@ from slpkg.pkg.find import find_package
 
 
 def write_deps(deps_dict):
-    '''
+    """
     Write dependencies in a log file
     into directory `/var/log/slpkg/dep/`
-    '''
+    """
     for name, dependencies in deps_dict.iteritems():
-        if find_package(name + '-', _m.pkg_path):
+        if find_package(name + "-", _m.pkg_path):
             dep_path = _m.log_path + "dep/"
             if not os.path.exists(dep_path):
                 os.mkdir(dep_path)

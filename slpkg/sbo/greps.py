@@ -27,9 +27,9 @@ from slpkg.__metadata__ import MetaData as _m
 
 
 class SBoGrep(object):
-    '''
+    """
     Class data grab
-    '''
+    """
     def __init__(self, name):
         self.name = name
         arch64 = "x86_64"
@@ -42,15 +42,15 @@ class SBoGrep(object):
         self.line_md5_64 = "SLACKBUILD MD5SUM_{0}: ".format(arch64)
         self.line_des = "SLACKBUILD SHORT DESCRIPTION:  "
         self.sbo_txt = _m.lib_path + "sbo_repo/SLACKBUILDS.TXT"
-        self.answer = ['y', 'Y']
-        self.unst = ['UNSUPPORTED', 'UNTESTED']
+        self.answer = ["y", "Y"]
+        self.unst = ["UNSUPPORTED", "UNTESTED"]
         self.SLACKBUILDS_TXT = Utils().read_file(self.sbo_txt)
 
     def source(self):
-        '''
+        """
         Grab sources downloads links
-        '''
-        source, source64, = '', ''
+        """
+        source, source64, = "", ""
         for line in self.SLACKBUILDS_TXT.splitlines():
             if line.startswith(self.line_name):
                 sbo_name = line[17:].strip()
@@ -63,7 +63,7 @@ class SBoGrep(object):
         return self._select_source_arch(source, source64)
 
     def _select_source_arch(self, source, source64):
-        src = ''
+        src = ""
         if _m.arch == "x86_64":
             if source64:
                 src = source64
@@ -79,9 +79,9 @@ class SBoGrep(object):
         return src
 
     def requires(self):
-        '''
+        """
         Grab package requirements
-        '''
+        """
         for line in self.SLACKBUILDS_TXT.splitlines():
             if line.startswith(self.line_name):
                 sbo_name = line[17:].strip()
@@ -90,9 +90,9 @@ class SBoGrep(object):
                     return line[21:].strip().split()
 
     def version(self):
-        '''
+        """
         Grab package version
-        '''
+        """
         for line in self.SLACKBUILDS_TXT.splitlines():
             if line.startswith(self.line_name):
                 sbo_name = line[17:].strip()
@@ -101,9 +101,9 @@ class SBoGrep(object):
                     return line[20:].strip()
 
     def checksum(self):
-        '''
+        """
         Grab checksum string
-        '''
+        """
         md5sum, md5sum64, = [], []
         for line in self.SLACKBUILDS_TXT.splitlines():
             if line.startswith(self.line_name):
@@ -117,7 +117,7 @@ class SBoGrep(object):
         return self._select_md5sum_arch(md5sum, md5sum64)
 
     def _select_md5sum_arch(self, md5sum, md5sum64):
-        md5 = ''
+        md5 = ""
         if _m.arch == "x86_64":
             if md5sum64:
                 md5 = md5sum64
@@ -133,9 +133,9 @@ class SBoGrep(object):
         return md5
 
     def description(self):
-        '''
+        """
         Grab package verion
-        '''
+        """
         for line in self.SLACKBUILDS_TXT.splitlines():
             if line.startswith(self.line_name):
                 sbo_name = line[17:].strip()

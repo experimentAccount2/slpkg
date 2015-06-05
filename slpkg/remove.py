@@ -28,9 +28,9 @@ from __metadata__ import MetaData as _m
 
 
 def delete(path, packages):
-    '''
+    """
     Remove downloaded packages
-    '''
+    """
     if _m.del_all in ["on", "ON"]:
         for pkg in packages:
             os.remove(path + pkg)

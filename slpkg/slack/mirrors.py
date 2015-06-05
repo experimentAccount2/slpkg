@@ -29,10 +29,10 @@ from slack_version import slack_ver
 
 
 def mirrors(name, location):
-    '''
+    """
     Select Slackware official mirror packages
     based architecture and version.
-    '''
+    """
     rel = _m.slack_rel
     ver = slack_ver()
     repo = Repo().slack()

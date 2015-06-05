@@ -34,16 +34,16 @@ class URL(object):
         self.link = link
 
     def reading(self):
-        '''
+        """
         Open url and read
-        '''
+        """
         try:
             f = urllib2.urlopen(self.link)
             return f.read()
         except (urllib2.URLError, ValueError):
             print("\n{0}Can't read file '{1}'{2}".format(
-                _m.color['RED'], self.link.split('/')[-1], _m.color['ENDC']))
-            return ' '
+                _m.color["RED"], self.link.split("/")[-1], _m.color["ENDC"]))
+            return " "
         except KeyboardInterrupt:
             print("")   # new line at exit
             sys.exit(0)

@@ -36,9 +36,9 @@ from search import sbo_search_pkg
 
 
 def sbo_upgrade(skip):
-    '''
+    """
     Return packages for upgrade
-    '''
+    """
     try:
         Msg().checking()
         upgrade_names = []
@@ -61,9 +61,9 @@ def sbo_upgrade(skip):
 
 
 def sbo_list():
-    '''
+    """
     Return all SBo packages
-    '''
+    """
     sbo_packages = []
     for pkg in os.listdir(_m.pkg_path):
         if pkg.endswith("_SBo"):

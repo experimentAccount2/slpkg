@@ -38,14 +38,14 @@ class Download(object):
         self.wget_options = _m.wget_options
 
     def start(self):
-        '''
+        """
         Download files usign wget.
-        '''
+        """
         dwn_count = 1
         for dwn in self.url:
             self.file_name = dwn.split("/")[-1]
             print("\n[{0}/{1}][ {2}Download{3} ] --> {4}\n".format(
-                dwn_count, len(self.url), _m.color['GREEN'], _m.color['ENDC'],
+                dwn_count, len(self.url), _m.color["GREEN"], _m.color["ENDC"],
                 self.file_name))
             try:
                 subprocess.call("wget {0} --directory-prefix={1} {2}".format(
@@ -58,11 +58,11 @@ class Download(object):
 
     def _check_if_downloaded(self):
         if not os.path.isfile(self.path + self.file_name):
-            print('')
+            print("")
             Msg().template(78)
             print("| Download '{0}' file {1}[ FAILED ]{2}".format(
-                self.file_name, _m.color['RED'], _m.color['ENDC']))
+                self.file_name, _m.color["RED"], _m.color["ENDC"]))
             Msg().template(78)
-            print('')
-            if not Msg().answer() in ['y', 'Y']:
+            print("")
+            if not Msg().answer() in ["y", "Y"]:
                 sys.exit(0)

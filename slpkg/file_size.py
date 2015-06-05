@@ -33,21 +33,21 @@ class FileSize(object):
         self.registry = registry
 
     def server(self):
-        '''
+        """
         Returns the size of remote files
-        '''
+        """
         try:
             tar = urllib2.urlopen(self.registry)
             meta = tar.info()
             return int(meta.getheaders("Content-Length")[0])
         except (urllib2.URLError, IndexError):
-            return ' '
+            return " "
         except KeyboardInterrupt:
             print("")   # new line at cancel
             sys.exit(0)
 
     def local(self):
-        '''
+        """
         Returns the size of local files
-        '''
+        """
         return os.path.getsize(self.registry)

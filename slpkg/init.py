@@ -61,9 +61,9 @@ class Initialization(object):
             os.makedirs(self.slpkg_tmp_patches)
 
     def custom(self, name):
-        '''
+        """
         Creating user select repository local library
-        '''
+        """
         repo = Repo().custom_repository()[name]
         log = self.log_path + name + "/"
         lib = self.lib_path + "{0}_repo/".format(name)
@@ -83,12 +83,12 @@ class Initialization(object):
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
         self.remote(log, log_file, changelog_txt, lib, lib_file,
-                    packages_txt, md5_file, checksums_md5, '', '')
+                    packages_txt, md5_file, checksums_md5, "", "")
 
     def slack(self):
-        '''
+        """
         Creating slack local libraries
-        '''
+        """
         log = self.log_path + "slack/"
         lib = self.lib_path + "slack_repo/"
         lib_file = "PACKAGES.TXT"
@@ -114,12 +114,12 @@ class Initialization(object):
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, '', '')
+                    md5_file, checksums_md5, "", "")
 
     def sbo(self):
-        '''
+        """
         Creating sbo local library
-        '''
+        """
         repo = Repo().sbo()
         log = self.log_path + "sbo/"
         lib = self.lib_path + "sbo_repo/"
@@ -141,9 +141,9 @@ class Initialization(object):
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
     def rlw(self):
-        '''
+        """
         Creating rlw local library
-        '''
+        """
         repo = Repo().rlw()
         log = self.log_path + "rlw/"
         lib = self.lib_path + "rlw_repo/"
@@ -163,12 +163,12 @@ class Initialization(object):
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, '', '')
+                    md5_file, checksums_md5, "", "")
 
     def alien(self):
-        '''
+        """
         Creating alien local library
-        '''
+        """
         repo = Repo().alien()
         log = self.log_path + "alien/"
         lib = self.lib_path + "alien_repo/"
@@ -188,12 +188,12 @@ class Initialization(object):
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, '', '')
+                    md5_file, checksums_md5, "", "")
 
     def slacky(self):
-        '''
+        """
         Creating alien local library
-        '''
+        """
         ar = ""
         arch = os.uname()[4]
         repo = Repo().slacky()
@@ -221,12 +221,12 @@ class Initialization(object):
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, '', '')
+                    md5_file, checksums_md5, "", "")
 
     def studio(self):
-        '''
+        """
         Creating alien local library
-        '''
+        """
         ar = ""
         arch = os.uname()[4]
         repo = Repo().studioware()
@@ -253,12 +253,12 @@ class Initialization(object):
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, '', '')
+                    md5_file, checksums_md5, "", "")
 
     def slackr(self):
-        '''
+        """
         Creating slackers local library
-        '''
+        """
         repo = Repo().slackers()
         log = self.log_path + "slackr/"
         lib = self.lib_path + "slackr_repo/"
@@ -282,9 +282,9 @@ class Initialization(object):
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
     def slonly(self):
-        '''
+        """
         Creating slackers local library
-        '''
+        """
         ar = "{0}-x86".format(slack_ver())
         arch = os.uname()[4]
         repo = Repo().slackonly()
@@ -310,12 +310,12 @@ class Initialization(object):
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, '', '')
+                    md5_file, checksums_md5, "", "")
 
     def ktown(self):
-        '''
+        """
         Creating alien ktown local library
-        '''
+        """
         repo = Repo().ktown()
         log = self.log_path + "ktown/"
         lib = self.lib_path + "ktown_repo/"
@@ -335,12 +335,12 @@ class Initialization(object):
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, '', '')
+                    md5_file, checksums_md5, "", "")
 
     def multi(self):
-        '''
+        """
         Creating alien multilib local library
-        '''
+        """
         repo = Repo().multi()
         log = self.log_path + "multi/"
         lib = self.lib_path + "multi_repo/"
@@ -360,12 +360,12 @@ class Initialization(object):
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, '', '')
+                    md5_file, checksums_md5, "", "")
 
     def slacke(self):
-        '''
+        """
         Creating Slacke local library
-        '''
+        """
         ar = ""
         arch = os.uname()[4]
         repo = Repo().slacke()
@@ -394,12 +394,12 @@ class Initialization(object):
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, '', '')
+                    md5_file, checksums_md5, "", "")
 
     def salix(self):
-        '''
+        """
         Creating SalixOS local library
-        '''
+        """
         ar = "i486"
         arch = os.uname()[4]
         repo = Repo().salix()
@@ -423,12 +423,12 @@ class Initialization(object):
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, '', '')
+                    md5_file, checksums_md5, "", "")
 
     def slackl(self):
-        '''
+        """
         Creating SalixOS local library
-        '''
+        """
         ar = "i486"
         arch = os.uname()[4]
         repo = Repo().slackel()
@@ -452,12 +452,12 @@ class Initialization(object):
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, '', '')
+                    md5_file, checksums_md5, "", "")
 
     def rested(self):
-        '''
+        """
         Creating alien restricted local library
-        '''
+        """
         repo = Repo().restricted()
         log = self.log_path + "rested/"
         lib = self.lib_path + "rested_repo/"
@@ -477,12 +477,12 @@ class Initialization(object):
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, '', '')
+                    md5_file, checksums_md5, "", "")
 
     def write_file(self, path, archive, contents_txt):
-        '''
+        """
         Create local file
-        '''
+        """
         toolbar_width, index = 2, 0
         with open("{0}{1}".format(path, archive), "w") as f:
             for line in contents_txt.splitlines():
@@ -492,10 +492,10 @@ class Initialization(object):
             f.close()
 
     def write(self, path, data_file, file_url):
-        '''
+        """
         Write repositories files in /var/lib/slpkg
         and /var/log/slpkg
-        '''
+        """
         FILE_TXT = ""
         if not os.path.isfile(path + data_file):
             for fu in file_url.split():
@@ -503,7 +503,7 @@ class Initialization(object):
             self.write_file(path, data_file, FILE_TXT)
 
     def remote(self, *args):
-        '''
+        """
         args[0] = log path
         args[1] = log_file
         args[2] = changelog_txt URL
@@ -517,7 +517,7 @@ class Initialization(object):
 
         We take the size of ChangeLog.txt from the server and locally.
         If the two files differ in size delete and replace all files with new.
-        '''
+        """
         PACKAGES_TXT = ""
         server = FileSize(args[2]).server()
         local = FileSize(args[0] + args[1]).local()
@@ -532,10 +532,10 @@ class Initialization(object):
             # remove FILELIST.TXT
             if args[8]:
                 os.remove("{0}{1}".format(args[3], args[8]))
-            # read PACKAGES_TXT URL's
+            # read PACKAGES_TXT URL"s
             for fu in args[5].split():
                 PACKAGES_TXT += URL(fu).reading()
-            # read CHANGELOG_TXX URL's
+            # read CHANGELOG_TXX URL"s
             CHANGELOG_TXT = URL(args[2]).reading()
             # create PACKAGES.txt file
             self.write_file(args[3], args[4], PACKAGES_TXT)
@@ -551,18 +551,18 @@ class Initialization(object):
                 self.write_file(args[3], args[8], FILELIST_TXT)
 
     def upgrade(self):
-        '''
+        """
         Remove all package lists with changelog and checksums files
         and create lists again
-        '''
+        """
         for repo in _m.repositories:
-            changelogs = '{0}{1}{2}'.format(self.log_path, repo,
-                                            '/ChangeLog.txt')
+            changelogs = "{0}{1}{2}".format(self.log_path, repo,
+                                            "/ChangeLog.txt")
             if os.path.isfile(changelogs):
                 os.remove(changelogs)
-            if os.path.isdir(self.lib_path + '{0}_repo/'.format(repo)):
-                for f in os.listdir(self.lib_path + '{0}_repo/'.format(repo)):
-                    files = '{0}{1}_repo/{2}'.format(self.lib_path, repo, f)
+            if os.path.isdir(self.lib_path + "{0}_repo/".format(repo)):
+                for f in os.listdir(self.lib_path + "{0}_repo/".format(repo)):
+                    files = "{0}{1}_repo/{2}".format(self.lib_path, repo, f)
                     if os.path.isfile(files):
                         os.remove(files)
         Update().repository()
@@ -571,31 +571,31 @@ class Initialization(object):
 class Update(object):
 
     def __init__(self):
-        self._init = 'Initialization()'
+        self._init = "Initialization()"
 
     def repository(self):
-        '''
+        """
         Update all repositories lists
-        '''
+        """
         print("\nCheck and update repositories:\n")
         for repo in _m.repositories:
             sys.stdout.write("{0}Update repository {1} ...{2}".format(
-                _m.color['GREY'], repo, _m.color['ENDC']))
+                _m.color["GREY"], repo, _m.color["ENDC"]))
             sys.stdout.flush()
             if repo in _m.default_repositories:
-                exec('{0}.{1}()'.format(self._init, repo))
+                exec("{0}.{1}()".format(self._init, repo))
             else:
                 Initialization().custom(repo)
-            sys.stdout.write("{0}Done{1}\n".format(_m.color['GREY'],
-                                                   _m.color['ENDC']))
+            sys.stdout.write("{0}Done{1}\n".format(_m.color["GREY"],
+                                                   _m.color["ENDC"]))
         print("")   # new line at end
         sys.exit(0)
 
 
 def check_exists_repositories():
-    '''
+    """
     Checking if repositories exists by PACKAGES.TXT file
-    '''
+    """
     update = False
     pkg_list = "PACKAGES.TXT"
     for repo in _m.repositories:

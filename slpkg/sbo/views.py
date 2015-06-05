@@ -60,10 +60,10 @@ class SBoNetwork(object):
         Msg().done()
 
     def view(self):
-        '''
+        """
         View SlackBuild package, read or install them
         from slackbuilds.org
-        '''
+        """
         if self.sbo_url:
             prgnam = ("{0}-{1}".format(self.name, self.sbo_version))
             self.view_sbo(
@@ -74,27 +74,27 @@ class SBoNetwork(object):
             FAULT = self.error_uns()
             while True:
                 choice = self.read_choice()
-                if choice in ['D', 'd']:
+                if choice in ["D", "d"]:
                     Download("", self.dwn_srcs).start()
                     break
-                elif choice in ['R', 'r']:
+                elif choice in ["R", "r"]:
                     README = Read(self.sbo_url).readme("README")
                     fill = self.fill_pager(README)
                     pydoc.pager(README + fill)
-                elif choice in ['F', 'f']:
+                elif choice in ["F", "f"]:
                     info = Read(self.sbo_url).info(self.name, ".info")
                     fill = self.fill_pager(info)
                     pydoc.pager(info + fill)
-                elif choice in ['S', 's']:
+                elif choice in ["S", "s"]:
                     SlackBuild = Read(self.sbo_url).slackbuild(self.name,
                                                                ".SlackBuild")
                     fill = self.fill_pager(SlackBuild)
                     pydoc.pager(SlackBuild + fill)
-                elif choice in ['B', 'b']:
+                elif choice in ["B", "b"]:
                     self.build(FAULT)
                     delete(self.build_folder)
                     break
-                elif choice in ['I', 'i']:
+                elif choice in ["I", "i"]:
                     if not find_package(prgnam + _m.sp, _m.pkg_path):
                         self.build(FAULT)
                         self.install(prgnam)
@@ -112,48 +112,48 @@ class SBoNetwork(object):
 
     @staticmethod
     def view_sbo(*args):
-        '''
+        """
         View slackbuild.org
-        '''
+        """
         color = _m.color
         print("")   # new line at start
         Msg().template(78)
-        print("| {0}Package {1}{2}{3} --> {4}".format(color['GREEN'],
-                                                      color['CYAN'], args[0],
-                                                      color['GREEN'],
-                                                      color['ENDC'] + args[1]))
+        print("| {0}Package {1}{2}{3} --> {4}".format(color["GREEN"],
+                                                      color["CYAN"], args[0],
+                                                      color["GREEN"],
+                                                      color["ENDC"] + args[1]))
         Msg().template(78)
-        print("| {0}Description : {1}{2}".format(color['GREEN'],
-                                                 color['ENDC'], args[2]))
-        print("| {0}SlackBuild : {1}{2}".format(color['GREEN'], color['ENDC'],
+        print("| {0}Description : {1}{2}".format(color["GREEN"],
+                                                 color["ENDC"], args[2]))
+        print("| {0}SlackBuild : {1}{2}".format(color["GREEN"], color["ENDC"],
                                                 args[3]))
-        print("| {0}Sources : {1}{2}".format(color['GREEN'], color['ENDC'],
+        print("| {0}Sources : {1}{2}".format(color["GREEN"], color["ENDC"],
                                              args[4]))
-        print("| {0}Requirements : {1}{2}".format(color['YELLOW'],
-                                                  color['ENDC'],
+        print("| {0}Requirements : {1}{2}".format(color["YELLOW"],
+                                                  color["ENDC"],
                                                   ", ".join(args[5])))
         Msg().template(78)
         print(" {0}R{1}EADME               View the README file".format(
-            color['RED'], color['ENDC']))
+            color["RED"], color["ENDC"]))
         print(" {0}S{1}lackBuild           View the SlackBuild file".format(
-            color['RED'], color['ENDC']))
+            color["RED"], color["ENDC"]))
         print(" In{0}f{1}o                 View the Info file".format(
-            color['RED'], color['ENDC']))
+            color["RED"], color["ENDC"]))
         print(" {0}D{1}ownload             Download this package".format(
-            color['RED'], color['ENDC']))
+            color["RED"], color["ENDC"]))
         print(" {0}B{1}uild                Download and build".format(
-            color['RED'], color['ENDC']))
+            color["RED"], color["ENDC"]))
         print(" {0}I{1}nstall              Download/Build/Install".format(
-            color['RED'], color['ENDC']))
-        print(" {0}Q{1}uit                 Quit\n".format(color['RED'],
-                                                          color['ENDC']))
+            color["RED"], color["ENDC"]))
+        print(" {0}Q{1}uit                 Quit\n".format(color["RED"],
+                                                          color["ENDC"]))
 
     @staticmethod
     def fill_pager(page):
-        '''
+        """
         Fix pager spaces
-        '''
-        tty_size = os.popen('stty size', 'r').read().split()
+        """
+        tty_size = os.popen("stty size", "r").read().split()
         rows = int(tty_size[0]) - 1
         lines = sum(1 for line in page.splitlines())
         diff = rows - lines
@@ -164,33 +164,33 @@ class SBoNetwork(object):
             return ""
 
     def read_choice(self):
-        '''
+        """
         Return choice
-        '''
+        """
         try:
             choice = raw_input(" {0}Choose an option: {1}".format(
-                _m.color['GREY'], _m.color['ENDC']))
+                _m.color["GREY"], _m.color["ENDC"]))
         except KeyboardInterrupt:
             print("")   # new line at exit
             sys.exit(0)
         return choice
 
     def error_uns(self):
-        '''
+        """
         Check if package supported by arch
         before proceed to install
-        '''
+        """
         UNST = ["UNSUPPORTED", "UNTESTED"]
         if "".join(self.source_dwn) in UNST:
             return "".join(self.source_dwn)
 
     def build(self, FAULT):
-        '''
+        """
         Only build and create Slackware package
-        '''
+        """
         if FAULT:
-            print("\n{0}The package {1} {2}\n".format(_m.color['RED'], FAULT,
-                                                      _m.color['ENDC']))
+            print("\n{0}The package {1} {2}\n".format(_m.color["RED"], FAULT,
+                                                      _m.color["ENDC"]))
             sys.exit(0)
         sources = []
         if not os.path.exists(_m.build_path):
@@ -203,10 +203,10 @@ class SBoNetwork(object):
         BuildPackage(script, sources, _m.build_path).build()
 
     def install(self, prgnam):
-        '''
+        """
         Install Slackware package found in /tmp
         directory.
-        '''
+        """
         binary_list = []
         for search in find_package(prgnam, _m.output):
             if "_SBo" in search:
@@ -216,7 +216,7 @@ class SBoNetwork(object):
             except ValueError:
                 Msg().build_FAILED(self.sbo_url, prgnam)
                 sys.exit(0)
-            print("[ {0}Installing{1} ] --> {2}".format(_m.color['GREEN'],
-                                                        _m.color['ENDC'],
+            print("[ {0}Installing{1} ] --> {2}".format(_m.color["GREEN"],
+                                                        _m.color["ENDC"],
                                                         self.name))
             PackageManager(binary).upgrade()

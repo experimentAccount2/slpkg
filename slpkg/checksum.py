@@ -30,26 +30,26 @@ from __metadata__ import MetaData as _m
 
 
 def check_md5(pkg_md5, src_file):
-    '''
+    """
     MD5 Checksum
-    '''
+    """
     if _m.checkmd5 in ["on", "ON"]:
-        print('')
+        print("")
         md5s = md5(src_file)
         if pkg_md5 != md5s:
             Msg().template(78)
             print("| MD5SUM check for {0} [ {1}FAILED{2} ]".format(
-                src_file.split("/")[-1], _m.color['RED'], _m.color['ENDC']))
+                src_file.split("/")[-1], _m.color["RED"], _m.color["ENDC"]))
             Msg().template(78)
             print("| Expected: {0}".format(md5s))
             print("| Found: {0}".format(pkg_md5))
             Msg().template(78)
-            print('')
-            if not Msg().answer() in ['y', 'Y']:
+            print("")
+            if not Msg().answer() in ["y", "Y"]:
                 sys.exit(0)
         else:
             Msg().template(78)
             print("| MD5SUM check for {0} [ {1}PASSED{2} ]".format(
-                src_file.split("/")[-1], _m.color['GREEN'], _m.color['ENDC']))
+                src_file.split("/")[-1], _m.color["GREEN"], _m.color["ENDC"]))
             Msg().template(78)
-        print('')   # new line after pass checksum
+        print("")   # new line after pass checksum

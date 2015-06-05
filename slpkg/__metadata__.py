@@ -28,18 +28,14 @@ import getpass
 
 
 def s_user(user):
-    '''
-    Check for root user
-    '''
+    """Check for root user"""
     if user != "root":
         print("\nslpkg: error: must have root privileges\n")
         sys.exit(0)
 
 
 def remove_repositories(repositories, default_repositories):
-    '''
-    Remove no default repositories
-    '''
+    """Remove no default repositories"""
     repos = []
     for repo in repositories:
         if repo in default_repositories:
@@ -48,9 +44,7 @@ def remove_repositories(repositories, default_repositories):
 
 
 def update_repositories(repositories, conf_path):
-    '''
-    Upadate with user custom repositories
-    '''
+    """Upadate with user custom repositories"""
     repo_file = "{0}custom-repositories".format(conf_path)
     if os.path.isfile(repo_file):
         f = open(repo_file, "r")
@@ -64,23 +58,23 @@ def update_repositories(repositories, conf_path):
 
 
 def grab_sub_repo(repositories, repos):
-    '''
+    """
     Grab SUB_REPOSITORY
-    '''
+    """
     for i, repo in enumerate(repositories):
         if repos in repo:
-            sub = repositories[i].replace(repos, '')
+            sub = repositories[i].replace(repos, "")
             repositories[i] = repos
             return sub
 
 
 def select_slack_release(slack_rel):
-    '''
+    """
     Warning message if Slackware release not defined or
     defined wrong
-    '''
-    if slack_rel not in ['stable', 'current']:
-        return 'FAULT'
+    """
+    if slack_rel not in ["stable", "current"]:
+        return "FAULT"
     return slack_rel
 
 
@@ -96,7 +90,7 @@ class MetaData(object):
     s_user(getpass.getuser())
 
     # Default Slackware release
-    slack_rel = 'stable'
+    slack_rel = "stable"
 
     # Configuration path
     conf_path = "/etc/{0}/".format(__all__)
@@ -107,65 +101,65 @@ class MetaData(object):
 
     # Default configuration values
     _conf_slpkg = {
-        'RELEASE': 'stable',
-        'REPOSITORIES': ['slack', 'sbo', 'rlw', 'alien',
-                         'slacky', 'studio', 'slackr', 'slonly',
-                         'ktown{latest}', 'multi', 'slacke{18}',
-                         'salix', 'slackl', 'rested'],
-        'BUILD_PATH': '/tmp/slpkg/build/',
-        'PACKAGES': '/tmp/slpkg/packages/',
-        'PATCHES': '/tmp/slpkg/patches/',
-        'CHECKMD5': 'on',
-        'DEL_ALL': 'on',
-        'DEL_BUILD': 'off',
-        'SBO_BUILD_LOG': 'on',
-        'DEFAULT_ANSWER': 'n',
-        'REMOVE_DEPS_ANSWER': 'n',
-        'SKIP_UNST': 'n',
-        'RSL_DEPS': 'on',
-        'DEL_DEPS': 'off',
-        'USE_COLORS': 'on',
-        'WGET_OPTIONS': '-c -N',
-        'SLACKPKG_LOG': 'on',
-        'ONLY_INSTALLED': 'off'
+        "RELEASE": "stable",
+        "REPOSITORIES": ["slack", "sbo", "rlw", "alien",
+                         "slacky", "studio", "slackr", "slonly",
+                         "ktown{latest}", "multi", "slacke{18}",
+                         "salix", "slackl", "rested"],
+        "BUILD_PATH": "/tmp/slpkg/build/",
+        "PACKAGES": "/tmp/slpkg/packages/",
+        "PATCHES": "/tmp/slpkg/patches/",
+        "CHECKMD5": "on",
+        "DEL_ALL": "on",
+        "DEL_BUILD": "off",
+        "SBO_BUILD_LOG": "on",
+        "DEFAULT_ANSWER": "n",
+        "REMOVE_DEPS_ANSWER": "n",
+        "SKIP_UNST": "n",
+        "RSL_DEPS": "on",
+        "DEL_DEPS": "off",
+        "USE_COLORS": "on",
+        "WGET_OPTIONS": "-c -N",
+        "SLACKPKG_LOG": "on",
+        "ONLY_INSTALLED": "off"
     }
 
-    default_repositories = ['slack', 'sbo', 'rlw', 'alien', 'slacky', 'studio',
-                            'slackr', 'slonly', 'ktown', 'multi', 'slacke',
-                            'salix', 'slackl', 'rested']
+    default_repositories = ["slack", "sbo", "rlw", "alien", "slacky", "studio",
+                            "slackr", "slonly", "ktown", "multi", "slacke",
+                            "salix", "slackl", "rested"]
 
     # read value from configuration file
-    if os.path.isfile('%s%s' % (conf_path, 'slpkg.conf')):
-        f = open('%s%s' % (conf_path, 'slpkg.conf'), 'r')
+    if os.path.isfile("%s%s" % (conf_path, "slpkg.conf")):
+        f = open("%s%s" % (conf_path, "slpkg.conf"), "r")
         conf = f.read()
         f.close()
         for line in conf.splitlines():
             line = line.lstrip()
-            if line and not line.startswith('#'):
-                _conf_slpkg[line.split('=')[0]] = line.split('=')[1]
+            if line and not line.startswith("#"):
+                _conf_slpkg[line.split("=")[0]] = line.split("=")[1]
 
     # Set values from configuration file
-    slack_rel = _conf_slpkg['RELEASE']
-    if isinstance(_conf_slpkg['REPOSITORIES'], basestring):
-        repositories = _conf_slpkg['REPOSITORIES'].split(',')
+    slack_rel = _conf_slpkg["RELEASE"]
+    if isinstance(_conf_slpkg["REPOSITORIES"], basestring):
+        repositories = _conf_slpkg["REPOSITORIES"].split(",")
     else:
-        repositories = _conf_slpkg['REPOSITORIES']
-    build_path = _conf_slpkg['BUILD_PATH']
-    slpkg_tmp_packages = _conf_slpkg['PACKAGES']
-    slpkg_tmp_patches = _conf_slpkg['PATCHES']
-    checkmd5 = _conf_slpkg['CHECKMD5']
-    del_all = _conf_slpkg['DEL_ALL']
-    del_build = _conf_slpkg['DEL_BUILD']
-    sbo_build_log = _conf_slpkg['SBO_BUILD_LOG']
-    default_answer = _conf_slpkg['DEFAULT_ANSWER']
-    remove_deps_answer = _conf_slpkg['REMOVE_DEPS_ANSWER']
-    skip_unst = _conf_slpkg['SKIP_UNST']
-    rsl_deps = _conf_slpkg['RSL_DEPS']
-    del_deps = _conf_slpkg['DEL_DEPS']
-    use_colors = _conf_slpkg['USE_COLORS']
-    wget_options = _conf_slpkg['WGET_OPTIONS']
-    slackpkg_log = _conf_slpkg['SLACKPKG_LOG']
-    only_installed = _conf_slpkg['ONLY_INSTALLED']
+        repositories = _conf_slpkg["REPOSITORIES"]
+    build_path = _conf_slpkg["BUILD_PATH"]
+    slpkg_tmp_packages = _conf_slpkg["PACKAGES"]
+    slpkg_tmp_patches = _conf_slpkg["PATCHES"]
+    checkmd5 = _conf_slpkg["CHECKMD5"]
+    del_all = _conf_slpkg["DEL_ALL"]
+    del_build = _conf_slpkg["DEL_BUILD"]
+    sbo_build_log = _conf_slpkg["SBO_BUILD_LOG"]
+    default_answer = _conf_slpkg["DEFAULT_ANSWER"]
+    remove_deps_answer = _conf_slpkg["REMOVE_DEPS_ANSWER"]
+    skip_unst = _conf_slpkg["SKIP_UNST"]
+    rsl_deps = _conf_slpkg["RSL_DEPS"]
+    del_deps = _conf_slpkg["DEL_DEPS"]
+    use_colors = _conf_slpkg["USE_COLORS"]
+    wget_options = _conf_slpkg["WGET_OPTIONS"]
+    slackpkg_log = _conf_slpkg["SLACKPKG_LOG"]
+    only_installed = _conf_slpkg["ONLY_INSTALLED"]
 
     # Remove any gaps
     repositories = [repo.strip() for repo in repositories]
@@ -174,8 +168,8 @@ class MetaData(object):
     slack_rel = select_slack_release(slack_rel)
 
     # Grap sub repositories
-    ktown_kde_repo = grab_sub_repo(repositories, 'ktown')
-    slacke_sub_repo = grab_sub_repo(repositories, 'slacke')
+    ktown_kde_repo = grab_sub_repo(repositories, "ktown")
+    slacke_sub_repo = grab_sub_repo(repositories, "slacke")
 
     # remove no default repositories
     repositories = remove_repositories(repositories, default_repositories)
@@ -184,22 +178,22 @@ class MetaData(object):
     update_repositories(repositories, conf_path)
 
     color = {
-        'RED': '\x1b[31m',
-        'GREEN': '\x1b[32m',
-        'YELLOW': '\x1b[33m',
-        'CYAN': '\x1b[36m',
-        'GREY': '\x1b[38;5;247m',
-        'ENDC': '\x1b[0m'
+        "RED": "\x1b[31m",
+        "GREEN": "\x1b[32m",
+        "YELLOW": "\x1b[33m",
+        "CYAN": "\x1b[36m",
+        "GREY": "\x1b[38;5;247m",
+        "ENDC": "\x1b[0m"
     }
 
     if use_colors in ["off", "OFF"]:
         color = {
-            'RED': '',
-            'GREEN': '',
-            'YELLOW': '',
-            'CYAN': '',
-            'GREY': '',
-            'ENDC': ''
+            "RED": "",
+            "GREEN": "",
+            "YELLOW": "",
+            "CYAN": "",
+            "GREY": "",
+            "ENDC": ""
         }
 
     CHECKSUMS_link = ("https://raw.githubusercontent.com/{0}/{1}/"
@@ -234,8 +228,8 @@ class MetaData(object):
 
     # get sbo OUTPUT enviroment variable
     try:
-        output = os.environ['OUTPUT']
+        output = os.environ["OUTPUT"]
     except KeyError:
         output = tmp
-    if not output.endswith('/'):
-        output = output + '/'
+    if not output.endswith("/"):
+        output = output + "/"

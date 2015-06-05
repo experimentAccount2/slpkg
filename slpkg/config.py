@@ -34,41 +34,41 @@ class Config(object):
         self.config_file = "/etc/slpkg/slpkg.conf"
 
     def view(self):
-        '''
+        """
         View slpkg config file
-        '''
+        """
         print("")   # new line at start
         conf_args = [
-            'RELEASE',
-            'REPOSITORIES',
-            'BUILD_PATH',
-            'PACKAGES',
-            'PATCHES',
-            'CHECKMD5',
-            'DEL_ALL',
-            'DEL_BUILD',
-            'SBO_BUILD_LOG',
-            'DEFAULT_ANSWER',
-            'REMOVE_DEPS_ANSWER',
-            'SKIP_UNST',
-            'RSL_DEPS',
-            'DEL_DEPS',
-            'USE_COLORS',
-            'WGET_OPTIONS',
-            'SLACKPKG_LOG',
-            'ONLY_INSTALLED'
+            "RELEASE",
+            "REPOSITORIES",
+            "BUILD_PATH",
+            "PACKAGES",
+            "PATCHES",
+            "CHECKMD5",
+            "DEL_ALL",
+            "DEL_BUILD",
+            "SBO_BUILD_LOG",
+            "DEFAULT_ANSWER",
+            "REMOVE_DEPS_ANSWER",
+            "SKIP_UNST",
+            "RSL_DEPS",
+            "DEL_DEPS",
+            "USE_COLORS",
+            "WGET_OPTIONS",
+            "SLACKPKG_LOG",
+            "ONLY_INSTALLED"
         ]
         read_conf = Utils().read_file(self.config_file)
         for line in read_conf.splitlines():
             if not line.startswith("#") and line.split("=")[0] in conf_args:
                 print(line)
             else:
-                print("{0}{1}{2}".format(_m.color['CYAN'], line,
-                                         _m.color['ENDC']))
+                print("{0}{1}{2}".format(_m.color["CYAN"], line,
+                                         _m.color["ENDC"]))
         print("")   # new line at end
 
     def edit(self, editor):
-        '''
+        """
         Edit configuration file
-        '''
+        """
         subprocess.call("{0} {1}".format(editor, self.config_file), shell=True)

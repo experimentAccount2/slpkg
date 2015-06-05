@@ -31,13 +31,13 @@ from __metadata__ import MetaData as _m
 
 
 def find_from_repos(pkg):
-    '''
+    """
     Find packages from enabled repositories
-    '''
+    """
     cache = ""
     count_pkg = count_repo = 0
     print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
-        _m.color['CYAN'], ", ".join(pkg), _m.color['ENDC']))
+        _m.color["CYAN"], ", ".join(pkg), _m.color["ENDC"]))
     Msg().template(78)
     print("| {0}  {1}{2}{3}".format("Repository", "Package", " " * 54, "Size"))
     Msg().template(78)
@@ -58,16 +58,16 @@ def find_from_repos(pkg):
                             find + ver, " " * (53 - len(find + ver)),
                             size))
         print("\n{0}Total found {1} packages in {2} repositories.{3}\n".format(
-            _m.color['GREY'], count_pkg, count_repo, _m.color['ENDC']))
+            _m.color["GREY"], count_pkg, count_repo, _m.color["ENDC"]))
     except KeyboardInterrupt:
         print("")   # new line at exit
         sys.exit(0)
 
 
 def sbo_version(repo, find):
-    '''
+    """
     Add version to SBo packages
-    '''
+    """
     ver = ""
     if repo == "sbo":
         ver = "-" + SBoGrep(find).version()

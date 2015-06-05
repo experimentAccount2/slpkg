@@ -26,9 +26,9 @@ import re
 
 
 def slack_ver():
-    '''
+    """
     Open file and read Slackware version
-    '''
+    """
     with open("/etc/slackware-version", "r") as f:
         sv = f.read()
         f.close()

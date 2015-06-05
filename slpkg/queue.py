@@ -38,10 +38,10 @@ from pkg.manager import PackageManager
 
 
 class QueuePkgs(object):
-    '''
+    """
     Class to list, add or remove packages in queue,
     also build or install.
-    '''
+    """
     def __init__(self):
         queue_file = [
             "# In this file you can create a list of\n",
@@ -63,10 +63,10 @@ class QueuePkgs(object):
         self.queued = Utils().read_file(self.queue_list)
 
     def packages(self):
-        '''
+        """
         Return queue list from /var/lib/queue/queue_list
         file.
-        '''
+        """
         queue_list = []
         for read in self.queued.splitlines():
             read = read.lstrip()
@@ -75,22 +75,22 @@ class QueuePkgs(object):
         return queue_list
 
     def listed(self):
-        '''
+        """
         Print packages from queue
-        '''
+        """
         print("\nPackages in queue:\n")
         for pkg in self.packages():
             if pkg:
-                print("{0}{1}{2}".format(_m.color['GREEN'], pkg,
-                                         _m.color['ENDC']))
+                print("{0}{1}{2}".format(_m.color["GREEN"], pkg,
+                                         _m.color["ENDC"]))
                 self.quit = True
         if self.quit:
             print("")   # new line at exit
 
     def add(self, pkgs):
-        '''
+        """
         Add packages in queue if not exist
-        '''
+        """
         queue_list = self.packages()
         pkgs = list(OrderedDict.fromkeys(pkgs))
         print("\nAdd packages in queue:\n")
@@ -98,22 +98,22 @@ class QueuePkgs(object):
             for pkg in pkgs:
                 find = sbo_search_pkg(pkg)
                 if pkg not in queue_list and find is not None:
-                    print("{0}{1}{2}".format(_m.color['GREEN'], pkg,
-                                             _m.color['ENDC']))
+                    print("{0}{1}{2}".format(_m.color["GREEN"], pkg,
+                                             _m.color["ENDC"]))
                     queue.write(pkg + "\n")
                     self.quit = True
                 else:
-                    print("{0}{1}{2}".format(_m.color['RED'], pkg,
-                                             _m.color['ENDC']))
+                    print("{0}{1}{2}".format(_m.color["RED"], pkg,
+                                             _m.color["ENDC"]))
                     self.quit = True
             queue.close()
         if self.quit:
             print("")   # new line at exit
 
     def remove(self, pkgs):
-        '''
+        """
         Remove packages from queue
-        '''
+        """
         print("\nRemove packages from queue:\n")
         if pkgs == ["all"]:
             pkgs = self.packages()
@@ -122,17 +122,17 @@ class QueuePkgs(object):
                 if line not in pkgs:
                     queue.write(line + "\n")
                 else:
-                    print("{0}{1}{2}".format(_m.color['RED'], line,
-                                             _m.color['ENDC']))
+                    print("{0}{1}{2}".format(_m.color["RED"], line,
+                                             _m.color["ENDC"]))
                     self.quit = True
             queue.close()
         if self.quit:
             print("")   # new line at exit
 
     def build(self):
-        '''
+        """
         Build packages from queue
-        '''
+        """
         packages = self.packages()
         if packages:
             for pkg in packages:
@@ -153,9 +153,9 @@ class QueuePkgs(object):
             print("\nPackages not found in the queue for building\n")
 
     def install(self):
-        '''
+        """
         Install packages from queue
-        '''
+        """
         packages = self.packages()
         if packages:
             print("")   # new line at start

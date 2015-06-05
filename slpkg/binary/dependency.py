@@ -40,10 +40,10 @@ class Dependencies(object):
         self.packages = Utils().package_name(PACKAGES_TXT, repo)
 
     def binary(self, name, resolve):
-        '''
+        """
         Build all dependencies of a package
-        '''
-        if _m.rsl_deps in ['on', 'ON'] and resolve:
+        """
+        if _m.rsl_deps in ["on", "ON"] and resolve:
             try:
                 sys.setrecursionlimit(10000)
                 dependencies = []

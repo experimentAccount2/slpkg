@@ -36,12 +36,12 @@ class Repo(object):
         self.repositories_list = Utils().read_file(self.repo_file)
 
     def add(self, repo, url):
-        '''
+        """
         Write custom repository name and url in a file
-        '''
+        """
         repo_name = []
-        if not url.endswith('/'):
-            url = url + '/'
+        if not url.endswith("/"):
+            url = url + "/"
         for line in self.repositories_list.splitlines():
             line = line.lstrip()
             if line and not line.startswith("#"):
@@ -56,20 +56,20 @@ class Repo(object):
             print("\nMaximum repository name length must be six (6) "
                   "characters\n")
             sys.exit(0)
-        elif not url.startswith('http') or url.startswith('ftp'):
+        elif not url.startswith("http") or url.startswith("ftp"):
             print("\nWrong type URL '{0}'\n".format(url))
             sys.exit(0)
         with open(self.repo_file, "a") as repos:
-            new_line = "  {0}{1}{2}\n".format(repo, ' ' * (10 - len(repo)), url)
+            new_line = "  {0}{1}{2}\n".format(repo, " " * (10 - len(repo)), url)
             repos.write(new_line)
         repos.close()
         print("\nRepository '{0}' successfully added\n".format(repo))
         sys.exit(0)
 
     def remove(self, repo):
-        '''
+        """
         Remove custom repository
-        '''
+        """
         rem_repo = False
         with open(self.repo_file, "w") as repos:
             for line in self.repositories_list.splitlines():
@@ -86,9 +86,9 @@ class Repo(object):
         sys.exit(0)
 
     def custom_repository(self):
-        '''
+        """
         Return dictionary with repo name and url
-        '''
+        """
         dict_repo = {}
         for line in self.repositories_list.splitlines():
             line = line.lstrip()
@@ -97,12 +97,12 @@ class Repo(object):
         return dict_repo
 
     def slack(self):
-        '''
+        """
         Official slackware repository
-        '''
+        """
         default = "http://mirrors.slackware.com/slackware/"
         if os.path.isfile("/etc/slpkg/slackware-mirrors"):
-            mirrors = Utils().read_file(_m.conf_path + 'slackware-mirrors')
+            mirrors = Utils().read_file(_m.conf_path + "slackware-mirrors")
             for line in mirrors.splitlines():
                 line = line.rstrip()
                 if not line.startswith("#") and line:
@@ -110,80 +110,80 @@ class Repo(object):
         return default
 
     def sbo(self):
-        '''
+        """
         SlackBuilds.org repository
-        '''
+        """
         return "http://slackbuilds.org/slackbuilds/"
 
     def rlw(self):
-        '''
-        Robby's repoisitory
-        '''
+        """
+        Robby"s repoisitory
+        """
         return "http://rlworkman.net/pkgs/"
 
     def alien(self):
-        '''
-        Alien's slackbuilds repository
-        '''
+        """
+        Alien"s slackbuilds repository
+        """
         return "http://www.slackware.com/~alien/slackbuilds/"
 
     def slacky(self):
-        '''
+        """
         Slacky.eu repository
-        '''
+        """
         return "http://repository.slacky.eu/"
 
     def studioware(self):
-        '''
+        """
         Studioware repository
-        '''
+        """
         return "http://studioware.org/files/packages/"
 
     def slackers(self):
-        '''
+        """
         Slackers.it repository
-        '''
+        """
         return "http://www.slackers.it/repository/"
 
     def slackonly(self):
-        '''
+        """
         Slackonly.com repository
-        '''
+        """
         return "https://slackonly.com/pub/packages/"
 
     def ktown(self):
-        '''
-        Alien's ktown repository
-        '''
+        """
+        Alien"s ktown repository
+        """
         return "http://alien.slackbook.org/ktown/"
 
     def multi(self):
-        '''
-        Alien's multilib repository
-        '''
+        """
+        Alien"s multilib repository
+        """
         return "http://www.slackware.com/~alien/multilib/"
 
     def slacke(self):
-        '''
+        """
         Slacke slacke{17|18} repository
-        '''
+        """
         return "http://ngc891.blogdns.net/pub/"
 
     def salix(self):
-        '''
+        """
         SalixOS salix repository
-        '''
+        """
         return "http://download.salixos.org/"
 
     def slackel(self):
-        '''
+        """
         Slackel.gr slackel repository
-        '''
+        """
         return "http://www.slackel.gr/repo/"
 
     def restricted(self):
-        '''
+        """
         Slackel.gr slackel repository
-        '''
+        """
         return ("http://taper.alienbase.nl/mirrors/people/alien/"
                 "restricted_slackbuilds/")

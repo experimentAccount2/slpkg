@@ -62,15 +62,15 @@ class BinaryInstall(object):
         self.uncomp_sum, self.dep_uncomp_sum = [], []
         self.dependencies = []
         self.deps_dict = {}
-        self.answer = ''
+        self.answer = ""
         Msg().reading()
         self.PACKAGES_TXT, self.mirror = RepoInit(self.repo).fetch()
         self.step = 0
 
     def start(self, if_upgrade):
-        '''
+        """
         Install packages from official Slackware distribution
-        '''
+        """
         try:
             # fix if packages is for upgrade
             self.if_upgrade = if_upgrade
@@ -83,7 +83,7 @@ class BinaryInstall(object):
             self.packages = self.clear_masters()
             (self.dwn, self.install, self.comp_sum,
              self.uncomp_sum) = self.store(self.packages)
-            if _m.rsl_deps in ['on', 'ON'] and self.resolve:
+            if _m.rsl_deps in ["on", "ON"] and self.resolve:
                 Msg().done()
             if self.install:
                 print("\nThe following packages will be automatically "
@@ -102,7 +102,7 @@ class BinaryInstall(object):
                                    self.uncomp_sum + self.dep_uncomp_sum)
                 print("\nInstalling summary")
                 print("=" * 79)
-                print("{0}Total {1} {2}.".format(_m.color['GREY'], sum(sums),
+                print("{0}Total {1} {2}.".format(_m.color["GREY"], sum(sums),
                                                  Msg().pkg(sum(sums))))
                 print("{0} {1} will be installed, {2} will be upgraded and "
                       "{3} will be reinstalled.".format(sums[2],
@@ -112,9 +112,9 @@ class BinaryInstall(object):
                                                                 unit[0]))
                 print("After this process, {0} {1} of additional disk "
                       "space will be used.{2}".format(size[1], unit[1],
-                                                      _m.color['ENDC']))
+                                                      _m.color["ENDC"]))
                 print("")
-                if Msg().answer() in ['y', 'Y']:
+                if Msg().answer() in ["y", "Y"]:
                     self.install.reverse()
                     Download(self.tmp_path, (self.dep_dwn + self.dwn)).start()
                     self.dep_install = Utils().check_downloaded(
@@ -132,9 +132,9 @@ class BinaryInstall(object):
             sys.exit(0)
 
     def pkg_exist(self):
-        '''
+        """
         Search if package exist
-        '''
+        """
         pkg_found, pkg_not_found = [], []
         for pkg in self.packages:
             if search_pkg(pkg, self.repo):
@@ -147,10 +147,10 @@ class BinaryInstall(object):
             self.packages = pkg_not_found
 
     def clear_masters(self):
-        '''
+        """
         Clear master packages if already exist in dependencies
         or if added to install two or more times
-        '''
+        """
         packages = []
         for mas in Utils().remove_dbs(self.packages):
             if mas not in self.dependencies:
@@ -158,39 +158,39 @@ class BinaryInstall(object):
         return packages
 
     def install_packages(self):
-        '''
+        """
         Install or upgrade packages
-        '''
+        """
         installs, upgraded = [], []
         for inst in (self.dep_install + self.install):
             package = (self.tmp_path + inst).split()
-            pkg_ver = '{0}-{1}'.format(split_package(inst)[0],
+            pkg_ver = "{0}-{1}".format(split_package(inst)[0],
                                        split_package(inst)[1])
             self.checksums(inst)
             if os.path.isfile(_m.pkg_path + inst[:-4]):
-                print("[ {0}reinstalling{1} ] --> {2}".format(_m.color['GREEN'],
-                                                              _m.color['ENDC'],
+                print("[ {0}reinstalling{1} ] --> {2}".format(_m.color["GREEN"],
+                                                              _m.color["ENDC"],
                                                               inst))
                 installs.append(pkg_ver)
                 PackageManager(package).reinstall()
             elif find_package(split_package(inst)[0] + "-", _m.pkg_path):
-                print("[ {0}upgrading{1} ] --> {2}".format(_m.color['YELLOW'],
-                                                           _m.color['ENDC'],
+                print("[ {0}upgrading{1} ] --> {2}".format(_m.color["YELLOW"],
+                                                           _m.color["ENDC"],
                                                            inst))
                 upgraded.append(pkg_ver)
                 PackageManager(package).upgrade()
             else:
-                print("[ {0}installing{1} ] --> {2}".format(_m.color['GREEN'],
-                                                            _m.color['ENDC'],
+                print("[ {0}installing{1} ] --> {2}".format(_m.color["GREEN"],
+                                                            _m.color["ENDC"],
                                                             inst))
                 installs.append(pkg_ver)
                 PackageManager(package).upgrade()
         return [installs, upgraded]
 
     def checksums(self, install):
-        '''
+        """
         Checksums before install
-        '''
+        """
         if self.repo == "alien" and self.version == "stable":
             check_md5(pkg_checksum("/" + slack_ver() + "/" + install,
                                    self.repo), self.tmp_path + install)
@@ -201,11 +201,11 @@ class BinaryInstall(object):
             check_md5(pkg_checksum(install, self.repo), self.tmp_path + install)
 
     def resolving_deps(self):
-        '''
+        """
         Return package dependencies
-        '''
+        """
         requires = []
-        if _m.rsl_deps in ['on', 'ON'] and self.resolve:
+        if _m.rsl_deps in ["on", "ON"] and self.resolve:
             Msg().resolving()
         for dep in self.packages:
             if self.if_upgrade:
@@ -218,25 +218,25 @@ class BinaryInstall(object):
         return Utils().remove_dbs(requires)
 
     def views(self, install, comp_sum):
-        '''
+        """
         Views packages
-        '''
+        """
         pkg_sum = uni_sum = upg_sum = 0
         # fix repositories align
-        repo = self.repo + (' ' * (6 - (len(self.repo))))
+        repo = self.repo + (" " * (6 - (len(self.repo))))
         for pkg, comp in zip(install, comp_sum):
             pkg_split = split_package(pkg[:-4])
             if find_package(pkg[:-4], _m.pkg_path):
                 pkg_sum += 1
-                COLOR = _m.color['GREEN']
+                COLOR = _m.color["GREEN"]
             elif find_package(pkg_split[0] + "-", _m.pkg_path):
-                COLOR = _m.color['YELLOW']
+                COLOR = _m.color["YELLOW"]
                 upg_sum += 1
             else:
-                COLOR = _m.color['RED']
+                COLOR = _m.color["RED"]
                 uni_sum += 1
             print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>11}{12}".format(
-                COLOR, pkg_split[0], _m.color['ENDC'],
+                COLOR, pkg_split[0], _m.color["ENDC"],
                 " " * (24-len(pkg_split[0])), pkg_split[1],
                 " " * (18-len(pkg_split[1])), pkg_split[2],
                 " " * (8-len(pkg_split[2])), pkg_split[3],
@@ -256,9 +256,9 @@ class BinaryInstall(object):
         Msg().template(78)
 
     def store(self, packages):
-        '''
+        """
         Store and return packages for install
-        '''
+        """
         dwn, install, comp_sum, uncomp_sum = ([] for i in range(4))
         black = BlackList().packages()
         # name = data[0]

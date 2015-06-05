@@ -29,13 +29,13 @@ from slpkg.splitting import split_package
 
 
 def find_package(find_pkg, directory):
-    '''
+    """
     Find packages
-    '''
+    """
     pkgs = []
     blacklist = BlackList().packages()
     for pkg in sorted(os.listdir(directory)):
-        if (not pkg.startswith('.') and pkg.startswith(find_pkg) and
+        if (not pkg.startswith(".") and pkg.startswith(find_pkg) and
                 split_package(pkg)[0] not in blacklist):
             pkgs.append(pkg)
     return pkgs

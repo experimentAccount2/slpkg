@@ -36,19 +36,19 @@ from binary.dependency import Dependencies
 
 
 def track_dep(name, repo):
-    '''
+    """
     View tree of dependencies and also
     highlight packages with color green
     if allready installed and color red
     if not installed.
-    '''
+    """
     Msg().resolving()
     if repo == "sbo":
         dependencies_list = Requires(resolve=True).sbo(name)
         find_pkg = sbo_search_pkg(name)
     else:
-        PACKAGES_TXT = Utils().read_file(_m.lib_path + '{0}_repo/'
-                                         'PACKAGES.TXT'.format(repo))
+        PACKAGES_TXT = Utils().read_file(_m.lib_path + "{0}_repo/"
+                                         "PACKAGES.TXT".format(repo))
         dependencies_list = Dependencies(PACKAGES_TXT, repo).binary(
             name, resolve=True)
         find_pkg = search_pkg(name, repo)
@@ -63,25 +63,25 @@ def track_dep(name, repo):
         pkg_len = len(name) + 24
         print("")    # new line at start
         Msg().template(pkg_len)
-        print("| Package {0}{1}{2} dependencies :".format(_m.color['CYAN'],
+        print("| Package {0}{1}{2} dependencies :".format(_m.color["CYAN"],
                                                           name,
-                                                          _m.color['ENDC']))
+                                                          _m.color["ENDC"]))
         Msg().template(pkg_len)
         print("\\")
-        print(" +---{0}[ Tree of dependencies ]{1}".format(_m.color['YELLOW'],
-                                                           _m.color['ENDC']))
+        print(" +---{0}[ Tree of dependencies ]{1}".format(_m.color["YELLOW"],
+                                                           _m.color["ENDC"]))
         index = 0
         for pkg in dependencies:
             index += 1
             if find_package(pkg + _m.sp, _m.pkg_path):
                 print(" |")
                 print(" {0}{1}: {2}{3}{4}".format("+--", index,
-                                                  _m.color['GREEN'],
-                                                  pkg, _m.color['ENDC']))
+                                                  _m.color["GREEN"],
+                                                  pkg, _m.color["ENDC"]))
             else:
                 print(" |")
-                print(" {0}{1}: {2}{3}{4}".format("+--", index, _m.color['RED'],
-                                                  pkg, _m.color['ENDC']))
+                print(" {0}{1}: {2}{3}{4}".format("+--", index, _m.color["RED"],
+                                                  pkg, _m.color["ENDC"]))
         print("")    # new line at end
     else:
         print("\nNo package was found to match\n")

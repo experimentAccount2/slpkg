@@ -38,9 +38,9 @@ from greps import repo_data
 
 
 def pkg_upgrade(repo, skip):
-    '''
+    """
     Checking packages for upgrade
-    '''
+    """
     try:
         Msg().checking()
         PACKAGES_TXT = RepoInit(repo).fetch()[0]
@@ -63,7 +63,7 @@ def pkg_upgrade(repo, skip):
                     repo_pkg[3] >= inst_pkg[3] and
                         inst_pkg[0] not in BlackList().packages() and
                         inst_pkg[0] not in skip):
-                    pkgs_for_upgrade.append('{0}-{1}'.format(repo_pkg[0],
+                    pkgs_for_upgrade.append("{0}-{1}".format(repo_pkg[0],
                                                              repo_pkg[1]))
         Msg().done()
         return pkgs_for_upgrade
@@ -73,7 +73,7 @@ def pkg_upgrade(repo, skip):
 
 
 def installed():
-    '''
+    """
     Return all installed packages
-    '''
-    return find_package('', _m.pkg_path)
+    """
+    return find_package("", _m.pkg_path)

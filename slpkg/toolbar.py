@@ -29,11 +29,11 @@ from __metadata__ import MetaData as _m
 
 
 def status(index, width, step):
-    '''
+    """
     Print toolbar status
-    '''
+    """
     if index == width:
-        sys.stdout.write("{0}.{1}".format(_m.color['GREY'], _m.color['ENDC']))
+        sys.stdout.write("{0}.{1}".format(_m.color["GREY"], _m.color["ENDC"]))
         sys.stdout.flush()
         width += step
         time.sleep(0.02)

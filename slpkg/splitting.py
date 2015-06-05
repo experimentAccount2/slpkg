@@ -23,15 +23,15 @@
 
 
 def split_package(package):
-    '''
+    """
     Split package in name, version
     arch and build tag.
-    '''
+    """
     name = ver = arch = build = []
     split = package.split("-")
     if len(split) > 2:
         build = split[-1]
-        build_a, build_b = '', ''
+        build_a, build_b = "", ""
         build_a = build[:1]
         if build[1:2].isdigit():
             build_b = build[1:2]

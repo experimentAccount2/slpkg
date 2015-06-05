@@ -33,9 +33,9 @@ from slpkg.slack.slack_version import slack_ver
 
 
 def sbo_search_pkg(name):
-    '''
+    """
     Search for package path from SLACKBUILDS.TXT file
-    '''
+    """
     try:
         repo = Repo().sbo()
         blacklist = BlackList().packages()

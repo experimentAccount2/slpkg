@@ -74,9 +74,9 @@ class Patches(object):
             self.step = 700
 
     def start(self):
-        '''
+        """
         Install new patches from official Slackware mirrors
-        '''
+        """
         try:
             self.store()
             Msg().done()
@@ -97,7 +97,7 @@ class Patches(object):
                 print("\nInstalling summary")
                 print("=" * 79)
                 print("{0}Total {1} {2} will be upgraded and {3} will be "
-                      "installed.".format(_m.color['GREY'],
+                      "installed.".format(_m.color["GREY"],
                                           self.count_upg,
                                           Msg().pkg(self.upgrade_all),
                                           self.count_added))
@@ -105,9 +105,9 @@ class Patches(object):
                                                                 unit[0]))
                 print("After this process, {0} {1} of additional disk space "
                       "will be used.{2}".format(size[1], unit[1],
-                                                _m.color['ENDC']))
-                print('')
-                if Msg().answer() in ['y', 'Y']:
+                                                _m.color["ENDC"]))
+                print("")
+                if Msg().answer() in ["y", "Y"]:
                     Download(self.patch_path, self.dwn_links).start()
                     self.upgrade_all = self.utils.check_downloaded(
                         self.patch_path, self.upgrade_all)
@@ -128,10 +128,10 @@ class Patches(object):
             sys.exit(0)
 
     def store(self):
-        '''
+        """
         Store and return packages for upgrading
-        '''
-        data = repo_data(self.PACKAGES_TXT, self.step, 'slack', resolve=True)
+        """
+        data = repo_data(self.PACKAGES_TXT, self.step, "slack", resolve=True)
         black = BlackList().packages()
         for name, loc, comp, uncomp in zip(data[0], data[1], data[2], data[3]):
             repo_pkg_name = split_package(name)[0]
@@ -149,16 +149,16 @@ class Patches(object):
                     self.count_upg -= 1
 
     def views(self):
-        '''
+        """
         Views packages
-        '''
+        """
         for upg, size in sorted(zip(self.upgrade_all, self.comp_sum)):
             pkg_split = split_package(upg[:-4])
-            color = _m.color['YELLOW']
+            color = _m.color["YELLOW"]
             if not find_package(pkg_split[0], _m.pkg_path):
-                color = _m.color['RED']
+                color = _m.color["RED"]
             print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>12}{12}".format(
-                color, pkg_split[0], _m.color['ENDC'],
+                color, pkg_split[0], _m.color["ENDC"],
                 " " * (24-len(pkg_split[0])), pkg_split[1],
                 " " * (18-len(pkg_split[1])), pkg_split[2],
                 " " * (8-len(pkg_split[2])), pkg_split[3],
@@ -166,31 +166,31 @@ class Patches(object):
                 size, " K")).rstrip()
 
     def upgrade(self):
-        '''
+        """
         Upgrade packages
-        '''
+        """
         for pkg in self.upgrade_all:
             check_md5(pkg_checksum(pkg, "slack_patches"), self.patch_path + pkg)
-            pkg_ver = '{0}-{1}'.format(split_package(pkg)[0],
+            pkg_ver = "{0}-{1}".format(split_package(pkg)[0],
                                        split_package(pkg)[1])
             if find_package(split_package(pkg)[0] + "-", _m.pkg_path):
-                print("[ {0}upgrading{1} ] --> {2}".format(_m.color['YELLOW'],
-                                                           _m.color['ENDC'],
+                print("[ {0}upgrading{1} ] --> {2}".format(_m.color["YELLOW"],
+                                                           _m.color["ENDC"],
                                                            pkg[:-4]))
                 PackageManager((self.patch_path + pkg).split()).upgrade()
                 self.upgraded.append(pkg_ver)
             else:
-                print("[ {0}installing{1} ] --> {2}".format(_m.color['GREEN'],
-                                                            _m.color['ENDC'],
+                print("[ {0}installing{1} ] --> {2}".format(_m.color["GREEN"],
+                                                            _m.color["ENDC"],
                                                             pkg[:-4]))
                 PackageManager((self.patch_path + pkg).split()).upgrade()
                 self.installed.append(pkg_ver)
 
     def kernel(self):
-        '''
+        """
         Check if kernel upgraded if true
-        then reinstall 'lilo'
-        '''
+        then reinstall "lilo"
+        """
         for core in self.upgrade_all:
             if "kernel" in core:
                 if _m.default_answer == "y":
@@ -199,19 +199,19 @@ class Patches(object):
                     print("")
                     Msg().template(78)
                     print("| {0}*** HIGHLY recommended reinstall 'LILO' "
-                          "***{1}".format(_m.color['RED'], _m.color['ENDC']))
+                          "***{1}".format(_m.color["RED"], _m.color["ENDC"]))
                     Msg().template(78)
                     answer = raw_input("\nThe kernel has been upgraded, "
                                        "reinstall `LILO` [Y/n]? ")
-                if answer in ['y', 'Y']:
+                if answer in ["y", "Y"]:
                     subprocess.call("lilo", shell=True)
                     break
 
     def slackpkg_update(self):
-        '''
+        """
         This replace slackpkg ChangeLog.txt file with new
         from Slackware official mirrors after update distribution.
-        '''
+        """
         changelog_txt = "ChangeLog.txt"
         changelog_old = changelog_txt + ".old"
         arch = "64" if os.uname()[4] == "x86_64" else ""

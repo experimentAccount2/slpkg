@@ -57,11 +57,11 @@ class BuildPackage(object):
             os.mkdir(self.build_logs)
 
     def build(self):
-        '''
+        """
         Build package from source and create log
         file in path /var/log/slpkg/sbo/build_logs/.
         Also check md5sum calculates.
-        '''
+        """
         try:
             tar = tarfile.open(self.script)
             tar.extractall()
@@ -84,7 +84,7 @@ class BuildPackage(object):
                 # start log write
                 log_head(self.build_logs, self.log_file, self.start_log_time)
                 subprocess.Popen("{0} ./{1}.SlackBuild 2>&1 | tee -a "
-                                 "{2}{3}".format(' '.join(pass_var),
+                                 "{2}{3}".format(" ".join(pass_var),
                                                  self.prgnam, self.build_logs,
                                                  self.log_file), shell=True,
                                  stdout=sys.stdout).communicate()
@@ -95,7 +95,7 @@ class BuildPackage(object):
                     self.prgnam, sum_time))
             else:
                 subprocess.call("{0} ./{1}.SlackBuild".format(
-                    ' '.join(pass_var), self.prgnam, shell=True))
+                    " ".join(pass_var), self.prgnam, shell=True))
             os.chdir(self.path)
         except (OSError, IOError):
             Msg().pkg_not_found("\n", self.prgnam, "Wrong file", "\n")
@@ -104,28 +104,28 @@ class BuildPackage(object):
             sys.exit(0)
 
     def _pass_variable(self):
-        '''
+        """
         Return enviroment variables
-        '''
+        """
         pass_var = []
         for var in os.environ.keys():
-            if var.split('_')[0] == self.prgnam.upper():
-                pass_var.append('{0}={1}'.format(
-                    var.split('_')[1], os.environ[var]))
+            if var.split("_")[0] == self.prgnam.upper():
+                pass_var.append("{0}={1}".format(
+                    var.split("_")[1], os.environ[var]))
         return pass_var
 
     def _delete_sbo(self):
-        '''
+        """
         Delete slackbuild tar.gz file after untar
-        '''
+        """
         if os.path.isfile(self.script):
             os.remove(self.script)
 
 
 def log_head(path, log_file, log_time):
-    '''
+    """
     write headers to log file
-    '''
+    """
     with open(path + log_file, "w") as log:
         log.write("#" * 79 + "\n\n")
         log.write("File : " + log_file + "\n")
@@ -137,9 +137,9 @@ def log_head(path, log_file, log_time):
 
 
 def log_end(path, log_file, sum_time):
-    '''
+    """
     append END tag to a log file
-    '''
+    """
     with open(path + log_file, "a") as log:
         log.seek(2)
         log.write("#" * 79 + "\n\n")
@@ -151,9 +151,9 @@ def log_end(path, log_file, sum_time):
 
 
 def build_time(start_time):
-    '''
+    """
     Calculate build time per package
-    '''
+    """
     diff_time = round(time.time() - start_time, 2)
     if diff_time <= 59.99:
         sum_time = str(diff_time) + " Sec"

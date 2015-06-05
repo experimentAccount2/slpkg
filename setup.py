@@ -71,9 +71,9 @@ if "install" in sys.argv:
         os.makedirs(man_path)
     man_page = "man/slpkg.8"
     gzip_man = "man/slpkg.8.gz"
-    print("Installing '{0}' man pages".format(gzip_man.split('/')[1]))
+    print("Installing '{0}' man pages".format(gzip_man.split("/")[1]))
     f_in = open(man_page, "rb")
-    f_out = gzip.open(gzip_man, 'wb')
+    f_out = gzip.open(gzip_man, "wb")
     f_out.writelines(f_in)
     f_out.close()
     f_in.close()
@@ -82,24 +82,24 @@ if "install" in sys.argv:
     bash_completion = "/etc/bash_completion.d/"
     fish_completion = "/etc/fish/completions/"
     completion_file = [
-        'conf/slpkg.bash-completion',
-        'conf/slpkg.fish'
+        "conf/slpkg.bash-completion",
+        "conf/slpkg.fish"
     ]
     if not os.path.exists(bash_completion):
         os.makedirs(bash_completion)
-    print("Installing '{0}' file".format(completion_file[0].split('/')[1]))
+    print("Installing '{0}' file".format(completion_file[0].split("/")[1]))
     shutil.copy2(completion_file[0], bash_completion)
-    os.chmod(bash_completion + completion_file[0].split('/')[1], 744)
+    os.chmod(bash_completion + completion_file[0].split("/")[1], 744)
     if os.path.exists(fish_completion):
-        print("Installing '{0}' file".format(completion_file[1].split('/')[1]))
+        print("Installing '{0}' file".format(completion_file[1].split("/")[1]))
         shutil.copy2(completion_file[1], fish_completion)
-        os.chmod(fish_completion + completion_file[1].split('/')[1], 744)
+        os.chmod(fish_completion + completion_file[1].split("/")[1], 744)
     conf_file = [
-        'conf/slpkg.conf',
-        'conf/blacklist',
-        'conf/slackware-mirrors',
-        'conf/custom-repositories',
-        'conf/slackware-changelogs-mirror'
+        "conf/slpkg.conf",
+        "conf/blacklist",
+        "conf/slackware-mirrors",
+        "conf/custom-repositories",
+        "conf/slackware-changelogs-mirror"
     ]
     if not os.path.exists(_m.conf_path):
         os.makedirs(_m.conf_path)

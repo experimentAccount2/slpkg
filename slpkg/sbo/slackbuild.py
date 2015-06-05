@@ -59,13 +59,13 @@ class SBoInstall(object):
         self.package_found = []
         self.deps_dict = {}
         self.toolbar_width, self.index = 2, 0
-        self.answer = ''
+        self.answer = ""
         self.match = False
         Msg().reading()
 
     def start(self, if_upgrade):
         try:
-            tagc = ''
+            tagc = ""
             count_ins = count_upg = count_uni = 0
             self._remove_blacklist()
             for _sbo in self.slackbuilds:
@@ -84,11 +84,11 @@ class SBoInstall(object):
             self.master_packages, mas_src = self.sbo_version_source(
                 self.package_found)
             Msg().done()
-            if _m.rsl_deps in ['on', 'ON'] and self.resolve:
+            if _m.rsl_deps in ["on", "ON"] and self.resolve:
                 Msg().resolving()
             self.dependencies, dep_src = self.sbo_version_source(
                 self.one_for_all(self.deps))
-            if _m.rsl_deps in ['on', 'ON'] and self.resolve:
+            if _m.rsl_deps in ["on", "ON"] and self.resolve:
                 Msg().done()
             self.clear_masters()
             if self.package_found:
@@ -100,27 +100,27 @@ class SBoInstall(object):
                 for sbo, ar in zip(self.master_packages, mas_src):
                     tagc, count_ins, count_upg, count_uni = self.tag(
                         sbo, count_ins, count_upg, count_uni)
-                    name = '-'.join(sbo.split('-')[:-1])
-                    self.view_packages(tagc, name, sbo.split('-')[-1],
+                    name = "-".join(sbo.split("-")[:-1])
+                    self.view_packages(tagc, name, sbo.split("-")[-1],
                                        self.select_arch(ar))
                 self._view_installing_for_deps()
                 # view dependencies
                 for dep, ar in zip(self.dependencies, dep_src):
                     tagc, count_ins, count_upg, count_uni = self.tag(
                         dep, count_ins, count_upg, count_uni)
-                    name = '-'.join(dep.split('-')[:-1])
-                    self.view_packages(tagc, name, dep.split('-')[-1],
+                    name = "-".join(dep.split("-")[:-1])
+                    self.view_packages(tagc, name, dep.split("-")[-1],
                                        self.select_arch(ar))
                 count_total = (count_ins + count_upg + count_uni)
                 print("\nInstalling summary")
                 print("=" * 79)
                 print("{0}Total {1} {2}.".format(
-                    _m.color['GREY'], count_total, Msg().pkg(count_total)))
+                    _m.color["GREY"], count_total, Msg().pkg(count_total)))
                 print("{0} {1} will be installed, {2} allready installed and "
                       "{3} {4}".format(count_uni, Msg().pkg(count_uni),
                                        count_ins, count_upg,
                                        Msg().pkg(count_upg)))
-                print("will be upgraded.{0}\n".format(_m.color['ENDC']))
+                print("will be upgraded.{0}\n".format(_m.color["ENDC"]))
                 self._continue_to_install()
             else:
                 Msg().not_found(if_upgrade)
@@ -129,9 +129,9 @@ class SBoInstall(object):
             sys.exit(0)
 
     def _remove_blacklist(self):
-        '''
+        """
         Remove packages in blacklist
-        '''
+        """
         rmv_black = []
         for sbo in self.slackbuilds:
             if sbo not in BlackList().packages():
@@ -139,36 +139,36 @@ class SBoInstall(object):
         self.slackbuilds = rmv_black
 
     def _continue_to_install(self):
-        '''
+        """
         Continue to install
-        '''
-        if self.master_packages and Msg().answer() in ['y', 'Y']:
+        """
+        if self.master_packages and Msg().answer() in ["y", "Y"]:
             installs, upgraded = self.build_install()
             Msg().reference(installs, upgraded)
             write_deps(self.deps_dict)
             delete(self.build_folder)
 
     def _view_installing_for_deps(self):
-        '''
+        """
         View installing for dependencies message
-        '''
+        """
         if not self.match and self.dependencies:
             print("Installing for dependencies:")
 
     def clear_masters(self):
-        '''
+        """
         Clear master slackbuilds if already exist in dependencies
         or if added to install two or more times
-        '''
+        """
         self.master_packages = Utils().remove_dbs(self.master_packages)
         for mas in self.master_packages:
             if mas in self.dependencies:
                 self.master_packages.remove(mas)
 
     def matching(self):
-        '''
+        """
         Return matching SBo
-        '''
+        """
         f = open(_m.lib_path + "sbo_repo/SLACKBUILDS.TXT", "r")
         SLACKBUILDS_TXT = f.read()
         f.close()
@@ -178,24 +178,24 @@ class SBoInstall(object):
                     self.package_found.append(line[17:])
 
     def sbo_version_source(self, slackbuilds):
-        '''
+        """
         Create sbo name with version
-        '''
+        """
         sbo_versions, sources = [], []
         for sbo in slackbuilds:
             self.index += 1
             self.toolbar_width = status(self.index, self.toolbar_width, 4)
-            sbo_ver = '{0}-{1}'.format(sbo, SBoGrep(sbo).version())
+            sbo_ver = "{0}-{1}".format(sbo, SBoGrep(sbo).version())
             sbo_versions.append(sbo_ver)
             sources.append(SBoGrep(sbo).source())
         return [sbo_versions, sources]
 
     def one_for_all(self, deps):
-        '''
+        """
         Because there are dependencies that depend on other
         dependencies are created lists into other lists.
         Thus creating this loop create one-dimensional list.
-        '''
+        """
         requires, dependencies = [], []
         deps.reverse()
         requires = Utils().dimensional_list(deps)
@@ -205,9 +205,9 @@ class SBoInstall(object):
         return dependencies
 
     def top_view(self):
-        '''
+        """
         View top template
-        '''
+        """
         Msg().template(78)
         print("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
             "| Package", " " * 17,
@@ -219,42 +219,42 @@ class SBoInstall(object):
         Msg().template(78)
 
     def view_packages(self, *args):
-        '''
+        """
         View slackbuild packages with version and arch
         args[0] package color
         args[1] package
         args[2] version
         args[3] arch
-        '''
+        """
         print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>11}{12}".format(
-            args[0], args[1], _m.color['ENDC'],
+            args[0], args[1], _m.color["ENDC"],
             " " * (24-len(args[1])), args[2],
             " " * (18-len(args[2])), args[3],
             " " * (15-len(args[3])), "",
             "", "SBo", "", "")).rstrip()
 
     def tag(self, sbo, count_ins, count_upg, count_uni):
-        '''
+        """
         Tag with color green if package already installed,
         color yellow for packages to upgrade and color red
         if not installed.
-        '''
+        """
         if find_package(sbo, _m.pkg_path):
-            paint = _m.color['GREEN']
+            paint = _m.color["GREEN"]
             count_ins += 1
-        elif find_package('-'.join(sbo.split('-')[:-1]) + '-', _m.pkg_path):
-            paint = _m.color['YELLOW']
+        elif find_package("-".join(sbo.split("-")[:-1]) + "-", _m.pkg_path):
+            paint = _m.color["YELLOW"]
             count_upg += 1
         else:
-            paint = _m.color['RED']
+            paint = _m.color["RED"]
             count_uni += 1
         return paint, count_ins, count_upg, count_uni
 
     def select_arch(self, src):
-        '''
+        """
         Looks if sources unsupported or untested
         from arch else select arch
-        '''
+        """
         arch = os.uname()[4]
         if arch.startswith("i") and arch.endswith("86"):
             arch = "i486"
@@ -264,9 +264,9 @@ class SBoInstall(object):
         return arch
 
     def filenames(self, sources):
-        '''
+        """
         Return filenames from sources
-        '''
+        """
         filename = []
         for src in sources:
             # get file from source
@@ -274,9 +274,9 @@ class SBoInstall(object):
         return filename
 
     def search_in_tmp(self, prgnam):
-        '''
+        """
         Search for binary packages in /tmp directory
-        '''
+        """
         binary = []
         for search in find_package(prgnam, _m.output):
             if "_SBo" in search:
@@ -284,19 +284,19 @@ class SBoInstall(object):
         return binary
 
     def build_install(self):
-        '''
+        """
         Searches the package name and version in /tmp to
         install. If find two or more packages e.g. to build
         tag 2 or 3 will fit most
-        '''
+        """
         slackbuilds = self.dependencies + self.master_packages
         installs, upgraded, = [], []
         if not os.path.exists(self.build_folder):
             os.makedirs(self.build_folder)
         os.chdir(self.build_folder)
         for sbo in slackbuilds:
-            pkg = '-'.join(sbo.split('-')[:-1])
-            ver = sbo.split('-')[-1]
+            pkg = "-".join(sbo.split("-")[:-1])
+            ver = sbo.split("-")[-1]
             prgnam = ("{0}-{1}".format(pkg, ver))
             sbo_file = "".join(find_package(prgnam, _m.pkg_path))
             src_link = SBoGrep(pkg).source().split()
@@ -306,9 +306,9 @@ class SBoInstall(object):
                 Msg().template(78)
             elif self.unst[0] in src_link or self.unst[1] in src_link:
                 Msg().template(78)
-                print("| Package {0} {1}{2}{3}".format(sbo, _m.color['RED'],
-                                                       ''.join(src_link),
-                                                       _m.color['ENDC']))
+                print("| Package {0} {1}{2}{3}".format(sbo, _m.color["RED"],
+                                                       "".join(src_link),
+                                                       _m.color["ENDC"]))
                 Msg().template(78)
             else:
                 sbo_url = sbo_search_pkg(pkg)
@@ -324,13 +324,13 @@ class SBoInstall(object):
                 except ValueError:
                     Msg().build_FAILED(sbo_url, prgnam)
                     sys.exit(0)
-                if find_package(pkg + '-', _m.pkg_path):
+                if find_package(pkg + "-", _m.pkg_path):
                     print("{0}[ Upgrading ] --> {1}{2}".format(
-                        _m.color['YELLOW'], _m.color['ENDC'], pkg))
+                        _m.color["YELLOW"], _m.color["ENDC"], pkg))
                     upgraded.append(prgnam)
                 else:
                     print("{0}[ Installing ] --> {1}{2}".format(
-                        _m.color['GREEN'], _m.color['ENDC'], pkg))
+                        _m.color["GREEN"], _m.color["ENDC"], pkg))
                     installs.append(prgnam)
                 PackageManager(binary).upgrade()
         return installs, upgraded

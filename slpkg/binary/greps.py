@@ -33,14 +33,14 @@ from slpkg.slack.slack_version import slack_ver
 
 
 def repo_data(PACKAGES_TXT, step, repo, resolve):
-    '''
+    """
     Grap data packages
-    '''
+    """
     (name, location, size, unsize,
      rname, rlocation, rsize, runsize) = ([] for i in range(8))
     index, toolbar_width = 0, 100
     for line in PACKAGES_TXT.splitlines():
-        if _m.rsl_deps in ['on', 'ON'] and resolve:
+        if _m.rsl_deps in ["on", "ON"] and resolve:
             index += 1
             toolbar_width = status(index, toolbar_width, step)
         if line.startswith("PACKAGE NAME:"):
@@ -84,9 +84,9 @@ def repo_data(PACKAGES_TXT, step, repo, resolve):
 
 
 def rlw_filter(name, location, size, unsize):
-    '''
+    """
     Filter rlw repository data
-    '''
+    """
     arch = os.uname()[4]
     if arch.startswith("i") and arch.endswith("86"):
         arch = "i486"
@@ -102,9 +102,9 @@ def rlw_filter(name, location, size, unsize):
 
 
 def alien_filter(name, location, size, unsize):
-    '''
-    Filter Alien's repository data
-    '''
+    """
+    Filter Alien"s repository data
+    """
     ver = slack_ver()
     if _m.slack_rel == "current":
         ver = "current"
@@ -122,9 +122,9 @@ def alien_filter(name, location, size, unsize):
 
 
 def ktown_filter(name, location, size, unsize):
-    '''
-    Filter Alien's ktown repository data
-    '''
+    """
+    Filter Alien"s ktown repository data
+    """
     ver = slack_ver()
     if _m.slack_rel == "current":
         ver = "current"
@@ -142,9 +142,9 @@ def ktown_filter(name, location, size, unsize):
 
 
 def multi_filter(name, location, size, unsize):
-    '''
-    Filter Alien's multilib repository data
-    '''
+    """
+    Filter Alien"s multilib repository data
+    """
     ver = slack_ver()
     if _m.slack_rel == "current":
         ver = "current"
@@ -159,17 +159,17 @@ def multi_filter(name, location, size, unsize):
 
 
 def fix_slackers_pkg(name):
-    '''
-    Fix 'PACKAGE NAME:' from PACKAGES.TXT file
+    """
+    Fix "PACKAGE NAME:" from PACKAGES.TXT file
     Beacause repository slackers.it not report the full
     name in PACKAGES.TXT file use FILELIST.TXT to
     get.
-    '''
-    FILELIST_TXT = Utils().read_file(_m.lib_path + 'slackr_repo/FILELIST.TXT')
+    """
+    FILELIST_TXT = Utils().read_file(_m.lib_path + "slackr_repo/FILELIST.TXT")
     for line in FILELIST_TXT.splitlines():
         if name in line and line.endswith(".txz"):
             return line.split("/")[-1].strip()
-    # This trick fix spliting 'NoneType' packages
+    # This trick fix spliting "NoneType" packages
     # reference wrong name between PACKAGE.TXT and
     # FILELIST.TXT
     return ""
@@ -182,11 +182,11 @@ class Requires(object):
         self.repo = repo
 
     def get_deps(self):
-        '''
+        """
         Grap package requirements from repositories
-        '''
+        """
         if self.repo == "rlw":
-            # Robby's repository dependencies as shown in the central page
+            # Robby"s repository dependencies as shown in the central page
             # http://rlworkman.net/pkgs/
             dependencies = {
                 "abiword": "wv",
@@ -201,7 +201,7 @@ class Requires(object):
             else:
                 return ""
         else:
-            PACKAGES_TXT = Utils().read_file('{0}{1}_repo/PACKAGES.TXT'.format(
+            PACKAGES_TXT = Utils().read_file("{0}{1}_repo/PACKAGES.TXT".format(
                 _m.lib_path, self.repo))
             for line in PACKAGES_TXT.splitlines():
                 if line.startswith("PACKAGE NAME:"):
@@ -215,14 +215,14 @@ class Requires(object):
                             return self._req_fix(line)
 
     def _req_fix(self, line):
-        '''
+        """
         Fix slacky and salix requirements because many dependencies splitting
-        with ',' and others with '|'
-        '''
+        with "," and others with "|"
+        """
         deps = []
-        for dep in line[18:].strip().split(','):
+        for dep in line[18:].strip().split(","):
             dep = dep.split("|")
-            if self.repo == 'slacky':
+            if self.repo == "slacky":
                 if len(dep) > 1:
                     for d in dep:
                         deps.append(d.split()[0])

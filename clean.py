@@ -28,10 +28,10 @@ import shutil
 
 class Clean(object):
     """Clean all data like man page, log files, PACKAGES.TXT and
-    configuration files. This is useful if 'slpkg' installed via
-    'pip' because pip uninstalls only Python packages and script
-    and not data. So if uninstall '# pip uninstall slpkg' after run
-    '# python clean.py' to remove all data and configuration file.
+    configuration files. This is useful if "slpkg" installed via
+    "pip" because pip uninstalls only Python packages and script
+    and not data. So if uninstall "# pip uninstall slpkg" after run
+    "# python clean.py" to remove all data and configuration file.
     keep this script if you want to remove data some time.
     """
     def __init__(self):
@@ -57,5 +57,5 @@ class Clean(object):
                 print("Remove directory --> {0}".format(d))
                 shutil.rmtree(d)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     Clean().start()

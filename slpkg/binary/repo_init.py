@@ -33,19 +33,19 @@ from slpkg.slack.slack_version import slack_ver
 
 
 class RepoInit(object):
-    '''
+    """
     Return PACKAGES.TXT and mirror by repository
-    '''
+    """
 
     def __init__(self, repo):
         self.repo = repo
-        self.mirror = ''
+        self.mirror = ""
 
     def fetch(self):
         if self.repo in _m.default_repositories:
-            exec('self._init_{0}()'.format(self.repo))
+            exec("self._init_{0}()".format(self.repo))
         else:
-            exec('self._init_custom()')
+            exec("self._init_custom()")
         self.lib = _m.lib_path + "{0}_repo/PACKAGES.TXT".format(self.repo)
         PACKAGES_TXT = Utils().read_file(self.lib)
         return PACKAGES_TXT, self.mirror
@@ -54,7 +54,7 @@ class RepoInit(object):
         self.mirror = "{0}".format(Repo().custom_repository()[self.repo])
 
     def _init_slack(self):
-        self.mirror = mirrors('', '')
+        self.mirror = mirrors("", "")
 
     def _init_rlw(self):
         self.mirror = "{0}{1}/".format(Repo().rlw(), slack_ver())
