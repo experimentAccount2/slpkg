@@ -22,8 +22,6 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-import sys
-
 from __metadata__ import MetaData as _m
 
 
@@ -34,4 +32,3 @@ def prog_version():
     print("Version : {0}".format(_m.__version__))
     print("Licence : {0}".format(_m.__license__))
     print("Email   : {0}".format(_m.__email__))
-    sys.exit(0)
