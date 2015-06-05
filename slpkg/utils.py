@@ -30,14 +30,18 @@ from splitting import split_package
 class Utils(object):
 
     def dimensional_list(self, lists):
-        """ Create one dimensional list """
+        """
+        Create one dimensional list
+        """
         one_list = []
         for lst in lists:
             one_list += lst
         return one_list
 
     def remove_dbs(self, double):
-        """ Remove douuble item from list """
+        """
+        Remove douuble item from list
+        """
         one = []
         for dup in double:
             if dup not in one:
@@ -45,18 +49,20 @@ class Utils(object):
         return one
 
     def read_file(self, registry):
-        """ Return reading file """
+        """
+        Return reading file
+        """
         with open(registry, "r") as file_txt:
             read_file = file_txt.read()
             file_txt.close()
             return read_file
 
     def package_name(self, PACKAGES_TXT, repo):
-        """ Return PACKAGE NAME """
+        """
+        Return PACKAGE NAME
+        """
         packages = []
         for line in PACKAGES_TXT.splitlines():
-            # index += 1
-            # toolbar_width = status(index, toolbar_width, step)
             if line.startswith("PACKAGE NAME:"):
                 if repo == "slackr":
                     packages.append(line[14:].strip())
@@ -65,7 +71,9 @@ class Utils(object):
         return packages
 
     def check_downloaded(self, path, maybe_downloaded):
-        """ Return downloaded packages """
+        """
+        Return downloaded packages
+        """
         downloaded = []
         for pkg in maybe_downloaded:
             if os.path.isfile(path + pkg):
@@ -73,7 +81,9 @@ class Utils(object):
         return downloaded
 
     def read_file_pkg(self, file_pkg):
-        """ Return packages from file """
+        """
+        Return packages from file
+        """
         packages = []
         if os.path.isfile(file_pkg):
             packages = []
@@ -86,7 +96,9 @@ class Utils(object):
         return filter(lambda x: x != "", packages)
 
     def read_config(self, config):
-        """ Read config file and return uncomment line """
+        """
+        Read config file and return uncomment line
+        """
         for line in config.splitlines():
             line = line.lstrip()
             if line and not line.startswith("#"):

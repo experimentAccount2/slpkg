@@ -28,14 +28,18 @@ import getpass
 
 
 def s_user(user):
-    """Check for root user"""
+    """
+    Check for root user
+    """
     if user != "root":
         print("\nslpkg: error: must have root privileges\n")
         sys.exit(0)
 
 
 def remove_repositories(repositories, default_repositories):
-    """Remove no default repositories"""
+    """
+    Remove no default repositories
+    """
     repos = []
     for repo in repositories:
         if repo in default_repositories:
@@ -44,7 +48,9 @@ def remove_repositories(repositories, default_repositories):
 
 
 def update_repositories(repositories, conf_path):
-    """Upadate with user custom repositories"""
+    """
+    Upadate with user custom repositories
+    """
     repo_file = "{0}custom-repositories".format(conf_path)
     if os.path.isfile(repo_file):
         f = open(repo_file, "r")
