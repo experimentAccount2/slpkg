@@ -86,7 +86,6 @@ class Utils(object):
         """
         packages = []
         if os.path.isfile(file_pkg):
-            packages = []
             r_file = self.read_file(file_pkg)
             for pkg in r_file.splitlines():
                 packages.append(pkg)
