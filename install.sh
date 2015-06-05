@@ -33,7 +33,7 @@ TAG=${TAG:-_dsw}
 
 # Installation script.
 # With this script allows you to install the slpkg as a Slackware package binary file.
-# support wget download.
+# Support wget download.
 
 ARCHIVES="$PRGNAM-$VERSION.tar.gz $PRGNAM-$VERSION.zip v$VERSION.tar.gz v$VERSION.zip"
 cd ..
