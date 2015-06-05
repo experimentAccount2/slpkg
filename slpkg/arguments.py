@@ -26,6 +26,12 @@ from repolist import RepoList
 from __metadata__ import MetaData as _m
 
 
+def header():
+    """help header message"""
+    print("\nslpkg - version {0} | Slackware release: {1}\n".format(
+        _m.__version__, _m.slack_rel))
+
+
 def options():
     """Slpkg is a user-friendly package manager for Slackware installations
                                                  _       _
@@ -109,12 +115,30 @@ Optional arguments:
 You can read more about slpkg from manpage or see examples from readme file.
 Homepage: https://github.com/dslackw/slpkg
 """
-    print("\nslpkg - version {0} | Slackware release: {1}\n".format(
-        _m.__version__, _m.slack_rel))
-    print options.__doc__
+    header()
+    print(options.__doc__)
 
 
 def usage(repo):
+    """Usage: slpkg Commands:
+             [update] [upgrade] [repo-add [repository name] [URL]]
+             [repo-remove [repository]] [repo-list]
+             [repo-info [repository]] [update [slpkg]]
+
+             Optional arguments:
+             [-h] [-v] [-a [script.tar.gz] [sources...]]
+             [-b list, [...] --add, --remove]
+             [-q list, [...] --add, --remove]
+             [-q build, install, build-install]
+             [-g config, config=[editor]]
+             [-l [repository], --index, --installed]
+             [-c [repository] --upgrade --skip=[], --resolve-off]
+             [-s [repository] [package...], --resolve-off]
+             [-t [repository] [package]]
+             [-p [repository] [package], --color=[]]
+             [-n [SBo package]] [-F [...]] [-f [...]] [-i [...]]
+             [-u [...]] [-o  [...]] [-r [...]] [-d [...]]
+             """
     error_repo = ""
     if repo and repo not in _m.repositories:
         all_repos = RepoList().all_repos
@@ -125,28 +149,7 @@ def usage(repo):
         else:
             error_repo = ("slpkg: error: repository '{0}' does not exist"
                           "\n".format(repo))
-    view = [
-        "\nslpkg - version {0} | Slackware release: {1}\n".format(
-            _m.__version__, _m.slack_rel),
-        "Usage: slpkg Commands:",
-        "             [update] [upgrade] [repo-add [repository name] [URL]]",
-        "             [repo-remove [repository]] [repo-list]",
-        "             [repo-info [repository]] [update [slpkg]]\n",
-        "             Optional arguments:",
-        "             [-h] [-v] [-a [script.tar.gz] [sources...]]",
-        "             [-b list, [...] --add, --remove]",
-        "             [-q list, [...] --add, --remove]",
-        "             [-q build, install, build-install]",
-        "             [-g config, config=[editor]]",
-        "             [-l [repository], --index, --installed]",
-        "             [-c [repository] --upgrade --skip=[], --resolve-off]",
-        "             [-s [repository] [package...], --resolve-off]",
-        "             [-t [repository] [package]]",
-        "             [-p [repository] [package], --color=[]]",
-        "             [-n [SBo package]] [-F [...]] [-f [...]] [-i [...]]",
-        "             [-u [...]] [-o  [...]] [-r [...]] [-d [...]]\n",
-        error_repo,
-        "For more information try 'slpkg -h, --help' or view manpage\n"
-    ]
-    for usg in view:
-        print(usg)
+    header()
+    print(usage.__doc__)
+    print(error_repo)
+    print("For more information try 'slpkg -h, --help' or view manpage\n")
