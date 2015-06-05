@@ -40,7 +40,7 @@ class Utils(object):
 
     def remove_dbs(self, double):
         """
-        Remove douuble item from list
+        Remove double item from list
         """
         one = []
         for dup in double:
@@ -50,7 +50,7 @@ class Utils(object):
 
     def read_file(self, registry):
         """
-        Return reading file
+        Returns reading file
         """
         with open(registry, "r") as file_txt:
             read_file = file_txt.read()
@@ -59,7 +59,7 @@ class Utils(object):
 
     def package_name(self, PACKAGES_TXT, repo):
         """
-        Return PACKAGE NAME
+        Returns list with all the names of packages repository
         """
         packages = []
         for line in PACKAGES_TXT.splitlines():
@@ -72,7 +72,8 @@ class Utils(object):
 
     def check_downloaded(self, path, maybe_downloaded):
         """
-        Return downloaded packages
+        Check if files downloaded and return downloaded
+        packages
         """
         downloaded = []
         for pkg in maybe_downloaded:
@@ -82,7 +83,8 @@ class Utils(object):
 
     def read_file_pkg(self, file_pkg):
         """
-        Return packages from file
+        Read file.pkg and return packages name
+        from file
         """
         packages = []
         if os.path.isfile(file_pkg):
@@ -96,7 +98,8 @@ class Utils(object):
 
     def read_config(self, config):
         """
-        Read config file and return uncomment line
+        Read config file and returns first uncomment line
+        and stop. Used for Slackware mirrors
         """
         for line in config.splitlines():
             line = line.lstrip()
