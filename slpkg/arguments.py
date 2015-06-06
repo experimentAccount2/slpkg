@@ -58,58 +58,58 @@ Commands:
 Optional arguments:
   -h, --help                                Print this help message and exit
   -v, --version                             Print program version and exit.
-  -a, [script.tar.gz] [source...]           Auto build SBo packages.
+  -a, --autobuild, [script] [source...]     Auto build SBo packages.
                                             If you already have downloaded the
                                             script and the source code you can
                                             build a new package with this
                                             command.
-  -b, [package...] --add, --remove          Manage packages in the blacklist.
-      list                                  Add or remove packages and print
+  -b, --blacklist, [package...] --add,      Manage packages in the blacklist.
+      --remove, list                        Add or remove packages and print
                                             the list. Each package is added
                                             here will not be accessible by the
                                             program.
-  -q, [package...] --add, --remove          Manage SBo packages in the queue.
-      list, build, install, build-install   Add or remove and print the list
-                                            of packages. Build and then install
+  -q, --queue, [package...] --add,          Manage SBo packages in the queue.
+      --remove, list, build, install,       Add or remove and print the list
+      build-install                         of packages. Build and then install
                                             the packages from the queue.
-  -g, config, config=[editor]               Configuration file management.
+  -g, --config, print, edit=[editor]        Configuration file management.
                                             Print the configuration file or
                                             edit.
-  -l, [repository], --index, --installed    Print a list of all available
-                                            packages repository, index or print
+  -l, --list, [repository], --index,        Print a list of all available
+      --installed                           packages repository, index or print
                                             only packages installed on the
                                             system.
-  -c, [repository] --upgrade --skip=[],     Check, view and install updated
-      --resolve-off                         packages from repositories.
-  -s, [repository] [package...],            Sync packages. Install packages
+  -c, --check, [repository] --upgrade       Check, view and install updated
+      --skip=[] --resolve-off               packages from repositories.
+  -s, --sync, [repository] [package...],    Sync packages. Install packages
       --resolve-off                         directly from remote repositories
                                             with all dependencies.
-  -t, [repository] [package]                Track package dependencies and
+  -t, --tracking, [repository] [package]    Tracking package dependencies and
                                             print package dependenies tree with
                                             highlight if packages is installed.
-  -p, [repository] [package], --color=[]    Print description of a package
-                                            directly from the repository and
+  -p, --print, [repository] [package],      Print description of a package
+      --color=[]                            directly from the repository and
                                             change color text.
-  -n, [package]                             View a standard of SBo page in
+  -n, --network, [package]                  View a standard of SBo page in
                                             terminal and manage multiple options
                                             like reading, downloading, building
                                             installation, etc.
-  -F, [package...]                          Find packages from repositories and
+  -F, --FIND, [package...]                  Find packages from repositories and
                                             search at each enabled repository
                                             and prints results.
-  -f, [package...]                          Find and print installed packages
+  -f, --find, [package...]                  Find and print installed packages
                                             reporting the size and the sum.
-  -i, [package...]                          Installs single or multiple
+  -i, --install, [package...]               Installs single or multiple
                                             Slackware binary packages (*.t?z).
-  -u, [package...]                          Upgrade single or multiple Slackware
+  -u, --upgrade, [package...]               Upgrade single or multiple Slackware
                                             binary packages from a older to a
                                             newer one.
-  -o, [package...]                          Reinstall signle or multiple
+  -o, --reinstall, [package...]             Reinstall signle or multiple
                                             Slackware binary packages with the
                                             same packages if the exact.
-  -r, [package...]                          Removes a previously installed
+  -r, --remove, [package...]                Removes a previously installed
                                             Slackware binary packages.
-  -d, [package...]                          Display the packages contents and
+  -d, --display, [package...]               Display the packages contents and
                                             file list.
 
 You can read more about slpkg from manpage or see examples from readme file.
