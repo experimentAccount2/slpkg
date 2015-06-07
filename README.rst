@@ -386,8 +386,8 @@ Command Line Tool Usage
                                                 same packages if the exact.
       -r, --remove, [package...]                Removes a previously installed
                                                 Slackware binary packages.
-      -d, --display, [package...]               Display the packages contents and
-                                                file list.
+      -d, --display, [package...]               Display the installed packages 
+                                                contents and file list.
 
 Slpkg Examples
 --------------
