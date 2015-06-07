@@ -26,7 +26,7 @@ import os
 import sys
 
 from utils import Utils
-from __metadata__ import MetaData as _m
+from __metadata__ import MetaData as _meta_
 
 
 class Repo(object):
@@ -46,8 +46,8 @@ class Repo(object):
             line = line.lstrip()
             if line and not line.startswith("#"):
                 repo_name.append(line.split()[0])
-        if (repo in _m.repositories or repo in repo_name or
-                repo in _m.default_repositories):
+        if (repo in _meta_.repositories or repo in repo_name or
+                repo in _meta_.default_repositories):
             print("\nRepository name '{0}' exist, select different name.\n"
                   "View all repositories with command 'repo-list'.\n".format(
                       repo))
@@ -102,7 +102,7 @@ class Repo(object):
         """
         default = "http://mirrors.slackware.com/slackware/"
         if os.path.isfile("/etc/slpkg/slackware-mirrors"):
-            mirrors = Utils().read_file(_m.conf_path + "slackware-mirrors")
+            mirrors = Utils().read_file(_meta_.conf_path + "slackware-mirrors")
             for line in mirrors.splitlines():
                 line = line.rstrip()
                 if not line.startswith("#") and line:

@@ -27,7 +27,7 @@ import sys
 from messages import Msg
 from sbo.greps import SBoGrep
 from pkg.manager import PackageManager
-from __metadata__ import MetaData as _m
+from __metadata__ import MetaData as _meta_
 
 
 def find_from_repos(pkg):
@@ -37,12 +37,12 @@ def find_from_repos(pkg):
     cache = ""
     count_pkg = count_repo = 0
     print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
-        _m.color["CYAN"], ", ".join(pkg), _m.color["ENDC"]))
+        _meta_.color["CYAN"], ", ".join(pkg), _meta_.color["ENDC"]))
     Msg().template(78)
     print("| {0}  {1}{2}{3}".format("Repository", "Package", " " * 54, "Size"))
     Msg().template(78)
     try:
-        for repo in _m.repositories:
+        for repo in _meta_.repositories:
             PACKAGES_TXT = PackageManager(pkg).list_lib(repo)
             packages, sizes = PackageManager(pkg).list_greps(repo, PACKAGES_TXT)
             for find, size in zip(packages, sizes):
@@ -58,7 +58,7 @@ def find_from_repos(pkg):
                             find + ver, " " * (53 - len(find + ver)),
                             size))
         print("\n{0}Total found {1} packages in {2} repositories.{3}\n".format(
-            _m.color["GREY"], count_pkg, count_repo, _m.color["ENDC"]))
+            _meta_.color["GREY"], count_pkg, count_repo, _meta_.color["ENDC"]))
     except KeyboardInterrupt:
         print("")   # new line at exit
         sys.exit(0)

@@ -22,13 +22,13 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-from __metadata__ import MetaData as _m
+from __metadata__ import MetaData as _meta_
 
 
 def prog_version():
     """
     Print version, license and email
     """
-    print("Version : {0}".format(_m.__version__))
-    print("Licence : {0}".format(_m.__license__))
-    print("Email   : {0}".format(_m.__email__))
+    print("Version : {0}".format(_meta_.__version__))
+    print("Licence : {0}".format(_meta_.__license__))
+    print("Email   : {0}".format(_meta_.__email__))

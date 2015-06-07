@@ -24,13 +24,13 @@
 
 import os
 
-from __metadata__ import MetaData as _m
+from __metadata__ import MetaData as _meta_
 
 
 def delete(path, packages):
     """
     Remove downloaded packages
     """
-    if _m.del_all in ["on", "ON"]:
+    if _meta_.del_all in ["on", "ON"]:
         for pkg in packages:
             os.remove(path + pkg)

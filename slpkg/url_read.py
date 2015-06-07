@@ -25,7 +25,7 @@
 import sys
 import urllib2
 
-from __metadata__ import MetaData as _m
+from __metadata__ import MetaData as _meta_
 
 
 class URL(object):
@@ -42,7 +42,8 @@ class URL(object):
             return f.read()
         except (urllib2.URLError, ValueError):
             print("\n{0}Can't read file '{1}'{2}".format(
-                _m.color["RED"], self.link.split("/")[-1], _m.color["ENDC"]))
+                _meta_.color["RED"], self.link.split("/")[-1],
+                _meta_.color["ENDC"]))
             return " "
         except KeyboardInterrupt:
             print("")   # new line at exit

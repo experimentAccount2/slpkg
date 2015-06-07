@@ -26,7 +26,7 @@ import sys
 
 from messages import Msg
 from repositories import Repo
-from __metadata__ import MetaData as _m
+from __metadata__ import MetaData as _meta_
 
 
 class RepoList(object):
@@ -66,19 +66,19 @@ class RepoList(object):
             "Status"))
         Msg().template(78)
         for repo_id, repo_URL in sorted(self.all_repos.iteritems()):
-            status, COLOR = "disabled", _m.color["RED"]
+            status, COLOR = "disabled", _meta_.color["RED"]
             default = "yes"
             if len(repo_URL) > 49:
                 repo_URL = repo_URL[:48] + "~"
-            if repo_id in _m.repositories:
-                status, COLOR = "enabled", _m.color["GREEN"]
-            if repo_id not in _m.default_repositories:
+            if repo_id in _meta_.repositories:
+                status, COLOR = "enabled", _meta_.color["GREEN"]
+            if repo_id not in _meta_.default_repositories:
                 default = "no"
             print("  {0}{1}{2}{3}{4}{5}{6}{7:>8}{8}".format(
                 repo_id, " " * (9 - len(repo_id)),
                 repo_URL, " " * (52 - len(repo_URL)),
                 default, " " * (8 - len(default)),
-                COLOR, status, _m.color["ENDC"]))
+                COLOR, status, _meta_.color["ENDC"]))
         print("\nFor enable or disable default repositories edit "
               "'/etc/slpkg/slpkg.conf' file\n")
         sys.exit(0)
