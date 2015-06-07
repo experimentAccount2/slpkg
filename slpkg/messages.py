@@ -24,7 +24,7 @@
 
 import sys
 
-from __metadata__ import MetaData as _m
+from __metadata__ import MetaData as _meta_
 
 from slpkg.pkg.find import find_package
 
@@ -62,13 +62,12 @@ class Msg(object):
         Print error message if build failed
         """
         self.template(78)
-        print("| Build package {0} [ {1}FAILED{2} ]".format(prgnam,
-                                                            _m.color["RED"],
-                                                            _m.color["ENDC"]))
+        print("| Build package {0} [ {1}FAILED{2} ]".format(
+            prgnam, _meta_.color["RED"], _meta_.color["ENDC"]))
         self.template(78)
         print("| See log file in '{0}/var/log/slpkg/sbo/build_logs{1}' "
-              "directory or read README".format(_m.color["CYAN"],
-                                                _m.color["ENDC"]))
+              "directory or read README".format(_meta_.color["CYAN"],
+                                                _meta_.color["ENDC"]))
         print("| file: {0}{1}".format(sbo_url, "README"))
         self.template(78)
         print   # new line at end
@@ -83,8 +82,8 @@ class Msg(object):
         """
         Message checking
         """
-        sys.stdout.write("{0}Checking ...{1}".format(_m.color["GREY"],
-                                                     _m.color["ENDC"]))
+        sys.stdout.write("{0}Checking ...{1}".format(_meta_.color["GREY"],
+                                                     _meta_.color["ENDC"]))
         sys.stdout.flush()
 
     def reading(self):
@@ -92,7 +91,7 @@ class Msg(object):
         Message reading
         """
         sys.stdout.write("{0}Reading package lists ...{1}".format(
-            _m.color["GREY"], _m.color["ENDC"]))
+            _meta_.color["GREY"], _meta_.color["ENDC"]))
         sys.stdout.flush()
 
     def resolving(self):
@@ -100,15 +99,15 @@ class Msg(object):
         Message resolving
         """
         sys.stdout.write("{0}Resolving dependencies ...{1}".format(
-            _m.color["GREY"], _m.color["ENDC"]))
+            _meta_.color["GREY"], _meta_.color["ENDC"]))
         sys.stdout.flush()
 
     def done(self):
         """
         Message done
         """
-        sys.stdout.write("{0}Done{1}\n".format(_m.color["GREY"],
-                                               _m.color["ENDC"]))
+        sys.stdout.write("{0}Done{1}\n".format(_meta_.color["GREY"],
+                                               _meta_.color["ENDC"]))
 
     def pkg(self, count):
         """
@@ -141,8 +140,8 @@ class Msg(object):
         """
         Message answer
         """
-        if _m.default_answer == "y":
-            answer = _m.default_answer
+        if _meta_.default_answer == "y":
+            answer = _meta_.default_answer
         else:
             answer = raw_input("Would you like to continue [Y/n]? ")
         return answer
@@ -159,7 +158,7 @@ class Msg(object):
         self.template(78)
         for installed in (install + upgrade):
             name = "-".join(installed.split("-")[:-1])
-            if find_package(installed, _m.pkg_path):
+            if find_package(installed, _meta_.pkg_path):
                 if installed in upgrade:
                     print("| Package {0} upgraded successfully".format(name))
                 else:

@@ -23,7 +23,7 @@
 
 
 from utils import Utils
-from __metadata__ import MetaData as _m
+from __metadata__ import MetaData as _meta_
 
 
 class BlackList(object):
@@ -55,8 +55,8 @@ class BlackList(object):
         print("\nPackages in blacklist:\n")
         for black in self.packages():
             if black:
-                print("{0}{1}{2}".format(_m.color["GREEN"], black,
-                                         _m.color["ENDC"]))
+                print("{0}{1}{2}".format(_meta_.color["GREEN"], black,
+                                         _meta_.color["ENDC"]))
                 self.quit = True
         if self.quit:
             print("")   # new line at exit
@@ -71,8 +71,8 @@ class BlackList(object):
         with open(self.blackfile, "a") as black_conf:
             for pkg in pkgs:
                 if pkg not in blacklist:
-                    print("{0}{1}{2}".format(_m.color["GREEN"], pkg,
-                                             _m.color["ENDC"]))
+                    print("{0}{1}{2}".format(_meta_.color["GREEN"], pkg,
+                                             _meta_.color["ENDC"]))
                     black_conf.write(pkg + "\n")
                     self.quit = True
             black_conf.close()
@@ -89,8 +89,8 @@ class BlackList(object):
                 if line not in pkgs:
                     remove.write(line + "\n")
                 else:
-                    print("{0}{1}{2}".format(_m.color["RED"], line,
-                                             _m.color["ENDC"]))
+                    print("{0}{1}{2}".format(_meta_.color["RED"], line,
+                                             _meta_.color["ENDC"]))
                     self.quit = True
             remove.close()
         if self.quit:

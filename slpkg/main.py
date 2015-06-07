@@ -44,7 +44,7 @@ from init import (
     Initialization,
     check_exists_repositories
 )
-from __metadata__ import MetaData as _m
+from __metadata__ import MetaData as _meta_
 
 from pkg.build import BuildPackage
 from pkg.manager import PackageManager
@@ -82,7 +82,7 @@ class ArgParse(object):
         elif (len(self.args) >= 3 and
                 self.args[0] in ["-s", "--sync", "-t", "--tracking", "-p",
                                  "--print", "-F", "--FIND"] and
-                self.args[1] in _m.repositories and
+                self.args[1] in _meta_.repositories and
                 self.args[2].endswith(".pkg")):
             self.packages = Utils().read_file_pkg(self.args[2])
         elif (len(self.args) == 3 and self.args[0] in ["-q", "--queue",
@@ -165,7 +165,7 @@ class ArgParse(object):
         """ auto built tool """
         options = ["-a", "--autobuild"]
         if len(self.args) == 3 and self.args[0] in options:
-            BuildPackage(self.args[1], self.args[2:], _m.path).build()
+            BuildPackage(self.args[1], self.args[2:], _meta_.path).build()
         else:
             usage("")
 
@@ -174,7 +174,7 @@ class ArgParse(object):
         options = ["-l", "--list"]
         flag = ["--index", "--installed"]
         if (len(self.args) == 3 and self.args[0] in options and
-                self.args[1] in _m.repositories):
+                self.args[1] in _meta_.repositories):
             if self.args[2] == flag[0]:
                 PackageManager(binary=None).package_list(self.args[1],
                                                          INDEX=True,
@@ -186,11 +186,11 @@ class ArgParse(object):
             else:
                 usage("")
         elif (len(self.args) == 2 and self.args[0] in options and
-                self.args[1] in _m.repositories):
+                self.args[1] in _meta_.repositories):
             PackageManager(None).package_list(self.args[1], INDEX=False,
                                               installed=False)
         elif (len(self.args) > 1 and self.args[0] in options and
-                self.args[1] not in _m.repositories):
+                self.args[1] not in _meta_.repositories):
             usage(self.args[1])
         else:
             usage("")
@@ -211,12 +211,12 @@ class ArgParse(object):
             self.args.pop(3)
         if (len(self.args) == 3 and self.args[0] in options and
                 self.args[2] == flag[0]):
-            if (self.args[1] in _m.repositories and
+            if (self.args[1] in _meta_.repositories and
                     self.args[1] not in ["slack", "sbo"]):
                 BinaryInstall(pkg_upgrade(self.args[1], skip),
                               self.args[1], resolve).start(if_upgrade=True)
             elif self.args[1] == "slack":
-                if _m.only_installed in ["on", "ON"]:
+                if _meta_.only_installed in ["on", "ON"]:
                     BinaryInstall(pkg_upgrade("slack", skip),
                                   "slack", resolve).start(if_upgrade=True)
                 else:
@@ -236,7 +236,8 @@ class ArgParse(object):
         if self.args[-1] == flag[0]:
             resolve = False
         if len(self.args) >= 3 and self.args[0] in options:
-            if self.args[1] in _m.repositories and self.args[1] not in ["sbo"]:
+            if (self.args[1] in _meta_.repositories and
+                    self.args[1] not in ["sbo"]):
                 BinaryInstall(self.packages, self.args[1], resolve).start(
                     if_upgrade=False)
             elif self.args[1] == "sbo":
@@ -256,10 +257,10 @@ class ArgParse(object):
             if self.args[2].endswith(".pkg"):
                 packages = self.packages[0]
         if (len(self.args) == 3 and self.args[0] in options and
-                self.args[1] in _m.repositories):
+                self.args[1] in _meta_.repositories):
             track_dep(packages, self.args[1])
         elif (len(self.args) > 1 and self.args[0] in options and
-                self.args[1] not in _m.repositories):
+                self.args[1] not in _meta_.repositories):
             usage(self.args[1])
         else:
             usage("")
@@ -271,7 +272,7 @@ class ArgParse(object):
         if len(self.packages) > 1:
             packages = self.packages[0]
         if (len(self.args) == 2 and self.args[0] in options and
-                "sbo" in _m.repositories):
+                "sbo" in _meta_.repositories):
             SBoNetwork(packages).view()
         else:
             usage("")
@@ -371,17 +372,17 @@ class ArgParse(object):
         if len(self.packages) > 1:
             packages = self.packages[0]
         if (len(self.args) == 3 and self.args[0] in options and
-                self.args[1] in _m.repositories):
+                self.args[1] in _meta_.repositories):
             PkgDesc(packages, self.args[1], "").view()
         elif (len(self.args) == 4 and self.args[0] in options and
                 self.args[3].startswith(flag[0])):
             tag = self.args[3][len(flag[0]):]
-            if self.args[1] in _m.repositories and tag in colors:
+            if self.args[1] in _meta_.repositories and tag in colors:
                 PkgDesc(packages, self.args[1], tag).view()
             else:
                 usage("")
         elif (len(self.args) > 1 and self.args[0] in options and
-                self.args[1] not in _m.repositories):
+                self.args[1] not in _meta_.repositories):
             usage(self.args[1])
         else:
             usage("")
@@ -405,16 +406,15 @@ class ArgParse(object):
     def congiguration(self):
         """ manage slpkg configuration file """
         options = ["-g", "--config"]
-        command = ["print", "edit"]
+        command = ["print", "edit="]
         if (len(self.args) == 2 and self.args[0] in options and
-                self.args[1].startswith(command[0])):
+                self.args[1].startswith(command[1])):
             editor = self.args[1][len(command[1]):]
-            if self.args[1] == command[0]:
-                Config().view()
-            elif editor:
-                Config().edit(editor)
-            else:
-                usage("")
+            print editor
+            Config().edit(editor)
+        elif (len(self.args) == 2 and self.args[0] in options and
+                self.args[1] == (command[0])):
+            Config().view()
         else:
             usage("")
 

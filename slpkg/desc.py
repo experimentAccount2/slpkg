@@ -24,7 +24,7 @@
 
 from utils import Utils
 from messages import Msg
-from __metadata__ import MetaData as _m
+from __metadata__ import MetaData as _meta_
 
 
 class PkgDesc(object):
@@ -36,18 +36,19 @@ class PkgDesc(object):
         self.COLOR = ""
         self.lib = ""
         color_text = {
-            "red": _m.color["RED"],
-            "green": _m.color["GREEN"],
-            "yellow": _m.color["YELLOW"],
-            "cyan": _m.color["CYAN"],
-            "grey": _m.color["GREY"],
+            "red": _meta_.color["RED"],
+            "green": _meta_.color["GREEN"],
+            "yellow": _meta_.color["YELLOW"],
+            "cyan": _meta_.color["CYAN"],
+            "grey": _meta_.color["GREY"],
             "": ""
         }
         self.COLOR = color_text[self.paint]
-        if self.repo in _m.repositories and self.repo != "sbo":
-            self.lib = _m.lib_path + "{0}_repo/PACKAGES.TXT".format(self.repo)
+        if self.repo in _meta_.repositories and self.repo != "sbo":
+            self.lib = _meta_.lib_path + "{0}_repo/PACKAGES.TXT".format(
+                self.repo)
         else:
-            self.lib = _m.lib_path + "{0}_repo/SLACKBUILDS.TXT".format(
+            self.lib = _meta_.lib_path + "{0}_repo/SLACKBUILDS.TXT".format(
                 self.repo)
 
     def view(self):
@@ -58,7 +59,7 @@ class PkgDesc(object):
             for line in PACKAGES_TXT.splitlines():
                 if line.startswith(self.name + ":"):
                     print(self.COLOR + line[len(self.name) + 1:] +
-                          _m.color["ENDC"])
+                          _meta_.color["ENDC"])
                     count += 1
                     if count == 11:
                         break
@@ -67,7 +68,7 @@ class PkgDesc(object):
                 if (line.startswith(
                         "SLACKBUILD SHORT DESCRIPTION:  " + self.name + " (")):
                     count += 1
-                    print(self.COLOR + line[31:] + _m.color["ENDC"])
+                    print(self.COLOR + line[31:] + _meta_.color["ENDC"])
         if count == 0:
             Msg().pkg_not_found("", self.name, "No matching", "\n")
         else:

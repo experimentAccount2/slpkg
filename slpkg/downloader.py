@@ -27,7 +27,7 @@ import sys
 import subprocess
 
 from messages import Msg
-from __metadata__ import MetaData as _m
+from __metadata__ import MetaData as _meta_
 
 
 class Download(object):
@@ -35,7 +35,7 @@ class Download(object):
     def __init__(self, path, url):
         self.path = path
         self.url = url
-        self.wget_options = _m.wget_options
+        self.wget_options = _meta_.wget_options
 
     def start(self):
         """
@@ -45,7 +45,8 @@ class Download(object):
         for dwn in self.url:
             self.file_name = dwn.split("/")[-1]
             print("\n[{0}/{1}][ {2}Download{3} ] --> {4}\n".format(
-                dwn_count, len(self.url), _m.color["GREEN"], _m.color["ENDC"],
+                dwn_count, len(self.url), _meta_.color["GREEN"],
+                _meta_.color["ENDC"],
                 self.file_name))
             try:
                 subprocess.call("wget {0} --directory-prefix={1} {2}".format(
@@ -61,7 +62,7 @@ class Download(object):
             print("")
             Msg().template(78)
             print("| Download '{0}' file {1}[ FAILED ]{2}".format(
-                self.file_name, _m.color["RED"], _m.color["ENDC"]))
+                self.file_name, _meta_.color["RED"], _meta_.color["ENDC"]))
             Msg().template(78)
             print("")
             if not Msg().answer() in ["y", "Y"]:

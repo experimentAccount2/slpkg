@@ -23,13 +23,13 @@
 
 
 from repolist import RepoList
-from __metadata__ import MetaData as _m
+from __metadata__ import MetaData as _meta_
 
 
 def header():
     """help header message"""
     print("\nslpkg - version {0} | Slackware release: {1}\n".format(
-        _m.__version__, _m.slack_rel))
+        _meta_.__version__, _meta_.slack_rel))
 
 
 def options():
@@ -140,7 +140,7 @@ def usage(repo):
              [-u [...]] [-o  [...]] [-r [...]] [-d [...]]
              """
     error_repo = ""
-    if repo and repo not in _m.repositories:
+    if repo and repo not in _meta_.repositories:
         all_repos = RepoList().all_repos
         del RepoList().all_repos
         if repo in all_repos:

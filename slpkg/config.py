@@ -25,7 +25,7 @@
 import subprocess
 
 from utils import Utils
-from __metadata__ import MetaData as _m
+from __metadata__ import MetaData as _meta_
 
 
 class Config(object):
@@ -63,8 +63,8 @@ class Config(object):
             if not line.startswith("#") and line.split("=")[0] in conf_args:
                 print(line)
             else:
-                print("{0}{1}{2}".format(_m.color["CYAN"], line,
-                                         _m.color["ENDC"]))
+                print("{0}{1}{2}".format(_meta_.color["CYAN"], line,
+                                         _meta_.color["ENDC"]))
         print("")   # new line at end
 
     def edit(self, editor):

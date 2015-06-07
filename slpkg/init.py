@@ -29,7 +29,7 @@ from url_read import URL
 from toolbar import status
 from repositories import Repo
 from file_size import FileSize
-from __metadata__ import MetaData as _m
+from __metadata__ import MetaData as _meta_
 
 from slack.mirrors import mirrors
 from slack.slack_version import slack_ver
@@ -38,13 +38,13 @@ from slack.slack_version import slack_ver
 class Initialization(object):
 
     def __init__(self):
-        self.conf_path = _m.conf_path
-        self.log_path = _m.log_path
-        self.lib_path = _m.lib_path
-        self.tmp_path = _m.tmp_path
-        self.build_path = _m.build_path
-        self.slpkg_tmp_packages = _m.slpkg_tmp_packages
-        self.slpkg_tmp_patches = _m.slpkg_tmp_patches
+        self.conf_path = _meta_.conf_path
+        self.log_path = _meta_.log_path
+        self.lib_path = _meta_.lib_path
+        self.tmp_path = _meta_.tmp_path
+        self.build_path = _meta_.build_path
+        self.slpkg_tmp_packages = _meta_.slpkg_tmp_packages
+        self.slpkg_tmp_patches = _meta_.slpkg_tmp_patches
         if not os.path.exists(self.conf_path):
             os.mkdir(self.conf_path)
         if not os.path.exists(self.log_path):
@@ -384,12 +384,12 @@ class Initialization(object):
         elif arch == "arm":
             ar = "arm"
         packages_txt = "{0}slacke{1}/slackware{2}-{3}/{4}".format(
-            repo, _m.slacke_sub_repo[1:-1], ar, slack_ver(), lib_file)
+            repo, _meta_.slacke_sub_repo[1:-1], ar, slack_ver(), lib_file)
         # filelist_txt = ""
         checksums_md5 = "{0}slacke{1}/slackware{2}-{3}/{4}".format(
-            repo, _m.slacke_sub_repo[1:-1], ar, slack_ver(), md5_file)
+            repo, _meta_.slacke_sub_repo[1:-1], ar, slack_ver(), md5_file)
         changelog_txt = "{0}slacke{1}/slackware{2}-{3}/{4}".format(
-            repo, _m.slacke_sub_repo[1:-1], ar, slack_ver(), log_file)
+            repo, _meta_.slacke_sub_repo[1:-1], ar, slack_ver(), log_file)
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
@@ -555,7 +555,7 @@ class Initialization(object):
         Remove all package lists with changelog and checksums files
         and create lists again
         """
-        for repo in _m.repositories:
+        for repo in _meta_.repositories:
             changelogs = "{0}{1}{2}".format(self.log_path, repo,
                                             "/ChangeLog.txt")
             if os.path.isfile(changelogs):
@@ -578,16 +578,16 @@ class Update(object):
         Update all repositories lists
         """
         print("\nCheck and update repositories:\n")
-        for repo in _m.repositories:
+        for repo in _meta_.repositories:
             sys.stdout.write("{0}Update repository {1} ...{2}".format(
-                _m.color["GREY"], repo, _m.color["ENDC"]))
+                _meta_.color["GREY"], repo, _meta_.color["ENDC"]))
             sys.stdout.flush()
-            if repo in _m.default_repositories:
+            if repo in _meta_.default_repositories:
                 exec("{0}.{1}()".format(self._init, repo))
             else:
                 Initialization().custom(repo)
-            sys.stdout.write("{0}Done{1}\n".format(_m.color["GREY"],
-                                                   _m.color["ENDC"]))
+            sys.stdout.write("{0}Done{1}\n".format(_meta_.color["GREY"],
+                                                   _meta_.color["ENDC"]))
         print("")   # new line at end
         sys.exit(0)
 
@@ -598,11 +598,11 @@ def check_exists_repositories():
     """
     update = False
     pkg_list = "PACKAGES.TXT"
-    for repo in _m.repositories:
+    for repo in _meta_.repositories:
         pkg_list = "PACKAGES.TXT"
         if repo == "sbo":
             pkg_list = "SLACKBUILDS.TXT"
-        if not os.path.isfile("{0}{1}{2}".format(_m.lib_path, repo,
+        if not os.path.isfile("{0}{1}{2}".format(_meta_.lib_path, repo,
                                                  "_repo/{0}".format(pkg_list))):
             update = True
     if update:
