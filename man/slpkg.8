@@ -88,40 +88,42 @@ View repository information.
 .PP
 You can check for new versions and update slpkg itself.
 
-.SS -a, auto build packages
-\fBslpkg\fP \fB-a\fP <\fIscript\fP> <\fIsources\fP>
+.SS -a, --autobuild, auto build packages
+\fBslpkg\fP \fB-a\fP <\fIscript.tar.gz\fP> <\fIsources\fP>
 .PP
-With this argument, build slackware package from source quickly and easy.
+If you already have download the script and source with this argument you can build Slackware 
+package from source quickly and easy.
 (If you want to pass variables to the script exported as: '# export FFMPEG_X264=yes FFMPEG_LAME=yes')
 
-.SS -b, add, remove, view packages in blacklist
-\fBslpkg\fP \fB-b\fP \fBlist\fP, <\fIpackages\fP> \fB--add\fP, \fB--remove\fP
+.SS -b, --blacklist, add, remove, view packages in blacklist
+\fBslpkg\fP \fB-b\fP <\fIname of packages\fP> \fB--add\fP, \fB--remove\fP, \fBlist\fP
 .PP
-List, add or remove packages from blacklist file. The settings here affect 
+Add, remove or listed packages from blacklist file. The settings here affect 
 all repositories.
 
-.SS -q, add, remove, view packages in queue
-\fBslpkg\fP \fB-q\fP \fBlist\fP, <\fIpackages\fP> \fB--add\fP, \fB--remove\fP
+.SS -q, --queue, add, remove, view packages in queue
+\fBslpkg\fP \fB-q\fP <\fInames of packages\fP> \fB--add\fP, \fB--remove\fP
 .TP
-\fBslpkg\fP \fB-q\fP \fBbuild\fP, \fBinstall\fP, \fBbuild-install\fP
+\fBslpkg\fP \fB-q\fP \fBlist\fP, \fBbuild\fP, \fBinstall\fP, \fBbuild-install\fP
 .PP
-List, add, or remove sbo packages from queue. This argument is very useful if you want
+Add, remove and listed sbo packages from queue. This argument is very useful if you want
 to build and install multiple packages together. Note the correct order if there are 
 dependencies. If you want to remove all the packages from the list run '# slpkg -q all --remove'. 
 (these arguments only working for the sbo repository)
 Build or install or build and install packages are queued.
 
-.SS -g, configuration file management
-\fBslpkg\fP \fBconfig\fP, \fBconfig=[editor]\fP
+.SS -g, --config, configuration file management
+\fBslpkg\fP \fB-g\fP \fBprint\fP, \fBedit=[editor]\fP
 .PP
-Print configuration file or edit with editor.
+Print configuration file or edit with your favorite editor.
 
-.SS -l, list of installed packages
+.SS -l, --list, list of installed packages
 \fBslpkg\fP \fB-l\fP <\fIrepository\fP>, \fB--index\fP, \fB--installed\fP
 .PP
-List of packages per repository. Support command 'grep' like '# slpkg -l sbo | grep "python"'.
+Print a list of all available packages repository, index or print only packages installed on the 
+system. Support command 'grep' like '# slpkg -l sbo | grep "python"'.
 
-.SS -c, check if your packages is up to date
+.SS -c, --check, check if your packages is up to date
 \fBslpkg\fP \fB-c\fP <\fIrepository\fP> \fB--upgrade\fP \fB--skip=[packages...]\fP, 
 \fB--resolve-off\fP
 .PP
@@ -131,78 +133,81 @@ Slackware 'patches' repository works independently of the others i.e not need be
 the list of packages by choosing "# slpkg update", works directly with the official repository 
 and so always you can have updated your system. 
 
-.SS -s, download, build and install package with all dependencies
-\fBslpkg\fP \fB-s\fP <\fIrepository\fP> <\fIname of packages\fP>, \fB--resolve-off\fP
+.SS -s, --sync, synchronize packages, download, build and install package with all dependencies
+\fBslpkg\fP \fB-s\fP <\fIrepository\fP> <\fInames of packages\fP>, \fB--resolve-off\fP
 .PP
 Installs or upgrade packages from the repositories with automatically resolving all 
 dependencies of the package. Sometimes to install a package have to pass part of the 
-version of the package as 'slpkg -s alien ffmpeg-2.4.3'.
+version of the package as '# slpkg -s alien ffmpeg-2.4.3'.
 (If you want to pass variables to the script exported as: '# export FFMPEG_X264=yes FFMPEG_LAME=yes')
 Switch off automatic resolve dependencies with additional option '--resolve-off'.
 
-.SS -t, tracking dependencies
+.SS -t, --tracking,  tracking dependencies
 \fBslpkg\fP \fB-t\fP <\fIrepository\fP> <\fIname of package\fP>
 .PP
 Tracking all dependencies of that package.
 The sequence shown is that you must follow to correctly install package.
-Also you can check if the package has installed all the required dependencies.
+Also you can check if the installed package has all the required dependencies.
 
-.SS -p, print packages description
+.SS -p, --print, print packages description
 \fBslpkg\fP \fB-p\fP <\fIrepository\fP> <\fIname of package\fP>, \fB--color=[]\fP
 .PP
-Print package description with color. Available colors: red, green, yellow, cyan, grey
+Print package description from remote repository with color. Available colors: 
+red, green, yellow, cyan, grey
 
-.SS -F, find packages from repositories
-\fBslpkg\fP \fB-F\fP <\fIname of packages\fP>
+.SS -F, --FIND, find packages from repositories
+\fBslpkg\fP \fB-F\fP <\fInames of packages\fP>
 .PP
-Find packages from repositories are enabled.
-
-.SS -f, find istalled packages
-\fBslpkg\fP \fB-f\fP <\fIname of packages\fP>
+Find packages from all repositories are enabled. Useful command to find all available packages
+per repository.
+ 
+.SS -f, --find, find istalled packages
+\fBslpkg\fP \fB-f\fP <\fInames of packages\fP>
 .PP
 Find installed packages with view total file size. 
 Example you can view all installed sbo packages like '# slpkg -f _SBo'.
 
-.SS -n, view SBo packages
+.SS -n, --network, view SBo packages
 \fBslpkg\fP \fB-n\fP <\fIname of package\fP>
 .PP
 View complete slackbuilds.org site in your terminal. Read file, download, 
 build or install etc.
 
-.SS -i, install binary packages
+.SS -i, --install, install Slackware binary packages
 \fBslpkg\fP \fB-i\fP <\fIpackages.t?z\fP>
 .PP
 Installs single binary packages designed for use with the Slackware Linux 
 distribution into your system.
 
-.SS -u, install-upgrade packages with new
+.SS -u, --upgrade, install-upgrade Slackware binary packages with new
 \fBslpkg\fP \fB-u\fP <\fIpackages.t?z\fP>
 .PP
 Normally upgrade only upgrades packages that are already installed on the system, 
 and will skip any packages that do not already have a version installed. 
-(like slackware command upgradepkg --install-new)
+(like slackware command 'upgradepkg --install-new')
 
-.SS -o, reinstall binary packages
+.SS -o, --reinstall, reinstall Slackware binary packages
 \fBslpkg\fP \fB-o\fP <\fIpackages.t?z\fP>
 .PP
-Upgradepkg usually skips packages if the exact same package (matching name, version, 
-arch, and build number) is already installed on the system. 
-(like slackware command upgradepkg --reinstall)
+Upgrade package usually skips packages if the exact same package (matching name, version, 
+arch, and build number) is already installed on the system. Use the '--reinstall' option 
+if you want to  upgrade  all  packages  even  if the same version is already installed. 
+(like slackware command 'upgradepkg --reinstall')
 
-.SS -r, remove packages
-\fBslpkg\fP \fB-r\fP <\fIname of packages\fP>
+.SS -r, --remove, remove previously installed Slackware binary packages
+\fBslpkg\fP \fB-r\fP <\fInames of packages\fP>
 .PP
 Removes a previously installed Slackware package, while writing a progress report to 
 the standard output. A package may be specified either by the full package name (as 
 you'd see listed in /var/log/packages/), or by the base package name. If installed
-packages with command 'slpkg -s sbo <package>' then write a file in /var/log/slpkg/dep/ 
+packages with command 'slpkg -s sbo <packages>' then write a file in /var/log/slpkg/dep/ 
 with all dependencies and it allows you can remove them all together. 
-(like slackware command removepkg)
+(like slackware command 'removepkg')
 
-.SS -d, display contents
-\fBslpkg\fP \fB-d\fP <\fIname of packages\fP>
+.SS -d, --display, display the installed packages contents and file list
+\fBslpkg\fP \fB-d\fP <\fInames of packages\fP>
 .PP
-Display the contents of the package with all descriptions.
+Display the installed Slackware packages contents and file list with all descriptions.
 
 .SH HELP OPTION
 Specifying the help option displays help for slpkg itself, or a
