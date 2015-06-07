@@ -449,6 +449,7 @@ def main():
         "-a": argparse.auto_build,
         "--autobuild": argparse.auto_build,
         "-l": argparse.pkg_list,
+        "--list": argparse.pkg_list,
         "-c": argparse.pkg_upgrade,
         "--check": argparse.pkg_upgrade,
         "-s": argparse.pkg_install,
