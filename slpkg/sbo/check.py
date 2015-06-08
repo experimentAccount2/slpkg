@@ -29,7 +29,7 @@ from distutils.version import LooseVersion
 from slpkg.messages import Msg
 from slpkg.toolbar import status
 from slpkg.splitting import split_package
-from slpkg.__metadata__ import MetaData as _m
+from slpkg.__metadata__ import MetaData as _meta_
 
 from greps import SBoGrep
 from search import sbo_search_pkg
@@ -65,7 +65,7 @@ def sbo_list():
     Return all SBo packages
     """
     sbo_packages = []
-    for pkg in os.listdir(_m.pkg_path):
+    for pkg in os.listdir(_meta_.pkg_path):
         if pkg.endswith("_SBo"):
             sbo_packages.append(pkg)
     return sbo_packages

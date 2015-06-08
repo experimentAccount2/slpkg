@@ -32,7 +32,7 @@ from slpkg.blacklist import BlackList
 from slpkg.log_deps import write_deps
 from slpkg.downloader import Download
 from slpkg.splitting import split_package
-from slpkg.__metadata__ import MetaData as _m
+from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.pkg.find import find_package
 from slpkg.pkg.build import BuildPackage
@@ -50,7 +50,8 @@ class SBoInstall(object):
     def __init__(self, slackbuilds, resolve):
         self.slackbuilds = slackbuilds
         self.resolve = resolve
-        self.build_folder = _m.build_path
+        self.meta = _meta_
+        self.build_folder = self.meta.build_path
         self.unst = ["UNSUPPORTED", "UNTESTED"]
         self.master_packages = []
         self.deps = []
@@ -84,11 +85,11 @@ class SBoInstall(object):
             self.master_packages, mas_src = self.sbo_version_source(
                 self.package_found)
             Msg().done()
-            if _m.rsl_deps in ["on", "ON"] and self.resolve:
+            if self.meta.rsl_deps in ["on", "ON"] and self.resolve:
                 Msg().resolving()
             self.dependencies, dep_src = self.sbo_version_source(
                 self.one_for_all(self.deps))
-            if _m.rsl_deps in ["on", "ON"] and self.resolve:
+            if self.meta.rsl_deps in ["on", "ON"] and self.resolve:
                 Msg().done()
             self.clear_masters()
             if self.package_found:
@@ -115,12 +116,13 @@ class SBoInstall(object):
                 print("\nInstalling summary")
                 print("=" * 79)
                 print("{0}Total {1} {2}.".format(
-                    _m.color["GREY"], count_total, Msg().pkg(count_total)))
+                    self.meta.color["GREY"], count_total,
+                    Msg().pkg(count_total)))
                 print("{0} {1} will be installed, {2} allready installed and "
                       "{3} {4}".format(count_uni, Msg().pkg(count_uni),
                                        count_ins, count_upg,
                                        Msg().pkg(count_upg)))
-                print("will be upgraded.{0}\n".format(_m.color["ENDC"]))
+                print("will be upgraded.{0}\n".format(self.meta.color["ENDC"]))
                 self._continue_to_install()
             else:
                 Msg().not_found(if_upgrade)
@@ -169,7 +171,7 @@ class SBoInstall(object):
         """
         Return matching SBo
         """
-        f = open(_m.lib_path + "sbo_repo/SLACKBUILDS.TXT", "r")
+        f = open(self.meta.lib_path + "sbo_repo/SLACKBUILDS.TXT", "r")
         SLACKBUILDS_TXT = f.read()
         f.close()
         for sbo in self.package_not_found:
@@ -227,7 +229,7 @@ class SBoInstall(object):
         args[3] arch
         """
         print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>11}{12}".format(
-            args[0], args[1], _m.color["ENDC"],
+            args[0], args[1], self.meta.color["ENDC"],
             " " * (24-len(args[1])), args[2],
             " " * (18-len(args[2])), args[3],
             " " * (15-len(args[3])), "",
@@ -239,14 +241,15 @@ class SBoInstall(object):
         color yellow for packages to upgrade and color red
         if not installed.
         """
-        if find_package(sbo, _m.pkg_path):
-            paint = _m.color["GREEN"]
+        if find_package(sbo, self.meta.pkg_path):
+            paint = self.meta.color["GREEN"]
             count_ins += 1
-        elif find_package("-".join(sbo.split("-")[:-1]) + "-", _m.pkg_path):
-            paint = _m.color["YELLOW"]
+        elif find_package("-".join(sbo.split("-")[:-1]) + "-",
+                          self.meta.pkg_path):
+            paint = self.meta.color["YELLOW"]
             count_upg += 1
         else:
-            paint = _m.color["RED"]
+            paint = self.meta.color["RED"]
             count_uni += 1
         return paint, count_ins, count_upg, count_uni
 
@@ -278,7 +281,7 @@ class SBoInstall(object):
         Search for binary packages in /tmp directory
         """
         binary = []
-        for search in find_package(prgnam, _m.output):
+        for search in find_package(prgnam, self.meta.output):
             if "_SBo" in search:
                 binary.append(search)
         return binary
@@ -298,7 +301,7 @@ class SBoInstall(object):
             pkg = "-".join(sbo.split("-")[:-1])
             ver = sbo.split("-")[-1]
             prgnam = ("{0}-{1}".format(pkg, ver))
-            sbo_file = "".join(find_package(prgnam, _m.pkg_path))
+            sbo_file = "".join(find_package(prgnam, self.meta.pkg_path))
             src_link = SBoGrep(pkg).source().split()
             if sbo_file:
                 Msg().template(78)
@@ -306,9 +309,10 @@ class SBoInstall(object):
                 Msg().template(78)
             elif self.unst[0] in src_link or self.unst[1] in src_link:
                 Msg().template(78)
-                print("| Package {0} {1}{2}{3}".format(sbo, _m.color["RED"],
+                print("| Package {0} {1}{2}{3}".format(sbo,
+                                                       self.meta.color["RED"],
                                                        "".join(src_link),
-                                                       _m.color["ENDC"]))
+                                                       self.meta.color["ENDC"]))
                 Msg().template(78)
             else:
                 sbo_url = sbo_search_pkg(pkg)
@@ -320,17 +324,18 @@ class SBoInstall(object):
                 BuildPackage(script, sources, self.build_folder).build()
                 binary_list = self.search_in_tmp(prgnam)
                 try:
-                    binary = (_m.output + max(binary_list)).split()
+                    binary = (self.meta.output + max(binary_list)).split()
                 except ValueError:
                     Msg().build_FAILED(sbo_url, prgnam)
                     sys.exit(0)
-                if find_package(pkg + "-", _m.pkg_path):
+                if find_package(pkg + "-", self.meta.pkg_path):
                     print("{0}[ Upgrading ] --> {1}{2}".format(
-                        _m.color["YELLOW"], _m.color["ENDC"], pkg))
+                        self.meta.color["YELLOW"],
+                        self.meta.color["ENDC"], pkg))
                     upgraded.append(prgnam)
                 else:
                     print("{0}[ Installing ] --> {1}{2}".format(
-                        _m.color["GREEN"], _m.color["ENDC"], pkg))
+                        self.meta.color["GREEN"], self.meta.color["ENDC"], pkg))
                     installs.append(prgnam)
                 PackageManager(binary).upgrade()
         return installs, upgraded

@@ -26,7 +26,7 @@ import sys
 
 from slpkg.toolbar import status
 from slpkg.blacklist import BlackList
-from slpkg.__metadata__ import MetaData as _m
+from slpkg.__metadata__ import MetaData as _meta_
 
 from greps import SBoGrep
 
@@ -35,13 +35,14 @@ class Requires(object):
 
     def __init__(self, resolve):
         self.resolve = resolve
+        self.meta = _meta_
         self.dep_results = []
 
     def sbo(self, name):
         """
         Build all dependencies of a package
         """
-        if _m.rsl_deps in ["on", "ON"] and self.resolve:
+        if self.meta.rsl_deps in ["on", "ON"] and self.resolve:
             try:
                 sys.setrecursionlimit(10000)
                 dependencies = []
