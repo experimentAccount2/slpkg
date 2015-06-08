@@ -32,6 +32,7 @@ class BlackList(object):
     in blacklist file.
     """
     def __init__(self):
+        self.meta = _meta_
         self.quit = False
         self.blackfile = "/etc/slpkg/blacklist"
         self.black_conf = Utils().read_file(self.blackfile)
@@ -55,8 +56,8 @@ class BlackList(object):
         print("\nPackages in blacklist:\n")
         for black in self.packages():
             if black:
-                print("{0}{1}{2}".format(_meta_.color["GREEN"], black,
-                                         _meta_.color["ENDC"]))
+                print("{0}{1}{2}".format(self.meta.color["GREEN"], black,
+                                         self.meta.color["ENDC"]))
                 self.quit = True
         if self.quit:
             print("")   # new line at exit
@@ -71,8 +72,8 @@ class BlackList(object):
         with open(self.blackfile, "a") as black_conf:
             for pkg in pkgs:
                 if pkg not in blacklist:
-                    print("{0}{1}{2}".format(_meta_.color["GREEN"], pkg,
-                                             _meta_.color["ENDC"]))
+                    print("{0}{1}{2}".format(self.meta.color["GREEN"], pkg,
+                                             self.meta.color["ENDC"]))
                     black_conf.write(pkg + "\n")
                     self.quit = True
             black_conf.close()
@@ -89,8 +90,8 @@ class BlackList(object):
                 if line not in pkgs:
                     remove.write(line + "\n")
                 else:
-                    print("{0}{1}{2}".format(_meta_.color["RED"], line,
-                                             _meta_.color["ENDC"]))
+                    print("{0}{1}{2}".format(self.meta.color["RED"], line,
+                                             self.meta.color["ENDC"]))
                     self.quit = True
             remove.close()
         if self.quit:

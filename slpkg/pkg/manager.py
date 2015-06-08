@@ -28,7 +28,7 @@ import subprocess
 
 from slpkg.utils import Utils
 from slpkg.messages import Msg
-from slpkg.__metadata__ import MetaData as _m
+from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.pkg.find import find_package
 
@@ -42,6 +42,7 @@ class PackageManager(object):
     """
     def __init__(self, binary):
         self.binary = binary
+        self.meta = _meta_
 
     def install(self):
         """
@@ -90,7 +91,7 @@ class PackageManager(object):
         """
         Remove Slackware binary packages
         """
-        dep_path = _m.log_path + "dep/"
+        dep_path = self.meta.log_path + "dep/"
         dependencies, rmv_list = [], []
         removed = self._view_removed()
         if not removed:
@@ -100,8 +101,8 @@ class PackageManager(object):
             if len(removed) > 1:
                 msg = msg + "s"
             try:
-                if _m.default_answer == "y":
-                    remove_pkg = _m.default_answer
+                if self.meta.default_answer == "y":
+                    remove_pkg = self.meta.default_answer
                 else:
                     remove_pkg = raw_input(
                         "\nAre you sure to remove {0} {1} [Y/n]? ".format(
@@ -114,8 +115,8 @@ class PackageManager(object):
                     # If package build and install with "slpkg -s sbo <package>"
                     # then look log file for dependencies in /var/log/slpkg/dep,
                     # read and remove all else remove only the package.
-                    if os.path.isfile(dep_path + rmv) and _m.del_deps in ["on",
-                                                                          "ON"]:
+                    if (os.path.isfile(dep_path + rmv) and
+                            self.meta.del_deps in ["on", "ON"]):
                         dependencies = self._view_deps(dep_path, rmv)
                         if self._rmv_deps_answer() in ["y", "Y"]:
                             rmv_list += (self._rmv_deps(dependencies, dep_path,
@@ -132,8 +133,8 @@ class PackageManager(object):
         """
         Remove dependencies answer
         """
-        if _m.remove_deps_answer == "y":
-            remove_dep = _m.remove_deps_answer
+        if self.meta.remove_deps_answer == "y":
+            remove_dep = self.meta.remove_deps_answer
         else:
             try:
                 remove_dep = raw_input(
@@ -150,12 +151,13 @@ class PackageManager(object):
         """
         removed = []
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
-            _m.color["CYAN"], ", ".join(self.binary), _m.color["ENDC"]))
+            self.meta.color["CYAN"], ", ".join(self.binary),
+            self.meta.color["ENDC"]))
         for pkg in self.binary:
-            pkgs = find_package(pkg + _m.sp, _m.pkg_path)
+            pkgs = find_package(pkg + self.meta.sp, self.meta.pkg_path)
             if pkgs:
                 print("[ {0}delete{1} ] --> {2}".format(
-                    _m.color["RED"], _m.color["ENDC"],
+                    self.meta.color["RED"], self.meta.color["ENDC"],
                     "\n               ".join(pkgs)))
                 removed.append(pkg)
             else:
@@ -172,7 +174,8 @@ class PackageManager(object):
         print("| Found dependencies for package {0}:".format(package))
         Msg().template(78)
         for dep in dependencies.splitlines():
-            print("| {0}{1}{2}".format(_m.color["RED"], dep, _m.color["ENDC"]))
+            print("| {0}{1}{2}".format(self.meta.color["RED"], dep,
+                                       self.meta.color["ENDC"]))
         Msg().template(78)
         return dependencies
 
@@ -184,7 +187,7 @@ class PackageManager(object):
         deps = dependencies.split()
         deps.append(package)
         for dep in deps:
-            if find_package(dep + _m.sp, _m.pkg_path):
+            if find_package(dep + self.meta.sp, self.meta.pkg_path):
                 print(subprocess.check_output("removepkg {0}".format(dep),
                                               shell=True))
                 removes.append(dep)
@@ -195,7 +198,7 @@ class PackageManager(object):
         """
         Remove one signle package
         """
-        if find_package(package + _m.sp, _m.pkg_path):
+        if find_package(package + self.meta.sp, self.meta.pkg_path):
             print(subprocess.check_output("removepkg {0}".format(package),
                                           shell=True))
         return package.split()
@@ -208,7 +211,7 @@ class PackageManager(object):
         print("| Total {0} packages removed".format(len(removes)))
         Msg().template(78)
         for pkg in removes:
-            if not find_package(pkg + _m.sp, _m.pkg_path):
+            if not find_package(pkg + self.meta.sp, self.meta.pkg_path):
                 print("| Package {0} removed".format(pkg))
             else:
                 print("| Package {0} not found".format(pkg))
@@ -221,14 +224,16 @@ class PackageManager(object):
         """
         matching = size = 0
         print("\nPackages with matching name [ {0}{1}{2} ]\n".format(
-              _m.color["CYAN"], ", ".join(self.binary), _m.color["ENDC"]))
+            self.meta.color["CYAN"], ", ".join(self.binary),
+            self.meta.color["ENDC"]))
         for pkg in self.binary:
-            for match in find_package("", _m.pkg_path):
+            for match in find_package("", self.meta.pkg_path):
                 if pkg in match:
                     matching += 1
                     print("[ {0}installed{1} ] - {2}".format(
-                        _m.color["GREEN"], _m.color["ENDC"], match))
-                    data = Utils().read_file(_m.pkg_path + match)
+                        self.meta.color["GREEN"], self.meta.color["ENDC"],
+                        match))
+                    data = Utils().read_file(self.meta.pkg_path + match)
                     for line in data.splitlines():
                         if line.startswith("UNCOMPRESSED PACKAGE SIZE:"):
                             if "M" in line[26:]:
@@ -241,22 +246,23 @@ class PackageManager(object):
             Msg().pkg_not_found("", ", ".join(self.binary), message, "\n")
         else:
             print("\n{0}Total found {1} matching packages.{2}".format(
-                _m.color["GREY"], matching, _m.color["ENDC"]))
+                self.meta.color["GREY"], matching, self.meta.color["ENDC"]))
             unit = "Kb"
             if size > 1024:
                 unit = "Mb"
                 size = (size / 1024)
             print("{0}Size of installed packages {1} {2}.{3}\n".format(
-                _m.color["GREY"], round(size, 2), unit, _m.color["ENDC"]))
+                self.meta.color["GREY"], round(size, 2), unit,
+                self.meta.color["ENDC"]))
 
     def display(self):
         """
         Print the Slackware packages contents
         """
         for pkg in self.binary:
-            find = find_package(pkg + _m.sp, _m.pkg_path)
+            find = find_package(pkg + self.meta.sp, self.meta.pkg_path)
             if find:
-                package = Utils().read_file(_m.pkg_path + "".join(find))
+                package = Utils().read_file(self.meta.pkg_path + "".join(find))
                 for line in package.splitlines():
                     print(line).strip()
                 print("")   # new line per file
@@ -284,21 +290,22 @@ class PackageManager(object):
                 if INDEX:
                     index += 1
                     pkg = self.list_color_tag(pkg)
-                    print("{0}{1}:{2} {3}".format(_m.color["GREY"], index,
-                                                  _m.color["ENDC"], pkg))
+                    print("{0}{1}:{2} {3}".format(
+                        self.meta.color["GREY"], index,
+                        self.meta.color["ENDC"], pkg))
                     if index == page:
                         read = raw_input("\nPress {0}Enter{1} to "
                                          "continue... ".format(
-                                             _m.color["CYAN"],
-                                             _m.color["ENDC"]))
+                                             self.meta.color["CYAN"],
+                                             self.meta.color["ENDC"]))
                         if read in ["Q", "q"]:
                             break
                         print("")   # new line after page
                         page += row
                 elif installed:
                     if self.list_of_installed(pkg):
-                        print("{0}{1}{2}".format(_m.color["GREEN"], pkg,
-                                                 _m.color["ENDC"]))
+                        print("{0}{1}{2}".format(self.meta.color["GREEN"], pkg,
+                                                 self.meta.color["ENDC"]))
                 else:
                     print(pkg)
             print("")   # new line at end
@@ -329,13 +336,14 @@ class PackageManager(object):
         """
         if repo == "sbo":
             if (os.path.isfile(
-                    _m.lib_path + "{0}_repo/SLACKBUILDS.TXT".format(repo))):
-                packages = Utils().read_file(_m.lib_path + "{0}_repo/"
+                    self.meta.lib_path + "{0}_repo/SLACKBUILDS.TXT".format(
+                        repo))):
+                packages = Utils().read_file(self.meta.lib_path + "{0}_repo/"
                                              "SLACKBUILDS.TXT".format(repo))
         else:
-            if (os.path.isfile(_m.lib_path + "{0}_repo/PACKAGES.TXT".format(
-                    repo))):
-                packages = Utils().read_file(_m.lib_path + "{0}_repo/"
+            if (os.path.isfile(
+                    self.meta.lib_path + "{0}_repo/PACKAGES.TXT".format(repo))):
+                packages = Utils().read_file(self.meta.lib_path + "{0}_repo/"
                                              "PACKAGES.TXT".format(repo))
         return packages
 
@@ -351,20 +359,20 @@ class PackageManager(object):
         """
         Tag with color installed packages
         """
-        find = pkg + "-"
+        find = pkg + self.meta.sp
         if pkg.endswith(".txz") or pkg.endswith(".tgz"):
             find = pkg[:-4]
-        if find_package(find, _m.pkg_path):
-            pkg = "{0}{1}{2}".format(_m.color["GREEN"], pkg,
-                                     _m.color["ENDC"])
+        if find_package(find, self.meta.pkg_path):
+            pkg = "{0}{1}{2}".format(self.meta.color["GREEN"], pkg,
+                                     self.meta.color["ENDC"])
         return pkg
 
     def list_of_installed(self, pkg):
         """
         Return installed packages
         """
-        find = pkg + "-"
+        find = pkg + self.meta.sp
         if pkg.endswith(".txz") or pkg.endswith(".tgz"):
             find = pkg[:-4]
-        if find_package(find, _m.pkg_path):
+        if find_package(find, self.meta.pkg_path):
             return pkg

@@ -32,7 +32,7 @@ import subprocess
 
 from slpkg.messages import Msg
 from slpkg.checksum import check_md5
-from slpkg.__metadata__ import MetaData as _m
+from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.sbo.greps import SBoGrep
 
@@ -43,14 +43,15 @@ class BuildPackage(object):
         self.script = script
         self.sources = sources
         self.path = path
+        self.meta = _meta_
         self.prgnam = self.script[:-7]
         self.log_file = "build_{0}_log".format(self.prgnam)
-        self.sbo_logs = _m.log_path + "sbo/"
+        self.sbo_logs = self.meta.log_path + "sbo/"
         self.build_logs = self.sbo_logs + "build_logs/"
         self.start_log_time = time.strftime("%H:%M:%S")
         self.start_time = time.time()
-        if not os.path.exists(_m.log_path):
-            os.mkdir(_m.log_path)
+        if not os.path.exists(self.meta.log_path):
+            os.mkdir(self.meta.log_path)
         if not os.path.exists(self.sbo_logs):
             os.mkdir(self.sbo_logs)
         if not os.path.exists(self.build_logs):
@@ -78,7 +79,7 @@ class BuildPackage(object):
             subprocess.call("chmod +x {0}.SlackBuild".format(self.prgnam),
                             shell=True)
             pass_var = self._pass_variable()
-            if _m.sbo_build_log in ["on", "ON"]:
+            if self.meta.sbo_build_log in ["on", "ON"]:
                 if os.path.isfile(self.build_logs + self.log_file):
                     os.remove(self.build_logs + self.log_file)
                 # start log write

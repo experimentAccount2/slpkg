@@ -27,7 +27,7 @@ import os
 from slpkg.utils import Utils
 from slpkg.toolbar import status
 from slpkg.splitting import split_package
-from slpkg.__metadata__ import MetaData as _m
+from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.slack.slack_version import slack_ver
 
@@ -40,7 +40,7 @@ def repo_data(PACKAGES_TXT, step, repo, resolve):
      rname, rlocation, rsize, runsize) = ([] for i in range(8))
     index, toolbar_width = 0, 100
     for line in PACKAGES_TXT.splitlines():
-        if _m.rsl_deps in ["on", "ON"] and resolve:
+        if _meta_.rsl_deps in ["on", "ON"] and resolve:
             index += 1
             toolbar_width = status(index, toolbar_width, step)
         if line.startswith("PACKAGE NAME:"):
@@ -106,7 +106,7 @@ def alien_filter(name, location, size, unsize):
     Filter Alien"s repository data
     """
     ver = slack_ver()
-    if _m.slack_rel == "current":
+    if _meta_.slack_rel == "current":
         ver = "current"
     path_pkg = "pkg"
     if os.uname()[4] == "x86_64":
@@ -126,14 +126,15 @@ def ktown_filter(name, location, size, unsize):
     Filter Alien"s ktown repository data
     """
     ver = slack_ver()
-    if _m.slack_rel == "current":
+    if _meta_.slack_rel == "current":
         ver = "current"
     path_pkg = "x86"
     if os.uname()[4] == "x86_64":
         path_pkg = os.uname()[4]
     (fname, flocation, fsize, funsize) = ([] for i in range(4))
     for n, l, s, u in zip(name, location, size, unsize):
-        if path_pkg in l and _m.ktown_kde_repo[1:-1] in l and l.startswith(ver):
+        if (path_pkg in l and _meta_.ktown_kde_repo[1:-1] in l and
+                l.startswith(ver)):
             fname.append(n)
             flocation.append(l)
             fsize.append(s)
@@ -146,7 +147,7 @@ def multi_filter(name, location, size, unsize):
     Filter Alien"s multilib repository data
     """
     ver = slack_ver()
-    if _m.slack_rel == "current":
+    if _meta_.slack_rel == "current":
         ver = "current"
     (fname, flocation, fsize, funsize) = ([] for i in range(4))
     for n, l, s, u in zip(name, location, size, unsize):
@@ -165,7 +166,8 @@ def fix_slackers_pkg(name):
     name in PACKAGES.TXT file use FILELIST.TXT to
     get.
     """
-    FILELIST_TXT = Utils().read_file(_m.lib_path + "slackr_repo/FILELIST.TXT")
+    FILELIST_TXT = Utils().read_file(
+        _meta_.lib_path + "slackr_repo/FILELIST.TXT")
     for line in FILELIST_TXT.splitlines():
         if name in line and line.endswith(".txz"):
             return line.split("/")[-1].strip()
@@ -202,7 +204,7 @@ class Requires(object):
                 return ""
         else:
             PACKAGES_TXT = Utils().read_file("{0}{1}_repo/PACKAGES.TXT".format(
-                _m.lib_path, self.repo))
+                _meta_.lib_path, self.repo))
             for line in PACKAGES_TXT.splitlines():
                 if line.startswith("PACKAGE NAME:"):
                     if self.repo == "slackr":

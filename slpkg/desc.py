@@ -33,22 +33,23 @@ class PkgDesc(object):
         self.name = name
         self.repo = repo
         self.paint = paint
+        self.meta = _meta_
         self.COLOR = ""
         self.lib = ""
         color_text = {
-            "red": _meta_.color["RED"],
-            "green": _meta_.color["GREEN"],
-            "yellow": _meta_.color["YELLOW"],
-            "cyan": _meta_.color["CYAN"],
-            "grey": _meta_.color["GREY"],
+            "red": self.meta.color["RED"],
+            "green": self.meta.color["GREEN"],
+            "yellow": self.meta.color["YELLOW"],
+            "cyan": self.meta.color["CYAN"],
+            "grey": self.meta.color["GREY"],
             "": ""
         }
         self.COLOR = color_text[self.paint]
-        if self.repo in _meta_.repositories and self.repo != "sbo":
-            self.lib = _meta_.lib_path + "{0}_repo/PACKAGES.TXT".format(
+        if self.repo in self.meta.repositories and self.repo != "sbo":
+            self.lib = self.meta.lib_path + "{0}_repo/PACKAGES.TXT".format(
                 self.repo)
         else:
-            self.lib = _meta_.lib_path + "{0}_repo/SLACKBUILDS.TXT".format(
+            self.lib = self.meta.lib_path + "{0}_repo/SLACKBUILDS.TXT".format(
                 self.repo)
 
     def view(self):
@@ -59,7 +60,7 @@ class PkgDesc(object):
             for line in PACKAGES_TXT.splitlines():
                 if line.startswith(self.name + ":"):
                     print(self.COLOR + line[len(self.name) + 1:] +
-                          _meta_.color["ENDC"])
+                          self.meta.color["ENDC"])
                     count += 1
                     if count == 11:
                         break
@@ -68,7 +69,7 @@ class PkgDesc(object):
                 if (line.startswith(
                         "SLACKBUILD SHORT DESCRIPTION:  " + self.name + " (")):
                     count += 1
-                    print(self.COLOR + line[31:] + _meta_.color["ENDC"])
+                    print(self.COLOR + line[31:] + self.meta.color["ENDC"])
         if count == 0:
             Msg().pkg_not_found("", self.name, "No matching", "\n")
         else:

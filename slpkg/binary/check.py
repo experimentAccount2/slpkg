@@ -29,7 +29,7 @@ from slpkg.messages import Msg
 from slpkg.toolbar import status
 from slpkg.blacklist import BlackList
 from slpkg.splitting import split_package
-from slpkg.__metadata__ import MetaData as _m
+from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.pkg.find import find_package
 
@@ -76,4 +76,4 @@ def installed():
     """
     Return all installed packages
     """
-    return find_package("", _m.pkg_path)
+    return find_package("", _meta_.pkg_path)

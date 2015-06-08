@@ -35,7 +35,7 @@ from slpkg.downloader import Download
 from slpkg.log_deps import write_deps
 from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
-from slpkg.__metadata__ import MetaData as _m
+from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.pkg.find import find_package
 from slpkg.pkg.manager import PackageManager
@@ -54,8 +54,9 @@ class BinaryInstall(object):
         self.packages = packages
         self.repo = repo
         self.resolve = resolve
-        self.version = _m.slack_rel
-        self.tmp_path = _m.slpkg_tmp_packages
+        self.meta = _meta_
+        self.version = self.meta.slack_rel
+        self.tmp_path = self.meta.slpkg_tmp_packages
         self.dwn, self.dep_dwn = [], []
         self.install, self.dep_install = [], []
         self.comp_sum, self.dep_comp_sum = [], []
@@ -83,7 +84,7 @@ class BinaryInstall(object):
             self.packages = self.clear_masters()
             (self.dwn, self.install, self.comp_sum,
              self.uncomp_sum) = self.store(self.packages)
-            if _m.rsl_deps in ["on", "ON"] and self.resolve:
+            if self.meta.rsl_deps in ["on", "ON"] and self.resolve:
                 Msg().done()
             if self.install:
                 print("\nThe following packages will be automatically "
@@ -102,7 +103,8 @@ class BinaryInstall(object):
                                    self.uncomp_sum + self.dep_uncomp_sum)
                 print("\nInstalling summary")
                 print("=" * 79)
-                print("{0}Total {1} {2}.".format(_m.color["GREY"], sum(sums),
+                print("{0}Total {1} {2}.".format(self.meta.color["GREY"],
+                                                 sum(sums),
                                                  Msg().pkg(sum(sums))))
                 print("{0} {1} will be installed, {2} will be upgraded and "
                       "{3} will be reinstalled.".format(sums[2],
@@ -112,7 +114,7 @@ class BinaryInstall(object):
                                                                 unit[0]))
                 print("After this process, {0} {1} of additional disk "
                       "space will be used.{2}".format(size[1], unit[1],
-                                                      _m.color["ENDC"]))
+                                                      self.meta.color["ENDC"]))
                 print("")
                 if Msg().answer() in ["y", "Y"]:
                     self.install.reverse()
@@ -167,22 +169,20 @@ class BinaryInstall(object):
             pkg_ver = "{0}-{1}".format(split_package(inst)[0],
                                        split_package(inst)[1])
             self.checksums(inst)
-            if os.path.isfile(_m.pkg_path + inst[:-4]):
-                print("[ {0}reinstalling{1} ] --> {2}".format(_m.color["GREEN"],
-                                                              _m.color["ENDC"],
-                                                              inst))
+            if os.path.isfile(self.meta.pkg_path + inst[:-4]):
+                print("[ {0}reinstalling{1} ] --> {2}".format(
+                    self.meta.color["GREEN"], self.meta.color["ENDC"], inst))
                 installs.append(pkg_ver)
                 PackageManager(package).reinstall()
-            elif find_package(split_package(inst)[0] + "-", _m.pkg_path):
-                print("[ {0}upgrading{1} ] --> {2}".format(_m.color["YELLOW"],
-                                                           _m.color["ENDC"],
-                                                           inst))
+            elif find_package(split_package(inst)[0] + self.meta.sp,
+                              self.meta.pkg_path):
+                print("[ {0}upgrading{1} ] --> {2}".format(
+                    self.meta.color["YELLOW"], self.meta.color["ENDC"], inst))
                 upgraded.append(pkg_ver)
                 PackageManager(package).upgrade()
             else:
-                print("[ {0}installing{1} ] --> {2}".format(_m.color["GREEN"],
-                                                            _m.color["ENDC"],
-                                                            inst))
+                print("[ {0}installing{1} ] --> {2}".format(
+                    self.meta.color["GREEN"], self.meta.color["ENDC"], inst))
                 installs.append(pkg_ver)
                 PackageManager(package).upgrade()
         return [installs, upgraded]
@@ -205,11 +205,11 @@ class BinaryInstall(object):
         Return package dependencies
         """
         requires = []
-        if _m.rsl_deps in ["on", "ON"] and self.resolve:
+        if self.meta.rsl_deps in ["on", "ON"] and self.resolve:
             Msg().resolving()
         for dep in self.packages:
             if self.if_upgrade:
-                dep = dep.split("-")[0]
+                dep = dep.split(self.meta.sp)[0]
             dependencies = []
             dependencies = Utils().dimensional_list(Dependencies(
                 self.PACKAGES_TXT, self.repo).binary(dep, self.resolve))
@@ -226,17 +226,17 @@ class BinaryInstall(object):
         repo = self.repo + (" " * (6 - (len(self.repo))))
         for pkg, comp in zip(install, comp_sum):
             pkg_split = split_package(pkg[:-4])
-            if find_package(pkg[:-4], _m.pkg_path):
+            if find_package(pkg[:-4], self.meta.pkg_path):
                 pkg_sum += 1
-                COLOR = _m.color["GREEN"]
-            elif find_package(pkg_split[0] + "-", _m.pkg_path):
-                COLOR = _m.color["YELLOW"]
+                COLOR = self.meta.color["GREEN"]
+            elif find_package(pkg_split[0] + self.meta.sp, self.meta.pkg_path):
+                COLOR = self.meta.color["YELLOW"]
                 upg_sum += 1
             else:
-                COLOR = _m.color["RED"]
+                COLOR = self.meta.color["RED"]
                 uni_sum += 1
             print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>11}{12}".format(
-                COLOR, pkg_split[0], _m.color["ENDC"],
+                COLOR, pkg_split[0], self.meta.color["ENDC"],
                 " " * (24-len(pkg_split[0])), pkg_split[1],
                 " " * (18-len(pkg_split[1])), pkg_split[2],
                 " " * (8-len(pkg_split[2])), pkg_split[3],

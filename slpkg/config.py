@@ -32,6 +32,7 @@ class Config(object):
 
     def __init__(self):
         self.config_file = "/etc/slpkg/slpkg.conf"
+        self.meta = _meta_
 
     def view(self):
         """
@@ -63,8 +64,8 @@ class Config(object):
             if not line.startswith("#") and line.split("=")[0] in conf_args:
                 print(line)
             else:
-                print("{0}{1}{2}".format(_meta_.color["CYAN"], line,
-                                         _meta_.color["ENDC"]))
+                print("{0}{1}{2}".format(self.meta.color["CYAN"], line,
+                                         self.meta.color["ENDC"]))
         print("")   # new line at end
 
     def edit(self, editor):

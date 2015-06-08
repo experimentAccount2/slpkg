@@ -32,6 +32,7 @@ class URL(object):
 
     def __init__(self, link):
         self.link = link
+        self.meta = _meta_
 
     def reading(self):
         """
@@ -42,8 +43,8 @@ class URL(object):
             return f.read()
         except (urllib2.URLError, ValueError):
             print("\n{0}Can't read file '{1}'{2}".format(
-                _meta_.color["RED"], self.link.split("/")[-1],
-                _meta_.color["ENDC"]))
+                self.meta.color["RED"], self.link.split("/")[-1],
+                self.meta.color["ENDC"]))
             return " "
         except KeyboardInterrupt:
             print("")   # new line at exit

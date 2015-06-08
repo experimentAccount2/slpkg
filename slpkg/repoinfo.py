@@ -45,6 +45,7 @@ class RepoInfo(object):
             "Total compressed packages:": "",
             "Total uncompressed packages:": ""
         }
+        self.meta = _meta_
         self.all_repos = RepoList().all_repos
         self.all_repos.update(Repo().custom_repository())
         del RepoList().all_repos
@@ -53,17 +54,17 @@ class RepoInfo(object):
         """
         View repository information
         """
-        status = "{0}disabled{1}".format(_meta_.color["RED"],
-                                         _meta_.color["ENDC"])
+        status = "{0}disabled{1}".format(self.meta.color["RED"],
+                                         self.meta.color["ENDC"])
         self.form["Status:"] = status
         self.form["Default:"] = "no"
-        if repo in _meta_.default_repositories:
+        if repo in self.meta.default_repositories:
             self.form["Default:"] = "yes"
-        if (repo in _meta_.repositories and
-                os.path.isfile(_meta_.lib_path + "{0}_repo/PACKAGES.TXT".format(
-                    repo))):
-            status = "{0}enabled{1}".format(_meta_.color["GREEN"],
-                                            _meta_.color["ENDC"])
+        if (repo in self.meta.repositories and
+                os.path.isfile(self.meta.lib_path + "{0}_repo/PACKAGES."
+                               "TXT".format(repo))):
+            status = "{0}enabled{1}".format(self.meta.color["GREEN"],
+                                            self.meta.color["ENDC"])
             if repo != "sbo":
                 data = self.repository_data(repo)
                 size = units(data[1], data[2])
@@ -76,17 +77,18 @@ class RepoInfo(object):
                 self.form["Number of packages:"] = data[0]
                 self.form["Status:"] = status
                 self.form["Last updated:"] = data[3]
-        elif (repo == "sbo" and os.path.isfile(_meta_.lib_path + "{0}_repo/"
+        elif (repo == "sbo" and os.path.isfile(self.meta.lib_path + "{0}_repo/"
                                                "SLACKBUILDS.TXT".format(repo))):
-            status = "{0}enabled{1}".format(_meta_.color["GREEN"],
-                                            _meta_.color["ENDC"])
+            status = "{0}enabled{1}".format(self.meta.color["GREEN"],
+                                            self.meta.color["ENDC"])
             sum_sbo_pkgs = 0
             for line in (Utils().read_file(
-                    _meta_.lib_path + "sbo_repo/SLACKBUILDS.TXT").splitlines()):
+                    self.meta.lib_path + "sbo_repo/SLACKBUILDS."
+                    "TXT").splitlines()):
                 if line.startswith("SLACKBUILD NAME: "):
                     sum_sbo_pkgs += 1
             changelog_txt = Utils().read_file(
-                _meta_.log_path + "sbo/ChangeLog.txt")
+                self.meta.log_path + "sbo/ChangeLog.txt")
             last_upd = changelog_txt.split("\n", 1)[0]
             self.form["Repo id:"] = repo
             self.form["Repo url:"] = self.all_repos[repo]
@@ -97,7 +99,7 @@ class RepoInfo(object):
             self.form["Last updated:"] = last_upd
         print("")
         for key, value in sorted(self.form.iteritems()):
-            print _meta_.color["GREY"] + key + _meta_.color["ENDC"], value
+            print self.meta.color["GREY"] + key + self.meta.color["ENDC"], value
         print("")
         sys.exit(0)
 
@@ -107,7 +109,7 @@ class RepoInfo(object):
         """
         sum_pkgs, size, unsize, last_upd = 0, [], [], ""
         for line in (Utils().read_file(
-                _meta_.lib_path + repo + "_repo/PACKAGES.TXT").splitlines()):
+                self.meta.lib_path + repo + "_repo/PACKAGES.TXT").splitlines()):
             if line.startswith("PACKAGES.TXT;"):
                 last_upd = line[14:].strip()
             if line.startswith("PACKAGE NAME:"):
@@ -118,6 +120,6 @@ class RepoInfo(object):
                 unsize.append(line[30:-2].strip())
         if repo in ["salix", "slackl"]:
             log = Utils().read_file(
-                _meta_.log_path + "{0}/ChangeLog.txt".format(repo))
+                self.meta.log_path + "{0}/ChangeLog.txt".format(repo))
             last_upd = log.split("\n", 1)[0]
         return [sum_pkgs, size, unsize, last_upd]

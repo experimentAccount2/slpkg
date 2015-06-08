@@ -38,13 +38,14 @@ from slack.slack_version import slack_ver
 class Initialization(object):
 
     def __init__(self):
-        self.conf_path = _meta_.conf_path
-        self.log_path = _meta_.log_path
-        self.lib_path = _meta_.lib_path
-        self.tmp_path = _meta_.tmp_path
-        self.build_path = _meta_.build_path
-        self.slpkg_tmp_packages = _meta_.slpkg_tmp_packages
-        self.slpkg_tmp_patches = _meta_.slpkg_tmp_patches
+        self.meta = _meta_
+        self.conf_path = self.meta.conf_path
+        self.log_path = self.meta.log_path
+        self.lib_path = self.meta.lib_path
+        self.tmp_path = self.meta.tmp_path
+        self.build_path = self.meta.build_path
+        self.slpkg_tmp_packages = self.meta.slpkg_tmp_packages
+        self.slpkg_tmp_patches = self.meta.slpkg_tmp_patches
         if not os.path.exists(self.conf_path):
             os.mkdir(self.conf_path)
         if not os.path.exists(self.log_path):
@@ -384,12 +385,12 @@ class Initialization(object):
         elif arch == "arm":
             ar = "arm"
         packages_txt = "{0}slacke{1}/slackware{2}-{3}/{4}".format(
-            repo, _meta_.slacke_sub_repo[1:-1], ar, slack_ver(), lib_file)
+            repo, self.meta.slacke_sub_repo[1:-1], ar, slack_ver(), lib_file)
         # filelist_txt = ""
         checksums_md5 = "{0}slacke{1}/slackware{2}-{3}/{4}".format(
-            repo, _meta_.slacke_sub_repo[1:-1], ar, slack_ver(), md5_file)
+            repo, self.meta.slacke_sub_repo[1:-1], ar, slack_ver(), md5_file)
         changelog_txt = "{0}slacke{1}/slackware{2}-{3}/{4}".format(
-            repo, _meta_.slacke_sub_repo[1:-1], ar, slack_ver(), log_file)
+            repo, self.meta.slacke_sub_repo[1:-1], ar, slack_ver(), log_file)
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
@@ -555,7 +556,7 @@ class Initialization(object):
         Remove all package lists with changelog and checksums files
         and create lists again
         """
-        for repo in _meta_.repositories:
+        for repo in self.meta.repositories:
             changelogs = "{0}{1}{2}".format(self.log_path, repo,
                                             "/ChangeLog.txt")
             if os.path.isfile(changelogs):
@@ -578,16 +579,16 @@ class Update(object):
         Update all repositories lists
         """
         print("\nCheck and update repositories:\n")
-        for repo in _meta_.repositories:
+        for repo in self.meta.repositories:
             sys.stdout.write("{0}Update repository {1} ...{2}".format(
-                _meta_.color["GREY"], repo, _meta_.color["ENDC"]))
+                self.meta.color["GREY"], repo, self.meta.color["ENDC"]))
             sys.stdout.flush()
-            if repo in _meta_.default_repositories:
+            if repo in self.meta.default_repositories:
                 exec("{0}.{1}()".format(self._init, repo))
             else:
                 Initialization().custom(repo)
-            sys.stdout.write("{0}Done{1}\n".format(_meta_.color["GREY"],
-                                                   _meta_.color["ENDC"]))
+            sys.stdout.write("{0}Done{1}\n".format(self.meta.color["GREY"],
+                                                   self.meta.color["ENDC"]))
         print("")   # new line at end
         sys.exit(0)
 

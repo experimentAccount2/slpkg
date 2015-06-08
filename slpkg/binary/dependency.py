@@ -27,7 +27,7 @@ import sys
 from slpkg.utils import Utils
 from slpkg.toolbar import status
 from slpkg.blacklist import BlackList
-from slpkg.__metadata__ import MetaData as _m
+from slpkg.__metadata__ import MetaData as _meta_
 
 from greps import Requires
 
@@ -38,12 +38,13 @@ class Dependencies(object):
         self.repo = repo
         self.dep_results = []
         self.packages = Utils().package_name(PACKAGES_TXT, repo)
+        self.meta = _meta_
 
     def binary(self, name, resolve):
         """
         Build all dependencies of a package
         """
-        if _m.rsl_deps in ["on", "ON"] and resolve:
+        if self.meta.rsl_deps in ["on", "ON"] and resolve:
             try:
                 sys.setrecursionlimit(10000)
                 dependencies = []

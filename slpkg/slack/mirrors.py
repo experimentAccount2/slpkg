@@ -23,7 +23,7 @@
 
 
 from slpkg.repositories import Repo
-from slpkg.__metadata__ import MetaData as _m
+from slpkg.__metadata__ import MetaData as _meta_
 
 from slack_version import slack_ver
 
@@ -33,10 +33,10 @@ def mirrors(name, location):
     Select Slackware official mirror packages
     based architecture and version.
     """
-    rel = _m.slack_rel
+    rel = _meta_.slack_rel
     ver = slack_ver()
     repo = Repo().slack()
-    if _m.arch == "x86_64":
+    if _meta_.arch == "x86_64":
         if rel == "stable":
             http = repo + "slackware64-{0}/{1}{2}".format(ver, location, name)
         else:

@@ -35,6 +35,7 @@ class RepoList(object):
     """
 
     def __init__(self):
+        self.meta = _meta_
         self.all_repos = {
             "slack": Repo().slack(),
             "sbo": Repo().sbo(),
@@ -66,19 +67,19 @@ class RepoList(object):
             "Status"))
         Msg().template(78)
         for repo_id, repo_URL in sorted(self.all_repos.iteritems()):
-            status, COLOR = "disabled", _meta_.color["RED"]
+            status, COLOR = "disabled", self.meta.color["RED"]
             default = "yes"
             if len(repo_URL) > 49:
                 repo_URL = repo_URL[:48] + "~"
-            if repo_id in _meta_.repositories:
-                status, COLOR = "enabled", _meta_.color["GREEN"]
-            if repo_id not in _meta_.default_repositories:
+            if repo_id in self.meta.repositories:
+                status, COLOR = "enabled", self.meta.color["GREEN"]
+            if repo_id not in self.meta.default_repositories:
                 default = "no"
             print("  {0}{1}{2}{3}{4}{5}{6}{7:>8}{8}".format(
                 repo_id, " " * (9 - len(repo_id)),
                 repo_URL, " " * (52 - len(repo_URL)),
                 default, " " * (8 - len(default)),
-                COLOR, status, _meta_.color["ENDC"]))
+                COLOR, status, self.meta.color["ENDC"]))
         print("\nFor enable or disable default repositories edit "
               "'/etc/slpkg/slpkg.conf' file\n")
         sys.exit(0)

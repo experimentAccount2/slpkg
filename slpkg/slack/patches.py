@@ -37,7 +37,7 @@ from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
 from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
-from slpkg.__metadata__ import MetaData as _m
+from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.pkg.find import find_package
 from slpkg.pkg.manager import PackageManager
@@ -52,8 +52,9 @@ class Patches(object):
 
     def __init__(self, skip):
         self.skip = skip
-        self.version = _m.slack_rel
-        self.patch_path = _m.slpkg_tmp_patches
+        self.meta = _meta_
+        self.version = self.meta.slack_rel
+        self.patch_path = self.meta.slpkg_tmp_patches
         self.pkg_for_upgrade = []
         self.dwn_links = []
         self.upgrade_all = []
@@ -97,7 +98,7 @@ class Patches(object):
                 print("\nInstalling summary")
                 print("=" * 79)
                 print("{0}Total {1} {2} will be upgraded and {3} will be "
-                      "installed.".format(_m.color["GREY"],
+                      "installed.".format(self.meta.color["GREY"],
                                           self.count_upg,
                                           Msg().pkg(self.upgrade_all),
                                           self.count_added))
@@ -105,7 +106,7 @@ class Patches(object):
                                                                 unit[0]))
                 print("After this process, {0} {1} of additional disk space "
                       "will be used.{2}".format(size[1], unit[1],
-                                                _m.color["ENDC"]))
+                                                self.meta.color["ENDC"]))
                 print("")
                 if Msg().answer() in ["y", "Y"]:
                     Download(self.patch_path, self.dwn_links).start()
@@ -113,7 +114,7 @@ class Patches(object):
                         self.patch_path, self.upgrade_all)
                     self.upgrade()
                     self.kernel()
-                    if _m.slackpkg_log in ["on", "ON"]:
+                    if self.meta.slackpkg_log in ["on", "ON"]:
                         self.slackpkg_update()
                     Msg().reference(self.installed, self.upgraded)
                     delete(self.patch_path, self.upgrade_all)
@@ -135,7 +136,7 @@ class Patches(object):
         black = BlackList().packages()
         for name, loc, comp, uncomp in zip(data[0], data[1], data[2], data[3]):
             repo_pkg_name = split_package(name)[0]
-            if (not os.path.isfile(_m.pkg_path + name[:-4]) and
+            if (not os.path.isfile(self.meta.pkg_path + name[:-4]) and
                     repo_pkg_name not in black and
                     repo_pkg_name not in self.skip):
                 self.dwn_links.append("{0}{1}/{2}".format(mirrors("", ""),
@@ -144,7 +145,7 @@ class Patches(object):
                 self.uncomp_sum.append(uncomp)
                 self.upgrade_all.append(name)
                 self.count_upg += 1
-                if not find_package(repo_pkg_name, _m.pkg_path):
+                if not find_package(repo_pkg_name, self.meta.pkg_path):
                     self.count_added += 1
                     self.count_upg -= 1
 
@@ -154,11 +155,11 @@ class Patches(object):
         """
         for upg, size in sorted(zip(self.upgrade_all, self.comp_sum)):
             pkg_split = split_package(upg[:-4])
-            color = _m.color["YELLOW"]
-            if not find_package(pkg_split[0], _m.pkg_path):
-                color = _m.color["RED"]
+            color = self.meta.color["YELLOW"]
+            if not find_package(pkg_split[0], self.meta.pkg_path):
+                color = self.meta.color["RED"]
             print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>12}{12}".format(
-                color, pkg_split[0], _m.color["ENDC"],
+                color, pkg_split[0], self.meta.color["ENDC"],
                 " " * (24-len(pkg_split[0])), pkg_split[1],
                 " " * (18-len(pkg_split[1])), pkg_split[2],
                 " " * (8-len(pkg_split[2])), pkg_split[3],
@@ -173,16 +174,16 @@ class Patches(object):
             check_md5(pkg_checksum(pkg, "slack_patches"), self.patch_path + pkg)
             pkg_ver = "{0}-{1}".format(split_package(pkg)[0],
                                        split_package(pkg)[1])
-            if find_package(split_package(pkg)[0] + "-", _m.pkg_path):
-                print("[ {0}upgrading{1} ] --> {2}".format(_m.color["YELLOW"],
-                                                           _m.color["ENDC"],
-                                                           pkg[:-4]))
+            if find_package(split_package(pkg)[0] + "-", self.meta.pkg_path):
+                print("[ {0}upgrading{1} ] --> {2}".format(
+                    self.meta.color["YELLOW"], self.meta.color["ENDC"],
+                    pkg[:-4]))
                 PackageManager((self.patch_path + pkg).split()).upgrade()
                 self.upgraded.append(pkg_ver)
             else:
-                print("[ {0}installing{1} ] --> {2}".format(_m.color["GREEN"],
-                                                            _m.color["ENDC"],
-                                                            pkg[:-4]))
+                print("[ {0}installing{1} ] --> {2}".format(
+                    self.meta.color["GREEN"], self.meta.color["ENDC"],
+                    pkg[:-4]))
                 PackageManager((self.patch_path + pkg).split()).upgrade()
                 self.installed.append(pkg_ver)
 
@@ -193,13 +194,14 @@ class Patches(object):
         """
         for core in self.upgrade_all:
             if "kernel" in core:
-                if _m.default_answer == "y":
-                    answer = _m.default_answer
+                if self.meta.default_answer == "y":
+                    answer = self.meta.default_answer
                 else:
                     print("")
                     Msg().template(78)
                     print("| {0}*** HIGHLY recommended reinstall 'LILO' "
-                          "***{1}".format(_m.color["RED"], _m.color["ENDC"]))
+                          "***{1}".format(self.meta.color["RED"],
+                                          self.meta.color["ENDC"]))
                     Msg().template(78)
                     answer = raw_input("\nThe kernel has been upgraded, "
                                        "reinstall `LILO` [Y/n]? ")
@@ -216,9 +218,10 @@ class Patches(object):
         changelog_old = changelog_txt + ".old"
         arch = "64" if os.uname()[4] == "x86_64" else ""
         slackware_mirror = self.utils.read_config(self.utils.read_file(
-            _m.conf_path + "slackware-changelogs-mirror"))
+            self.meta.conf_path + "slackware-changelogs-mirror"))
         slackpkg_mirror = self.utils.read_config(
-            self.utils.read_file("{0}{1}".format(_m.slackpkg_conf, "mirrors")))
+            self.utils.read_file("{0}{1}".format(self.meta.slackpkg_conf,
+                                                 "mirrors")))
         if slackpkg_mirror and "current" in slackpkg_mirror:
             log_mirror = "{0}slackware{1}-current/{2}".format(slackware_mirror,
                                                               arch,
@@ -229,12 +232,12 @@ class Patches(object):
                                                           slack_ver(),
                                                           changelog_txt)
         slackware_log = URL(log_mirror).reading()
-        if os.path.isfile(_m.slackpkg_lib_path + changelog_txt):
-            if os.path.isfile(_m.slackpkg_lib_path + changelog_old):
-                os.remove(_m.slackpkg_lib_path + changelog_old)
-            shutil.copy2(_m.slackpkg_lib_path + changelog_txt,
-                         _m.slackpkg_lib_path + changelog_old)
-            os.remove(_m.slackpkg_lib_path + changelog_txt)
-            with open(_m.slackpkg_lib_path + changelog_txt, "w") as log:
+        if os.path.isfile(self.meta.slackpkg_lib_path + changelog_txt):
+            if os.path.isfile(self.meta.slackpkg_lib_path + changelog_old):
+                os.remove(self.meta.slackpkg_lib_path + changelog_old)
+            shutil.copy2(self.meta.slackpkg_lib_path + changelog_txt,
+                         self.meta.slackpkg_lib_path + changelog_old)
+            os.remove(self.meta.slackpkg_lib_path + changelog_txt)
+            with open(self.meta.slackpkg_lib_path + changelog_txt, "w") as log:
                 log.write(slackware_log)
                 log.close()
