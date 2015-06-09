@@ -1,3 +1,13 @@
+Version 2.4.3
+10-06-2015
+
+[Feature] - Added long options.
+
+[Updated] - Usage help message.
+          - Bash and fish completion.
+          - Man page.
+          - Configuration file.
+
 Version 2.4.2
 04-06-2015
 
