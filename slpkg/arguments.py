@@ -56,7 +56,7 @@ Commands:
                                             repository.
 
 Optional arguments:
-  -h, --help                                Print this help message and exit
+  -h, --help                                Print this help message and exit.
   -v, --version                             Print program version and exit.
   -a, --autobuild, [script] [source...]     Auto build SBo packages.
                                             If you already have downloaded the
@@ -100,7 +100,7 @@ Optional arguments:
   -f, --find, [package...]                  Find and print installed packages
                                             reporting the size and the sum.
   -i, --install, [package...]               Installs single or multiple
-                                            Slackware binary packages (*.t?z).
+                                            Slackware binary packages.
   -u, --upgrade, [package...]               Upgrade single or multiple Slackware
                                             binary packages from a older to a
                                             newer one.
