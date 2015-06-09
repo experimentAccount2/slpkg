@@ -136,10 +136,12 @@ Combine with the command 'grep' to catch the results you want.
 
 Check and upgrade the distribution of your upgrade your packages with command '$ slpkg -c <repository> 
 --upgrade'. Don't forget to update packages list before (for 'slack' repository don't is necessary).
-This command except upgrade packages will fix packages with broken dependencies.
+This command except upgrade packages will fix packages with broken dependencies. Switch  off automatic
+resolve dependensies with additional option '--resolve-off'.
 
 The most famous command is "$ slpkg -s <repository> <packages>" , this command downloads and 
-installs packages with resolve all the dependencies.
+installs packages with resolve all the dependencies or switch of resolve with additional option
+'--resolve-off'.
 
 Watch the dependencies of a package with command '$ slpkg -t <repository> <package>'.
 Displays a package dependency tree and also tells you which ones are installed on your system events.
