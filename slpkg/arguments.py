@@ -79,7 +79,7 @@ Optional arguments:
       --installed                           packages repository, index or print
                                             only packages installed on the
                                             system.
-  -c, --check, [repository] --upgrade       Check, view and install updated
+  -c, --check, [repository] --upgrade,      Check, view and install updated
       --skip=[] --resolve-off               packages from repositories.
   -s, --sync, [repository] [package...],    Sync packages. Install packages
       --resolve-off                         directly from remote repositories
@@ -127,12 +127,12 @@ def usage(repo):
 
              Optional arguments:
              [-h] [-v] [-a [script.tar.gz] [sources...]]
-             [-b list, [...] --add, --remove]
-             [-q list, [...] --add, --remove]
+             [-b [package...] --add, --remove, list]
+             [-q [package...] --add, --remove, list]
              [-q build, install, build-install]
-             [-g config, config=[editor]]
+             [-g print, edit=[editor]]
              [-l [repository], --index, --installed]
-             [-c [repository] --upgrade --skip=[], --resolve-off]
+             [-c [repository] --upgrade, --skip=[] --resolve-off]
              [-s [repository] [package...], --resolve-off]
              [-t [repository] [package]]
              [-p [repository] [package], --color=[]]
