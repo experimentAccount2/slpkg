@@ -290,7 +290,7 @@ class ArgParse(object):
         elif (len(self.args) > 2 and self.args[0] in options and
                 self.args[-1] == flag[0]):
             blacklist.add(self.packages)
-        elif (len(self.args) > 2 and self.args[0] == options and
+        elif (len(self.args) > 2 and self.args[0] in options and
                 self.args[-1] == flag[1]):
             blacklist.remove(self.packages)
         else:
