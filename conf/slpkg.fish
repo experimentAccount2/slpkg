@@ -9,7 +9,7 @@ complete --command slpkg --long-option check --short-option c --description 'Che
 complete --command slpkg --long-option sync --short-option s --description 'Sync packages. Install packages directly from remote repositories with all dependencies.'
 complete --command slpkg --long-option tracking --short-option t --description 'Tracking package dependencies and print package dependenies tree with highlight if packages is installed.'
 complete --command slpkg --long-option print --short-option p --description 'Print description of a package directly from the repository and change color text.'
-complete --command slpkg --long option network --short-option n --description 'View a standard of SBo page in terminal and manage multiple options like reading downloading building installation etc.'
+complete --command slpkg --long-option network --short-option n --description 'View a standard of SBo page in terminal and manage multiple options like reading downloading building installation etc.'
 complete --command slpkg --long-option find --short-option f --description 'Find and print installed packages reporting the size and the sum.'
 complete --command slpkg --long-option FIND --short-option F --description 'Find packages from repositories and search at each enabled repository and prints results.'
 complete --command slpkg --long-option install --short-option i --description 'Installs single or multiple Slackware binary packages.'
