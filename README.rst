@@ -262,7 +262,7 @@ For Slackware 'current' users must change the variable VERSION in '/etc/slpkg.co
 
 .. code-block:: bash
 
-    $ slpkg -g config=nano
+    $ slpkg -g edit=nano
 
 
 Slackware Mirrors
