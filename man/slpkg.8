@@ -32,7 +32,7 @@ Usage: slpkg Commands:
              [-t [repository] [package]]
              [-p [repository] [package], --color=[]]
              [-n [SBo package]] [-F [...]] [-f [...]] [-i [...]] 
-             [-u [...]] [-o  [...]] [-r [...]] [-d [...]]
+             [-u [...]] [-r [...]] [-d [...]]
 
 .SH DESCRIPTION
 Slpkg is a powerful software package manager that installs, updates, and
@@ -93,7 +93,6 @@ You can check for new versions and update slpkg itself.
 .PP
 If you already have download the script and source with this argument you can build Slackware 
 package from source quickly and easy.
-(If you want to pass variables to the script exported as: '# export FFMPEG_X264=yes FFMPEG_LAME=yes')
 
 .SS -b, --blacklist, add, remove, view packages in blacklist
 \fBslpkg\fP \fB-b\fP <\fIname of packages\fP> \fB--add\fP, \fB--remove\fP, \fBlist\fP
@@ -139,7 +138,6 @@ and so always you can have updated your system.
 Installs or upgrade packages from the repositories with automatically resolving all 
 dependencies of the package. Sometimes to install a package have to pass part of the 
 version of the package as '# slpkg -s alien ffmpeg-2.4.3'.
-(If you want to pass variables to the script exported as: '# export FFMPEG_X264=yes FFMPEG_LAME=yes')
 Switch off automatic resolve dependencies with additional option '--resolve-off'.
 
 .SS -t, --tracking,  tracking dependencies
@@ -173,36 +171,29 @@ Example you can view all installed sbo packages like '# slpkg -f _SBo'.
 View complete slackbuilds.org site in your terminal. Read file, download, 
 build or install etc.
 
-.SS -i, --install, install Slackware binary packages
-\fBslpkg\fP \fB-i\fP <\fIpackages.t?z\fP>
+.SS -i, --installpkg, install Slackware binary packages
+\fBslpkg\fP \fB-i\fP \fB[--warn, --md5sum, --root /otherroot, --infobox, --menu, --terse, 
+--ask, --priority ADD|REC|OPT|SKP, --tagfile /somedir/tagfile]\fP <\fIpackages.t?z\fP>
 .PP
 Installs single binary packages designed for use with the Slackware Linux 
-distribution into your system.
+distribution into your system. More information please read 'man installpkg'.
 
-.SS -u, --install-new, install-upgrade Slackware binary packages with new
-\fBslpkg\fP \fB-u\fP <\fIpackages.t?z\fP>
+.SS -u, --upgradepkg, install-upgrade Slackware binary packages with new
+\fBslpkg\fP \fB-u\fP \fB[--dry-run, --install-new, --reinstall, --verbose]\fP <\fIpackages.t?z\fP>
 .PP
 Normally upgrade only upgrades packages that are already installed on the system, 
 and will skip any packages that do not already have a version installed. 
-(like slackware command 'upgradepkg --install-new')
+More information please read 'man upgradepkg'.
 
-.SS -o, --reinstall, reinstall Slackware binary packages
-\fBslpkg\fP \fB-o\fP <\fIpackages.t?z\fP>
-.PP
-Upgrade package usually skips packages if the exact same package (matching name, version, 
-arch, and build number) is already installed on the system. Use the '--reinstall' option 
-if you want to  upgrade  all  packages  even  if the same version is already installed. 
-(like slackware command 'upgradepkg --reinstall')
-
-.SS -r, --remove, remove previously installed Slackware binary packages
-\fBslpkg\fP \fB-r\fP <\fInames of packages\fP>
+.SS -r, --removepkg, remove previously installed Slackware binary packages
+\fBslpkg\fP \fB-r\fP \fB[-copy, -keep, -preserve, -warn]\fP <\fInames of packages\fP>
 .PP
 Removes a previously installed Slackware package, while writing a progress report to 
 the standard output. A package may be specified either by the full package name (as 
 you'd see listed in /var/log/packages/), or by the base package name. If installed
 packages with command 'slpkg -s sbo <packages>' then write a file in /var/log/slpkg/dep/ 
 with all dependencies and it allows you can remove them all together. 
-(like slackware command 'removepkg')
+More information please read 'man removepkg'.
 
 .SS -d, --display, display the installed packages contents and file list
 \fBslpkg\fP \fB-d\fP <\fInames of packages\fP>
@@ -236,29 +227,15 @@ For example:
  Add or remove default repository in configuration file '/etc/slpkg/slpkg.conf'.
  Read REPOSITORIES file for explanations.
 
-.SH PACKAGE FILE
-Instead of [package...] you can create file with the suffix '.pkg' which was to 
-contain the packages you want to work like:
-
- # echo "brasero
- > bitfighter
- > ffmpeg" > foo.pkg
-
- # cat foo.pkg
- > brasero
- > bitfighter
- > ffmpeg
-
- Example:
-
- # slpkg -s sbo foo.pkg
-
- or
-
- # slpkg -r foo.pkg 
-
 .SH COLORS
  red, green, yellow, cyan, grey
+
+.SH PASS VARIABLES TO SCRIPT
+ If you want to pass variables to the script exported as: 
+ Usage: <NAME_VARIABLE=value>
+
+ Example:
+ '# export FFMPEG_X264=yes FFMPEG_LAME=yes'
 
 .SH FILES
 /etc/slpkg/slpkg.conf
