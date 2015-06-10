@@ -305,7 +305,7 @@ class Initialization(object):
         # filelist_txt = "{0}{1}/{2}".format(repo, ar, lst_file)
         checksums_md5 = "{0}{1}/{2}".format(repo, ar, md5_file)
         # ChangeLog.txt file available only for x86 arch
-        changelog_txt = "{0}{1}-x86/{2}".format(repo, slack_ver(), log_file)
+        changelog_txt = "{0}{1}/{2}".format(repo, ar, log_file)
         self.write(lib, lib_file, packages_txt)
         # self.write(lib, lst_file, filelist_txt)
         self.write(lib, md5_file, checksums_md5)
