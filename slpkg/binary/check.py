@@ -63,8 +63,7 @@ def pkg_upgrade(repo, skip):
                     repo_pkg[3] >= inst_pkg[3] and
                         inst_pkg[0] not in BlackList().packages() and
                         inst_pkg[0] not in skip):
-                    pkgs_for_upgrade.append("{0}-{1}".format(repo_pkg[0],
-                                                             repo_pkg[1]))
+                    pkgs_for_upgrade.append(repo_pkg[0])
         Msg().done()
         return pkgs_for_upgrade
     except KeyboardInterrupt:

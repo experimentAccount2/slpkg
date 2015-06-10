@@ -208,8 +208,6 @@ class BinaryInstall(object):
         if self.meta.rsl_deps in ["on", "ON"] and self.resolve:
             Msg().resolving()
         for dep in self.packages:
-            if self.if_upgrade:
-                dep = dep.split(self.meta.sp)[0]
             dependencies = []
             dependencies = Utils().dimensional_list(Dependencies(
                 self.PACKAGES_TXT, self.repo).binary(dep, self.resolve))
@@ -269,8 +267,8 @@ class BinaryInstall(object):
         for pkg in packages:
             for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
                                                data[3]):
-                if (name and name.startswith(pkg) and name not in install and
-                        pkg not in black):
+                if (name and name.startswith(pkg + self.meta.sp) and
+                        name not in install and pkg not in black):
                     dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
                     install.append(name)
                     comp_sum.append(comp)
