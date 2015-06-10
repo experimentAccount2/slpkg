@@ -224,7 +224,7 @@ class ArgParse(object):
 
     def pkg_tracking(self):
         """ tracking package dependencies """
-        packages = self.args[2:]
+        packages = self.args[2]
         options = ["-t", "--tracking"]
         if (len(self.args) == 3 and self.args[0] in options and
                 self.args[1] in self.meta.repositories):
@@ -462,9 +462,9 @@ def main():
         "-q": argparse.pkg_queue,
         "--queue": argparse.pkg_queue,
         "-i": argparse.bin_install,
-        "--install": argparse.bin_install,
+        "--installpkg": argparse.bin_install,
         "-u": argparse.bin_upgrade,
-        "--install-new": argparse.bin_upgrade,
+        "--upgradepkg": argparse.bin_upgrade,
         "-r": argparse.bin_remove,
         "--removepkg": argparse.bin_remove,
         "-f": argparse.bin_find,
