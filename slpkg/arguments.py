@@ -101,7 +101,7 @@ Optional arguments:
                                             reporting the size and the sum.
   -i, --install, [package...]               Installs single or multiple
                                             Slackware binary packages.
-  -u, --upgrade, [package...]               Upgrade single or multiple Slackware
+  -u, --install-new, [package...]           Upgrade single or multiple Slackware
                                             binary packages from a older to a
                                             newer one.
   -o, --reinstall, [package...]             Reinstall signle or multiple

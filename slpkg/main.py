@@ -75,7 +75,7 @@ class ArgParse(object):
 
         if (len(self.args) > 1 and
                 self.args[0] in ["-f", "--find", "-i", "--install", "-u",
-                                 "--upgrade", "-o", "--reinstall", "-r",
+                                 "--install-new", "-o", "--reinstall", "-r",
                                  "--remove", "-d", "--display", "-n",
                                  "--network"] and
                 self.args[1].endswith(".pkg")):
@@ -334,7 +334,7 @@ class ArgParse(object):
 
     def bin_upgrade(self):
         """ install-upgrade Slackware binary packages """
-        options = ["-u", "--upgrade"]
+        options = ["-u", "--install-new"]
         if len(self.args) > 1 and self.args[0] in options:
             PackageManager(self.packages).upgrade()
         else:
@@ -465,7 +465,7 @@ def main():
         "-i": argparse.bin_install,
         "--install": argparse.bin_install,
         "-u": argparse.bin_upgrade,
-        "--upgrade": argparse.bin_upgrade,
+        "--install-new": argparse.bin_upgrade,
         "-o": argparse.bin_reinstall,
         "--reinstall": argparse.bin_reinstall,
         "-r": argparse.bin_remove,

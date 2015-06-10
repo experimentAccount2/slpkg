@@ -13,7 +13,7 @@ complete --command slpkg --long-option network --short-option n --description 'V
 complete --command slpkg --long-option find --short-option f --description 'Find and print installed packages reporting the size and the sum.'
 complete --command slpkg --long-option FIND --short-option F --description 'Find packages from repositories and search at each enabled repository and prints results.'
 complete --command slpkg --long-option install --short-option i --description 'Installs single or multiple Slackware binary packages.'
-complete --command slpkg --long-option upgrade --short-option u --description 'Upgrade single or multiple Slackware binary packages from a older to a newer one.'
+complete --command slpkg --long-option install-new --short-option u --description 'Upgrade single or multiple Slackware binary packages from a older to a newer one.'
 complete --command slpkg --long-option reinstall --short-option o --description 'Reinstall signle or multiple Slackware binary packages with the same packages if the exact.'
 complete --command slpkg --long-option remove --short-option r --description 'Removes a previously installed Slackware binary packages.'
 complete --command slpkg --long-option display --short-option d --description 'Display the installed packages contents and file list.'
