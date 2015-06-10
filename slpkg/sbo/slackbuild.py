@@ -337,5 +337,5 @@ class SBoInstall(object):
                     print("{0}[ Installing ] --> {1}{2}".format(
                         self.meta.color["GREEN"], self.meta.color["ENDC"], pkg))
                     installs.append(prgnam)
-                PackageManager(binary).upgrade()
+                PackageManager(binary).upgrade("--install-new")
         return installs, upgraded

@@ -173,18 +173,18 @@ class BinaryInstall(object):
                 print("[ {0}reinstalling{1} ] --> {2}".format(
                     self.meta.color["GREEN"], self.meta.color["ENDC"], inst))
                 installs.append(pkg_ver)
-                PackageManager(package).reinstall()
+                PackageManager(package).upgrade("--reinstall")
             elif find_package(split_package(inst)[0] + self.meta.sp,
                               self.meta.pkg_path):
                 print("[ {0}upgrading{1} ] --> {2}".format(
                     self.meta.color["YELLOW"], self.meta.color["ENDC"], inst))
                 upgraded.append(pkg_ver)
-                PackageManager(package).upgrade()
+                PackageManager(package).upgrade("--install-new")
             else:
                 print("[ {0}installing{1} ] --> {2}".format(
                     self.meta.color["GREEN"], self.meta.color["ENDC"], inst))
                 installs.append(pkg_ver)
-                PackageManager(package).upgrade()
+                PackageManager(package).upgrade("--install-new")
         return [installs, upgraded]
 
     def checksums(self, install):

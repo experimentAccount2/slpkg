@@ -44,41 +44,29 @@ class PackageManager(object):
         self.binary = binary
         self.meta = _meta_
 
-    def install(self):
+    def install(self, flag):
         """
         Install Slackware binary packages
         """
         for pkg in self.binary:
             try:
-                print(subprocess.check_output("installpkg {0}".format(
-                                              pkg), shell=True))
+                subprocess.call("installpkg {0} {1}".format(flag, pkg),
+                                shell=True)
                 print("Completed!\n")
             except subprocess.CalledProcessError:
                 self._not_found("Can't install", self.binary, pkg)
 
-    def upgrade(self):
+    def upgrade(self, flag):
         """
-        Upgrade Slackware binary packages
+        Upgrade Slackware binary packages with new
         """
         for pkg in self.binary:
             try:
-                print(subprocess.check_output("upgradepkg --install-new "
-                                              "{0}".format(pkg), shell=True))
+                subprocess.call("upgradepkg {0} {1}".format(flag, pkg),
+                                shell=True)
                 print("Completed!\n")
             except subprocess.CalledProcessError:
                 self._not_found("Can't upgrade", self.binary, pkg)
-
-    def reinstall(self):
-        """
-        Reinstall Slackware binary packages
-        """
-        for pkg in self.binary:
-            try:
-                print(subprocess.check_output(
-                    "upgradepkg --reinstall {0}".format(pkg), shell=True))
-                print("Completed!\n")
-            except subprocess.CalledProcessError:
-                self._not_found("Can't reinstall", self.binary, pkg)
 
     def _not_found(self, message, binary, pkg):
         if len(binary) > 1:
@@ -87,10 +75,11 @@ class PackageManager(object):
             bol = eol = "\n"
         Msg().pkg_not_found(bol, pkg, message, eol)
 
-    def remove(self):
+    def remove(self, flag):
         """
         Remove Slackware binary packages
         """
+        self.flag = flag
         dep_path = self.meta.log_path + "dep/"
         dependencies, rmv_list = [], []
         removed = self._view_removed()
@@ -188,8 +177,8 @@ class PackageManager(object):
         deps.append(package)
         for dep in deps:
             if find_package(dep + self.meta.sp, self.meta.pkg_path):
-                print(subprocess.check_output("removepkg {0}".format(dep),
-                                              shell=True))
+                subprocess.call("removepkg {0} {1}".format(self.flag, dep),
+                                shell=True)
                 removes.append(dep)
         os.remove(path + package)
         return removes
@@ -199,8 +188,8 @@ class PackageManager(object):
         Remove one signle package
         """
         if find_package(package + self.meta.sp, self.meta.pkg_path):
-            print(subprocess.check_output("removepkg {0}".format(package),
-                                          shell=True))
+            subprocess.call("removepkg {0} {1}".format(self.flag, package),
+                            shell=True)
         return package.split()
 
     def _reference_rmvs(self, removes):

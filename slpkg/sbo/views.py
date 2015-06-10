@@ -222,4 +222,4 @@ class SBoNetwork(object):
             print("[ {0}Installing{1} ] --> {2}".format(_meta_.color["GREEN"],
                                                         _meta_.color["ENDC"],
                                                         self.name))
-            PackageManager(binary).upgrade()
+            PackageManager(binary).upgrade("--install-new")

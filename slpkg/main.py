@@ -25,7 +25,6 @@
 import sys
 import getpass
 
-from utils import Utils
 from messages import Msg
 from desc import PkgDesc
 from config import Config
@@ -63,33 +62,6 @@ class ArgParse(object):
     def __init__(self, args):
         self.args = args
         self.meta = _meta_
-        self.packages = self.args[1:]
-        if len(self.args) > 1 and self.args[0] in ["-q", "--queue", "-b",
-                                                   "--blacklist"]:
-            self.packages = self.args[1:-1]
-        elif len(self.packages) > 1 and self.args[0] in ["-s", "--sync", "-t",
-                                                         "--tracking", "-p",
-                                                         "--print", "-F",
-                                                         "--FIND"]:
-            self.packages = self.args[2:]
-
-        if (len(self.args) > 1 and
-                self.args[0] in ["-f", "--find", "-i", "--install", "-u",
-                                 "--install-new", "-o", "--reinstall", "-r",
-                                 "--remove", "-d", "--display", "-n",
-                                 "--network"] and
-                self.args[1].endswith(".pkg")):
-            self.packages = Utils().read_file_pkg(self.args[1])
-        elif (len(self.args) >= 3 and
-                self.args[0] in ["-s", "--sync", "-t", "--tracking", "-p",
-                                 "--print", "-F", "--FIND"] and
-                self.args[1] in self.meta.repositories and
-                self.args[2].endswith(".pkg")):
-            self.packages = Utils().read_file_pkg(self.args[2])
-        elif (len(self.args) == 3 and self.args[0] in ["-q", "--queue",
-                                                       "-b", "--blacklist"] and
-                self.args[1].endswith(".pkg")):
-            self.packages = Utils().read_file_pkg(self.args[1])
 
         # checking if repositories exists
         if len(self.args) > 1 and self.args[0] not in [
@@ -231,6 +203,7 @@ class ArgParse(object):
 
     def pkg_install(self):
         """ install packages by repository """
+        packages = self.args[2:]
         options = ["-s", "--sync"]
         flag = ["--resolve-off"]
         resolve = True
@@ -239,10 +212,10 @@ class ArgParse(object):
         if len(self.args) >= 3 and self.args[0] in options:
             if (self.args[1] in self.meta.repositories and
                     self.args[1] not in ["sbo"]):
-                BinaryInstall(self.packages, self.args[1], resolve).start(
+                BinaryInstall(packages, self.args[1], resolve).start(
                     if_upgrade=False)
             elif self.args[1] == "sbo":
-                SBoInstall(self.packages, resolve).start(
+                SBoInstall(packages, resolve).start(
                     if_upgrade=False)
             else:
                 usage(self.args[1])
@@ -251,12 +224,8 @@ class ArgParse(object):
 
     def pkg_tracking(self):
         """ tracking package dependencies """
-        packages = "".join(self.packages)
+        packages = self.args[2:]
         options = ["-t", "--tracking"]
-        if len(self.packages) > 1:
-            packages = self.packages[1]
-            if self.args[2].endswith(".pkg"):
-                packages = self.packages[0]
         if (len(self.args) == 3 and self.args[0] in options and
                 self.args[1] in self.meta.repositories):
             track_dep(packages, self.args[1])
@@ -268,10 +237,8 @@ class ArgParse(object):
 
     def sbo_network(self):
         """ view slackbuilds packages """
-        packages = "".join(self.packages)
+        packages = self.args[1]
         options = ["-n", "--network"]
-        if len(self.packages) > 1:
-            packages = self.packages[0]
         if (len(self.args) == 2 and self.args[0] in options and
                 "sbo" in self.meta.repositories):
             SBoNetwork(packages).view()
@@ -280,6 +247,7 @@ class ArgParse(object):
 
     def pkg_blacklist(self):
         """ manage blacklist packages """
+        packages = self.args[1:]
         blacklist = BlackList()
         options = ["-b", "--blacklist"]
         flag = ["--add", "--remove"]
@@ -289,25 +257,26 @@ class ArgParse(object):
             blacklist.listed()
         elif (len(self.args) > 2 and self.args[0] in options and
                 self.args[-1] == flag[0]):
-            blacklist.add(self.packages)
+            blacklist.add(packages)
         elif (len(self.args) > 2 and self.args[0] in options and
                 self.args[-1] == flag[1]):
-            blacklist.remove(self.packages)
+            blacklist.remove(packages)
         else:
             usage("")
 
     def pkg_queue(self):
         """ manage packages in queue """
+        packages = self.args[1:]
         queue = QueuePkgs()
         options = ["-q", "--queue"]
         flag = ["--add", "--remove"]
         command = ["list", "build", "install", "build-install"]
         if (len(self.args) > 2 and self.args[0] in options and
                 self.args[-1] == flag[0]):
-            queue.add(self.packages)
+            queue.add(packages)
         elif (len(self.args) > 2 and self.args[0] in options and
                 self.args[-1] == flag[1]):
-            queue.remove(self.packages)
+            queue.remove(packages)
         elif (len(self.args) == 2 and self.args[0] in options and
                 self.args[1] == command[0]):
             queue.listed()
@@ -326,52 +295,81 @@ class ArgParse(object):
 
     def bin_install(self):
         """ install Slackware binary packages """
-        options = ["-i", "--install"]
+        packages = self.args[1:]
+        options = ["-i", "--installpkg"]
+        flag = ""
+        flags = [
+            "--warn",
+            "--md5sum",
+            "--root",
+            "--infobox",
+            "--menu",
+            "--terse",
+            "--ask",
+            "--priority",
+            "--tagfile"
+        ]
+        if self.args[1] in flags:
+            flag = self.args[1]
+            packages = self.args[2:]
         if len(self.args) > 1 and self.args[0] in options:
-            PackageManager(self.packages).install()
+            PackageManager(packages).install(flag)
         else:
             usage("")
 
     def bin_upgrade(self):
         """ install-upgrade Slackware binary packages """
-        options = ["-u", "--install-new"]
+        packages = self.args[1:]
+        options = ["-u", "--upgradepkg"]
+        flag = ""
+        flags = [
+            "--dry-run",
+            "--install-new",
+            "--reinstall",
+            "--verbose"
+        ]
+        if self.args[1] in flags:
+            flag = self.args[1]
+            packages = self.args[2:]
         if len(self.args) > 1 and self.args[0] in options:
-            PackageManager(self.packages).upgrade()
-        else:
-            usage("")
-
-    def bin_reinstall(self):
-        """ reinstall Slackware binary packages """
-        options = ["-o", "--reinstall"]
-        if len(self.args) > 1 and self.args[0] in options:
-            PackageManager(self.packages).reinstall()
+            PackageManager(packages).upgrade(flag)
         else:
             usage("")
 
     def bin_remove(self):
         """ remove Slackware packages """
-        options = ["-r", "--remove"]
+        packages = self.args[1:]
+        options = ["-r", "--removepkg"]
+        flag = ""
+        flags = [
+            "-warn",
+            "-preserve",
+            "-copy",
+            "-keep"
+        ]
+        if self.args[1] in flags:
+            flag = self.args[1]
+            packages = self.args[2:]
         if len(self.args) > 1 and self.args[0] in options:
-            PackageManager(self.packages).remove()
+            PackageManager(packages).remove(flag)
         else:
             usage("")
 
     def bin_find(self):
         """ find installed packages """
+        packages = self.args[1:]
         options = ["-f", "--find"]
         if len(self.args) > 1 and self.args[0] in options:
-            PackageManager(self.packages).find()
+            PackageManager(packages).find()
         else:
             usage("")
 
     def pkg_desc(self):
         """ print slack-desc by repository"""
-        packages = "".join(self.packages)
+        packages = self.args[2]
         options = ["-p", "--print"]
         flag = ["--color="]
         colors = ["red", "green", "yellow", "cyan", "grey"]
-        if len(self.packages) > 1:
-            packages = self.packages[0]
         if (len(self.args) == 3 and self.args[0] in options and
                 self.args[1] in self.meta.repositories):
             PkgDesc(packages, self.args[1], "").view()
@@ -398,9 +396,10 @@ class ArgParse(object):
 
     def pkg_contents(self):
         """ print packages contents """
+        packages = self.args[1:]
         options = ["-d", "--display"]
         if len(self.args) > 1 and self.args[0] in options:
-            PackageManager(self.packages).display()
+            PackageManager(packages).display()
         else:
             usage("")
 
@@ -466,10 +465,8 @@ def main():
         "--install": argparse.bin_install,
         "-u": argparse.bin_upgrade,
         "--install-new": argparse.bin_upgrade,
-        "-o": argparse.bin_reinstall,
-        "--reinstall": argparse.bin_reinstall,
         "-r": argparse.bin_remove,
-        "--remove": argparse.bin_remove,
+        "--removepkg": argparse.bin_remove,
         "-f": argparse.bin_find,
         "--find": argparse.bin_find,
         "-F": argparse.pkg_find,

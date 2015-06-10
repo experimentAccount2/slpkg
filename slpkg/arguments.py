@@ -99,16 +99,17 @@ Optional arguments:
                                             and prints results.
   -f, --find, [package...]                  Find and print installed packages
                                             reporting the size and the sum.
-  -i, --install, [package...]               Installs single or multiple
-                                            Slackware binary packages.
-  -u, --install-new, [package...]           Upgrade single or multiple Slackware
-                                            binary packages from a older to a
-                                            newer one.
-  -o, --reinstall, [package...]             Reinstall signle or multiple
-                                            Slackware binary packages with the
-                                            same packages if the exact.
-  -r, --remove, [package...]                Removes a previously installed
-                                            Slackware binary packages.
+  -i, --installpkg, [options] [package...]  Installs single or multiple
+      options=[--warn, --md5sum, --root,    Slackware binary packages designed
+               --infobox, --menu, --terse,  for use with the Slackware Linux
+               --ask, --priority,           distribution onto your system.
+               --tagfile]
+  -u, --upgradepkg, [options] [package...]  Upgrade single or multiple Slackware
+      options=[--dry-run, --install-new,    binary packages from an older
+               --reinstall, --verbose]      version to a newer one.
+  -r, --removepkg, [options] [package...]   Removes a previously installed
+      options=[-warn, -preserve, copy,      Slackware binary packages.
+               -keep]
   -d, --display, [package...]               Display the installed packages
                                             contents and file list.
 
@@ -137,7 +138,7 @@ def usage(repo):
              [-t [repository] [package]]
              [-p [repository] [package], --color=[]]
              [-n [SBo package]] [-F [...]] [-f [...]] [-i [...]]
-             [-u [...]] [-o  [...]] [-r [...]] [-d [...]]
+             [-u [...]] [-r [...]] [-d [...]]
              """
     error_repo = ""
     if repo and repo not in _meta_.repositories:

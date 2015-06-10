@@ -178,13 +178,15 @@ class Patches(object):
                 print("[ {0}upgrading{1} ] --> {2}".format(
                     self.meta.color["YELLOW"], self.meta.color["ENDC"],
                     pkg[:-4]))
-                PackageManager((self.patch_path + pkg).split()).upgrade()
+                PackageManager((self.patch_path + pkg).split()).upgrade(
+                    "--install-new")
                 self.upgraded.append(pkg_ver)
             else:
                 print("[ {0}installing{1} ] --> {2}".format(
                     self.meta.color["GREEN"], self.meta.color["ENDC"],
                     pkg[:-4]))
-                PackageManager((self.patch_path + pkg).split()).upgrade()
+                PackageManager((self.patch_path + pkg).split()).upgrade(
+                    "--install-new")
                 self.installed.append(pkg_ver)
 
     def kernel(self):
