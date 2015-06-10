@@ -72,7 +72,8 @@ class ArgParse(object):
             check_exists_repositories()
 
     def help_version(self):
-        """ Help and version info """
+        """Help and version info
+        """
         if (len(self.args) == 1 and self.args[0] in ["-h", "--help"] and
                 self.args[1:] == []):
             options()
@@ -83,47 +84,54 @@ class ArgParse(object):
             usage("")
 
     def command_update(self):
-        """ update package lists repositories """
+        """Update package lists repositories
+        """
         if len(self.args) == 1 and self.args[0] == "update":
             Update().repository()
 
     def command_update_slpkg(self):
-        """ slpkg it self update """
+        """Slpkg it self update
+        """
         if len(self.args) == 2 and self.args[0] == "update-slpkg":
             it_self_update()
         else:
             usage("")
 
     def command_repo_list(self):
-        """ repositories list """
+        """Repositories list
+        """
         if len(self.args) == 1 and self.args[0] == "repo-list":
             RepoList().repos()
         else:
             usage("")
 
     def command_repo_add(self):
-        """ add custom repositories """
+        """Add custom repositories
+        """
         if len(self.args) == 3 and self.args[0] == "repo-add":
             Repo().add(self.args[1], self.args[2])
         else:
             usage("")
 
     def command_repo_remove(self):
-        """ remove custom repositories """
+        """Remove custom repositories
+        """
         if len(self.args) == 2 and self.args[0] == "repo-remove":
             Repo().remove(self.args[1])
         else:
             usage("")
 
     def command_upgrade(self):
-        """ re create repositories package lists """
+        """Recreate repositories package lists
+        """
         if len(self.args) == 1 and self.args[0] == "upgrade":
             Initialization().upgrade()
         else:
             usage("")
 
     def command_repo_info(self):
-        """ repositories informations """
+        """Repositories informations
+        """
         if (len(self.args) == 2 and self.args[0] == "repo-info" and
                 self.args[1] in RepoList().all_repos):
             del RepoList().all_repos
@@ -135,7 +143,8 @@ class ArgParse(object):
             usage("")
 
     def auto_build(self):
-        """ auto built tool """
+        """Auto built tool
+        """
         options = ["-a", "--autobuild"]
         if len(self.args) == 3 and self.args[0] in options:
             BuildPackage(self.args[1], self.args[2:], self.meta.path).build()
@@ -143,7 +152,8 @@ class ArgParse(object):
             usage("")
 
     def pkg_list(self):
-        """ list of packages by repository """
+        """List of packages by repository
+        """
         options = ["-l", "--list"]
         flag = ["--index", "--installed"]
         if (len(self.args) == 3 and self.args[0] in options and
@@ -169,7 +179,8 @@ class ArgParse(object):
             usage("")
 
     def pkg_upgrade(self):
-        """ check and upgrade packages by repository """
+        """Check and upgrade packages by repository
+        """
         skip, resolve = "", True
         options = ["-c", "--check"]
         flag = ["--upgrade", "--skip=", "--resolve-off"]
@@ -202,7 +213,8 @@ class ArgParse(object):
             usage("")
 
     def pkg_install(self):
-        """ install packages by repository """
+        """Install packages by repository
+        """
         packages = self.args[2:]
         options = ["-s", "--sync"]
         flag = ["--resolve-off"]
@@ -223,7 +235,8 @@ class ArgParse(object):
             usage("")
 
     def pkg_tracking(self):
-        """ tracking package dependencies """
+        """Tracking package dependencies
+        """
         packages = self.args[2]
         options = ["-t", "--tracking"]
         if (len(self.args) == 3 and self.args[0] in options and
@@ -236,7 +249,8 @@ class ArgParse(object):
             usage("")
 
     def sbo_network(self):
-        """ view slackbuilds packages """
+        """View slackbuilds packages
+        """
         packages = self.args[1]
         options = ["-n", "--network"]
         if (len(self.args) == 2 and self.args[0] in options and
@@ -246,7 +260,8 @@ class ArgParse(object):
             usage("")
 
     def pkg_blacklist(self):
-        """ manage blacklist packages """
+        """Manage blacklist packages
+        """
         packages = self.args[1:]
         blacklist = BlackList()
         options = ["-b", "--blacklist"]
@@ -265,7 +280,8 @@ class ArgParse(object):
             usage("")
 
     def pkg_queue(self):
-        """ manage packages in queue """
+        """Manage packages in queue
+        """
         packages = self.args[1:]
         queue = QueuePkgs()
         options = ["-q", "--queue"]
@@ -294,7 +310,8 @@ class ArgParse(object):
             usage("")
 
     def bin_install(self):
-        """ install Slackware binary packages """
+        """Install Slackware binary packages
+        """
         packages = self.args[1:]
         options = ["-i", "--installpkg"]
         flag = ""
@@ -318,7 +335,8 @@ class ArgParse(object):
             usage("")
 
     def bin_upgrade(self):
-        """ install-upgrade Slackware binary packages """
+        """Install-upgrade Slackware binary packages
+        """
         packages = self.args[1:]
         options = ["-u", "--upgradepkg"]
         flag = ""
@@ -337,7 +355,8 @@ class ArgParse(object):
             usage("")
 
     def bin_remove(self):
-        """ remove Slackware packages """
+        """Remove Slackware packages
+        """
         packages = self.args[1:]
         options = ["-r", "--removepkg"]
         flag = ""
@@ -356,7 +375,8 @@ class ArgParse(object):
             usage("")
 
     def bin_find(self):
-        """ find installed packages """
+        """Find installed packages
+        """
         packages = self.args[1:]
         options = ["-f", "--find"]
         if len(self.args) > 1 and self.args[0] in options:
@@ -365,7 +385,8 @@ class ArgParse(object):
             usage("")
 
     def pkg_desc(self):
-        """ print slack-desc by repository"""
+        """Print slack-desc by repository
+        """
         packages = self.args[2]
         options = ["-p", "--print"]
         flag = ["--color="]
@@ -387,7 +408,8 @@ class ArgParse(object):
             usage("")
 
     def pkg_find(self):
-        """ find packages from all enabled repositories """
+        """Find packages from all enabled repositories
+        """
         options = ["-F", "--FIND"]
         if len(self.args) > 1 and self.args[0] in options:
             find_from_repos(self.args[1:])
@@ -395,7 +417,8 @@ class ArgParse(object):
             usage("")
 
     def pkg_contents(self):
-        """ print packages contents """
+        """Print packages contents
+        """
         packages = self.args[1:]
         options = ["-d", "--display"]
         if len(self.args) > 1 and self.args[0] in options:
@@ -404,7 +427,8 @@ class ArgParse(object):
             usage("")
 
     def congiguration(self):
-        """ manage slpkg configuration file """
+        """Manage slpkg configuration file
+        """
         options = ["-g", "--config"]
         command = ["print", "edit="]
         if (len(self.args) == 2 and self.args[0] in options and
