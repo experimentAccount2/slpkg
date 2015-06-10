@@ -573,6 +573,7 @@ class Update(object):
 
     def __init__(self):
         self._init = "Initialization()"
+        self.meta = _meta_
 
     def repository(self):
         """
