@@ -411,7 +411,6 @@ class ArgParse(object):
         if (len(self.args) == 2 and self.args[0] in options and
                 self.args[1].startswith(command[1])):
             editor = self.args[1][len(command[1]):]
-            print editor
             Config().edit(editor)
         elif (len(self.args) == 2 and self.args[0] in options and
                 self.args[1] == (command[0])):
