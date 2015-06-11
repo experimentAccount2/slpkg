@@ -81,21 +81,6 @@ class Utils(object):
                 downloaded.append(pkg)
         return downloaded
 
-    def read_file_pkg(self, file_pkg):
-        """
-        Read file.pkg and return packages name
-        from file
-        """
-        packages = []
-        if os.path.isfile(file_pkg):
-            r_file = self.read_file(file_pkg)
-            for pkg in r_file.splitlines():
-                packages.append(pkg)
-        else:
-            print("\nThe '{0}' file not found\n".format(
-                file_pkg.split("/")[-1]))
-        return filter(lambda x: x != "", packages)
-
     def read_config(self, config):
         """
         Read config file and returns first uncomment line

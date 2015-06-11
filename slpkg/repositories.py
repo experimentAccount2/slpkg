@@ -145,7 +145,7 @@ class Repo(object):
         """
         Slackers.it repository
         """
-        return "http://www.slackers.it/repository/"
+        return "http://ponce.cc/slackers/repository/"
 
     def slackonly(self):
         """

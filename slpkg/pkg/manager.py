@@ -32,8 +32,6 @@ from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.pkg.find import find_package
 
-from slpkg.binary.greps import fix_slackers_pkg
-
 
 class PackageManager(object):
     """Package manager class for install, upgrade,
@@ -214,7 +212,7 @@ class PackageManager(object):
             for rmv in removes:
                 if rmv in deps:
                     view = True
-                    dict_pkg[pkg] = rmv
+                    dict_pkg[rmv] = pkg
                 else:
                     mas = False
         if view:
@@ -316,7 +314,6 @@ class PackageManager(object):
             pkg_list = self.list_greps(repo, r)[0]
             print("")
             for pkg in sorted(pkg_list):
-                pkg = self._slackr_repo(repo, pkg)
                 if INDEX:
                     index += 1
                     pkg = self.list_color_tag(pkg)
@@ -374,13 +371,6 @@ class PackageManager(object):
                 packages = Utils().read_file(self.meta.lib_path + "{0}_repo/"
                                              "PACKAGES.TXT".format(repo))
         return packages
-
-    def _slackr_repo(self, repo, pkg):
-        """Fix slackers packages
-        """
-        if repo == "slackr":
-            return fix_slackers_pkg(pkg)
-        return pkg
 
     def list_color_tag(self, pkg):
         """Tag with color installed packages

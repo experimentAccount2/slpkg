@@ -44,10 +44,7 @@ def repo_data(PACKAGES_TXT, step, repo, resolve):
             index += 1
             toolbar_width = status(index, toolbar_width, step)
         if line.startswith("PACKAGE NAME:"):
-            if repo == "slackr":
-                name.append(fix_slackers_pkg(line[15:]))
-            else:
-                name.append(line[15:].strip())
+            name.append(line[15:].strip())
         if line.startswith("PACKAGE LOCATION:"):
             location.append(line[21:].strip())
         if line.startswith("PACKAGE SIZE (compressed):"):
@@ -159,24 +156,6 @@ def multi_filter(name, location, size, unsize):
     return [fname, flocation, fsize, funsize]
 
 
-def fix_slackers_pkg(name):
-    """
-    Fix "PACKAGE NAME:" from PACKAGES.TXT file
-    Beacause repository slackers.it not report the full
-    name in PACKAGES.TXT file use FILELIST.TXT to
-    get.
-    """
-    FILELIST_TXT = Utils().read_file(
-        _meta_.lib_path + "slackr_repo/FILELIST.TXT")
-    for line in FILELIST_TXT.splitlines():
-        if name in line and line.endswith(".txz"):
-            return line.split("/")[-1].strip()
-    # This trick fix spliting "NoneType" packages
-    # reference wrong name between PACKAGE.TXT and
-    # FILELIST.TXT
-    return ""
-
-
 class Requires(object):
 
     def __init__(self, name, repo):
@@ -207,10 +186,7 @@ class Requires(object):
                 _meta_.lib_path, self.repo))
             for line in PACKAGES_TXT.splitlines():
                 if line.startswith("PACKAGE NAME:"):
-                    if self.repo == "slackr":
-                        pkg_name = fix_slackers_pkg(line[15:])
-                    else:
-                        pkg_name = split_package(line[14:].strip())[0]
+                    pkg_name = split_package(line[14:].strip())[0]
                 if line.startswith("PACKAGE REQUIRED:"):
                     if pkg_name == self.name:
                         if line[18:].strip():

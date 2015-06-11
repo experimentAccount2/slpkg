@@ -46,10 +46,7 @@ def search_pkg(name, repo):
             index += 1
             toolbar_width = status(index, toolbar_width, step)
             if line.startswith("PACKAGE NAME:  ") and len(line) > 16:
-                if repo == "slackr":
-                    pkg_name = line[15:].strip()
-                else:
-                    pkg_name = split_package(line[15:])[0].strip()
+                pkg_name = split_package(line[15:])[0].strip()
                 if name == pkg_name and name not in blacklist:
                     return pkg_name
     except KeyboardInterrupt:
