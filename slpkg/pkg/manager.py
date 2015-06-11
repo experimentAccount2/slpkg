@@ -206,22 +206,23 @@ class PackageManager(object):
         before removed"""
         print("")
         view = False
-        dict_pkg = {}
+        package, dependency = [], []
         for pkg in find_package("", self.dep_path):
             deps = Utils().read_file(self.dep_path + pkg)
             for rmv in removes:
                 if rmv in deps:
                     view = True
-                    dict_pkg[rmv] = pkg
+                    package.append(pkg)
+                    dependency.append(rmv)
                 else:
                     mas = False
         if view:
             Msg().template(78)
-            for key, value in dict_pkg.iteritems():
+            for p, d in zip(package, dependency):
                 print("| {0}{1}{2} is dependency of the package --> "
-                      "{3}{4}{5}".format(self.meta.color["RED"], value,
+                      "{3}{4}{5}".format(self.meta.color["RED"], d,
                                          self.meta.color["ENDC"],
-                                         self.meta.color["GREEN"], key,
+                                         self.meta.color["GREEN"], p,
                                          self.meta.color["ENDC"]))
             Msg().template(78)
         if mas:
