@@ -53,7 +53,7 @@ class PackageManager(object):
                 subprocess.call("installpkg {0} {1}".format(flag, pkg),
                                 shell=True)
                 print("Completed!\n")
-            except subprocess.CalledProcessError:
+            except (subprocess.CalledProcessError, KeyboardInterrupt):
                 self._not_found("Can't install", self.binary, pkg)
 
     def upgrade(self, flag):
@@ -65,7 +65,7 @@ class PackageManager(object):
                 subprocess.call("upgradepkg {0} {1}".format(flag, pkg),
                                 shell=True)
                 print("Completed!\n")
-            except subprocess.CalledProcessError:
+            except (subprocess.CalledProcessError, KeyboardInterrupt):
                 self._not_found("Can't upgrade", self.binary, pkg)
 
     def _not_found(self, message, binary, pkg):
@@ -188,8 +188,12 @@ class PackageManager(object):
         for dep in deps:
             if (dep not in skip
                     and find_package(dep + self.meta.sp, self.meta.pkg_path)):
-                subprocess.call("removepkg {0} {1}".format(self.flag, dep),
-                                shell=True)
+                try:
+                    subprocess.call("removepkg {0} {1}".format(self.flag, dep),
+                                    shell=True)
+                except KeyboardInterrupt:
+                    print("")
+                    sys.exit(0)
                 removes.append(dep)
         os.remove(path + package)
         return removes
@@ -199,8 +203,12 @@ class PackageManager(object):
         Remove one signle package
         """
         if find_package(package + self.meta.sp, self.meta.pkg_path):
-            subprocess.call("removepkg {0} {1}".format(self.flag, package),
-                            shell=True)
+            try:
+                subprocess.call("removepkg {0} {1}".format(self.flag, package),
+                                shell=True)
+            except KeyboardInterrupt:
+                print("")
+                sys.exit(0)
         return package.split()
 
     def _reference_rmvs(self, removes):
