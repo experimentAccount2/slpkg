@@ -1,3 +1,14 @@
+Version 2.5.0
+11-06-2015
+
+[Feature] - Added full support Slackware command installpkg, upgradepkg and
+            removepkg with all options. Option '--reinstall' merged into 
+            '--upgradepkg'.
+
+[Updated] - Fix 'slonly' repopsitory ChangeLog.txt link.
+          - Selection foo.pkg removed instead you can use a variable ambient 
+            as: pkgs="pip brasero pylint" and then '# slpkg -s sbo $pkgs'.
+
 Version 2.4.4
 10-06-2015
 
