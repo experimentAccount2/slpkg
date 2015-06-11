@@ -65,8 +65,8 @@ command delete all the package lists and recreated.
 \fBslpkg\fP \fBrepo-add\fP <\fIrepository name\fP> <\fIURL\fP>
 .PP
 Add custom binary repository. The repositories will be added to this command should 
-contain at least the files 'PACKAGES.TXT' and 'CHECKSUMS.md5' and optional file
-ChangeLog.txt.
+contain at least the files "PACKAGES.TXT" and "CHECKSUMS.md5" and optional file
+"ChangeLog.txt".
 
 .SS repo-remove, remove custom repository
 \fBslpkg\fP \fBrepo-remove\fP <\fIrepository\fP> 
@@ -107,7 +107,7 @@ all repositories.
 .PP
 Add, remove and listed sbo packages from queue. This argument is very useful if you want
 to build and install multiple packages together. Note the correct order if there are 
-dependencies. If you want to remove all the packages from the list run '# slpkg -q all --remove'. 
+dependencies. If you want to remove all the packages from the list run "# slpkg -q all --remove". 
 (these arguments only working for the sbo repository)
 Build or install or build and install packages are queued.
 
@@ -120,15 +120,15 @@ Print configuration file or edit with your favorite editor.
 \fBslpkg\fP \fB-l\fP <\fIrepository\fP>, \fB--index\fP, \fB--installed\fP
 .PP
 Print a list of all available packages repository, index or print only packages installed on the 
-system. Support command 'grep' like '# slpkg -l sbo | grep "python"'.
+system. Support command "grep" like "# slpkg -l sbo | grep python".
 
 .SS -c, --check, check if your packages is up to date
 \fBslpkg\fP \fB-c\fP <\fIrepository\fP> \fB--upgrade\fP \fB--skip=[packages...]\fP, 
 \fB--resolve-off\fP
 .PP
-Check your packages if up to date. Option '--skip' help to skip packages when upgrading and
-additional option '--resolve-off' switch off automatic resolve dependensies.
-Slackware 'patches' repository works independently of the others i.e not need before updating 
+Check your packages if up to date. Option "--skip" help to skip packages when upgrading and
+additional option "--resolve-off" switch off automatic resolve dependensies.
+Slackware patches repository works independently of the others i.e not need before updating 
 the list of packages by choosing "# slpkg update", works directly with the official repository 
 and so always you can have updated your system. 
 
@@ -136,9 +136,8 @@ and so always you can have updated your system.
 \fBslpkg\fP \fB-s\fP <\fIrepository\fP> <\fInames of packages\fP>, \fB--resolve-off\fP
 .PP
 Installs or upgrade packages from the repositories with automatically resolving all 
-dependencies of the package. Sometimes to install a package have to pass part of the 
-version of the package as '# slpkg -s alien ffmpeg-2.4.3'.
-Switch off automatic resolve dependencies with additional option '--resolve-off'.
+dependencies of the package. Switch off automatic resolve dependencies with additional option 
+"--resolve-off".
 
 .SS -t, --tracking,  tracking dependencies
 \fBslpkg\fP \fB-t\fP <\fIrepository\fP> <\fIname of package\fP>
@@ -156,14 +155,14 @@ red, green, yellow, cyan, grey
 .SS -F, --FIND, find packages from repositories
 \fBslpkg\fP \fB-F\fP <\fInames of packages\fP>
 .PP
-Find packages from all repositories are enabled. Useful command to find all available packages
-per repository.
+Find packages from all repositories are enabled. Useful command to find all available 
+packages per repository.
  
 .SS -f, --find, find istalled packages
 \fBslpkg\fP \fB-f\fP <\fInames of packages\fP>
 .PP
 Find installed packages with view total file size. 
-Example you can view all installed sbo packages like '# slpkg -f _SBo'.
+Example you can view all installed sbo packages like "# slpkg -f _SBo".
 
 .SS -n, --network, view SBo packages
 \fBslpkg\fP \fB-n\fP <\fIname of package\fP>
@@ -176,14 +175,14 @@ build or install etc.
 --ask, --priority ADD|REC|OPT|SKP, --tagfile /somedir/tagfile]\fP <\fIpackages.t?z\fP>
 .PP
 Installs single binary packages designed for use with the Slackware Linux 
-distribution into your system. More information please read 'man installpkg'.
+distribution into your system. More information please read "man installpkg".
 
 .SS -u, --upgradepkg, install-upgrade Slackware binary packages with new
 \fBslpkg\fP \fB-u\fP \fB[--dry-run, --install-new, --reinstall, --verbose]\fP <\fIpackages.t?z\fP>
 .PP
 Normally upgrade only upgrades packages that are already installed on the system, 
 and will skip any packages that do not already have a version installed. 
-More information please read 'man upgradepkg'.
+More information please read "man upgradepkg".
 
 .SS -r, --removepkg, remove previously installed Slackware binary packages
 \fBslpkg\fP \fB-r\fP \fB[-copy, -keep, -preserve, -warn]\fP <\fInames of packages\fP>
@@ -191,9 +190,9 @@ More information please read 'man upgradepkg'.
 Removes a previously installed Slackware package, while writing a progress report to 
 the standard output. A package may be specified either by the full package name (as 
 you'd see listed in /var/log/packages/), or by the base package name. If installed
-packages with command 'slpkg -s sbo <packages>' then write a file in /var/log/slpkg/dep/ 
+packages with command "slpkg -s sbo <packages>" then write a file in /var/log/slpkg/dep/ 
 with all dependencies and it allows you can remove them all together. 
-More information please read 'man removepkg'.
+More information please read "man removepkg".
 
 .SS -d, --display, display the installed packages contents and file list
 \fBslpkg\fP \fB-d\fP <\fInames of packages\fP>
@@ -208,23 +207,23 @@ For example:
   \fBslpkg \-\-help\fP - display help for slpkg
 
 .SH DEFAULT REPOSITORIES 
- slackware.com = 'slack'
- SlackBuilds.org = 'sbo'
- Alien's = 'alien'
- slacky.eu = 'slacky'
- rworkman's = 'rlw'
- studioware.org = 'studio'
- slacker.it = 'slackr'
- slackonly.com = 'slonly'
- Alien's ktown = 'ktown{latest}'
- Alien's multilib = 'multi'
- Slacke E17 and E18 = 'slacke{18}'
- SalixOS = 'salix'
- Slackel.gr = 'slackel'
- Alien's restricted = 'rested'
+ slackware.com = "slack"
+ SlackBuilds.org = "sbo"
+ Alien"s = "alien"
+ slacky.eu = "slacky"
+ rworkman"s = "rlw"
+ studioware.org = "studio"
+ slacker.it = "slackr"
+ slackonly.com = "slonly"
+ Alien"s ktown = "ktown{latest}"
+ Alien"s multilib = "multi"
+ Slacke E17 and E18 = "slacke{18}"
+ SalixOS = "salix"
+ Slackel.gr = "slackel"
+ Alien"s restricted = "rested"
    
- Default enable repository is 'slack' and 'sbo'.
- Add or remove default repository in configuration file '/etc/slpkg/slpkg.conf'.
+ Default enable repository is "slack" and "sbo".
+ Add or remove default repository in configuration file "/etc/slpkg/slpkg.conf".
  Read REPOSITORIES file for explanations.
 
 .SH COLORS
@@ -235,7 +234,7 @@ For example:
  Usage: <NAME_VARIABLE=value>
 
  Example:
- '# export FFMPEG_X264=yes FFMPEG_LAME=yes'
+ "# export FFMPEG_X264=yes FFMPEG_LAME=yes"
 
 .SH FILES
 /etc/slpkg/slpkg.conf
