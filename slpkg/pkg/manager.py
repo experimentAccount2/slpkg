@@ -175,8 +175,19 @@ class PackageManager(object):
         removes = []
         deps = dependencies.split()
         deps.append(package)
+        print("")
+        Msg().template(78)
+        print("| Enter some packages splitting with comma ',' for be excluded\n"
+              "| from the removal or hit Enter to continue:")
+        Msg().template(78)
+        try:
+            skip = raw_input("| > ").split(",")
+        except KeyboardInterrupt:
+            print("")
+            sys.exit(0)
         for dep in deps:
-            if find_package(dep + self.meta.sp, self.meta.pkg_path):
+            if (dep not in skip
+                    and find_package(dep + self.meta.sp, self.meta.pkg_path)):
                 subprocess.call("removepkg {0} {1}".format(self.flag, dep),
                                 shell=True)
                 removes.append(dep)
