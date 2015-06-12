@@ -39,6 +39,7 @@ class PackageManager(object):
     def __init__(self, binary):
         self.binary = binary
         self.meta = _meta_
+        self.skip = ""
 
     def install(self, flag):
         """Install Slackware binary packages
@@ -69,18 +70,19 @@ class PackageManager(object):
             bol = eol = "\n"
         Msg().pkg_not_found(bol, pkg, message, eol)
 
-    def remove(self, flag):
+    def remove(self, flag, extra):
         """Remove Slackware binary packages
         """
         self.flag = flag
+        self.extra = extra
         self.dep_path = self.meta.log_path + "dep/"
         dependencies, rmv_list = [], []
-        removed = self._view_removed()
-        if not removed:
+        self.removed = self._view_removed()
+        if not self.removed:
             print("")   # new line at end
         else:
             msg = "package"
-            if len(removed) > 1:
+            if len(self.removed) > 1:
                 msg = msg + "s"
             try:
                 if self.meta.default_answer == "y":
@@ -88,13 +90,13 @@ class PackageManager(object):
                 else:
                     remove_pkg = raw_input(
                         "\nAre you sure to remove {0} {1} [Y/n]? ".format(
-                            str(len(removed)), msg))
+                            str(len(self.removed)), msg))
             except KeyboardInterrupt:
                 print("")   # new line at exit
                 sys.exit(0)
             if remove_pkg in ["y", "Y"]:
-                self._check_if_used(self.binary, mas=True)
-                for rmv in removed:
+                self._check_if_used(self.binary)
+                for rmv in self.removed:
                     # If package build and install with "slpkg -s sbo <package>"
                     # then look log file for dependencies in /var/log/slpkg/dep,
                     # read and remove all else remove only the package.
@@ -103,7 +105,7 @@ class PackageManager(object):
                         dependencies = self._view_deps(self.dep_path, rmv)
                         if self._rmv_deps_answer() in ["y", "Y"]:
                             rmv_list += (self._rmv_deps(dependencies,
-                                                        self.dep_path, rmv))
+                                         self.dep_path, rmv))
                         else:
                             rmv_list += self._rmv_pkg(rmv)
                             os.remove(self.dep_path + rmv)
@@ -160,31 +162,27 @@ class PackageManager(object):
         Msg().template(78)
         return dependencies
 
+    def _removepkg(self, package):
+        """removepkg Slackware command
+        """
+        try:
+            subprocess.call("removepkg {0} {1}".format(self.flag, package),
+                            shell=True)
+        except KeyboardInterrupt:
+            print("")
+            sys.exit(0)
+
     def _rmv_deps(self, dependencies, path, package):
         """Remove dependencies
         """
         removes = []
         deps = dependencies.split()
         deps.append(package)
-        self._check_if_used(deps, mas=False)
-        Msg().template(78)
-        print("| Enter some packages splitting with comma ',' for be excluded\n"
-              "| from the removal or hit Enter to continue:")
-        Msg().template(78)
-        try:
-            self.skip = raw_input(" > ").split(",")
-        except KeyboardInterrupt:
-            print("")
-            sys.exit(0)
+        self._check_if_used(deps)
         for dep in deps:
             if (dep not in self.skip
                     and find_package(dep + self.meta.sp, self.meta.pkg_path)):
-                try:
-                    subprocess.call("removepkg {0} {1}".format(self.flag, dep),
-                                    shell=True)
-                except KeyboardInterrupt:
-                    print("")
-                    sys.exit(0)
+                self._removepkg(dep)
                 removes.append(dep)
         os.remove(path + package)
         return removes
@@ -192,49 +190,50 @@ class PackageManager(object):
     def _rmv_pkg(self, package):
         """Remove one signle package
         """
-        if find_package(package + self.meta.sp, self.meta.pkg_path):
-            try:
-                subprocess.call("removepkg {0} {1}".format(self.flag, package),
-                                shell=True)
-            except KeyboardInterrupt:
-                print("")
-                sys.exit(0)
+        if (find_package(package + self.meta.sp, self.meta.pkg_path) and
+                package not in self.skip):
+            self._removepkg(package)
         return package.split()
 
-    def _check_if_used(self, removes, mas):
+    def _skip_remove(self):
+        """Skip packages from remove
+        """
+        Msg().template(78)
+        print("| Insert packages to exception removal:")
+        Msg().template(78)
+        try:
+            self.skip = raw_input(" > ").split()
+        except KeyboardInterrupt:
+            print("")
+            sys.exit(0)
+        for s in self.skip:
+            if s in self.removed:
+                self.removed.remove(s)
+
+    def _check_if_used(self, removes):
         """Check package if dependencies for another package
         before removed"""
-        print("")
-        view = False
-        package, dependency = [], []
-        for pkg in find_package("", self.dep_path):
-            deps = Utils().read_file(self.dep_path + pkg)
-            for rmv in removes:
-                if rmv in deps:
-                    view = True
-                    package.append(pkg)
-                    dependency.append(rmv)
-                elif not package and not dependency:
-                    mas = False
-        if view:
-            Msg().template(78)
-            for p, d in zip(package, dependency):
-                print("| {0}{1}{2} is dependency of the package --> "
-                      "{3}{4}{5}".format(self.meta.color["RED"], d,
-                                         self.meta.color["ENDC"],
-                                         self.meta.color["GREEN"], p,
-                                         self.meta.color["ENDC"]))
-            Msg().template(78)
-        if mas:
-            try:
-                print("")
-                if self.meta.default_answer and Msg().answer() in ["y", "Y"]:
-                    pass
-                else:
-                    sys.exit(0)
-            except KeyboardInterrupt:
-                    print("")
-                    sys.exit(0)
+        if self.extra == "--check-deps":
+            print("")
+            view = False
+            package, dependency = [], []
+            for pkg in find_package("", self.dep_path):
+                deps = Utils().read_file(self.dep_path + pkg)
+                for rmv in removes:
+                    if rmv in deps:
+                        view = True
+                        package.append(pkg)
+                        dependency.append(rmv)
+            if view:
+                Msg().template(78)
+                for p, d in zip(package, dependency):
+                    print("| {0}{1}{2} is dependency of the package --> "
+                          "{3}{4}{5}".format(self.meta.color["RED"], d,
+                                             self.meta.color["ENDC"],
+                                             self.meta.color["GREEN"], p,
+                                             self.meta.color["ENDC"]))
+                Msg().template(78)
+                self._skip_remove()
 
     def _reference_rmvs(self, removes):
         """Prints all removed packages

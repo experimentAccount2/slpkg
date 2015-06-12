@@ -359,18 +359,22 @@ class ArgParse(object):
         """
         packages = self.args[1:]
         options = ["-r", "--removepkg"]
-        flag = ""
+        additional_options = ["--check-deps"]
+        flag = extra = ""
         flags = [
             "-warn",
             "-preserve",
             "-copy",
             "-keep"
         ]
+        if self.args[-1] == additional_options[0]:
+            extra = additional_options[0]
+            packages = self.args[1:-1]
         if self.args[1] in flags:
             flag = self.args[1]
             packages = self.args[2:]
         if len(self.args) > 1 and self.args[0] in options:
-            PackageManager(packages).remove(flag)
+            PackageManager(packages).remove(flag, extra)
         else:
             usage("")
 
