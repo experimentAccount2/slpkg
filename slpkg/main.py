@@ -205,7 +205,8 @@ class ArgParse(object):
                                   "slack", resolve).start(if_upgrade=True)
                 else:
                     Patches(skip).start()
-            elif self.args[1] == "sbo":
+            elif (self.args[1] == "sbo" and
+                    self.args[1] in self.meta.repositories):
                 SBoInstall(sbo_upgrade(skip), resolve).start(if_upgrade=True)
             else:
                 usage(self.args[1])
@@ -226,9 +227,9 @@ class ArgParse(object):
                     self.args[1] not in ["sbo"]):
                 BinaryInstall(packages, self.args[1], resolve).start(
                     if_upgrade=False)
-            elif self.args[1] == "sbo":
-                SBoInstall(packages, resolve).start(
-                    if_upgrade=False)
+            elif (self.args[1] == "sbo" and
+                    self.args[1] in self.meta.repositories):
+                SBoInstall(packages, resolve).start(if_upgrade=False)
             else:
                 usage(self.args[1])
         else:
