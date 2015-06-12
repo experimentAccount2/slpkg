@@ -172,7 +172,7 @@ class PackageManager(object):
               "| from the removal or hit Enter to continue:")
         Msg().template(78)
         try:
-            self.skip = raw_input("| > ").split(",")
+            self.skip = raw_input(" > ").split(",")
         except KeyboardInterrupt:
             print("")
             sys.exit(0)
@@ -214,7 +214,7 @@ class PackageManager(object):
                     view = True
                     package.append(pkg)
                     dependency.append(rmv)
-                else:
+                elif not package and not dependency:
                     mas = False
         if view:
             Msg().template(78)
