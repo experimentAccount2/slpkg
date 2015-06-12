@@ -233,14 +233,23 @@ class BinaryInstall(object):
             else:
                 COLOR = self.meta.color["RED"]
                 uni_sum += 1
+            ver = self.get_installed_version(pkg_split[0])
             print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>11}{12}".format(
-                COLOR, pkg_split[0], self.meta.color["ENDC"],
-                " " * (24-len(pkg_split[0])), pkg_split[1],
+                COLOR, pkg_split[0] + ver, self.meta.color["ENDC"],
+                " " * (24-len(pkg_split[0] + ver)), pkg_split[1],
                 " " * (18-len(pkg_split[1])), pkg_split[2],
                 " " * (8-len(pkg_split[2])), pkg_split[3],
                 " " * (7-len(pkg_split[3])), repo,
                 comp, " K")).rstrip()
         return [pkg_sum, upg_sum, uni_sum]
+
+    def get_installed_version(self, package):
+        """Get installed package version
+        """
+        find = find_package(package + self.meta.sp, self.meta.pkg_path)
+        if find:
+            return self.meta.sp + split_package(find[0])[1]
+        return ""
 
     def top_view(self):
         Msg().template(78)

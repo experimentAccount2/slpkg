@@ -228,12 +228,21 @@ class SBoInstall(object):
         args[2] version
         args[3] arch
         """
+        ver = self.get_installed_version(args[1])
         print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>11}{12}".format(
-            args[0], args[1], self.meta.color["ENDC"],
-            " " * (24-len(args[1])), args[2],
+            args[0], args[1] + ver, self.meta.color["ENDC"],
+            " " * (24-len(args[1] + ver)), args[2],
             " " * (18-len(args[2])), args[3],
             " " * (15-len(args[3])), "",
             "", "SBo", "", "")).rstrip()
+
+    def get_installed_version(self, package):
+        """Get installed package version
+        """
+        find = find_package(package + self.meta.sp, self.meta.pkg_path)
+        if find:
+            return self.meta.sp + split_package(find[0])[1]
+        return ""
 
     def tag(self, sbo, count_ins, count_upg, count_uni):
         """
