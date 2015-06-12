@@ -116,3 +116,10 @@ class RepoInit(object):
 
     def _init_rested(self):
         self.mirror = Repo().restricted()
+
+    def _init_msb(self):
+        arch = "x86"
+        if os.uname()[4] == "x86_64":
+            arch = "x86_64"
+        self.mirror = "{0}{1}/{2}/{3}/".format(
+            Repo().msb(), slack_ver(), self.meta.msb_sub_repo[1:-1], arch)

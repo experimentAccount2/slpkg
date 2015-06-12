@@ -38,6 +38,7 @@ from slpkg.downloader import Download
 from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _meta_
+from slpkg.get_version import get_installed_version
 
 from slpkg.pkg.find import find_package
 from slpkg.pkg.manager import PackageManager
@@ -86,7 +87,7 @@ class Patches(object):
                 Msg().template(78)
                 print("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
                     "| Package", " " * 17,
-                    "Version", " " * 12,
+                    "New Version", " " * 8,
                     "Arch", " " * 4,
                     "Build", " " * 2,
                     "Repos", " " * 10,
@@ -158,9 +159,10 @@ class Patches(object):
             color = self.meta.color["YELLOW"]
             if not find_package(pkg_split[0], self.meta.pkg_path):
                 color = self.meta.color["RED"]
+            ver = get_installed_version(pkg_split[0])
             print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>12}{12}".format(
-                color, pkg_split[0], self.meta.color["ENDC"],
-                " " * (24-len(pkg_split[0])), pkg_split[1],
+                color, pkg_split[0] + ver, self.meta.color["ENDC"],
+                " " * (24-len(pkg_split[0] + ver)), pkg_split[1],
                 " " * (18-len(pkg_split[1])), pkg_split[2],
                 " " * (8-len(pkg_split[2])), pkg_split[3],
                 " " * (7-len(pkg_split[3])), "Slack",

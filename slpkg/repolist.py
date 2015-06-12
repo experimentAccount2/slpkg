@@ -50,7 +50,8 @@ class RepoList(object):
             "slacke": Repo().slacke(),
             "salix": Repo().salix(),
             "slackl": Repo().slackel(),
-            "rested": Repo().restricted()
+            "rested": Repo().restricted(),
+            "msb": Repo().msb()
         }
         self.all_repos.update(Repo().custom_repository())
 

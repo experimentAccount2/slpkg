@@ -33,6 +33,7 @@ from slpkg.log_deps import write_deps
 from slpkg.downloader import Download
 from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _meta_
+from slpkg.get_version import get_installed_version
 
 from slpkg.pkg.find import find_package
 from slpkg.pkg.build import BuildPackage
@@ -213,7 +214,7 @@ class SBoInstall(object):
         Msg().template(78)
         print("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
             "| Package", " " * 17,
-            "Version", " " * 12,
+            "New version", " " * 8,
             "Arch", " " * 4,
             "Build", " " * 2,
             "Repos", " " * 10,
@@ -228,21 +229,13 @@ class SBoInstall(object):
         args[2] version
         args[3] arch
         """
-        ver = self.get_installed_version(args[1])
+        ver = get_installed_version(args[1])
         print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>11}{12}".format(
             args[0], args[1] + ver, self.meta.color["ENDC"],
             " " * (24-len(args[1] + ver)), args[2],
             " " * (18-len(args[2])), args[3],
             " " * (15-len(args[3])), "",
             "", "SBo", "", "")).rstrip()
-
-    def get_installed_version(self, package):
-        """Get installed package version
-        """
-        find = find_package(package + self.meta.sp, self.meta.pkg_path)
-        if find:
-            return self.meta.sp + split_package(find[0])[1]
-        return ""
 
     def tag(self, sbo, count_ins, count_upg, count_uni):
         """

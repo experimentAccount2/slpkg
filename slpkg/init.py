@@ -478,6 +478,37 @@ class Initialization(object):
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
+    def msb(self):
+        """
+        Creating mate restricted local library
+        """
+        ar = "x86"
+        arch = os.uname()[4]
+        repo = Repo().msb()
+        log = self.log_path + "msb/"
+        lib = self.lib_path + "msb_repo/"
+        lib_file = "PACKAGES.TXT"
+        lst_file = ""
+        md5_file = "CHECKSUMS.md5"
+        log_file = "ChangeLog.txt"
+        if not os.path.exists(log):
+            os.mkdir(log)
+        if not os.path.exists(lib):
+            os.mkdir(lib)
+        if arch == "x86_64":
+            ar = "x86_64"
+        packages_txt = "{0}{1}/{2}/{3}/{4}".format(
+            repo, slack_ver(), self.meta.msb_sub_repo[1:-1], ar, lib_file)
+        filelist_txt = ""
+        checksums_md5 = "{0}{1}/{2}/{3}/{4}".format(
+            repo, slack_ver(), self.meta.msb_sub_repo[1:-1], ar, md5_file)
+        changelog_txt = "{0}{1}".format(repo, log_file)
+        self.write(lib, lib_file, packages_txt)
+        self.write(lib, md5_file, checksums_md5)
+        self.write(log, log_file, changelog_txt)
+        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
+                    md5_file, checksums_md5, lst_file, filelist_txt)
+
     def write_file(self, path, archive, contents_txt):
         """
         Create local file

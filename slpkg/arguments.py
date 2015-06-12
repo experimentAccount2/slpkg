@@ -128,18 +128,20 @@ def usage(repo):
              [repo-info [repository]] [update [slpkg]]
 
              Optional arguments:
-             [-h] [-v] [-a [script.tar.gz] [sources...]]
+             [-h] [-v]
+             [-a [script] [sources...]]
              [-b [package...] --add, --remove, list]
              [-q [package...] --add, --remove, list]
-             [-q build, install, build-install]
-             [-g print, edit=[editor]]
+             [-q [build, install, build-install]]
+             [-g [print, edit=[editor]]]
              [-l [repository], --index, --installed]
              [-c [repository] --upgrade, --skip=[] --resolve-off]
              [-s [repository] [package...], --resolve-off]
              [-t [repository] [package]]
              [-p [repository] [package], --color=[]]
-             [-n [SBo package]] [-F [...]] [-f [...]] [-i [...]]
-             [-u [...]] [-r [...]] [-d [...]]
+             [-n [SBo package]] [-F [...]] [-f [...]]
+             [-i [options] [...]] [-u [options] [...]]
+             [-r [options] [...], --check-deps] [-d [...]]
              """
     error_repo = ""
     if repo and repo not in _meta_.repositories:

@@ -36,6 +36,7 @@ from slpkg.log_deps import write_deps
 from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _meta_
+from slpkg.get_version import get_installed_version
 
 from slpkg.pkg.find import find_package
 from slpkg.pkg.manager import PackageManager
@@ -233,7 +234,7 @@ class BinaryInstall(object):
             else:
                 COLOR = self.meta.color["RED"]
                 uni_sum += 1
-            ver = self.get_installed_version(pkg_split[0])
+            ver = get_installed_version(pkg_split[0])
             print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>11}{12}".format(
                 COLOR, pkg_split[0] + ver, self.meta.color["ENDC"],
                 " " * (24-len(pkg_split[0] + ver)), pkg_split[1],
@@ -243,19 +244,11 @@ class BinaryInstall(object):
                 comp, " K")).rstrip()
         return [pkg_sum, upg_sum, uni_sum]
 
-    def get_installed_version(self, package):
-        """Get installed package version
-        """
-        find = find_package(package + self.meta.sp, self.meta.pkg_path)
-        if find:
-            return self.meta.sp + split_package(find[0])[1]
-        return ""
-
     def top_view(self):
         Msg().template(78)
         print("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
             "| Package", " " * 17,
-            "Version", " " * 12,
+            "New Version", " " * 8,
             "Arch", " " * 4,
             "Build", " " * 2,
             "Repos", " " * 10,

@@ -132,7 +132,7 @@ class MetaData(object):
 
     default_repositories = ["slack", "sbo", "rlw", "alien", "slacky", "studio",
                             "slackr", "slonly", "ktown", "multi", "slacke",
-                            "salix", "slackl", "rested"]
+                            "salix", "slackl", "rested", "msb"]
 
     # read value from configuration file
     if os.path.isfile("%s%s" % (conf_path, "slpkg.conf")):
@@ -176,6 +176,7 @@ class MetaData(object):
     # Grap sub repositories
     ktown_kde_repo = grab_sub_repo(repositories, "ktown")
     slacke_sub_repo = grab_sub_repo(repositories, "slacke")
+    msb_sub_repo = grab_sub_repo(repositories, "msb")
 
     # remove no default repositories
     repositories = remove_repositories(repositories, default_repositories)

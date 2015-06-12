@@ -189,3 +189,9 @@ class Repo(object):
         """
         return ("http://taper.alienbase.nl/mirrors/people/alien/"
                 "restricted_slackbuilds/")
+
+    def msb(self):
+        """
+        MSB mate repository
+        """
+        return ("http://slackware.org.uk/msb/")
