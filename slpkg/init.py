@@ -561,10 +561,13 @@ class Initialization(object):
                 FILELIST_TXT = URL(args[9]).reading()
                 self.write_file(args[3], args[8], FILELIST_TXT)
 
-    def upgrade(self):
+    def upgrade(self, only):
         """Remove all package lists with changelog and checksums files
         and create lists again"""
-        for repo in self.meta.repositories:
+        repositories = self.meta.repositories
+        if only:
+            repositories = only
+        for repo in repositories:
             changelogs = "{0}{1}{2}".format(self.log_path, repo,
                                             "/ChangeLog.txt")
             if os.path.isfile(changelogs):
@@ -574,7 +577,7 @@ class Initialization(object):
                     files = "{0}{1}_repo/{2}".format(self.lib_path, repo, f)
                     if os.path.isfile(files):
                         os.remove(files)
-        Update().repository()
+        Update().repository(only)
 
 
 class Update(object):
@@ -582,21 +585,31 @@ class Update(object):
     def __init__(self):
         self._init = "Initialization()"
         self.meta = _meta_
+        self.done = "{0}Done{1}\n".format(self.meta.color["GREY"],
+                                          self.meta.color["ENDC"])
+        self.error = "{0}Error{1}\n".format(self.meta.color["RED"],
+                                            self.meta.color["ENDC"])
 
-    def repository(self):
-        """Update all repositories lists
+    def repository(self, only):
+        """Update repositories lists
         """
         print("\nCheck and update repositories:\n")
-        for repo in self.meta.repositories:
+        repositories = self.meta.repositories
+        if only:
+            repositories = only
+        for repo in repositories:
             sys.stdout.write("{0}Update repository {1} ...{2}".format(
                 self.meta.color["GREY"], repo, self.meta.color["ENDC"]))
             sys.stdout.flush()
             if repo in self.meta.default_repositories:
                 exec("{0}.{1}()".format(self._init, repo))
-            else:
+                sys.stdout.write(self.done)
+            elif repo in self.meta.repositories:
                 Initialization().custom(repo)
-            sys.stdout.write("{0}Done{1}\n".format(self.meta.color["GREY"],
-                                                   self.meta.color["ENDC"]))
+                sys.stdout.write(self.done)
+            else:
+                sys.stdout.write(self.error)
+
         print("")   # new line at end
         sys.exit(0)
 

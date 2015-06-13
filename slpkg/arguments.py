@@ -42,9 +42,9 @@ def options():
                                                   |_|        |___/
 
 Commands:
-   update                                   Run this command to update all
+   update, --only=[...]                     Run this command to update all
                                             the packages list.
-   upgrade                                  Delete and recreate all packages
+   upgrade, --only=[...]                    Delete and recreate all packages
                                             lists.
    repo-add [repository name] [URL]         Add custom repository.
    repo-remove [repository]                 Remove custom repository.
@@ -80,7 +80,7 @@ Optional arguments:
                                             only packages installed on the
                                             system.
   -c, --check, [repository] --upgrade,      Check, view and install updated
-      --skip=[] --resolve--off              packages from repositories.
+      --skip=[...] --resolve--off           packages from repositories.
   -s, --sync, [repository] [package...],    Sync packages. Install packages
       --resolve-off                         directly from remote repositories
                                             with all dependencies.
@@ -123,7 +123,8 @@ Homepage: https://github.com/dslackw/slpkg
 
 def usage(repo):
     """Usage: slpkg Commands:
-             [update] [upgrade] [repo-add [repository name] [URL]]
+             [update, --only=[...]] [upgrade, --only=[...]]
+             [repo-add [repository name] [URL]]
              [repo-remove [repository]] [repo-list]
              [repo-info [repository]] [update [slpkg]]
 
@@ -135,7 +136,7 @@ def usage(repo):
              [-q [build, install, build-install]]
              [-g [print, edit=[editor]]]
              [-l [repository], --index, --installed]
-             [-c [repository] --upgrade, --skip=[] --resolve-off]
+             [-c [repository] --upgrade, --skip=[...] --resolve-off]
              [-s [repository] [package...], --resolve-off]
              [-t [repository] [package]]
              [-p [repository] [package], --color=[]]

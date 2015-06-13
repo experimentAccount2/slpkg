@@ -87,7 +87,13 @@ class ArgParse(object):
         """Update package lists repositories
         """
         if len(self.args) == 1 and self.args[0] == "update":
-            Update().repository()
+            Update().repository(only="")
+        elif (len(self.args) == 2 and self.args[0] == "update" and
+                self.args[1].startswith("--only=")):
+            repos = self.args[1].split("=")[-1].split(",")
+            Update().repository(repos)
+        else:
+            usage("")
 
     def command_update_slpkg(self):
         """Slpkg it self update
@@ -125,7 +131,11 @@ class ArgParse(object):
         """Recreate repositories package lists
         """
         if len(self.args) == 1 and self.args[0] == "upgrade":
-            Initialization().upgrade()
+            Initialization().upgrade(only="")
+        elif (len(self.args) == 2 and self.args[0] == "upgrade" and
+                self.args[1].startswith("--only=")):
+            repos = self.args[1].split("=")[-1].split(",")
+            Initialization().upgrade(repos)
         else:
             usage("")
 
