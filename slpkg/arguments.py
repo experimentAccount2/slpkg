@@ -80,7 +80,7 @@ Optional arguments:
                                             only packages installed on the
                                             system.
   -c, --check, [repository] --upgrade,      Check, view and install updated
-      --skip=[] --resolve-off               packages from repositories.
+      --skip=[] --resolve--off              packages from repositories.
   -s, --sync, [repository] [package...],    Sync packages. Install packages
       --resolve-off                         directly from remote repositories
                                             with all dependencies.

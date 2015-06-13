@@ -181,11 +181,11 @@ class ArgParse(object):
     def pkg_upgrade(self):
         """Check and upgrade packages by repository
         """
-        skip, resolve = "", True
+        skip = resolve = ""
         options = ["-c", "--check"]
         flag = ["--upgrade", "--skip=", "--resolve-off"]
         if flag[2] in self.args:
-            resolve = False
+            resolve = flag[2]
             index = self.args.index(flag[2])
             del self.args[index]
         if (len(self.args) == 4 and self.args[0] in options and
@@ -216,20 +216,19 @@ class ArgParse(object):
     def pkg_install(self):
         """Install packages by repository
         """
-        packages = self.args[2:]
         options = ["-s", "--sync"]
-        flag = ["--resolve-off"]
-        resolve = True
-        if self.args[-1] == flag[0]:
-            resolve = False
+        flag = ""
+        flags = ["--resolve-off"]
+        if self.args[-1] in flags:
+            flag = self.args[-1]
         if len(self.args) >= 3 and self.args[0] in options:
             if (self.args[1] in self.meta.repositories and
                     self.args[1] not in ["sbo"]):
-                BinaryInstall(packages, self.args[1], resolve).start(
+                BinaryInstall(self.args[2:], self.args[1], flag).start(
                     if_upgrade=False)
             elif (self.args[1] == "sbo" and
                     self.args[1] in self.meta.repositories):
-                SBoInstall(packages, resolve).start(if_upgrade=False)
+                SBoInstall(self.args[2:], flag).start(if_upgrade=False)
             else:
                 usage(self.args[1])
         else:
@@ -238,11 +237,10 @@ class ArgParse(object):
     def pkg_tracking(self):
         """Tracking package dependencies
         """
-        packages = self.args[2]
         options = ["-t", "--tracking"]
         if (len(self.args) == 3 and self.args[0] in options and
                 self.args[1] in self.meta.repositories):
-            track_dep(packages, self.args[1])
+            track_dep(self.args[2], self.args[1])
         elif (len(self.args) > 1 and self.args[0] in options and
                 self.args[1] not in self.meta.repositories):
             usage(self.args[1])
@@ -252,18 +250,19 @@ class ArgParse(object):
     def sbo_network(self):
         """View slackbuilds packages
         """
-        packages = self.args[1]
         options = ["-n", "--network"]
-        if (len(self.args) == 2 and self.args[0] in options and
+        if (len(self.args) == 3 and self.args[0] in options and
                 "sbo" in self.meta.repositories):
-            SBoNetwork(packages).view()
+            SBoNetwork(self.args[1]).view()
+        elif (len(self.args) == 2 and self.args[0] in options and
+                "sbo" in self.meta.repositories):
+            SBoNetwork(self.args[1]).view()
         else:
             usage("")
 
     def pkg_blacklist(self):
         """Manage blacklist packages
         """
-        packages = self.args[1:]
         blacklist = BlackList()
         options = ["-b", "--blacklist"]
         flag = ["--add", "--remove"]
@@ -273,27 +272,26 @@ class ArgParse(object):
             blacklist.listed()
         elif (len(self.args) > 2 and self.args[0] in options and
                 self.args[-1] == flag[0]):
-            blacklist.add(packages)
+            blacklist.add(self.args[1:])
         elif (len(self.args) > 2 and self.args[0] in options and
                 self.args[-1] == flag[1]):
-            blacklist.remove(packages)
+            blacklist.remove(self.args[1:])
         else:
             usage("")
 
     def pkg_queue(self):
         """Manage packages in queue
         """
-        packages = self.args[1:]
         queue = QueuePkgs()
         options = ["-q", "--queue"]
         flag = ["--add", "--remove"]
         command = ["list", "build", "install", "build-install"]
         if (len(self.args) > 2 and self.args[0] in options and
                 self.args[-1] == flag[0]):
-            queue.add(packages)
+            queue.add(self.args[1:])
         elif (len(self.args) > 2 and self.args[0] in options and
                 self.args[-1] == flag[1]):
-            queue.remove(packages)
+            queue.remove(self.args[1:])
         elif (len(self.args) == 2 and self.args[0] in options and
                 self.args[1] == command[0]):
             queue.listed()
@@ -327,10 +325,10 @@ class ArgParse(object):
             "--priority",
             "--tagfile"
         ]
-        if self.args[1] in flags:
-            flag = self.args[1]
-            packages = self.args[2:]
         if len(self.args) > 1 and self.args[0] in options:
+            if self.args[1] in flags:
+                flag = self.args[1]
+                packages = self.args[2:]
             PackageManager(packages).install(flag)
         else:
             usage("")
@@ -347,10 +345,10 @@ class ArgParse(object):
             "--reinstall",
             "--verbose"
         ]
-        if self.args[1] in flags:
-            flag = self.args[1]
-            packages = self.args[2:]
         if len(self.args) > 1 and self.args[0] in options:
+            if self.args[1] in flags:
+                flag = self.args[1]
+                packages = self.args[2:]
             PackageManager(packages).upgrade(flag)
         else:
             usage("")
@@ -368,13 +366,13 @@ class ArgParse(object):
             "-copy",
             "-keep"
         ]
-        if self.args[-1] == additional_options[0]:
-            extra = additional_options[0]
-            packages = self.args[1:-1]
-        if self.args[1] in flags:
-            flag = self.args[1]
-            packages = self.args[2:]
         if len(self.args) > 1 and self.args[0] in options:
+            if self.args[-1] == additional_options[0]:
+                extra = additional_options[0]
+                packages = self.args[1:-1]
+            if self.args[1] in flags:
+                flag = self.args[1]
+                packages = self.args[2:]
             PackageManager(packages).remove(flag, extra)
         else:
             usage("")
@@ -392,18 +390,17 @@ class ArgParse(object):
     def pkg_desc(self):
         """Print slack-desc by repository
         """
-        packages = self.args[2]
         options = ["-p", "--print"]
         flag = ["--color="]
         colors = ["red", "green", "yellow", "cyan", "grey"]
         if (len(self.args) == 3 and self.args[0] in options and
                 self.args[1] in self.meta.repositories):
-            PkgDesc(packages, self.args[1], "").view()
+            PkgDesc(self.args[2], self.args[1], "").view()
         elif (len(self.args) == 4 and self.args[0] in options and
                 self.args[3].startswith(flag[0])):
             tag = self.args[3][len(flag[0]):]
             if self.args[1] in self.meta.repositories and tag in colors:
-                PkgDesc(packages, self.args[1], tag).view()
+                PkgDesc(self.args[2], self.args[1], tag).view()
             else:
                 usage("")
         elif (len(self.args) > 1 and self.args[0] in options and

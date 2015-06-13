@@ -44,7 +44,7 @@ class Dependencies(object):
         """
         Build all dependencies of a package
         """
-        if self.meta.rsl_deps in ["on", "ON"] and resolve:
+        if self.meta.rsl_deps in ["on", "ON"] and resolve != "--resolve-off":
             try:
                 sys.setrecursionlimit(10000)
                 dependencies = []

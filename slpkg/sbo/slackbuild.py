@@ -48,9 +48,9 @@ from search import sbo_search_pkg
 
 class SBoInstall(object):
 
-    def __init__(self, slackbuilds, resolve):
+    def __init__(self, slackbuilds, flag):
         self.slackbuilds = slackbuilds
-        self.resolve = resolve
+        self.flag = flag
         self.meta = _meta_
         self.build_folder = self.meta.build_path
         self.unst = ["UNSUPPORTED", "UNTESTED"]
@@ -74,7 +74,7 @@ class SBoInstall(object):
                 self.index += 1
                 self.toolbar_width = status(self.index, self.toolbar_width, 4)
                 if sbo_search_pkg(_sbo):
-                    sbo_deps = Requires(self.resolve).sbo(_sbo)
+                    sbo_deps = Requires(self.flag).sbo(_sbo)
                     self.deps += sbo_deps
                     self.deps_dict[_sbo] = self.one_for_all(sbo_deps)
                     self.package_found.append(_sbo)
@@ -86,11 +86,13 @@ class SBoInstall(object):
             self.master_packages, mas_src = self.sbo_version_source(
                 self.package_found)
             Msg().done()
-            if self.meta.rsl_deps in ["on", "ON"] and self.resolve:
+            if (self.meta.rsl_deps in ["on", "ON"] and
+                    self.flag != "--resolve-off"):
                 Msg().resolving()
             self.dependencies, dep_src = self.sbo_version_source(
                 self.one_for_all(self.deps))
-            if self.meta.rsl_deps in ["on", "ON"] and self.resolve:
+            if (self.meta.rsl_deps in ["on", "ON"] and
+                    self.flag != "--resolve-off"):
                 Msg().done()
             self.clear_masters()
             if self.package_found:

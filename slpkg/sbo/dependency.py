@@ -33,8 +33,8 @@ from greps import SBoGrep
 
 class Requires(object):
 
-    def __init__(self, resolve):
-        self.resolve = resolve
+    def __init__(self, flag):
+        self.flag = flag
         self.meta = _meta_
         self.dep_results = []
 
@@ -42,7 +42,7 @@ class Requires(object):
         """
         Build all dependencies of a package
         """
-        if self.meta.rsl_deps in ["on", "ON"] and self.resolve:
+        if self.meta.rsl_deps in ["on", "ON"] and self.flag != "--resolve-off":
             try:
                 sys.setrecursionlimit(10000)
                 dependencies = []

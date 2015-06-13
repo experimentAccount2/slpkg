@@ -40,7 +40,7 @@ def repo_data(PACKAGES_TXT, step, repo, resolve):
      rname, rlocation, rsize, runsize) = ([] for i in range(8))
     index, toolbar_width = 0, 100
     for line in PACKAGES_TXT.splitlines():
-        if _meta_.rsl_deps in ["on", "ON"] and resolve:
+        if _meta_.rsl_deps in ["on", "ON"] and resolve != "--resolve-off":
             index += 1
             toolbar_width = status(index, toolbar_width, step)
         if line.startswith("PACKAGE NAME:"):

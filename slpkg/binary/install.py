@@ -85,7 +85,8 @@ class BinaryInstall(object):
             self.packages = self.clear_masters()
             (self.dwn, self.install, self.comp_sum,
              self.uncomp_sum) = self.store(self.packages)
-            if self.meta.rsl_deps in ["on", "ON"] and self.resolve:
+            if (self.meta.rsl_deps in ["on", "ON"] and
+                    self.resolve != "--resolve-off"):
                 Msg().done()
             if self.install:
                 print("\nThe following packages will be automatically "
@@ -206,7 +207,8 @@ class BinaryInstall(object):
         Return package dependencies
         """
         requires = []
-        if self.meta.rsl_deps in ["on", "ON"] and self.resolve:
+        if (self.meta.rsl_deps in ["on", "ON"] and
+                self.resolve != "--resolve-off"):
             Msg().resolving()
         for dep in self.packages:
             dependencies = []
