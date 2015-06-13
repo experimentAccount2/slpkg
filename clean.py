@@ -33,7 +33,7 @@ class Clean(object):
     and not data. So if uninstall "# pip uninstall slpkg" after run
     "# python clean.py" to remove all data and configuration file.
     keep this script if you want to remove data some time.
-    """
+    NOTE: Run this script as root."""
     def __init__(self):
         self.files = [
             "/usr/man/man8/slpkg.8.gz",
