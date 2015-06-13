@@ -62,8 +62,7 @@ class Initialization(object):
             os.makedirs(self.slpkg_tmp_patches)
 
     def custom(self, name):
-        """
-        Creating user select repository local library
+        """Creating user select repository local library
         """
         repo = Repo().custom_repository()[name]
         log = self.log_path + name + "/"
@@ -88,8 +87,7 @@ class Initialization(object):
                     filelist_txt)
 
     def slack(self):
-        """
-        Creating slack local libraries
+        """Creating slack local libraries
         """
         log = self.log_path + "slack/"
         lib = self.lib_path + "slack_repo/"
@@ -119,8 +117,7 @@ class Initialization(object):
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
     def sbo(self):
-        """
-        Creating sbo local library
+        """Creating sbo local library
         """
         repo = Repo().sbo()
         log = self.log_path + "sbo/"
@@ -143,8 +140,7 @@ class Initialization(object):
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
     def rlw(self):
-        """
-        Creating rlw local library
+        """Creating rlw local library
         """
         repo = Repo().rlw()
         log = self.log_path + "rlw/"
@@ -168,8 +164,7 @@ class Initialization(object):
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
     def alien(self):
-        """
-        Creating alien local library
+        """Creating alien local library
         """
         repo = Repo().alien()
         log = self.log_path + "alien/"
@@ -193,8 +188,7 @@ class Initialization(object):
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
     def slacky(self):
-        """
-        Creating alien local library
+        """Creating slacky.eu local library
         """
         ar = ""
         arch = os.uname()[4]
@@ -226,8 +220,7 @@ class Initialization(object):
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
     def studio(self):
-        """
-        Creating alien local library
+        """Creating alien local library
         """
         ar = ""
         arch = os.uname()[4]
@@ -258,8 +251,7 @@ class Initialization(object):
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
     def slackr(self):
-        """
-        Creating slackers local library
+        """Creating slackers local library
         """
         repo = Repo().slackers()
         log = self.log_path + "slackr/"
@@ -283,8 +275,7 @@ class Initialization(object):
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
     def slonly(self):
-        """
-        Creating slackers local library
+        """Creating slackers local library
         """
         ar = "{0}-x86".format(slack_ver())
         arch = os.uname()[4]
@@ -312,8 +303,7 @@ class Initialization(object):
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
     def ktown(self):
-        """
-        Creating alien ktown local library
+        """Creating alien ktown local library
         """
         repo = Repo().ktown()
         log = self.log_path + "ktown/"
@@ -337,8 +327,7 @@ class Initialization(object):
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
     def multi(self):
-        """
-        Creating alien multilib local library
+        """Creating alien multilib local library
         """
         repo = Repo().multi()
         log = self.log_path + "multi/"
@@ -362,8 +351,7 @@ class Initialization(object):
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
     def slacke(self):
-        """
-        Creating Slacke local library
+        """Creating Slacke local library
         """
         ar = ""
         arch = os.uname()[4]
@@ -396,8 +384,7 @@ class Initialization(object):
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
     def salix(self):
-        """
-        Creating SalixOS local library
+        """Creating SalixOS local library
         """
         ar = "i486"
         arch = os.uname()[4]
@@ -425,8 +412,7 @@ class Initialization(object):
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
     def slackl(self):
-        """
-        Creating SalixOS local library
+        """Creating slackel.gr local library
         """
         ar = "i486"
         arch = os.uname()[4]
@@ -454,8 +440,7 @@ class Initialization(object):
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
     def rested(self):
-        """
-        Creating alien restricted local library
+        """Creating alien restricted local library
         """
         repo = Repo().restricted()
         log = self.log_path + "rested/"
@@ -479,8 +464,7 @@ class Initialization(object):
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
     def msb(self):
-        """
-        Creating mate restricted local library
+        """Creating MATE local library
         """
         ar = "x86"
         arch = os.uname()[4]
@@ -510,8 +494,7 @@ class Initialization(object):
                     md5_file, checksums_md5, lst_file, filelist_txt)
 
     def write_file(self, path, archive, contents_txt):
-        """
-        Create local file
+        """Create local file
         """
         toolbar_width, index = 2, 0
         with open("{0}{1}".format(path, archive), "w") as f:
@@ -522,10 +505,8 @@ class Initialization(object):
             f.close()
 
     def write(self, path, data_file, file_url):
-        """
-        Write repositories files in /var/lib/slpkg
-        and /var/log/slpkg
-        """
+        """Write repositories files in /var/lib/slpkg
+        and /var/log/slpkg"""
         FILE_TXT = ""
         if not os.path.isfile(path + data_file):
             for fu in file_url.split():
@@ -581,10 +562,8 @@ class Initialization(object):
                 self.write_file(args[3], args[8], FILELIST_TXT)
 
     def upgrade(self):
-        """
-        Remove all package lists with changelog and checksums files
-        and create lists again
-        """
+        """Remove all package lists with changelog and checksums files
+        and create lists again"""
         for repo in self.meta.repositories:
             changelogs = "{0}{1}{2}".format(self.log_path, repo,
                                             "/ChangeLog.txt")
@@ -605,8 +584,7 @@ class Update(object):
         self.meta = _meta_
 
     def repository(self):
-        """
-        Update all repositories lists
+        """Update all repositories lists
         """
         print("\nCheck and update repositories:\n")
         for repo in self.meta.repositories:
@@ -624,8 +602,7 @@ class Update(object):
 
 
 def check_exists_repositories():
-    """
-    Checking if repositories exists by PACKAGES.TXT file
+    """Checking if repositories exists by PACKAGES.TXT file
     """
     update = False
     pkg_list = "PACKAGES.TXT"
