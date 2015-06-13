@@ -231,7 +231,7 @@ class PackageManager(object):
             if view:
                 Msg().template(78)
                 print("| {0}{1}{2}".format(
-                    self.meta.color["RED"], "WARNING !!! " * 5,
+                    self.meta.color["RED"], " " * 30 + "!!! WARNING !!!",
                     self.meta.color["ENDC"]))
                 Msg().template(78)
                 for p, d in zip(package, dependency):
