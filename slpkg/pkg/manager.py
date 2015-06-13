@@ -108,8 +108,7 @@ class PackageManager(object):
                             self.meta.del_deps in ["on", "ON"]):
                         dependencies = self._view_deps(self.dep_path, rmv)
                         if self._rmv_deps_answer() in ["y", "Y"]:
-                            rmv_list += (self._rmv_deps(dependencies,
-                                         self.dep_path, rmv))
+                            rmv_list += self._rmv_deps(dependencies, rmv)
                         else:
                             rmv_list += self._rmv_pkg(rmv)
                             os.remove(self.dep_path + rmv)
@@ -176,7 +175,7 @@ class PackageManager(object):
             print("")
             sys.exit(0)
 
-    def _rmv_deps(self, dependencies, path, package):
+    def _rmv_deps(self, dependencies, package):
         """Remove dependencies
         """
         removes = []
@@ -188,7 +187,7 @@ class PackageManager(object):
                     find_package(dep + self.meta.sp, self.meta.pkg_path)):
                 self._removepkg(dep)
                 removes.append(dep)
-        os.remove(path + package)
+        os.remove(self.dep_path + package)
         return removes
 
     def _rmv_pkg(self, package):
