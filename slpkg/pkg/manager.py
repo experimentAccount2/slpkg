@@ -230,9 +230,13 @@ class PackageManager(object):
                         dependency.append(rmv)
             if view:
                 Msg().template(78)
+                print("| {0}{1}{2}".format(
+                    self.meta.color["RED"], "WARNING !!! " * 5,
+                    self.meta.color["ENDC"]))
+                Msg().template(78)
                 for p, d in zip(package, dependency):
                     print("| {0}{1}{2} is dependency of the package --> "
-                          "{3}{4}{5}".format(self.meta.color["RED"], d,
+                          "{3}{4}{5}".format(self.meta.color["YELLOW"], d,
                                              self.meta.color["ENDC"],
                                              self.meta.color["GREEN"], p,
                                              self.meta.color["ENDC"]))

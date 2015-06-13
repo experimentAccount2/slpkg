@@ -100,7 +100,7 @@ Default available Repositories:
 - `Restricted <http://taper.alienbase.nl/mirrors/people/alien/restricted_slackbuilds/>`_
   Arch: {x86, x86_64}
   Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14,1, current}
-- `MSB <http://slackware.org.uk/msb/>`_
+- `MATE Desktop Environment <http://slackware.org.uk/msb/>`_
   Arch: {x86, x86_64}
   Versions: {14.0, 14,1}
 
@@ -166,7 +166,8 @@ The next four commands '$ slpkg --installpkg, --upgradepkg, --removepkg <package
 remove packages from your system events.
 Notable mention must give the command '$ slpkg --removepkg <packages>' which can remove a packages 
 with all dependencies together after editing configuration file '/etc/slpkg/slpkg.conf' 
-(default is disable).
+(default is disable). Also you can check if packages used as dependency with additional option 
+"--check-deps".
 
 The last command is useful to print the entire contents of a package installed on the system with the
 command '$ slpkg -d <packages>'.
@@ -325,9 +326,9 @@ Command Line Tool Usage
                                                       |_|        |___/
 
     Commands:
-       update                                   Run this command to update all
+       update, --only=[...]                     Run this command to update all
                                                 the packages list.
-       upgrade                                  Delete and recreate all packages
+       upgrade, --only=[...]                    Delete and recreate all packages
                                                 lists.
        repo-add [repository name] [URL]         Add custom repository.
        repo-remove [repository]                 Remove custom repository.
@@ -363,7 +364,7 @@ Command Line Tool Usage
                                                 only packages installed on the
                                                 system.
       -c, --check, [repository] --upgrade,      Check, view and install updated
-          --skip=[] --resolve-off               packages from repositories.
+          --skip=[...] --resolve--off           packages from repositories.
       -s, --sync, [repository] [package...],    Sync packages. Install packages
           --resolve-off                         directly from remote repositories
                                                 with all dependencies.
@@ -382,24 +383,23 @@ Command Line Tool Usage
                                                 and prints results.
       -f, --find, [package...]                  Find and print installed packages
                                                 reporting the size and the sum.
-      -i, --installpkg, [options] [package...]  Installs single or multiple
-          options=[--warn, --md5sum, --root,    Slackware binary packages designed
-                   --infobox, --menu, --terse,  for use with the Slackware Linux
-                   --ask, --priority,           distribution onto your system.
-                   --tagfile]
+      -i, --installpkg, [options] [package...]  Installs single or multiple *.tgz
+          options=[--warn, --md5sum, --root,    (or .tbz, .tlz, .txz) Slackware
+                   --infobox, --menu, --terse,  binary packages designed for use
+                   --ask, --priority,           with the Slackware Linux
+                   --tagfile]                   distribution onto your system.
       -u, --upgradepkg, [options] [package...]  Upgrade single or multiple Slackware
           options=[--dry-run, --install-new,    binary packages from an older
                    --reinstall, --verbose]      version to a newer one.
-      -r, --removepkg, [options] [package...]   Removes a previously installed
-          options=[-warn, -preserve, copy,      Slackware binary packages.
-                   -keep]
+      -r, --removepkg, [options] [package...],  Removes a previously installed
+          --check-deps                          Slackware binary packages,
+          options=[-warn, -preserve, copy,      while writing a progress report
+                   -keep]                       to the standard output.
       -d, --display, [package...]               Display the installed packages
                                                 contents and file list.
 
-
 Slpkg Examples
 --------------
-
 
 If you use slpkg for the first time will have to create and update the package 
 list. This command must be executed to update the package lists:
@@ -420,6 +420,11 @@ list. This command must be executed to update the package lists:
     Update repository slacke ...Done
     Update repository slackl ...Done
     Update repository multi ...Done
+    Update repository msb ........Done
+
+    Update specifically repositories:
+
+    $ slpkg update --only=sbo,msb,slacky
 
 
 Add and remove custom repositories:
@@ -447,6 +452,7 @@ View information about the repositories:
     +==============================================================================
       alien    http://www.slackware.com/~alien/slackbuilds/        yes     disabled
       ktown    http://alien.slackbook.org/ktown/                   yes     disabled
+    | msb      http://slackware.org.uk/msb/                        yes      enabled
       multi    http://www.slackware.com/~alien/multilib/           yes     disabled
       ponce    http://ponce.cc/slackware/slackware64-14.1/packa~   no       enabled
       rested   http://taper.alienbase.nl/mirrors/people/alien/r~   yes     disabled
@@ -487,61 +493,59 @@ Installing packages from the repositories (supporting multi packages):
     with new version:
 
     +==============================================================================
-    | Package                 Version            Arch    Build  Repos          Size
+    | Package                 New version        Arch    Build  Repos          Size
     +==============================================================================
-    Installing: 
-     brasero                  3.12.0             x86_64         SBo           
+    Installing:
+     brasero                  3.12.1             x86_64         SBo
     Installing for dependencies:
-     orc                      0.4.22             x86_64         SBo           
-     gstreamer1               1.4.1              x86_64         SBo           
-     gst1-plugins-base        1.4.1              x86_64         SBo           
-     gst1-plugins-bad         1.4.1              x86_64         SBo           
-     libunique                1.1.6              x86_64         SBo           
-    
+     orc                      0.4.23             x86_64         SBo
+     gstreamer1               1.4.5              x86_64         SBo
+     gst1-plugins-base        1.4.5              x86_64         SBo
+     gst1-plugins-bad         1.4.5              x86_64         SBo
+
     Installing summary
     ===============================================================================
-    Total 6 packages.
-    4 packages will be installed, 2 allready installed and 0 package
+    Total 5 packages.
+    5 packages will be installed, 0 allready installed and 0 package
     will be upgraded.
 
     Would you like to continue [Y/n]?
-
+    
     
     Example install multi packages:
     
-    $ slpkg -s sbo brasero pylint bitfighter
+    $ slpkg -s sbo brasero pylint atkmm
     Reading package lists ..........Done
     Resolving dependencies ......Done
 
     The following packages will be automatically installed or upgraded 
     with new version:
-
+    
     +==============================================================================
-    | Package                 Version            Arch    Build  Repos          Size
+    | Package                 New version        Arch    Build  Repos          Size
     +==============================================================================
-    Installing: 
-     brasero                  3.12.0             x86_64         SBo           
-     pylint                   1.3.1              x86_64         SBo           
-     bitfighter               019d               x86_64         SBo           
+    Installing:
+     brasero                  3.12.1             x86_64         SBo
+     pylint-1.3.1             1.3.1              x86_64         SBo
+     atkmm                    2.22.7             x86_64         SBo
     Installing for dependencies:
-     libmodplug               0.8.8.5            x86_64         SBo           
-     speex                    1.2rc1             x86_64         SBo           
-     SDL2                     2.0.3              x86_64         SBo           
-     OpenAL                   1.16.0             x86_64         SBo           
-     six                      1.8.0              x86_64         SBo           
-     logilab-common           0.63.2             x86_64         SBo           
-     pysetuptools             7.0                x86_64         SBo           
-     astroid                  1.3.4              x86_64         SBo           
-     orc                      0.4.22             x86_64         SBo           
-     gstreamer1               1.4.1              x86_64         SBo           
-     gst1-plugins-base        1.4.1              x86_64         SBo           
-     gst1-plugins-bad         1.4.1              x86_64         SBo           
-     libunique                1.1.6              x86_64         SBo           
+     libsigc++                2.2.11             x86_64         SBo
+     glibmm                   2.36.2             x86_64         SBo
+     cairomm                  1.10.0             x86_64         SBo
+     pangomm                  2.34.0             x86_64         SBo
+     six-1.8.0                1.8.0              x86_64         SBo
+     pysetuptools-17.0        17.0               x86_64         SBo
+     logilab-common-0.63.2    0.63.2             x86_64         SBo
+     astroid-1.3.6            1.3.6              x86_64         SBo
+     orc                      0.4.23             x86_64         SBo
+     gstreamer1               1.4.5              x86_64         SBo
+     gst1-plugins-base        1.4.5              x86_64         SBo
+     gst1-plugins-bad         1.4.5              x86_64         SBo
 
     Installing summary
     ===============================================================================
-    Total 16 packages.
-    4 packages will be installed, 12 allready installed and 0 package
+    Total 15 packages.
+    10 packages will be installed, 5 allready installed and 0 package
     will be upgraded.
 
     Would you like to continue [Y/n]?
@@ -574,6 +578,31 @@ Installing packages from the repositories (supporting multi packages):
     Would you like to continue [Y/n]?
 
     
+    Close auto resolve dependencies:
+
+    $ slpkg -s alien atkm --resolve-off
+    Reading package lists .....Done
+
+    The following packages will be automatically installed or upgraded 
+    with new version:
+
+    +==============================================================================
+    | Package                 New Version        Arch    Build  Repos          Size
+    +==============================================================================
+    Installing:
+     atkmm                    2.22.6             x86_64  1      alien         124 K
+    
+     Installing summary
+     ===============================================================================
+     Total 1 package.
+     1 package will be installed, 0 will be upgraded and 0 will be reinstalled.
+     Need to get 124 Kb of archives.
+     After this process, 620 Kb of additional disk space will be used.
+
+     Would you like to continue [Y/n]?
+
+
+
 Build packages and passing variables to the script:
 
 .. code-block:: bash
@@ -591,7 +620,7 @@ Build packages and passing variables to the script:
 
     $ slpkg -n ffmpeg
 
-    or
+    or if already script and source donwloaded:
 
     $ slpkg -a ffmpeg.tar.gz ffmpeg-2.1.5.tar.bz2
 
@@ -637,12 +666,12 @@ Check if your packages is up to date:
     | Package                 Version            Arch    Build  Repos          Size
     +==============================================================================
     Upgrading:
-     astroid                  1.3.4              x86_64         SBo           
-     jdk                      8u31               x86_64         SBo           
+     astroid-1.3.2            1.3.4              x86_64         SBo           
+     jdk-7u51                 8u31               x86_64         SBo           
     Installing for dependencies:
-     six                      1.8.0              x86_64         SBo           
-     logilab-common           0.63.2             x86_64         SBo           
-     pysetuptools             7.0                x86_64         SBo           
+     six-1.7.3                1.8.0              x86_64         SBo           
+     logilab-common-0.60.1    0.63.2             x86_64         SBo           
+     pysetuptools-6.1         7.0                x86_64         SBo           
 
     Installing summary
     ===============================================================================
@@ -662,7 +691,7 @@ Check if your packages is up to date:
     | Package                 Version            Arch    Build  Repos          Size
     +==============================================================================
     Upgrading:
-     gstreamer1               1.4.4              x86_64  1      slacky       1563 K
+     gstreamer1-1.4.1         1.4.4              x86_64  1      slacky       1563 K
 
     Installing summary
     ===============================================================================
@@ -690,9 +719,9 @@ why always you can have updated your system:
     | Package                   Version          Arch     Build  Repos         Size
     +==============================================================================
     Upgrading:
-     dhcpcd                     6.0.5            x86_64   3      Slack         92 K
-     samba                      4.1.11           x86_64   1      Slack       9928 K
-     xscreensaver               5.29             x86_64   1      Slack       3896 K
+     dhcpcd-6.0.5               6.0.5            x86_64   3      Slack         92 K
+     samba-4.1.0                4.1.11           x86_64   1      Slack       9928 K
+     xscreensaver-5.22          5.29             x86_64   1      Slack       3896 K
 
     Installing summary
     ===============================================================================
@@ -719,10 +748,10 @@ Skip packages when upgrading:
     | Package                 Version            Arch    Build  Repos          Size
     +==============================================================================
     Upgrading:
-     cffi                     1.1.0              x86_64         SBo
+     cffi-1.0.1               1.1.0              x86_64         SBo
     Installing for dependencies:
-     pysetuptools             17.0               x86_64         SBo
-     pycparser                2.13               x86_64         SBo
+     pysetuptools-17.0        17.0               x86_64         SBo
+     pycparser-2-12           2.13               x86_64         SBo
 
     Installing summary
     ===============================================================================
@@ -995,13 +1024,13 @@ Removes a previously installed Slackware binary packages:
     +==============================================================================
 
 
-Remove packages with all dependencies:
+Remove packages with all dependencies and check if used as dependency:
 Presupposes facility with the option '$ slpkg -s <repository> <packages>' and
 enabled from configuration file.
 
 .. code-block:: bash
 
-    $ slpkg -r Flask
+    $ slpkg -r Flask --check-deps
 
     Packages with name matching [ Flask ]
 
@@ -1021,13 +1050,26 @@ enabled from configuration file.
 
     Remove dependencies (maybe used by other packages) [Y/n]? y
     
-    +==============================================================================
-    | Enter some packages splitting with comma ',' for be excluded
-    | from the removal or hit Enter to continue:
-    +==============================================================================
-    | > 
-
     
+    +==============================================================================
+    | WARNING !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!! 
+    +==============================================================================
+    | pysetuptools is dependency of the package --> Flask
+    | MarkupSafe is dependency of the package --> Flask
+    | werkzeug is dependency of the package --> Flask
+    | Jinja2 is dependency of the package --> Flask
+    | itsdangerous is dependency of the package --> Flask
+    | pysetuptools is dependency of the package --> flake8
+    | pysetuptools is dependency of the package --> pip
+    | pysetuptools is dependency of the package --> pipstat
+    | pysetuptools is dependency of the package --> pylint
+    | pysetuptools is dependency of the package --> wcwidth
+    +==============================================================================
+    +==============================================================================
+    | Insert packages to exception removal:
+    +==============================================================================
+     >     
+
     .
     .
     .
