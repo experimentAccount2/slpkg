@@ -467,7 +467,8 @@ View information about the repositories:
       slonly   https://slackonly.com/pub/packages/                 yes     disabled
       studio   http://studioware.org/files/packages/               yes     disabled
 
-    For enable or disable default repositories edit '/etc/slpkg/slpkg.conf' file
+    15/15 enabled default repositories and 1 custom.
+    For enable or disable default repositories edit '/etc/slpkg/slpkg.conf' file.
 
     $ slpkg repo-info alien
 
