@@ -92,7 +92,7 @@ class Initialization(object):
         log = self.log_path + "slack/"
         lib = self.lib_path + "slack_repo/"
         lib_file = "PACKAGES.TXT"
-        lst_file = ""
+        # lst_file = ""
         md5_file = "CHECKSUMS.md5"
         log_file = "ChangeLog.txt"
         if not os.path.exists(log):
@@ -100,7 +100,7 @@ class Initialization(object):
         if not os.path.exists(lib):
             os.mkdir(lib)
         packages = mirrors(lib_file, "")
-        filelist_txt = ""
+        # filelist_txt = ""
         pkg_checksums = mirrors(md5_file, "")
         extra = mirrors(lib_file, "extra/")
         ext_checksums = mirrors(md5_file, "extra/")
@@ -114,7 +114,7 @@ class Initialization(object):
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, lst_file, filelist_txt)
+                    md5_file, checksums_md5, lst_file="", filelist_txt="")
 
     def sbo(self):
         """Creating sbo local library
