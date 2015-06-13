@@ -497,21 +497,29 @@ class Initialization(object):
         """Create local file
         """
         toolbar_width, index = 2, 0
-        with open("{0}{1}".format(path, archive), "w") as f:
-            for line in contents_txt.splitlines():
-                index += 1
-                toolbar_width = status(index, toolbar_width, 700)
-                f.write(line + "\n")
-            f.close()
+        try:
+            with open("{0}{1}".format(path, archive), "w") as f:
+                for line in contents_txt.splitlines():
+                    index += 1
+                    toolbar_width = status(index, toolbar_width, 700)
+                    f.write(line + "\n")
+                f.close()
+        except KeyboardInterrupt:
+            print("")
+            sys.exit(0)
 
     def write(self, path, data_file, file_url):
         """Write repositories files in /var/lib/slpkg
         and /var/log/slpkg"""
         FILE_TXT = ""
-        if not os.path.isfile(path + data_file):
-            for fu in file_url.split():
-                FILE_TXT += URL(fu).reading()
-            self.write_file(path, data_file, FILE_TXT)
+        try:
+            if not os.path.isfile(path + data_file):
+                for fu in file_url.split():
+                    FILE_TXT += URL(fu).reading()
+                self.write_file(path, data_file, FILE_TXT)
+        except KeyboardInterrupt:
+            print("")
+            sys.exit(0)
 
     def remote(self, *args):
         """
@@ -567,16 +575,21 @@ class Initialization(object):
         repositories = self.meta.repositories
         if only:
             repositories = only
-        for repo in repositories:
-            changelogs = "{0}{1}{2}".format(self.log_path, repo,
-                                            "/ChangeLog.txt")
-            if os.path.isfile(changelogs):
-                os.remove(changelogs)
-            if os.path.isdir(self.lib_path + "{0}_repo/".format(repo)):
-                for f in os.listdir(self.lib_path + "{0}_repo/".format(repo)):
-                    files = "{0}{1}_repo/{2}".format(self.lib_path, repo, f)
-                    if os.path.isfile(files):
-                        os.remove(files)
+        try:
+            for repo in repositories:
+                changelogs = "{0}{1}{2}".format(self.log_path, repo,
+                                                "/ChangeLog.txt")
+                if os.path.isfile(changelogs):
+                    os.remove(changelogs)
+                if os.path.isdir(self.lib_path + "{0}_repo/".format(repo)):
+                    for f in (os.listdir(self.lib_path + "{0}_repo/".format(
+                            repo))):
+                        files = "{0}{1}_repo/{2}".format(self.lib_path, repo, f)
+                        if os.path.isfile(files):
+                            os.remove(files)
+        except KeyboardInterrupt:
+            print("")
+            sys.exit(0)
         Update().repository(only)
 
 
@@ -597,19 +610,22 @@ class Update(object):
         repositories = self.meta.repositories
         if only:
             repositories = only
-        for repo in repositories:
-            sys.stdout.write("{0}Update repository {1} ...{2}".format(
-                self.meta.color["GREY"], repo, self.meta.color["ENDC"]))
-            sys.stdout.flush()
-            if repo in self.meta.default_repositories:
-                exec("{0}.{1}()".format(self._init, repo))
-                sys.stdout.write(self.done)
-            elif repo in self.meta.repositories:
-                Initialization().custom(repo)
-                sys.stdout.write(self.done)
-            else:
-                sys.stdout.write(self.error)
-
+        try:
+            for repo in repositories:
+                sys.stdout.write("{0}Update repository {1} ...{2}".format(
+                    self.meta.color["GREY"], repo, self.meta.color["ENDC"]))
+                sys.stdout.flush()
+                if repo in self.meta.default_repositories:
+                    exec("{0}.{1}()".format(self._init, repo))
+                    sys.stdout.write(self.done)
+                elif repo in self.meta.repositories:
+                    Initialization().custom(repo)
+                    sys.stdout.write(self.done)
+                else:
+                    sys.stdout.write(self.error)
+        except KeyboardInterrupt:
+            print("")
+            sys.exit(0)
         print("")   # new line at end
         sys.exit(0)
 
