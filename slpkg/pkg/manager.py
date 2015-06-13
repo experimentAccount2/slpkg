@@ -48,7 +48,9 @@ class PackageManager(object):
             try:
                 subprocess.call("installpkg {0} {1}".format(flag, pkg),
                                 shell=True)
-                print("Completed!\n")
+                check = pkg[:-4].split("/")[-1]
+                if os.path.isfile(self.meta.pkg_path + check):
+                    print("Completed!\n")
             except (subprocess.CalledProcessError, KeyboardInterrupt):
                 self._not_found("Can't install", self.binary, pkg)
 
@@ -59,7 +61,9 @@ class PackageManager(object):
             try:
                 subprocess.call("upgradepkg {0} {1}".format(flag, pkg),
                                 shell=True)
-                print("Completed!\n")
+                check = pkg[:-4].split("/")[-1]
+                if os.path.isfile(self.meta.pkg_path + check):
+                    print("Completed!\n")
             except (subprocess.CalledProcessError, KeyboardInterrupt):
                 self._not_found("Can't upgrade", self.binary, pkg)
 
