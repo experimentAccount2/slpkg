@@ -59,6 +59,7 @@ class RepoList(object):
         """
         View or enabled or disabled repositories
         """
+        count = 0
         print("")
         Msg().template(78)
         print("{0}{1}{2}{3}{4}{5}{6}".format(
@@ -73,6 +74,7 @@ class RepoList(object):
             if len(repo_URL) > 49:
                 repo_URL = repo_URL[:48] + "~"
             if repo_id in self.meta.repositories:
+                count += 1
                 status, COLOR = "enabled", self.meta.color["GREEN"]
             if repo_id not in self.meta.default_repositories:
                 default = "no"
@@ -81,6 +83,8 @@ class RepoList(object):
                 repo_URL, " " * (52 - len(repo_URL)),
                 default, " " * (8 - len(default)),
                 COLOR, status, self.meta.color["ENDC"]))
-        print("\nFor enable or disable default repositories edit "
-              "'/etc/slpkg/slpkg.conf' file\n")
+        print("\n[{0}/{1}] enabled repositories.".format(
+            count, len(self.all_repos)))
+        print("For enable or disable default repositories edit "
+              "'/etc/slpkg/slpkg.conf' file.\n")
         sys.exit(0)
