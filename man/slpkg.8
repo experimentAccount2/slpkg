@@ -16,7 +16,8 @@
 Slpkg is a user-friendly package manager for Slackware installations
 .SH SYNOPSIS
 Usage: slpkg Commands:
-             [update] [upgrade] [repo-add [repository name] [URL]]
+             [update, --only=[...]] [upgrade, --only=[...]]
+             [repo-add [repository name] [URL]]
              [repo-remove [repository]] [repo-list]
              [repo-info [repository]] [update [slpkg]]
 
@@ -28,7 +29,7 @@ Usage: slpkg Commands:
              [-q [build, install, build-install]]
              [-g [print, edit=[editor]]]
              [-l [repository], --index, --installed]
-             [-c [repository] --upgrade, --skip=[] --resolve-off]
+             [-c [repository] --upgrade, --skip=[...] --resolve-off]
              [-s [repository] [package...], --resolve-off]
              [-t [repository] [package]]
              [-p [repository] [package], --color=[]]
@@ -52,16 +53,18 @@ Print the version of program and exit.
 The following commands are available.
 
 .SS update, create and update packages list
-\fBslpkg\fP \fBupdate\fP
+\fBslpkg\fP \fBupdate\fP, \fB--only=[repositories...]\fP
 .PP
 Used to re-synchronize the package lists and create some important files.
 This command must run every new repository is added or new updates is available.
+With additional option "--only=" update at specifically repositories.
 
 .SS upgrade, recreate packages list
-\fBslpkg\fP \fBupgrade\fP
+\fBslpkg\fP \fBupgrade\fP, \fB--only=[repositories...]\fP
 .PP
 It is sometimes useful to create all of the base file from the beginning so this 
 command delete all the package lists and recreated.
+Additional option "--only=" just like "slpkg update --only=[repositories...]".
 
 .SS repo-add, add custom repository
 \fBslpkg\fP \fBrepo-add\fP <\fIrepository name\fP> <\fIURL\fP>
@@ -129,7 +132,7 @@ system. Support command "grep" like "# slpkg -l sbo | grep python".
 \fB--resolve-off\fP
 .PP
 Check your packages if up to date. Option "--skip" help to skip packages when upgrading and
-additional option "--resolve-off" switch off automatic resolve dependensies.
+additional option "--resolve-off" switch off automatic resolve dependencies.
 Slackware patches repository works independently of the others i.e not need before updating 
 the list of packages by choosing "# slpkg update", works directly with the official repository 
 and so always you can have updated your system. 
