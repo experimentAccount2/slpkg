@@ -191,33 +191,32 @@ class ArgParse(object):
     def pkg_upgrade(self):
         """Check and upgrade packages by repository
         """
-        skip = resolve = ""
+        skip = flag = ""
         options = ["-c", "--check"]
-        flag = ["--upgrade", "--skip=", "--resolve-off"]
-        if flag[2] in self.args:
-            resolve = flag[2]
-            index = self.args.index(flag[2])
+        flags = ["--upgrade", "--skip=", "--resolve-off"]
+        if flags[2] in self.args:
+            flag = flags[2]
+            index = self.args.index(flags[2])
             del self.args[index]
         if (len(self.args) == 4 and self.args[0] in options and
-                self.args[2] == flag[0] and
-                self.args[3].startswith(flag[1])):
+                self.args[2] == flags[0] and
+                self.args[3].startswith(flags[1])):
             skip = "".join(self.args[3].split("=")[1:]).split(",")
             self.args.pop(3)
         if (len(self.args) == 3 and self.args[0] in options and
-                self.args[2] == flag[0]):
-            if (self.args[1] in self.meta.repositories and
-                    self.args[1] not in ["slack", "sbo"]):
+                self.args[2] == flags[0] and
+                self.args[1] in self.meta.repositories):
+            if self.args[1] not in ["slack", "sbo"]:
                 BinaryInstall(pkg_upgrade(self.args[1], skip),
-                              self.args[1], resolve).start(if_upgrade=True)
+                              self.args[1], flag).start(if_upgrade=True)
             elif self.args[1] == "slack":
                 if self.meta.only_installed in ["on", "ON"]:
                     BinaryInstall(pkg_upgrade("slack", skip),
-                                  "slack", resolve).start(if_upgrade=True)
+                                  "slack", flag).start(if_upgrade=True)
                 else:
-                    Patches(skip).start()
-            elif (self.args[1] == "sbo" and
-                    self.args[1] in self.meta.repositories):
-                SBoInstall(sbo_upgrade(skip), resolve).start(if_upgrade=True)
+                    Patches(skip, flag).start()
+            elif self.args[1] == "sbo":
+                SBoInstall(sbo_upgrade(skip), flag).start(if_upgrade=True)
             else:
                 usage(self.args[1])
         else:

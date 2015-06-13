@@ -51,8 +51,9 @@ from slack_version import slack_ver
 
 class Patches(object):
 
-    def __init__(self, skip):
+    def __init__(self, skip, flag):
         self.skip = skip
+        self.flag = flag
         self.meta = _meta_
         self.version = self.meta.slack_rel
         self.patch_path = self.meta.slpkg_tmp_patches
@@ -133,7 +134,7 @@ class Patches(object):
         """
         Store and return packages for upgrading
         """
-        data = repo_data(self.PACKAGES_TXT, self.step, "slack", flag="")
+        data = repo_data(self.PACKAGES_TXT, self.step, "slack", self.flag)
         black = BlackList().packages()
         for name, loc, comp, uncomp in zip(data[0], data[1], data[2], data[3]):
             repo_pkg_name = split_package(name)[0]
