@@ -44,13 +44,13 @@ def track_dep(name, repo):
     """
     Msg().resolving()
     if repo == "sbo":
-        dependencies_list = Requires(resolve=True).sbo(name)
+        dependencies_list = Requires(flag="").sbo(name)
         find_pkg = sbo_search_pkg(name)
     else:
         PACKAGES_TXT = Utils().read_file(_meta_.lib_path + "{0}_repo/"
                                          "PACKAGES.TXT".format(repo))
         dependencies_list = Dependencies(PACKAGES_TXT, repo).binary(
-            name, resolve=True)
+            name, flag="")
         find_pkg = search_pkg(name, repo)
     Msg().done()
     if find_pkg:

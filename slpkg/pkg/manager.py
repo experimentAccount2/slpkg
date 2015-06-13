@@ -184,8 +184,8 @@ class PackageManager(object):
         deps.append(package)
         self._check_if_used(deps)
         for dep in deps:
-            if (dep not in self.skip
-                    and find_package(dep + self.meta.sp, self.meta.pkg_path)):
+            if (dep not in self.skip and
+                    find_package(dep + self.meta.sp, self.meta.pkg_path)):
                 self._removepkg(dep)
                 removes.append(dep)
         os.remove(path + package)
