@@ -169,6 +169,6 @@ class QueuePkgs(object):
                     print("Package '{0}' not found in /tmp\n".format(pkg))
                 if pkg in find:
                     binary = "{0}{1}".format(self.meta.tmp, find)
-                    PackageManager(binary.split(), flag="").install()
+                    PackageManager(binary.split()).upgrade(flag="--install-new")
         else:
             print("\nPackages not found in the queue for installation\n")
