@@ -101,16 +101,16 @@ Optional arguments:
                                             reporting the size and the sum.
   -i, --installpkg, [options] [package...]  Installs single or multiple *.tgz
       options=[--warn, --md5sum, --root,    (or .tbz, .tlz, .txz) Slackware
-               --infobox, --menu, --terse,  binary packages designed for use
-               --ask, --priority,           with the Slackware Linux
-               --tagfile]                   distribution onto your system.
+      --infobox, --menu, --terse, --ask,    binary packages designed for use
+      --priority, --tagfile]                with the Slackware Linux
+                                            distribution onto your system.
   -u, --upgradepkg, [options] [package...]  Upgrade single or multiple Slackware
       options=[--dry-run, --install-new,    binary packages from an older
-               --reinstall, --verbose]      version to a newer one.
+      --reinstall, --verbose]               version to a newer one.
   -r, --removepkg, [options] [package...],  Removes a previously installed
       --check-deps                          Slackware binary packages,
       options=[-warn, -preserve, copy,      while writing a progress report
-               -keep]                       to the standard output.
+      -keep]                                to the standard output.
   -d, --display, [package...]               Display the installed packages
                                             contents and file list.
 
