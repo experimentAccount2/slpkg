@@ -100,6 +100,9 @@ Default available Repositories:
 - `Restricted <http://taper.alienbase.nl/mirrors/people/alien/restricted_slackbuilds/>`_
   Arch: {x86, x86_64}
   Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14,1, current}
+- `MSB <http://slackware.org.uk/msb/>`_
+  Arch: {x86, x86_64}
+  Versions: {14.0, 14,1}
 
 
 * Choose default repositories you need to work from file '/etc/slpkg/slpkg.conf' default is 
@@ -159,10 +162,11 @@ If you want to find packages from all repositories, this command will solve your
 If you want to see if any packages are installed on your system enter the command '$ slpkg -f <packages>'.
 The surprise in the end is the reporting of packages sum and size found.
 
-The next four commands '$ slpkg -i, -u, -o, -r <packages>' install, upgrade, reinstall, or remove 
-packages from your system events.
-Notable mention must give the command '$ slpkg -r <packages>' which can remove a packages with all 
-dependencies together after editing configuration file '/etc/slpkg/slpkg.conf' (default is disable).
+The next four commands '$ slpkg --installpkg, --upgradepkg, --removepkg <packages>' install, upgrade, 
+remove packages from your system events.
+Notable mention must give the command '$ slpkg --removepkg <packages>' which can remove a packages 
+with all dependencies together after editing configuration file '/etc/slpkg/slpkg.conf' 
+(default is disable).
 
 The last command is useful to print the entire contents of a package installed on the system with the
 command '$ slpkg -d <packages>'.
@@ -242,9 +246,9 @@ Using pip:
 
 Bbinary packages:
 
-Slackware: `slpkg-2.4.4-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.4.4/slpkg-2.4.4-i486-1_dsw.txz>`_
+Slackware: `slpkg-2.5.0-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.5.0/slpkg-2.5.0-i486-1_dsw.txz>`_
 
-Slackware64: `slpkg-2.4.4-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.4.4/slpkg-2.4.4-x86_64-1_dsw.txz>`_
+Slackware64: `slpkg-2.5.0-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.5.0/slpkg-2.5.0-x86_64-1_dsw.txz>`_
 
 
 Upgrade
@@ -378,18 +382,20 @@ Command Line Tool Usage
                                                 and prints results.
       -f, --find, [package...]                  Find and print installed packages
                                                 reporting the size and the sum.
-      -i, --install, [package...]               Installs single or multiple
-                                                Slackware binary packages.
-      -u, --install-new, [package...]               Upgrade single or multiple Slackware
-                                                binary packages from a older to a
-                                                newer one.
-      -o, --reinstall, [package...]             Reinstall signle or multiple
-                                                Slackware binary packages with the
-                                                same packages if the exact.
-      -r, --remove, [package...]                Removes a previously installed
-                                                Slackware binary packages.
-      -d, --display, [package...]               Display the installed packages 
+      -i, --installpkg, [options] [package...]  Installs single or multiple
+          options=[--warn, --md5sum, --root,    Slackware binary packages designed
+                   --infobox, --menu, --terse,  for use with the Slackware Linux
+                   --ask, --priority,           distribution onto your system.
+                   --tagfile]
+      -u, --upgradepkg, [options] [package...]  Upgrade single or multiple Slackware
+          options=[--dry-run, --install-new,    binary packages from an older
+                   --reinstall, --verbose]      version to a newer one.
+      -r, --removepkg, [options] [package...]   Removes a previously installed
+          options=[-warn, -preserve, copy,      Slackware binary packages.
+                   -keep]
+      -d, --display, [package...]               Display the installed packages
                                                 contents and file list.
+
 
 Slpkg Examples
 --------------
@@ -568,63 +574,6 @@ Installing packages from the repositories (supporting multi packages):
     Would you like to continue [Y/n]?
 
     
-    You can create a file with the extension '.pkg' with the names of the packages you 
-    want to manage and use it instead of [package...] like:
-
-    $ echo "brasero
-    > atkmm
-    > Flask
-    > pylint" > foo.pkg
-
-    $ cat foo.pkg
-    brasero
-    atkmm
-    Flask
-    pylint
-
-    $ slpkg -s sbo foo.pkg
-    Reading package lists .........Done
-    Resolving dependencies .......Done
-
-    The following packages will be automatically installed or upgraded 
-    with new version:
-
-    +==============================================================================
-    | Package                 Version            Arch    Build  Repos          Size
-    +==============================================================================
-    Installing:
-     brasero                  3.12.0             x86_64         SBo           
-     atkmm                    2.22.7             x86_64         SBo           
-     Flask                    0.10.1             x86_64         SBo           
-     pylint                   1.3.1              x86_64         SBo           
-    Installing for dependencies:
-     six                      1.8.0              x86_64         SBo           
-     logilab-common           0.63.2             x86_64         SBo           
-     pysetuptools             7.0                x86_64         SBo           
-     astroid                  1.3.4              x86_64         SBo           
-     MarkupSafe               0.23               x86_64         SBo           
-     itsdangerous             0.24               x86_64         SBo           
-     Jinja2                   2.7.3              x86_64         SBo           
-     werkzeug                 0.9.4              x86_64         SBo           
-     libsigc++                2.2.11             x86_64         SBo           
-     glibmm                   2.36.2             x86_64         SBo           
-     cairomm                  1.10.0             x86_64         SBo           
-     pangomm                  2.34.0             x86_64         SBo           
-     orc                      0.4.22             x86_64         SBo           
-     gstreamer1               1.4.1              x86_64         SBo           
-     gst1-plugins-base        1.4.1              x86_64         SBo           
-     gst1-plugins-bad         1.4.1              x86_64         SBo           
-     libunique                1.1.6              x86_64         SBo           
-
-    Installing summary
-    ===============================================================================
-    Total 21 packages.
-    15 packages will be installed, 6 allready installed and 0 package
-    will be upgraded.
-
-    Would you like to continue [Y/n]?    
-
-
 Build packages and passing variables to the script:
 
 .. code-block:: bash
@@ -896,7 +845,7 @@ Upgrade, install packages like Slackware command '# upgradepkg --install-new':
 
 .. code-block:: bash
 
-    $ slpkg -u /tmp/termcolor-1.1.0-x86_64-1_SBo.tgz
+    $ slpkg -u --install-new /tmp/termcolor-1.1.0-x86_64-1_SBo.tgz
 
     +==============================================================================
     | Installing new package ./termcolor-1.1.0-x86_64-1_SBo.tgz
@@ -917,21 +866,11 @@ Install mass-packages:
 
 .. code-block:: bash
 
-    $ slpkg -u *.t?z
+    $ slpkg -u --install-new *.t?z
     
     or 
 
     $ slpkg -i *.t?z
-
-    or use .pkg file like:
-
-    # cat foo.pkg
-    /tmp/x264-20131101-x86_64-1_SBo.tgz
-    /tmp/xtermcolor-1.3-x86_64-1_SBo.tgz
-    /tmp/python-urllib3-1.9.1-x86_64-1_SBo.tgz
-
-    $ slpkg -u foo.pkg
-
 
 Search and find packages from repositories are enabled:
 
@@ -969,28 +908,6 @@ Find installed packages:
     Size of installed packages 1.61 Mb
 
     
-    Example view all sbo installed packages:
-
-    $ slpkg -f _SBo
-
-    from foo.pkg file
-
-    $ cat foo.pkg
-    brasero
-    atkmm
-    Flask
-    pylint
-
-    $ slpkg -f foo.pkg
-    
-    Packages with matching name [ brasero, atkmm, Flask, pylint ]
-
-    [ installed ] - pylint-1.3.1-x86_64-1_SBo
-
-    Total found 1 matching packages.
-    Size of installed packages 1.8 Mb.
-
-
 Display the contents of the packages:
 
 .. code-block:: bash
@@ -1040,7 +957,7 @@ Display the contents of the packages:
     No such package lua: Cant find
 
 
-Remove packages:
+Removes a previously installed Slackware binary packages:
 
 .. code-block:: bash
 
@@ -1079,7 +996,8 @@ Remove packages:
 
 
 Remove packages with all dependencies:
-(presupposes facility with the option 'slpkg -s <repository> <package>)
+Presupposes facility with the option '$ slpkg -s <repository> <packages>' and
+enabled from configuration file.
 
 .. code-block:: bash
 
@@ -1102,6 +1020,14 @@ Remove packages with all dependencies:
     +==============================================================================
 
     Remove dependencies (maybe used by other packages) [Y/n]? y
+    
+    +==============================================================================
+    | Enter some packages splitting with comma ',' for be excluded
+    | from the removal or hit Enter to continue:
+    +==============================================================================
+    | > 
+
+    
     .
     .
     .
@@ -1114,24 +1040,6 @@ Remove packages with all dependencies:
     | Package werkzeug removed
     +==============================================================================
 
-    Use list from file foo.pkg like:
-
-    $ cat foo.pkg
-    brasero
-    atkmm
-    Flask
-    pylint
-
-    $ slpkg -r foo.pkg
-
-    Packages with name matching [ brasero, atkmm, Flask, pylint ]
-
-    No such package brasero: Cant remove
-    No such package atkmm: Cant remove
-    No such package Flask: Cant remove
-    [ delete ] --> pylint-1.3.1-x86_64-1_SBo
-
-    Are you sure to remove 1 package [Y/n]?
 
 Build and install packages that have added to the queue:
 

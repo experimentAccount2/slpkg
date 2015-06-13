@@ -21,18 +21,20 @@ Usage: slpkg Commands:
              [repo-info [repository]] [update [slpkg]]
 
              Optional arguments:
-             [-h] [-v] [-a [script.tar.gz] [sources...]]
+             [-h] [-v]
+             [-a [script] [sources...]]
              [-b [package...] --add, --remove, list]
              [-q [package...] --add, --remove, list]
-             [-q build, install, build-install]
-             [-g print, edit=[editor]]
+             [-q [build, install, build-install]]
+             [-g [print, edit=[editor]]]
              [-l [repository], --index, --installed]
-             [-c [repository] --upgrade, --skip[] --resolve-off]
+             [-c [repository] --upgrade, --skip=[] --resolve-off]
              [-s [repository] [package...], --resolve-off]
              [-t [repository] [package]]
              [-p [repository] [package], --color=[]]
-             [-n [SBo package]] [-F [...]] [-f [...]] [-i [...]] 
-             [-u [...]] [-r [...]] [-d [...]]
+             [-n [SBo package]] [-F [...]] [-f [...]]
+             [-i [options] [...]] [-u [options] [...]]
+             [-r [options] [...], --check-deps] [-d [...]]
 
 .SH DESCRIPTION
 Slpkg is a powerful software package manager that installs, updates, and
@@ -185,13 +187,14 @@ and will skip any packages that do not already have a version installed.
 More information please read "man upgradepkg".
 
 .SS -r, --removepkg, remove previously installed Slackware binary packages
-\fBslpkg\fP \fB-r\fP \fB[-copy, -keep, -preserve, -warn]\fP <\fInames of packages\fP>
+\fBslpkg\fP \fB-r\fP \fB[-copy, -keep, -preserve, -warn]\fP <\fInames of packages\fP>, \fB--check-deps\fP
 .PP
 Removes a previously installed Slackware package, while writing a progress report to 
 the standard output. A package may be specified either by the full package name (as 
 you'd see listed in /var/log/packages/), or by the base package name. If installed
-packages with command "slpkg -s sbo <packages>" then write a file in /var/log/slpkg/dep/ 
-with all dependencies and it allows you can remove them all together. 
+packages with command "slpkg -s <repo> <packages>" then write a file in /var/log/slpkg/dep/ 
+with all dependencies and it allows you can remove them all together. But with the additional
+option "--check-deps" report a list of packages we are dependencies in use.
 More information please read "man removepkg".
 
 .SS -d, --display, display the installed packages contents and file list
@@ -221,6 +224,7 @@ For example:
  SalixOS = "salix"
  Slackel.gr = "slackel"
  Alien"s restricted = "rested"
+ MATE Desktop Environment = "msb"
    
  Default enable repository is "slack" and "sbo".
  Add or remove default repository in configuration file "/etc/slpkg/slpkg.conf".
