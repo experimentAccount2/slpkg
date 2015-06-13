@@ -109,7 +109,7 @@ Optional arguments:
       --reinstall, --verbose]               version to a newer one.
   -r, --removepkg, [options] [package...],  Removes a previously installed
       --check-deps                          Slackware binary packages,
-      options=[-warn, -preserve, copy,      while writing a progress report
+      options=[-warn, -preserve, -copy,     while writing a progress report
       -keep]                                to the standard output.
   -d, --display, [package...]               Display the installed packages
                                             contents and file list.
