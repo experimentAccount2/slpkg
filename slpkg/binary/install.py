@@ -51,10 +51,10 @@ from dependency import Dependencies
 
 class BinaryInstall(object):
 
-    def __init__(self, packages, repo, resolve):
+    def __init__(self, packages, repo, flag):
         self.packages = packages
         self.repo = repo
-        self.resolve = resolve
+        self.flag = flag
         self.meta = _meta_
         self.version = self.meta.slack_rel
         self.tmp_path = self.meta.slpkg_tmp_packages
@@ -86,7 +86,7 @@ class BinaryInstall(object):
             (self.dwn, self.install, self.comp_sum,
              self.uncomp_sum) = self.store(self.packages)
             if (self.meta.rsl_deps in ["on", "ON"] and
-                    self.resolve != "--resolve-off"):
+                    self.flag != "--resolve-off"):
                 Msg().done()
             if self.install:
                 print("\nThe following packages will be automatically "
@@ -208,12 +208,12 @@ class BinaryInstall(object):
         """
         requires = []
         if (self.meta.rsl_deps in ["on", "ON"] and
-                self.resolve != "--resolve-off"):
+                self.flag != "--resolve-off"):
             Msg().resolving()
         for dep in self.packages:
             dependencies = []
             dependencies = Utils().dimensional_list(Dependencies(
-                self.PACKAGES_TXT, self.repo).binary(dep, self.resolve))
+                self.PACKAGES_TXT, self.repo).binary(dep, self.flag))
             requires += dependencies
             self.deps_dict[dep] = Utils().remove_dbs(dependencies)
         return Utils().remove_dbs(requires)
@@ -267,7 +267,7 @@ class BinaryInstall(object):
         # location = data[1]
         # size = data[2]
         # unsize = data[3]
-        data = repo_data(self.PACKAGES_TXT, self.step, self.repo, self.resolve)
+        data = repo_data(self.PACKAGES_TXT, self.step, self.repo, self.flag)
         for pkg in packages:
             for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
                                                data[3]):
