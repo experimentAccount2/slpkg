@@ -146,7 +146,7 @@ class ArgParse(object):
         """Auto built tool
         """
         options = ["-a", "--autobuild"]
-        if len(self.args) == 3 and self.args[0] in options:
+        if len(self.args) >= 3 and self.args[0] in options:
             BuildPackage(self.args[1], self.args[2:], self.meta.path).build()
         else:
             usage("")
