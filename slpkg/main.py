@@ -261,10 +261,7 @@ class ArgParse(object):
         """View slackbuilds packages
         """
         options = ["-n", "--network"]
-        if (len(self.args) == 3 and self.args[0] in options and
-                "sbo" in self.meta.repositories):
-            SBoNetwork(self.args[1]).view()
-        elif (len(self.args) == 2 and self.args[0] in options and
+        if (len(self.args) == 2 and self.args[0] in options and
                 "sbo" in self.meta.repositories):
             SBoNetwork(self.args[1]).view()
         else:
