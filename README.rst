@@ -752,7 +752,7 @@ Skip packages when upgrading:
      cffi-1.0.1               1.1.0              x86_64         SBo
     Installing for dependencies:
      pysetuptools-17.0        17.0               x86_64         SBo
-     pycparser-2-12           2.13               x86_64         SBo
+     pycparser-2.12           2.13               x86_64         SBo
 
     Installing summary
     ===============================================================================
