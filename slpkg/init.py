@@ -76,18 +76,18 @@ class Initialization(object):
             os.mkdir(log)
         if not os.path.exists(lib):
             os.mkdir(lib)
-        packages_txt = "{0}{1}".format(repo, lib_file)
-        filelist_txt = ""
-        checksums_md5 = "{0}{1}".format(repo, md5_file)
-        changelog_txt = "{0}{1}".format(repo, log_file)
+        PACKAGES_TXT = "{0}{1}".format(repo, lib_file)
+        FILELIST_TXT = ""
+        CHECKSUMS_MD5 = "{0}{1}".format(repo, md5_file)
+        ChangeLog_txt = "{0}{1}".format(repo, log_file)
         if self.check:
-            return self.checks_logs(log, log_file, changelog_txt)
-        self.write(lib, lib_file, packages_txt)
-        self.write(lib, md5_file, checksums_md5)
-        self.write(log, log_file, changelog_txt)
-        self.remote(log, log_file, changelog_txt, lib, lib_file,
-                    packages_txt, md5_file, checksums_md5, lst_file,
-                    filelist_txt)
+            return self.checks_logs(log, log_file, ChangeLog_txt)
+        self.write(lib, lib_file, PACKAGES_TXT)
+        self.write(lib, md5_file, CHECKSUMS_MD5)
+        self.write(log, log_file, ChangeLog_txt)
+        self.remote(log, log_file, ChangeLog_txt, lib, lib_file,
+                    PACKAGES_TXT, md5_file, CHECKSUMS_MD5, lst_file,
+                    FILELIST_TXT)
 
     def slack(self):
         """Creating slack local libraries
@@ -103,23 +103,23 @@ class Initialization(object):
         if not os.path.exists(lib):
             os.mkdir(lib)
         packages = mirrors(lib_file, "")
-        filelist_txt = ""
+        FILELIST_TXT = ""
         pkg_checksums = mirrors(md5_file, "")
         extra = mirrors(lib_file, "extra/")
         ext_checksums = mirrors(md5_file, "extra/")
         pasture = mirrors(lib_file, "pasture/")
         pas_checksums = mirrors(md5_file, "pasture/")
-        packages_txt = ("{0} {1} {2}".format(packages, extra, pasture))
-        checksums_md5 = ("{0} {1} {2}".format(pkg_checksums, ext_checksums,
+        PACKAGES_TXT = ("{0} {1} {2}".format(packages, extra, pasture))
+        CHECKSUMS_MD5 = ("{0} {1} {2}".format(pkg_checksums, ext_checksums,
                                               pas_checksums))
-        changelog_txt = mirrors(log_file, "")
+        ChangeLog_txt = mirrors(log_file, "")
         if self.check:
-            return self.checks_logs(log, log_file, changelog_txt)
-        self.write(lib, lib_file, packages_txt)
-        self.write(lib, md5_file, checksums_md5)
-        self.write(log, log_file, changelog_txt)
-        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, lst_file, filelist_txt)
+            return self.checks_logs(log, log_file, ChangeLog_txt)
+        self.write(lib, lib_file, PACKAGES_TXT)
+        self.write(lib, md5_file, CHECKSUMS_MD5)
+        self.write(log, log_file, ChangeLog_txt)
+        self.remote(log, log_file, ChangeLog_txt, lib, lib_file, PACKAGES_TXT,
+                    md5_file, CHECKSUMS_MD5, lst_file, FILELIST_TXT)
 
     def sbo(self):
         """Creating sbo local library
@@ -135,16 +135,17 @@ class Initialization(object):
             os.mkdir(log)
         if not os.path.exists(lib):
             os.mkdir(lib)
-        packages_txt = "{0}{1}/{2}".format(repo, slack_ver(), lib_file)
-        filelist_txt = ""
-        checksums_md5 = ""
-        changelog_txt = "{0}{1}/{2}".format(repo, slack_ver(), log_file)
+        SLACKBUILDS_TXT = "{0}{1}/{2}".format(repo, slack_ver(), lib_file)
+        FILELIST_TXT = ""
+        CHECKSUMS_MD5 = ""
+        ChangeLog_txt = "{0}{1}/{2}".format(repo, slack_ver(), log_file)
         if self.check:
-            return self.checks_logs(log, log_file, changelog_txt)
-        self.write(lib, lib_file, packages_txt)
-        self.write(log, log_file, changelog_txt)
-        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, lst_file, filelist_txt)
+            return self.checks_logs(log, log_file, ChangeLog_txt)
+        self.write(lib, lib_file, SLACKBUILDS_TXT)
+        self.write(log, log_file, ChangeLog_txt)
+        self.remote(log, log_file, ChangeLog_txt, lib, lib_file,
+                    SLACKBUILDS_TXT, md5_file, CHECKSUMS_MD5, lst_file,
+                    FILELIST_TXT)
 
     def rlw(self):
         """Creating rlw local library
@@ -160,17 +161,17 @@ class Initialization(object):
             os.mkdir(log)
         if not os.path.exists(lib):
             os.mkdir(lib)
-        packages_txt = "{0}{1}/{2}".format(repo, slack_ver(), lib_file)
-        filelist_txt = ""
-        checksums_md5 = "{0}{1}/{2}".format(repo, slack_ver(), md5_file)
-        changelog_txt = "{0}{1}/{2}".format(repo, slack_ver(), log_file)
+        PACKAGES_TXT = "{0}{1}/{2}".format(repo, slack_ver(), lib_file)
+        FILELIST_TXT = ""
+        CHECKSUMS_MD5 = "{0}{1}/{2}".format(repo, slack_ver(), md5_file)
+        ChangeLog_txt = "{0}{1}/{2}".format(repo, slack_ver(), log_file)
         if self.check:
-            return self.checks_logs(log, log_file, changelog_txt)
-        self.write(lib, lib_file, packages_txt)
-        self.write(lib, md5_file, checksums_md5)
-        self.write(log, log_file, changelog_txt)
-        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, lst_file, filelist_txt)
+            return self.checks_logs(log, log_file, ChangeLog_txt)
+        self.write(lib, lib_file, PACKAGES_TXT)
+        self.write(lib, md5_file, CHECKSUMS_MD5)
+        self.write(log, log_file, ChangeLog_txt)
+        self.remote(log, log_file, ChangeLog_txt, lib, lib_file, PACKAGES_TXT,
+                    md5_file, CHECKSUMS_MD5, lst_file, FILELIST_TXT)
 
     def alien(self):
         """Creating alien local library
@@ -186,17 +187,17 @@ class Initialization(object):
             os.mkdir(log)
         if not os.path.exists(lib):
             os.mkdir(lib)
-        packages_txt = "{0}{1}".format(repo, lib_file)
-        filelist_txt = ""
-        checksums_md5 = "{0}{1}".format(repo, md5_file)
-        changelog_txt = "{0}{1}".format(repo, log_file)
+        PACKAGES_TXT = "{0}{1}".format(repo, lib_file)
+        FILELIST_TXT = ""
+        CHECKSUMS_MD5 = "{0}{1}".format(repo, md5_file)
+        ChangeLog_txt = "{0}{1}".format(repo, log_file)
         if self.check:
-            return self.checks_logs(log, log_file, changelog_txt)
-        self.write(lib, lib_file, packages_txt)
-        self.write(lib, md5_file, checksums_md5)
-        self.write(log, log_file, changelog_txt)
-        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, lst_file, filelist_txt)
+            return self.checks_logs(log, log_file, ChangeLog_txt)
+        self.write(lib, lib_file, PACKAGES_TXT)
+        self.write(lib, md5_file, CHECKSUMS_MD5)
+        self.write(log, log_file, ChangeLog_txt)
+        self.remote(log, log_file, ChangeLog_txt, lib, lib_file, PACKAGES_TXT,
+                    md5_file, CHECKSUMS_MD5, lst_file, FILELIST_TXT)
 
     def slacky(self):
         """Creating slacky.eu local library
@@ -216,21 +217,21 @@ class Initialization(object):
             os.mkdir(lib)
         if arch == "x86_64":
             ar = "64"
-        packages_txt = "{0}slackware{1}-{2}/{3}".format(repo, ar, slack_ver(),
+        PACKAGES_TXT = "{0}slackware{1}-{2}/{3}".format(repo, ar, slack_ver(),
                                                         lib_file)
-        filelist_txt = ""
-        checksums_md5 = "{0}slackware{1}-{2}/{3}".format(repo, ar, slack_ver(),
+        FILELIST_TXT = ""
+        CHECKSUMS_MD5 = "{0}slackware{1}-{2}/{3}".format(repo, ar, slack_ver(),
                                                          md5_file)
 
-        changelog_txt = "{0}slackware{1}-{2}/{3}".format(repo, ar, slack_ver(),
+        ChangeLog_txt = "{0}slackware{1}-{2}/{3}".format(repo, ar, slack_ver(),
                                                          log_file)
         if self.check:
-            return self.checks_logs(log, log_file, changelog_txt)
-        self.write(lib, lib_file, packages_txt)
-        self.write(lib, md5_file, checksums_md5)
-        self.write(log, log_file, changelog_txt)
-        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, lst_file, filelist_txt)
+            return self.checks_logs(log, log_file, ChangeLog_txt)
+        self.write(lib, lib_file, PACKAGES_TXT)
+        self.write(lib, md5_file, CHECKSUMS_MD5)
+        self.write(log, log_file, ChangeLog_txt)
+        self.remote(log, log_file, ChangeLog_txt, lib, lib_file, PACKAGES_TXT,
+                    md5_file, CHECKSUMS_MD5, lst_file, FILELIST_TXT)
 
     def studio(self):
         """Creating alien local library
@@ -250,20 +251,20 @@ class Initialization(object):
             os.mkdir(lib)
         if arch == "x86_64":
             ar = "64"
-        packages_txt = "{0}slackware{1}-{2}/{3}".format(repo, ar, slack_ver(),
+        PACKAGES_TXT = "{0}slackware{1}-{2}/{3}".format(repo, ar, slack_ver(),
                                                         lib_file)
-        filelist_txt = ""
-        checksums_md5 = "{0}slackware{1}-{2}/{3}".format(repo, ar, slack_ver(),
+        FILELIST_TXT = ""
+        CHECKSUMS_MD5 = "{0}slackware{1}-{2}/{3}".format(repo, ar, slack_ver(),
                                                          md5_file)
-        changelog_txt = "{0}slackware{1}-{2}/{3}".format(repo, ar, slack_ver(),
+        ChangeLog_txt = "{0}slackware{1}-{2}/{3}".format(repo, ar, slack_ver(),
                                                          log_file)
         if self.check:
-            return self.checks_logs(log, log_file, changelog_txt)
-        self.write(lib, lib_file, packages_txt)
-        self.write(lib, md5_file, checksums_md5)
-        self.write(log, log_file, changelog_txt)
-        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, lst_file, filelist_txt)
+            return self.checks_logs(log, log_file, ChangeLog_txt)
+        self.write(lib, lib_file, PACKAGES_TXT)
+        self.write(lib, md5_file, CHECKSUMS_MD5)
+        self.write(log, log_file, ChangeLog_txt)
+        self.remote(log, log_file, ChangeLog_txt, lib, lib_file, PACKAGES_TXT,
+                    md5_file, CHECKSUMS_MD5, lst_file, FILELIST_TXT)
 
     def slackr(self):
         """Creating slackers local library
@@ -279,17 +280,17 @@ class Initialization(object):
             os.mkdir(log)
         if not os.path.exists(lib):
             os.mkdir(lib)
-        packages_txt = "{0}{1}".format(repo, lib_file)
-        filelist_txt = ""
-        checksums_md5 = "{0}{1}".format(repo, md5_file)
-        changelog_txt = "{0}{1}".format(repo, log_file)
+        PACKAGES_TXT = "{0}{1}".format(repo, lib_file)
+        FILELIST_TXT = ""
+        CHECKSUMS_MD5 = "{0}{1}".format(repo, md5_file)
+        ChangeLog_txt = "{0}{1}".format(repo, log_file)
         if self.check:
-            return self.checks_logs(log, log_file, changelog_txt)
-        self.write(lib, lib_file, packages_txt)
-        self.write(lib, md5_file, checksums_md5)
-        self.write(log, log_file, changelog_txt)
-        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, lst_file, filelist_txt)
+            return self.checks_logs(log, log_file, ChangeLog_txt)
+        self.write(lib, lib_file, PACKAGES_TXT)
+        self.write(lib, md5_file, CHECKSUMS_MD5)
+        self.write(log, log_file, ChangeLog_txt)
+        self.remote(log, log_file, ChangeLog_txt, lib, lib_file, PACKAGES_TXT,
+                    md5_file, CHECKSUMS_MD5, lst_file, FILELIST_TXT)
 
     def slonly(self):
         """Creating slackers local library
@@ -309,17 +310,17 @@ class Initialization(object):
             os.mkdir(lib)
         if arch == "x86_64":
             ar = "{0}-x86_64".format(slack_ver())
-        packages_txt = "{0}{1}/{2}".format(repo, ar, lib_file)
-        filelist_txt = "{0}{1}/{2}".format(repo, ar, lst_file)
-        checksums_md5 = "{0}{1}/{2}".format(repo, ar, md5_file)
-        changelog_txt = "{0}{1}/{2}".format(repo, ar, log_file)
+        PACKAGES_TXT = "{0}{1}/{2}".format(repo, ar, lib_file)
+        FILELIST_TXT = "{0}{1}/{2}".format(repo, ar, lst_file)
+        CHECKSUMS_MD5 = "{0}{1}/{2}".format(repo, ar, md5_file)
+        ChangeLog_txt = "{0}{1}/{2}".format(repo, ar, log_file)
         if self.check:
-            return self.checks_logs(log, log_file, changelog_txt)
-        self.write(lib, lib_file, packages_txt)
-        self.write(lib, md5_file, checksums_md5)
-        self.write(log, log_file, changelog_txt)
-        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, lst_file, filelist_txt)
+            return self.checks_logs(log, log_file, ChangeLog_txt)
+        self.write(lib, lib_file, PACKAGES_TXT)
+        self.write(lib, md5_file, CHECKSUMS_MD5)
+        self.write(log, log_file, ChangeLog_txt)
+        self.remote(log, log_file, ChangeLog_txt, lib, lib_file, PACKAGES_TXT,
+                    md5_file, CHECKSUMS_MD5, lst_file, FILELIST_TXT)
 
     def ktown(self):
         """Creating alien ktown local library
@@ -335,17 +336,17 @@ class Initialization(object):
             os.mkdir(log)
         if not os.path.exists(lib):
             os.mkdir(lib)
-        packages_txt = "{0}{1}".format(repo, lib_file)
-        filelist_txt = ""
-        checksums_md5 = "{0}{1}".format(repo, md5_file)
-        changelog_txt = "{0}{1}".format(repo, log_file)
+        PACKAGES_TXT = "{0}{1}".format(repo, lib_file)
+        FILELIST_TXT = ""
+        CHECKSUMS_MD5 = "{0}{1}".format(repo, md5_file)
+        ChangeLog_txt = "{0}{1}".format(repo, log_file)
         if self.check:
-            return self.checks_logs(log, log_file, changelog_txt)
-        self.write(lib, lib_file, packages_txt)
-        self.write(lib, md5_file, checksums_md5)
-        self.write(log, log_file, changelog_txt)
-        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, lst_file, filelist_txt)
+            return self.checks_logs(log, log_file, ChangeLog_txt)
+        self.write(lib, lib_file, PACKAGES_TXT)
+        self.write(lib, md5_file, CHECKSUMS_MD5)
+        self.write(log, log_file, ChangeLog_txt)
+        self.remote(log, log_file, ChangeLog_txt, lib, lib_file, PACKAGES_TXT,
+                    md5_file, CHECKSUMS_MD5, lst_file, FILELIST_TXT)
 
     def multi(self):
         """Creating alien multilib local library
@@ -361,17 +362,17 @@ class Initialization(object):
             os.mkdir(log)
         if not os.path.exists(lib):
             os.mkdir(lib)
-        packages_txt = "{0}{1}".format(repo, lib_file)
-        filelist_txt = ""
-        checksums_md5 = "{0}{1}".format(repo, md5_file)
-        changelog_txt = "{0}{1}".format(repo, log_file)
+        PACKAGES_TXT = "{0}{1}".format(repo, lib_file)
+        FILELIST_TXT = ""
+        CHECKSUMS_MD5 = "{0}{1}".format(repo, md5_file)
+        ChangeLog_txt = "{0}{1}".format(repo, log_file)
         if self.check:
-            return self.checks_logs(log, log_file, changelog_txt)
-        self.write(lib, lib_file, packages_txt)
-        self.write(lib, md5_file, checksums_md5)
-        self.write(log, log_file, changelog_txt)
-        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, lst_file, filelist_txt)
+            return self.checks_logs(log, log_file, ChangeLog_txt)
+        self.write(lib, lib_file, PACKAGES_TXT)
+        self.write(lib, md5_file, CHECKSUMS_MD5)
+        self.write(log, log_file, ChangeLog_txt)
+        self.remote(log, log_file, ChangeLog_txt, lib, lib_file, PACKAGES_TXT,
+                    md5_file, CHECKSUMS_MD5, lst_file, FILELIST_TXT)
 
     def slacke(self):
         """Creating Slacke local library
@@ -393,20 +394,20 @@ class Initialization(object):
             ar = "64"
         elif arch == "arm":
             ar = "arm"
-        packages_txt = "{0}slacke{1}/slackware{2}-{3}/{4}".format(
+        PACKAGES_TXT = "{0}slacke{1}/slackware{2}-{3}/{4}".format(
             repo, self.meta.slacke_sub_repo[1:-1], ar, slack_ver(), lib_file)
-        filelist_txt = ""
-        checksums_md5 = "{0}slacke{1}/slackware{2}-{3}/{4}".format(
+        FILELIST_TXT = ""
+        CHECKSUMS_MD5 = "{0}slacke{1}/slackware{2}-{3}/{4}".format(
             repo, self.meta.slacke_sub_repo[1:-1], ar, slack_ver(), md5_file)
-        changelog_txt = "{0}slacke{1}/slackware{2}-{3}/{4}".format(
+        ChangeLog_txt = "{0}slacke{1}/slackware{2}-{3}/{4}".format(
             repo, self.meta.slacke_sub_repo[1:-1], ar, slack_ver(), log_file)
         if self.check:
-            return self.checks_logs(log, log_file, changelog_txt)
-        self.write(lib, lib_file, packages_txt)
-        self.write(lib, md5_file, checksums_md5)
-        self.write(log, log_file, changelog_txt)
-        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, lst_file, filelist_txt)
+            return self.checks_logs(log, log_file, ChangeLog_txt)
+        self.write(lib, lib_file, PACKAGES_TXT)
+        self.write(lib, md5_file, CHECKSUMS_MD5)
+        self.write(log, log_file, ChangeLog_txt)
+        self.remote(log, log_file, ChangeLog_txt, lib, lib_file, PACKAGES_TXT,
+                    md5_file, CHECKSUMS_MD5, lst_file, FILELIST_TXT)
 
     def salix(self):
         """Creating SalixOS local library
@@ -426,17 +427,17 @@ class Initialization(object):
             os.mkdir(lib)
         if arch == "x86_64":
             ar = "x86_64"
-        packages_txt = "{0}{1}/{2}/{3}".format(repo, ar, slack_ver(), lib_file)
-        filelist_txt = ""
-        checksums_md5 = "{0}{1}/{2}/{3}".format(repo, ar, slack_ver(), md5_file)
-        changelog_txt = "{0}{1}/{2}/{3}".format(repo, ar, slack_ver(), log_file)
+        PACKAGES_TXT = "{0}{1}/{2}/{3}".format(repo, ar, slack_ver(), lib_file)
+        FILELIST_TXT = ""
+        CHECKSUMS_MD5 = "{0}{1}/{2}/{3}".format(repo, ar, slack_ver(), md5_file)
+        ChangeLog_txt = "{0}{1}/{2}/{3}".format(repo, ar, slack_ver(), log_file)
         if self.check:
-            return self.checks_logs(log, log_file, changelog_txt)
-        self.write(lib, lib_file, packages_txt)
-        self.write(lib, md5_file, checksums_md5)
-        self.write(log, log_file, changelog_txt)
-        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, lst_file, filelist_txt)
+            return self.checks_logs(log, log_file, ChangeLog_txt)
+        self.write(lib, lib_file, PACKAGES_TXT)
+        self.write(lib, md5_file, CHECKSUMS_MD5)
+        self.write(log, log_file, ChangeLog_txt)
+        self.remote(log, log_file, ChangeLog_txt, lib, lib_file, PACKAGES_TXT,
+                    md5_file, CHECKSUMS_MD5, lst_file, FILELIST_TXT)
 
     def slackl(self):
         """Creating slackel.gr local library
@@ -456,17 +457,17 @@ class Initialization(object):
             os.mkdir(lib)
         if arch == "x86_64":
             ar = "x86_64"
-        packages_txt = "{0}{1}/current/{2}".format(repo, ar, lib_file)
-        filelist_txt = ""
-        checksums_md5 = "{0}{1}/current/{2}".format(repo, ar, md5_file)
-        changelog_txt = "{0}{1}/current/{2}".format(repo, ar, log_file)
+        PACKAGES_TXT = "{0}{1}/current/{2}".format(repo, ar, lib_file)
+        FILELIST_TXT = ""
+        CHECKSUMS_MD5 = "{0}{1}/current/{2}".format(repo, ar, md5_file)
+        ChangeLog_txt = "{0}{1}/current/{2}".format(repo, ar, log_file)
         if self.check:
-            return self.checks_logs(log, log_file, changelog_txt)
-        self.write(lib, lib_file, packages_txt)
-        self.write(lib, md5_file, checksums_md5)
-        self.write(log, log_file, changelog_txt)
-        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, lst_file, filelist_txt)
+            return self.checks_logs(log, log_file, ChangeLog_txt)
+        self.write(lib, lib_file, PACKAGES_TXT)
+        self.write(lib, md5_file, CHECKSUMS_MD5)
+        self.write(log, log_file, ChangeLog_txt)
+        self.remote(log, log_file, ChangeLog_txt, lib, lib_file, PACKAGES_TXT,
+                    md5_file, CHECKSUMS_MD5, lst_file, FILELIST_TXT)
 
     def rested(self):
         """Creating alien restricted local library
@@ -482,17 +483,17 @@ class Initialization(object):
             os.mkdir(log)
         if not os.path.exists(lib):
             os.mkdir(lib)
-        packages_txt = "{0}{1}".format(repo, lib_file)
-        filelist_txt = ""
-        checksums_md5 = "{0}{1}".format(repo, md5_file)
-        changelog_txt = "{0}{1}".format(repo, log_file)
+        PACKAGES_TXT = "{0}{1}".format(repo, lib_file)
+        FILELIST_TXT = ""
+        CHECKSUMS_MD5 = "{0}{1}".format(repo, md5_file)
+        ChangeLog_txt = "{0}{1}".format(repo, log_file)
         if self.check:
-            return self.checks_logs(log, log_file, changelog_txt)
-        self.write(lib, lib_file, packages_txt)
-        self.write(lib, md5_file, checksums_md5)
-        self.write(log, log_file, changelog_txt)
-        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, lst_file, filelist_txt)
+            return self.checks_logs(log, log_file, ChangeLog_txt)
+        self.write(lib, lib_file, PACKAGES_TXT)
+        self.write(lib, md5_file, CHECKSUMS_MD5)
+        self.write(log, log_file, ChangeLog_txt)
+        self.remote(log, log_file, ChangeLog_txt, lib, lib_file, PACKAGES_TXT,
+                    md5_file, CHECKSUMS_MD5, lst_file, FILELIST_TXT)
 
     def msb(self):
         """Creating MATE local library
@@ -512,19 +513,19 @@ class Initialization(object):
             os.mkdir(lib)
         if arch == "x86_64":
             ar = "x86_64"
-        packages_txt = "{0}{1}/{2}/{3}/{4}".format(
+        PACKAGES_TXT = "{0}{1}/{2}/{3}/{4}".format(
             repo, slack_ver(), self.meta.msb_sub_repo[1:-1], ar, lib_file)
-        filelist_txt = ""
-        checksums_md5 = "{0}{1}/{2}/{3}/{4}".format(
+        FILELIST_TXT = ""
+        CHECKSUMS_MD5 = "{0}{1}/{2}/{3}/{4}".format(
             repo, slack_ver(), self.meta.msb_sub_repo[1:-1], ar, md5_file)
-        changelog_txt = "{0}{1}".format(repo, log_file)
+        ChangeLog_txt = "{0}{1}".format(repo, log_file)
         if self.check:
-            return self.checks_logs(log, log_file, changelog_txt)
-        self.write(lib, lib_file, packages_txt)
-        self.write(lib, md5_file, checksums_md5)
-        self.write(log, log_file, changelog_txt)
-        self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
-                    md5_file, checksums_md5, lst_file, filelist_txt)
+            return self.checks_logs(log, log_file, ChangeLog_txt)
+        self.write(lib, lib_file, PACKAGES_TXT)
+        self.write(lib, md5_file, CHECKSUMS_MD5)
+        self.write(log, log_file, ChangeLog_txt)
+        self.remote(log, log_file, ChangeLog_txt, lib, lib_file, PACKAGES_TXT,
+                    md5_file, CHECKSUMS_MD5, lst_file, FILELIST_TXT)
 
     def write_file(self, path, archive, contents_txt):
         """Create local file
@@ -558,14 +559,14 @@ class Initialization(object):
         """
         args[0] = log path
         args[1] = log_file
-        args[2] = changelog_txt URL
+        args[2] = ChangeLog_txt URL
         args[3] = lib path
         args[4] = lib_file
-        args[5] = packages_txt URL
+        args[5] = PACKAGES_TXT URL
         args[6] = md5_file
-        args[7] = checksums_md5 URL
+        args[7] = CHECKSUMS_MD5 URL
         args[8] = lst_file
-        args[9] = filelist_txt URL
+        args[9] = FILELIST_TXT URL
 
         We take the size of ChangeLog.txt from the server and locally.
         If the two files differ in size delete and replace all files with new.
