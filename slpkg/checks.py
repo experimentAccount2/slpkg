@@ -33,6 +33,7 @@ class Updates(object):
         self.repo = repo
         self.meta = _meta_
         self.check = 2
+        self.st = ""
         self._init = Initialization(True)
         self.all_repos = {
             "slack": self._init.slack,
@@ -65,10 +66,12 @@ class Updates(object):
         else:
             usage(self.repo)
         self.status()
+        print(self.st)
 
     def ALL(self):
+        """Check ALL enabled repositories ChangeLogs
+        """
         for repo in self.meta.repositories:
-            print("Repository: {0}".format(repo))
             if repo in self.meta.default_repositories:
                 try:
                     self.check = self.all_repos[repo]()
@@ -77,11 +80,12 @@ class Updates(object):
             elif repo in self.meta.repositories:
                 self.check = self._init.custom(repo)
             self.status()
+            print("Repository '{0}':\n {1}".format(repo, self.st))
 
     def status(self):
         """Print messages
         """
         if self.check == 1:
-            print("\nNews in ChangeLog.txt\n")
+            self.st = "\nNews in ChangeLog.txt\n"
         elif self.check == 0:
-            print("\nNo changes in ChangeLog.txt\n")
+            self.st = "\nNo changes in ChangeLog.txt\n"
