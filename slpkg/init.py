@@ -37,7 +37,8 @@ from slack.slack_version import slack_ver
 
 class Initialization(object):
 
-    def __init__(self):
+    def __init__(self, check):
+        self.check = check
         self.meta = _meta_
         self.conf_path = self.meta.conf_path
         self.log_path = self.meta.log_path
@@ -79,6 +80,8 @@ class Initialization(object):
         filelist_txt = ""
         checksums_md5 = "{0}{1}".format(repo, md5_file)
         changelog_txt = "{0}{1}".format(repo, log_file)
+        if self.check:
+            return self.checks_logs(log, log_file, changelog_txt)
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
@@ -110,6 +113,8 @@ class Initialization(object):
         checksums_md5 = ("{0} {1} {2}".format(pkg_checksums, ext_checksums,
                                               pas_checksums))
         changelog_txt = mirrors(log_file, "")
+        if self.check:
+            return self.checks_logs(log, log_file, changelog_txt)
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
@@ -134,6 +139,8 @@ class Initialization(object):
         filelist_txt = ""
         checksums_md5 = ""
         changelog_txt = "{0}{1}/{2}".format(repo, slack_ver(), log_file)
+        if self.check:
+            return self.checks_logs(log, log_file, changelog_txt)
         self.write(lib, lib_file, packages_txt)
         self.write(log, log_file, changelog_txt)
         self.remote(log, log_file, changelog_txt, lib, lib_file, packages_txt,
@@ -157,6 +164,8 @@ class Initialization(object):
         filelist_txt = ""
         checksums_md5 = "{0}{1}/{2}".format(repo, slack_ver(), md5_file)
         changelog_txt = "{0}{1}/{2}".format(repo, slack_ver(), log_file)
+        if self.check:
+            return self.checks_logs(log, log_file, changelog_txt)
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
@@ -181,6 +190,8 @@ class Initialization(object):
         filelist_txt = ""
         checksums_md5 = "{0}{1}".format(repo, md5_file)
         changelog_txt = "{0}{1}".format(repo, log_file)
+        if self.check:
+            return self.checks_logs(log, log_file, changelog_txt)
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
@@ -213,6 +224,8 @@ class Initialization(object):
 
         changelog_txt = "{0}slackware{1}-{2}/{3}".format(repo, ar, slack_ver(),
                                                          log_file)
+        if self.check:
+            return self.checks_logs(log, log_file, changelog_txt)
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
@@ -244,6 +257,8 @@ class Initialization(object):
                                                          md5_file)
         changelog_txt = "{0}slackware{1}-{2}/{3}".format(repo, ar, slack_ver(),
                                                          log_file)
+        if self.check:
+            return self.checks_logs(log, log_file, changelog_txt)
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
@@ -268,6 +283,8 @@ class Initialization(object):
         filelist_txt = ""
         checksums_md5 = "{0}{1}".format(repo, md5_file)
         changelog_txt = "{0}{1}".format(repo, log_file)
+        if self.check:
+            return self.checks_logs(log, log_file, changelog_txt)
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
@@ -296,6 +313,8 @@ class Initialization(object):
         filelist_txt = "{0}{1}/{2}".format(repo, ar, lst_file)
         checksums_md5 = "{0}{1}/{2}".format(repo, ar, md5_file)
         changelog_txt = "{0}{1}/{2}".format(repo, ar, log_file)
+        if self.check:
+            return self.checks_logs(log, log_file, changelog_txt)
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
@@ -320,6 +339,8 @@ class Initialization(object):
         filelist_txt = ""
         checksums_md5 = "{0}{1}".format(repo, md5_file)
         changelog_txt = "{0}{1}".format(repo, log_file)
+        if self.check:
+            return self.checks_logs(log, log_file, changelog_txt)
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
@@ -344,6 +365,8 @@ class Initialization(object):
         filelist_txt = ""
         checksums_md5 = "{0}{1}".format(repo, md5_file)
         changelog_txt = "{0}{1}".format(repo, log_file)
+        if self.check:
+            return self.checks_logs(log, log_file, changelog_txt)
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
@@ -377,6 +400,8 @@ class Initialization(object):
             repo, self.meta.slacke_sub_repo[1:-1], ar, slack_ver(), md5_file)
         changelog_txt = "{0}slacke{1}/slackware{2}-{3}/{4}".format(
             repo, self.meta.slacke_sub_repo[1:-1], ar, slack_ver(), log_file)
+        if self.check:
+            return self.checks_logs(log, log_file, changelog_txt)
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
@@ -405,6 +430,8 @@ class Initialization(object):
         filelist_txt = ""
         checksums_md5 = "{0}{1}/{2}/{3}".format(repo, ar, slack_ver(), md5_file)
         changelog_txt = "{0}{1}/{2}/{3}".format(repo, ar, slack_ver(), log_file)
+        if self.check:
+            return self.checks_logs(log, log_file, changelog_txt)
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
@@ -433,6 +460,8 @@ class Initialization(object):
         filelist_txt = ""
         checksums_md5 = "{0}{1}/current/{2}".format(repo, ar, md5_file)
         changelog_txt = "{0}{1}/current/{2}".format(repo, ar, log_file)
+        if self.check:
+            return self.checks_logs(log, log_file, changelog_txt)
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
@@ -457,6 +486,8 @@ class Initialization(object):
         filelist_txt = ""
         checksums_md5 = "{0}{1}".format(repo, md5_file)
         changelog_txt = "{0}{1}".format(repo, log_file)
+        if self.check:
+            return self.checks_logs(log, log_file, changelog_txt)
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
@@ -487,6 +518,8 @@ class Initialization(object):
         checksums_md5 = "{0}{1}/{2}/{3}/{4}".format(
             repo, slack_ver(), self.meta.msb_sub_repo[1:-1], ar, md5_file)
         changelog_txt = "{0}{1}".format(repo, log_file)
+        if self.check:
+            return self.checks_logs(log, log_file, changelog_txt)
         self.write(lib, lib_file, packages_txt)
         self.write(lib, md5_file, checksums_md5)
         self.write(log, log_file, changelog_txt)
@@ -538,9 +571,8 @@ class Initialization(object):
         If the two files differ in size delete and replace all files with new.
         """
         PACKAGES_TXT = ""
-        server = FileSize(args[2]).server()
-        local = FileSize(args[0] + args[1]).local()
-        if server != local:
+        check = self.checks_logs(args[0], args[1], args[2])
+        if check == 1:
             # remove PACKAGES.txt
             os.remove("{0}{1}".format(args[3], args[4]))
             # remove Changelog.txt
@@ -569,6 +601,15 @@ class Initialization(object):
                 FILELIST_TXT = URL(args[9]).reading()
                 self.write_file(args[3], args[8], FILELIST_TXT)
 
+    def checks_logs(self, log_path, log_file, url):
+        """Checks ChangeLog.txt from changes
+        """
+        server = FileSize(url).server()
+        local = FileSize(log_path + log_file).local()
+        if server != local:
+            return 1
+        return 0
+
     def upgrade(self, only):
         """Remove all package lists with changelog and checksums files
         and create lists again"""
@@ -596,7 +637,7 @@ class Initialization(object):
 class Update(object):
 
     def __init__(self):
-        self._init = "Initialization()"
+        self._init = "Initialization(False)"
         self.meta = _meta_
         self.done = "{0}Done{1}\n".format(self.meta.color["GREY"],
                                           self.meta.color["ENDC"])
@@ -619,7 +660,7 @@ class Update(object):
                     exec("{0}.{1}()".format(self._init, repo))
                     sys.stdout.write(self.done)
                 elif repo in self.meta.repositories:
-                    Initialization().custom(repo)
+                    Initialization(False).custom(repo)
                     sys.stdout.write(self.done)
                 else:
                     sys.stdout.write(self.error)

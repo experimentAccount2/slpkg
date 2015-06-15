@@ -67,7 +67,7 @@ class Patches(object):
         self.comp_sum = []
         self.uncomp_sum = []
         self.utils = Utils()
-        Msg().reading()
+        Msg().checking()
         if self.version == "stable":
             self.PACKAGES_TXT = URL(mirrors("PACKAGES.TXT",
                                             "patches/")).reading()
@@ -150,6 +150,7 @@ class Patches(object):
                 if not find_package(repo_pkg_name, self.meta.pkg_path):
                     self.count_added += 1
                     self.count_upg -= 1
+        return self.count_upg
 
     def views(self):
         """

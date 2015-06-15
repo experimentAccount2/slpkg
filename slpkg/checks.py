@@ -21,39 +21,67 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-
-from messages import Msg
 from arguments import usage
-from sbo.check import sbo_upgrade
-from slack.patches import Patches
-from binary.check import pkg_upgrade
+from init import Initialization
 from __metadata__ import MetaData as _meta_
 
 
 class Updates(object):
-
+    """Checking for news in ChangeLog.txt
+    """
     def __init__(self, repo):
         self.repo = repo
         self.meta = _meta_
+        self.check = 2
+        self._init = Initialization(True)
+        self.all_repos = {
+            "slack": self._init.slack,
+            "sbo": self._init.sbo,
+            "rlw": self._init.rlw,
+            "alien": self._init.alien,
+            "slacky": self._init.slacky,
+            "studio": self._init.studio,
+            "slackr": self._init.slackr,
+            "slonly": self._init.slonly,
+            "ktown": self._init.ktown,
+            "multi": self._init.multi,
+            "slacke": self._init.slacke,
+            "salix": self._init.salix,
+            "slackl": self._init.slackl,
+            "rested": self._init.rested,
+            "msb": self._init.msb
+        }
 
     def run(self):
-        if self.repo in self.meta.repositories:
-            if self.repo == "sbo":
-                self.check = len(sbo_upgrade(skip=""))
-            elif self.repo == "slack":
-                if self.meta.only_installed in ["on", "ON"]:
-                    self.check = len(pkg_upgrade(self.repo, skip=""))
-                else:
-                    self.check = Patches(skip="", flag="").store()
-                    Msg().done()
-            else:
-                self.check = len(pkg_upgrade(self.repo, skip=""))
-            self.status()
+        """Run and check if new in ChangeLog.txt
+        """
+        if self.repo in self.meta.default_repositories:
+            try:
+                self.check = self.all_repos[self.repo]()
+            except OSError:
+                usage(self.repo)
+        elif self.repo in self.meta.repositories:
+            self.check = self._init.custom(self.repo)
         else:
             usage(self.repo)
+        self.status()
+
+    def ALL(self):
+        for repo in self.meta.repositories:
+            print("Repository: {0}".format(repo))
+            if repo in self.meta.default_repositories:
+                try:
+                    self.check = self.all_repos[repo]()
+                except OSError:
+                    usage(self.repo)
+            elif repo in self.meta.repositories:
+                self.check = self._init.custom(repo)
+            self.status()
 
     def status(self):
-        if self.check > 1:
+        """Print messages
+        """
+        if self.check == 1:
             print("\nNews in ChangeLog.txt\n")
-        else:
+        elif self.check == 0:
             print("\nNo changes in ChangeLog.txt\n")

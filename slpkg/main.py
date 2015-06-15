@@ -28,6 +28,7 @@ import getpass
 from messages import Msg
 from desc import PkgDesc
 from config import Config
+from checks import Updates
 from queue import QueuePkgs
 from repoinfo import RepoInfo
 from repolist import RepoList
@@ -131,11 +132,11 @@ class ArgParse(object):
         """Recreate repositories package lists
         """
         if len(self.args) == 1 and self.args[0] == "upgrade":
-            Initialization().upgrade(only="")
+            Initialization(False).upgrade(only="")
         elif (len(self.args) == 2 and self.args[0] == "upgrade" and
                 self.args[1].startswith("--only=")):
             repos = self.args[1].split("=")[-1].split(",")
-            Initialization().upgrade(repos)
+            Initialization(False).upgrade(repos)
         else:
             usage("")
 
@@ -219,6 +220,11 @@ class ArgParse(object):
                 SBoInstall(sbo_upgrade(skip), flag).start(if_upgrade=True)
             else:
                 usage(self.args[1])
+        elif len(self.args) == 2 and self.args[0] in options:
+            if self.args[1] == "ALL":
+                Updates("").ALL()
+            else:
+                Updates(self.args[1]).run()
         else:
             usage("")
 

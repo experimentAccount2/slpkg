@@ -363,7 +363,7 @@ Command Line Tool Usage
           --installed                           packages repository, index or print
                                                 only packages installed on the
                                                 system.
-      -c, --check, [repository] --upgrade,      Check, view and install updated
+      -c, --check, [repository], --upgrade,     Check, view and install updated
           --skip=[...] --resolve--off           packages from repositories.
       -s, --sync, [repository] [package...],    Sync packages. Install packages
           --resolve-off                         directly from remote repositories
@@ -425,6 +425,12 @@ list. This command must be executed to update the package lists:
     Update specifically repositories:
 
     $ slpkg update --only=sbo,msb,slacky
+
+    Also you can check ChangeLog.txt for changes like:
+
+    $ slpkg -c sbo
+
+    News in ChangeLog.txt
 
 
 Add and remove custom repositories:
@@ -651,9 +657,17 @@ and also displays installed packages:
      +--5 libunique
 
 
-Check if your packages is up to date:
+Check if your packages is up to date or changes in ChangeLog.txt:
 
 .. code-block:: bash
+
+    You can check ChangeLog.txt for changes before with command:
+
+    $ slpkg -c sbo
+
+    News in ChangeLog.txt
+
+    And check if packages need upgrade with:
 
     $ slpkg -c sbo --upgrade
     Checking ...................Done

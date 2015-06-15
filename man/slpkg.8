@@ -93,6 +93,10 @@ View repository information.
 .PP
 You can check for new versions and update slpkg itself.
 
+.SH OPTIONS
+.PP
+The following arguments are available.
+
 .SS -a, --autobuild, auto build packages
 \fBslpkg\fP \fB-a\fP <\fIscript.tar.gz\fP> <\fIsources\fP>
 .PP
@@ -136,6 +140,9 @@ additional option "--resolve-off" switch off automatic resolve dependencies.
 Slackware patches repository works independently of the others i.e not need before updating 
 the list of packages by choosing "# slpkg update", works directly with the official repository 
 and so always you can have updated your system. 
+Also you can check ChangeLog.txt for changes without option "--upgrade" like:
+"# slpkg -c [repository]" or check all enabled repositories just replace repository name with
+"ALL".
 
 .SS -s, --sync, synchronize packages, download, build and install package with all dependencies
 \fBslpkg\fP \fB-s\fP <\fIrepository\fP> <\fInames of packages\fP>, \fB--resolve-off\fP
