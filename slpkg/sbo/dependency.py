@@ -37,6 +37,7 @@ class Requires(object):
         self.flag = flag
         self.meta = _meta_
         self.dep_results = []
+        self.black = BlackList().packages()
 
     def sbo(self, name):
         """
@@ -46,7 +47,6 @@ class Requires(object):
             try:
                 sys.setrecursionlimit(10000)
                 dependencies = []
-                blacklist = BlackList().packages()
                 requires = SBoGrep(name).requires()
                 toolbar_width, index = 2, 0
                 if requires:
@@ -55,7 +55,7 @@ class Requires(object):
                         toolbar_width = status(index, toolbar_width, 1)
                         # avoid to add %README% as dependency and
                         # if require in blacklist
-                        if "%README%" not in req and req not in blacklist:
+                        if "%README%" not in req and req not in self.black:
                             dependencies.append(req)
                     if dependencies:
                         self.dep_results.append(dependencies)

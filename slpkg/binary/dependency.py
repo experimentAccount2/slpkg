@@ -39,6 +39,7 @@ class Dependencies(object):
         self.dep_results = []
         self.packages = Utils().package_name(PACKAGES_TXT, repo)
         self.meta = _meta_
+        self.black = BlackList().packages()
 
     def binary(self, name, flag):
         """
@@ -48,7 +49,6 @@ class Dependencies(object):
             try:
                 sys.setrecursionlimit(10000)
                 dependencies = []
-                blacklist = BlackList().packages()
                 requires = Requires(name, self.repo).get_deps()
                 toolbar_width, index = 2, 0
                 if requires:
@@ -56,7 +56,7 @@ class Dependencies(object):
                         index += 1
                         toolbar_width = status(index, toolbar_width, 7)
                         if (req and req in self.packages and
-                                req not in blacklist):
+                                req not in self.black):
                             dependencies.append(req)
                     if dependencies:
                         self.dep_results.append(dependencies)
