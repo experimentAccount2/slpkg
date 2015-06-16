@@ -213,12 +213,6 @@ Features
 It's a quick and easy way to manage your packages in `Slackware <http://www.slackware.com/>`_
 to a command.
 
-Tutorial
---------
-
-.. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/screenshot-1.png
-    :target: https://asciinema.org/a/16251
-
 
 Installation
 ------------
