@@ -2,6 +2,7 @@ Version 2.5.2
 16-06-2015
 
 [Updated] - Update resolve dependencies classes.
+		  - Fix add and remove packages from blacklist.
 
 
 Version 2.5.1

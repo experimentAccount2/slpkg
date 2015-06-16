@@ -1133,7 +1133,7 @@ Build and install packages that have added to the queue:
     $ slpkg -q build-install (build and install)
 
 
-Add packages in blacklist file manually from 
+Add or remove packages in blacklist file manually from 
 /etc/slpkg/blacklist or with the following options:
 
 .. code-block:: bash
