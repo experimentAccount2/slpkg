@@ -1,3 +1,9 @@
+Version 2.5.2
+16-06-2015
+
+[Updated] - Update resolve dependencies classes.
+
+
 Version 2.5.1
 14-06-2015
 
