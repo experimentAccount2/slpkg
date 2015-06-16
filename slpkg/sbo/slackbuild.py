@@ -144,8 +144,7 @@ class SBoInstall(object):
         self.slackbuilds = rmv_black
 
     def _continue_to_install(self):
-        """
-        Continue to install
+        """Continue to install ?
         """
         if self.master_packages and Msg().answer() in ["y", "Y"]:
             installs, upgraded = self.build_install()
@@ -154,15 +153,13 @@ class SBoInstall(object):
             delete(self.build_folder)
 
     def _view_installing_for_deps(self):
-        """
-        View installing for dependencies message
+        """View installing message for dependencies
         """
         if not self.match and self.dependencies:
             print("Installing for dependencies:")
 
     def clear_masters(self):
-        """
-        Clear master slackbuilds if already exist in dependencies
+        """Clear master slackbuilds if already exist in dependencies
         or if added to install two or more times
         """
         self.master_packages = Utils().remove_dbs(self.master_packages)
@@ -171,8 +168,7 @@ class SBoInstall(object):
                 self.master_packages.remove(mas)
 
     def matching(self):
-        """
-        Return matching SBo
+        """Return found matching SBo packages
         """
         f = open(self.meta.lib_path + "sbo_repo/SLACKBUILDS.TXT", "r")
         SLACKBUILDS_TXT = f.read()
@@ -183,8 +179,7 @@ class SBoInstall(object):
                     self.package_found.append(line[17:])
 
     def sbo_version_source(self, slackbuilds):
-        """
-        Create sbo name with version
+        """Create sbo name with version
         """
         sbo_versions, sources = [], []
         for sbo in slackbuilds:
@@ -196,10 +191,10 @@ class SBoInstall(object):
         return [sbo_versions, sources]
 
     def one_for_all(self, deps):
-        """
-        Because there are dependencies that depend on other
+        """Because there are dependencies that depend on other
         dependencies are created lists into other lists.
-        Thus creating this loop create one-dimensional list.
+        Thus creating this loop create one-dimensional list and
+        remove double packages from dependencies.
         """
         requires, dependencies = [], []
         deps.reverse()
@@ -210,8 +205,7 @@ class SBoInstall(object):
         return dependencies
 
     def top_view(self):
-        """
-        View top template
+        """View top template
         """
         Msg().template(78)
         print("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
@@ -224,8 +218,7 @@ class SBoInstall(object):
         Msg().template(78)
 
     def view_packages(self, *args):
-        """
-        View slackbuild packages with version and arch
+        """:View slackbuild packages with version and arch
         args[0] package color
         args[1] package
         args[2] version
@@ -240,8 +233,7 @@ class SBoInstall(object):
             "", "SBo", "", "")).rstrip()
 
     def tag(self, sbo, count_ins, count_upg, count_uni):
-        """
-        Tag with color green if package already installed,
+        """Tag with color green if package already installed,
         color yellow for packages to upgrade and color red
         if not installed.
         """
@@ -258,9 +250,8 @@ class SBoInstall(object):
         return paint, count_ins, count_upg, count_uni
 
     def select_arch(self, src):
-        """
-        Looks if sources unsupported or untested
-        from arch else select arch
+        """Looks if sources unsupported or untested
+        from arch else select arch.
         """
         arch = os.uname()[4]
         if arch.startswith("i") and arch.endswith("86"):
@@ -271,18 +262,15 @@ class SBoInstall(object):
         return arch
 
     def filenames(self, sources):
-        """
-        Return filenames from sources
+        """Return filenames from sources links
         """
         filename = []
         for src in sources:
-            # get file from source
             filename.append(src.split("/")[-1])
         return filename
 
     def search_in_tmp(self, prgnam):
-        """
-        Search for binary packages in /tmp directory
+        """Search for binary packages in /tmp directory
         """
         binary = []
         for search in find_package(prgnam, self.meta.output):
@@ -291,10 +279,9 @@ class SBoInstall(object):
         return binary
 
     def build_install(self):
-        """
-        Searches the package name and version in /tmp to
+        """Searches the package name and version in /tmp to
         install. If find two or more packages e.g. to build
-        tag 2 or 3 will fit most
+        tag 2 or 3 will fit most.
         """
         slackbuilds = self.dependencies + self.master_packages
         installs, upgraded, = [], []
