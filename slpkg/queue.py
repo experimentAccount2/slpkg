@@ -116,8 +116,6 @@ class QueuePkgs(object):
         Remove packages from queue
         """
         print("\nRemove packages from queue:\n")
-        if pkgs == ["all"]:
-            pkgs = self.packages()
         with open(self.queue_list, "w") as queue:
             for line in self.queued.splitlines():
                 if line not in pkgs:

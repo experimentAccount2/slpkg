@@ -1111,7 +1111,7 @@ Build and install packages that have added to the queue:
     CEGUI
 
     
-    $ slpkg -q roxterm --remove (or 'slpkg -q all --remove' remove all packages from queue)
+    $ slpkg -q roxterm --remove (or 'slpkg -q ALL --remove' remove all packages from queue)
     
     Remove packages from queue:
 
@@ -1147,7 +1147,7 @@ Add or remove packages in blacklist file manually from
     faac
 
 
-    $ slpkg -b speex --remove
+    $ slpkg -b speex --remove (or 'slpkg -b ALL --remove' remove all packages from blacklist)
 
     Remove packages from blacklist:
 
