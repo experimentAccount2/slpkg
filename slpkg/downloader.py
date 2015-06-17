@@ -45,6 +45,8 @@ class Download(object):
         dwn_count = 1
         for dwn in self.url:
             self.file_name = dwn.split("/")[-1]
+            self._check_certificate()
+            print self.wget_options
             print("\n[{0}/{1}][ {2}Download{3} ] --> {4}\n".format(
                 dwn_count, len(self.url), self.meta.color["GREEN"],
                 self.meta.color["ENDC"],
@@ -69,3 +71,10 @@ class Download(object):
             print("")
             if not Msg().answer() in ["y", "Y"]:
                 sys.exit(0)
+
+    def _check_certificate(self):
+        """Check sources like jdk for extra options for wget
+        """
+        if self.file_name.startswith("jdk-"):
+            self.wget_options += (" --no-check-certificate --header='Cookie: "
+                                  "oraclelicense=accept-securebackup-cookie'")
