@@ -111,7 +111,8 @@ class Patches(object):
                                                 self.meta.color["ENDC"]))
                 print("")
                 if Msg().answer() in ["y", "Y"]:
-                    Download(self.patch_path, self.dwn_links).start()
+                    Download(self.patch_path, self.dwn_links,
+                             repo="slack").start()
                     self.upgrade_all = self.utils.check_downloaded(
                         self.patch_path, self.upgrade_all)
                     self.upgrade()

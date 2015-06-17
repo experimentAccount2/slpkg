@@ -32,9 +32,10 @@ from __metadata__ import MetaData as _meta_
 
 class Download(object):
 
-    def __init__(self, path, url):
+    def __init__(self, path, url, repo):
         self.path = path
         self.url = url
+        self.repo = repo
         self.meta = _meta_
         self.wget_options = self.meta.wget_options
 
@@ -46,7 +47,6 @@ class Download(object):
         for dwn in self.url:
             self.file_name = dwn.split("/")[-1]
             self._check_certificate()
-            print self.wget_options
             print("\n[{0}/{1}][ {2}Download{3} ] --> {4}\n".format(
                 dwn_count, len(self.url), self.meta.color["GREEN"],
                 self.meta.color["ENDC"],
@@ -73,8 +73,8 @@ class Download(object):
                 sys.exit(0)
 
     def _check_certificate(self):
-        """Check sources like jdk for extra options for wget
+        """Check for certificates options for wget
         """
-        if self.file_name.startswith("jdk-"):
+        if self.file_name.startswith("jdk-") and self.repo == "sbo":
             self.wget_options += (" --no-check-certificate --header='Cookie: "
                                   "oraclelicense=accept-securebackup-cookie'")

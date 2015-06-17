@@ -76,7 +76,7 @@ class SBoNetwork(object):
             while True:
                 choice = self.read_choice()
                 if choice in ["D", "d"]:
-                    Download("", self.dwn_srcs).start()
+                    Download("", self.dwn_srcs, repo="sbo").start()
                     break
                 elif choice in ["R", "r"]:
                     README = Read(self.sbo_url).readme("README")
@@ -199,7 +199,7 @@ class SBoNetwork(object):
         if not os.path.exists(_meta_.build_path):
             os.makedirs(_meta_.build_path)
         os.chdir(_meta_.build_path)
-        Download(_meta_.build_path, self.dwn_srcs).start()
+        Download(_meta_.build_path, self.dwn_srcs, repo="sbo").start()
         script = self.sbo_dwn.split("/")[-1]
         for src in self.source_dwn:
             sources.append(src.split("/")[-1])

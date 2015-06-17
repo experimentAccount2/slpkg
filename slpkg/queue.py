@@ -143,9 +143,11 @@ class QueuePkgs(object):
                 sources = []
                 os.chdir(self.meta.build_path)
                 script = sbo_dwn.split("/")[-1]
-                Download(self.meta.build_path, sbo_dwn.split()).start()
+                Download(self.meta.build_path, sbo_dwn.split(),
+                         repo="sbo").start()
                 for src in source_dwn:
-                    Download(self.meta.build_path, src.split()).start()
+                    Download(self.meta.build_path, src.split(),
+                             repo="sbo").start()
                     sources.append(src.split("/")[-1])
                 BuildPackage(script, sources, self.meta.build_path).build()
         else:

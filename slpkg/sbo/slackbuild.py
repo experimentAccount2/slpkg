@@ -300,17 +300,16 @@ class SBoInstall(object):
                 Msg().template(78)
             elif self.unst[0] in src_link or self.unst[1] in src_link:
                 Msg().template(78)
-                print("| Package {0} {1}{2}{3}".format(sbo,
-                                                       self.meta.color["RED"],
-                                                       "".join(src_link),
-                                                       self.meta.color["ENDC"]))
+                print("| Package {0} {1}{2}{3}".format(
+                    sbo, self.meta.color["RED"], "".join(src_link),
+                    self.meta.color["ENDC"]))
                 Msg().template(78)
             else:
                 sbo_url = sbo_search_pkg(pkg)
                 sbo_link = SBoLink(sbo_url).tar_gz()
                 script = sbo_link.split("/")[-1]
                 dwn_srcs = sbo_link.split() + src_link
-                Download(self.build_folder, dwn_srcs).start()
+                Download(self.build_folder, dwn_srcs, repo="sbo").start()
                 sources = self.filenames(src_link)
                 BuildPackage(script, sources, self.build_folder).build()
                 binary_list = self.search_in_tmp(prgnam)

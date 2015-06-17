@@ -120,7 +120,8 @@ class BinaryInstall(object):
                 print("")
                 if Msg().answer() in ["y", "Y"]:
                     self.install.reverse()
-                    Download(self.tmp_path, (self.dep_dwn + self.dwn)).start()
+                    Download(self.tmp_path, self.dep_dwn + self.dwn,
+                             self.repo).start()
                     self.dep_install = Utils().check_downloaded(
                         self.tmp_path, self.dep_install)
                     self.install = Utils().check_downloaded(
