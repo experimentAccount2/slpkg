@@ -31,6 +31,8 @@ from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.slack.slack_version import slack_ver
 
+from greps import SBoGrep
+
 
 def sbo_search_pkg(name):
     """
@@ -38,7 +40,8 @@ def sbo_search_pkg(name):
     """
     try:
         repo = Repo().sbo()
-        blacklist = BlackList().packages()
+        SLACKBUILDS_TXT = SBoGrep(name="").names()
+        blacklist = BlackList().packages(pkgs=SLACKBUILDS_TXT, repo="sbo")
         sbo_url = "{0}{1}/".format(repo, slack_ver())
         SLACKBUILDS_TXT = Utils().read_file(
             _meta_.lib_path + "sbo_repo/SLACKBUILDS.TXT")

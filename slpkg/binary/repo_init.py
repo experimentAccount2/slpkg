@@ -56,7 +56,7 @@ class RepoInit(object):
         self.mirror = "{0}".format(Repo().custom_repository()[self.repo])
 
     def _init_slack(self):
-        self.mirror = mirrors("", "")
+        self.mirror = mirrors(name="", location="")
 
     def _init_rlw(self):
         self.mirror = "{0}{1}/".format(Repo().rlw(), slack_ver())

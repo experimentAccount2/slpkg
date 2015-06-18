@@ -64,10 +64,7 @@ class Utils(object):
         packages = []
         for line in PACKAGES_TXT.splitlines():
             if line.startswith("PACKAGE NAME:"):
-                if repo == "slackr":
-                    packages.append(line[14:].strip())
-                else:
-                    packages.append(split_package(line[14:].strip())[0])
+                packages.append(split_package(line[14:].strip())[0])
         return packages
 
     def check_downloaded(self, path, maybe_downloaded):

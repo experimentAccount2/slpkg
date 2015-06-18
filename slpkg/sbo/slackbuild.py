@@ -28,7 +28,6 @@ import sys
 from slpkg.utils import Utils
 from slpkg.messages import Msg
 from slpkg.toolbar import status
-from slpkg.blacklist import BlackList
 from slpkg.log_deps import write_deps
 from slpkg.downloader import Download
 from slpkg.splitting import split_package
@@ -69,7 +68,7 @@ class SBoInstall(object):
         try:
             tagc = ""
             count_ins = count_upg = count_uni = 0
-            self._remove_blacklist()
+            # self._remove_blacklist()
             for _sbo in self.slackbuilds:
                 self.index += 1
                 self.toolbar_width = status(self.index, self.toolbar_width, 4)
@@ -132,16 +131,6 @@ class SBoInstall(object):
         except KeyboardInterrupt:
             print("")   # new line at exit
             sys.exit(0)
-
-    def _remove_blacklist(self):
-        """
-        Remove packages in blacklist
-        """
-        rmv_black = []
-        for sbo in self.slackbuilds:
-            if sbo not in BlackList().packages():
-                rmv_black.append(sbo)
-        self.slackbuilds = rmv_black
 
     def _continue_to_install(self):
         """Continue to install ?

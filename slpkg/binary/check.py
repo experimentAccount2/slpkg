@@ -50,6 +50,7 @@ def pkg_upgrade(repo, skip):
         # size = data[2]
         # unsize = data[3]
         data = repo_data(PACKAGES_TXT, 2000, repo, flag="")
+        black = BlackList().packages(data[0], repo)
         index, toolbar_width = 0, 1000
         for pkg in installed():
             index += 1
@@ -61,7 +62,7 @@ def pkg_upgrade(repo, skip):
                 if (repo_pkg[0] == inst_pkg[0] and
                     LooseVersion(repo_pkg[1]) > LooseVersion(inst_pkg[1]) and
                     repo_pkg[3] >= inst_pkg[3] and
-                        inst_pkg[0] not in BlackList().packages() and
+                        inst_pkg[0] not in black and
                         inst_pkg[0] not in skip):
                     pkgs_for_upgrade.append(repo_pkg[0])
         Msg().done()

@@ -26,7 +26,6 @@ import sys
 
 from slpkg.utils import Utils
 from slpkg.toolbar import status
-from slpkg.blacklist import BlackList
 from slpkg.__metadata__ import MetaData as _meta_
 
 from greps import Requires
@@ -34,12 +33,13 @@ from greps import Requires
 
 class Dependencies(object):
 
-    def __init__(self, PACKAGES_TXT, repo):
+    def __init__(self, PACKAGES_TXT, repo, black):
+        self.packages = PACKAGES_TXT
         self.repo = repo
+        self.black = black
+        self.names = Utils().package_name(PACKAGES_TXT, self.repo)
         self.dep_results = []
-        self.packages = Utils().package_name(PACKAGES_TXT, repo)
         self.meta = _meta_
-        self.black = BlackList().packages()
 
     def binary(self, name, flag):
         """
@@ -55,7 +55,7 @@ class Dependencies(object):
                     for req in requires:
                         index += 1
                         toolbar_width = status(index, toolbar_width, 7)
-                        if (req and req in self.packages and
+                        if (req and req in self.names and
                                 req not in self.black):
                             dependencies.append(req)
                     if dependencies:

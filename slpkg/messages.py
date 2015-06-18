@@ -26,7 +26,7 @@ import sys
 
 from __metadata__ import MetaData as _meta_
 
-from slpkg.pkg.find import find_package
+from pkg.find import find_package
 
 
 class Msg(object):

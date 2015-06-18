@@ -47,9 +47,17 @@ class SBoGrep(object):
         self.unst = ["UNSUPPORTED", "UNTESTED"]
         self.SLACKBUILDS_TXT = Utils().read_file(self.sbo_txt)
 
-    def source(self):
+    def names(self):
+        """Grab all packages name
         """
-        Grab sources downloads links
+        pkg_names = []
+        for line in self.SLACKBUILDS_TXT.splitlines():
+            if line.startswith(self.line_name):
+                pkg_names.append(line[17:].strip())
+        return pkg_names
+
+    def source(self):
+        """Grab sources downloads links
         """
         source, source64, = "", ""
         for line in self.SLACKBUILDS_TXT.splitlines():
@@ -80,8 +88,7 @@ class SBoGrep(object):
         return src
 
     def requires(self):
-        """
-        Grab package requirements
+        """Grab package requirements
         """
         for line in self.SLACKBUILDS_TXT.splitlines():
             if line.startswith(self.line_name):
@@ -91,8 +98,7 @@ class SBoGrep(object):
                     return line[21:].strip().split()
 
     def version(self):
-        """
-        Grab package version
+        """Grab package version
         """
         for line in self.SLACKBUILDS_TXT.splitlines():
             if line.startswith(self.line_name):
@@ -102,8 +108,7 @@ class SBoGrep(object):
                     return line[20:].strip()
 
     def checksum(self):
-        """
-        Grab checksum string
+        """Grab checksum string
         """
         md5sum, md5sum64, = [], []
         for line in self.SLACKBUILDS_TXT.splitlines():
@@ -134,8 +139,7 @@ class SBoGrep(object):
         return md5
 
     def description(self):
-        """
-        Grab package verion
+        """Grab package verion
         """
         for line in self.SLACKBUILDS_TXT.splitlines():
             if line.startswith(self.line_name):

@@ -24,19 +24,15 @@
 
 import os
 
-from slpkg.blacklist import BlackList
-from slpkg.splitting import split_package
-
 
 def find_package(find_pkg, directory):
     """
     Find packages
     """
     pkgs = []
-    blacklist = BlackList().packages()
+    installed = sorted(os.listdir(directory))
     if os.path.exists(directory):
-        for pkg in sorted(os.listdir(directory)):
-            if (not pkg.startswith(".") and pkg.startswith(find_pkg) and
-                    split_package(pkg)[0] not in blacklist):
+        for pkg in installed:
+            if not pkg.startswith(".") and pkg.startswith(find_pkg):
                 pkgs.append(pkg)
     return pkgs

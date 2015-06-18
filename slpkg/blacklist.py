@@ -23,6 +23,7 @@
 
 
 from utils import Utils
+from splitting import split_package
 from __metadata__ import MetaData as _meta_
 
 
@@ -37,7 +38,7 @@ class BlackList(object):
         self.blackfile = "/etc/slpkg/blacklist"
         self.black_conf = Utils().read_file(self.blackfile)
 
-    def packages(self):
+    def get_black(self):
         """
         Return blacklist packages from /etc/slpkg/blacklist
         configuration file.
@@ -54,7 +55,7 @@ class BlackList(object):
         Print blacklist packages
         """
         print("\nPackages in blacklist:\n")
-        for black in self.packages():
+        for black in self.get_black():
             if black:
                 print("{0}{1}{2}".format(self.meta.color["GREEN"], black,
                                          self.meta.color["ENDC"]))
@@ -66,7 +67,7 @@ class BlackList(object):
         """
         Add blacklist packages if not exist
         """
-        blacklist = self.packages()
+        blacklist = self.get_black()
         pkgs = set(pkgs)
         print("\nAdd packages in blacklist:\n")
         with open(self.blackfile, "a") as black_conf:
@@ -96,3 +97,22 @@ class BlackList(object):
             remove.close()
         if self.quit:
             print("")   # new line at exit
+
+    def packages(self, pkgs, repo):
+        black = []
+        for bl in self.get_black():
+            for pkg in pkgs:
+                if bl.startswith("*") and bl.endswith("*"):
+                    if repo == "sbo":
+                        if bl[1:-1] in pkg:
+                            black.append(pkg)
+                    else:
+                        black.append(split_package(pkg)[0])
+                elif bl.endswith("*"):
+                    if pkg.startswith(bl[:-1]):
+                        black.append(pkg)
+                    else:
+                        black.append(split_package(pkg)[0])
+            if bl not in black and "*" not in bl:
+                black.append(bl)
+        return black

@@ -44,7 +44,6 @@ from slpkg.pkg.manager import PackageManager
 from slpkg.slack.slack_version import slack_ver
 
 from greps import repo_data
-from search import search_pkg
 from repo_init import RepoInit
 from dependency import Dependencies
 
@@ -65,9 +64,12 @@ class BinaryInstall(object):
         self.dependencies = []
         self.deps_dict = {}
         self.answer = ""
+        self.step = 0
         Msg().reading()
         self.PACKAGES_TXT, self.mirror = RepoInit(self.repo).fetch()
-        self.step = 0
+        self.data = repo_data(self.PACKAGES_TXT, self.step, self.repo,
+                              self.flag)
+        self.black = BlackList().packages(self.data[0], self.repo)
 
     def start(self, if_upgrade):
         """
@@ -77,7 +79,6 @@ class BinaryInstall(object):
             # fix if packages is for upgrade
             self.if_upgrade = if_upgrade
             mas_sum = dep_sum = sums = [0, 0, 0]
-            self.pkg_exist()
             Msg().done()
             self.dependencies = self.resolving_deps()
             (self.dep_dwn, self.dep_install, self.dep_comp_sum,
@@ -135,21 +136,6 @@ class BinaryInstall(object):
         except KeyboardInterrupt:
             print("")   # new line at exit
             sys.exit(0)
-
-    def pkg_exist(self):
-        """
-        Search if package exist
-        """
-        pkg_found, pkg_not_found = [], []
-        for pkg in self.packages:
-            if search_pkg(pkg, self.repo):
-                pkg_found.append(pkg)
-            else:
-                pkg_not_found.append(pkg)
-        if pkg_found:
-            self.packages = pkg_found
-        else:
-            self.packages = pkg_not_found
 
     def clear_masters(self):
         """
@@ -214,7 +200,7 @@ class BinaryInstall(object):
         for dep in self.packages:
             dependencies = []
             dependencies = Utils().dimensional_list(Dependencies(
-                self.PACKAGES_TXT, self.repo).binary(dep, self.flag))
+                self.PACKAGES_TXT, self.repo, self.black).binary(dep, self.flag))
             requires += dependencies
             self.deps_dict[dep] = Utils().remove_dbs(dependencies)
         return Utils().remove_dbs(requires)
@@ -263,27 +249,25 @@ class BinaryInstall(object):
         Store and return packages for install
         """
         dwn, install, comp_sum, uncomp_sum = ([] for i in range(4))
-        black = BlackList().packages()
         # name = data[0]
         # location = data[1]
         # size = data[2]
         # unsize = data[3]
-        data = repo_data(self.PACKAGES_TXT, self.step, self.repo, self.flag)
         for pkg in packages:
-            for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
-                                               data[3]):
+            for name, loc, comp, uncomp in zip(self.data[0], self.data[1],
+                                               self.data[2], self.data[3]):
                 if (name and name.startswith(pkg + self.meta.sp) and
-                        name not in install and pkg not in black):
+                        name not in install and pkg not in self.black):
                     dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
                     install.append(name)
                     comp_sum.append(comp)
                     uncomp_sum.append(uncomp)
         if not install:
             for pkg in packages:
-                for name, loc, comp, uncomp in zip(data[0], data[1], data[2],
-                                                   data[3]):
+                for name, loc, comp, uncomp in zip(self.data[0], self.data[1],
+                                                   self.data[2], self.data[3]):
                     if (name and pkg in split_package(name)[0] and
-                            pkg not in black):
+                            pkg not in self.black):
                         dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
                         install.append(name)
                         comp_sum.append(comp)

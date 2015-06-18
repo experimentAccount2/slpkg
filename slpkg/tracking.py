@@ -24,6 +24,7 @@
 
 from utils import Utils
 from messages import Msg
+from blacklist import BlackList
 from __metadata__ import MetaData as _meta_
 
 from pkg.find import find_package
@@ -49,7 +50,9 @@ def track_dep(name, repo):
     else:
         PACKAGES_TXT = Utils().read_file(_meta_.lib_path + "{0}_repo/"
                                          "PACKAGES.TXT".format(repo))
-        dependencies_list = Dependencies(PACKAGES_TXT, repo).binary(
+        names = Utils().package_name(PACKAGES_TXT, repo)
+        black = BlackList().packages(names, repo)
+        dependencies_list = Dependencies(names, repo, black).binary(
             name, flag="")
         find_pkg = search_pkg(name, repo)
     Msg().done()
