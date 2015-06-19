@@ -28,10 +28,8 @@ from __metadata__ import MetaData as _meta_
 
 
 class BlackList(object):
-    """
-    Blacklist class to add, remove or listed packages
-    in blacklist file.
-    """
+    """Blacklist class to add, remove or listed packages
+    in blacklist file."""
     def __init__(self):
         self.meta = _meta_
         self.quit = False
@@ -39,10 +37,8 @@ class BlackList(object):
         self.black_conf = Utils().read_file(self.blackfile)
 
     def get_black(self):
-        """
-        Return blacklist packages from /etc/slpkg/blacklist
-        configuration file.
-        """
+        """Return blacklist packages from /etc/slpkg/blacklist
+        configuration file."""
         blacklist = []
         for read in self.black_conf.splitlines():
             read = read.lstrip()
@@ -51,8 +47,7 @@ class BlackList(object):
         return blacklist
 
     def listed(self):
-        """
-        Print blacklist packages
+        """Print blacklist packages
         """
         print("\nPackages in blacklist:\n")
         for black in self.get_black():
@@ -64,8 +59,7 @@ class BlackList(object):
             print("")   # new line at exit
 
     def add(self, pkgs):
-        """
-        Add blacklist packages if not exist
+        """Add blacklist packages if not exist
         """
         blacklist = self.get_black()
         pkgs = set(pkgs)
@@ -82,8 +76,7 @@ class BlackList(object):
             print("")   # new line at exit
 
     def remove(self, pkgs):
-        """
-        Remove packages from blacklist
+        """Remove packages from blacklist
         """
         print("\nRemove packages from blacklist:\n")
         with open(self.blackfile, "w") as remove:
@@ -99,19 +92,32 @@ class BlackList(object):
             print("")   # new line at exit
 
     def packages(self, pkgs, repo):
+        """Return packages in blacklist or by repository
+        """
         black = []
         for bl in self.get_black():
+            pr = bl.split(":")
             for pkg in pkgs:
+                if (pr[0] == repo and pr[1].startswith("*") and
+                        pr[1].endswith("*")):
+                    if repo == "sbo" and pr[1][1:-1] in pkg:
+                        black.append(pkg)
+                    elif pr[1][1:-1] in pkg:
+                        black.append(split_package(pkg)[0])
+                elif pr[0] == repo and pr[1].endswith("*"):
+                    if repo == "sbo" and pkg.startswith(pr[1][:-1]):
+                        black.append(pkg)
+                    elif pkg.startswith(pr[1][:-1]):
+                        black.append(split_package(pkg)[0])
                 if bl.startswith("*") and bl.endswith("*"):
-                    if repo == "sbo":
-                        if bl[1:-1] in pkg:
-                            black.append(pkg)
-                    else:
+                    if repo == "sbo" and bl[1:-1] in pkg:
+                        black.append(pkg)
+                    elif bl[1:-1] in pkg:
                         black.append(split_package(pkg)[0])
                 elif bl.endswith("*"):
-                    if pkg.startswith(bl[:-1]):
+                    if repo == "sbo" and pkg.startswith(bl[:-1]):
                         black.append(pkg)
-                    else:
+                    elif pkg.startswith(bl[:-1]):
                         black.append(split_package(pkg)[0])
             if bl not in black and "*" not in bl:
                 black.append(bl)

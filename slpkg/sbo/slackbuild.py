@@ -164,7 +164,8 @@ class SBoInstall(object):
         f.close()
         for sbo in self.package_not_found:
             for line in SLACKBUILDS_TXT.splitlines():
-                if line.startswith("SLACKBUILD NAME: ") and sbo in line[17:]:
+                if (line.startswith("SLACKBUILD NAME: ") and
+                        sbo in line[17:] and sbo_search_pkg(line[17:]).strip()):
                     self.package_found.append(line[17:])
 
     def sbo_version_source(self, slackbuilds):

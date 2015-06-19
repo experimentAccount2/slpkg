@@ -69,7 +69,7 @@ class BinaryInstall(object):
         self.PACKAGES_TXT, self.mirror = RepoInit(self.repo).fetch()
         self.data = repo_data(self.PACKAGES_TXT, self.step, self.repo,
                               self.flag)
-        self.black = BlackList().packages(self.data[0], self.repo)
+        self.blacklist = BlackList().packages(self.data[0], self.repo)
 
     def start(self, if_upgrade):
         """
@@ -200,7 +200,8 @@ class BinaryInstall(object):
         for dep in self.packages:
             dependencies = []
             dependencies = Utils().dimensional_list(Dependencies(
-                self.PACKAGES_TXT, self.repo, self.black).binary(dep, self.flag))
+                self.PACKAGES_TXT, self.repo, self.blacklist).binary(
+                    dep, self.flag))
             requires += dependencies
             self.deps_dict[dep] = Utils().remove_dbs(dependencies)
         return Utils().remove_dbs(requires)
@@ -257,7 +258,7 @@ class BinaryInstall(object):
             for name, loc, comp, uncomp in zip(self.data[0], self.data[1],
                                                self.data[2], self.data[3]):
                 if (name and name.startswith(pkg + self.meta.sp) and
-                        name not in install and pkg not in self.black):
+                        name not in install and pkg not in self.blacklist):
                     dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
                     install.append(name)
                     comp_sum.append(comp)
@@ -267,7 +268,7 @@ class BinaryInstall(object):
                 for name, loc, comp, uncomp in zip(self.data[0], self.data[1],
                                                    self.data[2], self.data[3]):
                     if (name and pkg in split_package(name)[0] and
-                            pkg not in self.black):
+                            pkg not in self.blacklist):
                         dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
                         install.append(name)
                         comp_sum.append(comp)
