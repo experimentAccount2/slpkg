@@ -42,9 +42,8 @@ class Download(object):
         self.downder_options = self.meta.downder_options
 
     def start(self):
-        """
-        Download files usign wget.
-        """
+        """Download files using wget or other downloader.
+        Optional curl and aria2c"""
         dwn_count = 1
         self._directory_prefix()
         print self.downder, self.downder_options, self.dir_prefix
@@ -72,6 +71,8 @@ class Download(object):
                 sys.exit(0)
 
     def _directory_prefix(self):
+        """Downloader options for specific directory
+        """
         if self.downder == "wget":
             self.dir_prefix = "--directory-prefix="
         elif self.downder == "aria2c":
