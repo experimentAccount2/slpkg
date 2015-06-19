@@ -255,22 +255,23 @@ class BinaryInstall(object):
         # size = data[2]
         # unsize = data[3]
         for pkg in packages:
-            for name, loc, comp, uncomp in zip(self.data[0], self.data[1],
-                                               self.data[2], self.data[3]):
-                if (name and name.startswith(pkg + self.meta.sp) and
-                        name not in install and pkg not in self.blacklist):
-                    dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
-                    install.append(name)
+            for pk, loc, comp, uncomp in zip(self.data[0], self.data[1],
+                                             self.data[2], self.data[3]):
+                if (pk and pk.startswith(pkg + self.meta.sp) and
+                        pk not in install and
+                        split_package(pk)[0] not in self.blacklist):
+                    dwn.append("{0}{1}/{2}".format(self.mirror, loc, pk))
+                    install.append(pk)
                     comp_sum.append(comp)
                     uncomp_sum.append(uncomp)
         if not install:
             for pkg in packages:
-                for name, loc, comp, uncomp in zip(self.data[0], self.data[1],
-                                                   self.data[2], self.data[3]):
-                    if (name and pkg in split_package(name)[0] and
-                            pkg not in self.blacklist):
-                        dwn.append("{0}{1}/{2}".format(self.mirror, loc, name))
-                        install.append(name)
+                for pk, loc, comp, uncomp in zip(self.data[0], self.data[1],
+                                                 self.data[2], self.data[3]):
+                    name = split_package(pk)[0]
+                    if (pk and pkg in name and name not in self.blacklist):
+                        dwn.append("{0}{1}/{2}".format(self.mirror, loc, pk))
+                        install.append(pk)
                         comp_sum.append(comp)
                         uncomp_sum.append(uncomp)
         dwn.reverse()

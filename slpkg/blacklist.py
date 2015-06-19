@@ -98,6 +98,7 @@ class BlackList(object):
         for bl in self.get_black():
             pr = bl.split(":")
             for pkg in pkgs:
+                # blacklist packages by repository priority
                 if (pr[0] == repo and pr[1].startswith("*") and
                         pr[1].endswith("*")):
                     if repo == "sbo" and pr[1][1:-1] in pkg:
@@ -109,6 +110,17 @@ class BlackList(object):
                         black.append(pkg)
                     elif pkg.startswith(pr[1][:-1]):
                         black.append(split_package(pkg)[0])
+                elif pr[0] == repo and pr[1].startswith("*"):
+                    if repo == "sbo" and pkg.endswith(pr[1][1:]):
+                        black.append(pkg)
+                    elif pkg.endswith(pr[1][1:]):
+                        black.append(split_package(pkg)[0])
+                elif pr[0] == repo and "*" not in pr[1]:
+                    if repo == "sbo":
+                        black.append(pr[1])
+                    else:
+                        black.append(split_package(pkg)[0])
+                # normal blacklist packages
                 if bl.startswith("*") and bl.endswith("*"):
                     if repo == "sbo" and bl[1:-1] in pkg:
                         black.append(pkg)
@@ -118,6 +130,11 @@ class BlackList(object):
                     if repo == "sbo" and pkg.startswith(bl[:-1]):
                         black.append(pkg)
                     elif pkg.startswith(bl[:-1]):
+                        black.append(split_package(pkg)[0])
+                elif bl.startswith("*"):
+                    if repo == "sbo" and pkg.endswith(bl[1:]):
+                        black.append(pkg)
+                    elif pkg.endswith(bl[1:]):
                         black.append(split_package(pkg)[0])
             if bl not in black and "*" not in bl:
                 black.append(bl)

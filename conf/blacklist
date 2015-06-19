@@ -2,13 +2,17 @@
 # installed be upgraded be find or deleted.
 # NOTE: The settings here affect all repositories.
 #
-# An example syntax is as follows:
-# add a package from SBo repository:
-# brasero
-#
-# Add package from slackware repository:
-# example add package 'wicd-1.7.2.4-x86_64-4.txz':
+# To blacklist the package 'wicd-1.7.2.4-x86_64-4.txz' the line will be:
 # wicd
+#
+# This one will blacklist all packages include string "lib" in package name:
+# *lib*
+#
+# Exclude packages with repository priority:
+# sbo:py*        `excluded all packages from sbo starts with 'py'`
+# sbo:jdk        `excluded jdk package from sbo repository`
+# slack:*multi*  `excluded packages include string 'multi' from slack`
+# msb:*.txz      `excluded packages ends with '.txz' from msb repository`
 #
 # Sometimes the automatic kernel update creates problems because you
 # may need to file intervention 'lilo'. The slpkg automatically detects
