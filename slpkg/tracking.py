@@ -50,7 +50,7 @@ def track_dep(name, repo):
     else:
         PACKAGES_TXT = Utils().read_file(_meta_.lib_path + "{0}_repo/"
                                          "PACKAGES.TXT".format(repo))
-        names = Utils().package_name(PACKAGES_TXT, repo)
+        names = Utils().package_name(PACKAGES_TXT)
         black = BlackList().packages(names, repo)
         dependencies_list = Dependencies(names, repo, black).binary(
             name, flag="")
