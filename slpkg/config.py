@@ -55,7 +55,8 @@ class Config(object):
             "RSL_DEPS",
             "DEL_DEPS",
             "USE_COLORS",
-            "WGET_OPTIONS",
+            "DOWNDER",
+            "DOWNDER_OPTIONS",
             "SLACKPKG_LOG",
             "ONLY_INSTALLED"
         ]

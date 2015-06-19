@@ -37,13 +37,17 @@ class Download(object):
         self.url = url
         self.repo = repo
         self.meta = _meta_
-        self.wget_options = self.meta.wget_options
+        self.dir_prefix = ""
+        self.downder = self.meta.downder
+        self.downder_options = self.meta.downder_options
 
     def start(self):
         """
         Download files usign wget.
         """
         dwn_count = 1
+        self._directory_prefix()
+        print self.downder, self.downder_options, self.dir_prefix
         for dwn in self.url:
             self.file_name = dwn.split("/")[-1]
             self._check_certificate()
@@ -52,15 +56,30 @@ class Download(object):
                 self.meta.color["ENDC"],
                 self.file_name))
             try:
-                subprocess.call("wget {0} --directory-prefix={1} {2}".format(
-                                self.wget_options, self.path, dwn), shell=True)
+                if self.downder in ["wget", "aria2c"]:
+                    subprocess.call("{0} {1} {2}{3} {4}".format(
+                                    self.downder, self.downder_options,
+                                    self.dir_prefix, self.path, dwn),
+                                    shell=True)
+                elif self.downder == "curl":
+                    subprocess.call("{0} {1} {2} {3}".format(
+                                    self.downder, self.downder_options,
+                                    dwn, self.path), shell=True)
                 self._check_if_downloaded()
                 dwn_count += 1
             except KeyboardInterrupt:
                 print   # new line at cancel
                 sys.exit(0)
 
+    def _directory_prefix(self):
+        if self.downder == "wget":
+            self.dir_prefix = "--directory-prefix="
+        elif self.downder == "aria2c":
+            self.dir_prefix = "--dir="
+
     def _check_if_downloaded(self):
+        """Check if file downloaded
+        """
         if not os.path.isfile(self.path + self.file_name):
             print("")
             Msg().template(78)
@@ -75,6 +94,14 @@ class Download(object):
     def _check_certificate(self):
         """Check for certificates options for wget
         """
-        if self.file_name.startswith("jdk-") and self.repo == "sbo":
-            self.wget_options += (" --no-check-certificate --header='Cookie: "
-                                  "oraclelicense=accept-securebackup-cookie'")
+        if (self.file_name.startswith("jdk-") and self.repo == "sbo" and
+                self.downder == "wget"):
+            certificate = (' --no-check-certificate --header="Cookie: '
+                           'oraclelicense=accept-securebackup-cookie"')
+            Msg().template(78)
+            print("| '{0}' need to go ahead downloading".format(
+                certificate[:23]))
+            Msg().template(78)
+            self.downder_options += certificate
+            if not Msg().answer() in ["y", "Y"]:
+                sys.exit(0)

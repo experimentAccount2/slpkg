@@ -125,7 +125,8 @@ class MetaData(object):
         "RSL_DEPS": "on",
         "DEL_DEPS": "off",
         "USE_COLORS": "on",
-        "WGET_OPTIONS": "-c -N",
+        "DOWNDER": "wget",
+        "DOWNDER_OPTIONS": "-c -N",
         "SLACKPKG_LOG": "on",
         "ONLY_INSTALLED": "off"
     }
@@ -163,7 +164,8 @@ class MetaData(object):
     rsl_deps = _conf_slpkg["RSL_DEPS"]
     del_deps = _conf_slpkg["DEL_DEPS"]
     use_colors = _conf_slpkg["USE_COLORS"]
-    wget_options = _conf_slpkg["WGET_OPTIONS"]
+    downder = _conf_slpkg["DOWNDER"]
+    downder_options = _conf_slpkg["DOWNDER_OPTIONS"]
     slackpkg_log = _conf_slpkg["SLACKPKG_LOG"]
     only_installed = _conf_slpkg["ONLY_INSTALLED"]
 
