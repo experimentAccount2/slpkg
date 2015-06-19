@@ -87,7 +87,7 @@ Optional arguments:
   -t, --tracking, [repository] [package]    Tracking package dependencies and
                                             print package dependenies tree with
                                             highlight if packages is installed.
-  -p, --print, [repository] [package],      Print description of a package
+  -p, --desc, [repository] [package],       Print description of a package
       --color=[]                            directly from the repository and
                                             change color text.
   -n, --network, [package]                  View a standard of SBo page in

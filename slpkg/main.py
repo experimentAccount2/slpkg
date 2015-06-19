@@ -408,7 +408,7 @@ class ArgParse(object):
     def pkg_desc(self):
         """Print slack-desc by repository
         """
-        options = ["-p", "--print"]
+        options = ["-p", "--desc"]
         flag = ["--color="]
         colors = ["red", "green", "yellow", "cyan", "grey"]
         if (len(self.args) == 3 and self.args[0] in options and
@@ -517,7 +517,7 @@ def main():
         "-F": argparse.pkg_find,
         "--FIND": argparse.pkg_find,
         "-p": argparse.pkg_desc,
-        "--print": argparse.pkg_desc,
+        "--desc": argparse.pkg_desc,
         "-d": argparse.pkg_contents,
         "--display": argparse.pkg_contents,
         "-g": argparse.congiguration,
