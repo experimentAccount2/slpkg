@@ -1,5 +1,9 @@
 Version 2.5.2
-16-06-2015
+20-06-2015
+
+[Feature] - Support blacklist packages by repository priority.
+			Added instead wget, curl and aria2c as downloader.
+			Added support download jdk from "sbo" repository.
 
 [Updated] - Update resolve dependencies classes.
 		  - Fix add and remove packages from blacklist and queue.
