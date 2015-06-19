@@ -69,7 +69,7 @@ def it_self_update():
                                          __new_version__)]
         if not os.path.exists(_meta_.build_path):
             os.makedirs(_meta_.build_path)
-        Download(_meta_.build_path, dwn_link).start()
+        Download(_meta_.build_path, dwn_link, repo="").start()
         os.chdir(_meta_.build_path)
         slpkg_tar_file = "v" + __new_version__ + ".tar.gz"
         tar = tarfile.open(slpkg_tar_file)

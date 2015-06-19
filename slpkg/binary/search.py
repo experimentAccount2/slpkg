@@ -39,7 +39,7 @@ def search_pkg(name, repo):
     try:
         PACKAGES_TXT = Utils().read_file(_meta_.lib_path + "{0}_repo/"
                                          "PACKAGES.TXT".format(repo))
-        names = Utils().package_name(PACKAGES_TXT, repo)
+        names = Utils().package_name(PACKAGES_TXT)
         blacklist = BlackList().packages(pkgs=names, repo=repo)
         num_lines = sum(1 for line in PACKAGES_TXT)
         toolbar_width, index, step = 2, 0, num_lines

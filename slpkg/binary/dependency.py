@@ -37,7 +37,7 @@ class Dependencies(object):
         self.packages = PACKAGES_TXT
         self.repo = repo
         self.black = black
-        self.names = Utils().package_name(PACKAGES_TXT, self.repo)
+        self.names = Utils().package_name(PACKAGES_TXT)
         self.dep_results = []
         self.meta = _meta_
 

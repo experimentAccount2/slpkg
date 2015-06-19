@@ -287,7 +287,7 @@ class ArgParse(object):
             blacklist.add(self.args[1:-1])
         elif (len(self.args) == 3 and self.args[0] in options and
                 self.args[1] == "ALL" and self.args[-1] == flag[1]):
-            blacklist.remove(blacklist.packages())
+            blacklist.remove(blacklist.get_black())
         elif (len(self.args) > 2 and self.args[0] in options and
                 self.args[-1] == flag[1]):
             blacklist.remove(self.args[1:-1])

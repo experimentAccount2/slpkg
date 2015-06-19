@@ -57,7 +57,7 @@ class Utils(object):
             file_txt.close()
             return read_file
 
-    def package_name(self, PACKAGES_TXT, repo):
+    def package_name(self, PACKAGES_TXT):
         """
         Returns list with all the names of packages repository
         """
