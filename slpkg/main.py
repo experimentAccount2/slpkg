@@ -420,7 +420,7 @@ class ArgParse(object):
             if self.args[1] in self.meta.repositories and tag in colors:
                 PkgDesc(self.args[2], self.args[1], tag).view()
             else:
-                usage("")
+                usage(self.args[1])
         elif (len(self.args) > 1 and self.args[0] in options and
                 self.args[1] not in self.meta.repositories):
             usage(self.args[1])
