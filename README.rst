@@ -241,9 +241,9 @@ Using pip:
 
 Bbinary packages:
 
-Slackware: `slpkg-2.5.2-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.5.2/slpkg-2.5.2-i486-1_dsw.txz>`_
+Slackware: `slpkg-2.5.3-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.5.3/slpkg-2.5.3-i486-1_dsw.txz>`_
 
-Slackware64: `slpkg-2.5.2-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.5.2/slpkg-2.5.2-x86_64-1_dsw.txz>`_
+Slackware64: `slpkg-2.5.3-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.5.3/slpkg-2.5.3-x86_64-1_dsw.txz>`_
 
 
 Upgrade
@@ -1105,7 +1105,7 @@ Build and install packages that have added to the queue:
     CEGUI
 
     
-    $ slpkg -q roxterm --remove (or 'slpkg -q ALL --remove' remove all packages from queue)
+    $ slpkg -q roxterm --remove (or 'slpkg -q ALL --remove' remove all packages)
     
     Remove packages from queue:
 
@@ -1141,7 +1141,7 @@ Add or remove packages in blacklist file manually from
     faac
 
 
-    $ slpkg -b speex --remove (or 'slpkg -b ALL --remove' remove all packages from blacklist)
+    $ slpkg -b speex --remove (or 'slpkg -b ALL --remove' remove all packages)
 
     Remove packages from blacklist:
 
