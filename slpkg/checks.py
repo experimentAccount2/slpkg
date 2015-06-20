@@ -56,7 +56,8 @@ class Updates(object):
     def run(self):
         """Run and check if new in ChangeLog.txt
         """
-        if self.repo in self.meta.default_repositories:
+        if (self.repo in self.meta.default_repositories and
+                self.repo in self.meta.repositories):
             try:
                 self.check = self.all_repos[self.repo]()
             except OSError:
