@@ -1155,7 +1155,7 @@ Add or remove packages in blacklist file manually from
     live555
     faac
 
-    Note: you can use "*" to match more packages like:
+    Note: you can use asterisk "*" to match more packages like:
 
     *lib*   \\ all packages inlcude string "lib"
     *lib    \\ all packages ends with string "lib"
