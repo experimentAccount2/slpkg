@@ -35,34 +35,29 @@ class Msg(object):
         self.meta = _meta_
 
     def pkg_not_found(self, bol, pkg, message, eol):
-        """
-        Print message when package not found
+        """Print message when package not found
         """
         print("{0}No such package {1}: {2}{3}".format(bol, pkg, message, eol))
 
     def pkg_found(self, pkg, version):
-        """
-        Print message when package found
+        """Print message when package found
         """
         print("| Package {0}-{1} is already installed".format(pkg, version))
 
     def pkg_installed(self, pkg):
-        """
-        Print message when package installed
+        """Print message when package installed
         """
         print("| Package {0} installed".format(pkg))
 
     def s_user(self, user):
-        """
-        Check for root user
+        """Check for root user
         """
         if user != "root":
             print("\nslpkg: error: must have root privileges\n")
             sys.exit(0)
 
     def build_FAILED(self, sbo_url, prgnam):
-        """
-        Print error message if build failed
+        """Print error message if build failed
         """
         self.template(78)
         print("| Build package {0} [ {1}FAILED{2} ]".format(
@@ -76,45 +71,39 @@ class Msg(object):
         print   # new line at end
 
     def template(self, max_len):
-        """
-        Print template
+        """Print template
         """
         print("+" + "=" * max_len)
 
     def checking(self):
-        """
-        Message checking
+        """Message checking
         """
         sys.stdout.write("{0}Checking ...{1}".format(self.meta.color["GREY"],
                                                      self.meta.color["ENDC"]))
         sys.stdout.flush()
 
     def reading(self):
-        """
-        Message reading
+        """Message reading
         """
         sys.stdout.write("{0}Reading package lists ...{1}".format(
             self.meta.color["GREY"], self.meta.color["ENDC"]))
         sys.stdout.flush()
 
     def resolving(self):
-        """
-        Message resolving
+        """Message resolving
         """
         sys.stdout.write("{0}Resolving dependencies ...{1}".format(
             self.meta.color["GREY"], self.meta.color["ENDC"]))
         sys.stdout.flush()
 
     def done(self):
-        """
-        Message done
+        """Message done
         """
         sys.stdout.write("{0}Done{1}\n".format(self.meta.color["GREY"],
                                                self.meta.color["ENDC"]))
 
     def pkg(self, count):
-        """
-        Print singular plural
+        """Print singular plural
         """
         message = "package"
         if count > 1:
@@ -122,8 +111,7 @@ class Msg(object):
         return message
 
     def not_found(self, if_upgrade):
-        """
-        Message not found packages
+        """Message not found packages
         """
         if if_upgrade:
             print("\nNot found packages for upgrade\n")
@@ -131,8 +119,7 @@ class Msg(object):
             print("\nNot found packages for installation\n")
 
     def upg_inst(self, if_upgrade):
-        """
-        Message installing or upgrading
+        """Message installing or upgrading
         """
         if not if_upgrade:
             print("Installing:")
@@ -140,8 +127,7 @@ class Msg(object):
             print("Upgrading:")
 
     def answer(self):
-        """
-        Message answer
+        """Message answer
         """
         if self.meta.default_answer == "y":
             answer = self.meta.default_answer
@@ -150,8 +136,7 @@ class Msg(object):
         return answer
 
     def reference(self, install, upgrade):
-        """
-        Reference list with packages installed
+        """Reference list with packages installed
         and upgraded
         """
         self.template(78)
