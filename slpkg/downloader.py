@@ -46,7 +46,6 @@ class Download(object):
         Optional curl and aria2c"""
         dwn_count = 1
         self._directory_prefix()
-        print self.downder, self.downder_options, self.dir_prefix
         for dwn in self.url:
             self.file_name = dwn.split("/")[-1]
             self._check_certificate()
