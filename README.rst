@@ -452,7 +452,7 @@ View information about the repositories:
     +==============================================================================
       alien    http://www.slackware.com/~alien/slackbuilds/        yes     disabled
       ktown    http://alien.slackbook.org/ktown/                   yes     disabled
-    | msb      http://slackware.org.uk/msb/                        yes      enabled
+      msb      http://slackware.org.uk/msb/                        yes      enabled
       multi    http://www.slackware.com/~alien/multilib/           yes     disabled
       ponce    http://ponce.cc/slackware/slackware64-14.1/packa~   no       enabled
       rested   http://taper.alienbase.nl/mirrors/people/alien/r~   yes     disabled
