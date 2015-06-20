@@ -36,6 +36,7 @@ class Download(object):
         self.path = path
         self.url = url
         self.repo = repo
+        self.file_name = ""
         self.meta = _meta_
         self.dir_prefix = ""
         self.downder = self.meta.downder
@@ -49,7 +50,6 @@ class Download(object):
         for dwn in self.url:
             self.file_name = dwn.split("/")[-1]
             self._check_certificate()
-            print self.downder, self.downder_options, dwn, self.path
             print("\n[{0}/{1}][ {2}Download{3} ] --> {4}\n".format(
                 dwn_count, len(self.url), self.meta.color["GREEN"],
                 self.meta.color["ENDC"],
