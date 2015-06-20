@@ -49,6 +49,7 @@ class Download(object):
         for dwn in self.url:
             self.file_name = dwn.split("/")[-1]
             self._check_certificate()
+            print self.downder, self.downder_options, dwn, self.path
             print("\n[{0}/{1}][ {2}Download{3} ] --> {4}\n".format(
                 dwn_count, len(self.url), self.meta.color["GREEN"],
                 self.meta.color["ENDC"],
@@ -60,9 +61,9 @@ class Download(object):
                                     self.dir_prefix, self.path, dwn),
                                     shell=True)
                 elif self.downder == "curl":
-                    subprocess.call("{0} {1} {2} {3}".format(
+                    subprocess.call("{0} {1} {2}{3} {4}".format(
                                     self.downder, self.downder_options,
-                                    dwn, self.path), shell=True)
+                                    self.path, self.file_name, dwn), shell=True)
                 self._check_if_downloaded()
                 dwn_count += 1
             except KeyboardInterrupt:
