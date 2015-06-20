@@ -649,19 +649,24 @@ class Update(object):
         """Update repositories lists
         """
         print("\nCheck and update repositories:\n")
-        repositories = self.meta.repositories
+        enabled = self.meta.repositories
         if only:
-            repositories = only
+            self.meta.repositories = only
         try:
-            for repo in repositories:
+            for repo in self.meta.repositories:
                 sys.stdout.write("{0}Update repository {1} ...{2}".format(
                     self.meta.color["GREY"], repo, self.meta.color["ENDC"]))
                 sys.stdout.flush()
-                if repo in self.meta.default_repositories:
+                if repo in enabled:
                     exec("{0}.{1}()".format(self._init, repo))
                     sys.stdout.write(self.done)
-                elif repo in self.meta.repositories:
-                    Initialization(False).custom(repo)
+                elif repo in self.meta.default_repositories:
+                    try:
+                        Initialization(False).custom(repo)
+                    except:
+                        sys.stdout.write(self.error)
+                        print("")
+                        sys.exit(0)
                     sys.stdout.write(self.done)
                 else:
                     sys.stdout.write(self.error)
