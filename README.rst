@@ -56,8 +56,7 @@ official repositories of Slackware. Even you can check for the official updates 
 Asciicast
 ---------
 
-[[embed url=https://www.youtube.com/watch?v=oTtD4XhHKlA]]
-
+[[youtube-{voTtD4XhHKlA}-{688}x{387}]]
 
 
 Repositories
