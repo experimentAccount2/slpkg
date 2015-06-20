@@ -103,6 +103,7 @@ class Download(object):
             print("| '{0}' need to go ahead downloading".format(
                 certificate[:23]))
             Msg().template(78)
+            print("")
             self.downder_options += certificate
             if not Msg().answer() in ["y", "Y"]:
                 sys.exit(0)

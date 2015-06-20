@@ -222,7 +222,7 @@ class ArgParse(object):
                 usage(self.args[1])
         elif len(self.args) == 2 and self.args[0] in options:
             if self.args[1] == "ALL":
-                Updates("").ALL()
+                Updates(repo="").ALL()
             else:
                 Updates(self.args[1]).run()
         else:
@@ -413,7 +413,7 @@ class ArgParse(object):
         colors = ["red", "green", "yellow", "cyan", "grey"]
         if (len(self.args) == 3 and self.args[0] in options and
                 self.args[1] in self.meta.repositories):
-            PkgDesc(self.args[2], self.args[1], "").view()
+            PkgDesc(self.args[2], self.args[1], paint="").view()
         elif (len(self.args) == 4 and self.args[0] in options and
                 self.args[3].startswith(flag[0])):
             tag = self.args[3][len(flag[0]):]
