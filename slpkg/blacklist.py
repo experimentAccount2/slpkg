@@ -25,6 +25,7 @@
 from utils import Utils
 from splitting import split_package
 from __metadata__ import MetaData as _meta_
+from slpkg.pkg.find import find_package
 
 
 class BlackList(object):
@@ -139,3 +140,8 @@ class BlackList(object):
             if bl not in black and "*" not in bl:
                 black.append(bl)
         return black
+
+    def installed(self):
+        """Return all installed packages
+        """
+        return find_package("", _meta_.pkg_path)

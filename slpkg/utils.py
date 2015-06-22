@@ -62,7 +62,7 @@ class Utils(object):
         Returns list with all the names of packages repository
         """
         packages = []
-        for line in PACKAGES_TXT:
+        for line in PACKAGES_TXT.splitlines():
             if line.startswith("PACKAGE NAME:"):
                 packages.append(split_package(line[14:].strip())[0])
         return packages

@@ -29,6 +29,7 @@ from slpkg.utils import Utils
 from slpkg.sizes import units
 from slpkg.messages import Msg
 from slpkg.remove import delete
+from slpkg.toolbar import status
 from slpkg.checksum import check_md5
 from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
@@ -197,7 +198,10 @@ class BinaryInstall(object):
         if (self.meta.rsl_deps in ["on", "ON"] and
                 self.flag != "--resolve-off"):
             Msg().resolving()
+        toolbar_width, index = 2, 0
         for dep in self.packages:
+            index += 1
+            toolbar_width = status(index, toolbar_width, 3)
             dependencies = []
             dependencies = Utils().dimensional_list(Dependencies(
                 self.PACKAGES_TXT, self.repo, self.blacklist).binary(
