@@ -12,6 +12,14 @@ Fixed:
 - Resolve dependencies classes
 - Add and remove packages from blacklist and queue.
 
+2.5.2 - 19/06/2015
+Added:
+- Repository check in blacklist
+Updated:
+- Blacklist options
+Fixed:
+- Pylint errors
+
 2.5.1 - 14/06/2015
 Added:
 - Check repositories ChangeLog.txt with command  "slpkg --check [repo]"
