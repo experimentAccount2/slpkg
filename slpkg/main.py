@@ -93,6 +93,9 @@ class ArgParse(object):
         elif (len(self.args) == 2 and self.args[0] == "update" and
                 self.args[1].startswith("--only=")):
             repos = self.args[1].split("=")[-1].split(",")
+            for rp in repos:
+                if rp not in self.meta.repositories:
+                    repos.remove(rp)
             Update().repository(repos)
         else:
             usage("")
