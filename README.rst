@@ -751,12 +751,13 @@ why always you can have updated your system:
     
     Upgrade only distribution:
 
-    $ slpkg -c slack --upgrade --skip="multi:*multilib*,ktown:*"    // This upgrade distribution
-    Checking...................Done                                 // and skip multilib packages
-                                                                    // and all packages from ktwon
-    Slackware64 'stable' v14.1 distribution is up to date           // repository.
-
-
+    $ slpkg -c slack --upgrade --skip="multi:*multilib*,ktown:*"  // This upgrade 
+    Checking...................Done                               // distribution
+                                                                  // and skip all 
+    Slackware64 'stable' v14.1 distribution is up to date         // packages from
+                                                                  // ktown repository
+                                                                  // and multilib
+                                                                  // from multi.
 Skip packages when upgrading:
 
 .. code-block:: bash
