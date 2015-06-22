@@ -8,11 +8,12 @@
 # This one will blacklist all packages include string "lib" in package name:
 # *lib*
 #
-# Exclude packages with repository priority:
-# sbo:py*        `excluded all packages from sbo starts with 'py'`
-# sbo:jdk        `excluded jdk package from sbo repository`
-# slack:*multi*  `excluded packages include string 'multi' from slack`
-# msb:*.txz      `excluded packages ends with '.txz' from msb repository`
+# Add packages in blacklist by repository:
+# slacky:*       `add all packages from slacky repository`
+# sbo:py*        `add all packages from sbo starts with 'py'`
+# sbo:jdk        `add jdk package from sbo repository`
+# slack:*multi*  `add packages include string 'multi' from slack`
+# msb:*.txz      `add packages ends with '.txz' from msb repository`
 #
 # Sometimes the automatic kernel update creates problems because you
 # may need to file intervention 'lilo'. The slpkg automatically detects

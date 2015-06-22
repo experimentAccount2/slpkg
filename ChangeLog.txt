@@ -1,7 +1,10 @@
 2.5.4 - 20/06/2015
-Fixed
+Fixed:
 - Check repository if exist when package upgrade
 - AttributeError: 'list' object has no attribute 'splitlines' in "--tracking" Thanks to Brenton Earl for report
+- Check exist or enabled repostitories when upgraded in options
+Updated:
+- Toolbar time
 
 2.5.3 - 20/06/2015
 Added:
