@@ -662,12 +662,7 @@ class Update(object):
                     exec("{0}.{1}()".format(self._init, repo))
                     sys.stdout.write(self.done)
                 elif repo in enabled:
-                    try:
-                        Initialization(False).custom(repo)
-                    except:
-                        sys.stdout.write(self.error)
-                        print("")
-                        sys.exit(0)
+                    Initialization(False).custom(repo)
                     sys.stdout.write(self.done)
                 else:
                     sys.stdout.write(self.error)
