@@ -90,148 +90,125 @@ Fixed:
 - 'ZeroDivisionError:' for binary package install
 - 'OSError:' if path not exist
 
-Version 2.3.2
-21-05-2015
+2.3.2 - 21/05/2015
+Fixed:
+- Arguments and options
+- Remove view package version when upgrade because conflict with some packages with the same name
+- File license
 
-[Updated] - Update arguments and options.
-          - Remove view package version when upgrade because conflict with
-            some packages with the same name.
-          - Update file license.
+2.3.1 - 14/05/2015
+Added:
+- The ability to sync with slackpkg and slpkg to update the file ChangeLog.txt when upgrading distribution
 
-Version 2.3.1
-14-05-2015
+2.3.0 - 07/05/2015
+Fixed:
+- Bugfix: Find package error #13, Thanks 'lucashpandolfo' for reporting
 
-[Feature] - Added the ability to sync with slackpkg and slpkg to update the 
-            file ChangeLog.txt when upgrading distribution.
+2.2.9 - 24/4/2015
+Fixed:
+- Reference installed packages after distribution upgrade
+- Double reference after already installed SBo packages
+- Clear master SBo packages
 
-Version 2.3.0
-07-05-2015
+2.2.8 - 23/4/2015
+Fixed:
+- Add new packages when upgrade
+- Man page
+- TypeError: 'NoneType' object has no attribute '__getitem__' when no sbo link found. Many Thanks to 'R S Ananda Murthy' to report.
+- Slackbuilds.org ChangeLog.txt url
+- Install.sh script
+- Binary/install.py, sbo/slackbuild.py and slack/patches.py clases
+- Count packages the upgrading of distribution
 
-[Updated] - Bugfix: Find package error #13
-            Thanks 'lucashpandolfo' for reporting.
+2.2.7 - 18/3/2015
+Added:
+- bash and fish completion file
+Fixed:
+- Synchronization issues when upgrading SBo repository
+- Remove to the right spaces on view
 
-Version 2.2.9
-24-4-2015
-
-[Updated] - Fix reference installed packages after distribution upgrade.
-          - Fix double reference after already installed SBo packages.
-          - Fix clear master SBo packages.
-
-Version 2.2.8
-23-4-2015
-
-[Updated] - Fix added new packages when upgrad.
-          - Fix man page.
-          - Fix TypeError: 'NoneType' object has no attribute '__getitem__'
-            when no sbo link found. Many Thanks to 'R S Ananda Murthy' to report.
-          - Fix slackbuilds.org ChangeLog.txt url.
-          - Update install.sh script.
-          - Update binary/install.py, sbo/slackbuild.py and slack/patches.py 
-            clases.
-          - Update count packages the upgrading of distribution.
-
-Version 2.2.7
-18-3-2015
-
-[Feature] - Added bash completion file.
-          - Added fish completion file.
-[Updated] - Fix synchronization issues when upgrading SBo repository.
-          - Fix remove to the right spaces on view.
-
-Version 2.2.6
-26-2-2015
-
-[Feature] - Added counter download.
-[Updated] - Update Slackware release message.
+2.2.6 - 26/2/2015
+Added:
+- Counter download
+Fixed:
+- Slackware release message
 
 Version 2.2.5
-24-2-2015
+2.2.5 - 24/02/2015
+Fixed:
+- Error-prone
+- Rename variable name 'VERSION' to 'RELEASE' in configuration file
+- Merge functions and fix __metadata__ complexity
+- SlackBulid and install script
+- Rename command 're-create' to 'upgrade'
+- IOError: [Errno 13] Permission denied as user
+- Alien repository checksum.
 
-[Updated] - Fix Error-prone.
-          - Rename variable name 'VERSION' to 'RELEASE' in configuration file.
-          - Merge functions and fix __metadata__ complexity.
-          - Update slackbulid and install script.
-          - Rename command 're-create' to 'upgrade'. 
-          - Fix IOError: [Errno 13] Permission denied as user.
-          - Fix alien repository checksum.
+2.2.3 - 16/02/2015
+Fixed:
+- slpkg.SlackBuild script support .zip archives
+- Can't overwrite new sbo scripts
+- Remove master package with dependencies
 
-Version 2.2.3
-16-2-2015
+2.2.2 - 11/02/2015
+Added:
+- BugFix show hidden matching sbo packages
 
-[Updated] - Fix slpkg.SlackBuild script support .zip archives.
-          - Fix can't overwrite new sbo scripts.
-          - Fix remove master package with dependencies.
+2.2.1 - 6/02/2015
+Added:
+- Support multipackages
+- Passing variables to the script
+- Use file.pkg instead [package...] or [package]
+Fixed:
+- [key error] when you enter wrong name repository as default
+- Rename BUILD variable to BUILD_PATH in configuration file slpkg.conf
+- Fails install if modified OUTPUT variable
+- Change in view list of packages in option '-l'
+- Update option '-f' view installed packages
+- Update option '-l' view installed packages
 
-Version 2.2.2
-11-2-2015
+2.2.0 - 08/01/2015
+Fixed:
+- Queue downloads
+- Find argument
+- Rename commands repolist and repoinfo to repo-list, repo-info
+- Installed package list
+Added:
+- Custom binary repository
+- Slackware 'patches' repository in PACKAGES.txt file
+- Alien's restricted repository
+- Wget option
+- View default repositories in repo-list
 
-[Updated] - BugFix show hidden matching sbo packages.
+2.1.5 - 27/12/2014
+Added:
+- Slacker.it, slackonly.com, Alien's ktown, Alien's multilib, Slacke E17 and E18, SalixOS and Slackel repositories
+- Command 're-create'
+- Command 'repolist'
+- Command 'repoinfo'
+Fixed:
+- Slackware current upgrade checksums
+- Ingore hiden files in /var/log/packages/ path
+- Arguments
 
+2.1.4 - 16/12/2014
+Added:
+- Command 'update' and remove auto update package lists
+- Slpkg update itself
+Fixed:
+- 'UnboundLocalError: local variable 'md5' referenced before assignment' after try update alien repository in some packages and for Slackware current users. Thanks to 'Jack Kiersey' for reporting.
+- Checksums after try to update slackware packages
 
-Version 2.2.1
-6-2-2015
-
-[Feature] - Added support multipackages.
-          - Added passing variables to the script.
-          - Added use file.pkg instead [package...] or [package].
-
-[Updated] - Fix [key error] when you enter wrong name repository as default.
-          - Rename BUILD variable to BUILD_PATH in configuration file slpkg.conf.
-          - Fix fails install if modified OUTPUT variable.
-          - Change in view list of packages in option '-l'.
-          - Update option '-f' view installed packages.
-          - Update option '-l' view installed packages.
-
-Version 2.2.0
-08-1-2015
-
-[Updated] - Fix queue downloads.
-          - Update find argument.
-          - Rename commands repolist and repoinfo to repo-list, repo-info.
-          - Update installed package list.
-
-[Feature] - Added custom binary repository.
-          - Added Slackware 'patches' repository in PACKAGES.txt file.
-          - Added Alien's restricted repository.
-          - Added wget option.
-          - Added view default repositories in repo-list.
-
-Version 2.1.5
-27-12-2014
-
-[Feature] - Added slacker.it, slackonly.com, Alien's ktown, Alien's multilib,
-            Slacke E17 and E18, SalixOS and Slackel repositories.
-          - Added command 're-create'.
-          - Added command 'repolist'.
-          - Added command 'repoinfo'. 
-
-[Updated] - Fix Slackware current upgrade checksums.
-          - Fix ingore hiden files in /var/log/packages/ path.
-          - Fix arguments.
-
-Version 2.1.4
-16-12-2014
-
-[Feature] - Added command 'update' and remove auto update package lists.
-          - Added slpkg update itself.
-
-[Updated] - Fix 'UnboundLocalError: local variable 'md5' referenced before assignment'
-            after try update alien repository in some packages and for Slackware current
-            users. Thanks to 'Jack Kiersey' for reporting.
-          - Fix checksums after try to update slackware packages.
-
-Version 2.1.3
-06-12-2014
-
-[Updated] - Fix 'IndexError: tuple index out of range' when sbo upgrade.
+2.1.3 - 06/12/2014
+Fixed:
+- 'IndexError: tuple index out of range' when sbo upgrade
 
 
-Version 2.1.2
-04-12-2014
-
-[Feature] - Added checksum all repositories.
-
-[Updated] - Fix downloads modules.
+2.1.2 - 04/12/2014
+Added:
+- Checksum for all repositories
+Fixed:
+- Downloads modules
 
 2.1.1 - 01/12/2014
 Added:
@@ -494,7 +471,7 @@ Added:
 - Package not installed (slpkg -s sbo)
 - Display installed packages in tracking dependencies
 
-1.6.8 - 01-08-2014
+1.6.8 - 01/08/2014
 Fixed:
 - Grap http extra sources with space in line start like
 - Package EMBASSY
@@ -531,7 +508,7 @@ Fixed:
 - Arguments
 - NameError: global name 'sp' is not defined
 
-1.6.2 - 26-07-2014
+1.6.2 - 26/07/2014
 Added:
 - Distribution upgrade from official Slackware mirrors `slpkg -c slack upgrade`
 Fixed:
