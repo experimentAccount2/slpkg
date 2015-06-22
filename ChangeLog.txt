@@ -10,7 +10,7 @@ Added:
 - Support download jdk from "sbo" repository
 Fixed:
 - Resolve dependencies classes
-- Add and remove packages from blacklist and queue.
+- Add and remove packages from blacklist and queue
 
 2.5.2 - 19/06/2015
 Added:
@@ -141,7 +141,6 @@ Added:
 Fixed:
 - Slackware release message
 
-Version 2.2.5
 2.2.5 - 24/02/2015
 Fixed:
 - Error-prone
@@ -345,7 +344,7 @@ Fixed:
 1.8.9 - 23/09/2014
 Added:
 - Short description
-- View matching packages from SBo repostirory
+- View matching packages from SBo repository
 Fixed:
 - Open-close files as SLACKBUILDS.TXT
 
@@ -431,8 +430,7 @@ Added:
 
 1.7.5 - 22/08/2014
 Added: 
-- Report of packages will be installed the options `slpkg -s sbo <package>`,
-`slpkg -s slack <package>`, `slpkg -c slack upgrade`
+- Report of packages will be installed the options `slpkg -s sbo <package>`, `slpkg -s slack <package>`, `slpkg -c slack upgrade`
 Fixed:
 - Mirrors for Slackware x86
 
@@ -463,7 +461,7 @@ Fixed:
 - Bugfix OSError: [Errno 2] No such file or directory: '/tmp/slpkg/patches/
 Added:
 - Change the way to search packages from slackbuilds.org.
-- The route search package eventually becomes found after ChangeLog.txt change.
+- The route search package eventually becomes found after ChangeLog.txt change
 
 1.7.0 - 09/08/2014
 Added:
@@ -607,7 +605,7 @@ Fixed:
 
 1.4.3 - 03/06/2014
 Fixed:
-- Avoid build packages with more than four arguments.
+- Avoid build packages with more than four arguments
 
 1.4.2 - 03/06/2014
 Fixed:
