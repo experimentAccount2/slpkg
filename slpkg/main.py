@@ -25,6 +25,7 @@
 import sys
 import getpass
 
+from load import skiped
 from messages import Msg
 from desc import PkgDesc
 from config import Config
@@ -232,7 +233,7 @@ class ArgParse(object):
             del self.args[index]
         for arg in self.args:
             if arg.startswith("--skip"):
-                skip = "".join(self.args[3].split("=")[1:]).split(",")
+                skip = skiped(self.args[3].split("=")[1])
                 self.args.pop(i)
             i += 1
         return flags, flag, skip
