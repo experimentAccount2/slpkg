@@ -216,7 +216,7 @@ class ArgParse(object):
                 Updates(repo="").ALL()
             else:
                 Updates(self.args[1]).run()
-        elif (len(self.args) == 2 and self.args[0] in options and
+        elif (len(self.args) >= 2 and self.args[0] in options and
                 self.args[1] not in self.meta.repositories):
             usage(self.args[1])
         else:
