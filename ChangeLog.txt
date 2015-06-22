@@ -32,39 +32,33 @@ Fixed:
 - Repository slackers.it mirror.
 - Ignore "sbo" repository if not activated.
 
-Version 2.4.4
-10-06-2015
+2.4.4 - 10/06/2015
+Fixed:
+- AttributeError: 'Update' object has no attribute 'meta' when try update repositories
 
-[Updated] - Fix AttributeError: 'Update' object has no attribute 'meta'
-            when try update repositories.
+2.4.3 - 10/06/2015
+Added:
+- Long options
+Fixed:
+- Usage help message
+- Bash and fish completion
+- Man page
+- Configuration file
 
-Version 2.4.3
-10-06-2015
+2.4.2 - 04/06/2015
+Fixed:
+- BugFix TypeError: repo_data() function
+- SBo version compare
+- Code style
 
-[Feature] - Added long options.
-
-[Updated] - Usage help message.
-          - Bash and fish completion.
-          - Man page.
-          - Configuration file.
-
-Version 2.4.2
-04-06-2015
-
-[Updated] - BugFix TypeError: repo_data() function.
-          - Update sbo version compare.
-          - Fix code style.
-
-
-Version 2.4.1
-04-06-2015
-
-[Feature] - Added option to upgrade only the distribution packages installed.
-          - Added option to on/off resolve dependencies.
-
-[Updated] - Fixed upgrade packages.
-          - Fixed checksum on/off.
-          - Fixed upgrade Slackware binary packages resolve dependencies.
+2.4.1 - 04/06/2015
+Added:
+- Option to upgrade only the distribution packages installed
+- Option to on/off resolve dependencies
+Fixed:
+- Upgrade packages
+- Checksum on/off
+- Upgrade Slackware binary packages resolve dependencies
 
 
 Version 2.4.0
@@ -277,30 +271,27 @@ Version 2.0.8
 
 [Updated] - Added more options in slpkg configuration file.
 
-Version 2.0.7
-22-11-2014
+2.0.7 - 22/11/2014
+Added:
+- More option in slpkg.conf file
+- Slackware-mirrors file in /etc/slpkg
+Fixed:
+- Upgrade Slackware packages if installed
 
-[Feature] - Added more option in slpkg.conf file.
-          - Added slackware-mirrors file in /etc/slpkg
+2.0.6 - 18/11/2014
+Fixed:
+- Setup.py file
 
-[Updated] - Fix upgrade Slackware packages if installed.
-
-Version 2.0.6
-18-11-2014
-
-[Updated] - Fix setup.py file
-
-Version 2.0.5
-18-11-2014
-
-[Feature] - Added /etc/slpkg.conf file.
-          - Move "--current" switch in /etc/slpkg.conf file.
-          - Added local PACKAGES.TXT for Slackware repository.
-          - Added options to view package description.
-          - Added all repositories in tracking dependencies options '-t'.
-          - Added configuration file managment
-
-[Updated] - Bugfix upgrading binary packages.
+2.0.5 - 18/11/2014
+Added:
+- /etc/slpkg.conf file
+- Move "--current" switch in /etc/slpkg.conf file
+- Local PACKAGES.TXT for Slackware repository
+- Options to view package description
+- All repositories in tracking dependencies options '-t'
+- Configuration file managment
+Fixed:
+- Bugfix upgrading binary packages
 
 2.0.4 - 07/11/2014
 Added:
