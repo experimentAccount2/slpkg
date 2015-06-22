@@ -233,7 +233,7 @@ class ArgParse(object):
                 index = self.args.index(flags[2])
                 del self.args[index]
             for arg in self.args:
-                if arg.startswith("--skip"):
+                if arg.startswith(flags[1]):
                     skip = skiped(self.args[i].split("=")[1])
                     self.args.pop(i)
                 i += 1
