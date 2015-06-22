@@ -1,8 +1,12 @@
-2.5.4 - 20/06/2015
+2.5.4 - 22/06/2015
+Added:
+- Support local repositories and you can add with command "repo-add"
+- Skip packages by repositories or from local
 Fixed:
 - Check repository if exist when package upgrade
 - AttributeError: 'list' object has no attribute 'splitlines' in "--tracking" Thanks to Brenton Earl for report
 - Check exist or enabled repostitories when upgraded in options
+- Update custom repositories
 Updated:
 - Toolbar time
 

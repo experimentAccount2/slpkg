@@ -747,15 +747,24 @@ why always you can have updated your system:
     
     Would you like to continue [Y/n]?
 
+    
+    
+    Upgrade only distribution:
+
+    $ slpkg -c slack --upgrade --skip="multi:*multilib*,ktown:*"    // This upgrade distribution
+    Checking...................Done                                 // and skip multilib packages
+                                                                    // and all packages from ktwon
+    Slackware64 'stable' v14.1 distribution is up to date           // repository.
+
 
 Skip packages when upgrading:
 
 .. code-block:: bash
 
-    $ slpkg -c sbo --upgrade --skip=pip,jdk
-    Checking ...................Done
-    Reading package lists ......Done
-    Resolving dependencies ...Done
+    $ slpkg -c sbo --upgrade --skip=pip,jdk     // Available options:
+    Checking ...................Done            // repository:*string*
+    Reading package lists ......Done            // repository:string*
+    Resolving dependencies ...Done              // repository:*string
 
     The following packages will be automatically installed or upgraded 
     with new version:
@@ -777,7 +786,7 @@ Skip packages when upgrading:
 
     Would you like to continue [Y/n]?
 
-    
+
 View complete slackbuilds.org site in your terminal.
 Read fies, download, build or install:
 
@@ -1164,13 +1173,12 @@ Add or remove packages in blacklist file manually from
 
     Note: you can use asterisk "*" to match more packages like:
 
-    *lib*   \\ all packages inlcude string "lib"
-    *lib    \\ all packages ends with string "lib"
-    lib*    \\ all packages starts with string "lib"
+    *lib*   \\ Add all packages inlcude string "lib"
+    *lib    \\ Add all packages ends with string "lib"
+    lib*    \\ Add all packages starts with string "lib"
 
-    slack:*multilib*   \\ all packages include string "multilib" from Slackware
-                       \\ repository. Useful to ignore multilib when upgrade
-                       \\ Slackware distribution.
+    multi:*multilib*   \\ Add all packages include string "multilib" from "multi"
+                       \\ repository.
     
 Print package description:
 
