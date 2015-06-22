@@ -227,15 +227,16 @@ class ArgParse(object):
         """Manage flags for package upgrade option
         """
         flag = skip, i = "", 0
-        if flags[2] in self.args:
-            flag = flags[2]
-            index = self.args.index(flags[2])
-            del self.args[index]
-        for arg in self.args:
-            if arg.startswith("--skip"):
-                skip = skiped(self.args[3].split("=")[1])
-                self.args.pop(i)
-            i += 1
+        if flags[0] in self.args:
+            if flags[2] in self.args:
+                flag = flags[2]
+                index = self.args.index(flags[2])
+                del self.args[index]
+            for arg in self.args:
+                if arg.startswith("--skip"):
+                    skip = skiped(self.args[i].split("=")[1])
+                    self.args.pop(i)
+                i += 1
         return flags, flag, skip
 
     def pkg_install(self):
