@@ -197,8 +197,8 @@ and x86 'current' version 14.1.
 
 Features
 --------
-
-- Build third party packages from source with all dependencies
+- Build packages from source with all dependencies
+- Support three downloaders wget, curl and aria2
 - Grabs packages from repositories in real time
 - Find and Download packages from repositories 
 - Automatic tool build and install packages
@@ -248,9 +248,9 @@ Using pip:
 
 Bbinary packages:
 
-Slackware: `slpkg-2.5.3-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.5.3/slpkg-2.5.3-i486-1_dsw.txz>`_
+Slackware: `slpkg-2.5.4-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.5.4/slpkg-2.5.4-i486-1_dsw.txz>`_
 
-Slackware64: `slpkg-2.5.3-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.5.3/slpkg-2.5.3-x86_64-1_dsw.txz>`_
+Slackware64: `slpkg-2.5.4-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.5.4/slpkg-2.5.4-x86_64-1_dsw.txz>`_
 
 
 Upgrade
