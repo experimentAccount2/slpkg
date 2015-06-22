@@ -443,6 +443,11 @@ Add and remove custom repositories:
     Repository 'ponce' successfully added
 
 
+    $ slpkg repo-add repo1 file:///home/user1/repos/alien/
+    
+    Repository 'repo1' successfully added
+
+    
     $ slpkg repo-remove ponce
 
     Repository 'ponce' successfully removed
