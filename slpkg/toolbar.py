@@ -37,5 +37,5 @@ def status(index, width, step):
                                           _meta_.color["ENDC"]))
         sys.stdout.flush()
         width += step
-        time.sleep(0.02)
+        time.sleep(0.009)
     return width
