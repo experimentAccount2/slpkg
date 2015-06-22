@@ -28,11 +28,11 @@ from distutils.version import LooseVersion
 
 from slpkg.messages import Msg
 from slpkg.toolbar import status
+from slpkg.blacklist import BlackList
 from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _meta_
 
 from greps import SBoGrep
-from search import sbo_search_pkg
 
 
 def sbo_upgrade(skip):
@@ -43,12 +43,14 @@ def sbo_upgrade(skip):
         Msg().checking()
         upgrade_names = []
         index, toolbar_width = 0, 3
+        data = SBoGrep(name="").names()
+        blacklist = BlackList().packages(pkgs=data, repo="sbo")
         for pkg in sbo_list():
             index += 1
             toolbar_width = status(index, toolbar_width, 4)
             name = split_package(pkg)[0]
             ver = split_package(pkg)[1]
-            if sbo_search_pkg(name) and name not in skip:
+            if (name in data and name not in skip and name not in blacklist):
                 sbo_package = ("{0}-{1}".format(name, SBoGrep(name).version()))
                 package = ("{0}-{1}".format(name, ver))
                 if LooseVersion(sbo_package) > LooseVersion(package):

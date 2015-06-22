@@ -27,6 +27,7 @@ import sys
 import pydoc
 
 from slpkg.messages import Msg
+from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
 from slpkg.__metadata__ import MetaData as _meta_
 
@@ -49,6 +50,8 @@ class SBoNetwork(object):
         self.build_folder = self.meta.build_path
         Msg().reading()
         grep = SBoGrep(self.name)
+        self.data = SBoGrep(name="").names()
+        self.blacklist = BlackList().packages(pkgs=self.data, repo="sbo")
         self.sbo_url = sbo_search_pkg(self.name)
         if self.sbo_url:
             self.sbo_desc = grep.description()[len(self.name) + 2:-1]
@@ -65,7 +68,7 @@ class SBoNetwork(object):
         View SlackBuild package, read or install them
         from slackbuilds.org
         """
-        if self.sbo_url:
+        if self.sbo_url and self.name not in self.blacklist:
             prgnam = ("{0}-{1}".format(self.name, self.sbo_version))
             self.view_sbo(
                 self.name, self.sbo_url, self.sbo_desc,
@@ -76,7 +79,7 @@ class SBoNetwork(object):
             while True:
                 choice = self.read_choice()
                 if choice in ["D", "d"]:
-                    Download("", self.dwn_srcs, repo="sbo").start()
+                    Download(path="", url=self.dwn_srcs, repo="sbo").start()
                     break
                 elif choice in ["R", "r"]:
                     README = Read(self.sbo_url).readme("README")
