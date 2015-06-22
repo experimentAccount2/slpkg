@@ -57,9 +57,6 @@ class Repo(object):
             print("\nMaximum repository name length must be six (6) "
                   "characters\n")
             sys.exit(0)
-        elif not url.startswith("http") or url.startswith("ftp"):
-            print("\nWrong type URL '{0}'\n".format(url))
-            sys.exit(0)
         with open(self.repo_file, "a") as repos:
             new_line = "  {0}{1}{2}\n".format(repo, " " * (10 - len(repo)), url)
             repos.write(new_line)
