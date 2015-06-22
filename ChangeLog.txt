@@ -5,9 +5,9 @@ Fixed
 
 2.5.3 - 20/06/2015
 Added:
-- Support blacklist packages by repository priority.
-- Instead wget, curl and aria2c as downloader.
-- Support download jdk from "sbo" repository.
+- Support blacklist packages by repository priority
+- Instead wget, curl and aria2c as downloader
+- Support download jdk from "sbo" repository
 Fixed:
 - Resolve dependencies classes
 - Add and remove packages from blacklist and queue.
@@ -26,11 +26,11 @@ Added:
 - MSB (mate) in default repositories.\
 - Update or upgrade specifically repositories
 Fixed:
-- Slonly repopsitory ChangeLog.txt link.
-- Selection foo.pkg removed instead you can use a variable ambient as: pkgs="pip brasero pylint" and then '# slpkg -s sbo $pkgs'.
-- Resolve binary dependencies.
-- Repository slackers.it mirror.
-- Ignore "sbo" repository if not activated.
+- Slonly repopsitory ChangeLog.txt link
+- Selection foo.pkg removed instead you can use a variable ambient as: pkgs="pip brasero pylint" and then '# slpkg -s sbo $pkgs'
+- Resolve binary dependencies
+- Repository slackers.it mirror
+- Ignore "sbo" repository if not activated
 
 2.4.4 - 10/06/2015
 Fixed:
@@ -60,46 +60,35 @@ Fixed:
 - Checksum on/off
 - Upgrade Slackware binary packages resolve dependencies
 
+2.4.0 - 02/06/2015
+Fixed:
+- Comments arguments to '--help' option
+Added:
+- Additional option to skip packages when upgrading
 
-Version 2.4.0
-02-06-2015
+2.3.6 - 30/05/2015
+Fixed:
+- Avoid input the first package for searching when input multiple packages together with the option '-F'
 
-[Updated] - Updated comments arguments to '--help' option.
+2.3.5 - 30/05/2015
+Fixed:
+- Version for SBo packages when search with option '-F'
 
-[Feature] - Added additional option to skip packages when upgrading.
+2.3.4 - 28/05/2015
+Fixed:
+- Arguments comments
+- Compression slackbuild package
+- Binary dependencies and sizes
+- Pylint errors
+- rlw repository package dependencies
+Added:
+- Find packages from enabled repositories
+- Script to remove data. (clean.py)
 
-Version 2.3.6
-30-05-2015
-
-[Updated] - Fixed to avoid input the first package for searching when input multiple 
-            packages together with the option '-F'.
-
-
-Version 2.3.5
-30-05-2015
-
-[Updated] - Added version for SBo packages when search with option
-            '-F'.
-
-
-Version 2.3.4
-28-05-2015
-
-[Updated] - Fix arguments comments.
-          - Update compression slackbuild package.
-          - Fix binary dependencies and sizes.
-          - Fix pylint errors.
-          - Update 'rlw' repository package dependencies.
-
-[Feature] - Added to find packages from enabled repositories.
-          - Added script to remove data. (clean.py)
-
-
-Version 2.3.3
-23-05-2015
-
-[Updated] - Fix 'ZeroDivisionError:' for binary package install.
-          - Fix 'OSError:' if path not exist.
+2.3.3 - 23/05/2015
+Fixed:
+- 'ZeroDivisionError:' for binary package install
+- 'OSError:' if path not exist
 
 Version 2.3.2
 21-05-2015
@@ -244,32 +233,28 @@ Version 2.1.2
 
 [Updated] - Fix downloads modules.
 
-Version 2.1.1
-01-12-2014
+2.1.1 - 01/12/2014
+Added:
+- Options in /etc/slpkg/slpkg.conf file to select repositories
+- Options to skip unsupported and untested packages
+Fixed:
+- Bugfix TypeError for unsupported/untested sbo packages
 
-[Feature] - Added options in /etc/slpkg/slpkg.conf file to select
-            repositories.
-          - Added options to skip unsupported and untested packages.
+2.1.0 - 28/11/2014
+Fixed:
+- Change build path
+- Creating directories if not exists
+Added:
+- Studioware (studio) repository
 
-[Updated] - Bugfix TypeError for unsupported/untested sbo packages.
+2.0.9 - 26/11/2014
+Fixed:
+- Setup.py to install configuration files after checksum
+- View slpkg config file
 
-Version 2.1.0
-28-11-2014
-
-[Updated] - Fix change build path.
-          - Fix creating directories if not exists.
-          - Added Studioware repository.
-
-Version 2.0.9
-26-11-2014
-
-[Updated] - Fix setup.py to install configuration files after checksum.
-          - Fix view slpkg config file.
-
-Version 2.0.8
-25-11-2014
-
-[Updated] - Added more options in slpkg configuration file.
+2.0.8 - 25/11/2014
+Added:
+- More options in slpkg configuration file
 
 2.0.7 - 22/11/2014
 Added:
