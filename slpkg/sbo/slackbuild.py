@@ -29,6 +29,7 @@ from slpkg.utils import Utils
 from slpkg.messages import Msg
 from slpkg.toolbar import status
 from slpkg.log_deps import write_deps
+from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
 from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _meta_
@@ -63,16 +64,17 @@ class SBoInstall(object):
         self.answer = ""
         self.match = False
         Msg().reading()
+        self.data = SBoGrep(name="").names()
+        self.blacklist = BlackList().packages(pkgs=self.data, repo="sbo")
 
     def start(self, if_upgrade):
         try:
             tagc = ""
             count_ins = count_upg = count_uni = 0
-            # self._remove_blacklist()
             for _sbo in self.slackbuilds:
                 self.index += 1
                 self.toolbar_width = status(self.index, self.toolbar_width, 4)
-                if sbo_search_pkg(_sbo):
+                if _sbo in self.data and _sbo not in self.blacklist:
                     sbo_deps = Requires(self.flag).sbo(_sbo)
                     self.deps += sbo_deps
                     self.deps_dict[_sbo] = self.one_for_all(sbo_deps)
@@ -159,14 +161,10 @@ class SBoInstall(object):
     def matching(self):
         """Return found matching SBo packages
         """
-        f = open(self.meta.lib_path + "sbo_repo/SLACKBUILDS.TXT", "r")
-        SLACKBUILDS_TXT = f.read()
-        f.close()
         for sbo in self.package_not_found:
-            for line in SLACKBUILDS_TXT.splitlines():
-                if (line.startswith("SLACKBUILD NAME: ") and
-                        sbo in line[17:] and sbo_search_pkg(line[17:]).strip()):
-                    self.package_found.append(line[17:])
+            for pkg in self.data:
+                if sbo in pkg and pkg not in self.blacklist:
+                    self.package_found.append(pkg)
 
     def sbo_version_source(self, slackbuilds):
         """Create sbo name with version
