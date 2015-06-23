@@ -74,20 +74,20 @@ class Regex(object):
                 for d in data:
                     if pr[1].startswith("*") and pr[1].endswith("*"):
                         if pr[1][1:-1] in d:
-                            lib.append(self.add(pr[0], d, lib))
+                            lib.append(self.add(pr[0], d))
                     elif pr[1].endswith("*"):
                         if d.startswith(pr[1][:-1]):
-                            lib.append(self.add(pr[0], d, lib))
+                            lib.append(self.add(pr[0], d))
                     elif pr[1].startswith("*"):
                         if d.endswith(pr[1][1:]):
-                            lib.append(self.add(pr[0], d, lib))
+                            lib.append(self.add(pr[0], d))
                     else:
-                        lib.append(self.add(pr[0], d, lib))
+                        lib.append(self.add(pr[0], d))
             else:
                 lib += pkg.split()
         return lib
 
-    def add(self, repo, pkg, lib):
+    def add(self, repo, pkg):
         """Split packages by repository
         """
         if repo == "sbo":
