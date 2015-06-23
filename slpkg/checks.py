@@ -107,7 +107,7 @@ class Updates(object):
     def print_status(self, repo):
         """Print status
         """
-        print(" {0}{1}{2}".format(repo, " " * (20 - len(repo)), self.st))
+        print("  {0}{1}{2}".format(repo, " " * (19 - len(repo)), self.st))
 
     def summary(self):
         """Print summary

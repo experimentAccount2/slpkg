@@ -163,9 +163,9 @@ class Patches(object):
             if not find_package(pkg_split[0], self.meta.pkg_path):
                 color = self.meta.color["RED"]
             ver = get_installed_version(pkg_split[0])
-            print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>12}{12}".format(
+            print("  {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>12}{12}".format(
                 color, pkg_split[0] + ver, self.meta.color["ENDC"],
-                " " * (24-len(pkg_split[0] + ver)), pkg_split[1],
+                " " * (23-len(pkg_split[0] + ver)), pkg_split[1],
                 " " * (18-len(pkg_split[1])), pkg_split[2],
                 " " * (8-len(pkg_split[2])), pkg_split[3],
                 " " * (7-len(pkg_split[3])), "Slack",

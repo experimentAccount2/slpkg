@@ -213,9 +213,9 @@ class SBoInstall(object):
         args[3] arch
         """
         ver = get_installed_version(args[1])
-        print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>11}{12}".format(
+        print("  {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>11}{12}".format(
             args[0], args[1] + ver, self.meta.color["ENDC"],
-            " " * (24-len(args[1] + ver)), args[2],
+            " " * (23-len(args[1] + ver)), args[2],
             " " * (18-len(args[2])), args[3],
             " " * (15-len(args[3])), "",
             "", "SBo", "", "")).rstrip()

@@ -229,9 +229,9 @@ class BinaryInstall(object):
                 COLOR = self.meta.color["RED"]
                 uni_sum += 1
             ver = get_installed_version(pkg_split[0])
-            print(" {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>11}{12}".format(
+            print("  {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>11}{12}".format(
                 COLOR, pkg_split[0] + ver, self.meta.color["ENDC"],
-                " " * (24-len(pkg_split[0] + ver)), pkg_split[1],
+                " " * (23-len(pkg_split[0] + ver)), pkg_split[1],
                 " " * (18-len(pkg_split[1])), pkg_split[2],
                 " " * (8-len(pkg_split[2])), pkg_split[3],
                 " " * (7-len(pkg_split[3])), repo,
