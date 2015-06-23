@@ -53,12 +53,13 @@ def find_from_repos(pkg):
                         cache = repo
                         count_pkg += 1
                         ver = sbo_version(repo, find)
-                        print("| {0}{1}{2} {3}{4:>11}".format(
+                        print("  {0}{1}{2} {3}{4:>11}".format(
                             repo, " " * (12 - len(repo)),
                             find + ver, " " * (53 - len(find + ver)),
                             size))
-        Msg().template(78)
-        print("{0} Total found {1} packages in {2} repositories.{3}\n".format(
+        print("\nFound summary")
+        print("=" * 79)
+        print("{0}Total found {1} packages in {2} repositories.{3}\n".format(
             _meta_.color["GREY"], count_pkg, count_repo, _meta_.color["ENDC"]))
     except KeyboardInterrupt:
         print("")   # new line at exit
