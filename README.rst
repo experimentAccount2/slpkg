@@ -430,8 +430,31 @@ list. This command must be executed to update the package lists:
     Also you can check ChangeLog.txt for changes like:
 
     $ slpkg -c sbo
+    
+    +==============================================================================
+    | Repository         Status
+    +==============================================================================
+      sbo                News in ChangeLog.txt
 
-    News in ChangeLog.txt
+    Summary
+    ===============================================================================
+    From 1 repositories need 1 updating. Run the command 'slpkg update'.
+
+
+    $ slpkg -c ALL
+
+    +==============================================================================
+    | Repository         Status
+    +==============================================================================
+      slack              No changes in ChangeLog.txt
+      sbo                News in ChangeLog.txt
+      slacky             News in ChangeLog.txt
+      alien              No changes in ChangeLog.txt
+      rlw                No changes in ChangeLog.txt
+
+    Summary
+    ===============================================================================
+    From 5 repositories need 2 updating. Run the command 'slpkg update'.
 
 
 Add and remove custom repositories:
@@ -509,12 +532,12 @@ Installing packages from the repositories (supporting multi packages):
     | Package                 New version        Arch    Build  Repos          Size
     +==============================================================================
     Installing:
-     brasero                  3.12.1             x86_64         SBo
+      brasero                 3.12.1             x86_64         SBo
     Installing for dependencies:
-     orc                      0.4.23             x86_64         SBo
-     gstreamer1               1.4.5              x86_64         SBo
-     gst1-plugins-base        1.4.5              x86_64         SBo
-     gst1-plugins-bad         1.4.5              x86_64         SBo
+      orc                     0.4.23             x86_64         SBo
+      gstreamer1              1.4.5              x86_64         SBo
+      gst1-plugins-base       1.4.5              x86_64         SBo
+      gst1-plugins-bad        1.4.5              x86_64         SBo
 
     Installing summary
     ===============================================================================
@@ -538,22 +561,22 @@ Installing packages from the repositories (supporting multi packages):
     | Package                 New version        Arch    Build  Repos          Size
     +==============================================================================
     Installing:
-     brasero                  3.12.1             x86_64         SBo
-     pylint-1.3.1             1.3.1              x86_64         SBo
-     atkmm                    2.22.7             x86_64         SBo
+      brasero                 3.12.1             x86_64         SBo
+      pylint-1.3.1            1.3.1              x86_64         SBo
+      atkmm                   2.22.7             x86_64         SBo
     Installing for dependencies:
-     libsigc++                2.2.11             x86_64         SBo
-     glibmm                   2.36.2             x86_64         SBo
-     cairomm                  1.10.0             x86_64         SBo
-     pangomm                  2.34.0             x86_64         SBo
-     six-1.8.0                1.8.0              x86_64         SBo
-     pysetuptools-17.0        17.0               x86_64         SBo
-     logilab-common-0.63.2    0.63.2             x86_64         SBo
-     astroid-1.3.6            1.3.6              x86_64         SBo
-     orc                      0.4.23             x86_64         SBo
-     gstreamer1               1.4.5              x86_64         SBo
-     gst1-plugins-base        1.4.5              x86_64         SBo
-     gst1-plugins-bad         1.4.5              x86_64         SBo
+      libsigc++               2.2.11             x86_64         SBo
+      glibmm                  2.36.2             x86_64         SBo
+      cairomm                 1.10.0             x86_64         SBo
+      pangomm                 2.34.0             x86_64         SBo
+      six-1.8.0               1.8.0              x86_64         SBo
+      pysetuptools-17.0       17.0               x86_64         SBo
+      logilab-common-0.63.2   0.63.2             x86_64         SBo
+      astroid-1.3.6           1.3.6              x86_64         SBo
+      orc                     0.4.23             x86_64         SBo
+      gstreamer1              1.4.5              x86_64         SBo
+      gst1-plugins-base       1.4.5              x86_64         SBo
+      gst1-plugins-bad        1.4.5              x86_64         SBo
 
     Installing summary
     ===============================================================================
@@ -574,12 +597,12 @@ Installing packages from the repositories (supporting multi packages):
     | Package                 Version            Arch    Build  Repos          Size
     +==============================================================================
     Installing:
-     atkmm                    2.22.6             x86_64  1      alien         124 K
+      atkmm                   2.22.6             x86_64  1      alien         124 K
     Installing for dependencies:
-     libsigc++                2.2.10             x86_64  2      alien         128 K
-     glibmm                   2.32.1             x86_64  1      alien        1012 K
-     cairomm                  1.10.0             x86_64  2      alien         124 K
-     pangomm                  2.28.4             x86_64  1      alien         124 K
+      libsigc++               2.2.10             x86_64  2      alien         128 K
+      glibmm                  2.32.1             x86_64  1      alien        1012 K
+      cairomm                 1.10.0             x86_64  2      alien         124 K
+      pangomm                 2.28.4             x86_64  1      alien         124 K
 
     Installing summary
     ===============================================================================
@@ -603,7 +626,7 @@ Installing packages from the repositories (supporting multi packages):
     | Package                 New Version        Arch    Build  Repos          Size
     +==============================================================================
     Installing:
-     atkmm                    2.22.6             x86_64  1      alien         124 K
+      atkmm                   2.22.6             x86_64  1      alien         124 K
     
      Installing summary
      ===============================================================================
@@ -687,12 +710,12 @@ Check if your packages is up to date or changes in ChangeLog.txt:
     | Package                 Version            Arch    Build  Repos          Size
     +==============================================================================
     Upgrading:
-     astroid-1.3.2            1.3.4              x86_64         SBo           
-     jdk-7u51                 8u31               x86_64         SBo           
+      astroid-1.3.2           1.3.4              x86_64         SBo           
+      jdk-7u51                8u31               x86_64         SBo           
     Installing for dependencies:
-     six-1.7.3                1.8.0              x86_64         SBo           
-     logilab-common-0.60.1    0.63.2             x86_64         SBo           
-     pysetuptools-6.1         7.0                x86_64         SBo           
+      six-1.7.3               1.8.0              x86_64         SBo           
+      logilab-common-0.60.1   0.63.2             x86_64         SBo           
+      pysetuptools-6.1        7.0                x86_64         SBo           
 
     Installing summary
     ===============================================================================
@@ -712,7 +735,7 @@ Check if your packages is up to date or changes in ChangeLog.txt:
     | Package                 Version            Arch    Build  Repos          Size
     +==============================================================================
     Upgrading:
-     gstreamer1-1.4.1         1.4.4              x86_64  1      slacky       1563 K
+      gstreamer1-1.4.1        1.4.4              x86_64  1      slacky       1563 K
 
     Installing summary
     ===============================================================================
@@ -740,9 +763,9 @@ why always you can have updated your system:
     | Package                   Version          Arch     Build  Repos         Size
     +==============================================================================
     Upgrading:
-     dhcpcd-6.0.5               6.0.5            x86_64   3      Slack         92 K
-     samba-4.1.0                4.1.11           x86_64   1      Slack       9928 K
-     xscreensaver-5.22          5.29             x86_64   1      Slack       3896 K
+      dhcpcd-6.0.5              6.0.5            x86_64   3      Slack         92 K
+      samba-4.1.0               4.1.11           x86_64   1      Slack       9928 K
+      xscreensaver-5.22         5.29             x86_64   1      Slack       3896 K
 
     Installing summary
     ===============================================================================
@@ -779,10 +802,10 @@ Skip packages when upgrading:
     | Package                 Version            Arch    Build  Repos          Size
     +==============================================================================
     Upgrading:
-     cffi-1.0.1               1.1.0              x86_64         SBo
+      cffi-1.0.1              1.1.0              x86_64         SBo
     Installing for dependencies:
-     pysetuptools-17.0        17.0               x86_64         SBo
-     pycparser-2.12           2.13               x86_64         SBo
+      pysetuptools-17.0       17.0               x86_64         SBo
+      pycparser-2.12          2.13               x86_64         SBo
 
     Installing summary
     ===============================================================================
@@ -948,6 +971,8 @@ Search and find packages from repositories are enabled:
       salix       aria2-1.18.1-x86_64-1rl.txz                                1052 K
       slackr      aria2-1.18.10-x86_64-1cf.txz                               1140 K
     
+    Found summary
+    ===============================================================================
     Total found 4 packages in 4 repositories.
 
     
@@ -1083,7 +1108,7 @@ enabled from configuration file.
     
     
     +==============================================================================
-    | WARNING !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!! 
+    |                              !!! WARNING !!!  
     +==============================================================================
     | pysetuptools is dependency of the package --> Flask
     | MarkupSafe is dependency of the package --> Flask
