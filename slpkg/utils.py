@@ -23,6 +23,7 @@
 
 
 import os
+import sys
 
 from splitting import split_package
 
@@ -62,10 +63,14 @@ class Utils(object):
         Returns list with all the names of packages repository
         """
         packages = []
-        for line in PACKAGES_TXT.splitlines():
-            if line.startswith("PACKAGE NAME:"):
-                packages.append(split_package(line[14:].strip())[0])
-        return packages
+        try:
+            for line in PACKAGES_TXT.splitlines():
+                if line.startswith("PACKAGE NAME:"):
+                    packages.append(split_package(line[14:].strip())[0])
+            return packages
+        except KeyboardInterrupt:
+            print("")
+            sys.exit(0)
 
     def check_downloaded(self, path, maybe_downloaded):
         """
@@ -83,7 +88,11 @@ class Utils(object):
         Read config file and returns first uncomment line
         and stop. Used for Slackware mirrors
         """
-        for line in config.splitlines():
-            line = line.lstrip()
-            if line and not line.startswith("#"):
-                return line
+        try:
+            for line in config.splitlines():
+                line = line.lstrip()
+                if line and not line.startswith("#"):
+                    return line
+        except KeyboardInterrupt:
+            print("")
+            sys.exit(0)

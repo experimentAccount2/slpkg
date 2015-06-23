@@ -22,6 +22,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+import sys
 import subprocess
 
 from utils import Utils
@@ -61,12 +62,16 @@ class Config(object):
             "ONLY_INSTALLED"
         ]
         read_conf = Utils().read_file(self.config_file)
-        for line in read_conf.splitlines():
-            if not line.startswith("#") and line.split("=")[0] in conf_args:
-                print(line)
-            else:
-                print("{0}{1}{2}".format(self.meta.color["CYAN"], line,
-                                         self.meta.color["ENDC"]))
+        try:
+            for line in read_conf.splitlines():
+                if not line.startswith("#") and line.split("=")[0] in conf_args:
+                    print(line)
+                else:
+                    print("{0}{1}{2}".format(self.meta.color["CYAN"], line,
+                                             self.meta.color["ENDC"]))
+        except KeyboardInterrupt:
+            print("")
+            sys.exit(0)
         print("")   # new line at end
 
     def edit(self, editor):
