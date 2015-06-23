@@ -25,7 +25,7 @@
 import sys
 import getpass
 
-from load import skiped
+from load import Regex
 from messages import Msg
 from desc import PkgDesc
 from config import Config
@@ -237,7 +237,7 @@ class ArgParse(object):
                 del self.args[index]
             for arg in self.args:
                 if arg.startswith(flags[1]):
-                    skip = skiped(self.args[i].split("=")[1])
+                    skip = Regex(self.args[i].split("=")[1]).get()
                     self.args.pop(i)
                 i += 1
         return flags, flag, skip

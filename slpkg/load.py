@@ -56,38 +56,41 @@ def library(repo):
     return pkg_list
 
 
-def skiped(pkgs):
-    """Grap packages and added in skip
+class Regex(object):
+    """Grap packages with simple regex using asterisk *
+       with options: starts with string*
+                     ends with *string
+                     include *string*
     """
-    skip, data = [], []
-    for pkg in pkgs.split(","):
-        pr = pkg.split(":")
-        data = library(pr[0])
-        if len(pr) > 1:
-            for d in data:
-                if pr[1].startswith("*") and pr[1].endswith("*"):
-                    if pr[1][1:-1] in d:
-                        if pr[0] == "sbo":
-                            skip.append(d)
-                        else:
-                            skip.append(split_package(d)[0])
-                elif pr[1].endswith("*"):
-                    if d.startswith(pr[1][:-1]):
-                        if pr[0] == "sbo":
-                            skip.append(d)
-                        else:
-                            skip.append(split_package(d)[0])
-                elif pr[1].startswith("*"):
-                    if d.endswith(pr[1][1:]):
-                        if pr[0] == "sbo":
-                            skip.append(d)
-                        else:
-                            skip.append(split_package(d)[0])
-                else:
-                    if pr[0] == "sbo":
-                        skip.append(d)
+    def __init__(self, pkgs):
+        self.pkgs = pkgs
+
+    def get(self):
+        lib, data = [], []
+        for pkg in self.pkgs.split(","):
+            pr = pkg.split(":")
+            data = library(pr[0])
+            if len(pr) > 1:
+                for d in data:
+                    if pr[1].startswith("*") and pr[1].endswith("*"):
+                        if pr[1][1:-1] in d:
+                            lib.append(self.add(pr[0], d, lib))
+                    elif pr[1].endswith("*"):
+                        if d.startswith(pr[1][:-1]):
+                            lib.append(self.add(pr[0], d, lib))
+                    elif pr[1].startswith("*"):
+                        if d.endswith(pr[1][1:]):
+                            lib.append(self.add(pr[0], d, lib))
                     else:
-                        skip.append(split_package(d)[0])
+                        lib.append(self.add(pr[0], d, lib))
+            else:
+                lib += pkg.split()
+        return lib
+
+    def add(self, repo, pkg, lib):
+        """Split packages by repository
+        """
+        if repo == "sbo":
+            return pkg
         else:
-            skip += pkg.split()
-    return skip
+            return split_package(pkg)[0]
