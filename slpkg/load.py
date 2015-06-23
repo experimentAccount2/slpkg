@@ -68,8 +68,8 @@ class Regex(object):
     def get(self):
         lib, data = [], []
         for pkg in self.pkgs.split(","):
-            pr = pkg.split(":")
-            data = library(pr[0])
+            pr = pkg.split(":")     # priotity by repository
+            data = library(pr[0])   # load data
             if len(pr) > 1:
                 for d in data:
                     if pr[1].startswith("*") and pr[1].endswith("*"):
