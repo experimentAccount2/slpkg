@@ -53,8 +53,8 @@ Also you can install official packages of your favorite distribution directly fr
 official repositories of Slackware. Even you can check for the official updates and install them.
 
 
-Asciicast
----------
+Demonstration
+-------------
 
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/slpkg_youtube.png
     :target: https://www.youtube.com/watch?v=oTtD4XhHKlA
