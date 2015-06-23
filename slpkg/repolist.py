@@ -84,8 +84,12 @@ class RepoList(object):
                 repo_URL, " " * (52 - len(repo_URL)),
                 default, " " * (8 - len(default)),
                 COLOR, status, self.meta.color["ENDC"]))
-        print("\n{0}/{1} enabled default repositories and {2} custom.".format(
-            def_cnt, len(self.all_repos), cus_cnt))
+
+        print("\nRepositories summary")
+        print("=" * 79)
+        print("{0}{1}/{2} enabled default repositories and {3} custom.".format(
+            self.meta.color["GREY"], def_cnt, len(self.all_repos), cus_cnt))
         print("For enable or disable default repositories edit "
-              "'/etc/slpkg/slpkg.conf' file.\n")
+              "'/etc/slpkg/slpkg.conf' file.\n{0}".format(
+                  self.meta.color["ENDC"]))
         sys.exit(0)
