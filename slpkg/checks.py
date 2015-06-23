@@ -21,6 +21,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+from messages import Msg
 from arguments import usage
 from init import Initialization
 from __metadata__ import MetaData as _meta_
@@ -34,6 +36,8 @@ class Updates(object):
         self.meta = _meta_
         self.check = 2
         self.st = ""
+        self.count_repo = 0
+        self.count_news = 0
         self._init = Initialization(True)
         self.all_repos = {
             "slack": self._init.slack,
@@ -52,6 +56,10 @@ class Updates(object):
             "rested": self._init.rested,
             "msb": self._init.msb
         }
+        print("")
+        Msg().template(78)
+        print("| Repository         Status")
+        Msg().template(78)
 
     def run(self):
         """Run and check if new in ChangeLog.txt
@@ -67,7 +75,8 @@ class Updates(object):
         else:
             usage(self.repo)
         self.status()
-        print(self.st)
+        self.print_status(self.repo)
+        self.summary()
 
     def ALL(self):
         """Check ALL enabled repositories ChangeLogs
@@ -81,12 +90,35 @@ class Updates(object):
             elif repo in self.meta.repositories:
                 self.check = self._init.custom(repo)
             self.status()
-            print("Repository '{0}':\n {1}".format(repo, self.st))
+            self.print_status(repo)
+        self.summary()
 
     def status(self):
-        """Print messages
+        """Set messages
         """
+        self.count_repo += 1
         if self.check == 1:
-            self.st = "\nNews in ChangeLog.txt\n"
+            self.count_news += 1
+            self.st = "{0}News in ChangeLog.txt{1}".format(
+                self.meta.color["GREEN"], self.meta.color["ENDC"])
         elif self.check == 0:
-            self.st = "\nNo changes in ChangeLog.txt\n"
+            self.st = "No changes in ChangeLog.txt"
+
+    def print_status(self, repo):
+        """Print status
+        """
+        print(" {0}{1}{2}".format(repo, " " * (20 - len(repo)), self.st))
+
+    def summary(self):
+        """Print summary
+        """
+        print("\nSummary")
+        print("=" * 79)
+        cmd = "All repositories are updated."
+        if self.count_repo == 1:
+            cmd = "Repository is updated."
+        if self.count_news > 0:
+            cmd = "Run the command 'slpkg update'."
+        print("{0}From {1} repositories need {2} updating. {3}{4}\n".format(
+            self.meta.color["GREY"], self.count_repo, self.count_news, cmd,
+            self.meta.color["ENDC"]))
