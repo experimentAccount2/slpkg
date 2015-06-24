@@ -245,6 +245,7 @@ class PackageManager(object):
     def _reference_rmvs(self, removes):
         """Prints all removed packages
         """
+        print("")
         Msg().template(78)
         print("| Total {0} packages removed".format(len(removes)))
         Msg().template(78)
