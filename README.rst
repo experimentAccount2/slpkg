@@ -248,9 +248,9 @@ Using pip:
 
 Bbinary packages:
 
-Slackware: `slpkg-2.5.4-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.5.4/slpkg-2.5.4-i486-1_dsw.txz>`_
+Slackware: `slpkg-2.5.5-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.5.5/slpkg-2.5.5-i486-1_dsw.txz>`_
 
-Slackware64: `slpkg-2.5.4-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.5.4/slpkg-2.5.4-x86_64-1_dsw.txz>`_
+Slackware64: `slpkg-2.5.5-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.5.5/slpkg-2.5.5-x86_64-1_dsw.txz>`_
 
 
 Upgrade
@@ -832,15 +832,15 @@ Read fies, download, build or install:
     | Sources : bitfighter-019c.tar.gz, classic_level_pack.zip 
     | Requirements : OpenAL, SDL2, speex, libmodplug
     +===============================================================================
-     README               View the README file
-     SlackBuild           View the SlackBuild file
-     Info                 View the Info file
-     Download             Download this package
-     Build                Download and build this package
-     Install              Download/Build/Install
-     Quit                 Quit
-     
-     Choose an option: _
+    | README               View the README file
+    | SlackBuild           View the SlackBuild file
+    | Info                 View the Info file
+    | Download             Download this package
+    | Build                Download and build this package
+    | Install              Download/Build/Install
+    | Quit                 Quit
+    +================================================================================ 
+      Choose an option > _
 
      
 Auto tool to build package:
@@ -1129,6 +1129,8 @@ enabled from configuration file.
     .
     .
     .
+    +==============================================================================
+    | Total 6 packages removed
     +==============================================================================
     | Package Flask removed
     | Package pysetuptools removed

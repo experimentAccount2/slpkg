@@ -138,20 +138,22 @@ class SBoNetwork(object):
                                                   color["ENDC"],
                                                   ", ".join(args[5])))
         Msg().template(78)
-        print("  {0}R{1}EADME               View the README file".format(
+        print("| {0}R{1}EADME               View the README file".format(
             color["RED"], color["ENDC"]))
-        print("  {0}S{1}lackBuild           View the SlackBuild file".format(
+        print("| {0}S{1}lackBuild           View the SlackBuild file".format(
             color["RED"], color["ENDC"]))
-        print("  In{0}f{1}o                 View the Info file".format(
+        print("| In{0}f{1}o                 View the Info file".format(
             color["RED"], color["ENDC"]))
-        print("  {0}D{1}ownload             Download this package".format(
+        print("| {0}D{1}ownload             Download this package".format(
             color["RED"], color["ENDC"]))
-        print("  {0}B{1}uild                Download and build".format(
+        print("| {0}B{1}uild                Download and build".format(
             color["RED"], color["ENDC"]))
-        print("  {0}I{1}nstall              Download/Build/Install".format(
+        print("| {0}I{1}nstall              Download/Build/Install".format(
             color["RED"], color["ENDC"]))
-        print("  {0}Q{1}uit                 Quit\n".format(color["RED"],
-                                                           color["ENDC"]))
+        print("| {0}Q{1}uit                 Quit".format(color["RED"],
+                                                         color["ENDC"]))
+
+        Msg().template(78)
 
     @staticmethod
     def fill_pager(page):
@@ -173,7 +175,7 @@ class SBoNetwork(object):
         Return choice
         """
         try:
-            choice = raw_input("{0}  Choose an option: {1}".format(
+            choice = raw_input("{0}  Choose an option > {1}".format(
                 _meta_.color["GREY"], _meta_.color["ENDC"]))
         except KeyboardInterrupt:
             print("")   # new line at exit
