@@ -71,7 +71,7 @@ Additional option "--only=" just like "slpkg update --only=[repositories...]".
 .PP
 Add custom binary repository. The repositories will be added to this command should 
 contain at least the files "PACKAGES.TXT" and "CHECKSUMS.md5" and optional file
-"ChangeLog.txt".
+"ChangeLog.txt" used to control changes.
 
 .SS repo-remove, remove custom repository
 \fBslpkg\fP \fBrepo-remove\fP <\fIrepository\fP> 
@@ -108,7 +108,9 @@ package from source quickly and easy.
 .PP
 Add, remove or listed packages from blacklist file. The settings here affect 
 all repositories. Remove all packages from blacklist use argument "ALL" for package 
-like "# slpkg -b ALL --remove".
+like "# slpkg -b ALL --remove". Use asterisk "*" to match pagkages like "# slpkg -b 
+py* --add", this add all installed packages with starts string "py" or "# slpkg -b 
+multi:*multilib* --add", this add all multilib packages from repository "multi".
 
 .SS -q, --queue, add, remove, view packages in queue
 \fBslpkg\fP \fB-q\fP <\fInames of packages\fP> \fB--add\fP, \fB--remove\fP
@@ -136,14 +138,15 @@ system. Support command "grep" like "# slpkg -l sbo | grep python".
 \fBslpkg\fP \fB-c\fP <\fIrepository\fP> \fB--upgrade\fP \fB--skip=[packages...]\fP, 
 \fB--resolve-off\fP
 .PP
-Check your packages if up to date. Option "--skip" help to skip packages when upgrading and
+Check your packages if up to date. Option "--skip=" help to skip packages when upgrading and
 additional option "--resolve-off" switch off automatic resolve dependencies.
 Slackware patches repository works independently of the others i.e not need before updating 
 the list of packages by choosing "# slpkg update", works directly with the official repository 
 and so always you can have updated your system. 
 Also you can check ChangeLog.txt for changes without option "--upgrade" like:
 "# slpkg -c [repository]" or check all enabled repositories just replace repository name with
-"ALL".
+"ALL". NOTE: for option "--skip=" support asterisk "*" to match packages like "*string*" or per
+repository like "sbo:*_SBo", this skip all packages from SBo repository.
 
 .SS -s, --sync, synchronize packages, download, build and install package with all dependencies
 \fBslpkg\fP \fB-s\fP <\fIrepository\fP> <\fInames of packages\fP>, \fB--resolve-off\fP
@@ -235,7 +238,7 @@ For example:
  SalixOS = "salix"
  Slackel.gr = "slackel"
  Alien"s restricted = "rested"
- MATE Desktop Environment = "msb"
+ MATE Desktop Environment = "msb{1.10}"
    
  Default enable repository is "slack" and "sbo".
  Add or remove default repository in configuration file "/etc/slpkg/slpkg.conf".
@@ -243,6 +246,13 @@ For example:
 
 .SH COLORS
  red, green, yellow, cyan, grey
+
+.SH REGEX
+ For options "--skip=" and blacklist file.
+
+ All packages starts with: "string*"
+ All packages ends with: "*string"
+ All packages include: "*string*"
 
 .SH PASS VARIABLES TO SCRIPT
  If you want to pass variables to the script exported as: 
