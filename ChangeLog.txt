@@ -1,3 +1,10 @@
+2.5.5 - 23/06/-2015
+Added:
+- Summary in option "--FIND", "--check" and "repo-list"
+Updated:
+- Package view align
+- Repositories view list
+
 2.5.4 - 22/06/2015
 Added:
 - Support local repositories and you can add with command "repo-add"
