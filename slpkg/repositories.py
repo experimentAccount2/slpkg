@@ -191,4 +191,4 @@ class Repo(object):
         """
         MSB mate repository
         """
-        return ("http://slackware.org.uk/msb/")
+        return "http://slackware.org.uk/msb/"

@@ -211,7 +211,7 @@ class Patches(object):
                                           self.meta.color["ENDC"]))
                     Msg().template(78)
                     answer = raw_input("\nThe kernel has been upgraded, "
-                                       "reinstall `LILO` [Y/n]? ")
+                                       "reinstall `LILO` [y/N]? ")
                 if answer in ["y", "Y"]:
                     subprocess.call("lilo", shell=True)
                     break

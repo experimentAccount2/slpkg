@@ -129,10 +129,10 @@ class Msg(object):
     def answer(self):
         """Message answer
         """
-        if self.meta.default_answer == "y":
+        if self.meta.default_answer in ["y", "Y"]:
             answer = self.meta.default_answer
         else:
-            answer = raw_input("Would you like to continue [Y/n]? ")
+            answer = raw_input("Would you like to continue [y/N]? ")
         return answer
 
     def reference(self, install, upgrade):

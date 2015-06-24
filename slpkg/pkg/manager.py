@@ -89,11 +89,11 @@ class PackageManager(object):
             if len(self.removed) > 1:
                 msg = msg + "s"
             try:
-                if self.meta.default_answer == "y":
+                if self.meta.default_answer in ["y", "Y"]:
                     remove_pkg = self.meta.default_answer
                 else:
                     remove_pkg = raw_input(
-                        "\nAre you sure to remove {0} {1} [Y/n]? ".format(
+                        "\nAre you sure to remove {0} {1} [y/N]? ".format(
                             str(len(self.removed)), msg))
             except KeyboardInterrupt:
                 print("")   # new line at exit
@@ -120,13 +120,13 @@ class PackageManager(object):
     def _rmv_deps_answer(self):
         """Remove dependencies answer
         """
-        if self.meta.remove_deps_answer == "y":
+        if self.meta.remove_deps_answer in ["y", "Y"]:
             remove_dep = self.meta.remove_deps_answer
         else:
             try:
                 remove_dep = raw_input(
                     "\nRemove dependencies (maybe used by "
-                    "other packages) [Y/n]? ")
+                    "other packages) [y/N]? ")
                 print("")
             except KeyboardInterrupt:
                 print("")  # new line at exit
