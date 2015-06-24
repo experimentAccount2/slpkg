@@ -1,4 +1,4 @@
-2.5.5 - 23/06/-2015
+2.5.5 - 23/06/2015
 Added:
 - Summary in option "--FIND", "--check" and "repo-list"
 Updated:
