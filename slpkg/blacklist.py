@@ -94,36 +94,13 @@ class BlackList(object):
     def packages(self, pkgs, repo):
         """Return packages in blacklist or by repository
         """
-        black = []
+        self.black = []
         for bl in self.get_black():
             pr = bl.split(":")
             for pkg in pkgs:
-                # blacklist packages by repository priority
-                if (pr[0] == repo and pr[1].startswith("*") and
-                        pr[1].endswith("*")):
-                    if pr[1][1:-1] in pkg:
-                        black.append(self.__add(repo, pkg))
-                elif pr[0] == repo and pr[1].endswith("*"):
-                    if pkg.startswith(pr[1][:-1]):
-                        black.append(self.__add(repo, pkg))
-                elif pr[0] == repo and pr[1].startswith("*"):
-                    if pkg.endswith(pr[1][1:]):
-                        black.append(self.__add(repo, pkg))
-                elif pr[0] == repo and "*" not in pr[1]:
-                    black.append(self.__add(repo, pkg))
-                # normal blacklist packages
-                if bl.startswith("*") and bl.endswith("*"):
-                    if bl[1:-1] in pkg:
-                        black.append(self.__add(repo, pkg))
-                elif bl.endswith("*"):
-                    if pkg.startswith(bl[:-1]):
-                        black.append(self.__add(repo, pkg))
-                elif bl.startswith("*"):
-                    if pkg.endswith(bl[1:]):
-                        black.append(self.__add(repo, pkg))
-            if bl not in black and "*" not in bl:
-                black.append(bl)
-        return black
+                self.__priority(pr, repo, pkg)
+                self.__blackpkg(bl, repo, pkg)
+        return self.black
 
     def __add(self, repo, pkg):
         """Split packages by repository
@@ -132,3 +109,34 @@ class BlackList(object):
             return pkg
         else:
             return split_package(pkg)[0]
+
+    def __priority(self, pr, repo, pkg):
+        """Add packages in blacklist by priority
+        """
+        if (pr[0] == repo and pr[1].startswith("*") and
+                pr[1].endswith("*")):
+            if pr[1][1:-1] in pkg:
+                self.black.append(self.__add(repo, pkg))
+        elif pr[0] == repo and pr[1].endswith("*"):
+            if pkg.startswith(pr[1][:-1]):
+                self.black.append(self.__add(repo, pkg))
+        elif pr[0] == repo and pr[1].startswith("*"):
+            if pkg.endswith(pr[1][1:]):
+                self.black.append(self.__add(repo, pkg))
+        elif pr[0] == repo and "*" not in pr[1]:
+            self.black.append(self.__add(repo, pkg))
+
+    def __blackpkg(self, bl, repo, pkg):
+        """Add packages in blacklist
+        """
+        if bl.startswith("*") and bl.endswith("*"):
+            if bl[1:-1] in pkg:
+                self.black.append(self.__add(repo, pkg))
+        elif bl.endswith("*"):
+            if pkg.startswith(bl[:-1]):
+                self.black.append(self.__add(repo, pkg))
+        elif bl.startswith("*"):
+            if pkg.endswith(bl[1:]):
+                self.black.append(self.__add(repo, pkg))
+        if bl not in self.black and "*" not in bl:
+            self.black.append(bl)
