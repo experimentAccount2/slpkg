@@ -50,6 +50,7 @@ class Config(object):
             "DEL_ALL",
             "DEL_BUILD",
             "SBO_BUILD_LOG",
+            "MAKEFLAGS",
             "DEFAULT_ANSWER",
             "REMOVE_DEPS_ANSWER",
             "SKIP_UNST",
