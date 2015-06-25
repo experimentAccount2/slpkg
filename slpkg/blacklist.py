@@ -101,20 +101,11 @@ class BlackList(object):
                 # blacklist packages by repository priority
                 if (pr[0] == repo and pr[1].startswith("*") and
                         pr[1].endswith("*")):
-                    if repo == "sbo" and pr[1][1:-1] in pkg:
-                        black.append(pkg)
-                    elif pr[1][1:-1] in pkg:
-                        black.append(split_package(pkg)[0])
+                    black.append(self.__add(1, repo, pkg, pr[1][1:-1]))
                 elif pr[0] == repo and pr[1].endswith("*"):
-                    if repo == "sbo" and pkg.startswith(pr[1][:-1]):
-                        black.append(pkg)
-                    elif pkg.startswith(pr[1][:-1]):
-                        black.append(split_package(pkg)[0])
+                    black.append(self.__add(2, repo, pkg, pr[1][:-1]))
                 elif pr[0] == repo and pr[1].startswith("*"):
-                    if repo == "sbo" and pkg.endswith(pr[1][1:]):
-                        black.append(pkg)
-                    elif pkg.endswith(pr[1][1:]):
-                        black.append(split_package(pkg)[0])
+                    black.append(self.__add(3, repo, pkg, pr[1][1:]))
                 elif pr[0] == repo and "*" not in pr[1]:
                     if repo == "sbo":
                         black.append(pr[1])
@@ -122,20 +113,30 @@ class BlackList(object):
                         black.append(split_package(pkg)[0])
                 # normal blacklist packages
                 if bl.startswith("*") and bl.endswith("*"):
-                    if repo == "sbo" and bl[1:-1] in pkg:
-                        black.append(pkg)
-                    elif bl[1:-1] in pkg:
-                        black.append(split_package(pkg)[0])
+                    black.append(self.__add(1, repo, pkg, bl[1:-1]))
                 elif bl.endswith("*"):
-                    if repo == "sbo" and pkg.startswith(bl[:-1]):
-                        black.append(pkg)
-                    elif pkg.startswith(bl[:-1]):
-                        black.append(split_package(pkg)[0])
+                    black.append(self.__add(2, repo, pkg, bl[:-1]))
                 elif bl.startswith("*"):
-                    if repo == "sbo" and pkg.endswith(bl[1:]):
-                        black.append(pkg)
-                    elif pkg.endswith(bl[1:]):
-                        black.append(split_package(pkg)[0])
+                    black.append(self.__add(3, repo, pkg, bl[1:]))
             if bl not in black and "*" not in bl:
                 black.append(bl)
         return black
+
+    def __add(self, mode, repo, pkg, bl):
+        """Split packages by repository
+        """
+        if mode == 1:
+            if repo == "sbo" and bl in pkg:
+                return pkg
+            elif bl in pkg:
+                return split_package(pkg)[0]
+        if mode == 2:
+            if repo == "sbo" and pkg.startswith(bl):
+                return pkg
+            elif pkg.startswith(bl):
+                return split_package(pkg)[0]
+        if mode == 3:
+            if repo == "sbo" and pkg.endswith(bl):
+                return pkg
+            elif pkg.endswith(bl):
+                return split_package(pkg)[0]
