@@ -22,6 +22,8 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+import sys
+
 from messages import Msg
 from arguments import usage
 from init import Initialization
@@ -56,6 +58,10 @@ class Updates(object):
             "rested": self._init.rested,
             "msb": self._init.msb
         }
+
+    def status_bar(self):
+        """Top view bar status
+        """
         print("")
         Msg().template(78)
         print("| Repository         Status")
@@ -70,10 +76,13 @@ class Updates(object):
                 self.check = self.all_repos[self.repo]()
             except OSError:
                 usage(self.repo)
+                sys.exit(0)
         elif self.repo in self.meta.repositories:
             self.check = self._init.custom(self.repo)
         else:
             usage(self.repo)
+            sys.exit(0)
+        self.status_bar()
         self.status()
         self.print_status(self.repo)
         self.summary()
@@ -81,12 +90,14 @@ class Updates(object):
     def ALL(self):
         """Check ALL enabled repositories ChangeLogs
         """
+        self.status_bar()
         for repo in self.meta.repositories:
             if repo in self.meta.default_repositories:
                 try:
                     self.check = self.all_repos[repo]()
                 except OSError:
                     usage(self.repo)
+                    sys.exit(0)
             elif repo in self.meta.repositories:
                 self.check = self._init.custom(repo)
             self.status()
