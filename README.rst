@@ -197,6 +197,7 @@ and x86 'current' version 14.1.
 
 Features
 --------
+
 - Build packages from source with all dependencies
 - Support three downloaders wget, curl and aria2
 - Grabs packages from repositories in real time
@@ -209,6 +210,7 @@ Features
 - Build and install all in a command
 - Find packages from repositories
 - Checking for updated packages
+- With accelerated build script
 - List all installed packages
 - Support MD5SUM file check
 - Find installed package
