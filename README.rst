@@ -248,9 +248,9 @@ Using pip:
 
 Bbinary packages:
 
-Slackware: `slpkg-2.5.5-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.5.5/slpkg-2.5.5-i486-1_dsw.txz>`_
+Slackware: `slpkg-2.5.6-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.5.6/slpkg-2.5.6-i486-1_dsw.txz>`_
 
-Slackware64: `slpkg-2.5.5-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.5.5/slpkg-2.5.5-x86_64-1_dsw.txz>`_
+Slackware64: `slpkg-2.5.6-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.5.6/slpkg-2.5.6-x86_64-1_dsw.txz>`_
 
 
 Upgrade
@@ -545,7 +545,7 @@ Installing packages from the repositories (supporting multi packages):
     5 packages will be installed, 0 allready installed and 0 package
     will be upgraded.
 
-    Would you like to continue [Y/n]?
+    Would you like to continue [y/N]?
     
     
     Example install multi packages:
@@ -584,7 +584,7 @@ Installing packages from the repositories (supporting multi packages):
     10 packages will be installed, 5 allready installed and 0 package
     will be upgraded.
 
-    Would you like to continue [Y/n]?
+    Would you like to continue [y/N]?
 
 
     Example from 'alien' repository:
@@ -611,7 +611,7 @@ Installing packages from the repositories (supporting multi packages):
     Need to get 124 Kb of archives.
     After this process, 620 Kb of additional disk space will be used.
 
-    Would you like to continue [Y/n]?
+    Would you like to continue [y/N]?
 
     
     Close auto resolve dependencies:
@@ -635,7 +635,7 @@ Installing packages from the repositories (supporting multi packages):
      Need to get 124 Kb of archives.
      After this process, 620 Kb of additional disk space will be used.
 
-     Would you like to continue [Y/n]?
+     Would you like to continue [y/N]?
 
 
 
@@ -723,7 +723,7 @@ Check if your packages is up to date or changes in ChangeLog.txt:
     0 package will be installed, 2 allready installed and 3 packages
     will be upgraded.
 
-    Would you like to continue [Y/n]?
+    Would you like to continue [y/N]?
 
 
     $ slpkg -c slacky --upgrade
@@ -744,7 +744,7 @@ Check if your packages is up to date or changes in ChangeLog.txt:
     Need to get 1.53 Mb of archives.
     After this process, 14.55 Mb of additional disk space will be used.
 
-    Would you like to continue [Y/n]? 
+    Would you like to continue [y/N]? 
 
 
 Check if your Slackware distribution is up to date.
@@ -773,7 +773,7 @@ why always you can have updated your system:
     Need to get 13.58 Mb of archives.
     After this process, 76.10 Mb of additional disk space will be used.
     
-    Would you like to continue [Y/n]?
+    Would you like to continue [y/N]?
 
     
     
@@ -813,7 +813,7 @@ Skip packages when upgrading:
     0 package will be installed, 1 allready installed and 2 packages
     will be upgraded.
 
-    Would you like to continue [Y/n]?
+    Would you like to continue [y/N]?
 
 
 View complete slackbuilds.org site in your terminal.
@@ -1052,7 +1052,7 @@ Removes a previously installed Slackware binary packages:
     
     [ delete ] --> termcolor-1.1.0-x86_64-1_SBo
 
-    Are you sure to remove 1 package(s) [Y/n]? y
+    Are you sure to remove 1 package(s) [y/N]? y
 
     Package: termcolor-1.1.0-x86_64-1_SBo
         Removing... 
@@ -1092,7 +1092,7 @@ enabled from configuration file.
 
     [ delete ] --> Flask-0.10.1-x86_64-1_SBo
 
-    Are you sure to remove 1 package [Y/n]? y
+    Are you sure to remove 1 package [y/N]? y
 
     +==============================================================================
     | Found dependencies for package Flask:
@@ -1104,7 +1104,7 @@ enabled from configuration file.
     | werkzeug
     +==============================================================================
 
-    Remove dependencies (maybe used by other packages) [Y/n]? y
+    Remove dependencies (maybe used by other packages) [y/N]? y
     
     
     +==============================================================================

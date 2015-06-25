@@ -1,3 +1,12 @@
+2.5.6 - 25/06/2015
+Fixed:
+- Message question capital letter "N" by default. Thanks to Thomas Szteliga
+for report.
+- Source code complexity
+Added:
+- MAKEFLAGS option in configuration file "/etc/slpkg/slpkg.conf". Thanks
+to Brenton Earl for the idea.
+
 2.5.5 - 23/06/2015
 Added:
 - Summary in option "--FIND", "--check" and "repo-list"
