@@ -88,7 +88,7 @@ class MetaData(object):
 
     __all__ = "slpkg"
     __author__ = "dslackw"
-    __version_info__ = (2, 5, 5)
+    __version_info__ = (2, 5, 6)
     __version__ = "{0}.{1}.{2}".format(*__version_info__)
     __license__ = "GNU General Public License v3 (GPLv3)"
     __email__ = "d.zlatanidis@gmail.com"
@@ -119,6 +119,7 @@ class MetaData(object):
         "DEL_ALL": "on",
         "DEL_BUILD": "off",
         "SBO_BUILD_LOG": "on",
+        "MAKEFLAGS": "off",
         "DEFAULT_ANSWER": "n",
         "REMOVE_DEPS_ANSWER": "n",
         "SKIP_UNST": "n",
@@ -158,6 +159,7 @@ class MetaData(object):
     del_all = _conf_slpkg["DEL_ALL"]
     del_build = _conf_slpkg["DEL_BUILD"]
     sbo_build_log = _conf_slpkg["SBO_BUILD_LOG"]
+    makeflags = _conf_slpkg["MAKEFLAGS"]
     default_answer = _conf_slpkg["DEFAULT_ANSWER"]
     remove_deps_answer = _conf_slpkg["REMOVE_DEPS_ANSWER"]
     skip_unst = _conf_slpkg["SKIP_UNST"]

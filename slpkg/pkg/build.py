@@ -29,6 +29,7 @@ import time
 import shutil
 import tarfile
 import subprocess
+import multiprocessing
 
 from slpkg.messages import Msg
 from slpkg.checksum import check_md5
@@ -67,6 +68,7 @@ class BuildPackage(object):
             tar = tarfile.open(self.script)
             tar.extractall()
             tar.close()
+            self._makeflags()
             self._delete_sbo()
             sbo_md5_list = SBoGrep(self.prgnam).checksum()
             for src, sbo_md5 in zip(self.sources, sbo_md5_list):
@@ -103,6 +105,14 @@ class BuildPackage(object):
         except KeyboardInterrupt:
             print("")   # new line at exit
             sys.exit(0)
+
+    def _makeflags(self):
+        """Set variable MAKEFLAGS with the numbers of
+        processors
+        """
+        if self.meta.makeflags in ["on", "ON"]:
+            cpus = multiprocessing.cpu_count()
+            os.environ["MAKEFLAGS"] = "-j{0}".format(cpus)
 
     def _pass_variable(self):
         """
