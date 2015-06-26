@@ -124,7 +124,7 @@ class Repo(object):
         """
         Alien"s slackbuilds repository
         """
-        return "http://www.slackware.com/~alien/slackbuilds/"
+        return "http://taper.alienbase.nl/mirrors/people/alien/sbrepos/"
 
     def slacky(self):
         """

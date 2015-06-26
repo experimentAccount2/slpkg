@@ -176,6 +176,8 @@ class Initialization(object):
     def alien(self):
         """Creating alien local library
         """
+        ar = "x86"
+        arch = os.uname()[4]
         repo = Repo().alien()
         log = self.log_path + "alien/"
         lib = self.lib_path + "alien_repo/"
@@ -187,9 +189,12 @@ class Initialization(object):
             os.mkdir(log)
         if not os.path.exists(lib):
             os.mkdir(lib)
-        PACKAGES_TXT = "{0}{1}".format(repo, lib_file)
+        if arch == "x86_64":
+            ar = arch
+        PACKAGES_TXT = "{0}/{1}/{2}/{3}".format(repo, slack_ver(), ar, lib_file)
         FILELIST_TXT = ""
-        CHECKSUMS_MD5 = "{0}{1}".format(repo, md5_file)
+        CHECKSUMS_MD5 = "{0}/{1}/{2}/{3}".format(repo, slack_ver(), ar,
+                                                 md5_file)
         ChangeLog_txt = "{0}{1}".format(repo, log_file)
         if self.check:
             return self.checks_logs(log, log_file, ChangeLog_txt)
@@ -234,7 +239,7 @@ class Initialization(object):
                     md5_file, CHECKSUMS_MD5, lst_file, FILELIST_TXT)
 
     def studio(self):
-        """Creating alien local library
+        """Creating studio local library
         """
         ar = ""
         arch = os.uname()[4]

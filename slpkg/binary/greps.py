@@ -57,7 +57,7 @@ def repo_data(PACKAGES_TXT, step, repo, flag):
          rsize,
          runsize
          ) = rlw_filter(name, location, size, unsize)
-    elif repo == "alien" or repo == "rested":
+    elif repo == "rested":
         (rname,
          rlocation,
          rsize,

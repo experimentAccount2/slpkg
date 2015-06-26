@@ -62,7 +62,10 @@ class RepoInit(object):
         self.mirror = "{0}{1}/".format(Repo().rlw(), slack_ver())
 
     def _init_alien(self):
-        self.mirror = Repo().alien()
+        arch = "x86"
+        if os.uname()[4] == "x86_64":
+            arch = "x86_64"
+        self.mirror = "{0}{1}/{2}/".format(Repo().alien(), slack_ver(), arch)
 
     def _init_slacky(self):
         arch = ""
