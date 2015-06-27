@@ -261,7 +261,7 @@ class BinaryInstall(object):
         for pkg in packages:
             for pk, loc, comp, uncomp in zip(self.data[0], self.data[1],
                                              self.data[2], self.data[3]):
-                if (pk and pk.startswith(pkg + self.meta.sp) and
+                if (pk and pkg == split_package(pk)[0] and
                         pk not in install and
                         split_package(pk)[0] not in self.blacklist):
                     dwn.append("{0}{1}/{2}".format(self.mirror, loc, pk))
