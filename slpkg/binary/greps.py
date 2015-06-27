@@ -57,12 +57,18 @@ def repo_data(PACKAGES_TXT, step, repo, flag):
          rsize,
          runsize
          ) = rlw_filter(name, location, size, unsize)
-    elif repo == "rested":
+    elif repo == "alien":
         (rname,
          rlocation,
          rsize,
          runsize
          ) = alien_filter(name, location, size, unsize)
+    elif repo == "rested":
+        (rname,
+         rlocation,
+         rsize,
+         runsize
+         ) = rested_filter(name, location, size, unsize)
     elif repo == "ktown":
         (rname,
          rlocation,
@@ -99,6 +105,19 @@ def rlw_filter(name, location, size, unsize):
 
 
 def alien_filter(name, location, size, unsize):
+    """Fix to avoid packages include in slackbuilds folder
+    """
+    (fname, flocation, fsize, funsize) = ([] for i in range(4))
+    for n, l, s, u in zip(name, location, size, unsize):
+        if "slackbuilds" != l:
+            fname.append(n)
+            flocation.append(l)
+            fsize.append(s)
+            funsize.append(u)
+    return [fname, flocation, fsize, funsize]
+
+
+def rested_filter(name, location, size, unsize):
     """
     Filter Alien"s repository data
     """
