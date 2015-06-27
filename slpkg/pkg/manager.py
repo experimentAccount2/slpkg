@@ -28,6 +28,7 @@ import subprocess
 
 from slpkg.utils import Utils
 from slpkg.messages import Msg
+from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.pkg.find import find_package
@@ -362,6 +363,8 @@ class PackageManager(object):
                     pkg_list.append(line[15:].strip())
                 if line.startswith("PACKAGE SIZE (compressed): "):
                     pkg_size.append(line[26:].strip())
+        if repo == "alien":
+            return alien_filter(pkg_list, pkg_size)
         return pkg_list, pkg_size
 
     def list_lib(self, repo):
@@ -399,3 +402,17 @@ class PackageManager(object):
             find = pkg[:-4]
         if find_package(find, self.meta.pkg_path):
             return pkg
+
+
+def alien_filter(packages, sizes):
+    """This filter avoid list double packages from
+    alien repository
+    """
+    cache, npkg, nsize = [], [], []
+    for p, s in zip(packages, sizes):
+        name = split_package(p)[0]
+        if name not in cache:
+            cache.append(name)
+            npkg.append(p)
+            nsize.append(s)
+    return npkg, nsize
