@@ -71,9 +71,9 @@ Default available Repositories:
 - `Slack <http://www.slackware.com/>`_
   Arch: {x86, x86_64}
   Versions: {3.3, 8.1, 9.0, 9.1, 10.0, 10.1, 10.2, 11.0, 12.0, 12.2, 13.0, 13.37, 14.0, 14.1, current}
-- `Alien's <http://www.slackware.com/~alien/slackbuilds/>`_
+- `Alien's <http://taper.alienbase.nl/mirrors/people/alien/sbrepos/>`_
   Arch: {x86, x86_64}
-  Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1, current}
+  Versions: {13.0, 13.1, 13.37, 14.0, 14.1, current}
 - `Slacky <http://repository.slacky.eu/>`_
   Arch: {x86, x86_64}
   Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1}
