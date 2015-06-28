@@ -298,11 +298,12 @@ class PackageManager(object):
         """Print the Slackware packages contents
         """
         for pkg in self.binary:
+            print pkg
             find = find_package(pkg + self.meta.sp, self.meta.pkg_path)
             if find:
-                package = Utils().read_file(self.meta.pkg_path + "".join(find))
-                for line in package.splitlines():
-                    print(line).strip()
+                package = Utils().read_file(
+                    self.meta.pkg_path + "".join(find[0]))
+                print(package)
                 print("")   # new line per file
             else:
                 message = "Can't dislpay"
