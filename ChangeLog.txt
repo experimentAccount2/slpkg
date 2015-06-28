@@ -1,3 +1,10 @@
+2.5.7 - 28/06/2015
+Fixed:
+- Double packages from alien repository
+- Resolve dependencies for binaries packages
+Updated:
+- Change mirror for alien repository
+
 2.5.6 - 25/06/2015
 Fixed:
 - Message question capital letter "N" by default. Thanks to Thomas Szteliga
