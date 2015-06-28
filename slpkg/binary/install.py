@@ -42,8 +42,6 @@ from slpkg.get_version import get_installed_version
 from slpkg.pkg.find import find_package
 from slpkg.pkg.manager import PackageManager
 
-from slpkg.slack.slack_version import slack_ver
-
 from greps import repo_data
 from repo_init import RepoInit
 from dependency import Dependencies
@@ -181,14 +179,7 @@ class BinaryInstall(object):
         """
         Checksums before install
         """
-        if self.repo == "alien" and self.version == "stable":
-            check_md5(pkg_checksum("/" + slack_ver() + "/" + install,
-                                   self.repo), self.tmp_path + install)
-        elif self.repo == "alien" and self.version == "current":
-            check_md5(pkg_checksum("/" + self.version + "/" + install,
-                                   self.repo), self.tmp_path + install)
-        else:
-            check_md5(pkg_checksum(install, self.repo), self.tmp_path + install)
+        check_md5(pkg_checksum(install, self.repo), self.tmp_path + install)
 
     def resolving_deps(self):
         """

@@ -32,7 +32,7 @@ def pkg_checksum(binary, repo):
     """
     Return checksum from CHECKSUMS.md5 file by repository
     """
-    md5, end = "None", "/"
+    md5 = "None"
     if repo == "slack_patches" and _meta_.slack_rel == "stable":
         CHECKSUMS_md5 = URL(mirrors("CHECKSUMS.md5", "patches/")).reading()
     elif repo == "slack_patches" and _meta_.slack_rel == "current":
@@ -44,9 +44,7 @@ def pkg_checksum(binary, repo):
         f = open(lib, "r")
         CHECKSUMS_md5 = f.read()
         f.close()
-    if repo == "alien":
-        end = ""
     for line in CHECKSUMS_md5.splitlines():
-        if line.endswith("%s%s" % (end, binary)):
+        if line.endswith("/{0}".format(binary)):
             md5 = line.split()[0]
     return md5
