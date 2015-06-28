@@ -244,7 +244,7 @@ Using pip:
 
     $ pip uninstall slpkg
 
-    and clean data run clean.py from source code:
+    for clean data run clean.py from source code:
 
     $ python clean.py
 
