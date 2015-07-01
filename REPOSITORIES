@@ -16,12 +16,14 @@ dependencies file PACKAGES.TXT.
 Slackers.it (slackr) repository must be used only from Slackware64 current users
 and has no reference dependencies.
 
-Slackel.gr (slackl) repository must be used only from Slackware current users.
+Slackel.gr (slackl) repository must be used only from Slackware{x86, x86_64} current users.
 
 MSB (msb) repository has one ChangeLog.txt file for three sub-repositories {1.6, 1.8, 1.10}.
 So if you have updated the list of packages with version 1.8 and want to switch to version 
 1.10 then run "slpkg upgrade" instead of "slpkg update". MSB (msb) repository has no reference 
 dependencies.
+
+Slonly repository do not support -current for x86 arch.
 
 Studioware (studio), Alien's ktown (ktown), Alien's multilib (multi), Slacke E17 and E18
 and Alien's restricted repository has no reference dependencies.
