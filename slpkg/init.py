@@ -177,6 +177,7 @@ class Initialization(object):
         """Creating alien local library
         """
         ar = "x86"
+        ver = slack_ver()
         arch = os.uname()[4]
         repo = Repo().alien()
         log = self.log_path + "alien/"
@@ -191,10 +192,11 @@ class Initialization(object):
             os.mkdir(lib)
         if arch == "x86_64":
             ar = arch
-        PACKAGES_TXT = "{0}/{1}/{2}/{3}".format(repo, slack_ver(), ar, lib_file)
+        if self.meta.slack_rel == "current":
+            ver = self.meta.slack_rel
+        PACKAGES_TXT = "{0}/{1}/{2}/{3}".format(repo, ver, ar, lib_file)
         FILELIST_TXT = ""
-        CHECKSUMS_MD5 = "{0}/{1}/{2}/{3}".format(repo, slack_ver(), ar,
-                                                 md5_file)
+        CHECKSUMS_MD5 = "{0}/{1}/{2}/{3}".format(repo, ver, ar, md5_file)
         ChangeLog_txt = "{0}{1}".format(repo, log_file)
         if self.check:
             return self.checks_logs(log, log_file, ChangeLog_txt)
