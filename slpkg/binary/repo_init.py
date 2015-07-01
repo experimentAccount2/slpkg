@@ -69,7 +69,6 @@ class RepoInit(object):
         if self.meta.slack_rel == "current":
             ver = self.meta.slack_rel
         self.mirror = "{0}{1}/{2}/".format(Repo().alien(), ver, arch)
-        print self.meta.slack_rel, ver, self.mirror
 
     def _init_slacky(self):
         arch = ""
