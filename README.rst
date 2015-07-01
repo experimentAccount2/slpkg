@@ -250,9 +250,9 @@ Using pip:
 
 Bbinary packages:
 
-Slackware: `slpkg-2.5.8-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.5.8/slpkg-2.5.8-i486-1_dsw.txz>`_
+Slackware: `slpkg-2.5.9-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.5.9/slpkg-2.5.9-i486-1_dsw.txz>`_
 
-Slackware64: `slpkg-2.5.8-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.5.8/slpkg-2.5.8-x86_64-1_dsw.txz>`_
+Slackware64: `slpkg-2.5.9-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.5.9/slpkg-2.5.9-x86_64-1_dsw.txz>`_
 
 
 Upgrade
@@ -266,7 +266,7 @@ for changes.
 Slackware Current
 -----------------
 
-For Slackware 'current' users must change the variable VERSION in '/etc/slpkg.conf' file.
+For Slackware 'current' users must change the variable VERSION in '/etc/slpkg/slpkg.conf' file.
 
 .. code-block:: bash
 

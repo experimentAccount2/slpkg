@@ -1,3 +1,11 @@
+2.5.9 - 02/07/2015
+Fixed:
+- Print list file package contents
+- Fixed alien -current repository
+- Fixed multi -current repository
+Added:
+- Support slonly -current (x86_64) repository
+
 2.5.8 - 28/06/2015
 Fixed:
 - Checksum for alien repository
