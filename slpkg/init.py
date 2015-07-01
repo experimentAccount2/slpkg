@@ -318,9 +318,6 @@ class Initialization(object):
             os.mkdir(lib)
         if arch == "x86_64":
             ar = "{0}-x86_64".format(ver)
-        if (self.meta.slack_rel == "current" and arch.startswith("i") and
-                arch.endswith("6")):
-            ar = "{0}-x86".format(self.meta.slack_rel)
         if self.meta.slack_rel == "current" and arch == "x86_64":
             ar = "{0}-x86_64".format(self.meta.slack_rel)
         PACKAGES_TXT = "{0}{1}/{2}".format(repo, ar, lib_file)
