@@ -302,7 +302,8 @@ class Initialization(object):
     def slonly(self):
         """Creating slackers local library
         """
-        ar = "{0}-x86".format(slack_ver())
+        ver = slack_ver()
+        ar = "{0}-x86".format(ver)
         arch = os.uname()[4]
         repo = Repo().slackonly()
         log = self.log_path + "slonly/"
@@ -316,7 +317,12 @@ class Initialization(object):
         if not os.path.exists(lib):
             os.mkdir(lib)
         if arch == "x86_64":
-            ar = "{0}-x86_64".format(slack_ver())
+            ar = "{0}-x86_64".format(ver)
+        if (self.meta.slack_rel == "current" and arch.startswith("i") and
+                arch.endswith("6")):
+            ar = "{0}-x86".format(self.meta.slack_rel)
+        if self.meta.slack_rel == "current" and arch == "x86_64":
+            ar = "{0}-x86_64".format(self.meta.slack_rel)
         PACKAGES_TXT = "{0}{1}/{2}".format(repo, ar, lib_file)
         FILELIST_TXT = "{0}{1}/{2}".format(repo, ar, lst_file)
         CHECKSUMS_MD5 = "{0}{1}/{2}".format(repo, ar, md5_file)
@@ -358,6 +364,7 @@ class Initialization(object):
     def multi(self):
         """Creating alien multilib local library
         """
+        ver = slack_ver()
         repo = Repo().multi()
         log = self.log_path + "multi/"
         lib = self.lib_path + "multi_repo/"
@@ -369,9 +376,11 @@ class Initialization(object):
             os.mkdir(log)
         if not os.path.exists(lib):
             os.mkdir(lib)
-        PACKAGES_TXT = "{0}{1}".format(repo, lib_file)
+        if self.meta.slack_rel == "currnet":
+            ver = self.meta.slack_rel
+        PACKAGES_TXT = "{0}{1}/{2}".format(repo, ver, lib_file)
         FILELIST_TXT = ""
-        CHECKSUMS_MD5 = "{0}{1}".format(repo, md5_file)
+        CHECKSUMS_MD5 = "{0}{1}/{2}".format(repo, ver, md5_file)
         ChangeLog_txt = "{0}{1}".format(repo, log_file)
         if self.check:
             return self.checks_logs(log, log_file, ChangeLog_txt)

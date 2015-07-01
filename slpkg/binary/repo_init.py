@@ -89,16 +89,22 @@ class RepoInit(object):
         self.mirror = Repo().slackers()
 
     def _init_slonly(self):
-        arch = "{0}-x86".format(slack_ver())
+        ver = slack_ver()
+        arch = "{0}-x86".format(ver)
         if os.uname()[4] == "x86_64":
-            arch = "{0}-x86_64".format(slack_ver())
+            arch = "{0}-x86_64".format(ver)
+        if self.meta.slack_rel == "current":
+            arch = "{0}-x86_64".format(self.meta.slack_rel)
         self.mirror = "{0}{1}/".format(Repo().slackonly(), arch)
 
     def _init_ktown(self):
         self.mirror = Repo().ktown()
 
     def _init_multi(self):
-        self.mirror = Repo().multi()
+        ver = slack_ver()
+        if self.meta.slack_rel == "current":
+            ver = self.meta.slack_rel
+        self.mirror = Repo().multi() + ver + "/"
 
     def _init_slacke(self):
         arch = ""

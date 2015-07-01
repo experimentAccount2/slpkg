@@ -75,12 +75,6 @@ def repo_data(PACKAGES_TXT, step, repo, flag):
          rsize,
          runsize
          ) = ktown_filter(name, location, size, unsize)
-    elif repo == "multi":
-        (rname,
-         rlocation,
-         rsize,
-         runsize
-         ) = multi_filter(name, location, size, unsize)
     else:
         rname, rlocation, rsize, runsize = name, location, size, unsize
     return [rname, rlocation, rsize, runsize]
@@ -151,23 +145,6 @@ def ktown_filter(name, location, size, unsize):
     for n, l, s, u in zip(name, location, size, unsize):
         if (path_pkg in l and _meta_.ktown_kde_repo[1:-1] in l and
                 l.startswith(ver)):
-            fname.append(n)
-            flocation.append(l)
-            fsize.append(s)
-            funsize.append(u)
-    return [fname, flocation, fsize, funsize]
-
-
-def multi_filter(name, location, size, unsize):
-    """
-    Filter Alien"s multilib repository data
-    """
-    ver = slack_ver()
-    if _meta_.slack_rel == "current":
-        ver = "current"
-    (fname, flocation, fsize, funsize) = ([] for i in range(4))
-    for n, l, s, u in zip(name, location, size, unsize):
-        if l.startswith(ver):
             fname.append(n)
             flocation.append(l)
             fsize.append(s)
