@@ -266,7 +266,7 @@ for changes.
 Slackware Current
 -----------------
 
-For Slackware 'current' users must change the variable VERSION in '/etc/slpkg.conf' file.
+For Slackware 'current' users must change the variable VERSION in '/etc/slpkg/slpkg.conf' file.
 
 .. code-block:: bash
 
