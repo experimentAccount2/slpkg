@@ -76,16 +76,24 @@ def track_dep(name, repo):
         index = 0
         for pkg in dependencies:
             index += 1
+            installed = ""
             if find_package(pkg + _meta_.sp, _meta_.pkg_path):
+                if _meta_.use_colors in ["off", "OFF"]:
+                    installed = "*"
                 print(" |")
-                print(" {0}{1}: {2}{3}{4}".format("+--", index,
-                                                  _meta_.color["GREEN"],
-                                                  pkg, _meta_.color["ENDC"]))
+                print(" {0}{1}: {2}{3}{4} {5}".format("+--", index,
+                                                      _meta_.color["GREEN"],
+                                                      pkg, _meta_.color["ENDC"],
+                                                      installed))
             else:
                 print(" |")
-                print(" {0}{1}: {2}{3}{4}".format("+--", index,
-                                                  _meta_.color["RED"], pkg,
-                                                  _meta_.color["ENDC"]))
-        print("")    # new line at end
+                print(" {0}{1}: {2}{3}{4} {5}".format("+--", index,
+                                                      _meta_.color["RED"], pkg,
+                                                      _meta_.color["ENDC"],
+                                                      installed))
+        if _meta_.use_colors in ["off", "OFF"]:
+            print("\n *: Installed\n")
+        else:
+            print("")    # new line at end
     else:
         print("\nNo package was found to match\n")
