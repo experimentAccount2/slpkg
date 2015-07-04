@@ -120,6 +120,11 @@ class SBoNetwork(object):
         """
         View slackbuild.org
         """
+        br1, br2, fix_sp = "", "", " "
+        if _meta_.use_colors in ["off", "OFF"]:
+            br1 = "("
+            br2 = ")"
+            fix_sp = ""
         color = _meta_.color
         print("")   # new line at start
         Msg().template(78)
@@ -138,20 +143,20 @@ class SBoNetwork(object):
                                                   color["ENDC"],
                                                   ", ".join(args[5])))
         Msg().template(78)
-        print("| {0}R{1}EADME               View the README file".format(
-            color["RED"], color["ENDC"]))
-        print("| {0}S{1}lackBuild           View the SlackBuild file".format(
-            color["RED"], color["ENDC"]))
-        print("| In{0}f{1}o                 View the Info file".format(
-            color["RED"], color["ENDC"]))
-        print("| {0}D{1}ownload             Download this package".format(
-            color["RED"], color["ENDC"]))
-        print("| {0}B{1}uild                Download and build".format(
-            color["RED"], color["ENDC"]))
-        print("| {0}I{1}nstall              Download/Build/Install".format(
-            color["RED"], color["ENDC"]))
-        print("| {0}Q{1}uit                 Quit".format(color["RED"],
-                                                         color["ENDC"]))
+        print("| {0}R{1}{2}EADME               View the README file".format(
+            color["RED"], color["ENDC"], br2))
+        print("| {0}S{1}{2}lackBuild           View the SlackBuild file".format(
+            color["RED"], color["ENDC"], br2))
+        print("| In{0}{1}f{2}{3}o{4}                View the Info file".format(
+            br1, color["RED"], color["ENDC"], br2, fix_sp))
+        print("| {0}D{1}{2}ownload             Download this package".format(
+            color["RED"], color["ENDC"], br2))
+        print("| {0}B{1}{2}uild                Download and build".format(
+            color["RED"], color["ENDC"], br2))
+        print("| {0}I{1}{2}nstall              Download/Build/Install".format(
+            color["RED"], color["ENDC"], br2))
+        print("| {0}Q{1}{2}uit                 Quit".format(color["RED"],
+                                                            color["ENDC"], br2))
 
         Msg().template(78)
 
