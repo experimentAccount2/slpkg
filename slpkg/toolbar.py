@@ -25,17 +25,10 @@
 import sys
 import time
 
-from __metadata__ import MetaData as _meta_
 
-
-def status(index, width, step):
-    """
-    Print toolbar status
-    """
-    if index == width:
-        sys.stdout.write("{0}.{1}".format(_meta_.color["GREY"],
-                                          _meta_.color["ENDC"]))
+def status(sec):
+    syms = ["\\", "|", "/", "-"]
+    for sym in syms:
+        sys.stdout.write("\b{0}".format(sym))
         sys.stdout.flush()
-        width += step
-        time.sleep(0.009)
-    return width
+        time.sleep(float(sec))

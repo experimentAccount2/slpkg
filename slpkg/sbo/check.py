@@ -42,12 +42,10 @@ def sbo_upgrade(skip):
     try:
         Msg().checking()
         upgrade_names = []
-        index, toolbar_width = 0, 3
         data = SBoGrep(name="").names()
         blacklist = BlackList().packages(pkgs=data, repo="sbo")
         for pkg in sbo_list():
-            index += 1
-            toolbar_width = status(index, toolbar_width, 4)
+            status(0.03)
             name = split_package(pkg)[0]
             ver = split_package(pkg)[1]
             if (name in data and name not in skip and name not in blacklist):

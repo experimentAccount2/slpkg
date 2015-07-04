@@ -49,10 +49,8 @@ def pkg_upgrade(repo, skip):
         # size = data[2]
         # unsize = data[3]
         data = repo_data(PACKAGES_TXT, 2000, repo, flag="")
-        index, toolbar_width = 0, 1000
         for pkg in installed():
-            index += 1
-            toolbar_width = status(index, toolbar_width, 30)
+            status(0.00003)
             inst_pkg = split_package(pkg)
             for name in data[0]:
                 if name:    # this tips because some pkg_name is empty

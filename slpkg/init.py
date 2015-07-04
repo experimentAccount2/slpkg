@@ -543,12 +543,10 @@ class Initialization(object):
     def write_file(self, path, archive, contents_txt):
         """Create local file
         """
-        toolbar_width, index = 2, 0
         try:
             with open("{0}{1}".format(path, archive), "w") as f:
                 for line in contents_txt.splitlines():
-                    index += 1
-                    toolbar_width = status(index, toolbar_width, 700)
+                    status(0.00005)
                     f.write(line + "\n")
                 f.close()
         except KeyboardInterrupt:

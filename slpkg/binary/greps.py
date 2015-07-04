@@ -38,11 +38,9 @@ def repo_data(PACKAGES_TXT, step, repo, flag):
     """
     (name, location, size, unsize,
      rname, rlocation, rsize, runsize) = ([] for i in range(8))
-    index, toolbar_width = 0, 100
     for line in PACKAGES_TXT.splitlines():
         if _meta_.rsl_deps in ["on", "ON"] and flag != "--resolve-off":
-            index += 1
-            toolbar_width = status(index, toolbar_width, step)
+            status(0.000005)
         if line.startswith("PACKAGE NAME:"):
             name.append(line[15:].strip())
         if line.startswith("PACKAGE LOCATION:"):

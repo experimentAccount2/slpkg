@@ -50,11 +50,10 @@ class Requires(object):
                 sys.setrecursionlimit(10000)
                 dependencies = []
                 requires = SBoGrep(name).requires()
-                toolbar_width, index = 2, 0
                 if requires:
                     for req in requires:
-                        index += 1
-                        toolbar_width = status(index, toolbar_width, 1)
+                        status(0.03)
+                        # toolbar_width = status(index, toolbar_width, 1)
                         # avoid to add %README% as dependency and
                         # if require in blacklist
                         if "%README%" not in req and req not in self.blacklist:

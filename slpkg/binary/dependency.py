@@ -48,11 +48,9 @@ class Dependencies(object):
                 sys.setrecursionlimit(10000)
                 dependencies = []
                 requires = Requires(name, self.repo).get_deps()
-                toolbar_width, index = 2, 0
                 if requires:
                     for req in requires:
-                        index += 1
-                        toolbar_width = status(index, toolbar_width, 7)
+                        status(0)
                         if req and req not in self.black:
                             dependencies.append(req)
                     if dependencies:

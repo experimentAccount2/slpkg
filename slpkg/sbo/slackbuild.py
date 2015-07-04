@@ -60,7 +60,6 @@ class SBoInstall(object):
         self.package_not_found = []
         self.package_found = []
         self.deps_dict = {}
-        self.toolbar_width, self.index = 2, 0
         self.answer = ""
         self.match = False
         Msg().reading()
@@ -72,8 +71,7 @@ class SBoInstall(object):
             tagc = ""
             count_ins = count_upg = count_uni = 0
             for _sbo in self.slackbuilds:
-                self.index += 1
-                self.toolbar_width = status(self.index, self.toolbar_width, 4)
+                status(0.03)
                 if _sbo in self.data and _sbo not in self.blacklist:
                     sbo_deps = Requires(self.flag).sbo(_sbo)
                     self.deps += sbo_deps
@@ -171,8 +169,7 @@ class SBoInstall(object):
         """
         sbo_versions, sources = [], []
         for sbo in slackbuilds:
-            self.index += 1
-            self.toolbar_width = status(self.index, self.toolbar_width, 4)
+            status(0.02)
             sbo_ver = "{0}-{1}".format(sbo, SBoGrep(sbo).version())
             sbo_versions.append(sbo_ver)
             sources.append(SBoGrep(sbo).source())

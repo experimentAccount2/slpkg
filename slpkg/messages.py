@@ -78,29 +78,29 @@ class Msg(object):
     def checking(self):
         """Message checking
         """
-        sys.stdout.write("{0}Checking ...{1}".format(self.meta.color["GREY"],
-                                                     self.meta.color["ENDC"]))
+        sys.stdout.write("{0}Checking... {1} ".format(self.meta.color["GREY"],
+                                                      self.meta.color["ENDC"]))
         sys.stdout.flush()
 
     def reading(self):
         """Message reading
         """
-        sys.stdout.write("{0}Reading package lists ...{1}".format(
+        sys.stdout.write("{0}Reading package lists... {1} ".format(
             self.meta.color["GREY"], self.meta.color["ENDC"]))
         sys.stdout.flush()
 
     def resolving(self):
         """Message resolving
         """
-        sys.stdout.write("{0}Resolving dependencies ...{1}".format(
+        sys.stdout.write("{0}Resolving dependencies... {1} ".format(
             self.meta.color["GREY"], self.meta.color["ENDC"]))
         sys.stdout.flush()
 
     def done(self):
         """Message done
         """
-        sys.stdout.write("{0}Done{1}\n".format(self.meta.color["GREY"],
-                                               self.meta.color["ENDC"]))
+        sys.stdout.write("\b {0}Done{1}\n".format(self.meta.color["GREY"],
+                                                  self.meta.color["ENDC"]))
 
     def pkg(self, count):
         """Print singular plural
