@@ -22,11 +22,13 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+import os
 import sys
 import getpass
 
 from load import Regex
 from messages import Msg
+from auto_pkg import Auto
 from desc import PkgDesc
 from config import Config
 from checks import Updates
@@ -477,6 +479,19 @@ class ArgParse(object):
             usage("")
 
 
+def auto_detect(args):
+    """Check for already Slackware binary packages exist
+    """
+    packages = []
+    for pkg in args:
+        if pkg.endswith(".tgz") or pkg.endswith(".txz"):
+            if os.path.isfile(pkg):
+                packages.append(pkg)
+    if packages:
+        Auto(packages).select()
+        sys.exit(0)
+
+
 def main():
 
     Msg().s_user(getpass.getuser())
@@ -488,6 +503,8 @@ def main():
     if len(args) == 0:
         usage("")
         sys.exit(0)
+
+    auto_detect(args)
 
     if len(args) == 2 and args[0] == "update" and args[1] == "slpkg":
         args[0] = "update-slpkg"
