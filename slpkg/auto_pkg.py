@@ -28,36 +28,38 @@ from __metadata__ import MetaData as _meta_
 
 
 class Auto(object):
+    """Select Slackware command to install packages"""
 
     def __init__(self, packages):
         self.packages = packages
         self.meta = _meta_
         self.commands = {
-            "1": "installpkg",
-            "2": "upgradepkg --install-new",
-            "3": "upgradepkg --reinstall"
+            "i": "installpkg",
+            "u": "upgradepkg --install-new",
+            "r": "upgradepkg --reinstall"
         }
 
     def select(self):
-        print("\nFound Slackware binary package for installation:\n")
+        print("\nDetected Slackware binary package for installation:\n")
         for pkg in self.packages:
             print(" " + pkg.split("/")[-1])
         print("")
         Msg().template(78)
-        print("| Chose a command:")
+        print("| Choose a Slackware command:")
         Msg().template(78)
-        for key in sorted(self.commands):
-            print("| {0}. {1}{2}{3}".format(key, self.meta.color["GREEN"],
-                                            self.commands[key],
-                                            self.meta.color["ENDC"]))
+        for com in sorted(self.commands):
+            print("| {0}{1}{2})  {3}{4}{5}".format(
+                self.meta.color["RED"], com, self.meta.color["ENDC"],
+                self.meta.color["GREEN"], self.commands[com],
+                self.meta.color["ENDC"]))
         Msg().template(78)
         self.choice = raw_input(" > ")
         self.execute()
 
     def execute(self):
         if self.choice in self.commands.keys():
-            if self.choice == "1":
+            if self.choice == "i":
                 PackageManager(self.packages).install("")
-            elif self.choice in ["2", "3"]:
+            elif self.choice in ["u", "r"]:
                 PackageManager(self.packages).upgrade(
                     self.commands[self.choice][11:])
