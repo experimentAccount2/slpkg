@@ -48,7 +48,7 @@ def pkg_upgrade(repo, skip):
         # location = data[1]
         # size = data[2]
         # unsize = data[3]
-        data = repo_data(PACKAGES_TXT, 2000, repo, flag="")
+        data = repo_data(PACKAGES_TXT, repo, flag="")
         for pkg in installed():
             status(0.0003)
             inst_pkg = split_package(pkg)

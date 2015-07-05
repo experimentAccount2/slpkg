@@ -71,10 +71,8 @@ class Patches(object):
         if self.version == "stable":
             self.PACKAGES_TXT = URL(mirrors("PACKAGES.TXT",
                                             "patches/")).reading()
-            self.step = 20
         else:
             self.PACKAGES_TXT = URL(mirrors("PACKAGES.TXT", "")).reading()
-            self.step = 700
 
     def start(self):
         """
@@ -135,7 +133,7 @@ class Patches(object):
         """
         Store and return packages for upgrading
         """
-        data = repo_data(self.PACKAGES_TXT, self.step, "slack", self.flag)
+        data = repo_data(self.PACKAGES_TXT, "slack", self.flag)
         black = BlackList().packages(pkgs=data[0], repo="slack")
         for name, loc, comp, uncomp in zip(data[0], data[1], data[2], data[3]):
             repo_pkg_name = split_package(name)[0]
