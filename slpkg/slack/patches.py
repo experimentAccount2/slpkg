@@ -27,6 +27,7 @@ import sys
 import shutil
 import subprocess
 
+from slpkg.toolbar import status
 from slpkg.utils import Utils
 from slpkg.sizes import units
 from slpkg.messages import Msg
@@ -136,6 +137,7 @@ class Patches(object):
         data = repo_data(self.PACKAGES_TXT, "slack", self.flag)
         black = BlackList().packages(pkgs=data[0], repo="slack")
         for name, loc, comp, uncomp in zip(data[0], data[1], data[2], data[3]):
+            status(0.003)
             repo_pkg_name = split_package(name)[0]
             if (not os.path.isfile(self.meta.pkg_path + name[:-4]) and
                     repo_pkg_name not in black and
