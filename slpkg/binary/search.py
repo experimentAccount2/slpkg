@@ -41,11 +41,8 @@ def search_pkg(name, repo):
                                          "PACKAGES.TXT".format(repo))
         names = Utils().package_name(PACKAGES_TXT)
         blacklist = BlackList().packages(pkgs=names, repo=repo)
-        num_lines = sum(1 for line in PACKAGES_TXT)
-        toolbar_width, index, step = 2, 0, num_lines
         for line in PACKAGES_TXT.splitlines():
-            index += 1
-            toolbar_width = status(index, toolbar_width, step)
+            status(0)
             if line.startswith("PACKAGE NAME:  ") and len(line) > 16:
                 pkg_name = split_package(line[15:])[0].strip()
                 if name == pkg_name and name not in blacklist:

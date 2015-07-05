@@ -32,7 +32,7 @@ from slpkg.__metadata__ import MetaData as _meta_
 from slpkg.slack.slack_version import slack_ver
 
 
-def repo_data(PACKAGES_TXT, step, repo, flag):
+def repo_data(PACKAGES_TXT, repo, flag):
     """
     Grap data packages
     """
@@ -40,7 +40,7 @@ def repo_data(PACKAGES_TXT, step, repo, flag):
      rname, rlocation, rsize, runsize) = ([] for i in range(8))
     for line in PACKAGES_TXT.splitlines():
         if _meta_.rsl_deps in ["on", "ON"] and flag != "--resolve-off":
-            status(0.000005)
+            status(0.000000005)
         if line.startswith("PACKAGE NAME:"):
             name.append(line[15:].strip())
         if line.startswith("PACKAGE LOCATION:"):

@@ -99,8 +99,8 @@ class Msg(object):
     def done(self):
         """Message done
         """
-        sys.stdout.write("\b {0}Done{1}\n".format(self.meta.color["GREY"],
-                                                  self.meta.color["ENDC"]))
+        sys.stdout.write("\b{0}Done{1}\n".format(self.meta.color["GREY"],
+                                                 self.meta.color["ENDC"]))
 
     def pkg(self, count):
         """Print singular plural

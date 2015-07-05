@@ -63,11 +63,9 @@ class BinaryInstall(object):
         self.dependencies = []
         self.deps_dict = {}
         self.answer = ""
-        self.step = 0
         Msg().reading()
         self.PACKAGES_TXT, self.mirror = RepoInit(self.repo).fetch()
-        self.data = repo_data(self.PACKAGES_TXT, self.step, self.repo,
-                              self.flag)
+        self.data = repo_data(self.PACKAGES_TXT, self.repo, self.flag)
         self.blacklist = BlackList().packages(self.data[0], self.repo)
 
     def start(self, if_upgrade):
