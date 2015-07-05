@@ -27,12 +27,12 @@ import sys
 import shutil
 import subprocess
 
-from slpkg.toolbar import status
 from slpkg.utils import Utils
 from slpkg.sizes import units
 from slpkg.messages import Msg
 from slpkg.url_read import URL
 from slpkg.remove import delete
+from slpkg.toolbar import status
 from slpkg.checksum import check_md5
 from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
