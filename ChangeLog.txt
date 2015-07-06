@@ -1,3 +1,11 @@
+2.6.0 - 04/07/2015
+Added:
+- Auto detect Slackware packages for installation
+Updated:
+- Toolbar progressive status
+Fixed:
+- Visible options when using without colors
+
 2.5.9 - 02/07/2015
 Fixed:
 - Print list file package contents

@@ -411,19 +411,19 @@ list. This command must be executed to update the package lists:
 
     $ slpkg update
 
-    Update repository slack .......................Done
-    Update repository sbo .............Done
-    Update repository alien ...Done
-    Update repository slacky .....................................Done
-    Update repository studio ...................Done
-    Update repository slackr .............................................Done
-    Update repository slonly ...Done
-    Update repository ktown ...Done
-    Update repository salix ..................Done
-    Update repository slacke ...Done
-    Update repository slackl ...Done
-    Update repository multi ...Done
-    Update repository msb ........Done
+    Update repository slack... Done
+    Update repository sbo... Done
+    Update repository alien... Done
+    Update repository slacky... Done
+    Update repository studio... Done
+    Update repository slackr... Done
+    Update repository slonly... Done
+    Update repository ktown... Done
+    Update repository salix... Done
+    Update repository slacke... Done
+    Update repository slackl... Done
+    Update repository multi... Done
+    Update repository msb... Done
 
     Update specifically repositories:
 
@@ -524,8 +524,8 @@ Installing packages from the repositories (supporting multi packages):
 .. code-block:: bash
     
     $ slpkg -s sbo brasero
-    Reading package lists .....Done
-    Resolving dependencies ....Done
+    Reading package lists... Done
+    Resolving dependencies... Done
 
     The following packages will be automatically installed or upgraded 
     with new version:
@@ -553,8 +553,8 @@ Installing packages from the repositories (supporting multi packages):
     Example install multi packages:
     
     $ slpkg -s sbo brasero pylint atkmm
-    Reading package lists ..........Done
-    Resolving dependencies ......Done
+    Reading package lists... Done
+    Resolving dependencies... Done
 
     The following packages will be automatically installed or upgraded 
     with new version:
@@ -592,8 +592,8 @@ Installing packages from the repositories (supporting multi packages):
     Example from 'alien' repository:
 
     $ slpkg -s alien atkmm
-    Reading package lists .....Done
-    Resolving dependencies .........Done
+    Reading package lists... Done
+    Resolving dependencies... Done
 
     +==============================================================================
     | Package                 Version            Arch    Build  Repos          Size
@@ -619,7 +619,7 @@ Installing packages from the repositories (supporting multi packages):
     Close auto resolve dependencies:
 
     $ slpkg -s alien atkm --resolve-off
-    Reading package lists .....Done
+    Reading package lists... Done
 
     The following packages will be automatically installed or upgraded 
     with new version:
@@ -669,7 +669,7 @@ and also displays installed packages:
 .. code-block:: bash
 
     $ slpkg -t sbo brasero
-    Reading package lists ......Done
+    Reading package lists... Done
 
     +=========================
     | brasero dependencies   :
@@ -701,9 +701,9 @@ Check if your packages is up to date or changes in ChangeLog.txt:
     And check if packages need upgrade with:
 
     $ slpkg -c sbo --upgrade
-    Checking ...................Done
-    Reading package lists ......Done
-    Resolving dependencies ...Done
+    Checking... Done
+    Reading package lists... Done
+    Resolving dependencies... Done
 
     The following packages will be automatically installed or upgraded 
     with new version:
@@ -729,9 +729,9 @@ Check if your packages is up to date or changes in ChangeLog.txt:
 
 
     $ slpkg -c slacky --upgrade
-    Checking ........................Done
-    Reading package lists ....Done
-    Resolving dependencies ..........Done
+    Checking... Done
+    Reading package lists... Done
+    Resolving dependencies... Done
 
     +==============================================================================
     | Package                 Version            Arch    Build  Repos          Size
@@ -757,7 +757,7 @@ why always you can have updated your system:
 .. code-block:: bash
 
     $ slpkg -c slack --upgrade
-    Reading package lists .......Done
+    Reading package lists... Done
 
     These packages need upgrading:
     
@@ -782,7 +782,7 @@ why always you can have updated your system:
     Upgrade only distribution:
 
     $ slpkg -c slack --upgrade --skip="multi:*multilib*,ktown:*"  // This upgrade 
-    Checking...................Done                               // distribution
+    Checking... Done                                              // distribution
                                                                   // and skip all 
     Slackware64 'stable' v14.1 distribution is up to date         // packages from
                                                                   // ktown repository
@@ -793,9 +793,9 @@ Skip packages when upgrading:
 .. code-block:: bash
 
     $ slpkg -c sbo --upgrade --skip=pip,jdk     // Available options:
-    Checking ...................Done            // repository:*string*
-    Reading package lists ......Done            // repository:string*
-    Resolving dependencies ...Done              // repository:*string
+    Checking... Done                            // repository:*string*
+    Reading package lists... Done               // repository:string*
+    Resolving dependencies... Done              // repository:*string
 
     The following packages will be automatically installed or upgraded 
     with new version:
@@ -824,7 +824,7 @@ Read fies, download, build or install:
 .. code-block:: bash
 
     $ slpkg -n bitfighter
-    Reading package lists ...Done
+    Reading package lists... Done
     
     +===============================================================================
     | Package bitfighter --> http://slackbuilds.org/repository/14.1/games/bitfighter/
@@ -957,6 +957,27 @@ Install mass-packages:
 
     $ slpkg -i *.t?z
 
+
+Slpkg auto detect Slackware binary packages (.txz and .tgz) for installation:
+
+.. code-block:: bash
+
+    $ slpkg pysed-0.7.8-x86_64-1_SBo.tgz
+
+    Detected Slackware binary package for installation:
+
+      pysed-0.7.8-x86_64-1_SBo.tgz
+
+    +==============================================================================
+    | Choose a Slackware command:
+    +==============================================================================
+    | i)  installpkg
+    | r)  upgradepkg --reinstall
+    | u)  upgradepkg --install-new
+    +==============================================================================
+     > _
+
+    
 Search and find packages from repositories are enabled:
 
 .. code-block:: bash
