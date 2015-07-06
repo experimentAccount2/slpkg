@@ -546,7 +546,7 @@ class Initialization(object):
         try:
             with open("{0}{1}".format(path, archive), "w") as f:
                 for line in contents_txt.splitlines():
-                    status(0.00005)
+                    status(0.00003)
                     f.write(line + "\n")
                 f.close()
         except KeyboardInterrupt:
@@ -666,7 +666,7 @@ class Update(object):
             enabled = only
         try:
             for repo in enabled:
-                sys.stdout.write("{0}Update repository {1}... {2} ".format(
+                sys.stdout.write("{0}Update repository {1}...{2}  ".format(
                     self.meta.color["GREY"], repo, self.meta.color["ENDC"]))
                 sys.stdout.flush()
                 if repo in default:
