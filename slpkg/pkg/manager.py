@@ -224,7 +224,7 @@ class PackageManager(object):
             for pkg in find_package("", self.dep_path):
                 deps = Utils().read_file(self.dep_path + pkg)
                 for rmv in removes:
-                    if rmv in deps:
+                    if rmv in deps.split():
                         view = True
                         package.append(pkg)
                         dependency.append(rmv)
