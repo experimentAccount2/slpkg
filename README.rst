@@ -250,9 +250,9 @@ Using pip:
 
 Bbinary packages:
 
-Slackware: `slpkg-2.5.9-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.5.9/slpkg-2.5.9-i486-1_dsw.txz>`_
+Slackware: `slpkg-2.6.0-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.6.0/slpkg-2.6.0-i486-1_dsw.txz>`_
 
-Slackware64: `slpkg-2.5.9-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.5.9/slpkg-2.5.9-x86_64-1_dsw.txz>`_
+Slackware64: `slpkg-2.6.0-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.6.0/slpkg-2.6.0-x86_64-1_dsw.txz>`_
 
 
 Upgrade
