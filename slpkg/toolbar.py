@@ -27,8 +27,14 @@ import time
 
 
 def status(sec):
-    syms = ["\\", "|", "/", "-"]
-    for sym in syms:
-        sys.stdout.write("\b{0}".format(sym))
-        sys.stdout.flush()
-        time.sleep(float(sec))
+    """Toolbar progressive status
+    """
+    try:
+        syms = ["\\", "|", "/", "-"]
+        for sym in syms:
+            sys.stdout.write("\b{0}".format(sym))
+            sys.stdout.flush()
+            time.sleep(float(sec))
+    except KeyboardInterrupt:
+        print("")
+        sys.exit(0)
