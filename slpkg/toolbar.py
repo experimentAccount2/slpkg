@@ -25,6 +25,8 @@
 import sys
 import time
 
+from __metadata__ import MetaData as _meta_
+
 
 def status(sec):
     """Toolbar progressive status
@@ -32,7 +34,8 @@ def status(sec):
     try:
         syms = ["\\", "|", "/", "-"]
         for sym in syms:
-            sys.stdout.write("\b{0}".format(sym))
+            sys.stdout.write("\b{0}{1}{2}".format(_meta_.color["GREY"], sym,
+                                                  _meta_.color["ENDC"]))
             sys.stdout.flush()
             time.sleep(float(sec))
     except KeyboardInterrupt:
