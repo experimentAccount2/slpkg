@@ -22,6 +22,8 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+import sys
+
 from messages import Msg
 from pkg.manager import PackageManager
 from __metadata__ import MetaData as _meta_
@@ -53,7 +55,16 @@ class Auto(object):
                 self.meta.color["GREEN"], self.commands[com],
                 self.meta.color["ENDC"]))
         Msg().template(78)
-        self.choice = raw_input(" > ")
+        try:
+            self.choice = raw_input(" > ")
+            if self.choice in self.commands.keys():
+                sys.stdout.write("   \x1b[1A{0}{1}{2}\n\n".format(
+                    self.meta.color["CYAN"], self.commands[self.choice],
+                    self.meta.color["ENDC"]))
+                sys.stdout.flush()
+        except KeyboardInterrupt:
+            print("")
+            sys.exit(0)
         self.execute()
 
     def execute(self):
