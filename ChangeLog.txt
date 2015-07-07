@@ -1,10 +1,11 @@
-2.6.0 - 04/07/2015
+2.6.0 - 08/07/2015
 Added:
 - Auto detect Slackware packages for installation
 Updated:
 - Toolbar progressive status
 Fixed:
 - Visible options when using without colors
+- Check remove dependencies #26
 
 2.5.9 - 02/07/2015
 Fixed:
