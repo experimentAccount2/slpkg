@@ -309,7 +309,10 @@ class SBoInstall(object):
                 except ValueError:
                     Msg().build_FAILED(sbo_url, prgnam)
                     sys.exit(0)
-                if find_package(pkg + "-", self.meta.pkg_path):
+                find = find_package(pkg + "-", self.meta.pkg_path)
+                if find:
+                    inst_pkg = split_package(find[0])[0]
+                if inst_pkg == pkg:
                     print("{0}[ Upgrading ] --> {1}{2}".format(
                         self.meta.color["YELLOW"],
                         self.meta.color["ENDC"], pkg))
