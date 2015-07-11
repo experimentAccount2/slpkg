@@ -222,11 +222,17 @@ class SBoInstall(object):
         color yellow for packages to upgrade and color red
         if not installed.
         """
+        inst_name = ""
+        # split sbo name with version and get name
+        sbo_name = "-".join(sbo.split("-")[:-1])
+        # split installed package and get installed name
+        find = find_package(sbo_name + "-", self.meta.pkg_path)
+        if find:
+            inst_name = split_package(find[0])[0]
         if find_package(sbo, self.meta.pkg_path):
             paint = self.meta.color["GREEN"]
             count_ins += 1
-        elif find_package("-".join(sbo.split("-")[:-1]) + "-",
-                          self.meta.pkg_path):
+        elif sbo_name == inst_name:
             paint = self.meta.color["YELLOW"]
             count_upg += 1
         else:
