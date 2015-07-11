@@ -33,5 +33,7 @@ def get_installed_version(package):
     """
     find = find_package(package + _meta_.sp, _meta_.pkg_path)
     if find:
-        return _meta_.sp + split_package(find[0])[1]
+        name = split_package(find[0])[0]
+        if package == name:
+            return _meta_.sp + split_package(find[0])[1]
     return ""
