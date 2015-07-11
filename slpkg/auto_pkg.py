@@ -50,7 +50,7 @@ class Auto(object):
         print("| Choose a Slackware command:")
         Msg().template(78)
         for com in sorted(self.commands):
-            print("| {0}{1}{2})  {3}{4}{5}".format(
+            print("| {0}{1}{2}) {3}{4}{5}".format(
                 self.meta.color["RED"], com, self.meta.color["ENDC"],
                 self.meta.color["GREEN"], self.commands[com],
                 self.meta.color["ENDC"]))
