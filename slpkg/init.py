@@ -29,6 +29,7 @@ from url_read import URL
 from toolbar import status
 from repositories import Repo
 from file_size import FileSize
+from downloader import Download
 from __metadata__ import MetaData as _meta_
 
 from slack.mirrors import mirrors
@@ -94,8 +95,9 @@ class Initialization(object):
         """
         log = self.log_path + "slack/"
         lib = self.lib_path + "slack_repo/"
+        repo_name = log[:-1].split("/")[-1]
         lib_file = "PACKAGES.TXT"
-        lst_file = ""
+        # lst_file = ""
         md5_file = "CHECKSUMS.md5"
         log_file = "ChangeLog.txt"
         if not os.path.exists(log):
@@ -114,12 +116,18 @@ class Initialization(object):
                                               pas_checksums))
         ChangeLog_txt = mirrors(log_file, "")
         if self.check:
-            return self.checks_logs(log, log_file, ChangeLog_txt)
-        self.write(lib, lib_file, PACKAGES_TXT)
-        self.write(lib, md5_file, CHECKSUMS_MD5)
-        self.write(log, log_file, ChangeLog_txt)
-        self.remote(log, log_file, ChangeLog_txt, lib, lib_file, PACKAGES_TXT,
-                    md5_file, CHECKSUMS_MD5, lst_file, FILELIST_TXT)
+            return self.checks_logs(log, ChangeLog_txt)
+        self.down(lib, PACKAGES_TXT, repo_name)
+        self.down(lib, CHECKSUMS_MD5, repo_name)
+        self.down(log, ChangeLog_txt, repo_name)
+        self.remote(log, ChangeLog_txt, lib, PACKAGES_TXT, CHECKSUMS_MD5,
+                    FILELIST_TXT, repo_name)
+
+        # self.write(lib, lib_file, PACKAGES_TXT)
+        # self.write(lib, md5_file, CHECKSUMS_MD5)
+        # self.write(log, log_file, ChangeLog_txt)
+        # self.remote(log, log_file, ChangeLog_txt, lib, lib_file, PACKAGES_TXT,
+        #            md5_file, CHECKSUMS_MD5, lst_file, FILELIST_TXT)
 
     def sbo(self):
         """Creating sbo local library
@@ -516,8 +524,9 @@ class Initialization(object):
         repo = Repo().msb()
         log = self.log_path + "msb/"
         lib = self.lib_path + "msb_repo/"
+        repo_name = log[:-1].split("/")[-1]
         lib_file = "PACKAGES.TXT"
-        lst_file = ""
+        # lst_file = ""
         md5_file = "CHECKSUMS.md5"
         log_file = "ChangeLog.txt"
         if not os.path.exists(log):
@@ -533,12 +542,17 @@ class Initialization(object):
             repo, slack_ver(), self.meta.msb_sub_repo[1:-1], ar, md5_file)
         ChangeLog_txt = "{0}{1}".format(repo, log_file)
         if self.check:
-            return self.checks_logs(log, log_file, ChangeLog_txt)
-        self.write(lib, lib_file, PACKAGES_TXT)
-        self.write(lib, md5_file, CHECKSUMS_MD5)
-        self.write(log, log_file, ChangeLog_txt)
-        self.remote(log, log_file, ChangeLog_txt, lib, lib_file, PACKAGES_TXT,
-                    md5_file, CHECKSUMS_MD5, lst_file, FILELIST_TXT)
+            return self.checks_logs(log, ChangeLog_txt)
+        self.down(lib, PACKAGES_TXT, repo_name)
+        self.down(lib, CHECKSUMS_MD5, repo_name)
+        self.down(log, ChangeLog_txt, repo_name)
+        self.remote(log, ChangeLog_txt, lib, PACKAGES_TXT, CHECKSUMS_MD5,
+                    FILELIST_TXT, repo_name)
+
+    def down(self, path, link, repo):
+        filename = link.split("/")[-1]
+        if not os.path.isfile(path + filename):
+            Download(path, link.split(), repo).start()
 
     def write_file(self, path, archive, contents_txt):
         """Create local file
@@ -567,57 +581,52 @@ class Initialization(object):
             sys.exit(0)
 
     def remote(self, *args):
-        """
-        args[0] = log path
-        args[1] = log_file
-        args[2] = ChangeLog_txt URL
-        args[3] = lib path
-        args[4] = lib_file
-        args[5] = PACKAGES_TXT URL
-        args[6] = md5_file
-        args[7] = CHECKSUMS_MD5 URL
-        args[8] = lst_file
-        args[9] = FILELIST_TXT URL
+        log_path = args[0]
+        ChangeLog_txt = args[1]
+        lib_path = args[2]
+        PACKAGES_TXT = args[3]
+        CHECKSUMS_MD5 = args[4]
+        FILELIST_TXT = args[5]
+        repo = args[6]
 
-        We take the size of ChangeLog.txt from the server and locally.
-        If the two files differ in size delete and replace all files with new.
-        """
-        PACKAGES_TXT = ""
-        check = self.checks_logs(args[0], args[1], args[2])
+        check = self.checks_logs(log_path, ChangeLog_txt)
         if check == 1:
-            # remove PACKAGES.txt
-            os.remove("{0}{1}".format(args[3], args[4]))
-            # remove Changelog.txt
-            os.remove("{0}{1}".format(args[0], args[1]))
-            # remove CHECKSUMS.md5
-            if args[6]:
-                os.remove("{0}{1}".format(args[3], args[6]))
-            # remove FILELIST.TXT
-            if args[8]:
-                os.remove("{0}{1}".format(args[3], args[8]))
-            # read PACKAGES_TXT URL"s
-            for fu in args[5].split():
-                PACKAGES_TXT += URL(fu).reading()
-            # read CHANGELOG_TXX URL"s
-            CHANGELOG_TXT = URL(args[2]).reading()
-            # create PACKAGES.txt file
-            self.write_file(args[3], args[4], PACKAGES_TXT)
-            # create ChangeLog.txt file
-            self.write_file(args[0], args[1], CHANGELOG_TXT)
-            # create CHECKSUMS.md5 file
-            if args[6]:
-                CHECKSUMS_md5 = URL(args[7]).reading()
-                self.write_file(args[3], args[6], CHECKSUMS_md5)
-            # create FILELIST.TXT file
-            if args[8]:
-                FILELIST_TXT = URL(args[9]).reading()
-                self.write_file(args[3], args[8], FILELIST_TXT)
+            # remove ChangeLog.txt
+            os.remove("{0}{1}".format(log_path, ChangeLog_txt.split("/")[-1]))
 
-    def checks_logs(self, log_path, log_file, url):
-        """Checks ChangeLog.txt from changes
+            # remove PACKAGES.txt
+            os.remove("{0}{1}".format(lib_path, PACKAGES_TXT.split("/")[-1]))
+
+            # remove CHECKSUMS.md5
+            if CHECKSUMS_MD5:
+                os.remove("{0}{1}".format(lib_path,
+                                          CHECKSUMS_MD5.split("/")[-1]))
+
+            # remove FILELIST.TXT
+            if FILELIST_TXT:
+                os.remove("{0}{1}".format(lib_path,
+                                          FILELIST_TXT.split("/")[-1]))
+
+            # download ChangeLog.txt file
+            self.down(log_path, ChangeLog_txt, repo)
+
+            # download PACKAGES.txt file
+            self.down(lib_path, PACKAGES_TXT, repo)
+
+            # create CHECKSUMS.md5 file
+            if CHECKSUMS_MD5:
+                self.down(lib_path, CHECKSUMS_MD5, repo)
+
+            # create FILELIST.TXT file
+            if FILELIST_TXT:
+                self.down(lib_path, FILELIST_TXT, repo)
+
+    def checks_logs(self, log_path, url):
+        """Checks ChangeLog.txt for changes
         """
+        filename = url.split("/")[-1]
         server = FileSize(url).server()
-        local = FileSize(log_path + log_file).local()
+        local = FileSize(log_path + filename).local()
         if server != local:
             return 1
         return 0
