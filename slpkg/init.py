@@ -566,11 +566,15 @@ class Initialization(object):
                     FILELIST_TXT, repo_name)
 
     def down(self, path, link, repo):
+        """Download files
+        """
         filename = link.split("/")[-1]
         if not os.path.isfile(path + filename):
             Download(path, link.split(), repo).start()
 
     def remote(self, *args):
+        """Remove and recreate files
+        """
         log_path = args[0]
         ChangeLog_txt = args[1]
         lib_path = args[2]
@@ -594,12 +598,10 @@ class Initialization(object):
             self.file_remove(lib_path, FILELIST_TXT.split("/")[-1])
 
             if repo == "slack":
-                self.file_remove(lib_path + "core/", "PACKAGES.TXT")
-                self.file_remove(lib_path + "core/", "CHECKSUMS.md5")
-                self.file_remove(lib_path + "extra/", "PACKAGES.TXT")
-                self.file_remove(lib_path + "extra/", "CHECKSUMS.md5")
-                self.file_remove(lib_path + "pasture/", "PACKAGES.TXT")
-                self.file_remove(lib_path + "pasture/", "CHECKSUMS.md5")
+                dirs = ["core/", "extra/", "pasture/"]
+                for d in dirs:
+                    self.file_remove(lib_path + d, "PACKAGES.TXT")
+                    self.file_remove(lib_path + d, "CHECKSUMS.md5")
                 self.down(lib_path + "core/", PACKAGES_TXT, repo)
                 self.down(lib_path + "core/", CHECKSUMS_MD5, repo)
                 self.down(lib_path + "extra/", self.EXTRA, repo)
@@ -611,10 +613,11 @@ class Initialization(object):
             self.down(log_path, ChangeLog_txt, repo)
 
             # download PACKAGES.txt file
-            self.down(lib_path, PACKAGES_TXT, repo)
+            if repo != "slack":
+                self.down(lib_path, PACKAGES_TXT, repo)
 
-            # create CHECKSUMS.md5 file
-            self.down(lib_path, CHECKSUMS_MD5, repo)
+                # create CHECKSUMS.md5 file
+                self.down(lib_path, CHECKSUMS_MD5, repo)
 
             # create FILELIST.TXT file
             self.down(lib_path, FILELIST_TXT, repo)
