@@ -459,6 +459,11 @@ list. This command must be executed to update the package lists:
     From 5 repositories need 2 updating. Run the command 'slpkg update'.
 
 
+IMPORTANT: For Alien 's (Eric Hameleers) repositories (alien, multi and ktown) should run 
+'slpkg upgrade' instant 'slpkg update', if you want to spend from -stable in -current or not
+because there is not different file 'ChangeLog.txt' for each version.
+   
+    
 Add and remove custom repositories:
 
 .. code-block:: bash

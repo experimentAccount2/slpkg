@@ -28,6 +28,10 @@ Slonly repository do not support -current for x86 arch.
 Studioware (studio), Alien's ktown (ktown), Alien's multilib (multi), Slacke E17 and E18
 and Alien's restricted repository has no reference dependencies.
 
+IMPORTANT: For Alien 's (Eric Hameleers) repositories (alien, multi and ktown) should run 
+'slpkg upgrade' instant 'slpkg update', if you want to spend from -stable in -current or not
+because there is not different file 'ChangeLog.txt' for each version.
+
 Custom repositories:
 --------------------
 There is the possibility of adding the repository directly from the user enough to address
