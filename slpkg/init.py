@@ -69,6 +69,7 @@ class Initialization(object):
         lib = self.lib_path + "{0}_repo/".format(name)
         repo_name = log[:-1].split("/")[-1]
         lib_file = "PACKAGES.TXT"
+        print log, repo_name, repo
         # lst_file = ""
         md5_file = "CHECKSUMS.md5"
         log_file = "ChangeLog.txt"
@@ -575,28 +576,24 @@ class Initialization(object):
         check = self.checks_logs(log_path, ChangeLog_txt)
         if check == 1:
             # remove ChangeLog.txt
-            os.remove("{0}{1}".format(log_path, ChangeLog_txt.split("/")[-1]))
+            self.file_remove(log_path, ChangeLog_txt.split("/")[-1])
 
             # remove PACKAGES.txt
-            os.remove("{0}{1}".format(lib_path, PACKAGES_TXT.split("/")[-1]))
+            self.file_remove(lib_path, PACKAGES_TXT.split("/")[-1])
 
             # remove CHECKSUMS.md5
             if CHECKSUMS_MD5:
-                os.remove("{0}{1}".format(lib_path,
-                                          CHECKSUMS_MD5.split("/")[-1]))
+                self.file_remove(lib_path, CHECKSUMS_MD5.split("/")[-1])
 
             # remove FILELIST.TXT
             if FILELIST_TXT:
-                os.remove("{0}{1}".format(lib_path,
-                                          FILELIST_TXT.split("/")[-1]))
+                self.file_remove(lib_path, FILELIST_TXT.split("/")[-1])
 
             if repo == "slack":
-                os.remove("{0}{1}".format(lib_path + "extra/", "PACKAGES.TXT"))
-                os.remove("{0}{1}".format(lib_path + "extra/", "CHECKSUMS.md5"))
-                os.remove("{0}{1}".format(lib_path + "pasture/",
-                                          "PACKAGES.TXT"))
-                os.remove("{0}{1}".format(lib_path + "pasture/",
-                                          "CHECKSUMS.md5"))
+                self.file_remove(lib_path + "extra/", "PACKAGES.TXT")
+                self.file_remove(lib_path + "extra/", "CHECKSUMS.md5")
+                self.file_remove(lib_path + "pasture/", "PACKAGES.TXT")
+                self.file_remove(lib_path + "pasture/", "CHECKSUMS.md5")
                 self.down(lib_path + "extra/", self.EXTRA, repo)
                 self.down(lib_path + "pasture/", self.PASTURE, repo)
                 self.down(lib_path + "extra/", self.EXT_CHECKSUMS, repo)
@@ -616,12 +613,20 @@ class Initialization(object):
             if FILELIST_TXT:
                 self.down(lib_path, FILELIST_TXT, repo)
 
+    def file_remove(self, path, filename):
+        """Check if filename exists and remove
+        """
+        if os.path.isfile(path + filename):
+            os.remove(path + filename)
+
     def checks_logs(self, log_path, url):
         """Checks ChangeLog.txt for changes
         """
+        local = ""
         filename = url.split("/")[-1]
         server = FileSize(url).server()
-        local = FileSize(log_path + filename).local()
+        if os.path.isfile(log_path + filename):
+            local = FileSize(log_path + filename).local()
         if server != local:
             return 1
         return 0
