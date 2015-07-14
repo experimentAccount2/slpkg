@@ -582,12 +582,10 @@ class Initialization(object):
             self.file_remove(lib_path, PACKAGES_TXT.split("/")[-1])
 
             # remove CHECKSUMS.md5
-            if CHECKSUMS_MD5:
-                self.file_remove(lib_path, CHECKSUMS_MD5.split("/")[-1])
+            self.file_remove(lib_path, CHECKSUMS_MD5.split("/")[-1])
 
             # remove FILELIST.TXT
-            if FILELIST_TXT:
-                self.file_remove(lib_path, FILELIST_TXT.split("/")[-1])
+            self.file_remove(lib_path, FILELIST_TXT.split("/")[-1])
 
             if repo == "slack":
                 self.file_remove(lib_path + "extra/", "PACKAGES.TXT")
@@ -606,12 +604,10 @@ class Initialization(object):
             self.down(lib_path, PACKAGES_TXT, repo)
 
             # create CHECKSUMS.md5 file
-            if CHECKSUMS_MD5:
-                self.down(lib_path, CHECKSUMS_MD5, repo)
+            self.down(lib_path, CHECKSUMS_MD5, repo)
 
             # create FILELIST.TXT file
-            if FILELIST_TXT:
-                self.down(lib_path, FILELIST_TXT, repo)
+            self.down(lib_path, FILELIST_TXT, repo)
 
     def file_remove(self, path, filename):
         """Check if filename exists and remove
