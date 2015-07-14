@@ -102,7 +102,7 @@ class Initialization(object):
         if not os.path.exists(log):
             os.mkdir(log)
         if not os.path.exists(lib):
-            os.mkdir(lib)
+            os.makedirs(lib + "core/")
         if not os.path.exists(lib + "extra/"):
             os.mkdir(lib + "extra/")
         if not os.path.exists(lib + "pasture/"):
@@ -117,15 +117,21 @@ class Initialization(object):
         ChangeLog_txt = mirrors(log_file, "")
         if self.check:
             return self.checks_logs(log, ChangeLog_txt)
-        self.down(lib, PACKAGES_TXT, repo_name)
+        self.down(lib + "core/", PACKAGES_TXT, repo_name)
         self.down(lib + "extra/", self.EXTRA, repo_name)
         self.down(lib + "pasture/", self.PASTURE, repo_name)
-        self.down(lib, CHECKSUMS_MD5, repo_name)
+        self.down(lib + "core/", CHECKSUMS_MD5, repo_name)
         self.down(lib + "extra/", self.EXT_CHECKSUMS, repo_name)
         self.down(lib + "pasture/", self.PAS_CHECKSUMS, repo_name)
         self.down(log, ChangeLog_txt, repo_name)
         self.remote(log, ChangeLog_txt, lib, PACKAGES_TXT, CHECKSUMS_MD5,
                     FILELIST_TXT, repo_name)
+        self.merge(lib, "PACKAGES.TXT", ["core/PACKAGES.TXT",
+                                         "extra/PACKAGES.TXT",
+                                         "pasture/PACKAGES.TXT"])
+        self.merge(lib, "CHECKSUMS.md5", ["core/CHECKSUMS.md5",
+                                          "extra/CHECKSUMS.md5",
+                                          "pasture/CHECKSUMS.md5"])
 
     def sbo(self):
         """Creating sbo local library
@@ -588,10 +594,14 @@ class Initialization(object):
             self.file_remove(lib_path, FILELIST_TXT.split("/")[-1])
 
             if repo == "slack":
+                self.file_remove(lib_path + "core/", "PACKAGES.TXT")
+                self.file_remove(lib_path + "core/", "CHECKSUMS.md5")
                 self.file_remove(lib_path + "extra/", "PACKAGES.TXT")
                 self.file_remove(lib_path + "extra/", "CHECKSUMS.md5")
                 self.file_remove(lib_path + "pasture/", "PACKAGES.TXT")
                 self.file_remove(lib_path + "pasture/", "CHECKSUMS.md5")
+                self.down(lib_path + "core/", PACKAGES_TXT, repo)
+                self.down(lib_path + "core/", CHECKSUMS_MD5, repo)
                 self.down(lib_path + "extra/", self.EXTRA, repo)
                 self.down(lib_path + "pasture/", self.PASTURE, repo)
                 self.down(lib_path + "extra/", self.EXT_CHECKSUMS, repo)
@@ -608,6 +618,15 @@ class Initialization(object):
 
             # create FILELIST.TXT file
             self.down(lib_path, FILELIST_TXT, repo)
+
+    def merge(self, path, outfile, infiles):
+        """Merge files
+        """
+        with open(path + outfile, 'w') as out_f:
+            for i in infiles:
+                with open(path + i, "r") as in_f:
+                    for line in in_f:
+                        out_f.write(line)
 
     def file_remove(self, path, filename):
         """Check if filename exists and remove
