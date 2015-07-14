@@ -655,10 +655,10 @@ class Update(object):
     def __init__(self):
         self._init = "Initialization(False)"
         self.meta = _meta_
-        self.done = "\b{0}Done{1}\n".format(self.meta.color["GREY"],
+        self.done = "{0}Done{1}\n".format(self.meta.color["GREY"],
+                                          self.meta.color["ENDC"])
+        self.error = "{0}Error{1}\n".format(self.meta.color["RED"],
                                             self.meta.color["ENDC"])
-        self.error = "\b{0}Error{1}\n".format(self.meta.color["RED"],
-                                              self.meta.color["ENDC"])
 
     def repository(self, only):
         """Update repositories lists
@@ -670,8 +670,12 @@ class Update(object):
             enabled = only
         try:
             for repo in enabled:
-                sys.stdout.write("{0}Update repository {1}...{2}  ".format(
-                    self.meta.color["GREY"], repo, self.meta.color["ENDC"]))
+                sys.stdout.write("{0}Check repository [{1}{2}{3}] ... "
+                                 "{4}".format(
+                                     self.meta.color["GREY"],
+                                     self.meta.color["GREEN"], repo,
+                                     self.meta.color["GREY"],
+                                     self.meta.color["ENDC"]))
                 sys.stdout.flush()
                 if repo in default:
                     exec("{0}.{1}()".format(self._init, repo))
