@@ -1,3 +1,10 @@
+2.6.1 - 15/07/2015
+Fixed:
+- Get installed version
+- Matching _SBo package name with _SBo installed name
+Updated:
+- Turn initialization method from read-write file in download
+
 2.6.0 - 08/07/2015
 Added:
 - Auto detect Slackware packages for installation
