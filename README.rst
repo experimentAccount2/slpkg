@@ -250,9 +250,9 @@ Using pip:
 
 Bbinary packages:
 
-Slackware: `slpkg-2.6.1-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.6.1/slpkg-2.6.1-i486-1_dsw.txz>`_
+Slackware: `slpkg-2.6.2-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.6.2/slpkg-2.6.2-i486-1_dsw.txz>`_
 
-Slackware64: `slpkg-2.6.1-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.6.1/slpkg-2.6.1-x86_64-1_dsw.txz>`_
+Slackware64: `slpkg-2.6.2-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.6.2/slpkg-2.6.2-x86_64-1_dsw.txz>`_
 
 
 Upgrade
@@ -341,6 +341,7 @@ Command Line Tool Usage
                                                 repository.
        update slpkg                             Upgrade the program directly from
                                                 repository.
+       health, --silent                         Health check installed packages.
 
     Optional arguments:
       -h, --help                                Print this help message and exit.

@@ -27,9 +27,9 @@ import sys
 import getpass
 
 from load import Regex
+from desc import PkgDesc
 from messages import Msg
 from auto_pkg import Auto
-from desc import PkgDesc
 from config import Config
 from checks import Updates
 from queue import QueuePkgs
@@ -39,6 +39,7 @@ from repositories import Repo
 from tracking import track_dep
 from blacklist import BlackList
 from version import prog_version
+from health import PackageHealth
 from pkg_find import find_from_repos
 from arguments import options, usage
 from slpkg_update import it_self_update
@@ -70,8 +71,8 @@ class ArgParse(object):
         # checking if repositories exists
         if len(self.args) > 1 and self.args[0] not in [
             "-h", "--help", "-v", "--version", "upgrade", "repo-list",
-            "repo-add", "repo-remove", "update", "update-slpkg", "-g",
-            "--config"
+            "repo-add", "repo-remove", "update", "update-slpkg",
+            "health", "-g", "--config"
         ]:
             check_exists_repositories()
 
@@ -156,6 +157,17 @@ class ArgParse(object):
         elif (len(self.args) > 1 and self.args[0] == "repo-info" and
                 self.args[1] not in RepoList().all_repos):
             usage(self.args[1])
+        else:
+            usage("")
+
+    def command_health(self):
+        """Check package health
+        """
+        if len(self.args) == 1 and self.args[0] == "health":
+            PackageHealth(mode="").test()
+        elif (len(self.args) == 2 and self.args[0] == "health" and
+                self.args[1] == "--silent"):
+            PackageHealth(mode=self.args[1]).test()
         else:
             usage("")
 
@@ -521,6 +533,7 @@ def main():
         "repo-add": argparse.command_repo_add,
         "repo-remove": argparse.command_repo_remove,
         "repo-info": argparse.command_repo_info,
+        "health": argparse.command_health,
         "-a": argparse.auto_build,
         "--autobuild": argparse.auto_build,
         "-l": argparse.pkg_list,

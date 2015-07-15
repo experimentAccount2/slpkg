@@ -54,6 +54,7 @@ Commands:
                                             repository.
    update slpkg                             Upgrade the program directly from
                                             repository.
+   health, --silent                         Health check installed packages.
 
 Optional arguments:
   -h, --help                                Print this help message and exit.
@@ -127,6 +128,7 @@ def usage(repo):
              [repo-add [repository name] [URL]]
              [repo-remove [repository]] [repo-list]
              [repo-info [repository]] [update [slpkg]]
+             [health, --silent]
 
              Optional arguments:
              [-h] [-v]
