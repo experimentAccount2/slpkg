@@ -298,7 +298,6 @@ class PackageManager(object):
         """Print the Slackware packages contents
         """
         for pkg in self.binary:
-            print pkg
             find = find_package(pkg + self.meta.sp, self.meta.pkg_path)
             if find:
                 package = Utils().read_file(
