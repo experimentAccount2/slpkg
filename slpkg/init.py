@@ -588,18 +588,11 @@ class Initialization(object):
 
         check = self.checks_logs(log_path, ChangeLog_txt)
         if check == 1:
-            # remove ChangeLog.txt
+            # remove old files
             self.file_remove(log_path, ChangeLog_txt.split("/")[-1])
-
-            # remove PACKAGES.txt
             self.file_remove(lib_path, PACKAGES_TXT.split("/")[-1])
-
-            # remove CHECKSUMS.md5
             self.file_remove(lib_path, CHECKSUMS_MD5.split("/")[-1])
-
-            # remove FILELIST.TXT
             self.file_remove(lib_path, FILELIST_TXT.split("/")[-1])
-
             if repo == "slack":
                 dirs = ["core/", "extra/", "pasture/"]
                 for d in dirs:
@@ -611,18 +604,11 @@ class Initialization(object):
                 self.down(lib_path + "pasture/", self.PASTURE, repo)
                 self.down(lib_path + "extra/", self.EXT_CHECKSUMS, repo)
                 self.down(lib_path + "pasture/", self.PAS_CHECKSUMS, repo)
-
-            # download ChangeLog.txt file
+            # download new files
             self.down(log_path, ChangeLog_txt, repo)
-
-            # download PACKAGES.txt file
             if repo != "slack":
                 self.down(lib_path, PACKAGES_TXT, repo)
-
-                # create CHECKSUMS.md5 file
                 self.down(lib_path, CHECKSUMS_MD5, repo)
-
-            # create FILELIST.TXT file
             self.down(lib_path, FILELIST_TXT, repo)
 
     def merge(self, path, outfile, infiles):
