@@ -24,6 +24,7 @@
 
 import os
 import sys
+import shutil
 
 from repositories import Repo
 from file_size import FileSize
@@ -669,6 +670,8 @@ class Initialization(object):
                         files = "{0}{1}_repo/{2}".format(self.lib_path, repo, f)
                         if os.path.isfile(files):
                             os.remove(files)
+                        elif os.path.isdir(files):
+                            shutil.rmtree(files)
         except KeyboardInterrupt:
             print("")
             sys.exit(0)
