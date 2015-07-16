@@ -3,7 +3,8 @@ Added:
 - Health check installed packages
 Fixed:
 - Remove directories from slack repo when recreate package lists #29
-- Fix support Slackware version 13.37 #28
+- Support Slackware version 13.37 #28
+- Fresh install #30
 
 2.6.1 - 15/07/2015
 Fixed:
