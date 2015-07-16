@@ -309,6 +309,7 @@ class SBoInstall(object):
                 except ValueError:
                     Msg().build_FAILED(sbo_url, prgnam)
                     sys.exit(0)
+                inst_pkg = ""
                 find = find_package(pkg + "-", self.meta.pkg_path)
                 if find:
                     inst_pkg = split_package(find[0])[0]
