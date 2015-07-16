@@ -70,7 +70,6 @@ class Initialization(object):
         lib = self.lib_path + "{0}_repo/".format(name)
         repo_name = log[:-1].split("/")[-1]
         lib_file = "PACKAGES.TXT"
-        print log, repo_name, repo
         # lst_file = ""
         md5_file = "CHECKSUMS.md5"
         log_file = "ChangeLog.txt"
