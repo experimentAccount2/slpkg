@@ -31,7 +31,7 @@
 # below. Be careful is the template that the rest.
 # 
 # 
-# Last Updated: Mon Jun 15 10:47:01 UTC 2015
+# Last Updated: Fri Jul 17 13:47:02 UTC 2015
 # 
 # Available http mirrors:
 # 
@@ -78,6 +78,7 @@
 # no		 http://ftp.slackware.no/slackware/ 
 # nz		 http://ftp.slackware.org.nz/slackware/ 
 # ph		 http://mirror.pregi.net/slackware/ 
+# ph		 http://mirror.rise.ph/slackware/ 
 # pl		 http://ftp.slackware.pl/pub/slackware/ 
 # pl		 http://piotrkosoft.net/pub/mirrors/ftp.slackware.com/pub/slackware/ 
 # pl		 http://sunsite.icm.edu.pl/pub/Linux/slackware/ 
@@ -100,7 +101,6 @@
 # us		 http://mirror.lug.udel.edu/pub/slackware/ 
 # us		 http://mirror.metrocast.net/slackware/ 
 # us		 http://mirror.nexcess.net/slackware/ 
-# us		 http://mirror.quintex.com/slackware/ 
 # us		 http://mirrors.kingrst.com/slackware/ 
 # us		 http://mirrors.xmission.com/slackware/ 
 # us		 http://mirrors1.kernel.org/slackware/ 
@@ -153,6 +153,7 @@
 # no		 ftp://ftp.slackware.no/slackware/ 
 # nz		 ftp://ftp.slackware.org.nz/slackware/ 
 # ph		 ftp://mirror.pregi.net/slackware/ 
+# ph		 ftp://mirror.rise.ph/slackware/ 
 # pl		 ftp://ftp.piotrkosoft.net/pub/mirrors/ftp.slackware.com/pub/slackware/ 
 # pl		 ftp://ftp.slackware.pl/pub/slackware/ 
 # pl		 ftp://sunsite.icm.edu.pl/pub/Linux/slackware/ 
@@ -172,7 +173,6 @@
 # us		 ftp://ftp.slackware.com/pub/slackware/ 
 # us		 ftp://lug.mtu.edu/slackware/ 
 # us		 ftp://mirror.nexcess.net/slackware/ 
-# us		 ftp://mirror.quintex.com/slackware/ 
 # us		 ftp://mirrors.xmission.com/slackware/ 
 # us		 ftp://mirrors1.kernel.org/slackware/ 
 # us		 ftp://mirrors2.kernel.org/slackware/ 
