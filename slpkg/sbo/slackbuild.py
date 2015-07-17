@@ -314,12 +314,12 @@ class SBoInstall(object):
                 if find:
                     inst_pkg = split_package(find[0])[0]
                 if inst_pkg == pkg:
-                    print("{0}[ Upgrading ] --> {1}{2}".format(
+                    print("[ {0}Upgrading{1} ] --> {2}".format(
                         self.meta.color["YELLOW"],
                         self.meta.color["ENDC"], pkg))
                     upgraded.append(prgnam)
                 else:
-                    print("{0}[ Installing ] --> {1}{2}".format(
+                    print("[ {0}Installing{1} ] --> {2}".format(
                         self.meta.color["GREEN"], self.meta.color["ENDC"], pkg))
                     installs.append(prgnam)
                 PackageManager(binary).upgrade(flag="--install-new")
