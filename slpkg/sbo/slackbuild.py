@@ -222,17 +222,13 @@ class SBoInstall(object):
         color yellow for packages to upgrade and color red
         if not installed.
         """
-        inst_name = ""
         # split sbo name with version and get name
         sbo_name = "-".join(sbo.split("-")[:-1])
-        # split installed package and get installed name
-        find = find_package(sbo_name + "-", self.meta.pkg_path)
-        if find:
-            inst_name = split_package(find[0])[0]
+        find = self.find_installed(sbo_name)
         if find_package(sbo, self.meta.pkg_path):
             paint = self.meta.color["GREEN"]
             count_ins += 1
-        elif sbo_name == inst_name:
+        elif sbo_name == find:
             paint = self.meta.color["YELLOW"]
             count_upg += 1
         else:
@@ -268,6 +264,14 @@ class SBoInstall(object):
             if "_SBo" in search:
                 binary.append(search)
         return binary
+
+    def find_installed(self, pkg):
+        """Return installed package name
+        """
+        find = find_package(pkg + "-", self.meta.pkg_path)
+        if find:
+            return split_package(find[0])[0]
+        return ""
 
     def build_install(self):
         """Searches the package name and version in /tmp to
@@ -309,11 +313,8 @@ class SBoInstall(object):
                 except ValueError:
                     Msg().build_FAILED(sbo_url, prgnam)
                     sys.exit(0)
-                inst_pkg = ""
-                find = find_package(pkg + "-", self.meta.pkg_path)
-                if find:
-                    inst_pkg = split_package(find[0])[0]
-                if inst_pkg == pkg:
+                find = self.find_installed(pkg)
+                if find == pkg:
                     print("[ {0}Upgrading{1} ] --> {2}".format(
                         self.meta.color["YELLOW"],
                         self.meta.color["ENDC"], pkg))
