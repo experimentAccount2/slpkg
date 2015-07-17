@@ -158,18 +158,27 @@ class Patches(object):
         Views packages
         """
         for upg, size in sorted(zip(self.upgrade_all, self.comp_sum)):
-            pkg_split = split_package(upg[:-4])
-            color = self.meta.color["YELLOW"]
-            if not find_package(pkg_split[0], self.meta.pkg_path):
-                color = self.meta.color["RED"]
-            ver = get_installed_version(pkg_split[0])
+            pkg_repo = split_package(upg[:-4])
+            color = self.meta.color["RED"]
+            pkg_inst = self.find_installed(pkg_repo[0])
+            if pkg_repo[0] == pkg_inst:
+                color = self.meta.color["YELLOW"]
+            ver = get_installed_version(pkg_repo[0])
             print("  {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>12}{12}".format(
-                color, pkg_split[0] + ver, self.meta.color["ENDC"],
-                " " * (23-len(pkg_split[0] + ver)), pkg_split[1],
-                " " * (18-len(pkg_split[1])), pkg_split[2],
-                " " * (8-len(pkg_split[2])), pkg_split[3],
-                " " * (7-len(pkg_split[3])), "Slack",
+                color, pkg_repo[0] + ver, self.meta.color["ENDC"],
+                " " * (23-len(pkg_repo[0] + ver)), pkg_repo[1],
+                " " * (18-len(pkg_repo[1])), pkg_repo[2],
+                " " * (8-len(pkg_repo[2])), pkg_repo[3],
+                " " * (7-len(pkg_repo[3])), "Slack",
                 size, " K")).rstrip()
+
+    def find_installed(self, pkg):
+        """Return installed package name
+        """
+        find = find_package(pkg + "-", self.meta.pkg_path)
+        if find:
+            return split_package(find[0])[0]
+        return ""
 
     def upgrade(self):
         """
