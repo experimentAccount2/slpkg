@@ -317,11 +317,11 @@ class SBoInstall(object):
                 if find == pkg:
                     print("[ {0}Upgrading{1} ] --> {2}".format(
                         self.meta.color["YELLOW"],
-                        self.meta.color["ENDC"], pkg))
+                        self.meta.color["ENDC"], sbo))
                     upgraded.append(prgnam)
                 else:
                     print("[ {0}Installing{1} ] --> {2}".format(
-                        self.meta.color["GREEN"], self.meta.color["ENDC"], pkg))
+                        self.meta.color["GREEN"], self.meta.color["ENDC"], sbo))
                     installs.append(prgnam)
                 PackageManager(binary).upgrade(flag="--install-new")
         return installs, upgraded
