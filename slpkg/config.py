@@ -60,7 +60,8 @@ class Config(object):
             "DOWNDER",
             "DOWNDER_OPTIONS",
             "SLACKPKG_LOG",
-            "ONLY_INSTALLED"
+            "ONLY_INSTALLED",
+            "PRG_BAR"
         ]
         read_conf = Utils().read_file(self.config_file)
         try:

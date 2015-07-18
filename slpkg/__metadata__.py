@@ -88,7 +88,7 @@ class MetaData(object):
 
     __all__ = "slpkg"
     __author__ = "dslackw"
-    __version_info__ = (2, 6, 2)
+    __version_info__ = (2, 6, 3)
     __version__ = "{0}.{1}.{2}".format(*__version_info__)
     __license__ = "GNU General Public License v3 (GPLv3)"
     __email__ = "d.zlatanidis@gmail.com"
@@ -129,7 +129,8 @@ class MetaData(object):
         "DOWNDER": "wget",
         "DOWNDER_OPTIONS": "-c -N",
         "SLACKPKG_LOG": "on",
-        "ONLY_INSTALLED": "off"
+        "ONLY_INSTALLED": "off",
+        "PRG_BAR": "off"
     }
 
     default_repositories = ["slack", "sbo", "rlw", "alien", "slacky", "studio",
@@ -170,6 +171,7 @@ class MetaData(object):
     downder_options = _conf_slpkg["DOWNDER_OPTIONS"]
     slackpkg_log = _conf_slpkg["SLACKPKG_LOG"]
     only_installed = _conf_slpkg["ONLY_INSTALLED"]
+    prg_bar = _conf_slpkg["PRG_BAR"]
 
     # Remove any gaps
     repositories = [repo.strip() for repo in repositories]
