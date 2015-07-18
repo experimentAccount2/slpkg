@@ -188,7 +188,8 @@ class Patches(object):
             check_md5(pkg_checksum(pkg, "slack_patches"), self.patch_path + pkg)
             pkg_ver = "{0}-{1}".format(split_package(pkg)[0],
                                        split_package(pkg)[1])
-            if find_package(split_package(pkg)[0] + "-", self.meta.pkg_path):
+            if find_package(split_package(pkg)[0] + self.meta.sp,
+                            self.meta.pkg_path):
                 print("[ {0}upgrading{1} ] --> {2}".format(
                     self.meta.color["YELLOW"], self.meta.color["ENDC"],
                     pkg[:-4]))
