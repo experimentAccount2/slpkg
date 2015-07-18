@@ -130,7 +130,7 @@ class MetaData(object):
         "DOWNDER_OPTIONS": "-c -N",
         "SLACKPKG_LOG": "on",
         "ONLY_INSTALLED": "off",
-        "PRG_BAR": "off"
+        "PRG_BAR": "on"
     }
 
     default_repositories = ["slack", "sbo", "rlw", "alien", "slacky", "studio",
