@@ -281,6 +281,12 @@ nearest one. If however for some reason this troublesome please edit the file in
 '/etc/slpkg/slackware-mirrors'.
 
 
+Slpkg configuration
+-------------------
+It is important to read the configuration file '/etc/slpkg/slpkg.conf'. You will find many 
+useful options to configure the program so as you need it.
+
+
 Configuration Files
 -------------------
 
