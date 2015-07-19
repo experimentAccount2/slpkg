@@ -38,8 +38,8 @@ from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
 from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
+from slpkg.installed import GetFromInstalled
 from slpkg.__metadata__ import MetaData as _meta_
-from slpkg.get_version import get_installed_version
 
 from slpkg.pkg.find import find_package
 from slpkg.pkg.manager import PackageManager
@@ -163,7 +163,7 @@ class Patches(object):
             pkg_inst = self.find_installed(pkg_repo[0])
             if pkg_repo[0] == pkg_inst:
                 color = self.meta.color["YELLOW"]
-            ver = get_installed_version(pkg_repo[0])
+            ver = GetFromInstalled(pkg_repo[0]).version()
             print("  {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>12}{12}".format(
                 color, pkg_repo[0] + ver, self.meta.color["ENDC"],
                 " " * (23-len(pkg_repo[0] + ver)), pkg_repo[1],

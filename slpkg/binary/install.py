@@ -37,7 +37,7 @@ from slpkg.log_deps import write_deps
 from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _meta_
-from slpkg.get_version import get_installed_version
+from slpkg.installed import GetFromInstalled
 
 from slpkg.pkg.find import find_package
 from slpkg.pkg.manager import PackageManager
@@ -223,7 +223,7 @@ class BinaryInstall(object):
             else:
                 COLOR = self.meta.color["RED"]
                 uni_sum += 1
-            ver = get_installed_version(pkg_repo[0])
+            ver = GetFromInstalled(pkg_repo[0]).version()
             print("  {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>11}{12}".format(
                 COLOR, pkg_repo[0] + ver, self.meta.color["ENDC"],
                 " " * (23-len(pkg_repo[0] + ver)), pkg_repo[1],

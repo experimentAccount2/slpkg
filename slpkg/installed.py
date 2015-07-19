@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*
 
-# get_installed_version.py file is part of slpkg.
+# installed.py file is part of slpkg.
 
 # Copyright 2014-2015 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
@@ -28,12 +28,20 @@ from __metadata__ import MetaData as _meta_
 from pkg.find import find_package
 
 
-def get_installed_version(package):
-    """Get version from installed packages
+class GetFromInstalled(object):
+    """Find and return version and package name from
+    already installed packages
     """
-    find = find_package(package + _meta_.sp, _meta_.pkg_path)
-    if find:
-        name = split_package(find[0])[0]
-        if package == name:
-            return _meta_.sp + split_package(find[0])[1]
-    return ""
+    def __init__(self, package):
+        self.package = package
+        self.meta = _meta_
+
+    def version(self):
+        """Get version from installed packages
+        """
+        find = find_package(self.package + _meta_.sp, _meta_.pkg_path)
+        if find:
+            name = split_package(find[0])[0]
+            if self.package == name:
+                return _meta_.sp + split_package(find[0])[1]
+        return ""

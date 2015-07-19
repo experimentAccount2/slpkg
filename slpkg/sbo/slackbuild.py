@@ -32,8 +32,8 @@ from slpkg.log_deps import write_deps
 from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
 from slpkg.splitting import split_package
+from slpkg.installed import GetFromInstalled
 from slpkg.__metadata__ import MetaData as _meta_
-from slpkg.get_version import get_installed_version
 
 from slpkg.pkg.find import find_package
 from slpkg.pkg.build import BuildPackage
@@ -209,7 +209,7 @@ class SBoInstall(object):
         args[2] version
         args[3] arch
         """
-        ver = get_installed_version(args[1])
+        ver = GetFromInstalled(args[1]).version()
         print("  {0}{1}{2}{3} {4}{5} {6}{7}{8}{9}{10}{11:>11}{12}".format(
             args[0], args[1] + ver, self.meta.color["ENDC"],
             " " * (23-len(args[1] + ver)), args[2],
