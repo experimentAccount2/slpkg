@@ -494,14 +494,19 @@ class ArgParse(object):
 def auto_detect(args):
     """Check for already Slackware binary packages exist
     """
-    packages = []
+    packages, not_found = [], []
     for pkg in args:
         if pkg.endswith(".tgz") or pkg.endswith(".txz"):
             if os.path.isfile(pkg):
                 packages.append(pkg)
+            else:
+                not_found.append(pkg)
     if packages:
         Auto(packages).select()
-        sys.exit(0)
+    if not_found:
+        for ntf in not_found:
+            Msg().pkg_not_found("", ntf, "Not installed", "")
+    sys.exit(0)
 
 
 def main():
@@ -516,7 +521,8 @@ def main():
         usage("")
         sys.exit(0)
 
-    auto_detect(args)
+    if not args[0].startswith("-"):
+        auto_detect(args)
 
     if len(args) == 2 and args[0] == "update" and args[1] == "slpkg":
         args[0] = "update-slpkg"
