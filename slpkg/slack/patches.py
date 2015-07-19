@@ -160,7 +160,7 @@ class Patches(object):
         for upg, size in sorted(zip(self.upgrade_all, self.comp_sum)):
             pkg_repo = split_package(upg[:-4])
             color = self.meta.color["RED"]
-            pkg_inst = self.find_installed(pkg_repo[0])
+            pkg_inst = GetFromInstalled(pkg_repo[0]).name()
             if pkg_repo[0] == pkg_inst:
                 color = self.meta.color["YELLOW"]
             ver = GetFromInstalled(pkg_repo[0]).version()
@@ -171,14 +171,6 @@ class Patches(object):
                 " " * (8-len(pkg_repo[2])), pkg_repo[3],
                 " " * (7-len(pkg_repo[3])), "Slack",
                 size, " K")).rstrip()
-
-    def find_installed(self, pkg):
-        """Return installed package name
-        """
-        find = find_package(pkg + "-", self.meta.pkg_path)
-        if find:
-            return split_package(find[0])[0]
-        return ""
 
     def upgrade(self):
         """

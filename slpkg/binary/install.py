@@ -173,14 +173,6 @@ class BinaryInstall(object):
                 PackageManager(package).upgrade("--install-new")
         return [installs, upgraded]
 
-    def find_installed(self, pkg):
-        """Return installed package name
-        """
-        find = find_package(pkg + "-", self.meta.pkg_path)
-        if find:
-            return split_package(find[0])[0]
-        return ""
-
     def checksums(self, install):
         """
         Checksums before install
@@ -217,7 +209,7 @@ class BinaryInstall(object):
             if find_package(pkg[:-4], self.meta.pkg_path):
                 pkg_sum += 1
                 COLOR = self.meta.color["GREEN"]
-            elif pkg_repo[0] == self.find_installed(pkg_repo[0]):
+            elif pkg_repo[0] == GetFromInstalled(pkg_repo[0]).name():
                 COLOR = self.meta.color["YELLOW"]
                 upg_sum += 1
             else:

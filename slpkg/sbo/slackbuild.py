@@ -224,7 +224,7 @@ class SBoInstall(object):
         """
         # split sbo name with version and get name
         sbo_name = "-".join(sbo.split("-")[:-1])
-        find = self.find_installed(sbo_name)
+        find = GetFromInstalled(sbo_name).name()
         if find_package(sbo, self.meta.pkg_path):
             paint = self.meta.color["GREEN"]
             count_ins += 1
@@ -264,14 +264,6 @@ class SBoInstall(object):
             if "_SBo" in search:
                 binary.append(search)
         return binary
-
-    def find_installed(self, pkg):
-        """Return installed package name
-        """
-        find = find_package(pkg + "-", self.meta.pkg_path)
-        if find:
-            return split_package(find[0])[0]
-        return ""
 
     def build_install(self):
         """Searches the package name and version in /tmp to
@@ -313,7 +305,7 @@ class SBoInstall(object):
                 except ValueError:
                     Msg().build_FAILED(sbo_url, prgnam)
                     sys.exit(0)
-                find = self.find_installed(pkg)
+                find = GetFromInstalled(pkg).name()
                 if find == pkg:
                     print("[ {0}Upgrading{1} ] --> {2}".format(
                         self.meta.color["YELLOW"],
