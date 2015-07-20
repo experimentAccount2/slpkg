@@ -40,7 +40,7 @@ setup(
               "slpkg/binary"],
     scripts=["bin/slpkg"],
     version=_meta_.__version__,
-    description="Python tool to manage Slackware packages",
+    description="Package manager for Slackware installations",
     keywords=["slackware", "slpkg", "upgrade", "install", "remove",
               "view", "slackpkg", "tool", "build"],
     author=_meta_.__author__,
