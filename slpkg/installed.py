@@ -39,7 +39,7 @@ class GetFromInstalled(object):
     def version(self):
         """Return version from installed packages
         """
-        find = find_package(self.package + self.meta.sp, _meta_.pkg_path)
+        find = find_package(self.package + self.meta.sp, self.meta.pkg_path)
         if find:
             name = split_package(find[0])[0]
             if self.package == name:
