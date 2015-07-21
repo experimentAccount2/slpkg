@@ -162,8 +162,9 @@ class PackageManager(object):
         print("| Found dependencies for package {0}:".format(package))
         Msg().template(78)
         for dep in dependencies.splitlines():
-            print("| {0}{1}{2}".format(self.meta.color["RED"], dep,
-                                       self.meta.color["ENDC"]))
+            if GetFromInstalled(dep).name():
+                print("| {0}{1}{2}".format(self.meta.color["RED"], dep,
+                                           self.meta.color["ENDC"]))
         Msg().template(78)
         return dependencies
 
