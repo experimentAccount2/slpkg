@@ -35,7 +35,7 @@ def write_deps(deps_dict):
     into directory `/var/log/slpkg/dep/`
     """
     for name, dependencies in deps_dict.iteritems():
-        if find_package(name + "-", _meta_.pkg_path):
+        if find_package(name + _meta_.sp, _meta_.pkg_path):
             dep_path = _meta_.log_path + "dep/"
             if not os.path.exists(dep_path):
                 os.mkdir(dep_path)
