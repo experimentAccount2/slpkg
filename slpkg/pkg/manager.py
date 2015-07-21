@@ -166,6 +166,21 @@ class PackageManager(object):
         Msg().template(78)
         return dependencies
 
+    def _clean_logs(self, package):
+        """Clean logs for removed packages.
+        THIS FUNCTION IS NOT USED
+        """
+        files = find_package("", self.dep_path)
+        for f in files:
+            fo = open(self.dep_path + f, "r")
+            fr = fo.read()
+            fo.close()
+            if package in fr:
+                with open(self.dep_path + f, "w") as fopen:
+                    for line in fr.splitlines():
+                        if package != line:
+                            fopen.write(line + "\n")
+
     def _removepkg(self, package):
         """removepkg Slackware command
         """
