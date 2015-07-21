@@ -29,6 +29,7 @@ import subprocess
 from slpkg.utils import Utils
 from slpkg.messages import Msg
 from slpkg.splitting import split_package
+from slpkg.installed import GetFromInstalled
 from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.pkg.find import find_package
@@ -239,7 +240,7 @@ class PackageManager(object):
             for pkg in find_package("", self.dep_path):
                 deps = Utils().read_file(self.dep_path + pkg)
                 for rmv in removes:
-                    if rmv in deps.split():
+                    if GetFromInstalled(rmv).name() and rmv in deps.split():
                         view = True
                         package.append(pkg)
                         dependency.append(rmv)
