@@ -230,7 +230,7 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.6.3.tar.gz
+    $ tar xvf slpkg-2.6.4.tar.gz
     $ cd slpkg-<version>
     $ ./install.sh
 
@@ -250,9 +250,9 @@ Using pip:
 
 Bbinary packages:
 
-Slackware: `slpkg-2.6.3-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.6.3/slpkg-2.6.3-i486-1_dsw.txz>`_
+Slackware: `slpkg-2.6.4-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.6.4/slpkg-2.6.4-i486-1_dsw.txz>`_
 
-Slackware64: `slpkg-2.6.3-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.6.3/slpkg-2.6.3-x86_64-1_dsw.txz>`_
+Slackware64: `slpkg-2.6.4-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.6.4/slpkg-2.6.4-x86_64-1_dsw.txz>`_
 
 
 Upgrade
