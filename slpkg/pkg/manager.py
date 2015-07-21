@@ -146,8 +146,7 @@ class PackageManager(object):
             pkgs = find_package(pkg + self.meta.sp, self.meta.pkg_path)
             if pkgs:
                 print("[ {0}delete{1} ] --> {2}".format(
-                    self.meta.color["RED"], self.meta.color["ENDC"],
-                    "\n               ".join(pkgs)))
+                    self.meta.color["RED"], self.meta.color["ENDC"], pkgs[0]))
                 removed.append(pkg)
             else:
                 Msg().pkg_not_found("", pkg, "Can't remove", "")
