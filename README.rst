@@ -286,6 +286,8 @@ Slpkg configuration
 It is important to read the configuration file '/etc/slpkg/slpkg.conf'. You will find many 
 useful options to configure the program so as you need it.
 
+A simple example is to close the progress bar for speed, changing the variable PRG_BAR the 
+value "off".
 
 Configuration Files
 -------------------
