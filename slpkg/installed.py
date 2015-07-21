@@ -42,8 +42,7 @@ class GetFromInstalled(object):
         """Return version from installed packages
         """
         if self.find:
-            name = split_package(self.find[0])[0]
-            if self.package == name:
+            if self.package == split_package(self.find[0])[0]:
                 return self.meta.sp + split_package(self.find[0])[1]
         return ""
 
