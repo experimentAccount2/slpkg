@@ -67,6 +67,16 @@ class ArgParse(object):
     def __init__(self, args):
         self.args = args
         self.meta = _meta_
+        self.commands = [
+            "update",
+            "upgrade",
+            "repo-add",
+            "repo-remove",
+            "repo-list",
+            "repo-info",
+            "update-slpkg",
+            "health"
+        ]
 
         # checking if repositories exists
         if len(self.args) > 1 and self.args[0] not in [
@@ -490,23 +500,24 @@ class ArgParse(object):
         else:
             usage("")
 
-
-def auto_detect(args):
-    """Check for already Slackware binary packages exist
-    """
-    packages, not_found = [], []
-    for pkg in args:
-        if pkg.endswith(".tgz") or pkg.endswith(".txz"):
-            if os.path.isfile(pkg):
-                packages.append(pkg)
-            else:
-                not_found.append(pkg)
-    if packages:
-        Auto(packages).select()
-    if not_found:
-        for ntf in not_found:
-            Msg().pkg_not_found("", ntf, "Not installed", "")
-    sys.exit(0)
+    def auto_detect(self, args):
+        """Check for already Slackware binary packages exist
+        """
+        if (not args[0].startswith("-") and args[0] not in self.commands and
+                args[0].endswith(".tgz") or args[0].endswith(".txz")):
+            packages, not_found = [], []
+            for pkg in args:
+                if pkg.endswith(".tgz") or pkg.endswith(".txz"):
+                    if os.path.isfile(pkg):
+                        packages.append(pkg)
+                    else:
+                        not_found.append(pkg)
+            if packages:
+                Auto(packages).select()
+            if not_found:
+                for ntf in not_found:
+                    Msg().pkg_not_found("", ntf, "Not installed", "")
+            sys.exit(0)
 
 
 def main():
@@ -521,8 +532,7 @@ def main():
         usage("")
         sys.exit(0)
 
-    if not args[0].startswith("-"):
-        auto_detect(args)
+    argparse.auto_detect(args)
 
     if len(args) == 2 and args[0] == "update" and args[1] == "slpkg":
         args[0] = "update-slpkg"
