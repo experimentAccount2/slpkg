@@ -5,6 +5,7 @@ Fixed:
 - Auto detect Slackware packages
 - Check dependencies if existis before reference to remove
 - Check directories exists before find
+- Matching packages before remove
 
 2.6.3 - 17/07/2015
 Added:
