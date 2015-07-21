@@ -32,11 +32,12 @@ def find_package(find_pkg, directory):
     Find packages
     """
     pkgs = []
-    installed = sorted(os.listdir(directory))
-    blacklist = BlackList().packages(pkgs=installed, repo="local")
-    if os.path.exists(directory):
-        for pkg in installed:
-            if (not pkg.startswith(".") and pkg.startswith(find_pkg) and
-                    split_package(pkg)[0] not in blacklist):
-                pkgs.append(pkg)
+    if os.path.isdir(directory):
+        installed = sorted(os.listdir(directory))
+        blacklist = BlackList().packages(pkgs=installed, repo="local")
+        if os.path.exists(directory):
+            for pkg in installed:
+                if (not pkg.startswith(".") and pkg.startswith(find_pkg) and
+                        split_package(pkg)[0] not in blacklist):
+                    pkgs.append(pkg)
     return pkgs
