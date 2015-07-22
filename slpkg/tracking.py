@@ -91,9 +91,9 @@ def track_dep(name, repo, flag):
                     _meta_.color["ENDC"], installed, used))
             else:
                 print(" |")
-                print(" {0}{1}: {2}{3}{4} {5}{6}".format(
+                print(" {0}{1}: {2}{3}{4} {5}".format(
                     "+--", index, _meta_.color["RED"], pkg,
-                    _meta_.color["ENDC"], installed, used))
+                    _meta_.color["ENDC"], installed))
         if _meta_.use_colors in ["off", "OFF"]:
             print("\n *: Installed\n")
         else:
