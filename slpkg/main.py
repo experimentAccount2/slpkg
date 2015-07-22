@@ -291,9 +291,14 @@ class ArgParse(object):
         """Tracking package dependencies
         """
         options = ["-t", "--tracking"]
+        flag = ["--check-deps"]
         if (len(self.args) == 3 and self.args[0] in options and
                 self.args[1] in self.meta.repositories):
-            track_dep(self.args[2], self.args[1])
+            track_dep(self.args[2], self.args[1], flag="")
+        elif (len(self.args) == 4 and self.args[0] in options and
+                self.args[1] in self.meta.repositories and
+                self.args[3] == flag[0]):
+            track_dep(self.args[2], self.args[1], flag[0])
         elif (len(self.args) > 1 and self.args[0] in options and
                 self.args[1] not in self.meta.repositories):
             usage(self.args[1])

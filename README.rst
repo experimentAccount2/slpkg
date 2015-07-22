@@ -683,7 +683,7 @@ and also displays installed packages:
 .. code-block:: bash
 
     $ slpkg -t sbo brasero
-    Reading package lists... Done
+    Resolving dependencies... Done
 
     +=========================
     | brasero dependencies   :
@@ -700,6 +700,28 @@ and also displays installed packages:
      +--4 gst1-plugins-bad
      |
      +--5 libunique
+
+    
+    Check if dependencies used:
+
+    $ slpkg -t sbo Flask --check-deps
+    Resolving dependencies... Done
+
+    +=============================
+    | Package Flask dependencies :
+    +=============================
+    \
+     +---[ Tree of dependencies ]
+     |
+     +--1: pysetuptools is dependency --> Flask, bpython, pip, pylint
+     |
+     +--2: MarkupSafe is dependency --> Flask
+     |
+     +--3: itsdangerous is dependency --> Flask
+     |
+     +--4: Jinja2 is dependency --> Flask
+     |
+     +--5: werkzeug is dependency --> Flask
 
 
 Check if your packages is up to date or changes in ChangeLog.txt:

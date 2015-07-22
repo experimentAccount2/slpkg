@@ -32,7 +32,7 @@ Usage: slpkg Commands:
              [-l [repository], --index, --installed]
              [-c [repository] --upgrade, --skip=[...] --resolve-off]
              [-s [repository] [package...], --resolve-off]
-             [-t [repository] [package]]
+             [-t [repository] [package], --check-deps]
              [-p [repository] [package], --color=[]]
              [-n [SBo package]] [-F [...]] [-f [...]]
              [-i [options] [...]] [-u [options] [...]]
@@ -163,11 +163,12 @@ dependencies of the package. Switch off automatic resolve dependencies with addi
 "--resolve-off".
 
 .SS -t, --tracking,  tracking dependencies
-\fBslpkg\fP \fB-t\fP <\fIrepository\fP> <\fIname of package\fP>
+\fBslpkg\fP \fB-t\fP <\fIrepository\fP> <\fIname of package\fP>, \fB--check-deps\fP
 .PP
 Tracking all dependencies of that package.
 The sequence shown is that you must follow to correctly install package.
-Also you can check if the installed package has all the required dependencies.
+Also you can check if the installed package has all the required dependencies and with
+additional option "--check-deps" if used by other packages.
 
 .SS -p, --desk, print packages description
 \fBslpkg\fP \fB-p\fP <\fIrepository\fP> <\fIname of package\fP>, \fB--color=[]\fP

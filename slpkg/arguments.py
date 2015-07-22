@@ -85,8 +85,8 @@ Optional arguments:
   -s, --sync, [repository] [package...],    Sync packages. Install packages
       --resolve-off                         directly from remote repositories
                                             with all dependencies.
-  -t, --tracking, [repository] [package]    Tracking package dependencies and
-                                            print package dependenies tree with
+  -t, --tracking, [repository] [package],   Tracking package dependencies and
+      --check-deps                          print package dependenies tree with
                                             highlight if packages is installed.
   -p, --desc, [repository] [package],       Print description of a package
       --color=[]                            directly from the repository and
@@ -140,7 +140,7 @@ def usage(repo):
              [-l [repository], --index, --installed]
              [-c [repository], --upgrade, --skip=[...] --resolve-off]
              [-s [repository] [package...], --resolve-off]
-             [-t [repository] [package]]
+             [-t [repository] [package], --check-deps]
              [-p [repository] [package], --color=[]]
              [-n [SBo package]] [-F [...]] [-f [...]]
              [-i [options] [...]] [-u [options] [...]]

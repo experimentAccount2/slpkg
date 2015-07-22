@@ -36,7 +36,7 @@ from binary.search import search_pkg
 from binary.dependency import Dependencies
 
 
-def track_dep(name, repo):
+def track_dep(name, repo, flag):
     """
     View tree of dependencies and also
     highlight packages with color green
@@ -75,25 +75,42 @@ def track_dep(name, repo):
             _meta_.color["YELLOW"], _meta_.color["ENDC"]))
         index = 0
         for pkg in dependencies:
+            used = ""
+            if flag == "--check-deps":
+                used = "{0} {1}{2}{3}".format(
+                    "is dependency -->", _meta_.color["CYAN"],
+                    ", ".join(check_used(pkg)), _meta_.color["ENDC"])
             index += 1
             installed = ""
             if find_package(pkg + _meta_.sp, _meta_.pkg_path):
                 if _meta_.use_colors in ["off", "OFF"]:
                     installed = "*"
                 print(" |")
-                print(" {0}{1}: {2}{3}{4} {5}".format("+--", index,
-                                                      _meta_.color["GREEN"],
-                                                      pkg, _meta_.color["ENDC"],
-                                                      installed))
+                print(" {0}{1}: {2}{3}{4} {5}{6}".format(
+                    "+--", index, _meta_.color["GREEN"], pkg,
+                    _meta_.color["ENDC"], installed, used))
             else:
                 print(" |")
-                print(" {0}{1}: {2}{3}{4} {5}".format("+--", index,
-                                                      _meta_.color["RED"], pkg,
-                                                      _meta_.color["ENDC"],
-                                                      installed))
+                print(" {0}{1}: {2}{3}{4} {5}{6}".format(
+                    "+--", index, _meta_.color["RED"], pkg,
+                    _meta_.color["ENDC"], installed, used))
         if _meta_.use_colors in ["off", "OFF"]:
             print("\n *: Installed\n")
         else:
             print("")    # new line at end
     else:
         print("\nNo package was found to match\n")
+
+
+def check_used(pkg):
+    """Check if dependencies used
+    """
+    used = []
+    dep_path = _meta_.log_path + "dep/"
+    logs = find_package("", dep_path)
+    for log in logs:
+        deps = Utils().read_file(dep_path + log)
+        for dep in deps.splitlines():
+            if pkg == dep:
+                used.append(log)
+    return used
