@@ -75,11 +75,13 @@ def track_dep(name, repo, flag):
             _meta_.color["YELLOW"], _meta_.color["ENDC"]))
         index = 0
         for pkg in dependencies:
-            used = ""
-            if flag == "--check-deps":
+            used = check_used(pkg)
+            if used and flag == "--check-deps":
                 used = "{0} {1}{2}{3}".format(
                     "is dependency -->", _meta_.color["CYAN"],
-                    ", ".join(check_used(pkg)), _meta_.color["ENDC"])
+                    ", ".join(used), _meta_.color["ENDC"])
+            else:
+                used = ""
             index += 1
             installed = ""
             if find_package(pkg + _meta_.sp, _meta_.pkg_path):
