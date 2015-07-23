@@ -31,7 +31,8 @@ from pkg.find import find_package
 
 
 class DependenciesStatus(object):
-
+    """Print dependencies status used by packages
+    """
     def __init__(self):
         self.meta = _meta_
         self.dmap = {}
