@@ -736,6 +736,8 @@ and also displays installed packages:
 
 Print dependencies status used by packages:
 
+.. code-block:: bash
+   
     $ slpkg deps-status
 
     +==============================================================================
