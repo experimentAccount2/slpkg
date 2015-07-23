@@ -118,6 +118,7 @@ Optional arguments:
                                             contents and file list.
 
 You can read more about slpkg from manpage or see examples from readme file.
+Issues: https://github.com/dslackw/slpkg/issues
 Homepage: https://github.com/dslackw/slpkg
 """
     header()
