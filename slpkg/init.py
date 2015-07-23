@@ -686,7 +686,7 @@ class Update(object):
                 sys.stdout.write("{0}Check repository [{1}{2}{3}] ... "
                                  "{4}".format(
                                      self.meta.color["GREY"],
-                                     self.meta.color["GREEN"], repo,
+                                     self.meta.color["CYAN"], repo,
                                      self.meta.color["GREY"],
                                      self.meta.color["ENDC"]))
                 sys.stdout.flush()
