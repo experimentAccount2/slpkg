@@ -2,6 +2,8 @@
 Added:
 - Dependencies status command
 - Check if dependencies used in option "--tracking"
+Fixed:
+- Create 'core/' directory for Slackware repository
 
 2.6.4 - 21/07/2015
 Updated:
