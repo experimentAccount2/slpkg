@@ -131,6 +131,14 @@ run '$ slpkg update' to update package list.
 View list of repositories with command '$ slpkg repo-list' or get repository information with
 command '$ slpkg repo-info <repository>.
 
+Update slpkg itself simply run "$ slpkg update slpkg", and slpkg check from GitHub repository if
+new versions are available.
+
+Checking packages health with command "$ slpkg health" and slpkg check if files missing from 
+package file list.
+
+Print dependencies status used by packages with command "$ slpkg deps-status".
+
 If you have already downloaded the script and the source code you can build the package with 
 the command '$ slpkg <script.tar.gz> <sources>'.
 
@@ -350,6 +358,8 @@ Command Line Tool Usage
        update slpkg                             Upgrade the program directly from
                                                 repository.
        health, --silent                         Health check installed packages.
+       deps-status                              Print dependencies status used by
+                                                packages.
 
     Optional arguments:
       -h, --help                                Print this help message and exit.
@@ -722,6 +732,38 @@ and also displays installed packages:
      +--4: Jinja2 is dependency --> Flask
      |
      +--5: werkzeug is dependency --> Flask
+
+
+Print dependencies status used by packages:
+
+    $ slpkg deps-status
+
+    +==============================================================================
+    | Dependencies                    Packages
+    +==============================================================================
+      astroid                         pylint
+      logilab-common                  pylint
+      werkzeug                        Flask
+      cryptography                    bpython
+      ndg_httpsclient                 bpython
+      enum34                          bpython
+      pyOpenSSL                       bpython
+      curtsies                        bpython
+      six                             bpython, pylint
+      cffi                            bpython
+      python-requests                 bpython
+      pysetuptools                    Flask, bpython, pip, pylint
+      MarkupSafe                      Flask
+      Pygments                        bpython
+      Jinja2                          Flask
+      pycparser                       bpython
+      blessings                       bpython
+      greenlet                        bpython
+      pyasn1                          bpython
+
+    Summary
+    ===============================================================================
+    Found 19 dependencies in 4 packages.
 
 
 Check if your packages is up to date or changes in ChangeLog.txt:

@@ -43,6 +43,8 @@ from health import PackageHealth
 from pkg_find import find_from_repos
 from arguments import options, usage
 from slpkg_update import it_self_update
+from status_deps import DependenciesStatus
+
 from init import (
     Update,
     Initialization,
@@ -75,7 +77,8 @@ class ArgParse(object):
             "repo-list",
             "repo-info",
             "update-slpkg",
-            "health"
+            "health",
+            "deps-status"
         ]
 
         # checking if repositories exists
@@ -178,6 +181,14 @@ class ArgParse(object):
         elif (len(self.args) == 2 and self.args[0] == "health" and
                 self.args[1] == "--silent"):
             PackageHealth(mode=self.args[1]).test()
+        else:
+            usage("")
+
+    def command_deps_status(self):
+        """Print dependencies status
+        """
+        if len(self.args) == 1 and self.args[0] == "deps-status":
+            DependenciesStatus().show()
         else:
             usage("")
 
@@ -555,6 +566,7 @@ def main():
         "repo-remove": argparse.command_repo_remove,
         "repo-info": argparse.command_repo_info,
         "health": argparse.command_health,
+        "deps-status": argparse.command_deps_status,
         "-a": argparse.auto_build,
         "--autobuild": argparse.auto_build,
         "-l": argparse.pkg_list,
