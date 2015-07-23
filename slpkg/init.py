@@ -102,27 +102,27 @@ class Initialization(object):
         if not os.path.exists(log):
             os.mkdir(log)
         if not os.path.exists(lib):
-            os.makedirs(lib + "core/")
-        if not os.path.exists(lib + "extra/"):
-            os.mkdir(lib + "extra/")
-        if not os.path.exists(lib + "pasture/"):
-            os.mkdir(lib + "pasture/")
+            os.mkdir(lib)
+        dirs = ["core/", "extra/", "pasture/"]
+        for d in dirs:
+            if not os.path.exists(lib + d):
+                os.mkdir(lib + d)
         PACKAGES_TXT = mirrors(lib_file, "")
         FILELIST_TXT = ""
         CHECKSUMS_MD5 = mirrors(md5_file, "")
-        self.EXTRA = mirrors(lib_file, "extra/")
-        self.EXT_CHECKSUMS = mirrors(md5_file, "extra/")
-        self.PASTURE = mirrors(lib_file, "pasture/")
-        self.PAS_CHECKSUMS = mirrors(md5_file, "pasture/")
+        self.EXTRA = mirrors(lib_file, dirs[1])
+        self.EXT_CHECKSUMS = mirrors(md5_file, dirs[1])
+        self.PASTURE = mirrors(lib_file, dirs[2])
+        self.PAS_CHECKSUMS = mirrors(md5_file, dirs[2])
         ChangeLog_txt = mirrors(log_file, "")
         if self.check:
             return self.checks_logs(log, ChangeLog_txt)
-        self.down(lib + "core/", PACKAGES_TXT, repo_name)
-        self.down(lib + "extra/", self.EXTRA, repo_name)
-        self.down(lib + "pasture/", self.PASTURE, repo_name)
-        self.down(lib + "core/", CHECKSUMS_MD5, repo_name)
-        self.down(lib + "extra/", self.EXT_CHECKSUMS, repo_name)
-        self.down(lib + "pasture/", self.PAS_CHECKSUMS, repo_name)
+        self.down(lib + dirs[0], PACKAGES_TXT, repo_name)
+        self.down(lib + dirs[1], self.EXTRA, repo_name)
+        self.down(lib + dirs[2], self.PASTURE, repo_name)
+        self.down(lib + dirs[0], CHECKSUMS_MD5, repo_name)
+        self.down(lib + dirs[1], self.EXT_CHECKSUMS, repo_name)
+        self.down(lib + dirs[2], self.PAS_CHECKSUMS, repo_name)
         self.down(log, ChangeLog_txt, repo_name)
         self.remote(log, ChangeLog_txt, lib, PACKAGES_TXT, CHECKSUMS_MD5,
                     FILELIST_TXT, repo_name)
