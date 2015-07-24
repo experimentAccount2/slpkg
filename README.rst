@@ -53,6 +53,20 @@ Also you can install official packages of your favorite distribution directly fr
 official repositories of Slackware. Even you can check for the official updates and install them.
 
 
+Features
+--------
+
+- Dependency resolution
+- Multiple options
+- Multiple repositories
+- Easy configuration
+- Adaptability
+- Powerful options
+- Source builder
+- Faster process
+- Better Security
+
+
 Demonstration
 -------------
 
@@ -201,34 +215,6 @@ Testing
 
 The majority of trials have been made in an environment Slackware x86_64 'stable' 
 and x86 'current' version 14.1.
-
-
-Features
---------
-
-- Build packages from source with all dependencies
-- Support three downloaders wget, curl and aria2
-- Grabs packages from repositories in real time
-- Find and Download packages from repositories 
-- Automatic tool build and install packages
-- Check if your distribution is up to date
-- Remove packages with all dependencies
-- Display the contents of the packages
-- Install-upgrade Slackware packages
-- Build and install all in a command
-- Find packages from repositories
-- Checking for updated packages
-- With accelerated build script
-- List all installed packages
-- Support MD5SUM file check
-- Find installed package
-- Read SlackBuilds files
-- Τracking dependencies
-- Build log file
-- Sum build time
-
-It's a quick and easy way to manage your packages in `Slackware <http://www.slackware.com/>`_
-to a command.
 
 
 Installation
