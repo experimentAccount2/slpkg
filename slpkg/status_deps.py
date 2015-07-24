@@ -40,6 +40,8 @@ class DependenciesStatus(object):
         self.count_dep = 0
         self.dep_path = self.meta.log_path + "dep/"
         self.logs = find_package("", self.dep_path)
+        if not self.logs:
+            self.no_logs()
         self.installed = find_package("", self.meta.pkg_path)
 
     def data(self):
@@ -79,3 +81,11 @@ class DependenciesStatus(object):
         print("=" * 79)
         print("{0}Found {1} dependencies in {2} packages.{3}\n".format(
             grey, self.count_dep, self.count_pkg, endc))
+
+    def no_logs(self):
+        """Print message if no logs found
+        """
+        print("\n  There were no logs files. Obviously it wasn't used the \n"
+              "  method of installation with the command: \n"
+              "  '$ slpkg -s <repository> <packages>' yet.\n")
+        raise SystemExit()
