@@ -41,8 +41,7 @@ def write_deps(deps_dict):
                 os.mkdir(dep_path)
             if os.path.isfile(dep_path + name):
                 os.remove(dep_path + name)
-            if len(dependencies) > 0:
-                with open(dep_path + name, "w") as f:
-                    for dep in dependencies:
-                        f.write(dep + "\n")
-                    f.close()
+            with open(dep_path + name, "w") as f:
+                for dep in dependencies:
+                    f.write(dep + "\n")
+                f.close()

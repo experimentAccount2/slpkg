@@ -132,12 +132,20 @@ class SBoInstall(object):
             print("")   # new line at exit
             sys.exit(0)
 
+    def deps_tree(self):
+        """Update dependencies dictionary with all package
+        """
+        for dep in self.one_for_all(self.deps):
+            deps = Requires(self.flag).sbo(dep)
+            self.deps_dict[dep] = self.one_for_all(deps)
+
     def _continue_to_install(self):
         """Continue to install ?
         """
         if self.master_packages and Msg().answer() in ["y", "Y"]:
             installs, upgraded = self.build_install()
             Msg().reference(installs, upgraded)
+            self.deps_tree()
             write_deps(self.deps_dict)
             delete(self.build_folder)
 

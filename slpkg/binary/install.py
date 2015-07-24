@@ -126,6 +126,7 @@ class BinaryInstall(object):
                         self.tmp_path, self.install)
                     ins, upg = self.install_packages()
                     Msg().reference(ins, upg)
+                    self.deps_tree()
                     write_deps(self.deps_dict)
                     delete(self.tmp_path, self.install)
             else:
@@ -133,6 +134,15 @@ class BinaryInstall(object):
         except KeyboardInterrupt:
             print("")   # new line at exit
             sys.exit(0)
+
+    def deps_tree(self):
+        """Update dependencies dictionary with all package
+        """
+        for dep in self.dependencies:
+            deps = Utils().dimensional_list(Dependencies(
+                self.PACKAGES_TXT, self.repo, self.blacklist).binary(
+                    dep, self.flag))
+            self.deps_dict[dep] = deps
 
     def clear_masters(self):
         """

@@ -113,7 +113,6 @@ class PackageManager(object):
                             rmv_list += self._rmv_deps(dependencies, rmv)
                         else:
                             rmv_list += self._rmv_pkg(rmv)
-                            os.remove(self.dep_path + rmv)
                     else:
                         rmv_list += self._rmv_pkg(rmv)
                 # Prints all removed packages
@@ -168,8 +167,7 @@ class PackageManager(object):
         return dependencies
 
     def _clean_logs(self, package):
-        """Clean logs for removed packages.
-        THIS FUNCTION IS NOT USED
+        """Clean logs for removed packages
         """
         files = find_package("", self.dep_path)
         for f in files:
@@ -188,6 +186,9 @@ class PackageManager(object):
         try:
             subprocess.call("removepkg {0} {1}".format(self.flag, package),
                             shell=True)
+            if os.path.isfile(self.dep_path + package):
+                self._clean_logs(package)
+                os.remove(self.dep_path + package)  # remove log
         except KeyboardInterrupt:
             print("")
             sys.exit(0)
@@ -204,7 +205,6 @@ class PackageManager(object):
                     find_package(dep + self.meta.sp, self.meta.pkg_path)):
                 self._removepkg(dep)
                 removes.append(dep)
-        os.remove(self.dep_path + package)
         return removes
 
     def _rmv_pkg(self, package):
