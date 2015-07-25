@@ -44,7 +44,6 @@ class TrackingDeps(object):
     if allready installed and color red
     if not installed.
     """
-
     def __init__(self, name, repo, flag):
         self.name = name
         self.repo = repo

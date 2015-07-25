@@ -126,7 +126,7 @@ class BinaryInstall(object):
                         self.tmp_path, self.install)
                     ins, upg = self.install_packages()
                     Msg().reference(ins, upg)
-                    self.deps_tree()
+                    self.update_deps()
                     write_deps(self.deps_dict)
                     delete(self.tmp_path, self.install)
             else:
@@ -135,7 +135,7 @@ class BinaryInstall(object):
             print("")   # new line at exit
             sys.exit(0)
 
-    def deps_tree(self):
+    def update_deps(self):
         """Update dependencies dictionary with all package
         """
         for dep in self.dependencies:
