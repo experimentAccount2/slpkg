@@ -57,6 +57,7 @@ Features
 --------
 
 - Dependency resolution
+- Dependencies virtualization
 - Multiple options
 - Multiple repositories
 - Easy configuration
@@ -145,13 +146,14 @@ run '$ slpkg update' to update package list.
 View list of repositories with command '$ slpkg repo-list' or get repository information with
 command '$ slpkg repo-info <repository>.
 
-Update slpkg itself simply run "$ slpkg update slpkg", and slpkg check from GitHub repository if
+Update slpkg itself simply run '$ slpkg update slpkg', and slpkg check from GitHub repository if
 new versions are available.
 
 Checking packages health with command "$ slpkg health" and slpkg check if files missing from 
 package file list.
 
-Print dependencies status used by packages with command "$ slpkg deps-status".
+Print dependencies status used by packages with command '$ slpkg deps-status' or drawing image 
+dependencies map with additional option '--graph=[image]'.
 
 If you have already downloaded the script and the source code you can build the package with 
 the command '$ slpkg <script.tar.gz> <sources>'.
@@ -171,12 +173,14 @@ Check and upgrade the distribution of your upgrade your packages with command '$
 This command except upgrade packages will fix packages with broken dependencies. Switch  off automatic
 resolve dependensies with additional option '--resolve-off'.
 
-The most famous command is "$ slpkg -s <repository> <packages>" , this command downloads and 
+The most famous command is '$ slpkg -s <repository> <packages>' , this command downloads and 
 installs packages with resolve all the dependencies or switch of resolve with additional option
 '--resolve-off'.
 
-Watch the dependencies of a package with command '$ slpkg -t <repository> <package>'.
+Tracking the dependencies of a package with command '$ slpkg -t <repository> <package>'.
 Displays a package dependency tree and also tells you which ones are installed on your system events.
+Check if packages used from other packages with additional option '--check-deps' or drawing image 
+dependencies map with additional option '--graph=[image]'.
 
 Get information description of a package with command '$ slpkg -p <repository> <package>' and change
 color text with additional flag '--color=[]'.
@@ -224,7 +228,7 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.6.5.tar.gz
+    $ tar xvf slpkg-2.6.6.tar.gz
     $ cd slpkg-<version>
     $ ./install.sh
 
@@ -244,9 +248,9 @@ Using pip:
 
 Bbinary packages:
 
-Slackware: `slpkg-2.6.5-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.6.5/slpkg-2.6.5-i486-1_dsw.txz>`_
+Slackware: `slpkg-2.6.6-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.6.6/slpkg-2.6.6-i486-1_dsw.txz>`_
 
-Slackware64: `slpkg-2.6.5-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.6.5/slpkg-2.6.5-x86_64-1_dsw.txz>`_
+Slackware64: `slpkg-2.6.6-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.6.6/slpkg-2.6.6-x86_64-1_dsw.txz>`_
 
 
 Upgrade
