@@ -40,10 +40,7 @@ def graph_deps(deps_dict, image):
                    "svgz", "tif", "tiff", "tk", "vml", "vmlz", "vrml", "wbmp",
                    "x11", "xdot", "xdot1.2", "xdot1.4", "xlib"
                    ]
-    if image.split(".")[1] not in file_format:
-        print("Format: {0} not recognized. Use one of: {1}".format(
-            image.split(".")[1], " ".join(file_format)))
-        raise SystemExit()
+    format_error(image, file_format)
     try:
         G = pgv.AGraph(deps_dict)
         G.layout(prog="fdp")
@@ -53,3 +50,16 @@ def graph_deps(deps_dict, image):
     if os.path.isfile(image):
         print("Graph file '{0}' created".format(image))
     raise SystemExit()
+
+
+def format_error(image, file_format):
+    """Check for file format and type
+    """
+    try:
+        if image.split(".")[1] not in file_format:
+            print("Format: {0} not recognized. Use one of: {1}".format(
+                image.split(".")[1], " ".join(file_format)))
+            raise SystemExit()
+    except IndexError:
+        print("slpkg: error: File image suffix missing")
+        raise SystemExit()
