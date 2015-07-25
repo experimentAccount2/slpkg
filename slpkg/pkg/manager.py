@@ -166,20 +166,6 @@ class PackageManager(object):
         Msg().template(78)
         return dependencies
 
-    def _clean_logs(self, package):
-        """Clean logs for removed packages
-        """
-        files = find_package("", self.dep_path)
-        for f in files:
-            fo = open(self.dep_path + f, "r")
-            fr = fo.read()
-            fo.close()
-            if package in fr:
-                with open(self.dep_path + f, "w") as fopen:
-                    for line in fr.splitlines():
-                        if package != line:
-                            fopen.write(line + "\n")
-
     def _removepkg(self, package):
         """removepkg Slackware command
         """
@@ -187,7 +173,6 @@ class PackageManager(object):
             subprocess.call("removepkg {0} {1}".format(self.flag, package),
                             shell=True)
             if os.path.isfile(self.dep_path + package):
-                self._clean_logs(package)
                 os.remove(self.dep_path + package)  # remove log
         except KeyboardInterrupt:
             print("")
