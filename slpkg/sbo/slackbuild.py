@@ -79,6 +79,7 @@ class SBoInstall(object):
                     self.package_found.append(_sbo)
                 else:
                     self.package_not_found.append(_sbo)
+            self.update_deps()
             if not self.package_found:
                 self.match = True
                 self.matching()
@@ -145,7 +146,6 @@ class SBoInstall(object):
         if self.master_packages and Msg().answer() in ["y", "Y"]:
             installs, upgraded = self.build_install()
             Msg().reference(installs, upgraded)
-            self.update_deps()
             write_deps(self.deps_dict)
             delete(self.build_folder)
 

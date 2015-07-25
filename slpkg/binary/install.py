@@ -78,6 +78,7 @@ class BinaryInstall(object):
             mas_sum = dep_sum = sums = [0, 0, 0]
             Msg().done()
             self.dependencies = self.resolving_deps()
+            self.update_deps()
             (self.dep_dwn, self.dep_install, self.dep_comp_sum,
              self.dep_uncomp_sum) = self.store(self.dependencies)
             self.packages = self.clear_masters()
@@ -126,7 +127,6 @@ class BinaryInstall(object):
                         self.tmp_path, self.install)
                     ins, upg = self.install_packages()
                     Msg().reference(ins, upg)
-                    self.update_deps()
                     write_deps(self.deps_dict)
                     delete(self.tmp_path, self.install)
             else:
