@@ -153,7 +153,7 @@ Checking packages health with command "$ slpkg health" and slpkg check if files 
 package file list.
 
 Print dependencies status used by packages with command '$ slpkg deps-status' or drawing image 
-dependencies map with additional option '--graph=[image]'.
+map dependencies with additional option '--graph=[image]'.
 
 If you have already downloaded the script and the source code you can build the package with 
 the command '$ slpkg <script.tar.gz> <sources>'.
@@ -180,7 +180,7 @@ installs packages with resolve all the dependencies or switch of resolve with ad
 Tracking the dependencies of a package with command '$ slpkg -t <repository> <package>'.
 Displays a package dependency tree and also tells you which ones are installed on your system events.
 Check if packages used from other packages with additional option '--check-deps' or drawing image 
-dependencies map with additional option '--graph=[image]'.
+map dependencies with additional option '--graph=[image]'.
 
 Get information description of a package with command '$ slpkg -p <repository> <package>' and change
 color text with additional flag '--color=[]'.
@@ -727,7 +727,7 @@ and also displays installed packages:
      +--5: werkzeug is dependency --> Flask
 
     
-    Drawing image dependencies map:
+    Drawing image map dependencies:
 
     $ slpkg -t sbo flexget --graph=image.xlib
 
@@ -793,7 +793,7 @@ Print dependencies status used by packages:
     Found 19 dependencies in 4 packages.
 
 
-    or use additional option "--graph=[image]" to drawing image dependencies map, like:
+    or use additional option "--graph=[image]" to drawing image map dependencies, like:
 
     $ slpkg deps-status --graph=image.xlib
 
