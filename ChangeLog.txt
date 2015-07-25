@@ -1,3 +1,10 @@
+2.6.6 - 25/07/2015
+Added:
+- Dependencies status (command deps-status) message if no logs found
+- Optional pygraphviz module to drawing image map dependencies
+Updated:
+- Write dependencies logs with full packages
+
 2.6.5 - 23/07/2015
 Added:
 - Dependencies status command
