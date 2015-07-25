@@ -56,7 +56,7 @@ Commands:
                                             repository.
    health, --silent                         Health check installed packages.
    deps-status, --graph=[image]             Print dependencies status used by
-                                            packages or design image map
+                                            packages or drawing image map
                                             dependencies.
 
 Optional arguments:
@@ -89,8 +89,10 @@ Optional arguments:
       --resolve-off                         directly from remote repositories
                                             with all dependencies.
   -t, --tracking, [repository] [package],   Tracking package dependencies and
-      --check-deps                          print package dependenies tree with
+      --check-deps, --graph=[image]         print package dependenies tree with
                                             highlight if packages is installed.
+                                            Also check if dependencies used or
+                                            drawing image map dependencies.
   -p, --desc, [repository] [package],       Print description of a package
       --color=[]                            directly from the repository and
                                             change color text.
@@ -144,7 +146,7 @@ def usage(repo):
              [-l [repository], --index, --installed]
              [-c [repository], --upgrade, --skip=[...] --resolve-off]
              [-s [repository] [package...], --resolve-off]
-             [-t [repository] [package], --check-deps]
+             [-t [repository] [package], --check-deps, --graph=[image]]
              [-p [repository] [package], --color=[]]
              [-n [SBo package]] [-F [...]] [-f [...]]
              [-i [options] [...]] [-u [options] [...]]

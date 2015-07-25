@@ -36,7 +36,7 @@ from queue import QueuePkgs
 from repoinfo import RepoInfo
 from repolist import RepoList
 from repositories import Repo
-from tracking import track_dep
+from tracking import TrackingDeps
 from blacklist import BlackList
 from version import prog_version
 from health import PackageHealth
@@ -306,14 +306,23 @@ class ArgParse(object):
         """Tracking package dependencies
         """
         options = ["-t", "--tracking"]
-        flag = ["--check-deps"]
+        flag = ["--check-deps", "--graph="]
         if (len(self.args) == 3 and self.args[0] in options and
                 self.args[1] in self.meta.repositories):
-            track_dep(self.args[2], self.args[1], flag="")
+            TrackingDeps(self.args[2], self.args[1], flag="").run()
         elif (len(self.args) == 4 and self.args[0] in options and
                 self.args[1] in self.meta.repositories and
                 self.args[3] == flag[0]):
-            track_dep(self.args[2], self.args[1], flag[0])
+            TrackingDeps(self.args[2], self.args[1], flag[0]).run()
+        elif (len(self.args) == 4 and self.args[0] in options and
+                self.args[1] in self.meta.repositories and
+                self.args[3].startswith(flag[1])):
+            TrackingDeps(self.args[2], self.args[1], self.args[3]).run()
+        elif (len(self.args) == 5 and self.args[0] in options and
+                self.args[1] in self.meta.repositories and
+                self.args[3] == flag[0] and self.args[4].startswith(flag[1])):
+            TrackingDeps(self.args[2], self.args[1],
+                         self.args[3] + self.args[4]).run()
         elif (len(self.args) > 1 and self.args[0] in options and
                 self.args[1] not in self.meta.repositories):
             usage(self.args[1])
