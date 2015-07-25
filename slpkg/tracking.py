@@ -63,6 +63,7 @@ class TrackingDeps(object):
     def run(self):
         """Run tracking dependencies
         """
+        Msg().resolving()
         self.repositories()
         if self.find_pkg:
             self.requires = Utils().dimensional_list(self.dependencies_list)
@@ -70,11 +71,11 @@ class TrackingDeps(object):
             self.dependencies = Utils().remove_dbs(self.requires)
             if self.dependencies == []:
                 self.dependencies = ["No dependencies"]
-
             if self.flag.startswith("--graph="):
                 self.deps_tree()
+                Msg().done()
                 self.graph()
-
+            Msg().done()
             pkg_len = len(self.name) + 24
             print("")    # new line at start
             Msg().template(pkg_len)
@@ -120,7 +121,6 @@ class TrackingDeps(object):
     def repositories(self):
         """Get dependencies by repositories
         """
-        Msg().resolving()
         if self.repo == "sbo":
             self.dependencies_list = Requires(self.flag).sbo(self.name)
             self.find_pkg = sbo_search_pkg(self.name)
@@ -132,7 +132,6 @@ class TrackingDeps(object):
             self.dependencies_list = Dependencies(
                 self.names, self.repo, self.black).binary(self.name, self.flag)
             self.find_pkg = search_pkg(self.name, self.repo)
-        Msg().done()
 
     def graph(self):
         """Drawing image dependencies map
