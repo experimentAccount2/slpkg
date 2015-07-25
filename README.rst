@@ -729,8 +729,9 @@ and also displays installed packages:
 
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/deps2.png
     :target: https://raw.githubusercontent.com/dslackw/images/master/slpkg/deps2.png
-  
-    
+
+.. code-block:: bash
+
     $ slpkg -t sbo Flask --check-deps --graph=image.xlib
     Resolving dependencies... Done
 
