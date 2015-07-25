@@ -188,7 +188,11 @@ class ArgParse(object):
         """Print dependencies status
         """
         if len(self.args) == 1 and self.args[0] == "deps-status":
-            DependenciesStatus().show()
+            DependenciesStatus(image="").show()
+        elif (len(self.args) == 2 and self.args[0] == "deps-status" and
+                self.args[1].startswith("--graph=")):
+            image = self.args[1].split("=")[1]
+            DependenciesStatus(image).show()
         else:
             usage("")
 

@@ -55,8 +55,9 @@ Commands:
    update slpkg                             Upgrade the program directly from
                                             repository.
    health, --silent                         Health check installed packages.
-   deps-status                              Print dependencies status used by
-                                            packages.
+   deps-status, --graph=[image]             Print dependencies status used by
+                                            packages or design image map
+                                            dependencies.
 
 Optional arguments:
   -h, --help                                Print this help message and exit.
@@ -131,7 +132,7 @@ def usage(repo):
              [repo-add [repository name] [URL]]
              [repo-remove [repository]] [repo-list]
              [repo-info [repository]] [update [slpkg]]
-             [health, --silent] [deps-status]
+             [health, --silent] [deps-status, --graph=[image]]
 
              Optional arguments:
              [-h] [-v]

@@ -24,6 +24,7 @@
 
 from utils import Utils
 from messages import Msg
+from graph import graph_deps
 from splitting import split_package
 from __metadata__ import MetaData as _meta_
 
@@ -33,7 +34,8 @@ from pkg.find import find_package
 class DependenciesStatus(object):
     """Print dependencies status used by packages
     """
-    def __init__(self):
+    def __init__(self, image):
+        self.image = image
         self.meta = _meta_
         self.dmap = {}
         self.count_pkg = 0
@@ -65,6 +67,8 @@ class DependenciesStatus(object):
         """Show dependencies status
         """
         self.data()
+        if self.image:
+            graph_deps(self.dmap, self.image)
         grey = self.meta.color["GREY"]
         green = self.meta.color["GREEN"]
         yellow = self.meta.color["YELLOW"]

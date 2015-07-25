@@ -344,8 +344,9 @@ Command Line Tool Usage
        update slpkg                             Upgrade the program directly from
                                                 repository.
        health, --silent                         Health check installed packages.
-       deps-status                              Print dependencies status used by
-                                                packages.
+       deps-status, --graph=[image]             Print dependencies status used by
+                                                packages or design image map 
+                                                dependencies.
 
     Optional arguments:
       -h, --help                                Print this help message and exit.
@@ -753,6 +754,13 @@ Print dependencies status used by packages:
     ===============================================================================
     Found 19 dependencies in 4 packages.
 
+
+    or use additional option "--graph=[image]" to design image dependencies map, like:
+
+    $ slpkg deps-status --graph=image.xlib
+
+.. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/deps.png
+    :target: https://raw.githubusercontent.com/dslackw/images/master/slpkg/deps.png
 
 Check if your packages is up to date or changes in ChangeLog.txt:
 

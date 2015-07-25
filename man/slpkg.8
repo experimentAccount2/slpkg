@@ -101,9 +101,10 @@ Check file list from packages of files installed. The option "--silent" it allow
 reference only errors.
 
 .SS deps-status, print dependencies status
-\fBslpkg\fP \fBdeps-status\fP
+\fBslpkg\fP \fBdeps-status\fP \fB--graph=[image]\fP
 .PP
-Print dependencies status used by packages. Prerequisite packages have been installed 
+Print dependencies status used by packages or design image map dependencies with 
+additional option "--graph=[image]". Prerequisite packages have been installed 
 with the option "slpkg -s <repository> <packages>".
 
 .SH OPTIONS
@@ -113,8 +114,8 @@ The following arguments are available.
 .SS -a, --autobuild, auto build packages
 \fBslpkg\fP \fB-a\fP <\fIscript.tar.gz\fP> <\fIsources\fP>
 .PP
-If you already have download the script and source with this argument you can build Slackware 
-package from source quickly and easy.
+If you already have download the script and source with this argument you can build 
+Slackware package from source quickly and easy.
 
 .SS -b, --blacklist, add, remove, view packages in blacklist
 \fBslpkg\fP \fB-b\fP <\fIname of packages\fP> \fB--add\fP, \fB--remove\fP, \fBlist\fP
