@@ -345,7 +345,7 @@ Command Line Tool Usage
                                                 repository.
        health, --silent                         Health check installed packages.
        deps-status, --graph=[image]             Print dependencies status used by
-                                                packages or design image map 
+                                                packages or drawing image map 
                                                 dependencies.
 
     Optional arguments:
@@ -377,9 +377,11 @@ Command Line Tool Usage
       -s, --sync, [repository] [package...],    Sync packages. Install packages
           --resolve-off                         directly from remote repositories
                                                 with all dependencies.
-      -t, --tracking, [repository] [package]    Tracking package dependencies and
-                                                print package dependenies tree with
+      -t, --tracking, [repository] [package],   Tracking package dependencies and
+          --check-deps, --graph=[image]         print package dependenies tree with
                                                 highlight if packages is installed.
+                                                Also check if dependencies used or
+                                                drawing image map dependencies.
       -p, --desc, [repository] [package],       Print description of a package
           --color=[]                            directly from the repository and
                                                 change color text.
@@ -720,7 +722,15 @@ and also displays installed packages:
      |
      +--5: werkzeug is dependency --> Flask
 
+    
+    Drawing image dependencies map:
 
+    $ slpkg -t sbo flexget --graph=image.xlib
+
+.. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/deps2.png
+    :target: https://raw.githubusercontent.com/dslackw/images/master/slpkg/deps2.png
+  
+     
 Print dependencies status used by packages:
 
 .. code-block:: bash
@@ -755,7 +765,7 @@ Print dependencies status used by packages:
     Found 19 dependencies in 4 packages.
 
 
-    or use additional option "--graph=[image]" to design image dependencies map, like:
+    or use additional option "--graph=[image]" to drawing image dependencies map, like:
 
     $ slpkg deps-status --graph=image.xlib
 
