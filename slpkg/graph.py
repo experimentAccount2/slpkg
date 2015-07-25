@@ -33,14 +33,7 @@ def graph_deps(deps_dict, image):
     except ImportError:
         print("Require 'pygraphviz': Install with '$ slpkg -s sbo pygraphviz'")
         raise SystemExit()
-    file_format = ["bmp", "canon", "cmap", "cmapx", "cmapx_np", "dot", "eps",
-                   "fig", "gd", "gd2", "gif", "gtk", "gv", "ico", "imap",
-                   "imap_np", "ismap", "jpe", "jpeg", "jpg", "pdf", "pic",
-                   "plain", "plain-ext", "png", "pov", "ps", "ps2", "svg",
-                   "svgz", "tif", "tiff", "tk", "vml", "vmlz", "vrml", "wbmp",
-                   "x11", "xdot", "xdot1.2", "xdot1.4", "xlib"
-                   ]
-    format_error(image, file_format)
+    check_file(image)
     try:
         G = pgv.AGraph(deps_dict)
         G.layout(prog="fdp")
@@ -48,18 +41,25 @@ def graph_deps(deps_dict, image):
     except (IOError, KeyboardInterrupt):
         raise SystemExit()
     if os.path.isfile(image):
-        print("Graph file '{0}' created".format(image))
+        print("Graph image file '{0}' created".format(image))
     raise SystemExit()
 
 
-def format_error(image, file_format):
+def check_file(image):
     """Check for file format and type
     """
+    file_format = ["bmp", "canon", "cmap", "cmapx", "cmapx_np", "dot", "eps",
+                   "fig", "gd", "gd2", "gif", "gtk", "gv", "ico", "imap",
+                   "imap_np", "ismap", "jpe", "jpeg", "jpg", "pdf", "pic",
+                   "plain", "plain-ext", "png", "pov", "ps", "ps2", "svg",
+                   "svgz", "tif", "tiff", "tk", "vml", "vmlz", "vrml", "wbmp",
+                   "x11", "xdot", "xdot1.2", "xdot1.4", "xlib"
+                   ]
     try:
         if image.split(".")[1] not in file_format:
             print("Format: {0} not recognized. Use one of: {1}".format(
                 image.split(".")[1], " ".join(file_format)))
             raise SystemExit()
     except IndexError:
-        print("slpkg: error: File image suffix missing")
+        print("slpkg: error: Image file suffix missing")
         raise SystemExit()
