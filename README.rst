@@ -729,14 +729,14 @@ and also displays installed packages:
     
     Drawing image map dependencies:
 
-    $ slpkg -t sbo flexget --graph=image.xlib
+    $ slpkg -t sbo flexget --graph=image.x11
 
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/deps2.png
     :target: https://raw.githubusercontent.com/dslackw/images/master/slpkg/deps2.png
 
 .. code-block:: bash
 
-    $ slpkg -t sbo Flask --check-deps --graph=image.xlib
+    $ slpkg -t sbo Flask --check-deps --graph=image.x11
     Resolving dependencies... Done
 
     +=============================
@@ -795,7 +795,7 @@ Print dependencies status used by packages:
 
     or use additional option "--graph=[image]" to drawing image map dependencies, like:
 
-    $ slpkg deps-status --graph=image.xlib
+    $ slpkg deps-status --graph=image.x11
 
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/deps.png
     :target: https://raw.githubusercontent.com/dslackw/images/master/slpkg/deps.png
