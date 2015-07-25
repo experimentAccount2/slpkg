@@ -53,7 +53,7 @@ def check_file(image):
                    "imap_np", "ismap", "jpe", "jpeg", "jpg", "pdf", "pic",
                    "plain", "plain-ext", "png", "pov", "ps", "ps2", "svg",
                    "svgz", "tif", "tiff", "tk", "vml", "vmlz", "vrml", "wbmp",
-                   "x11", "xdot", "xdot1.2", "xdot1.4", "xlib"
+                   "x11", "xdot", "xlib"
                    ]
     try:
         if image.split(".")[1] not in file_format:
