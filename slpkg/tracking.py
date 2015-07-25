@@ -98,7 +98,7 @@ class TrackingDeps(object):
                 installed = ""
                 if find_package(pkg + self.meta.sp, self.meta.pkg_path):
                     if self.meta.use_colors in ["off", "OFF"]:
-                        installed = "*"
+                        installed = "* "
                     print(" |")
                     print(" {0}{1}: {2}{3}{4} {5}{6}".format(
                         "+--", index, self.green, pkg,
