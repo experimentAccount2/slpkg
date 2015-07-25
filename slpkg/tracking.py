@@ -170,7 +170,8 @@ class TrackingDeps(object):
     def deps_used(self, pkg, used):
         """Create dependencies dictionary
         """
-        if pkg not in self.deps_dict.values():
-            self.deps_dict[pkg] = used
-        else:
-            self.deps_dict[pkg] += used
+        if find_package(pkg + self.meta.sp, self.meta.pkg_path):
+            if pkg not in self.deps_dict.values():
+                self.deps_dict[pkg] = used
+            else:
+                self.deps_dict[pkg] += used
