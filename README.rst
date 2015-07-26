@@ -229,7 +229,7 @@ Untar the archive and run install.sh script:
 .. code-block:: bash
     
     $ tar xvf slpkg-2.6.6.tar.gz
-    $ cd slpkg-<version>
+    $ cd slpkg-2.6.6
     $ ./install.sh
 
 Using pip:
