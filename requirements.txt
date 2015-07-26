@@ -4,3 +4,6 @@
 # aria2 [optional]
 # curl [optional]
 # GNU coreutils
+
+# [OPTIONAL]
+# pygraphviz >= 1.3rc2
