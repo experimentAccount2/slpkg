@@ -759,7 +759,9 @@ and also displays installed packages:
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/deps3.png
     :target: https://raw.githubusercontent.com/dslackw/images/master/slpkg/deps3.png
 
-    
+
+.. code-block:: bash
+   
     Drawing dependencies ascii diagram:
 
     $ slpkg -t sbo brasero --graph=ascii
