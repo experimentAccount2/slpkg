@@ -20,7 +20,7 @@ Usage: slpkg Commands:
              [repo-add [repository name] [URL]]
              [repo-remove [repository]] [repo-list]
              [repo-info [repository]] [update [slpkg]] 
-             [health, --silent] [deps-status, --graph=[image]]
+             [health, --silent] [deps-status, --graph=[type]]
 
              Optional arguments:
              [-h] [-v]
@@ -32,7 +32,7 @@ Usage: slpkg Commands:
              [-l [repository], --index, --installed]
              [-c [repository] --upgrade, --skip=[...] --resolve-off]
              [-s [repository] [package...], --resolve-off]
-             [-t [repository] [package], --check-deps, --graph=[image]]
+             [-t [repository] [package], --check-deps, --graph=[type]]
              [-p [repository] [package], --color=[]]
              [-n [SBo package]] [-F [...]] [-f [...]]
              [-i [options] [...]] [-u [options] [...]]
@@ -110,14 +110,14 @@ Additional options:
 \fB--silent\fP : Print only errors.
 
 .SS deps-status, print dependencies status
-\fBslpkg\fP \fBdeps-status\fP \fB--graph=[image]\fP
+\fBslpkg\fP \fBdeps-status\fP \fB--graph=[type]\fP
 .PP
 Print dependencies status used by packages. Prerequisite packages have been installed 
 with the option "slpkg -s <repository> <packages>".
 .PP
 Additional options:
 .PP
-\fB--graph=[image]\fP : Drawing image map dependencies.
+\fB--graph=[type]\fP : Drawing dependencies diagram. (example for type: ascii, image.x11, image.png etc.)
 
 .SH OPTIONS
 .PP
@@ -189,7 +189,7 @@ Additional options:
 \fB--resolve-off\fP : Switch off automatic resolve dependencies.
 
 .SS -t, --tracking,  tracking dependencies
-\fBslpkg\fP \fB-t\fP <\fIrepository\fP> <\fIname of package\fP>, \fB--check-deps\fP, \fB--graph=[image]\fP
+\fBslpkg\fP \fB-t\fP <\fIrepository\fP> <\fIname of package\fP>, \fB--check-deps\fP, \fB--graph=[type]\fP
 .PP
 Tracking all dependencies of that package.
 The sequence shown is that you must follow to correctly install package.
@@ -199,7 +199,7 @@ Additional options:
 .PP
 \fB--check-deps\fP : Check if installed packages used by other packages.
 .PP
-\fB--graph=[image]\fP : Drawing image map dependencies.
+\fB--graph=[type]\fP : Drawing dependencies graph. (example for type: ascii, image.x11, image.png etc.)
 
 .SS -p, --desk, print packages description
 \fBslpkg\fP \fB-p\fP <\fIrepository\fP> <\fIname of package\fP>, \fB--color=[]\fP

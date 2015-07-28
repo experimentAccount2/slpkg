@@ -55,7 +55,7 @@ Commands:
    update slpkg                             Upgrade the program directly from
                                             repository.
    health, --silent                         Health check installed packages.
-   deps-status, --graph=[image]             Print dependencies status used by
+   deps-status, --graph=[type]              Print dependencies status used by
                                             packages or drawing dependencies
                                             diagram.
 
@@ -89,7 +89,7 @@ Optional arguments:
       --resolve-off                         directly from remote repositories
                                             with all dependencies.
   -t, --tracking, [repository] [package],   Tracking package dependencies and
-      --check-deps, --graph=[image]         print package dependenies tree with
+      --check-deps, --graph=[type]          print package dependenies tree with
                                             highlight if packages is installed.
                                             Also check if dependencies used or
                                             drawing dependencies digram.
@@ -134,7 +134,7 @@ def usage(repo):
              [repo-add [repository name] [URL]]
              [repo-remove [repository]] [repo-list]
              [repo-info [repository]] [update [slpkg]]
-             [health, --silent] [deps-status, --graph=[image]]
+             [health, --silent] [deps-status, --graph=[type]]
 
              Optional arguments:
              [-h] [-v]
@@ -146,7 +146,7 @@ def usage(repo):
              [-l [repository], --index, --installed]
              [-c [repository], --upgrade, --skip=[...] --resolve-off]
              [-s [repository] [package...], --resolve-off]
-             [-t [repository] [package], --check-deps, --graph=[image]]
+             [-t [repository] [package], --check-deps, --graph=[type]]
              [-p [repository] [package], --color=[]]
              [-n [SBo package]] [-F [...]] [-f [...]]
              [-i [options] [...]] [-u [options] [...]]

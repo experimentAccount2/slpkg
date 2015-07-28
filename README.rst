@@ -348,7 +348,7 @@ Command Line Tool Usage
        update slpkg                             Upgrade the program directly from
                                                 repository.
        health, --silent                         Health check installed packages.
-       deps-status, --graph=[image]             Print dependencies status used by
+       deps-status, --graph=[type]              Print dependencies status used by
                                                 packages or drawing dependencies
                                                 diagram.
 
@@ -382,7 +382,7 @@ Command Line Tool Usage
           --resolve-off                         directly from remote repositories
                                                 with all dependencies.
       -t, --tracking, [repository] [package],   Tracking package dependencies and
-          --check-deps, --graph=[image]         print package dependenies tree with
+          --check-deps, --graph=[type]          print package dependenies tree with
                                                 highlight if packages is installed.
                                                 Also check if dependencies used or
                                                 drawing dependencies diagram.
