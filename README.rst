@@ -734,10 +734,33 @@ and also displays installed packages:
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/deps2.png
     :target: https://raw.githubusercontent.com/dslackw/images/master/slpkg/deps2.png
 
-    
-    or drawing dependencies ascii diagram:
 
 .. code-block:: bash
+
+    $ slpkg -t sbo Flask --check-deps --graph=image.x11
+    Resolving dependencies... Done
+
+    +=============================
+    | Package Flask dependencies :
+    +=============================
+    \
+     +---[ Tree of dependencies ]
+     |
+     +--1: pysetuptools is dependency --> APScheduler, Flask, Jinja2, MarkupSafe, astroid, autopep8, blessings, bpython, cffi, cryptography, curtsies, itsdangerous, monty, ndg_httpsclient, pip, pyOpenSSL, pylint, wcwidth
+     |
+     +--2: MarkupSafe is dependency --> Flask, Jinja2
+     |
+     +--3: itsdangerous is dependency --> Flask
+     |
+     +--4: Jinja2 is dependency --> Flask
+     |
+     +--5: werkzeug is dependency --> Flask
+
+.. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/deps3.png
+    :target: https://raw.githubusercontent.com/dslackw/images/master/slpkg/deps3.png
+
+    
+    Drawing dependencies ascii diagram:
 
     $ slpkg -t sbo brasero --graph=ascii
     
@@ -766,29 +789,6 @@ and also displays installed packages:
       |                  +----------+       |
       |                                     |
       +-------------------------------------+
-
-
-    $ slpkg -t sbo Flask --check-deps --graph=image.x11
-    Resolving dependencies... Done
-
-    +=============================
-    | Package Flask dependencies :
-    +=============================
-    \
-     +---[ Tree of dependencies ]
-     |
-     +--1: pysetuptools is dependency --> APScheduler, Flask, Jinja2, MarkupSafe, astroid, autopep8, blessings, bpython, cffi, cryptography, curtsies, itsdangerous, monty, ndg_httpsclient, pip, pyOpenSSL, pylint, wcwidth
-     |
-     +--2: MarkupSafe is dependency --> Flask, Jinja2
-     |
-     +--3: itsdangerous is dependency --> Flask
-     |
-     +--4: Jinja2 is dependency --> Flask
-     |
-     +--5: werkzeug is dependency --> Flask
-
-.. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/deps3.png
-    :target: https://raw.githubusercontent.com/dslackw/images/master/slpkg/deps3.png
 
 
 Print dependencies status used by packages:
