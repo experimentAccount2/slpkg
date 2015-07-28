@@ -349,8 +349,8 @@ Command Line Tool Usage
                                                 repository.
        health, --silent                         Health check installed packages.
        deps-status, --graph=[image]             Print dependencies status used by
-                                                packages or drawing image map 
-                                                dependencies.
+                                                packages or drawing dependencies
+                                                diagram.
 
     Optional arguments:
       -h, --help                                Print this help message and exit.
@@ -385,7 +385,7 @@ Command Line Tool Usage
           --check-deps, --graph=[image]         print package dependenies tree with
                                                 highlight if packages is installed.
                                                 Also check if dependencies used or
-                                                drawing image map dependencies.
+                                                drawing dependencies diagram.
       -p, --desc, [repository] [package],       Print description of a package
           --color=[]                            directly from the repository and
                                                 change color text.
@@ -727,12 +727,46 @@ and also displays installed packages:
      +--5: werkzeug is dependency --> Flask
 
     
-    Drawing image map dependencies:
+    Drawing dependencies diagram:
 
     $ slpkg -t sbo flexget --graph=image.x11
 
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/deps2.png
     :target: https://raw.githubusercontent.com/dslackw/images/master/slpkg/deps2.png
+
+    
+    or drawing dependencies ascii diagram:
+
+.. code-block:: bash
+
+    $ slpkg -t sbo brasero --graph=ascii
+    
+                                       +---------------------------------+
+                                       |                                 |
+                                       |                                 |
+                                       |    +---------+                  |
+                                       |    |         |                  |
+                                       |    |         |                  |
+                      +----------------+----+----+    |                  |
+                      |                |    |    |    |                  |
+    +--------------+  |  +--------------------+  |  +-----------------+  |
+    |   jmespath   | -+- |      botocore      |  +- | python-dateutil |  |
+    +--------------+  |  +--------------------+     +-----------------+  |
+      |               |    |           |    |         |                  |
+      |               |    |           |    |         |                  |
+      |               |    |           |    |         |                  |
+    +--------------+  |  +----------+  |    |       +-----------------+  |
+    | pysetuptools | -+  |  bcdoc   | -+----+------ |       six       | -+
+    +--------------+     +----------+  |    |       +-----------------+
+      |                    |           |    |
+      |                    |           |    |
+      |                    |           |    |
+      |                  +----------+  |    |
+      |                  | docutils | -+    |
+      |                  +----------+       |
+      |                                     |
+      +-------------------------------------+
+
 
 .. code-block:: bash
 
@@ -793,7 +827,7 @@ Print dependencies status used by packages:
     Found 19 dependencies in 4 packages.
 
 
-    or use additional option "--graph=[image]" to drawing image map dependencies, like:
+    or use additional option "--graph=[image]" to drawing dependencies diagram, like:
 
     $ slpkg deps-status --graph=image.x11
 

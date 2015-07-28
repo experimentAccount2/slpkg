@@ -56,8 +56,8 @@ Commands:
                                             repository.
    health, --silent                         Health check installed packages.
    deps-status, --graph=[image]             Print dependencies status used by
-                                            packages or drawing image map
-                                            dependencies.
+                                            packages or drawing dependencies
+                                            diagram.
 
 Optional arguments:
   -h, --help                                Print this help message and exit.
@@ -92,7 +92,7 @@ Optional arguments:
       --check-deps, --graph=[image]         print package dependenies tree with
                                             highlight if packages is installed.
                                             Also check if dependencies used or
-                                            drawing image map dependencies.
+                                            drawing dependencies digram.
   -p, --desc, [repository] [package],       Print description of a package
       --color=[]                            directly from the repository and
                                             change color text.

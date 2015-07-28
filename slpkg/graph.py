@@ -23,6 +23,7 @@
 
 
 import os
+import subprocess
 
 
 def graph_deps(deps_dict, image):
@@ -33,10 +34,14 @@ def graph_deps(deps_dict, image):
     except ImportError:
         print("Require 'pygraphviz': Install with '$ slpkg -s sbo pygraphviz'")
         raise SystemExit()
-    check_file(image)
+    if image != "ascii":
+        check_file(image)
     try:
         G = pgv.AGraph(deps_dict)
         G.layout(prog="fdp")
+        if image == "ascii":
+            G.write("{0}.dot".format(image))
+            graph_easy(image)
         G.draw(image)
     except (IOError, KeyboardInterrupt):
         raise SystemExit()
@@ -63,3 +68,22 @@ def check_file(image):
     except IndexError:
         print("slpkg: error: Image file suffix missing")
         raise SystemExit()
+
+
+def graph_easy(image):
+    """Draw ascii diagram. graph-easy perl modulr require
+    """
+    if not os.path.isfile("/usr/bin/graph-easy"):
+        print("Require 'graph-easy': Install with '$ slpkg -s sbo graph-easy'")
+        remove_dot(image)
+        raise SystemExit()
+    subprocess.call("graph-easy {0}.dot".format(image), shell=True)
+    remove_dot(image)
+    raise SystemExit()
+
+
+def remove_dot(image):
+    """Remove .dot files
+    """
+    if os.path.isfile("{0}.dot".format(image)):
+        os.remove("{0}.dot".format(image))
