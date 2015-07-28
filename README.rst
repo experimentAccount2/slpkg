@@ -768,8 +768,6 @@ and also displays installed packages:
       +-------------------------------------+
 
 
-.. code-block:: bash
-
     $ slpkg -t sbo Flask --check-deps --graph=image.x11
     Resolving dependencies... Done
 
