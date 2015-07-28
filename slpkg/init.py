@@ -395,7 +395,7 @@ class Initialization(object):
             os.mkdir(log)
         if not os.path.exists(lib):
             os.mkdir(lib)
-        if self.meta.slack_rel == "currnet":
+        if self.meta.slack_rel == "current":
             ver = self.meta.slack_rel
         PACKAGES_TXT = "{0}{1}/{2}".format(repo, ver, lib_file)
         FILELIST_TXT = ""
