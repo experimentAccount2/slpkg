@@ -760,10 +760,10 @@ and also displays installed packages:
     :target: https://raw.githubusercontent.com/dslackw/images/master/slpkg/deps3.png
 
 
+Drawing dependencies ascii diagram:
+
 .. code-block:: bash
    
-    Drawing dependencies ascii diagram:
-
     $ slpkg -t sbo brasero --graph=ascii
     
                                        +---------------------------------+
