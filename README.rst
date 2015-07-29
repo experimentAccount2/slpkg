@@ -842,7 +842,15 @@ Check if your packages is up to date or changes in ChangeLog.txt:
 
     $ slpkg -c sbo
 
-    News in ChangeLog.txt
+    +==============================================================================
+    | Repository         Status
+    +==============================================================================
+      sbo                News in ChangeLog.txt
+
+    Summary
+    ===============================================================================
+    From 1 repositories need 1 updating. Run the command 'slpkg update'.
+
 
     And check if packages need upgrade with:
 
