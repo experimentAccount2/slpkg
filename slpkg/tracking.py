@@ -24,7 +24,7 @@
 
 from utils import Utils
 from messages import Msg
-from graph import graph_deps
+from graph import Graph
 from blacklist import BlackList
 from __metadata__ import MetaData as _meta_
 
@@ -136,7 +136,7 @@ class TrackingDeps(object):
         """Drawing image dependencies map
         """
         image = self.flag.split("=")[1]
-        graph_deps(self.deps_dict, image)
+        Graph(image).dependencies(self.deps_dict)
 
     def check_used(self, pkg):
         """Check if dependencies used

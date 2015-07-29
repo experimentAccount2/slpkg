@@ -24,7 +24,7 @@
 
 from utils import Utils
 from messages import Msg
-from graph import graph_deps
+from graph import Graph
 from splitting import split_package
 from __metadata__ import MetaData as _meta_
 
@@ -68,7 +68,7 @@ class DependenciesStatus(object):
         """
         self.data()
         if self.image:
-            graph_deps(self.dmap, self.image)
+            Graph(self.image).dependencies(self.dmap)
         grey = self.meta.color["GREY"]
         green = self.meta.color["GREEN"]
         yellow = self.meta.color["YELLOW"]
