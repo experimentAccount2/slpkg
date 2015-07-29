@@ -4,4 +4,6 @@ computes dependencies and figures out what things should occur
 to install packages. Slpkg makes it easier to maintain groups 
 of machines without having to manually update.
 
-Optional dependency: pygraphviz (for design image map dependencies)
+Optional dependencies: 
+- pygraphviz (for drawing dependencies diagram)
+- graph-easy (for drawing dependencies ascii diagram)
