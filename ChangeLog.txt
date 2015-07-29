@@ -2,7 +2,7 @@
 Fixed:
 - Fix typo #32
 Added:
-- graph-easy optional require to draw dependencies ascci diagram
+- graph-easy optional require to draw dependencies ascii diagram
 
 2.6.6 - 25/07/2015
 Added:
