@@ -109,7 +109,7 @@ class TrackingDeps(object):
                         "+--", index, self.red, pkg,
                         self.endc, installed))
             if self.meta.use_colors in ["off", "OFF"]:
-                print("\n *: Installed\n")
+                print("\n * = Installed\n")
             else:
                 print("")    # new line at end
             if self.flag.startswith("--check-deps--graph="):
