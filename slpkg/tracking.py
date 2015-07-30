@@ -65,8 +65,8 @@ class TrackingDeps(object):
         Msg().resolving()
         self.repositories()
         if self.find_pkg:
+            self.dependencies_list.reverse()
             self.requires = Utils().dimensional_list(self.dependencies_list)
-            self.requires.reverse()
             self.dependencies = Utils().remove_dbs(self.requires)
             if self.dependencies == []:
                 self.dependencies = ["No dependencies"]
