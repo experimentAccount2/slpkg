@@ -1,3 +1,7 @@
+2.6.8 - 30/07/2015
+Fixed:
+- SBo dependencies installation order
+
 2.6.7 - 28/07/2015
 Fixed:
 - Fix typo #32
