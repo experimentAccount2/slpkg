@@ -5,6 +5,7 @@ This file was created to explain some peculiarities of repositories used by the 
 
 Default repositories:
 ---------------------
+For -current users use sbo repository:
 SlackBuilds.org (sbo) FAQ(15): 
 Slackware current is not supported, but as a general rule, the scripts
 should work on it as well.
