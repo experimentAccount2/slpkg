@@ -58,7 +58,8 @@ def pkg_upgrade(repo, skip):
                 if (repo_pkg[0] == inst_pkg[0] and
                     LooseVersion(repo_pkg[1]) > LooseVersion(inst_pkg[1]) and
                     repo_pkg[3] >= inst_pkg[3] and
-                        inst_pkg[0] not in skip):
+                        inst_pkg[0] not in skip and
+                        repo_pkg[1] != "blacklist"):
                     pkgs_for_upgrade.append(repo_pkg[0])
         Msg().done()
         return pkgs_for_upgrade
