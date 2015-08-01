@@ -24,14 +24,14 @@
 
 import re
 
+from slpkg.utils import Utils
+
 
 def slack_ver():
     """
     Open file and read Slackware version
     """
-    with open("/etc/slackware-version", "r") as f:
-        sv = f.read()
-        f.close()
+    sv = Utils().read_file("/etc/slackware-version")
     version = re.findall(r"\d+", sv)
     if len(sv) > 2:
         return (".".join(version[:2]))
