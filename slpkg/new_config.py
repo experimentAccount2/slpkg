@@ -31,6 +31,8 @@ class NewConfig(object):
 
     def __init__(self):
         self.meta = _meta_
+        self.red = self.meta.color["RED"]
+        self.endc = self.meta.color["ENDC"]
         self.etc = "/etc/"
         self.news = []
 
@@ -38,9 +40,57 @@ class NewConfig(object):
         """Find all '.new' files from /etc/ folder
         and subfolders
         """
-        for path, dirs, files in os.walk("/etc/"):
+        print("\nSearch for .new configuration files:\n")
+        for path, dirs, files in os.walk(self.etc):
             for f in files:
                 if f.endswith(".new"):
                     self.news.append(os.path.join(path, f))
 
-NewConfig().find_new()
+    def view_new(self):
+        """print .new configuration files
+        """
+        self.find_new()
+        for n in self.news:
+            print("{0}".format(n))
+        print("\nInstalled {0} new configuration files:\n".format(
+            len(self.news)))
+        self.choices()
+
+    def choices(self):
+        """Menu options for new configuration files
+        """
+        br = ""
+        if self.meta.use_colors in ["off", "OFF"]:
+            br = ")"
+        print("     {0}O{1}{2}verwrite all old configuration files with new "
+              "ones".format(self.red, self.endc, br))
+        print("       The old files will be saved with suffix .old")
+        print("     {0}R{1}{2}emove all .new files".format(
+            self.red, self.endc, br))
+        print("     {0}P{1}{2}rompt O, R, option for each single file\n".format(
+            self.red, self.endc, br))
+        choose = raw_input("What would you like to do [O/R/P]? ")
+        if choose == "O":
+            self.overwrite_all()
+        elif choose == "R":
+            self.remove_all()
+        elif choose == "P":
+            self.prompt()
+
+    def overwrite_all(self):
+        pass
+
+    def remove_all(self):
+        pass
+
+    def prompt(self):
+        for p in self.news:
+            print("{0}".format(p))
+
+    def _remove(self):
+        pass
+
+    def _overwrite(self):
+        pass
+
+NewConfig().view_new()
