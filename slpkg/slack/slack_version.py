@@ -32,7 +32,8 @@ def slack_ver():
     with open("/etc/slackware-version", "r") as f:
         sv = f.read()
         f.close()
-    ver = re.findall(r"\d+", sv)
-    if len(ver) == 3 and ver[2] == "0":
-        return (".".join(ver)[:-2])
-    return (".".join(ver))
+    version = re.findall(r"\d+", sv)
+    if len(sv) > 2:
+        return (".".join(version[:2]))
+    else:
+        return (".".join(version))
