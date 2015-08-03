@@ -42,8 +42,7 @@ class NewConfig(object):
         if self.meta.use_colors in ["off", "OFF"]:
             self.br = ")"
         # self.etc = "/etc/"
-        self.etc = "/etc/slpkg/"
-        # self.etc = "/home/dslackw/Downloads/test/"
+        self.etc = "/home/dslackw/Downloads/test/"
         self.news = []
 
     def find_new(self):
@@ -83,17 +82,17 @@ class NewConfig(object):
             self.red, self.endc, self.br))
         Msg().template(78)
         try:
-            choose = raw_input("\nWhat would you like to do [O/R/P]? ")
+            choose = raw_input("\nWhat would you like to do [K/O/R/P]? ")
         except KeyboardInterrupt:
             print("")
             raise SystemExit()
-        if choose == "O":
-            self.overwrite_all()
-        elif choose == "R":
-            self.remove_all()
-        elif choose == "K":
+        if choose in ("K", "k"):
             self.keep
-        elif choose == "P":
+        elif choose in ("O", "o"):
+            self.overwrite_all()
+        elif choose in ("R", "r"):
+            self.remove_all()
+        elif choose in ("P", "p"):
             self.prompt()
 
     def overwrite_all(self):
@@ -122,6 +121,7 @@ class NewConfig(object):
                   self.red, self.endc, self.br, self.red, self.endc, self.br,
                   self.red, self.endc, self.br))
         Msg().template(78)
+        print("")
         self.i = 0
         try:
             while self.i < len(self.news):
@@ -135,15 +135,18 @@ class NewConfig(object):
         """Choose what do to file by file
         """
         prompt_ask = raw_input("{0} [K/O/R/D/M]? ".format(n))
-        if prompt_ask == "K":
+        print("")
+        if prompt_ask in ("K", "k"):
             self.keep()
-        elif prompt_ask == "O":
+        elif prompt_ask in ("O", "o"):
             self._overwrite(n)
-        elif prompt_ask == "R":
+        elif prompt_ask in ("R", "r"):
             self._remove(n)
-        elif prompt_ask == "D":
+        elif prompt_ask in ("D", "d"):
             self.diff(n)
             self.i -= 1
+        elif prompt_ask in ("M", "m"):
+            self.merge(n)
 
     def _remove(self, n):
         """Remove one single file
@@ -173,7 +176,7 @@ class NewConfig(object):
         for a, b in itertools.izip_longest(diff1, diff2):
             l += 1
             if a != b:
-                for s1, s2 in itertools.izip_longest(a, b):
+                for s1, s2 in itertools.izip_longest(str(a), str(b)):
                     c += 1
                     if s1 != s2:
                         break
@@ -188,6 +191,18 @@ class NewConfig(object):
                 c = 0
             else:
                 lines.append(a)
+        print("")
+
+    def merge(self, n):
+        old = Utils().read_file(n[:-4]).splitlines()
+        new = Utils().read_file(n).splitlines()
+        with open(n[:-4], "w") as out:
+            for l1, l2 in itertools.izip_longest(old, new):
+                if l1 != l2:
+                    out.write(l2 + "\n")
+                else:
+                    out.write(l1 + "\n")
+            print("The file {0} merged in file {1}".format(n, n[:-4]))
 
 
 NewConfig().view_new()
