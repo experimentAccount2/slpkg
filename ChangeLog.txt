@@ -1,3 +1,12 @@
+2.6.9 - 31/07/2015
+Added:
+- new-config command to manage .new configuration files
+Fixed:
+- Ignore check packages with version "blacklist" from binary repositories
+Updated:
+- slpkg.SlackBuild script
+- Read Slackware version function
+
 2.6.8 - 30/07/2015
 Fixed:
 - SBo dependencies installation order

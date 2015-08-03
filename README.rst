@@ -155,6 +155,8 @@ package file list.
 Print dependencies status used by packages with command '$ slpkg deps-status' or drawing image 
 map dependencies with additional option '--graph=[image]'.
 
+Manage .new configuration files with command 'slpkg new-config' like remove, overwrite, merge etc.
+
 If you have already downloaded the script and the source code you can build the package with 
 the command '$ slpkg <script.tar.gz> <sources>'.
 
@@ -228,8 +230,8 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.6.8.tar.gz
-    $ cd slpkg-2.6.8
+    $ tar xvf slpkg-2.6.9.tar.gz
+    $ cd slpkg-2.6.9
     $ ./install.sh
 
 Using pip:
@@ -248,9 +250,9 @@ Using pip:
 
 Bbinary packages:
 
-Slackware: `slpkg-2.6.8-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.6.8/slpkg-2.6.8-i486-1_dsw.txz>`_
+Slackware: `slpkg-2.6.9-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.6.9/slpkg-2.6.9-i486-1_dsw.txz>`_
 
-Slackware64: `slpkg-2.6.8-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.6.8/slpkg-2.6.8-x86_64-1_dsw.txz>`_
+Slackware64: `slpkg-2.6.9-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.6.9/slpkg-2.6.9-x86_64-1_dsw.txz>`_
 
 
 Upgrade
@@ -351,6 +353,7 @@ Command Line Tool Usage
        deps-status, --graph=[type]              Print dependencies status used by
                                                 packages or drawing dependencies
                                                 diagram.
+       new-config                               Manage .new configuration files.
 
     Optional arguments:
       -h, --help                                Print this help message and exit.
