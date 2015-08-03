@@ -21,6 +21,7 @@ Usage: slpkg Commands:
              [repo-remove [repository]] [repo-list]
              [repo-info [repository]] [update [slpkg]] 
              [health, --silent] [deps-status, --graph=[type]]
+             [new-config]
 
              Optional arguments:
              [-h] [-v]
@@ -118,6 +119,12 @@ with the option "slpkg -s <repository> <packages>".
 Additional options:
 .PP
 \fB--graph=[type]\fP : Drawing dependencies diagram. (example for type: ascii, image.x11, image.png etc.)
+
+.SS new-config, manage .new configuration files
+\fBslpkg\fP \fBnew-config\fP
+.PP
+This option searches for .new configuration files in /etc/ path and ask the user what todo with those
+files.
 
 .SH OPTIONS
 .PP

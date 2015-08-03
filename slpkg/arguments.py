@@ -58,6 +58,7 @@ Commands:
    deps-status, --graph=[type]              Print dependencies status used by
                                             packages or drawing dependencies
                                             diagram.
+   new-config                               Manage .new configuration files.
 
 Optional arguments:
   -h, --help                                Print this help message and exit.
@@ -135,6 +136,7 @@ def usage(repo):
              [repo-remove [repository]] [repo-list]
              [repo-info [repository]] [update [slpkg]]
              [health, --silent] [deps-status, --graph=[type]]
+             [new-config]
 
              Optional arguments:
              [-h] [-v]

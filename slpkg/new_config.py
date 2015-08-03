@@ -45,6 +45,19 @@ class NewConfig(object):
         self.etc = "/etc/"
         self.news = []
 
+    def run(self):
+        """print .new configuration files
+        """
+        self.find_new()
+        for n in self.news:
+            print("{0}".format(n))
+        print("")
+        Msg().template(78)
+        print("| Installed {0} new configuration files:".format(
+            len(self.news)))
+        Msg().template(78)
+        self.choices()
+
     def find_new(self):
         """Find all '.new' files from /etc/ folder
         and subfolders
@@ -57,19 +70,6 @@ class NewConfig(object):
         if not self.news:
             print("  No new configuration files\n")
             raise SystemExit()
-
-    def view_new(self):
-        """print .new configuration files
-        """
-        self.find_new()
-        for n in self.news:
-            print("{0}".format(n))
-        print("")
-        Msg().template(78)
-        print("| Installed {0} new configuration files:".format(
-            len(self.news)))
-        Msg().template(78)
-        self.choices()
 
     def choices(self):
         """Menu options for new configuration files

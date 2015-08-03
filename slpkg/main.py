@@ -36,10 +36,11 @@ from queue import QueuePkgs
 from repoinfo import RepoInfo
 from repolist import RepoList
 from repositories import Repo
-from tracking import TrackingDeps
 from blacklist import BlackList
 from version import prog_version
 from health import PackageHealth
+from new_config import NewConfig
+from tracking import TrackingDeps
 from pkg_find import find_from_repos
 from arguments import options, usage
 from slpkg_update import it_self_update
@@ -193,6 +194,14 @@ class ArgParse(object):
                 self.args[1].startswith("--graph=")):
             image = self.args[1].split("=")[1]
             DependenciesStatus(image).show()
+        else:
+            usage("")
+
+    def command_new_config(self):
+        """Manage .new configuration files
+        """
+        if len(self.args) == 1 and self.args[0] == "new-config":
+            NewConfig().run()
         else:
             usage("")
 
@@ -580,6 +589,7 @@ def main():
         "repo-info": argparse.command_repo_info,
         "health": argparse.command_health,
         "deps-status": argparse.command_deps_status,
+        "new-config": argparse.command_new_config,
         "-a": argparse.auto_build,
         "--autobuild": argparse.auto_build,
         "-l": argparse.pkg_list,
