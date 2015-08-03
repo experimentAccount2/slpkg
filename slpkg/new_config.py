@@ -82,7 +82,11 @@ class NewConfig(object):
         print("| {0}P{1}{2}rompt O, R, option for each single file".format(
             self.red, self.endc, self.br))
         Msg().template(78)
-        choose = raw_input("\nWhat would you like to do [O/R/P]? ")
+        try:
+            choose = raw_input("\nWhat would you like to do [O/R/P]? ")
+        except KeyboardInterrupt:
+            print("")
+            raise SystemExit()
         if choose == "O":
             self.overwrite_all()
         elif choose == "R":
@@ -97,10 +101,7 @@ class NewConfig(object):
         old with suffix .old
         """
         for n in self.news:
-            if os.path.isfile(n[:-4]):
-                shutil.copy2(n[:-4], n[:-4] + ".old")
-            if os.path.isfile(n):
-                shutil.move(n, n[:-4])
+            self._overwrite(n)
 
     def remove_all(self):
         """Remove all .new files
@@ -110,6 +111,8 @@ class NewConfig(object):
                 os.remove(n)
 
     def prompt(self):
+        """Select file
+        """
         print("")
         Msg().template(78)
         print("| Choose what to do file by file:")
@@ -119,20 +122,38 @@ class NewConfig(object):
                   self.red, self.endc, self.br, self.red, self.endc, self.br,
                   self.red, self.endc, self.br))
         Msg().template(78)
-        for n in self.news:
-            self.question(n)
+        self.i = 0
+        try:
+            while self.i < len(self.news):
+                self.question(self.news[self.i])
+                self.i += 1
+        except KeyboardInterrupt:
+            print("")
+            raise SystemExit()
 
     def question(self, n):
+        """Choose what do to file by file
+        """
         prompt_ask = raw_input("{0} [K/O/R/D/M]? ".format(n))
-        if prompt_ask == "D":
-            self.diff(n)
+        if prompt_ask == "K":
+            self.keep()
         elif prompt_ask == "O":
             self._overwrite(n)
+        elif prompt_ask == "R":
+            self._remove(n)
+        elif prompt_ask == "D":
+            self.diff(n)
+            self.i -= 1
 
-    def _remove(self):
-        pass
+    def _remove(self, n):
+        """Remove one single file
+        """
+        if os.path.isfile(n):
+            os.remove(n)
 
     def _overwrite(self, n):
+        """Overwrite old file with new and keep file with suffix .old
+        """
         if os.path.isfile(n[:-4]):
             shutil.copy2(n[:-4], n[:-4] + ".old")
         if os.path.isfile(n):
@@ -144,10 +165,11 @@ class NewConfig(object):
     def diff(self, n):
         """Print the differences between the two files
         """
-        diff1 = Utils().read_file(n[:-4]).splitlines()
-        diff2 = Utils().read_file(n).splitlines()
-        lines = []
-        l, c = 0, 0
+        if os.path.isfile(n[:-4]):
+            diff1 = Utils().read_file(n[:-4]).splitlines()
+        if os.path.isfile(n):
+            diff2 = Utils().read_file(n).splitlines()
+        lines, l, c = [], 0, 0
         for a, b in itertools.izip_longest(diff1, diff2):
             l += 1
             if a != b:
