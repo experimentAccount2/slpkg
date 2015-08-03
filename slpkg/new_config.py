@@ -24,8 +24,10 @@
 
 import os
 import shutil
+import itertools
 
 from messages import Msg
+from utils import Utils
 from __metadata__ import MetaData as _meta_
 
 
@@ -34,12 +36,14 @@ class NewConfig(object):
     def __init__(self):
         self.meta = _meta_
         self.red = self.meta.color["RED"]
+        self.green = self.meta.color["GREEN"]
         self.endc = self.meta.color["ENDC"]
         self.br = ""
         if self.meta.use_colors in ["off", "OFF"]:
             self.br = ")"
         # self.etc = "/etc/"
-        self.etc = "/home/dslackw/Downloads/test/"
+        self.etc = "/etc/slpkg/"
+        # self.etc = "/home/dslackw/Downloads/test/"
         self.news = []
 
     def find_new(self):
@@ -120,7 +124,9 @@ class NewConfig(object):
 
     def question(self, n):
         prompt_ask = raw_input("{0} [K/O/R/D/M]? ".format(n))
-        if prompt_ask == "O":
+        if prompt_ask == "D":
+            self.diff(n)
+        elif prompt_ask == "O":
             self._overwrite(n)
 
     def _remove(self):
@@ -134,5 +140,32 @@ class NewConfig(object):
 
     def keep(self):
         pass
+
+    def diff(self, n):
+        """Print the differences between the two files
+        """
+        diff1 = Utils().read_file(n[:-4]).splitlines()
+        diff2 = Utils().read_file(n).splitlines()
+        lines = []
+        l, c = 0, 0
+        for a, b in itertools.izip_longest(diff1, diff2):
+            l += 1
+            if a != b:
+                for s1, s2 in itertools.izip_longest(a, b):
+                    c += 1
+                    if s1 != s2:
+                        break
+                print("@@ -{0},{1} +{0},{1} @@\n".format(l, c))
+                for line in lines[-3:]:
+                    print("{0}".format(line))
+                if a is not None:
+                    print("{0}{1}{2}{3}".format(self.red, "-", self.endc, a))
+                if b is not None:
+                    print("{0}{1}{2}{3}".format(self.green, "+", self.endc, b))
+                lines = []
+                c = 0
+            else:
+                lines.append(a)
+
 
 NewConfig().view_new()
