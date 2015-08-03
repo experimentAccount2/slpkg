@@ -207,8 +207,10 @@ class NewConfig(object):
     def merge(self, n):
         """Merge new file into old
         """
-        old = Utils().read_file(n[:-4]).splitlines()
-        new = Utils().read_file(n).splitlines()
+        if os.path.isfile(n[:-4]):
+            old = Utils().read_file(n[:-4]).splitlines()
+        if os.path.isfile(n):
+            new = Utils().read_file(n).splitlines()
         with open(n[:-4], "w") as out:
             for l1, l2 in itertools.izip_longest(old, new):
                 if l1 is None:
