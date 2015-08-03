@@ -32,7 +32,8 @@ from __metadata__ import MetaData as _meta_
 
 
 class NewConfig(object):
-
+    """Manage .new configuration files
+    """
     def __init__(self):
         self.meta = _meta_
         self.red = self.meta.color["RED"]
