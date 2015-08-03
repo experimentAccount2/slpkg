@@ -41,8 +41,7 @@ class NewConfig(object):
         self.br = ""
         if self.meta.use_colors in ["off", "OFF"]:
             self.br = ")"
-        # self.etc = "/etc/"
-        self.etc = "/home/dslackw/Downloads/test/"
+        self.etc = "/etc/"
         self.news = []
 
     def find_new(self):
@@ -54,6 +53,9 @@ class NewConfig(object):
             for f in files:
                 if f.endswith(".new"):
                     self.news.append(os.path.join(path, f))
+        if not self.news:
+            print("  No new configuration files\n")
+            raise SystemExit()
 
     def view_new(self):
         """print .new configuration files
@@ -71,21 +73,22 @@ class NewConfig(object):
     def choices(self):
         """Menu options for new configuration files
         """
+        print("| {0}K{1}{2}eep the old and .new files, no changes".format(
+            self.red, self.endc, self.br))
         print("| {0}O{1}{2}verwrite all old configuration files with new "
               "ones".format(self.red, self.endc, self.br))
         print("|  The old files will be saved with suffix .old")
         print("| {0}R{1}{2}emove all .new files".format(
             self.red, self.endc, self.br))
-        print("| {0}K{1}{2}eep the old and .new files, no changes".format(
-            self.red, self.endc, self.br))
-        print("| {0}P{1}{2}rompt O, R, option for each single file".format(
-            self.red, self.endc, self.br))
+        print("| {0}P{1}{2}rompt K, O, R, D, M option for each single "
+              "file".format(self.red, self.endc, self.br))
         Msg().template(78)
         try:
             choose = raw_input("\nWhat would you like to do [K/O/R/P]? ")
-        except KeyboardInterrupt:
+        except (KeyboardInterrupt, EOFError):
             print("")
             raise SystemExit()
+        print("")
         if choose in ("K", "k"):
             self.keep
         elif choose in ("O", "o"):
@@ -106,13 +109,12 @@ class NewConfig(object):
         """Remove all .new files
         """
         for n in self.news:
-            if os.path.isfile(n):
-                os.remove(n)
+            self._remove(n)
+        print("")
 
     def prompt(self):
         """Select file
         """
-        print("")
         Msg().template(78)
         print("| Choose what to do file by file:")
         print("| {0}K{1}{2}epp, {3}O{4}{5}verwrite, {6}R{7}{8}emove, "
@@ -127,13 +129,14 @@ class NewConfig(object):
             while self.i < len(self.news):
                 self.question(self.news[self.i])
                 self.i += 1
-        except KeyboardInterrupt:
+        except (KeyboardInterrupt, EOFError):
             print("")
             raise SystemExit()
 
     def question(self, n):
         """Choose what do to file by file
         """
+        print("")
         prompt_ask = raw_input("{0} [K/O/R/D/M]? ".format(n))
         print("")
         if prompt_ask in ("K", "k"):
@@ -153,14 +156,20 @@ class NewConfig(object):
         """
         if os.path.isfile(n):
             os.remove(n)
+        if not os.path.isfile(n):
+            print("File '{0}' removed".format(n))
 
     def _overwrite(self, n):
         """Overwrite old file with new and keep file with suffix .old
         """
         if os.path.isfile(n[:-4]):
             shutil.copy2(n[:-4], n[:-4] + ".old")
+            print("Old file {0} saved as {1}.old".format(
+                n[:-4].split("/")[-1], n[:-4].split("/")[-1]))
         if os.path.isfile(n):
             shutil.move(n, n[:-4])
+            print("New file {0} overwrite as {1}".format(
+                n.split("/")[-1], n[:-4].split("/")[-1]))
 
     def keep(self):
         pass
@@ -180,29 +189,34 @@ class NewConfig(object):
                     c += 1
                     if s1 != s2:
                         break
-                print("@@ -{0},{1} +{0},{1} @@\n".format(l, c))
+                print("@@ -{0},{1} +{2},{3} @@\n".format(l, c, l, c))
                 for line in lines[-3:]:
                     print("{0}".format(line))
-                if a is not None:
-                    print("{0}{1}{2}{3}".format(self.red, "-", self.endc, a))
-                if b is not None:
-                    print("{0}{1}{2}{3}".format(self.green, "+", self.endc, b))
+                if a is None:
+                    a = ""
+                print("{0}{1}{2}{3}".format(self.red, "-", self.endc, a))
+                if b is None:
+                    b = ""
+                print("{0}{1}{2}{3}".format(self.green, "+", self.endc, b))
                 lines = []
                 c = 0
             else:
                 lines.append(a)
-        print("")
 
     def merge(self, n):
+        """Merge new file into old
+        """
         old = Utils().read_file(n[:-4]).splitlines()
         new = Utils().read_file(n).splitlines()
         with open(n[:-4], "w") as out:
             for l1, l2 in itertools.izip_longest(old, new):
+                if l1 is None:
+                    l1 = ""
+                if l2 is None:
+                    l2 = ""
                 if l1 != l2:
                     out.write(l2 + "\n")
                 else:
                     out.write(l1 + "\n")
-            print("The file {0} merged in file {1}".format(n, n[:-4]))
-
-
-NewConfig().view_new()
+            print("The file {0} merged in file {1}".format(
+                n.split("/")[-1], n[:-4].split("/")[-1]))
