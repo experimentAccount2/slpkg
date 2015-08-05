@@ -24,7 +24,6 @@
 
 import os
 import re
-import sys
 import tarfile
 import subprocess
 
@@ -62,7 +61,7 @@ def it_self_update():
         if answer in ["y", "Y"]:
             print("")   # new line after answer
         else:
-            sys.exit(0)
+            raise SystemExit()
         dwn_link = ["https://{0}.com/{1}/{2}/archive/"
                     "v{3}.tar.gz".format(repository, _meta_.__author__,
                                          _meta_.__all__,
@@ -85,4 +84,4 @@ def it_self_update():
     else:
         print("\n{0}: There is no new version, already used the last !"
               "\n".format(_meta_.__all__))
-    sys.exit(0)
+    raise SystemExit()

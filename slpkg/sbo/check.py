@@ -23,7 +23,6 @@
 
 
 import os
-import sys
 from distutils.version import LooseVersion
 
 from slpkg.messages import Msg
@@ -57,7 +56,7 @@ def sbo_upgrade(skip):
         return upgrade_names
     except KeyboardInterrupt:
         print("")   # new line at exit
-        sys.exit(0)
+        raise SystemExit()
 
 
 def sbo_list():

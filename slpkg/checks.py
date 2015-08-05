@@ -22,8 +22,6 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-import sys
-
 from messages import Msg
 from arguments import usage
 from init import Initialization
@@ -76,12 +74,12 @@ class Updates(object):
                 self.check = self.all_repos[self.repo]()
             except OSError:
                 usage(self.repo)
-                sys.exit(0)
+                raise SystemExit()
         elif self.repo in self.meta.repositories:
             self.check = self._init.custom(self.repo)
         else:
             usage(self.repo)
-            sys.exit(0)
+            raise SystemExit()
         self.status_bar()
         self.status()
         self.print_status(self.repo)
@@ -97,7 +95,7 @@ class Updates(object):
                     self.check = self.all_repos[repo]()
                 except OSError:
                     usage(self.repo)
-                    sys.exit(0)
+                    raise SystemExit()
             elif repo in self.meta.repositories:
                 self.check = self._init.custom(repo)
             self.status()

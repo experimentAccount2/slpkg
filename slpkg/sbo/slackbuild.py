@@ -23,7 +23,6 @@
 
 
 import os
-import sys
 
 from slpkg.utils import Utils
 from slpkg.messages import Msg
@@ -131,7 +130,7 @@ class SBoInstall(object):
                 Msg().not_found(if_upgrade)
         except KeyboardInterrupt:
             print("")   # new line at exit
-            sys.exit(0)
+            raise SystemExit()
 
     def update_deps(self):
         """Update dependencies dictionary with all package
@@ -315,7 +314,7 @@ class SBoInstall(object):
                     binary = (self.meta.output + max(binary_list)).split()
                 except ValueError:
                     Msg().build_FAILED(sbo_url, prgnam)
-                    sys.exit(0)
+                    raise SystemExit()
                 find = GetFromInstalled(pkg).name()
                 if find == pkg:
                     print("[ {0}Upgrading{1} ] --> {2}".format(

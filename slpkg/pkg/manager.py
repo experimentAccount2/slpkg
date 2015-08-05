@@ -23,7 +23,6 @@
 
 
 import os
-import sys
 import subprocess
 
 from slpkg.utils import Utils
@@ -99,7 +98,7 @@ class PackageManager(object):
                             str(len(self.removed)), msg))
             except KeyboardInterrupt:
                 print("")   # new line at exit
-                sys.exit(0)
+                raise SystemExit()
             if remove_pkg in ["y", "Y"]:
                 self._check_if_used(self.binary)
                 for rmv in self.removed:
@@ -131,7 +130,7 @@ class PackageManager(object):
                 print("")
             except KeyboardInterrupt:
                 print("")  # new line at exit
-                sys.exit(0)
+                raise SystemExit()
         return remove_dep
 
     def _view_removed(self):
@@ -176,7 +175,7 @@ class PackageManager(object):
                 os.remove(self.dep_path + package)  # remove log
         except KeyboardInterrupt:
             print("")
-            sys.exit(0)
+            raise SystemExit()
 
     def _rmv_deps(self, dependencies, package):
         """Remove dependencies
@@ -210,7 +209,7 @@ class PackageManager(object):
             self.skip = raw_input(" > ").split()
         except KeyboardInterrupt:
             print("")
-            sys.exit(0)
+            raise SystemExit()
         for s in self.skip:
             if s in self.removed:
                 self.removed.remove(s)
@@ -348,7 +347,7 @@ class PackageManager(object):
             print("")   # new line at end
         except KeyboardInterrupt:
             print("")   # new line at exit
-            sys.exit(0)
+            raise SystemExit()
 
     def list_greps(self, repo, packages):
         """Grep packages

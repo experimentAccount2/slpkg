@@ -22,8 +22,6 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-import sys
-
 from slpkg.utils import Utils
 from slpkg.toolbar import status
 from slpkg.blacklist import BlackList
@@ -49,4 +47,4 @@ def search_pkg(name, repo):
                     return pkg_name
     except KeyboardInterrupt:
         print("")   # new line at exit
-        sys.exit(0)
+        raise SystemExit()

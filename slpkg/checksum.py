@@ -22,8 +22,6 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-import sys
-
 from md5sum import md5
 from messages import Msg
 from __metadata__ import MetaData as _meta_
@@ -47,7 +45,7 @@ def check_md5(pkg_md5, src_file):
             Msg().template(78)
             print("")
             if not Msg().answer() in ["y", "Y"]:
-                sys.exit(0)
+                raise SystemExit()
         else:
             Msg().template(78)
             print("| MD5SUM check for {0} [ {1}PASSED{2} ]".format(

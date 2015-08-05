@@ -23,7 +23,6 @@
 
 
 import os
-import sys
 import subprocess
 
 from messages import Msg
@@ -68,7 +67,7 @@ class Download(object):
                 dwn_count += 1
             except KeyboardInterrupt:
                 print   # new line at cancel
-                sys.exit(0)
+                raise SystemExit()
 
     def _directory_prefix(self):
         """Downloader options for specific directory
@@ -90,7 +89,7 @@ class Download(object):
             Msg().template(78)
             print("")
             if not Msg().answer() in ["y", "Y"]:
-                sys.exit(0)
+                raise SystemExit()
 
     def _check_certificate(self):
         """Check for certificates options for wget
@@ -106,4 +105,4 @@ class Download(object):
             print("")
             self.downder_options += certificate
             if not Msg().answer() in ["y", "Y"]:
-                sys.exit(0)
+                raise SystemExit()

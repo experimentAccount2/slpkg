@@ -22,8 +22,6 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-import sys
-
 from messages import Msg
 from repositories import Repo
 from __metadata__ import MetaData as _meta_
@@ -92,4 +90,4 @@ class RepoList(object):
         print("For enable or disable default repositories edit "
               "'/etc/slpkg/slpkg.conf' file.\n{0}".format(
                   self.meta.color["ENDC"]))
-        sys.exit(0)
+        raise SystemExit()

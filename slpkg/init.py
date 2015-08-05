@@ -659,7 +659,7 @@ class Initialization(object):
                             shutil.rmtree(files)
         except KeyboardInterrupt:
             print("")
-            sys.exit(0)
+            raise SystemExit()
         Update().repository(only)
 
 
@@ -700,9 +700,9 @@ class Update(object):
                     sys.stdout.write(self.error)
         except KeyboardInterrupt:
             print("")
-            sys.exit(0)
+            raise SystemExit()
         print("")   # new line at end
-        sys.exit(0)
+        raise SystemExit()
 
 
 def check_exists_repositories():
@@ -721,4 +721,4 @@ def check_exists_repositories():
         print("\n  Please update packages lists. Run 'slpkg update'.\n" +
               "  This command should be used to synchronize packages\n" +
               "  lists from the repositories are enabled.\n")
-        sys.exit(0)
+        raise SystemExit()

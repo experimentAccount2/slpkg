@@ -104,7 +104,7 @@ class BuildPackage(object):
             Msg().pkg_not_found("\n", self.prgnam, "Wrong file", "\n")
         except KeyboardInterrupt:
             print("")   # new line at exit
-            sys.exit(0)
+            raise SystemExit()
 
     def _makeflags(self):
         """Set variable MAKEFLAGS with the numbers of

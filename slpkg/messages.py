@@ -54,7 +54,7 @@ class Msg(object):
         """
         if user != "root":
             print("\nslpkg: error: must have root privileges\n")
-            sys.exit(0)
+            raise SystemExit()
 
     def build_FAILED(self, sbo_url, prgnam):
         """Print error message if build failed
@@ -136,7 +136,7 @@ class Msg(object):
                 answer = raw_input("Would you like to continue [y/N]? ")
             except (KeyboardInterrupt, EOFError):
                 print("")
-                sys.exit(0)
+                raise SystemExit()
         return answer
 
     def reference(self, install, upgrade):

@@ -23,7 +23,6 @@
 
 
 import os
-import sys
 
 from messages import Msg
 from __metadata__ import MetaData as _meta_
@@ -63,7 +62,7 @@ class PackageHealth(object):
                     print(line)
         except (KeyboardInterrupt, IOError):
             print("")
-            sys.exit(0)
+            raise SystemExit()
 
     def test(self):
         """Get started test each package and read file list
@@ -81,7 +80,7 @@ class PackageHealth(object):
                             self.check(line, pkg)
         except KeyboardInterrupt:
             print("")
-            sys.exit(0)
+            raise SystemExit()
         self.results()
 
     def results(self):

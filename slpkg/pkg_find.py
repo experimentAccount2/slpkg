@@ -22,8 +22,6 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-import sys
-
 from messages import Msg
 from sbo.greps import SBoGrep
 from pkg.manager import PackageManager
@@ -63,7 +61,7 @@ def find_from_repos(pkg):
             _meta_.color["GREY"], count_pkg, count_repo, _meta_.color["ENDC"]))
     except KeyboardInterrupt:
         print("")   # new line at exit
-        sys.exit(0)
+        raise SystemExit()
 
 
 def sbo_version(repo, find):

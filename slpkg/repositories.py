@@ -23,7 +23,6 @@
 
 
 import os
-import sys
 
 from utils import Utils
 from __metadata__ import MetaData as _meta_
@@ -52,17 +51,17 @@ class Repo(object):
             print("\nRepository name '{0}' exist, select different name.\n"
                   "View all repositories with command 'repo-list'.\n".format(
                       repo))
-            sys.exit(0)
+            raise SystemExit()
         elif len(repo) > 6:
             print("\nMaximum repository name length must be six (6) "
                   "characters\n")
-            sys.exit(0)
+            raise SystemExit()
         with open(self.repo_file, "a") as repos:
             new_line = "  {0}{1}{2}\n".format(repo, " " * (10 - len(repo)), url)
             repos.write(new_line)
         repos.close()
         print("\nRepository '{0}' successfully added\n".format(repo))
-        sys.exit(0)
+        raise SystemExit()
 
     def remove(self, repo):
         """
@@ -81,7 +80,7 @@ class Repo(object):
             repos.close()
         if not rem_repo:
             print("\nRepository '{0}' doesn't exist\n".format(repo))
-        sys.exit(0)
+        raise SystemExit()
 
     def custom_repository(self):
         """

@@ -22,7 +22,6 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-import sys
 import subprocess
 
 from utils import Utils
@@ -73,7 +72,7 @@ class Config(object):
                                              self.meta.color["ENDC"]))
         except KeyboardInterrupt:
             print("")
-            sys.exit(0)
+            raise SystemExit()
         print("")   # new line at end
 
     def edit(self, editor):

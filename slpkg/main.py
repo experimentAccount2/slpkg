@@ -555,7 +555,7 @@ class ArgParse(object):
             if not_found:
                 for ntf in not_found:
                     Msg().pkg_not_found("", ntf, "Not installed", "")
-            sys.exit(0)
+            raise SystemExit()
 
 
 def main():
@@ -568,7 +568,7 @@ def main():
 
     if len(args) == 0:
         usage("")
-        sys.exit(0)
+        raise SystemExit()
 
     argparse.auto_detect(args)
 

@@ -23,7 +23,6 @@
 
 
 import os
-import sys
 import shutil
 import subprocess
 
@@ -128,7 +127,7 @@ class Patches(object):
                       "date\n".format(slack_arch, self.version, slack_ver()))
         except KeyboardInterrupt:
             print("")   # new line at exit
-            sys.exit(0)
+            raise SystemExit()
 
     def store(self):
         """

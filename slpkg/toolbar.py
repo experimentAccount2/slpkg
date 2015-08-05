@@ -41,4 +41,4 @@ def status(sec):
                 time.sleep(float(sec))
         except KeyboardInterrupt:
             print("")
-            sys.exit(0)
+            raise SystemExit()

@@ -23,7 +23,6 @@
 
 
 import os
-import sys
 import urllib2
 
 
@@ -44,7 +43,7 @@ class FileSize(object):
             return " "
         except KeyboardInterrupt:
             print("")   # new line at cancel
-            sys.exit(0)
+            raise SystemExit()
 
     def local(self):
         """

@@ -22,7 +22,6 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-import sys
 from distutils.version import LooseVersion
 
 from slpkg.messages import Msg
@@ -65,7 +64,7 @@ def pkg_upgrade(repo, skip):
         return pkgs_for_upgrade
     except KeyboardInterrupt:
         print("")   # new line at exit
-        sys.exit(0)
+        raise SystemExit()
 
 
 def installed():

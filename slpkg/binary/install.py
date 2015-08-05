@@ -23,7 +23,6 @@
 
 
 import os
-import sys
 
 from slpkg.utils import Utils
 from slpkg.sizes import units
@@ -133,7 +132,7 @@ class BinaryInstall(object):
                 Msg().not_found(self.if_upgrade)
         except KeyboardInterrupt:
             print("")   # new line at exit
-            sys.exit(0)
+            raise SystemExit()
 
     def update_deps(self):
         """Update dependencies dictionary with all package

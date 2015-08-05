@@ -64,7 +64,7 @@ class Auto(object):
                 sys.stdout.flush()
         except KeyboardInterrupt:
             print("")
-            sys.exit(0)
+            raise SystemExit()
         self.execute()
 
     def execute(self):

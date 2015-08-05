@@ -23,7 +23,6 @@
 
 
 import os
-import sys
 
 from sizes import units
 from utils import Utils
@@ -101,7 +100,7 @@ class RepoInfo(object):
         for key, value in sorted(self.form.iteritems()):
             print self.meta.color["GREY"] + key + self.meta.color["ENDC"], value
         print("")
-        sys.exit(0)
+        raise SystemExit()
 
     def repository_data(self, repo):
         """

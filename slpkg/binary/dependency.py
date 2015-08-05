@@ -60,6 +60,6 @@ class Dependencies(object):
                 return self.dep_results
             except KeyboardInterrupt:
                 print("")   # new line at exit
-                sys.exit(0)
+                raise SystemExit()
         else:
             return []

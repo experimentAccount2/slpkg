@@ -23,7 +23,6 @@
 
 
 import os
-import sys
 
 from splitting import split_package
 
@@ -70,7 +69,7 @@ class Utils(object):
             return packages
         except KeyboardInterrupt:
             print("")
-            sys.exit(0)
+            raise SystemExit()
 
     def check_downloaded(self, path, maybe_downloaded):
         """
@@ -95,4 +94,4 @@ class Utils(object):
                     return line
         except KeyboardInterrupt:
             print("")
-            sys.exit(0)
+            raise SystemExit()
