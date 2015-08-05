@@ -47,7 +47,9 @@ from dependency import Dependencies
 
 
 class BinaryInstall(object):
-
+    """Install binaries packages with all dependencies from
+    repository
+    """
     def __init__(self, packages, repo, flag):
         self.packages = packages
         self.repo = repo

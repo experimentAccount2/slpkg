@@ -29,7 +29,8 @@ from __metadata__ import MetaData as _meta_
 
 
 class Repo(object):
-
+    """Central repository urls
+    """
     def __init__(self):
         self.meta = _meta_
         self.repo_file = "/etc/slpkg/custom-repositories"

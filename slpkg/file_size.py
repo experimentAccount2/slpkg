@@ -27,7 +27,8 @@ import urllib2
 
 
 class FileSize(object):
-
+    """Check local or remote file size
+    """
     def __init__(self, registry):
         self.registry = registry
 

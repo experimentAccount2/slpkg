@@ -50,7 +50,8 @@ from slack_version import slack_ver
 
 
 class Patches(object):
-
+    """Upgrade distribution from official Slackware mirrors
+    """
     def __init__(self, skip, flag):
         self.skip = skip
         self.flag = flag

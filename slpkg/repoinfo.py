@@ -32,7 +32,8 @@ from __metadata__ import MetaData as _meta_
 
 
 class RepoInfo(object):
-
+    """Repository information
+    """
     def __init__(self):
         self.form = {
             "Last updated:": "",

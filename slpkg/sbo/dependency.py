@@ -32,7 +32,8 @@ from greps import SBoGrep
 
 
 class Requires(object):
-
+    """Resolving SBo dependencies
+    """
     def __init__(self, flag):
         self.flag = flag
         self.meta = _meta_

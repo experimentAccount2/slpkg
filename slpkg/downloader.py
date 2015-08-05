@@ -30,7 +30,9 @@ from __metadata__ import MetaData as _meta_
 
 
 class Download(object):
-
+    """Downloader manager. Slpkg use wget by default but support
+    curl and aria2.
+    """
     def __init__(self, path, url, repo):
         self.path = path
         self.url = url

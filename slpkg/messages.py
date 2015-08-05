@@ -30,7 +30,8 @@ from pkg.find import find_package
 
 
 class Msg(object):
-
+    """Messages control
+    """
     def __init__(self):
         self.meta = _meta_
 

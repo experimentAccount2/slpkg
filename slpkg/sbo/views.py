@@ -42,7 +42,9 @@ from search import sbo_search_pkg
 
 
 class SBoNetwork(object):
-
+    """View SBo site in terminal and also read, build or
+    install packages
+    """
     def __init__(self, name):
         self.name = name
         self.meta = _meta_

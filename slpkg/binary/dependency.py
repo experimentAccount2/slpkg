@@ -31,7 +31,8 @@ from greps import Requires
 
 
 class Dependencies(object):
-
+    """Resolving binary dependencies
+    """
     def __init__(self, PACKAGES_TXT, repo, black):
         self.packages = PACKAGES_TXT
         self.repo = repo

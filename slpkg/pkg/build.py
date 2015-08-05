@@ -39,7 +39,8 @@ from slpkg.sbo.greps import SBoGrep
 
 
 class BuildPackage(object):
-
+    """Build SBo packages from source
+    """
     def __init__(self, script, sources, path):
         self.script = script
         self.sources = sources

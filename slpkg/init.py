@@ -36,7 +36,9 @@ from slack.slack_version import slack_ver
 
 
 class Initialization(object):
-
+    """Slpkg initialization start all from here. Create local
+    package lists and update or upgrade these.
+    """
     def __init__(self, check):
         self.check = check
         self.meta = _meta_

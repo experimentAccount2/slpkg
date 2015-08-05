@@ -28,7 +28,8 @@ from __metadata__ import MetaData as _meta_
 
 
 class URL(object):
-
+    """Urls reading class
+    """
     def __init__(self, link):
         self.link = link
         self.meta = _meta_

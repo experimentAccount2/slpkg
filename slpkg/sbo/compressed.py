@@ -23,7 +23,8 @@
 
 
 class SBoLink(object):
-
+    """Create slackbuild tar.gz archive from url
+    """
     def __init__(self, sbo_url):
         self.sbo_url = sbo_url
 

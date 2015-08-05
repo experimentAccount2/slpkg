@@ -29,7 +29,8 @@ from __metadata__ import MetaData as _meta_
 
 
 class Config(object):
-
+    """Print or edit slpkg configuration file
+    """
     def __init__(self):
         self.config_file = "/etc/slpkg/slpkg.conf"
         self.meta = _meta_
@@ -66,7 +67,7 @@ class Config(object):
         try:
             for line in read_conf.splitlines():
                 if not line.startswith("#") and line.split("=")[0] in conf_args:
-                    print(line)
+                    print("{0}".format(line))
                 else:
                     print("{0}{1}{2}".format(self.meta.color["CYAN"], line,
                                              self.meta.color["ENDC"]))

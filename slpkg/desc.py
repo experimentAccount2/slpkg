@@ -53,14 +53,17 @@ class PkgDesc(object):
                 self.repo)
 
     def view(self):
+        """Print package description by repository
+        """
         PACKAGES_TXT = Utils().read_file(self.lib)
         print("")   # new line at start
         count = 0
         if self.repo != "sbo":
             for line in PACKAGES_TXT.splitlines():
                 if line.startswith(self.name + ":"):
-                    print(self.COLOR + line[len(self.name) + 1:] +
-                          self.meta.color["ENDC"])
+                    print("{0}{1}{2}".format(self.COLOR,
+                                             line[len(self.name) + 1:],
+                                             self.meta.color["ENDC"]))
                     count += 1
                     if count == 11:
                         break
@@ -69,7 +72,9 @@ class PkgDesc(object):
                 if (line.startswith(
                         "SLACKBUILD SHORT DESCRIPTION:  " + self.name + " (")):
                     count += 1
-                    print(self.COLOR + line[31:] + self.meta.color["ENDC"])
+                    print("{0}{1}{2}".format(self.COLOR,
+                                             line[31:],
+                                             self.meta.color["ENDC"]))
         if count == 0:
             Msg().pkg_not_found("", self.name, "No matching", "\n")
         else:

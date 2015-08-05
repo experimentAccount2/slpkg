@@ -28,7 +28,8 @@ from splitting import split_package
 
 
 class Utils(object):
-
+    """Class with usefull utilities
+    """
     def dimensional_list(self, lists):
         """
         Create one dimensional list
