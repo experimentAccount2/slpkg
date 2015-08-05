@@ -23,7 +23,6 @@
 
 
 import os
-import sys
 import getpass
 
 
@@ -33,7 +32,7 @@ def s_user(user):
     """
     if user != "root":
         print("\nslpkg: error: must have root privileges\n")
-        sys.exit(0)
+        raise SystemExit()
 
 
 def remove_repositories(repositories, default_repositories):
