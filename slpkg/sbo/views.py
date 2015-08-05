@@ -34,7 +34,7 @@ from slpkg.pkg.find import find_package
 from slpkg.pkg.build import BuildPackage
 from slpkg.pkg.manager import PackageManager
 
-from read import Read
+from read import ReadSBo
 from remove import delete
 from greps import SBoGrep
 from compressed import SBoLink
@@ -83,16 +83,16 @@ class SBoNetwork(object):
                     Download(path="", url=self.dwn_srcs, repo="sbo").start()
                     break
                 elif choice in ["R", "r"]:
-                    README = Read(self.sbo_url).readme("README")
+                    README = ReadSBo(self.sbo_url).readme("README")
                     fill = self.fill_pager(README)
                     pydoc.pager(README + fill)
                 elif choice in ["F", "f"]:
-                    info = Read(self.sbo_url).info(self.name, ".info")
+                    info = ReadSBo(self.sbo_url).info(self.name, ".info")
                     fill = self.fill_pager(info)
                     pydoc.pager(info + fill)
                 elif choice in ["S", "s"]:
-                    SlackBuild = Read(self.sbo_url).slackbuild(self.name,
-                                                               ".SlackBuild")
+                    SlackBuild = ReadSBo(self.sbo_url).slackbuild(self.name,
+                                                                  ".SlackBuild")
                     fill = self.fill_pager(SlackBuild)
                     pydoc.pager(SlackBuild + fill)
                 elif choice in ["B", "b"]:

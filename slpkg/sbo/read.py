@@ -25,7 +25,7 @@
 from slpkg.url_read import URL
 
 
-class Read(object):
+class ReadSBo(object):
     """Read SBo files from urls
     """
     def __init__(self, sbo_url):
