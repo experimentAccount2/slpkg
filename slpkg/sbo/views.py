@@ -48,6 +48,12 @@ class SBoNetwork(object):
     def __init__(self, name):
         self.name = name
         self.meta = _meta_
+        self.green = self.meta.color["GREEN"]
+        self.red = self.meta.color["RED"]
+        self.yellow = self.meta.color["YELLOW"]
+        self.cyan = self.meta.color["CYAN"]
+        self.grey = self.meta.color["GREY"]
+        self.endc = self.meta.color["ENDC"]
         self.build_folder = self.meta.build_path
         Msg().reading()
         grep = SBoGrep(self.name)
@@ -71,12 +77,7 @@ class SBoNetwork(object):
         """
         if self.sbo_url and self.name not in self.blacklist:
             prgnam = ("{0}-{1}".format(self.name, self.sbo_version))
-            self.view_sbo(
-                self.name, self.sbo_url, self.sbo_desc,
-                self.sbo_dwn.split("/")[-1],
-                ", ".join([src.split("/")[-1] for src in self.source_dwn]),
-                self.sbo_req)
-            FAULT = self.error_uns()
+            self.view_sbo()
             while True:
                 choice = self.read_choice()
                 if choice in ["D", "d"]:
@@ -96,13 +97,13 @@ class SBoNetwork(object):
                     fill = self.fill_pager(SlackBuild)
                     pydoc.pager(SlackBuild + fill)
                 elif choice in ["B", "b"]:
-                    self.build(FAULT)
+                    self.build()
                     delete(self.build_folder)
                     break
                 elif choice in ["I", "i"]:
                     if not find_package(prgnam + self.meta.sp,
                                         self.meta.pkg_path):
-                        self.build(FAULT)
+                        self.build()
                         self.install(prgnam)
                         delete(self.build_folder)
                         break
@@ -116,53 +117,51 @@ class SBoNetwork(object):
         else:
             Msg().pkg_not_found("\n", self.name, "Can't view", "\n")
 
-    @staticmethod
-    def view_sbo(*args):
+    def view_sbo(self):
         """
         View slackbuild.org
         """
         br1, br2, fix_sp = "", "", " "
-        if _meta_.use_colors in ["off", "OFF"]:
+        if self.meta.use_colors in ["off", "OFF"]:
             br1 = "("
             br2 = ")"
             fix_sp = ""
-        color = _meta_.color
         print("")   # new line at start
         Msg().template(78)
-        print("| {0}Package {1}{2}{3} --> {4}".format(color["GREEN"],
-                                                      color["CYAN"], args[0],
-                                                      color["GREEN"],
-                                                      color["ENDC"] + args[1]))
+        print("| {0}Package {1}{2}{3} --> {4}".format(self.green,
+                                                      self.cyan, self.name,
+                                                      self.green,
+                                                      self.endc + self.sbo_url))
         Msg().template(78)
-        print("| {0}Description : {1}{2}".format(color["GREEN"],
-                                                 color["ENDC"], args[2]))
-        print("| {0}SlackBuild : {1}{2}".format(color["GREEN"], color["ENDC"],
-                                                args[3]))
-        print("| {0}Sources : {1}{2}".format(color["GREEN"], color["ENDC"],
-                                             args[4]))
-        print("| {0}Requirements : {1}{2}".format(color["YELLOW"],
-                                                  color["ENDC"],
-                                                  ", ".join(args[5])))
+        print("| {0}Description : {1}{2}".format(self.green,
+                                                 self.endc, self.sbo_desc))
+        print("| {0}SlackBuild : {1}{2}".format(self.green, self.endc,
+                                                self.sbo_dwn.split("/")[-1]))
+        print("| {0}Sources : {1}{2}".format(
+            self.green, self.endc,
+            (", ".join([src.split("/")[-1] for src in self.source_dwn]))))
+        print("| {0}Requirements : {1}{2}".format(self.yellow,
+                                                  self.endc,
+                                                  ", ".join(self.sbo_req)))
         Msg().template(78)
         print("| {0}R{1}{2}EADME               View the README file".format(
-            color["RED"], color["ENDC"], br2))
+            self.red, self.endc, br2))
         print("| {0}S{1}{2}lackBuild           View the SlackBuild file".format(
-            color["RED"], color["ENDC"], br2))
+            self.red, self.endc, br2))
         print("| In{0}{1}f{2}{3}o{4}                View the Info file".format(
-            br1, color["RED"], color["ENDC"], br2, fix_sp))
+            br1, self.red, self.endc, br2, fix_sp))
         print("| {0}D{1}{2}ownload             Download this package".format(
-            color["RED"], color["ENDC"], br2))
+            self.red, self.endc, br2))
         print("| {0}B{1}{2}uild                Download and build".format(
-            color["RED"], color["ENDC"], br2))
+            self.red, self.endc, br2))
         print("| {0}I{1}{2}nstall              Download/Build/Install".format(
-            color["RED"], color["ENDC"], br2))
-        print("| {0}Q{1}{2}uit                 Quit".format(color["RED"],
-                                                            color["ENDC"], br2))
+            self.red, self.endc, br2))
+        print("| {0}Q{1}{2}uit                 Quit".format(self.red,
+                                                            self.endc, br2))
 
         Msg().template(78)
 
-    @staticmethod
-    def fill_pager(page):
+    def fill_pager(self, page):
         """
         Fix pager spaces
         """
@@ -183,7 +182,7 @@ class SBoNetwork(object):
         try:
             try:
                 choice = raw_input("{0}  Choose an option > {1}".format(
-                    _meta_.color["GREY"], _meta_.color["ENDC"]))
+                    self.grey, self.endc))
             except (KeyboardInterrupt, EOFError):
                 print("")
                 raise SystemExit()
@@ -201,24 +200,24 @@ class SBoNetwork(object):
         if "".join(self.source_dwn) in UNST:
             return "".join(self.source_dwn)
 
-    def build(self, FAULT):
+    def build(self):
         """
         Only build and create Slackware package
         """
-        if FAULT:
-            print("\n{0}The package {1} {2}\n".format(_meta_.color["RED"],
-                                                      FAULT,
-                                                      _meta_.color["ENDC"]))
+        if self.error_uns():
+            print("\n{0}The package {1} {2}\n".format(self.red,
+                                                      self.error_uns(),
+                                                      self.endc))
             raise SystemExit()
         sources = []
-        if not os.path.exists(_meta_.build_path):
-            os.makedirs(_meta_.build_path)
-        os.chdir(_meta_.build_path)
-        Download(_meta_.build_path, self.dwn_srcs, repo="sbo").start()
+        if not os.path.exists(self.meta.build_path):
+            os.makedirs(self.meta.build_path)
+        os.chdir(self.meta.build_path)
+        Download(self.meta.build_path, self.dwn_srcs, repo="sbo").start()
         script = self.sbo_dwn.split("/")[-1]
         for src in self.source_dwn:
             sources.append(src.split("/")[-1])
-        BuildPackage(script, sources, _meta_.build_path).build()
+        BuildPackage(script, sources, self.meta.build_path).build()
 
     def install(self, prgnam):
         """
@@ -226,15 +225,15 @@ class SBoNetwork(object):
         directory.
         """
         binary_list = []
-        for search in find_package(prgnam, _meta_.output):
+        for search in find_package(prgnam, self.meta.output):
             if "_SBo" in search:
                 binary_list.append(search)
             try:
-                binary = (_meta_.output + max(binary_list)).split()
+                binary = (self.meta.output + max(binary_list)).split()
             except ValueError:
                 Msg().build_FAILED(self.sbo_url, prgnam)
                 raise SystemExit()
-            print("[ {0}Installing{1} ] --> {2}".format(_meta_.color["GREEN"],
-                                                        _meta_.color["ENDC"],
+            print("[ {0}Installing{1} ] --> {2}".format(self.green,
+                                                        self.endc,
                                                         self.name))
             PackageManager(binary).upgrade(flag="--install-new")
