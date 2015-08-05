@@ -132,7 +132,11 @@ class Msg(object):
         if self.meta.default_answer in ["y", "Y"]:
             answer = self.meta.default_answer
         else:
-            answer = raw_input("Would you like to continue [y/N]? ")
+            try:
+                answer = raw_input("Would you like to continue [y/N]? ")
+            except (KeyboardInterrupt, EOFError):
+                print("")
+                sys.exit(0)
         return answer
 
     def reference(self, install, upgrade):
