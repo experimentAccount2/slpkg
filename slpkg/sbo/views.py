@@ -48,6 +48,8 @@ class SBoNetwork(object):
     def __init__(self, name):
         self.name = name
         self.meta = _meta_
+        self.choice = ""
+        self.FAULT = ""
         self.green = self.meta.color["GREEN"]
         self.red = self.meta.color["RED"]
         self.yellow = self.meta.color["YELLOW"]
@@ -78,28 +80,28 @@ class SBoNetwork(object):
             prgnam = ("{0}-{1}".format(self.name, self.sbo_version))
             self.view_sbo()
             while True:
-                choice = self.read_choice()
-                if choice in ["D", "d"]:
+                self.read_choice()
+                if self.choice in ["D", "d"]:
                     Download(path="", url=self.dwn_srcs, repo="sbo").start()
                     break
-                elif choice in ["R", "r"]:
+                elif self.choice in ["R", "r"]:
                     README = ReadSBo(self.sbo_url).readme("README")
                     fill = self.fill_pager(README)
                     pydoc.pager(README + fill)
-                elif choice in ["F", "f"]:
+                elif self.choice in ["F", "f"]:
                     info = ReadSBo(self.sbo_url).info(self.name, ".info")
                     fill = self.fill_pager(info)
                     pydoc.pager(info + fill)
-                elif choice in ["S", "s"]:
+                elif self.choice in ["S", "s"]:
                     SlackBuild = ReadSBo(self.sbo_url).slackbuild(self.name,
                                                                   ".SlackBuild")
                     fill = self.fill_pager(SlackBuild)
                     pydoc.pager(SlackBuild + fill)
-                elif choice in ["B", "b"]:
+                elif self.choice in ["B", "b"]:
                     self.build()
                     delete(self.build_folder)
                     break
-                elif choice in ["I", "i"]:
+                elif self.choice in ["I", "i"]:
                     if not find_package(prgnam + self.meta.sp,
                                         self.meta.pkg_path):
                         self.build()
@@ -179,33 +181,30 @@ class SBoNetwork(object):
         Return choice
         """
         try:
-            try:
-                choice = raw_input("{0}  Choose an option > {1}".format(
-                    self.grey, self.endc))
-            except (KeyboardInterrupt, EOFError):
-                print("")
-                raise SystemExit()
-        except KeyboardInterrupt:
-            print("")   # new line at exit
+            self.choice = raw_input("{0}  Choose an option > {1}".format(
+                self.grey, self.endc))
+        except (KeyboardInterrupt, EOFError):
+            print("")
             raise SystemExit()
-        return choice
 
     def error_uns(self):
         """
         Check if package supported by arch
         before proceed to install
         """
+        self.FAULT = ""
         UNST = ["UNSUPPORTED", "UNTESTED"]
         if "".join(self.source_dwn) in UNST:
-            return "".join(self.source_dwn)
+            self.FAULT = "".join(self.source_dwn)
 
     def build(self):
         """
         Only build and create Slackware package
         """
-        if self.error_uns():
+        self.error_uns()
+        if self.FAULT:
             print("\n{0}The package {1} {2}\n".format(self.red,
-                                                      self.error_uns(),
+                                                      self.FAULT,
                                                       self.endc))
             raise SystemExit()
         sources = []
