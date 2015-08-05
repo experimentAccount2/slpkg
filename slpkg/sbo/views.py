@@ -67,7 +67,6 @@ class SBoNetwork(object):
             self.sbo_dwn = SBoLink(self.sbo_url).tar_gz()
             self.sbo_version = grep.version()
             self.dwn_srcs = self.sbo_dwn.split() + self.source_dwn
-        self.space = ("\n" * 50)
         Msg().done()
 
     def view(self):
