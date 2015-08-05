@@ -226,12 +226,12 @@ class SBoNetwork(object):
         for search in find_package(prgnam, self.meta.output):
             if "_SBo" in search:
                 binary_list.append(search)
-            try:
-                binary = (self.meta.output + max(binary_list)).split()
-            except ValueError:
-                Msg().build_FAILED(self.sbo_url, prgnam)
-                raise SystemExit()
-            print("[ {0}Installing{1} ] --> {2}".format(self.green,
-                                                        self.endc,
-                                                        self.name))
-            PackageManager(binary).upgrade(flag="--install-new")
+        try:
+            binary = (self.meta.output + max(binary_list)).split()
+        except ValueError:
+            Msg().build_FAILED(self.sbo_url, prgnam)
+            raise SystemExit()
+        print("[ {0}Installing{1} ] --> {2}".format(self.green,
+                                                    self.endc,
+                                                    self.name))
+        PackageManager(binary).upgrade(flag="--install-new")
