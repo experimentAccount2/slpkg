@@ -23,7 +23,6 @@
 
 
 import os
-import sys
 import pydoc
 
 from slpkg.messages import Msg
@@ -180,11 +179,15 @@ class SBoNetwork(object):
         Return choice
         """
         try:
-            choice = raw_input("{0}  Choose an option > {1}".format(
-                _meta_.color["GREY"], _meta_.color["ENDC"]))
+            try:
+                choice = raw_input("{0}  Choose an option > {1}".format(
+                    _meta_.color["GREY"], _meta_.color["ENDC"]))
+            except (KeyboardInterrupt, EOFError):
+                print("")
+                raise SystemExit()
         except KeyboardInterrupt:
             print("")   # new line at exit
-            sys.exit(0)
+            raise SystemExit()
         return choice
 
     def error_uns(self):
@@ -204,7 +207,7 @@ class SBoNetwork(object):
             print("\n{0}The package {1} {2}\n".format(_meta_.color["RED"],
                                                       FAULT,
                                                       _meta_.color["ENDC"]))
-            sys.exit(0)
+            raise SystemExit()
         sources = []
         if not os.path.exists(_meta_.build_path):
             os.makedirs(_meta_.build_path)
@@ -228,7 +231,7 @@ class SBoNetwork(object):
                 binary = (_meta_.output + max(binary_list)).split()
             except ValueError:
                 Msg().build_FAILED(self.sbo_url, prgnam)
-                sys.exit(0)
+                raise SystemExit()
             print("[ {0}Installing{1} ] --> {2}".format(_meta_.color["GREEN"],
                                                         _meta_.color["ENDC"],
                                                         self.name))
