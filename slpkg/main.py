@@ -79,7 +79,8 @@ class ArgParse(object):
             "repo-info",
             "update-slpkg",
             "health",
-            "deps-status"
+            "deps-status",
+            "new-config"
         ]
 
         # checking if repositories exists
@@ -346,7 +347,7 @@ class ArgParse(object):
                 "sbo" in self.meta.repositories):
             SBoNetwork(self.args[1]).view()
         else:
-            usage("")
+            usage("sbo")
 
     def pkg_blacklist(self):
         """Manage blacklist packages
