@@ -267,8 +267,8 @@ class SBoInstall(object):
             filename.append(src.split("/")[-1])
         return filename
 
-    def search_in_tmp(self, prgnam):
-        """Search for binary packages in /tmp directory
+    def search_in_output(self, prgnam):
+        """Search for binary packages in output directory
         """
         binary = []
         for search in find_package(prgnam, self.meta.output):
@@ -310,7 +310,7 @@ class SBoInstall(object):
                 Download(self.build_folder, dwn_srcs, repo="sbo").start()
                 sources = self.filenames(src_link)
                 BuildPackage(script, sources, self.build_folder).build()
-                binary_list = self.search_in_tmp(prgnam)
+                binary_list = self.search_in_output(prgnam)
                 try:
                     binary = (self.meta.output + max(binary_list)).split()
                 except ValueError:
