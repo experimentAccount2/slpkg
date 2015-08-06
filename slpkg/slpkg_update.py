@@ -57,7 +57,11 @@ def it_self_update():
         else:
             print("\nNew version '{0}-{1}' is available !\n".format(
                 _meta_.__all__, __new_version__))
-            answer = raw_input("Would you like to upgrade [y/N]? ")
+            try:
+                answer = raw_input("Would you like to upgrade [y/N]? ")
+            except (KeyboardInterrupt, EOFError):
+                print("")
+                raise SystemExit()
         if answer in ["y", "Y"]:
             print("")   # new line after answer
         else:

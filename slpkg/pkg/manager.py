@@ -96,7 +96,7 @@ class PackageManager(object):
                     remove_pkg = raw_input(
                         "\nAre you sure to remove {0} {1} [y/N]? ".format(
                             str(len(self.removed)), msg))
-            except KeyboardInterrupt:
+            except (KeyboardInterrupt, EOFError):
                 print("")   # new line at exit
                 raise SystemExit()
             if remove_pkg in ["y", "Y"]:
@@ -128,7 +128,7 @@ class PackageManager(object):
                     "\nRemove dependencies (maybe used by "
                     "other packages) [y/N]? ")
                 print("")
-            except KeyboardInterrupt:
+            except (KeyboardInterrupt, EOFError):
                 print("")  # new line at exit
                 raise SystemExit()
         return remove_dep
@@ -207,7 +207,7 @@ class PackageManager(object):
         Msg().template(78)
         try:
             self.skip = raw_input(" > ").split()
-        except KeyboardInterrupt:
+        except (KeyboardInterrupt, EOFError):
             print("")
             raise SystemExit()
         for s in self.skip:
@@ -345,7 +345,7 @@ class PackageManager(object):
                 else:
                     print(pkg)
             print("")   # new line at end
-        except KeyboardInterrupt:
+        except (KeyboardInterrupt, EOFError):
             print("")   # new line at exit
             raise SystemExit()
 

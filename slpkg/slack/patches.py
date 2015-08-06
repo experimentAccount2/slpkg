@@ -212,8 +212,12 @@ class Patches(object):
                           "***{1}".format(self.meta.color["RED"],
                                           self.meta.color["ENDC"]))
                     Msg().template(78)
-                    answer = raw_input("\nThe kernel has been upgraded, "
-                                       "reinstall `LILO` [y/N]? ")
+                    try:
+                        answer = raw_input("\nThe kernel has been upgraded, "
+                                           "reinstall `LILO` [y/N]? ")
+                    except (KeyboardInterrupt, EOFError):
+                        print("")
+                        raise SystemExit()
                 if answer in ["y", "Y"]:
                     subprocess.call("lilo", shell=True)
                     break
