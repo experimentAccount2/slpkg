@@ -30,8 +30,8 @@ from __metadata__ import MetaData as _meta_
 
 
 class Auto(object):
-    """Select Slackware command to install packages"""
-
+    """Select Slackware command to install packages
+    """
     def __init__(self, packages):
         self.packages = packages
         self.meta = _meta_
@@ -42,6 +42,8 @@ class Auto(object):
         }
 
     def select(self):
+        """Select Slackware command
+        """
         print("\nDetected Slackware binary package for installation:\n")
         for pkg in self.packages:
             print(" " + pkg.split("/")[-1])
@@ -68,6 +70,8 @@ class Auto(object):
         self.execute()
 
     def execute(self):
+        """Execute Slackware command
+        """
         if self.choice in self.commands.keys():
             if self.choice == "i":
                 PackageManager(self.packages).install("")
