@@ -28,7 +28,8 @@ from __metadata__ import MetaData as _meta_
 
 
 class PkgDesc(object):
-
+    """Print package description from the repository
+    """
     def __init__(self, name, repo, paint):
         self.name = name
         self.repo = repo
