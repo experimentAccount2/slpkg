@@ -82,7 +82,7 @@ class BinaryInstall(object):
             self.update_deps()
             (self.dep_dwn, self.dep_install, self.dep_comp_sum,
              self.dep_uncomp_sum) = self.store(self.dependencies)
-            self.packages = self.clear_masters()
+            self.clear_masters()
             (self.dwn, self.install, self.comp_sum,
              self.uncomp_sum) = self.store(self.packages)
             if (self.meta.rsl_deps in ["on", "ON"] and
@@ -154,7 +154,7 @@ class BinaryInstall(object):
         for mas in Utils().remove_dbs(self.packages):
             if mas not in self.dependencies:
                 packages.append(mas)
-        return packages
+        self.packages = packages
 
     def install_packages(self):
         """
