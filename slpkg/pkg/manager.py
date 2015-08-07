@@ -28,10 +28,10 @@ import subprocess
 from slpkg.utils import Utils
 from slpkg.messages import Msg
 from slpkg.splitting import split_package
-from slpkg.installed import GetFromInstalled
 from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.pkg.find import find_package
+from slpkg.pkg.installed import GetFromInstalled
 
 
 class PackageManager(object):

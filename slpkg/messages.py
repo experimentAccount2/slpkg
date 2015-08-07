@@ -24,10 +24,9 @@
 
 import sys
 
-from installed import GetFromInstalled
 from __metadata__ import MetaData as _meta_
 
-from pkg.find import find_package
+from pkg.installed import GetFromInstalled
 
 
 class Msg(object):

@@ -35,11 +35,11 @@ from slpkg.downloader import Download
 from slpkg.log_deps import write_deps
 from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
-from slpkg.installed import GetFromInstalled
 from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.pkg.find import find_package
 from slpkg.pkg.manager import PackageManager
+from slpkg.pkg.installed import GetFromInstalled
 
 from greps import repo_data
 from repo_init import RepoInit

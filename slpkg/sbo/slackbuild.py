@@ -31,12 +31,12 @@ from slpkg.log_deps import write_deps
 from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
 from slpkg.splitting import split_package
-from slpkg.installed import GetFromInstalled
 from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.pkg.find import find_package
 from slpkg.pkg.build import BuildPackage
 from slpkg.pkg.manager import PackageManager
+from slpkg.pkg.installed import GetFromInstalled
 
 from greps import SBoGrep
 from remove import delete

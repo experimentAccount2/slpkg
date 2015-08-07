@@ -37,11 +37,11 @@ from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
 from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
-from slpkg.installed import GetFromInstalled
 from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.pkg.find import find_package
 from slpkg.pkg.manager import PackageManager
+from slpkg.pkg.installed import GetFromInstalled
 
 from slpkg.binary.greps import repo_data
 
