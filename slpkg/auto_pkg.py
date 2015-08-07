@@ -25,8 +25,9 @@
 import sys
 
 from messages import Msg
-from pkg.manager import PackageManager
 from __metadata__ import MetaData as _meta_
+
+from pkg.manager import PackageManager
 
 
 class Auto(object):
