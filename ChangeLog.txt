@@ -1,3 +1,9 @@
+2.7.1 - 08/08/2015
+Fixed:
+- Remove package when partial name is supplied #34
+- Removing a package states "package not found" #35
+- Remove and install references
+
 2.7.0 - 06/08/2015
 Fixed:
 - EOFError when user interrupt with "ctrl + d"
