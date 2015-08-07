@@ -230,8 +230,8 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.6.9.tar.gz
-    $ cd slpkg-2.6.9
+    $ tar xvf slpkg-2.7.0.tar.gz
+    $ cd slpkg-2.7.0
     $ ./install.sh
 
 Using pip:
@@ -250,9 +250,9 @@ Using pip:
 
 Bbinary packages:
 
-Slackware: `slpkg-2.6.9-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.6.9/slpkg-2.6.9-i486-1_dsw.txz>`_
+Slackware: `slpkg-2.7.0-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.7.0/slpkg-2.7.0-i486-1_dsw.txz>`_
 
-Slackware64: `slpkg-2.6.9-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.6.9/slpkg-2.6.9-x86_64-1_dsw.txz>`_
+Slackware64: `slpkg-2.7.0-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.7.0/slpkg-2.7.0-x86_64-1_dsw.txz>`_
 
 
 Upgrade
@@ -636,7 +636,9 @@ Installing packages from the repositories (supporting multi packages):
     Would you like to continue [y/N]?
 
     
-    Close auto resolve dependencies:
+Close auto resolve dependencies:
+
+.. code-block:: bash
 
     $ slpkg -s alien atkm --resolve-off
     Reading package lists... Done
@@ -708,7 +710,9 @@ and also displays installed packages:
      +--5 libunique
 
     
-    Check if dependencies used:
+Check if dependencies used:
+
+.. code-block:: bash
 
     $ slpkg -t sbo Flask --check-deps
     Resolving dependencies... Done
@@ -730,7 +734,9 @@ and also displays installed packages:
      +--5: werkzeug is dependency --> Flask
 
     
-    Drawing dependencies diagram:
+Drawing dependencies diagram:
+
+.. code-block:: bash
 
     $ slpkg -t sbo flexget --graph=image.x11
 
@@ -830,7 +836,9 @@ Print dependencies status used by packages:
     Found 19 dependencies in 4 packages.
 
 
-    or use additional option "--graph=[image]" to drawing dependencies diagram, like:
+Use additional option "--graph=[image]" to drawing dependencies diagram:
+
+.. code-block:: bash
 
     $ slpkg deps-status --graph=image.x11
 
@@ -855,7 +863,9 @@ Check if your packages is up to date or changes in ChangeLog.txt:
     From 1 repositories need 1 updating. Run the command 'slpkg update'.
 
 
-    And check if packages need upgrade with:
+And check if packages need upgrade with:
+
+.. code-block:: bash
 
     $ slpkg -c sbo --upgrade
     Checking... Done
@@ -936,7 +946,9 @@ why always you can have updated your system:
 
     
     
-    Upgrade only distribution:
+Upgrade only distribution:
+
+.. code-block:: bash
 
     $ slpkg -c slack --upgrade --skip="multi:*multilib*,ktown:*"  // This upgrade 
     Checking... Done                                              // distribution
