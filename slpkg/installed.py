@@ -35,20 +35,23 @@ class GetFromInstalled(object):
     def __init__(self, package):
         self.package = package
         self.meta = _meta_
-        self.find = find_package(self.package + self.meta.sp,
-                                 self.meta.pkg_path)
+        self.files = find_package(self.package + self.meta.sp,
+                                  self.meta.pkg_path)
+        self.find = ""
+        for f in self.files:
+            if split_package(f)[0] == self.package:
+                self.find = f
 
     def version(self):
         """Return version from installed packages
         """
         if self.find:
-            if self.package == split_package(self.find[0])[0]:
-                return self.meta.sp + split_package(self.find[0])[1]
+            return self.meta.sp + split_package(self.find)[1]
         return ""
 
     def name(self):
         """Return installed package name
         """
         if self.find:
-            return split_package(self.find[0])[0]
+            return split_package(self.find)[0]
         return ""
