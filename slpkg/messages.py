@@ -24,6 +24,7 @@
 
 import sys
 
+from installed import GetFromInstalled
 from __metadata__ import MetaData as _meta_
 
 from pkg.find import find_package
@@ -151,11 +152,8 @@ class Msg(object):
         self.template(78)
         for installed in (install + upgrade):
             name = "-".join(installed.split("-")[:-1])
-            if find_package(installed, self.meta.pkg_path):
-                if installed in upgrade:
-                    print("| Package {0} upgraded successfully".format(name))
-                else:
-                    print("| Package {0} installed successfully".format(name))
+            if GetFromInstalled(name).name():
+                print("| Package {0} upgraded successfully".format(name))
             else:
-                print("| Package {0} NOT installed".format(name))
+                print("| Package {0} installed successfully".format(name))
         self.template(78)
