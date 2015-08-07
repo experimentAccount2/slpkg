@@ -253,7 +253,7 @@ class PackageManager(object):
         print("| Total {0} packages removed".format(len(removes)))
         Msg().template(78)
         for pkg in removes:
-            if not find_package(pkg + self.meta.sp, self.meta.pkg_path):
+            if not GetFromInstalled(pkg).name():
                 print("| Package {0} removed".format(pkg))
             else:
                 print("| Package {0} not found".format(pkg))
