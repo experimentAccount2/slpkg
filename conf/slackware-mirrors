@@ -29,9 +29,9 @@
 # please uncomment (remove the '#' character) only one mirror from
 # the list available below. You can also add a new mirror in the list
 # below. Be careful is the template that the rest.
-# 
-# 
-# Last Updated: Fri Jul 17 13:47:02 UTC 2015
+#
+#
+# Last Updated: Fri Aug 7 01:47:02 UTC 2015
 # 
 # Available http mirrors:
 # 
@@ -50,7 +50,6 @@
 # ca		 http://mirror.csclub.uwaterloo.ca/slackware/ 
 # ca		 http://mirror.its.dal.ca/slackware/ 
 # cn		 http://mirror.bjtu.edu.cn/slackware/ 
-# cz		 http://mirror.oss.maxcdn.com/slackware/ 
 # de		 http://ftp5.gwdg.de/pub/linux/slackware/ 
 # de		 http://mirror.netcologne.de/slackware/ 
 # ec		 http://mirror.cedia.org.ec/slackware/ 
@@ -77,10 +76,8 @@
 # nl		 http://slackware.bokxing-it.nl/mirror/ 
 # no		 http://ftp.slackware.no/slackware/ 
 # nz		 http://ftp.slackware.org.nz/slackware/ 
-# ph		 http://mirror.pregi.net/slackware/ 
 # ph		 http://mirror.rise.ph/slackware/ 
 # pl		 http://ftp.slackware.pl/pub/slackware/ 
-# pl		 http://piotrkosoft.net/pub/mirrors/ftp.slackware.com/pub/slackware/ 
 # pl		 http://sunsite.icm.edu.pl/pub/Linux/slackware/ 
 # pt		 http://darkstar.ist.utl.pt/slackware/ 
 # pt		 http://ftp.rnl.tecnico.ulisboa.pt/pub/slackware/ 
@@ -110,7 +107,7 @@
 # us		 http://reflect.cs.princeton.edu/slackware/ 
 # us		 http://slackblog.com/slackware/ 
 # us		 http://slackbuilds.org/mirror/slackware/ 
-# us		 http://slackware.cs.utah.edu/ 
+# us		 http://slackware.cs.utah.edu/pub/slackware/ 
 # us		 http://slackware.mirrorcatalogs.com/ 
 # us		 http://slackware.mirrors.tds.net/pub/slackware/ 
 # us		 http://taper.alienbase.nl/mirrors/slackware/ 
@@ -132,7 +129,6 @@
 # br		 ftp://linorg.usp.br/slackware/ 
 # ca		 ftp://mirror.csclub.uwaterloo.ca/slackware/ 
 # ca		 ftp://mirror.its.dal.ca/slackware/ 
-# cz		 ftp://mirror.oss.maxcdn.com/slackware/ 
 # de		 ftp://ftp5.gwdg.de/pub/linux/slackware/ 
 # de		 ftp://mirror.netcologne.de/slackware/ 
 # ec		 ftp://mirror.cedia.org.ec/slackware/ 
@@ -152,9 +148,7 @@
 # nl		 ftp://mirror.nl.leaseweb.net/slackware/ 
 # no		 ftp://ftp.slackware.no/slackware/ 
 # nz		 ftp://ftp.slackware.org.nz/slackware/ 
-# ph		 ftp://mirror.pregi.net/slackware/ 
 # ph		 ftp://mirror.rise.ph/slackware/ 
-# pl		 ftp://ftp.piotrkosoft.net/pub/mirrors/ftp.slackware.com/pub/slackware/ 
 # pl		 ftp://ftp.slackware.pl/pub/slackware/ 
 # pl		 ftp://sunsite.icm.edu.pl/pub/Linux/slackware/ 
 # pt		 ftp://darkstar.ist.utl.pt/pub/slackware/ 

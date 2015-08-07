@@ -4,6 +4,7 @@ Fixed:
 Updated:
 - Replace sys.sxit(0) with raise SystemExit() and remove unused sys module
 - Code, doc strings
+- Slackware mirrors
 
 2.6.9 - 31/07/2015
 Added:
