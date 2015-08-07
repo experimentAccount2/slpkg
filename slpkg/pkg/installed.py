@@ -53,5 +53,5 @@ class GetFromInstalled(object):
         """Return installed package name
         """
         if self.find:
-            return split_package(self.find)[0]
+            return self.package
         return ""
