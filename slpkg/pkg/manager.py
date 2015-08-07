@@ -142,9 +142,11 @@ class PackageManager(object):
             self.meta.color["ENDC"]))
         for pkg in self.binary:
             found = GetFromInstalled(pkg).name()
+            package = find_package(found + self.meta.sp, self.meta.pkg_path)
             if found == pkg:
                 print("[ {0}delete{1} ] --> {2}".format(
-                    self.meta.color["RED"], self.meta.color["ENDC"], found))
+                    self.meta.color["RED"], self.meta.color["ENDC"],
+                    package[0]))
                 removed.append(pkg)
             else:
                 Msg().pkg_not_found("", pkg, "Can't remove", "")
