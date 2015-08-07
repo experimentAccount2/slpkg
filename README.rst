@@ -20,7 +20,7 @@
     :target: https://github.com/dslackw/slpkg/issues
  
 
-slpkg v2.7.0
+Slpkg v2.7.0
 ============
 
 |
