@@ -142,9 +142,11 @@ class PackageManager(object):
             self.meta.color["CYAN"], ", ".join(self.binary),
             self.meta.color["ENDC"]))
         for pkg in self.binary:
-            found = GetFromInstalled(pkg).name()
-            package = find_package(found + self.meta.sp, self.meta.pkg_path)
-            if found == pkg:
+            name = GetFromInstalled(pkg).name()
+            ver = GetFromInstalled(pkg).version()
+            package = find_package("{0}{1}{2}".format(name, ver, self.meta.sp),
+                                   self.meta.pkg_path)
+            if name == pkg:
                 print("[ {0}delete{1} ] --> {2}".format(
                     self.meta.color["RED"], self.meta.color["ENDC"],
                     package[0]))
@@ -197,8 +199,7 @@ class PackageManager(object):
     def _rmv_pkg(self, package):
         """Remove one signle package
         """
-        if (find_package(package + self.meta.sp, self.meta.pkg_path) and
-                package not in self.skip):
+        if GetFromInstalled(package).name() and package not in self.skip:
             self._removepkg(package)
         return package.split()
 
@@ -301,12 +302,14 @@ class PackageManager(object):
         """Print the Slackware packages contents
         """
         for pkg in self.binary:
-            find = find_package(pkg + self.meta.sp, self.meta.pkg_path)
+            name = GetFromInstalled(pkg).name()
+            ver = GetFromInstalled(pkg).version()
+            find = find_package("{0}{1}{2}".format(name, ver, self.meta.sp),
+                                self.meta.pkg_path)
             if find:
                 package = Utils().read_file(
-                    self.meta.pkg_path + "".join(find[0]))
+                    self.meta.pkg_path + "".join(find))
                 print(package)
-                print("")   # new line per file
             else:
                 message = "Can't dislpay"
                 if len(self.binary) > 1:
