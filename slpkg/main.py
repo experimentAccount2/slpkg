@@ -53,11 +53,11 @@ from init import (
 )
 from __metadata__ import MetaData as _meta_
 
-from pkg.build import BuildPackage
 from pkg.manager import PackageManager
 
 from sbo.views import SBoNetwork
 from sbo.check import sbo_upgrade
+from sbo.autobuild import AutoBuild
 from sbo.slackbuild import SBoInstall
 
 from slack.patches import Patches
@@ -211,7 +211,7 @@ class ArgParse(object):
         """
         options = ["-a", "--autobuild"]
         if len(self.args) >= 3 and self.args[0] in options:
-            BuildPackage(self.args[1], self.args[2:], self.meta.path).build()
+            AutoBuild(self.args[1], self.args[2:], self.meta.path).run()
         else:
             usage("")
 
