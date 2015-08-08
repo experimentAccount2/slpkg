@@ -71,11 +71,11 @@ class BuildPackage(object):
             tar.close()
             self._makeflags()
             self._delete_sbo()
-            sbo_md5_list = SBoGrep(self.prgnam).checksum()
-            for src, sbo_md5 in zip(self.sources, sbo_md5_list):
+            self._create_md5_dict()
+            for src in self.sources:
                 # fix build sources with spaces
                 src = src.replace("%20", " ")
-                check_md5(sbo_md5, src)
+                check_md5(self.sbo_md5[src], src)
                 shutil.copy2(src, self.prgnam)
             os.chdir(self.path + self.prgnam)
             # change permissions
@@ -106,6 +106,14 @@ class BuildPackage(object):
         except KeyboardInterrupt:
             print("")   # new line at exit
             raise SystemExit()
+
+    def _create_md5_dict(self):
+        """Create md5 dictionary per source
+        """
+        self.sbo_md5 = {}
+        md5_lists = SBoGrep(self.prgnam).checksum()
+        for src, md5 in zip(self.sources, md5_lists):
+            self.sbo_md5[src] = md5
 
     def _makeflags(self):
         """Set variable MAKEFLAGS with the numbers of
