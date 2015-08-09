@@ -148,7 +148,8 @@ class Patches(object):
                 self.uncomp_sum.append(uncomp)
                 self.upgrade_all.append(name)
                 self.count_upg += 1
-                if not find_package(repo_pkg_name, self.meta.pkg_path):
+                if not find_package(repo_pkg_name + self.meta.sp,
+                                    self.meta.pkg_path):
                     self.count_added += 1
                     self.count_upg -= 1
         return self.count_upg
