@@ -34,6 +34,12 @@ try:
 except ImportError:
     from distutils.core import setup
 
+INSTALLATION_REQUIREMENTS = []
+OPTIONAL_REQUIREMENTS = [
+    "pygraphviz >= 1.3rc2",
+    "graph-easy >= 0.75"
+]
+
 setup(
     name="slpkg",
     packages=["slpkg", "slpkg/sbo", "slpkg/pkg", "slpkg/slack",
@@ -47,6 +53,10 @@ setup(
     author_email=_meta_.__email__,
     url="https://github.com/dslackw/slpkg",
     package_data={"": ["LICENSE", "README.rst", "CHANGELOG"]},
+    install_requires=INSTALLATION_REQUIREMENTS,
+    extras_require={
+        "optional": OPTIONAL_REQUIREMENTS,
+    },
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Environment :: Console",
