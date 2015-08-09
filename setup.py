@@ -35,6 +35,8 @@ except ImportError:
     from distutils.core import setup
 
 INSTALLATION_REQUIREMENTS = []
+DOCS_REQUIREMENTS = []
+TESTS_REQUIREMENTS = []
 OPTIONAL_REQUIREMENTS = [
     "pygraphviz >= 1.3rc2",
     "graph-easy >= 0.75"
@@ -56,6 +58,8 @@ setup(
     install_requires=INSTALLATION_REQUIREMENTS,
     extras_require={
         "optional": OPTIONAL_REQUIREMENTS,
+        "docs": DOCS_REQUIREMENTS,
+        "tests": TESTS_REQUIREMENTS,
     },
     classifiers=[
         "Development Status :: 5 - Production/Stable",
