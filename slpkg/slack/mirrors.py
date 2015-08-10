@@ -41,6 +41,11 @@ def mirrors(name, location):
             http = repo + "slackware64-{0}/{1}{2}".format(ver, location, name)
         else:
             http = repo + "slackware64-{0}/{1}{2}".format(rel, location, name)
+    elif _meta_.arch.startswith("arm"):
+        if rel == "stable":
+            http = repo + "slackwarearm-{0}/{1}{2}".format(ver, location, name)
+        else:
+            http = repo + "slackwarearm-{0}/{1}{2}".format(rel, location, name)
     else:
         if rel == "stable":
             http = repo + "slackware-{0}/{1}{2}".format(ver, location, name)

@@ -99,6 +99,8 @@ class Repo(object):
         Official slackware repository
         """
         default = "http://mirrors.slackware.com/slackware/"
+        if self.meta.arch.startswith("arm"):
+            default = "http://ftp.arm.slackware.com/slackwarearm/"
         if os.path.isfile("/etc/slpkg/slackware-mirrors"):
             mirrors = Utils().read_file(
                 self.meta.conf_path + "slackware-mirrors")
