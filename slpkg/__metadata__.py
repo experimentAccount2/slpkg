@@ -236,7 +236,8 @@ class MetaData(object):
     slackpkg_conf = "/etc/slackpkg/"
 
     # computer architecture
-    arch = os.uname()[4]
+    # arch = os.uname()[4]
+    arch = "arm"
 
     # get sbo OUTPUT enviroment variable
     try:

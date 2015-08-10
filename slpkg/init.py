@@ -193,7 +193,7 @@ class Initialization(object):
         """
         ar = "x86"
         ver = slack_ver()
-        arch = os.uname()[4]
+        arch = self.meta.arch
         repo = Repo().alien()
         log = self.log_path + "alien/"
         lib = self.lib_path + "alien_repo/"
@@ -226,7 +226,7 @@ class Initialization(object):
         """Creating slacky.eu local library
         """
         ar = ""
-        arch = os.uname()[4]
+        arch = self.meta.arch
         repo = Repo().slacky()
         log = self.log_path + "slacky/"
         lib = self.lib_path + "slacky_repo/"
@@ -261,7 +261,7 @@ class Initialization(object):
         """Creating studio local library
         """
         ar = ""
-        arch = os.uname()[4]
+        arch = self.meta.arch
         repo = Repo().studioware()
         log = self.log_path + "studio/"
         lib = self.lib_path + "studio_repo/"
@@ -323,7 +323,7 @@ class Initialization(object):
         """
         ver = slack_ver()
         ar = "{0}-x86".format(ver)
-        arch = os.uname()[4]
+        arch = self.meta.arch
         repo = Repo().slackonly()
         log = self.log_path + "slonly/"
         lib = self.lib_path + "slonly_repo/"
@@ -415,7 +415,7 @@ class Initialization(object):
         """Creating Slacke local library
         """
         ar = ""
-        arch = os.uname()[4]
+        arch = self.meta.arch
         repo = Repo().slacke()
         log = self.log_path + "slacke/"
         lib = self.lib_path + "slacke_repo/"
@@ -430,8 +430,6 @@ class Initialization(object):
             os.mkdir(lib)
         if arch == "x86_64":
             ar = "64"
-        elif arch == "arm":
-            ar = "arm"
         PACKAGES_TXT = "{0}slacke{1}/slackware{2}-{3}/{4}".format(
             repo, self.meta.slacke_sub_repo[1:-1], ar, slack_ver(), lib_file)
         FILELIST_TXT = ""
@@ -451,7 +449,7 @@ class Initialization(object):
         """Creating SalixOS local library
         """
         ar = "i486"
-        arch = os.uname()[4]
+        arch = self.meta.arch
         repo = Repo().salix()
         log = self.log_path + "salix/"
         lib = self.lib_path + "salix_repo/"
@@ -482,7 +480,7 @@ class Initialization(object):
         """Creating slackel.gr local library
         """
         ar = "i486"
-        arch = os.uname()[4]
+        arch = self.meta.arch
         repo = Repo().slackel()
         log = self.log_path + "slackl/"
         lib = self.lib_path + "slackl_repo/"
@@ -540,7 +538,7 @@ class Initialization(object):
         """Creating MATE local library
         """
         ar = "x86"
-        arch = os.uname()[4]
+        arch = self.meta.arch
         repo = Repo().msb()
         log = self.log_path + "msb/"
         lib = self.lib_path + "msb_repo/"

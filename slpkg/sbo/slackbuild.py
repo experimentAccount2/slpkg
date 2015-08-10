@@ -251,7 +251,7 @@ class SBoInstall(object):
         """Looks if sources unsupported or untested
         from arch else select arch.
         """
-        arch = os.uname()[4]
+        arch = self.meta.arch
         if arch.startswith("i") and arch.endswith("86"):
             arch = "i486"
         for item in self.unst:

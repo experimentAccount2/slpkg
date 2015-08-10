@@ -122,7 +122,7 @@ class Patches(object):
                     delete(self.patch_path, self.upgrade_all)
             else:
                 slack_arch = ""
-                if os.uname()[4] == "x86_64":
+                if self.meta.arch == "x86_64":
                     slack_arch = 64
                 print("\nSlackware{0} '{1}' v{2} distribution is up to "
                       "date\n".format(slack_arch, self.version, slack_ver()))
@@ -230,7 +230,7 @@ class Patches(object):
         """
         changelog_txt = "ChangeLog.txt"
         changelog_old = changelog_txt + ".old"
-        arch = "64" if os.uname()[4] == "x86_64" else ""
+        arch = "64" if self.meta.arch == "x86_64" else ""
         slackware_mirror = self.utils.read_config(self.utils.read_file(
             self.meta.conf_path + "slackware-changelogs-mirror"))
         slackpkg_mirror = self.utils.read_config(

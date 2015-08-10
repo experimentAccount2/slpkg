@@ -82,7 +82,7 @@ def rlw_filter(name, location, size, unsize):
     """
     Filter rlw repository data
     """
-    arch = os.uname()[4]
+    arch = _meta_.arch
     if arch.startswith("i") and arch.endswith("86"):
         arch = "i486"
     (fname, flocation, fsize, funsize) = ([] for i in range(4))
@@ -117,7 +117,7 @@ def rested_filter(name, location, size, unsize):
     if _meta_.slack_rel == "current":
         ver = "current"
     path_pkg = "pkg"
-    if os.uname()[4] == "x86_64":
+    if _meta_.arch == "x86_64":
         path_pkg = "pkg64"
     (fname, flocation, fsize, funsize) = ([] for i in range(4))
     for n, l, s, u in zip(name, location, size, unsize):
@@ -137,8 +137,8 @@ def ktown_filter(name, location, size, unsize):
     if _meta_.slack_rel == "current":
         ver = "current"
     path_pkg = "x86"
-    if os.uname()[4] == "x86_64":
-        path_pkg = os.uname()[4]
+    if _meta_.arch == "x86_64":
+        path_pkg = _meta_.arch
     (fname, flocation, fsize, funsize) = ([] for i in range(4))
     for n, l, s, u in zip(name, location, size, unsize):
         if (path_pkg in l and _meta_.ktown_kde_repo[1:-1] in l and

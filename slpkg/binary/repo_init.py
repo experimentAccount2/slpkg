@@ -22,8 +22,6 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-import os
-
 from slpkg.utils import Utils
 from slpkg.repositories import Repo
 from slpkg.__metadata__ import MetaData as _meta_
@@ -64,7 +62,7 @@ class RepoInit(object):
     def _init_alien(self):
         ver = slack_ver()
         arch = "x86"
-        if os.uname()[4] == "x86_64":
+        if self.meta.arch == "x86_64":
             arch = "x86_64"
         if self.meta.slack_rel == "current":
             ver = self.meta.slack_rel
@@ -72,14 +70,14 @@ class RepoInit(object):
 
     def _init_slacky(self):
         arch = ""
-        if os.uname()[4] == "x86_64":
+        if self.meta.arch == "x86_64":
             arch = "64"
         self.mirror = "{0}slackware{1}-{2}/".format(Repo().slacky(), arch,
                                                     slack_ver())
 
     def _init_studio(self):
         arch = ""
-        if os.uname()[4] == "x86_64":
+        if self.meta.arch == "x86_64":
             arch = "64"
         self.mirror = "{0}slackware{1}-{2}/".format(Repo().studioware(),
                                                     arch, slack_ver())
@@ -90,7 +88,7 @@ class RepoInit(object):
     def _init_slonly(self):
         ver = slack_ver()
         arch = "{0}-x86".format(ver)
-        if os.uname()[4] == "x86_64":
+        if self.meta.arch == "x86_64":
             arch = "{0}-x86_64".format(ver)
         if self.meta.slack_rel == "current":
             arch = "{0}-x86_64".format(self.meta.slack_rel)
@@ -107,22 +105,20 @@ class RepoInit(object):
 
     def _init_slacke(self):
         arch = ""
-        if os.uname()[4] == "x86_64":
+        if self.meta.arch == "x86_64":
             arch = "64"
-        elif os.uname()[4] == "arm":
-            arch = "arm"
         self.mirror = "{0}slacke{1}/slackware{2}-{3}/".format(
             Repo().slacke(), self.meta.slacke_sub_repo[1:-1], arch, slack_ver())
 
     def _init_salix(self):
         arch = "i486"
-        if os.uname()[4] == "x86_64":
+        if self.meta.arch == "x86_64":
             arch = "x86_64"
         self.mirror = "{0}{1}/{2}/".format(Repo().salix(), arch, slack_ver())
 
     def _init_slackl(self):
         arch = "i486"
-        if os.uname()[4] == "x86_64":
+        if self.meta.arch == "x86_64":
             arch = "x86_64"
         self.mirror = "{0}{1}/current/".format(Repo().slackel(), arch)
 
@@ -131,7 +127,7 @@ class RepoInit(object):
 
     def _init_msb(self):
         arch = "x86"
-        if os.uname()[4] == "x86_64":
+        if self.meta.arch == "x86_64":
             arch = "x86_64"
         self.mirror = "{0}{1}/{2}/{3}/".format(
             Repo().msb(), slack_ver(), self.meta.msb_sub_repo[1:-1], arch)
