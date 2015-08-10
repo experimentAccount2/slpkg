@@ -108,6 +108,8 @@ class Repo(object):
                 line = line.rstrip()
                 if not line.startswith("#") and line:
                     default = line.split()[-1]
+        if not default.endswith("/"):
+            default += "/"
         return default
 
     def sbo(self):
