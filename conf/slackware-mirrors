@@ -179,3 +179,32 @@
 # za		 ftp://ftp.is.co.za/mirror/ftp.slackware.com/pub/ 
 # za		 ftp://ftp.wa.co.za/pub/slackware/ 
 # za		 ftp://slackware.mirror.ac.za/
+#
+#
+#
+# Available http mirrors for "arm*" systems:
+#
+# http://ftp.arm.slackware.com/slackwarearm // Default, do not use
+# http://ftp.slackware.pl/pub/slackwarearm
+# http://mirror.inode.at/data/slackwarearm
+# http://mirrors.vbi.vt.edu/linux/slackwarearm
+# http://ftp.halifax.rwth-aachen.de/slackwarearm
+# http://mirrors-usa.go-parts.com/slackware/
+# http://mirrors-ru.go-parts.com/slackware
+# http://mirrors-au.go-parts.com/slackware
+# http://mirrors-br.go-parts.com/slackware/
+#
+#
+# 
+# Available ftp mirrors for "arm*" systems:
+#
+# ftp://ftp.arm.slackware.com/slackwarearm
+# ftp://ftp.slackware.pl/pub/slackwarearm
+# ftp://mirror.inode.at/slackwarearm
+# ftp://mirrors.vbi.vt.edu/linux/slackwarearm
+# ftp://ftp.halifax.rwth-aachen.de/slackwarearm
+# ftp://mirrors-usa.go-parts.com/slackware/
+# ftp://mirrors-ru.go-parts.com/slackware
+# ftp://mirrors-au.go-parts.com/slackware
+# ftp://mirrors-br.go-parts.com/slackware
+
