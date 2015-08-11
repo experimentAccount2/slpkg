@@ -11,6 +11,16 @@
 # current. But the truly bleeding edge will want to leave an ftp session 
 # open to ftp://ftp.slackware.com and less the ChangeLog every 5 minutes.
 #
-# You may not have to be changed here.
+# Uncomment ONLY ONE mirror each time
 #
+#------------------------------------
+# For Slackware -stable and -current:
+#------------------------------------
 http://ftp.osuosl.org/pub/slackware/
+# ftp://ftp.osuosl.org/pub/slackware/
+#
+#----------------------------------------
+# For Slackware ARM -stable and -current:
+#----------------------------------------
+# http://ftp.arm.slackware.com/slackwarearm/
+# ftp://ftp.arm.slackware.com/slackwarearm/
