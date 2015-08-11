@@ -20,7 +20,7 @@
     :target: https://github.com/dslackw/slpkg/issues
  
 
-Slpkg v2.7.1
+Slpkg v2.7.2
 ============
 
 |
@@ -234,8 +234,8 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.7.1.tar.gz
-    $ cd slpkg-2.7.1
+    $ tar xvf slpkg-2.7.2.tar.gz
+    $ cd slpkg-2.7.2
     $ ./install.sh
 
 Using pip:
@@ -254,9 +254,9 @@ Using pip:
 
 Bbinary packages:
 
-Slackware: `slpkg-2.7.1-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.7.1/slpkg-2.7.1-i486-1_dsw.txz>`_
+Slackware: `slpkg-2.7.2-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.7.2/slpkg-2.7.2-i486-1_dsw.txz>`_
 
-Slackware64: `slpkg-2.7.1-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.7.1/slpkg-2.7.1-x86_64-1_dsw.txz>`_
+Slackware64: `slpkg-2.7.2-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.7.2/slpkg-2.7.2-x86_64-1_dsw.txz>`_
 
 
 Upgrade

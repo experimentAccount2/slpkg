@@ -1,3 +1,13 @@
+2.7.2 - 10/08/2015
+Added:
+- Support Slackware ARM
+Fixed:
+- The package build when the sources more than one with the option
+"--autobuild"
+Updated:
+- Manager to improve installed packages
+- setup.py requirements
+
 2.7.1 - 08/08/2015
 Fixed:
 - Remove package when partial name is supplied #34
