@@ -52,7 +52,7 @@ def it_self_update():
         if line.startswith("__version_info__"):
             __new_version__ = ".".join(re.findall(r"\d+", line))
     if __new_version__ > _meta_.__version__:
-        if _meta_.default_answer == "y":
+        if _meta_.default_answer in ["y", "Y"]:
             answer = _meta_.default_answer
         else:
             print("\nNew version '{0}-{1}' is available !\n".format(

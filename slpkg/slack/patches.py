@@ -204,7 +204,7 @@ class Patches(object):
         """
         for core in self.upgrade_all:
             if "kernel" in core:
-                if self.meta.default_answer == "y":
+                if self.meta.default_answer in ["y", "Y"]:
                     answer = self.meta.default_answer
                 else:
                     print("")
