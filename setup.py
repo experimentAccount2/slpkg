@@ -39,7 +39,6 @@ DOCS_REQUIREMENTS = []
 TESTS_REQUIREMENTS = []
 OPTIONAL_REQUIREMENTS = [
     "pygraphviz >= 1.3rc2",
-    "graph-easy >= 0.75"
 ]
 
 setup(
