@@ -228,30 +228,37 @@ class Patches(object):
         This replace slackpkg ChangeLog.txt file with new
         from Slackware official mirrors after update distribution.
         """
+        log_mirror, arch = "", ""
         changelog_txt = "ChangeLog.txt"
         changelog_old = changelog_txt + ".old"
-        arch = "64" if self.meta.arch == "x86_64" else ""
+        arch = ("64" if self.meta.arch == "x86_64" else
+                "arm" if self.meta.arch.startswith("arm") else "")
         slackware_mirror = self.utils.read_config(self.utils.read_file(
             self.meta.conf_path + "slackware-changelogs-mirror"))
         slackpkg_mirror = self.utils.read_config(
             self.utils.read_file("{0}{1}".format(self.meta.slackpkg_conf,
                                                  "mirrors")))
-        if slackpkg_mirror and "current" in slackpkg_mirror:
-            log_mirror = "{0}slackware{1}-current/{2}".format(slackware_mirror,
-                                                              arch,
-                                                              changelog_txt)
-        else:
-            log_mirror = "{0}slackware{1}-{2}/{3}".format(slackware_mirror,
-                                                          arch,
-                                                          slack_ver(),
-                                                          changelog_txt)
-        slackware_log = URL(log_mirror).reading()
-        if os.path.isfile(self.meta.slackpkg_lib_path + changelog_txt):
-            if os.path.isfile(self.meta.slackpkg_lib_path + changelog_old):
-                os.remove(self.meta.slackpkg_lib_path + changelog_old)
-            shutil.copy2(self.meta.slackpkg_lib_path + changelog_txt,
-                         self.meta.slackpkg_lib_path + changelog_old)
-            os.remove(self.meta.slackpkg_lib_path + changelog_txt)
-            with open(self.meta.slackpkg_lib_path + changelog_txt, "w") as log:
-                log.write(slackware_log)
-                log.close()
+        if slackpkg_mirror:
+            if arch.startswith("arm") and "-current" in slackpkg_mirror:
+                log_mirror = "{0}slackware{1}-{2}/{3}".format(
+                    slackware_mirror, arch, self.meta.slack_rel, changelog_txt)
+            elif arch.startswith("arm"):
+                log_mirror = "{0}slackware{1}-{2}/{3}".format(
+                    slackware_mirror, arch, slack_ver()[1], changelog_txt)
+            elif "-current" in slackpkg_mirror:
+                log_mirror = "{0}slackware{1}-{2}/{3}".format(
+                    slackware_mirror, arch, self.meta.slack_rel, changelog_txt)
+            elif slackpkg_mirror:
+                log_mirror = "{0}slackware{1}-{2}/{3}".format(
+                    slackware_mirror, arch, slack_ver(), changelog_txt)
+            slackware_log = URL(log_mirror).reading()
+            if os.path.isfile(self.meta.slackpkg_lib_path + changelog_txt):
+                if os.path.isfile(self.meta.slackpkg_lib_path + changelog_old):
+                    os.remove(self.meta.slackpkg_lib_path + changelog_old)
+                shutil.copy2(self.meta.slackpkg_lib_path + changelog_txt,
+                             self.meta.slackpkg_lib_path + changelog_old)
+                os.remove(self.meta.slackpkg_lib_path + changelog_txt)
+                with open(self.meta.slackpkg_lib_path + changelog_txt,
+                          "w") as log:
+                    log.write(slackware_log)
+                    log.close()
