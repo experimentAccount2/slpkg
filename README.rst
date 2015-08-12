@@ -288,7 +288,7 @@ nearest one. If however for some reason this troublesome please edit the file in
 Slackware ARM
 -------------
 
-Slackware ARM users needs to change mirror in '/etc/slackpkg/slackware-changelogs-mirror' 
+Slackware ARM users needs to change mirror in '/etc/slpkg/slackware-changelogs-mirror' 
 for synchronize ChangeLog.txt file with slackpkg.
 
 
