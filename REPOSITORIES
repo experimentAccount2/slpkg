@@ -44,3 +44,7 @@ the package lists for such a repository will be recreated from start automatical
 Sometimes you may experience some problems with these repositories such as the not correctly
 resolve dependencies, and this may happen some specificities separate list which unfortunately
 can not be calculated, good is the purpose of mentioning these problems.
+
+Slackware ARM repositories:
+---------------------------
+Slackware ARM users will must use only two repositories at the moment slack and sbo.
