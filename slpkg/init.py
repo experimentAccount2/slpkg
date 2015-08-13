@@ -120,11 +120,12 @@ class Initialization(object):
         if self.check:
             return self.checks_logs(log, ChangeLog_txt)
         self.down(lib + dirs[0], PACKAGES_TXT, repo_name)
-        self.down(lib + dirs[1], self.EXTRA, repo_name)
-        self.down(lib + dirs[2], self.PASTURE, repo_name)
         self.down(lib + dirs[0], CHECKSUMS_MD5, repo_name)
+        self.down(lib + dirs[1], self.EXTRA, repo_name)
         self.down(lib + dirs[1], self.EXT_CHECKSUMS, repo_name)
-        self.down(lib + dirs[2], self.PAS_CHECKSUMS, repo_name)
+        if slack_ver() != "14.0":   # no pasture/ folder for 14.0 version
+            self.down(lib + dirs[2], self.PASTURE, repo_name)
+            self.down(lib + dirs[2], self.PAS_CHECKSUMS, repo_name)
         self.down(log, ChangeLog_txt, repo_name)
         self.remote(log, ChangeLog_txt, lib, PACKAGES_TXT, CHECKSUMS_MD5,
                     FILELIST_TXT, repo_name)
@@ -585,8 +586,7 @@ class Initialization(object):
         FILELIST_TXT = args[5]
         repo = args[6]
 
-        check = self.checks_logs(log_path, ChangeLog_txt)
-        if check == 1:
+        if self.checks_logs(log_path, ChangeLog_txt):
             # remove old files
             self.file_remove(log_path, ChangeLog_txt.split("/")[-1])
             self.file_remove(lib_path, PACKAGES_TXT.split("/")[-1])
@@ -600,24 +600,26 @@ class Initialization(object):
                 self.down(lib_path + "core/", PACKAGES_TXT, repo)
                 self.down(lib_path + "core/", CHECKSUMS_MD5, repo)
                 self.down(lib_path + "extra/", self.EXTRA, repo)
-                self.down(lib_path + "pasture/", self.PASTURE, repo)
                 self.down(lib_path + "extra/", self.EXT_CHECKSUMS, repo)
-                self.down(lib_path + "pasture/", self.PAS_CHECKSUMS, repo)
+                if slack_ver() != "14.0":  # no pasture/ folder for 14.0 version
+                    self.down(lib_path + "pasture/", self.PASTURE, repo)
+                    self.down(lib_path + "pasture/", self.PAS_CHECKSUMS, repo)
             # download new files
-            self.down(log_path, ChangeLog_txt, repo)
             if repo != "slack":
                 self.down(lib_path, PACKAGES_TXT, repo)
                 self.down(lib_path, CHECKSUMS_MD5, repo)
             self.down(lib_path, FILELIST_TXT, repo)
+            self.down(log_path, ChangeLog_txt, repo)
 
     def merge(self, path, outfile, infiles):
         """Merge files
         """
         with open(path + outfile, 'w') as out_f:
             for i in infiles:
-                with open(path + i, "r") as in_f:
-                    for line in in_f:
-                        out_f.write(line)
+                if os.path.isfile("{0}{1}".format(path, i)):
+                    with open(path + i, "r") as in_f:
+                        for line in in_f:
+                            out_f.write(line)
 
     def file_remove(self, path, filename):
         """Check if filename exists and remove
@@ -634,8 +636,8 @@ class Initialization(object):
         if os.path.isfile(log_path + filename):
             local = FileSize(log_path + filename).local()
         if server != local:
-            return 1
-        return 0
+            return True
+        return False
 
     def upgrade(self, only):
         """Remove all package lists with changelog and checksums files
