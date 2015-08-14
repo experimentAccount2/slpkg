@@ -71,13 +71,14 @@ class PackageHealth(object):
         self.cf = 0
         try:
             for pkg in self.installed:
-                self.lf = 0
-                with open(self.pkg_path + pkg, "r") as fopen:
-                    for line in fopen:
-                        self.cf += 1     # count all files
-                        self.lf += 1     # count each package files
-                        if self.lf > 19:
-                            self.check(line, pkg)
+                if os.path.isfile(self.meta.pkg_path + pkg):
+                    self.lf = 0
+                    with open(self.pkg_path + pkg, "r") as fopen:
+                        for line in fopen:
+                            self.cf += 1     # count all files
+                            self.lf += 1     # count each package files
+                            if self.lf > 19:
+                                self.check(line, pkg)
         except KeyboardInterrupt:
             print("")
             raise SystemExit()
