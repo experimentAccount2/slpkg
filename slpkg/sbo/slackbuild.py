@@ -87,12 +87,12 @@ class SBoInstall(object):
                 self.package_found)
             Msg().done()
             if (self.meta.rsl_deps in ["on", "ON"] and
-                    self.flag != "--resolve-off"):
+                    self.flag != "--resolve-off" and not self.match):
                 Msg().resolving()
             self.dependencies, dep_src = self.sbo_version_source(
                 self.one_for_all(self.deps))
             if (self.meta.rsl_deps in ["on", "ON"] and
-                    self.flag != "--resolve-off"):
+                    self.flag != "--resolve-off" and not self.match):
                 Msg().done()
             self.clear_masters()
             if self.package_found:
