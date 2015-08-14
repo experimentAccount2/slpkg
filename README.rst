@@ -290,6 +290,7 @@ Slackware ARM
 
 Slackware ARM users needs to change mirror in '/etc/slpkg/slackware-changelogs-mirror' 
 for synchronize ChangeLog.txt file with slackpkg.
+Also you need to use only two repositories currently there 'slack' and 'sbo'.
 
 
 Slpkg configuration
