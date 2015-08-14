@@ -25,11 +25,13 @@
 from repolist import RepoList
 from __metadata__ import MetaData as _meta_
 
+from slack.slack_version import slack_ver
+
 
 def header():
     """help header message"""
-    print("\nslpkg - version {0} | Slackware release: {1}\n".format(
-        _meta_.__version__, _meta_.slack_rel))
+    print("\nslpkg - version {0} | Slackware release: {1} - {2}\n".format(
+        _meta_.__version__, _meta_.slack_rel, slack_ver()))
 
 
 def options():
