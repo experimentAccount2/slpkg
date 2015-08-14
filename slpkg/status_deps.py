@@ -22,6 +22,8 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+import sys
+
 from utils import Utils
 from messages import Msg
 from graph import Graph
@@ -37,6 +39,9 @@ class DependenciesStatus(object):
     def __init__(self, image):
         self.image = image
         self.meta = _meta_
+        self.grey = self.meta.color["GREY"]
+        self.green = self.meta.color["GREEN"]
+        self.endc = self.meta.color["ENDC"]
         self.dmap = {}
         self.count_pkg = 0
         self.count_dep = 0
@@ -69,22 +74,33 @@ class DependenciesStatus(object):
         self.data()
         if self.image:
             Graph(self.image).dependencies(self.dmap)
-        grey = self.meta.color["GREY"]
-        green = self.meta.color["GREEN"]
-        yellow = self.meta.color["YELLOW"]
-        endc = self.meta.color["ENDC"]
         print("")
         Msg().template(78)
         print("| {0}{1}{2}".format("Dependencies", " " * 20, "Packages"))
         Msg().template(78)
         for key, value in self.dmap.iteritems():
-            print("  {0}{1}{2}{3}{4}{5}{6}".format(
-                yellow, key, endc, " " * (32-len(key)),
-                green, ", ".join(value), endc))
-        print("\nSummary")
-        print("=" * 79)
-        print("{0}Found {1} dependencies in {2} packages.{3}\n".format(
-            grey, self.count_dep, self.count_pkg, endc))
+            print("  {0}{1}{2}{3}{4}".format(
+                self.green, key, self.endc, " " * (32-len(key)),
+                ", ".join(value)))
+        self.summary()
+
+    def tree(self):
+        """Like tree view mode
+        """
+        Msg().template(78)
+        print("| Dependencies\n"
+              "|   Packages")
+        Msg().template(78)
+        self.data()
+        for pkg, dep in self.dmap.iteritems():
+            print("+ {0}{1}{2}".format(self.green, pkg, self.endc))
+            print("|")
+            for d in dep:
+                print("+-- {0}".format(d))
+                print("|")
+            sys.stdout.write("\x1b[1A{0}\n".format(" "))
+            sys.stdout.flush()
+        self.summary()
 
     def no_logs(self):
         """Print message if no logs found
@@ -93,3 +109,11 @@ class DependenciesStatus(object):
               "  method of installation with the command: \n"
               "  '$ slpkg -s <repository> <packages>' yet.\n")
         raise SystemExit()
+
+    def summary(self):
+        """Summary by packages and dependencies
+        """
+        print("\nSummary")
+        print("=" * 79)
+        print("{0}found {1} dependencies in {2} packages.{3}\n".format(
+            self.grey, self.count_dep, self.count_pkg, self.endc))

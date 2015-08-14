@@ -361,7 +361,7 @@ Command Line Tool Usage
        update slpkg                             Upgrade the program directly from
                                                 repository.
        health, --silent                         Health check installed packages.
-       deps-status, --graph=[type]              Print dependencies status used by
+       deps-status, --tree, --graph=[type]      Print dependencies status used by
                                                 packages or drawing dependencies
                                                 diagram.
        new-config                               Manage .new configuration files.

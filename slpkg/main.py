@@ -195,6 +195,9 @@ class ArgParse(object):
                 self.args[1].startswith("--graph=")):
             image = self.args[1].split("=")[1]
             DependenciesStatus(image).show()
+        elif (len(self.args) == 2 and self.args[0] == "deps-status" and
+                self.args[1] == "--tree"):
+            DependenciesStatus(image="").tree()
         else:
             usage("")
 

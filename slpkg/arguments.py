@@ -55,7 +55,7 @@ Commands:
    update slpkg                             Upgrade the program directly from
                                             repository.
    health, --silent                         Health check installed packages.
-   deps-status, --graph=[type]              Print dependencies status used by
+   deps-status, --tree, --graph=[type]      Print dependencies status used by
                                             packages or drawing dependencies
                                             diagram.
    new-config                               Manage .new configuration files.
@@ -131,11 +131,15 @@ Homepage: https://github.com/dslackw/slpkg
 
 def usage(repo):
     """Usage: slpkg Commands:
-             [update, --only=[...]] [upgrade, --only=[...]]
+             [update, --only=[...]]
+             [upgrade, --only=[...]]
              [repo-add [repository name] [URL]]
-             [repo-remove [repository]] [repo-list]
-             [repo-info [repository]] [update [slpkg]]
-             [health, --silent] [deps-status, --graph=[type]]
+             [repo-remove [repository]]
+             [repo-list]
+             [repo-info [repository]]
+             [update [slpkg]]
+             [health, --silent]
+             [deps-status, --tree, --graph=[type]]
              [new-config]
 
              Optional arguments:
@@ -150,9 +154,13 @@ def usage(repo):
              [-s [repository] [package...], --resolve-off]
              [-t [repository] [package], --check-deps, --graph=[type]]
              [-p [repository] [package], --color=[]]
-             [-n [SBo package]] [-F [...]] [-f [...]]
-             [-i [options] [...]] [-u [options] [...]]
-             [-r [options] [...], --check-deps] [-d [...]]
+             [-n [SBo package]]
+             [-F [package...]]
+             [-f [package...]]
+             [-i [options] [package...]]
+             [-u [options] [package...]]
+             [-r [options] [package...], --check-deps]
+             [-d [package...]]
              """
     error_repo = ""
     if repo and repo not in _meta_.repositories:
