@@ -122,6 +122,7 @@ class SBoNetwork(object):
         """
         View slackbuild.org
         """
+        sbo_url = self.sbo_url.replace("/slackbuilds/", "/repository/")
         br1, br2, fix_sp = "", "", " "
         if self.meta.use_colors in ["off", "OFF"]:
             br1 = "("
@@ -132,7 +133,7 @@ class SBoNetwork(object):
         print("| {0}Package {1}{2}{3} --> {4}".format(self.green,
                                                       self.cyan, self.name,
                                                       self.green,
-                                                      self.endc + self.sbo_url))
+                                                      self.endc + sbo_url))
         Msg().template(78)
         print("| {0}Description : {1}{2}".format(self.green,
                                                  self.endc, self.sbo_desc))
