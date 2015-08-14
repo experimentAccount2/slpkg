@@ -22,6 +22,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+import os
 import sys
 
 from utils import Utils
@@ -56,17 +57,18 @@ class DependenciesStatus(object):
         dictionary database
         """
         for pkg in self.installed:
-            name = split_package(pkg)[0]
-            for log in self.logs:
-                deps = Utils().read_file(self.dep_path + log)
-                for dep in deps.splitlines():
-                    if name == dep:
-                        if name not in self.dmap.keys():
-                            self.dmap[name] = [log]
-                            self.count_dep += 1
-                        else:
-                            self.dmap[name] += [log]
-                            self.count_pkg += 1
+            if os.path.isfile(self.meta.pkg_path + pkg):
+                name = split_package(pkg)[0]
+                for log in self.logs:
+                    deps = Utils().read_file(self.dep_path + log)
+                    for dep in deps.splitlines():
+                        if name == dep:
+                            if name not in self.dmap.keys():
+                                self.dmap[name] = [log]
+                                self.count_dep += 1
+                            else:
+                                self.dmap[name] += [log]
+                                self.count_pkg += 1
 
     def show(self):
         """Show dependencies status
