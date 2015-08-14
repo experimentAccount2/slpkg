@@ -119,7 +119,7 @@ class NewConfig(object):
         """
         Msg().template(78)
         print("| Choose what to do file by file:")
-        print("| {0}K{1}{2}epp, {3}O{4}{5}verwrite, {6}R{7}{8}emove, "
+        print("| {0}K{1}{2}eep, {3}O{4}{5}verwrite, {6}R{7}{8}emove, "
               "{9}D{10}{11}iff, {12}M{13}{14}erge".format(
                   self.red, self.endc, self.br, self.red, self.endc, self.br,
                   self.red, self.endc, self.br, self.red, self.endc, self.br,
