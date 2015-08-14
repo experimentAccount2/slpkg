@@ -33,9 +33,11 @@ def find_from_repos(pkg):
     Find packages from enabled repositories
     """
     cache = ""
+    cyan = _meta_.color["CYAN"]
+    endc = _meta_.color["ENDC"]
     count_pkg = count_repo = 0
     print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
-        _meta_.color["CYAN"], ", ".join(pkg), _meta_.color["ENDC"]))
+        cyan, ", ".join(pkg), endc))
     Msg().template(78)
     print("| {0}  {1}{2}{3}".format("Repository", "Package", " " * 54, "Size"))
     Msg().template(78)
@@ -51,8 +53,9 @@ def find_from_repos(pkg):
                         cache = repo
                         count_pkg += 1
                         ver = sbo_version(repo, find)
-                        print("  {0}{1}{2} {3}{4:>11}".format(
-                            repo, " " * (12 - len(repo)),
+                        print("  {0}{1}{2}{3}{4} {5}{6:>11}".format(
+                            cyan, repo, endc,
+                            " " * (12 - len(repo)),
                             find + ver, " " * (53 - len(find + ver)),
                             size))
         print("\nFound summary")
