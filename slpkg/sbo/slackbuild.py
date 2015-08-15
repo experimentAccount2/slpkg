@@ -43,6 +43,7 @@ from remove import delete
 from compressed import SBoLink
 from dependency import Requires
 from search import sbo_search_pkg
+from build_num import BuildNumber
 
 
 class SBoInstall(object):
@@ -267,14 +268,19 @@ class SBoInstall(object):
             filename.append(src.split("/")[-1])
         return filename
 
-    def search_in_output(self, prgnam):
+    def search_in_output(self, prgnam, build_N):
         """Search for binary packages in output directory
         """
-        binary = []
-        for search in find_package(prgnam, self.meta.output):
-            if "_SBo" in search:
-                binary.append(search)
-        return binary
+        find = ""
+        arch = self.meta.arch
+        if self.meta.arch.startswith("arm"):
+            arch = "arm"
+        package = "{0}-{1}-{2}_SBo".format(prgnam, arch, build_N)
+        find = find_package(package, self.meta.output)
+        if not find:
+            Msg().build_FAILED(prgnam)
+            raise SystemExit()
+        return ["".join([self.meta.output] + find)]
 
     def build_install(self):
         """Searches the package name and version in /tmp to
@@ -310,12 +316,8 @@ class SBoInstall(object):
                 Download(self.build_folder, dwn_srcs, repo="sbo").start()
                 sources = self.filenames(src_link)
                 BuildPackage(script, sources, self.build_folder).build()
-                binary_list = self.search_in_output(prgnam)
-                try:
-                    binary = (self.meta.output + max(binary_list)).split()
-                except ValueError:
-                    Msg().build_FAILED(sbo_url, prgnam)
-                    raise SystemExit()
+                binary = self.search_in_output(
+                    prgnam, BuildNumber(sbo_url="", pkg=pkg).get())
                 find = GetFromInstalled(pkg).name()
                 if find == pkg:
                     print("[ {0}Upgrading{1} ] --> {2}".format(

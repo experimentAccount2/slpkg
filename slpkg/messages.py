@@ -57,7 +57,7 @@ class Msg(object):
             print("\nslpkg: error: must have root privileges\n")
             raise SystemExit()
 
-    def build_FAILED(self, sbo_url, prgnam):
+    def build_FAILED(self, prgnam):
         """Print error message if build failed
         """
         self.template(78)
@@ -67,7 +67,6 @@ class Msg(object):
         print("| See log file in '{0}/var/log/slpkg/sbo/build_logs{1}' "
               "directory or read README".format(self.meta.color["CYAN"],
                                                 self.meta.color["ENDC"]))
-        print("| file: {0}{1}".format(sbo_url, "README"))
         self.template(78)
         print   # new line at end
 

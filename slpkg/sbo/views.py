@@ -34,6 +34,7 @@ from slpkg.pkg.find import find_package
 from slpkg.pkg.build import BuildPackage
 from slpkg.pkg.manager import PackageManager
 
+from build_num import BuildNumber
 from read import ReadSBo
 from remove import delete
 from greps import SBoGrep
@@ -72,8 +73,7 @@ class SBoNetwork(object):
         Msg().done()
 
     def view(self):
-        """
-        View SlackBuild package, read or install them
+        """View SlackBuild package, read or install them
         from slackbuilds.org
         """
         if self.sbo_url and self.name not in self.blacklist:
@@ -119,8 +119,7 @@ class SBoNetwork(object):
             Msg().pkg_not_found("\n", self.name, "Can't view", "\n")
 
     def view_sbo(self):
-        """
-        View slackbuild.org
+        """View slackbuild.org
         """
         sbo_url = self.sbo_url.replace("/slackbuilds/", "/repository/")
         br1, br2, fix_sp = "", "", " "
@@ -164,8 +163,7 @@ class SBoNetwork(object):
         Msg().template(78)
 
     def fill_pager(self, page):
-        """
-        Fix pager spaces
+        """Fix pager spaces
         """
         tty_size = os.popen("stty size", "r").read().split()
         rows = int(tty_size[0]) - 1
@@ -178,8 +176,7 @@ class SBoNetwork(object):
             return ""
 
     def read_choice(self):
-        """
-        Return choice
+        """Return choice
         """
         try:
             self.choice = raw_input("{0}  Choose an option > {1}".format(
@@ -189,8 +186,7 @@ class SBoNetwork(object):
             raise SystemExit()
 
     def error_uns(self):
-        """
-        Check if package supported by arch
+        """Check if package supported by arch
         before proceed to install
         """
         self.FAULT = ""
@@ -199,8 +195,7 @@ class SBoNetwork(object):
             self.FAULT = "".join(self.source_dwn)
 
     def build(self):
-        """
-        Only build and create Slackware package
+        """Only build and create Slackware package
         """
         self.error_uns()
         if self.FAULT:
@@ -219,19 +214,19 @@ class SBoNetwork(object):
         BuildPackage(script, sources, self.meta.build_path).build()
 
     def install(self, prgnam):
+        """Install SBo package found in /tmp directory.
         """
-        Install Slackware package found in /tmp
-        directory.
-        """
-        binary_list = []
-        for search in find_package(prgnam, self.meta.output):
-            if "_SBo" in search:
-                binary_list.append(search)
-        try:
-            binary = (self.meta.output + max(binary_list)).split()
-        except ValueError:
-            Msg().build_FAILED(self.sbo_url, prgnam)
+        find = ""
+        arch = self.meta.arch
+        if self.meta.arch.startswith("arm"):
+            arch = "arm"
+        package = "{0}-{1}-{2}_SBo".format(
+            prgnam, arch, BuildNumber(sbo_url="", pkg=self.name).get())
+        find = find_package(package, self.meta.output)
+        if not find:
+            Msg().build_FAILED(prgnam)
             raise SystemExit()
+        binary = ["".join([self.meta.output] + find)]
         print("[ {0}Installing{1} ] --> {2}".format(self.green,
                                                     self.endc,
                                                     self.name))

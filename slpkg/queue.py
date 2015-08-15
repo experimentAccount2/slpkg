@@ -163,7 +163,7 @@ class QueuePkgs(object):
             print("")   # new line at start
             for pkg in packages:
                 # check if package exist in /tmp
-                find = find_package(pkg, self.meta.tmp)
+                find = find_package(pkg + self.meta.sp, self.meta.tmp)
                 try:
                     find = max(find)
                 except ValueError:
