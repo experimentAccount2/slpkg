@@ -1,3 +1,10 @@
+2.7.4 - 15/08/2015
+Fixed:
+- Resolving dependencies message for sbo repository when search for matching
+packages
+Updated:
+- Install SBo packages with specific build number
+
 2.7.3 - 13/08/2015
 Added:
 - Tree view for deps-status command
