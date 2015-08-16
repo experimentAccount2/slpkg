@@ -30,7 +30,8 @@ from __metadata__ import MetaData as _meta_
 
 
 class BuildNumber(object):
-
+    """Get build number from SlackBuild script
+    """
     def __init__(self, sbo_url, pkg):
         self.sbo_url = sbo_url
         self.pkg = pkg
