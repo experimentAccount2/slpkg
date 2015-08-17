@@ -163,13 +163,13 @@ class QueuePkgs(object):
             print("")   # new line at start
             for pkg in packages:
                 # check if package exist in /tmp
-                find = find_package(pkg + self.meta.sp, self.meta.tmp)
+                find = find_package(pkg + self.meta.sp, self.meta.output)
                 try:
                     find = max(find)
                 except ValueError:
                     print("Package '{0}' not found in /tmp\n".format(pkg))
                 if pkg in find:
-                    binary = "{0}{1}".format(self.meta.tmp, find)
+                    binary = "{0}{1}".format(self.meta.output, find)
                     PackageManager(binary.split()).upgrade(flag="--install-new")
         else:
             print("\nPackages not found in the queue for installation\n")
