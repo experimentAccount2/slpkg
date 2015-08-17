@@ -24,9 +24,9 @@
 
 import re
 
-from utils import Utils
-from url_read import URL
-from __metadata__ import MetaData as _meta_
+from slpkg.utils import Utils
+from slpkg.url_read import URL
+from slpkg.__metadata__ import MetaData as _meta_
 
 
 class BuildNumber(object):
