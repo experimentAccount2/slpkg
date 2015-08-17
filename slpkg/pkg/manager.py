@@ -53,6 +53,8 @@ class PackageManager(object):
                 check = pkg[:-4].split("/")[-1]
                 if os.path.isfile(self.meta.pkg_path + check):
                     print("Completed!\n")
+                else:
+                    raise SystemExit()
             except (subprocess.CalledProcessError, KeyboardInterrupt):
                 self._not_found("Can't install", self.binary, pkg)
 
@@ -66,6 +68,8 @@ class PackageManager(object):
                 check = pkg[:-4].split("/")[-1]
                 if os.path.isfile(self.meta.pkg_path + check):
                     print("Completed!\n")
+                else:
+                    raise SystemExit()
             except (subprocess.CalledProcessError, KeyboardInterrupt):
                 self._not_found("Can't upgrade", self.binary, pkg)
 

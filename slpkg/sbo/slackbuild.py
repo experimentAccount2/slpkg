@@ -277,9 +277,6 @@ class SBoInstall(object):
             arch = "arm"
         package = "{0}-{1}-{2}_SBo".format(prgnam, arch, build_N)
         find = find_package(package, self.meta.output)
-        if not find:
-            Msg().build_FAILED(prgnam)
-            raise SystemExit()
         return ["".join([self.meta.output] + find)]
 
     def build_install(self):

@@ -223,9 +223,6 @@ class SBoNetwork(object):
         package = "{0}-{1}-{2}_SBo".format(
             prgnam, arch, BuildNumber(sbo_url="", pkg=self.name).get())
         find = find_package(package, self.meta.output)
-        if not find:
-            Msg().build_FAILED(prgnam)
-            raise SystemExit()
         binary = ["".join([self.meta.output] + find)]
         print("[ {0}Installing{1} ] --> {2}".format(self.green,
                                                     self.endc,
