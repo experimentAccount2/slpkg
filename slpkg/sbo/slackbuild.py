@@ -63,6 +63,9 @@ class SBoInstall(object):
         self.deps_dict = {}
         self.answer = ""
         self.match = False
+        self.count_ins = 0
+        self.count_upg = 0
+        self.count_uni = 0
         Msg().reading()
         self.data = SBoGrep(name="").names()
         self.blacklist = BlackList().packages(pkgs=self.data, repo="sbo")
@@ -70,7 +73,6 @@ class SBoInstall(object):
     def start(self, if_upgrade):
         try:
             tagc = ""
-            count_ins = count_upg = count_uni = 0
             for _sbo in self.slackbuilds:
                 status(0.03)
                 if _sbo in self.data and _sbo not in self.blacklist:
@@ -81,9 +83,11 @@ class SBoInstall(object):
                 else:
                     self.package_not_found.append(_sbo)
             self.update_deps()
+
             if not self.package_found:
                 self.match = True
                 self.matching()
+
             self.master_packages, mas_src = self.sbo_version_source(
                 self.package_found)
             Msg().done()
@@ -96,36 +100,40 @@ class SBoInstall(object):
                     self.flag != "--resolve-off" and not self.match):
                 Msg().done()
             self.clear_masters()
+
             if self.package_found:
                 print("\nThe following packages will be automatically "
                       "installed or upgraded \nwith new version:\n")
                 self.top_view()
                 Msg().upg_inst(if_upgrade)
+
                 # view master packages
                 for sbo, ar in zip(self.master_packages, mas_src):
-                    tagc, count_ins, count_upg, count_uni = self.tag(
-                        sbo, count_ins, count_upg, count_uni)
+                    tagc = self.tag(sbo)
                     name = "-".join(sbo.split("-")[:-1])
                     self.view_packages(tagc, name, sbo.split("-")[-1],
                                        self.select_arch(ar))
                 self._view_installing_for_deps()
+
                 # view dependencies
                 for dep, ar in zip(self.dependencies, dep_src):
-                    tagc, count_ins, count_upg, count_uni = self.tag(
-                        dep, count_ins, count_upg, count_uni)
+                    tagc = self.tag(dep)
                     name = "-".join(dep.split("-")[:-1])
                     self.view_packages(tagc, name, dep.split("-")[-1],
                                        self.select_arch(ar))
-                count_total = (count_ins + count_upg + count_uni)
+
+                count_total = sum([self.count_ins, self.count_upg,
+                                   self.count_uni])
                 print("\nInstalling summary")
                 print("=" * 79)
                 print("{0}Total {1} {2}.".format(
                     self.meta.color["GREY"], count_total,
                     Msg().pkg(count_total)))
                 print("{0} {1} will be installed, {2} allready installed and "
-                      "{3} {4}".format(count_uni, Msg().pkg(count_uni),
-                                       count_ins, count_upg,
-                                       Msg().pkg(count_upg)))
+                      "{3} {4}".format(self.count_uni,
+                                       Msg().pkg(self.count_uni),
+                                       self.count_ins, self.count_upg,
+                                       Msg().pkg(self.count_upg)))
                 print("will be upgraded.{0}\n".format(self.meta.color["ENDC"]))
                 self._continue_to_install()
             else:
@@ -229,7 +237,7 @@ class SBoInstall(object):
             " " * (15-len(args[3])), "",
             "", "SBo", "", "")).rstrip()
 
-    def tag(self, sbo, count_ins, count_upg, count_uni):
+    def tag(self, sbo):
         """Tag with color green if package already installed,
         color yellow for packages to upgrade and color red
         if not installed.
@@ -239,14 +247,14 @@ class SBoInstall(object):
         find = GetFromInstalled(sbo_name).name()
         if find_package(sbo, self.meta.pkg_path):
             paint = self.meta.color["GREEN"]
-            count_ins += 1
+            self.count_ins += 1
         elif sbo_name == find:
             paint = self.meta.color["YELLOW"]
-            count_upg += 1
+            self.count_upg += 1
         else:
             paint = self.meta.color["RED"]
-            count_uni += 1
-        return paint, count_ins, count_upg, count_uni
+            self.count_uni += 1
+        return paint
 
     def select_arch(self, src):
         """Looks if sources unsupported or untested
