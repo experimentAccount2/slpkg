@@ -180,7 +180,7 @@ class PackageManager(object):
     def _remove_summary(self, unit):
         """Removed packge size summary
         """
-        print("\nSummary")
+        print("\nRemoved summary")
         print("=" * 79)
         print("{0}Size of removed packages {1} {2}.{3}".format(
             self.meta.color["GREY"], round(self.size, 2), unit,
@@ -315,7 +315,7 @@ class PackageManager(object):
             if self.size > 1024:
                 unit = "Mb"
                 self.size = (self.size / 1024)
-            print("\nSummary")
+            print("\nFound summary")
             print("=" * 79)
             print("{0}Total found {1} matching packages.{2}".format(
                 self.meta.color["GREY"], matching, self.meta.color["ENDC"]))

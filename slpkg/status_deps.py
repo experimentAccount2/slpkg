@@ -115,7 +115,7 @@ class DependenciesStatus(object):
     def summary(self):
         """Summary by packages and dependencies
         """
-        print("\nSummary")
+        print("\nStatus summary")
         print("=" * 79)
         print("{0}found {1} dependencies in {2} packages.{3}\n".format(
             self.grey, self.count_dep, self.count_pkg, self.endc))

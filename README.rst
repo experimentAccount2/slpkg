@@ -1193,6 +1193,8 @@ Find installed packages:
     [ installed ] - xf86dgaproto-2.1-noarch-1
     [ installed ] - xineramaproto-1.2.1-noarch-1
 
+    Found summary
+    ===============================================================================
     Total found 4 matcing packages
     Size of installed packages 1.61 Mb
 
@@ -1256,6 +1258,10 @@ Removes a previously installed Slackware binary packages:
     
     [ delete ] --> termcolor-1.1.0-x86_64-1_SBo
 
+    Removed summary
+    ===============================================================================
+    Size of removed packages 50.0 Kb.
+
     Are you sure to remove 1 package(s) [y/N]? y
 
     Package: termcolor-1.1.0-x86_64-1_SBo
@@ -1295,6 +1301,10 @@ enabled from configuration file.
     Packages with name matching [ Flask ]
 
     [ delete ] --> Flask-0.10.1-x86_64-1_SBo
+
+    Removed summary
+    ===============================================================================
+    Size of removed packages 1.2 Mb.
 
     Are you sure to remove 1 package [y/N]? y
 
@@ -1366,6 +1376,10 @@ Remove packages with by TAG:
     [ delete ] --> cryptography-0.8.2-x86_64-1_SBo
     [ delete ] --> curtsies-0.1.19-x86_64-1_SBo
     [ delete ] --> enum34-1.0.4-x86_64-1_SBo
+
+    Removed summary
+    ===============================================================================
+    Size of removed packages 24.61 Mb.
 
     Are you sure to remove 14 packages [y/N]? 
 
