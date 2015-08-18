@@ -2,6 +2,7 @@
 Added:
 - Support httpie for downloading
 - Remove packages with by TAG
+- Summary for size of removed package
 Fixed:
 - Resolving dependencies message for sbo repository when search for matching
 packages

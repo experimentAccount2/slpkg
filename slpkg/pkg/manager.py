@@ -142,7 +142,7 @@ class PackageManager(object):
     def _view_removed(self):
         """View packages before removed
         """
-        removed = []
+        removed, unit = [], "Kb"
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
             self.meta.color["CYAN"], ", ".join(self.binary),
             self.meta.color["ENDC"]))
@@ -154,6 +154,7 @@ class PackageManager(object):
                             self.meta.color["RED"], self.meta.color["ENDC"],
                             pkg))
                         removed.append(split_package(pkg)[0])
+                        self._sizes(pkg)
             if not removed:
                 Msg().pkg_not_found("", tag, "Can't remove", "")
         else:
@@ -167,9 +168,23 @@ class PackageManager(object):
                         self.meta.color["RED"], self.meta.color["ENDC"],
                         package[0]))
                     removed.append(pkg)
+                    self._sizes(package[0])
                 else:
                     Msg().pkg_not_found("", pkg, "Can't remove", "")
+        if self.size > 1024:
+            unit = "Mb"
+            self.size = (self.size / 1024)
+        self._remove_summary(unit)
         return removed
+
+    def _remove_summary(self, unit):
+        """Removed packge size summary
+        """
+        print("\nSummary")
+        print("=" * 79)
+        print("{0}Size of removed packages {1} {2}.{3}".format(
+            self.meta.color["GREY"], round(self.size, 2), unit,
+            self.meta.color["ENDC"]))
 
     def _view_deps(self, path, package):
         """View dependencies for before remove
