@@ -323,8 +323,7 @@ class SBoInstall(object):
                 BuildPackage(script, sources, self.build_folder).build()
                 binary = self.search_in_output(
                     prgnam, BuildNumber(sbo_url="", pkg=pkg).get())
-                find = GetFromInstalled(pkg).name()
-                if find == pkg:
+                if GetFromInstalled(pkg).name() == pkg:
                     print("[ {0}Upgrading{1} ] --> {2}".format(
                         self.meta.color["YELLOW"],
                         self.meta.color["ENDC"], sbo))
