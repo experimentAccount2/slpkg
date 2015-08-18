@@ -264,7 +264,7 @@ and will skip any packages that do not already have a version installed.
 More information please read "man upgradepkg".
 
 .SS -r, --removepkg, remove previously installed Slackware binary packages
-\fBslpkg\fP \fB-r\fP \fB[-copy, -keep, -preserve, -warn]\fP <\fInames of packages\fP>, \fB--check-deps\fP
+\fBslpkg\fP \fB-r\fP \fB[-copy, -keep, -preserve, -warn]\fP <\fInames of packages\fP>, \fB--check-deps\fP,  \fB--tag\fP
 .PP
 Removes a previously installed Slackware package, while writing a progress report to 
 the standard output. A package may be specified either by the full package name (as 
@@ -276,6 +276,8 @@ More information please read "man removepkg".
 Additional options:
 .PP
 \fB--check-deps\fP : Check if installed packages used by other packages.
+.pp
+\fB--tag\fP : Remove packages with by tag.
 
 .SS -d, --display, display the installed packages contents and file list
 \fBslpkg\fP \fB-d\fP <\fInames of packages\fP>

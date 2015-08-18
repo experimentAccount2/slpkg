@@ -145,18 +145,29 @@ class PackageManager(object):
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
             self.meta.color["CYAN"], ", ".join(self.binary),
             self.meta.color["ENDC"]))
-        for pkg in self.binary:
-            name = GetFromInstalled(pkg).name()
-            ver = GetFromInstalled(pkg).version()
-            package = find_package("{0}{1}{2}".format(name, ver, self.meta.sp),
-                                   self.meta.pkg_path)
-            if name == pkg:
-                print("[ {0}delete{1} ] --> {2}".format(
-                    self.meta.color["RED"], self.meta.color["ENDC"],
-                    package[0]))
-                removed.append(pkg)
-            else:
-                Msg().pkg_not_found("", pkg, "Can't remove", "")
+        if self.extra == "--tag":
+            for pkg in find_package("", self.meta.pkg_path):
+                for tag in self.binary:
+                    if pkg.endswith(tag):
+                        print("[ {0}delete{1} ] --> {2}".format(
+                            self.meta.color["RED"], self.meta.color["ENDC"],
+                            pkg))
+                        removed.append(split_package(pkg)[0])
+            if not removed:
+                Msg().pkg_not_found("", tag, "Can't remove", "")
+        else:
+            for pkg in self.binary:
+                name = GetFromInstalled(pkg).name()
+                ver = GetFromInstalled(pkg).version()
+                package = find_package("{0}{1}{2}".format(
+                    name, ver, self.meta.sp), self.meta.pkg_path)
+                if pkg and name == pkg:
+                    print("[ {0}delete{1} ] --> {2}".format(
+                        self.meta.color["RED"], self.meta.color["ENDC"],
+                        package[0]))
+                    removed.append(pkg)
+                else:
+                    Msg().pkg_not_found("", pkg, "Can't remove", "")
         return removed
 
     def _view_deps(self, path, package):
