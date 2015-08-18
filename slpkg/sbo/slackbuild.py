@@ -113,7 +113,7 @@ class SBoInstall(object):
                     name = "-".join(sbo.split("-")[:-1])
                     self.view_packages(tagc, name, sbo.split("-")[-1],
                                        self.select_arch(ar))
-                self._view_installing_for_deps()
+                self.view_installing_for_deps()
 
                 # view dependencies
                 for dep, ar in zip(self.dependencies, dep_src):
@@ -135,7 +135,7 @@ class SBoInstall(object):
                                        self.count_ins, self.count_upg,
                                        Msg().pkg(self.count_upg)))
                 print("will be upgraded.{0}\n".format(self.meta.color["ENDC"]))
-                self._continue_to_install()
+                self.continue_to_install()
             else:
                 Msg().not_found(if_upgrade)
         except KeyboardInterrupt:
@@ -152,7 +152,7 @@ class SBoInstall(object):
             deps = Requires(self.flag).sbo(dep)
             self.deps_dict[dep] = self.one_for_all(deps)
 
-    def _continue_to_install(self):
+    def continue_to_install(self):
         """Continue to install ?
         """
         if self.master_packages and Msg().answer() in ["y", "Y"]:
@@ -161,7 +161,7 @@ class SBoInstall(object):
             write_deps(self.deps_dict)
             delete(self.build_folder)
 
-    def _view_installing_for_deps(self):
+    def view_installing_for_deps(self):
         """View installing message for dependencies
         """
         if not self.match and self.dependencies:
