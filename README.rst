@@ -206,7 +206,7 @@ remove packages from your system events.
 Notable mention must give the command '$ slpkg --removepkg <packages>' which can remove a packages 
 with all dependencies together after editing configuration file '/etc/slpkg/slpkg.conf' 
 (default is disable). Also you can check if packages used as dependency with additional option 
-"--check-deps".
+"--check-deps". Option "--tag" allow to remove packages with by TAG.
 
 The last command is useful to print the entire contents of a package installed on the system with the
 command '$ slpkg -d <packages>'.
@@ -422,7 +422,7 @@ Command Line Tool Usage
           options=[--dry-run, --install-new,    binary packages from an older
           --reinstall, --verbose]               version to a newer one.
       -r, --removepkg, [options] [package...],  Removes a previously installed
-          --check-deps                          Slackware binary packages,
+          --check-deps, --tag                   Slackware binary packages,
           options=[-warn, -preserve, -copy,     while writing a progress report
           -keep]                                to the standard output.
       -d, --display, [package...]               Display the installed packages
@@ -1343,6 +1343,31 @@ enabled from configuration file.
     | Package Jinja2 removed
     | Package werkzeug removed
     +==============================================================================
+
+Remove packages with by TAG:
+
+.. code-block:: bash
+    
+    $ slpkg -r _SBo --tag
+    
+    Packages with name matching [ _SBo ]
+
+    [ delete ] --> Jinja2-2.7.3-x86_64-1_SBo
+    [ delete ] --> MarkupSafe-0.23-x86_64-1_SBo
+    [ delete ] --> Pafy-0.3.72-x86_64-1_SBo
+    [ delete ] --> Pulse-Glass-1.02-x86_64-1_SBo
+    [ delete ] --> Pygments-1.6-x86_64-2_SBo
+    [ delete ] --> asciinema-1.1.1-x86_64-1_SBo
+    [ delete ] --> astroid-1.3.8-x86_64-1_SBo
+    [ delete ] --> autopep8-1.2-x86_64-1_SBo
+    [ delete ] --> blessings-1.6-x86_64-1_SBo
+    [ delete ] --> bpython-0.14.2-x86_64-1_SBo
+    [ delete ] --> cffi-1.1.2-x86_64-1_SBo
+    [ delete ] --> cryptography-0.8.2-x86_64-1_SBo
+    [ delete ] --> curtsies-0.1.19-x86_64-1_SBo
+    [ delete ] --> enum34-1.0.4-x86_64-1_SBo
+
+    Are you sure to remove 14 packages [y/N]? 
 
 
 Build and install packages that have added to the queue:
