@@ -42,6 +42,7 @@ class PackageManager(object):
         self.binary = binary
         self.meta = _meta_
         self.skip = ""
+        self.size = 0
 
     def install(self, flag):
         """Install Slackware binary packages
@@ -280,7 +281,7 @@ class PackageManager(object):
     def find(self):
         """Find installed Slackware packages
         """
-        matching = size = 0
+        matching, unit = 0, "Kb"
         print("\nPackages with matching name [ {0}{1}{2} ]\n".format(
             self.meta.color["CYAN"], ", ".join(self.binary),
             self.meta.color["ENDC"]))
@@ -291,27 +292,33 @@ class PackageManager(object):
                     print("[ {0}installed{1} ] - {2}".format(
                         self.meta.color["GREEN"], self.meta.color["ENDC"],
                         match))
-                    data = Utils().read_file(self.meta.pkg_path + match)
-                    for line in data.splitlines():
-                        if line.startswith("UNCOMPRESSED PACKAGE SIZE:"):
-                            if "M" in line[26:]:
-                                size += float(line[26:-1]) * 1024
-                            else:
-                                size += float(line[26:-1])
-                            break
+                    self._sizes(match)
         if matching == 0:
             message = "Can't find"
             Msg().pkg_not_found("", ", ".join(self.binary), message, "\n")
         else:
-            print("\n{0}Total found {1} matching packages.{2}".format(
-                self.meta.color["GREY"], matching, self.meta.color["ENDC"]))
-            unit = "Kb"
-            if size > 1024:
+            if self.size > 1024:
                 unit = "Mb"
-                size = (size / 1024)
+                self.size = (self.size / 1024)
+            print("\nSummary")
+            print("=" * 79)
+            print("{0}Total found {1} matching packages.{2}".format(
+                self.meta.color["GREY"], matching, self.meta.color["ENDC"]))
             print("{0}Size of installed packages {1} {2}.{3}\n".format(
-                self.meta.color["GREY"], round(size, 2), unit,
+                self.meta.color["GREY"], round(self.size, 2), unit,
                 self.meta.color["ENDC"]))
+
+    def _sizes(self, package):
+        """Package size summary
+        """
+        data = Utils().read_file(self.meta.pkg_path + package)
+        for line in data.splitlines():
+            if line.startswith("UNCOMPRESSED PACKAGE SIZE:"):
+                if "M" in line[26:]:
+                    self.size += float(line[26:-1]) * 1024
+                else:
+                    self.size += float(line[26:-1])
+                    break
 
     def display(self):
         """Print the Slackware packages contents
