@@ -22,8 +22,6 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-import os
-
 from slpkg.utils import Utils
 from slpkg.toolbar import status
 from slpkg.splitting import split_package
