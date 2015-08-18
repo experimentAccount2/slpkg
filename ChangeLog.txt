@@ -1,7 +1,11 @@
-2.7.4 - 15/08/2015
+2.7.4 - 17/08/2015
+Added:
+- Support httpie for downloading
+- Remove packages with by TAG
 Fixed:
 - Resolving dependencies message for sbo repository when search for matching
 packages
+- Build error message
 Updated:
 - Install SBo packages with specific build number
 
