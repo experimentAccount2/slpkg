@@ -10,6 +10,9 @@
 # curl (alternative downloader)
 # 
 # [OPTIONAL]
+# http (alternative downloader)
+#
+# [OPTIONAL]
 # pygraphviz >= 1.3rc2 (drawing dependencies diagram)
 #
 # [OPTIONAL]

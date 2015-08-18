@@ -61,7 +61,7 @@ class Download(object):
                                     self.downder, self.downder_options,
                                     self.dir_prefix, self.path, dwn),
                                     shell=True)
-                elif self.downder == "curl":
+                elif self.downder in ["curl", "http"]:
                     subprocess.call("{0} {1} {2}{3} {4}".format(
                                     self.downder, self.downder_options,
                                     self.path, self.file_name, dwn), shell=True)
