@@ -38,8 +38,13 @@ class Graph(object):
         try:
             import pygraphviz as pgv
         except ImportError:
-            print("Require 'pygraphviz': Install with '$ slpkg -s sbo "
-                  "pygraphviz'")
+            graph_easy, comma = "", ""
+            if (self.image == "ascii" and
+                    not os.path.isfile("/usr/bin/graph-easy")):
+                comma = ","
+                graph_easy = " graph-easy"
+            print("Require 'pygraphviz{0}{1}': Install with '# slpkg -s sbo "
+                  "pygraphviz{1}'".format(comma, graph_easy))
             raise SystemExit()
         if self.image != "ascii":
             self.check_file()
