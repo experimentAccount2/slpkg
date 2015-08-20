@@ -9,6 +9,7 @@ packages
 - Build error message
 Updated:
 - Install SBo packages with specific build number
+- For SBo repository select computer architecture
 
 2.7.3 - 13/08/2015
 Added:
