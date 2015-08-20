@@ -40,10 +40,10 @@ class Msg(object):
         """
         print("{0}No such package {1}: {2}{3}".format(bol, pkg, message, eol))
 
-    def pkg_found(self, pkg, version):
+    def pkg_found(self, prgnam):
         """Print message when package found
         """
-        print("| Package {0}-{1} is already installed".format(pkg, version))
+        print("| Package {0} is already installed".format(prgnam))
 
     def pkg_installed(self, pkg):
         """Print message when package installed

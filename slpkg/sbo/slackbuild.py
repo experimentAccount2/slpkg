@@ -30,7 +30,6 @@ from slpkg.toolbar import status
 from slpkg.log_deps import write_deps
 from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
-from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.pkg.find import find_package
@@ -45,6 +44,7 @@ from compressed import SBoLink
 from dependency import Requires
 from search import sbo_search_pkg
 from build_num import BuildNumber
+from splitting import split_package
 
 
 class SBoInstall(object):
@@ -276,13 +276,19 @@ class SBoInstall(object):
             filename.append(src.split("/")[-1])
         return filename
 
-    def search_in_output(self, prgnam, build_N):
+    def search_in_output(self, prgnam):
         """Search for binary packages in output directory
         """
-        find = ""
-        package = "{0}-{1}-{2}_SBo".format(prgnam, self.arch, build_N)
-        find = find_package(package, self.meta.output)
-        return ["".join([self.meta.output] + find)]
+        binary = ""
+        # Get build number from prgnam.SlackBuild script
+        build1 = BuildNumber("", prgnam.split("-")[0]).get()
+        for pkg in find_package(prgnam + self.meta.sp, self.meta.output):
+            # Get build number from binary package
+            build2 = split_package(pkg[:-4])[3]
+            if pkg[:-4].endswith("_SBo") and build1 == build2:
+                binary = pkg
+                break
+        return ["".join(self.meta.output + binary)]
 
     def build_install(self):
         """Searches the package name and version in /tmp to
@@ -294,20 +300,19 @@ class SBoInstall(object):
         if not os.path.exists(self.build_folder):
             os.makedirs(self.build_folder)
         os.chdir(self.build_folder)
-        for sbo in slackbuilds:
-            pkg = "-".join(sbo.split("-")[:-1])
-            ver = sbo.split("-")[-1]
-            prgnam = ("{0}-{1}".format(pkg, ver))
-            sbo_file = "".join(find_package(prgnam, self.meta.pkg_path))
+        for prgnam in slackbuilds:
+            pkg = "-".join(prgnam.split("-")[:-1])
+            installed = "".join(find_package(prgnam + self.meta.sp,
+                                             self.meta.pkg_path))
             src_link = SBoGrep(pkg).source().split()
-            if sbo_file:
+            if installed:
                 Msg().template(78)
-                Msg().pkg_found(pkg, split_package(sbo_file)[1])
+                Msg().pkg_found(prgnam)
                 Msg().template(78)
             elif self.unst[0] in src_link or self.unst[1] in src_link:
                 Msg().template(78)
                 print("| Package {0} {1}{2}{3}".format(
-                    sbo, self.meta.color["RED"], "".join(src_link),
+                    prgnam, self.meta.color["RED"], "".join(src_link),
                     self.meta.color["ENDC"]))
                 Msg().template(78)
             else:
@@ -318,16 +323,16 @@ class SBoInstall(object):
                 Download(self.build_folder, dwn_srcs, repo="sbo").start()
                 sources = self.filenames(src_link)
                 BuildPackage(script, sources, self.build_folder).build()
-                binary = self.search_in_output(
-                    prgnam, BuildNumber(sbo_url="", pkg=pkg).get())
+                binary = self.search_in_output(prgnam)
                 if GetFromInstalled(pkg).name() == pkg:
                     print("[ {0}Upgrading{1} ] --> {2}".format(
                         self.meta.color["YELLOW"],
-                        self.meta.color["ENDC"], sbo))
+                        self.meta.color["ENDC"], prgnam))
                     upgraded.append(prgnam)
                 else:
                     print("[ {0}Installing{1} ] --> {2}".format(
-                        self.meta.color["GREEN"], self.meta.color["ENDC"], sbo))
+                        self.meta.color["GREEN"], self.meta.color["ENDC"],
+                        prgnam))
                     installs.append(prgnam)
                 PackageManager(binary).upgrade(flag="--install-new")
         return installs, upgraded

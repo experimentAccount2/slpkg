@@ -41,6 +41,7 @@ from sbo_arch import SBoArch
 from compressed import SBoLink
 from search import sbo_search_pkg
 from build_num import BuildNumber
+from splitting import split_package
 
 
 class SBoNetwork(object):
@@ -112,7 +113,7 @@ class SBoNetwork(object):
                         break
                     else:
                         Msg().template(78)
-                        Msg().pkg_found(self.name, self.sbo_version)
+                        Msg().pkg_found(prgnam)
                         Msg().template(78)
                         break
                 else:
@@ -218,11 +219,15 @@ class SBoNetwork(object):
     def install(self, prgnam):
         """Install SBo package found in /tmp directory.
         """
-        find = ""
-        package = "{0}-{1}-{2}_SBo".format(
-            prgnam, self.arch, BuildNumber(sbo_url="", pkg=self.name).get())
-        find = find_package(package, self.meta.output)
-        binary = ["".join([self.meta.output] + find)]
+        binary = ""
+        # Get build number from prgnam.SlackBuild script
+        build1 = BuildNumber("", prgnam.split("-")[0]).get()
+        for pkg in find_package(prgnam + self.meta.sp, self.meta.output):
+            # Get build number from binary package
+            build2 = split_package(pkg[:-4])[3]
+            if pkg[:-4].endswith("_SBo") and build1 == build2:
+                binary = ["".join(self.meta.output + pkg)]
+                break
         print("[ {0}Installing{1} ] --> {2}".format(self.green,
                                                     self.endc,
                                                     self.name))
