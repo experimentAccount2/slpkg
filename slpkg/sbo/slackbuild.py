@@ -280,8 +280,7 @@ class SBoInstall(object):
         """Search for binary packages in output directory
         """
         find = ""
-        arch = self.arch
-        package = "{0}-{1}-{2}_SBo".format(prgnam, arch, build_N)
+        package = "{0}-{1}-{2}_SBo".format(prgnam, self.arch, build_N)
         find = find_package(package, self.meta.output)
         return ["".join([self.meta.output] + find)]
 
