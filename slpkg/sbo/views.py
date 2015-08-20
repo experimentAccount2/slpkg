@@ -221,7 +221,7 @@ class SBoNetwork(object):
         """
         binary = ""
         # Get build number from prgnam.SlackBuild script
-        build1 = BuildNumber("", prgnam.split("-")[0]).get()
+        build1 = BuildNumber("", "-".join(prgnam.split("-")[:-1])).get()
         for pkg in find_package(prgnam + self.meta.sp, self.meta.output):
             # Get build number from binary package
             build2 = split_package(pkg[:-4])[3]
