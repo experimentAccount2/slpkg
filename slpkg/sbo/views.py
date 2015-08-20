@@ -34,12 +34,13 @@ from slpkg.pkg.find import find_package
 from slpkg.pkg.build import BuildPackage
 from slpkg.pkg.manager import PackageManager
 
-from build_num import BuildNumber
 from read import ReadSBo
 from remove import delete
 from greps import SBoGrep
+from sbo_arch import SBoArch
 from compressed import SBoLink
 from search import sbo_search_pkg
+from build_num import BuildNumber
 
 
 class SBoNetwork(object):
@@ -49,6 +50,7 @@ class SBoNetwork(object):
     def __init__(self, name):
         self.name = name
         self.meta = _meta_
+        self.arch = SBoArch().get()
         self.choice = ""
         self.FAULT = ""
         self.green = self.meta.color["GREEN"]
@@ -217,9 +219,7 @@ class SBoNetwork(object):
         """Install SBo package found in /tmp directory.
         """
         find = ""
-        arch = self.meta.arch
-        if self.meta.arch.startswith("arm"):
-            arch = "arm"
+        arch = self.arch
         package = "{0}-{1}-{2}_SBo".format(
             prgnam, arch, BuildNumber(sbo_url="", pkg=self.name).get())
         find = find_package(package, self.meta.output)

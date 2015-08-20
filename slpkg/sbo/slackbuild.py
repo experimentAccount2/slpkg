@@ -40,6 +40,7 @@ from slpkg.pkg.installed import GetFromInstalled
 
 from greps import SBoGrep
 from remove import delete
+from sbo_arch import SBoArch
 from compressed import SBoLink
 from dependency import Requires
 from search import sbo_search_pkg
@@ -53,6 +54,7 @@ class SBoInstall(object):
         self.slackbuilds = slackbuilds
         self.flag = flag
         self.meta = _meta_
+        self.arch = SBoArch().get()
         self.build_folder = self.meta.build_path
         self.unst = ["UNSUPPORTED", "UNTESTED"]
         self.master_packages = []
@@ -260,9 +262,7 @@ class SBoInstall(object):
         """Looks if sources unsupported or untested
         from arch else select arch.
         """
-        arch = self.meta.arch
-        if arch.startswith("i") and arch.endswith("86"):
-            arch = "i486"
+        arch = self.arch
         for item in self.unst:
             if item in src:
                 arch = item
@@ -280,9 +280,7 @@ class SBoInstall(object):
         """Search for binary packages in output directory
         """
         find = ""
-        arch = self.meta.arch
-        if self.meta.arch.startswith("arm"):
-            arch = "arm"
+        arch = self.arch
         package = "{0}-{1}-{2}_SBo".format(prgnam, arch, build_N)
         find = find_package(package, self.meta.output)
         return ["".join([self.meta.output] + find)]
