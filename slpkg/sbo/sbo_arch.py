@@ -31,6 +31,7 @@ class SBoArch(object):
     def __init__(self):
         self.meta = _meta_
         self.arch = self.meta.arch
+        # Architectures
         self.x86 = "i486"
         self.arm = "arm"
 
