@@ -6,10 +6,12 @@ Added:
 Fixed:
 - Resolving dependencies message for sbo repository when search for matching
 packages
+- Reference message for installing and upgrading packages
 - Build error message
 Updated:
 - Install SBo packages with specific build number
 - For SBo repository select computer architecture
+- Module imports path
 
 2.7.3 - 13/08/2015
 Added:

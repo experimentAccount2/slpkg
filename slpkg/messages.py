@@ -23,10 +23,9 @@
 
 
 import sys
+import itertools
 
 from slpkg.__metadata__ import MetaData as _meta_
-
-from slpkg.pkg.installed import GetFromInstalled
 
 
 class Msg(object):
@@ -148,10 +147,9 @@ class Msg(object):
             len(install), self.pkg(len(install)),
             len(upgrade), self.pkg(len(upgrade))))
         self.template(78)
-        for installed in (install + upgrade):
-            name = "-".join(installed.split("-")[:-1])
-            if GetFromInstalled(name).name():
-                print("| Package {0} upgraded successfully".format(name))
-            else:
-                print("| Package {0} installed successfully".format(name))
+        for installed, upgraded in itertools.izip_longest(install, upgrade):
+            if upgraded:
+                print("| Package {0} upgraded successfully".format(upgraded))
+            if installed:
+                print("| Package {0} installed successfully".format(installed))
         self.template(78)
