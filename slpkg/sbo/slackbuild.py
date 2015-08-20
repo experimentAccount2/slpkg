@@ -30,6 +30,7 @@ from slpkg.toolbar import status
 from slpkg.log_deps import write_deps
 from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
+from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.pkg.find import find_package
@@ -37,14 +38,13 @@ from slpkg.pkg.build import BuildPackage
 from slpkg.pkg.manager import PackageManager
 from slpkg.pkg.installed import GetFromInstalled
 
-from greps import SBoGrep
-from remove import delete
-from sbo_arch import SBoArch
-from compressed import SBoLink
-from dependency import Requires
-from search import sbo_search_pkg
-from build_num import BuildNumber
-from splitting import split_package
+from slpkg.sbo.greps import SBoGrep
+from slpkg.sbo.remove import delete
+from slpkg.sbo.sbo_arch import SBoArch
+from slpkg.sbo.compressed import SBoLink
+from slpkg.sbo.dependency import Requires
+from slpkg.sbo.search import sbo_search_pkg
+from slpkg.sbo.build_num import BuildNumber
 
 
 class SBoInstall(object):
@@ -73,6 +73,8 @@ class SBoInstall(object):
         self.blacklist = BlackList().packages(pkgs=self.data, repo="sbo")
 
     def start(self, if_upgrade):
+        """Start view, build and install SBo packages
+        """
         try:
             tagc = ""
             for _sbo in self.slackbuilds:
@@ -110,19 +112,19 @@ class SBoInstall(object):
                 Msg().upg_inst(if_upgrade)
 
                 # view master packages
-                for sbo, ar in zip(self.master_packages, mas_src):
+                for sbo, arch in zip(self.master_packages, mas_src):
                     tagc = self.tag(sbo)
                     name = "-".join(sbo.split("-")[:-1])
                     self.view_packages(tagc, name, sbo.split("-")[-1],
-                                       self.select_arch(ar))
+                                       self.select_arch(arch))
                 self.view_installing_for_deps()
 
                 # view dependencies
-                for dep, ar in zip(self.dependencies, dep_src):
+                for dep, arch in zip(self.dependencies, dep_src):
                     tagc = self.tag(dep)
                     name = "-".join(dep.split("-")[:-1])
                     self.view_packages(tagc, name, dep.split("-")[-1],
-                                       self.select_arch(ar))
+                                       self.select_arch(arch))
 
                 count_total = sum([self.count_ins, self.count_upg,
                                    self.count_uni])

@@ -22,9 +22,9 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-from messages import Msg
-from repositories import Repo
-from __metadata__ import MetaData as _meta_
+from slpkg.messages import Msg
+from slpkg.repositories import Repo
+from slpkg.__metadata__ import MetaData as _meta_
 
 
 class RepoList(object):

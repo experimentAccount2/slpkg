@@ -31,7 +31,7 @@ from slpkg.blacklist import BlackList
 from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _meta_
 
-from greps import SBoGrep
+from slpkg.sbo.greps import SBoGrep
 
 
 def sbo_upgrade(skip):

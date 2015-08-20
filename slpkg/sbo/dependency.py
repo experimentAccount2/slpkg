@@ -28,7 +28,7 @@ from slpkg.toolbar import status
 from slpkg.blacklist import BlackList
 from slpkg.__metadata__ import MetaData as _meta_
 
-from greps import SBoGrep
+from slpkg.sbo.greps import SBoGrep
 
 
 class Requires(object):

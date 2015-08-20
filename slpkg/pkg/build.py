@@ -31,7 +31,7 @@ import tarfile
 import subprocess
 import multiprocessing
 
-from find import find_package
+from slpkg.pkg.find import find_package
 
 from slpkg.messages import Msg
 from slpkg.checksum import check_md5

@@ -24,8 +24,8 @@
 
 import subprocess
 
-from utils import Utils
-from __metadata__ import MetaData as _meta_
+from slpkg.utils import Utils
+from slpkg.__metadata__ import MetaData as _meta_
 
 
 class Config(object):

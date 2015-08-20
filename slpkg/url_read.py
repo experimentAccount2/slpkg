@@ -24,7 +24,7 @@
 
 import urllib2
 
-from __metadata__ import MetaData as _meta_
+from slpkg.__metadata__ import MetaData as _meta_
 
 
 class URL(object):

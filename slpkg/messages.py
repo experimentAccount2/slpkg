@@ -24,9 +24,9 @@
 
 import sys
 
-from __metadata__ import MetaData as _meta_
+from slpkg.__metadata__ import MetaData as _meta_
 
-from pkg.installed import GetFromInstalled
+from slpkg.pkg.installed import GetFromInstalled
 
 
 class Msg(object):

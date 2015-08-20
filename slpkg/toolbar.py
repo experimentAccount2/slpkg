@@ -25,7 +25,7 @@
 import sys
 import time
 
-from __metadata__ import MetaData as _meta_
+from slpkg.__metadata__ import MetaData as _meta_
 
 
 def status(sec):

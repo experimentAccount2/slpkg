@@ -26,13 +26,13 @@ import os
 import sys
 import shutil
 
-from repositories import Repo
-from file_size import FileSize
-from downloader import Download
-from __metadata__ import MetaData as _meta_
+from slpkg.repositories import Repo
+from slpkg.file_size import FileSize
+from slpkg.downloader import Download
+from slpkg.__metadata__ import MetaData as _meta_
 
-from slack.mirrors import mirrors
-from slack.slack_version import slack_ver
+from slpkg.slack.mirrors import mirrors
+from slpkg.slack.slack_version import slack_ver
 
 
 class Initialization(object):

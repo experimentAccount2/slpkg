@@ -26,9 +26,9 @@ import os
 import shutil
 import itertools
 
-from messages import Msg
-from utils import Utils
-from __metadata__ import MetaData as _meta_
+from slpkg.messages import Msg
+from slpkg.utils import Utils
+from slpkg.__metadata__ import MetaData as _meta_
 
 
 class NewConfig(object):

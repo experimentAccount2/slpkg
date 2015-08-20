@@ -25,7 +25,7 @@
 from slpkg.repositories import Repo
 from slpkg.__metadata__ import MetaData as _meta_
 
-from slack_version import slack_ver
+from slpkg.slack.slack_version import slack_ver
 
 
 def mirrors(name, location):

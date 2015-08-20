@@ -26,43 +26,43 @@ import os
 import sys
 import getpass
 
-from load import Regex
-from desc import PkgDesc
-from messages import Msg
-from auto_pkg import Auto
-from config import Config
-from checks import Updates
-from queue import QueuePkgs
-from repoinfo import RepoInfo
-from repolist import RepoList
-from repositories import Repo
-from blacklist import BlackList
-from version import prog_version
-from health import PackageHealth
-from new_config import NewConfig
-from tracking import TrackingDeps
-from pkg_find import find_from_repos
-from arguments import options, usage
-from slpkg_update import it_self_update
-from status_deps import DependenciesStatus
+from slpkg.load import Regex
+from slpkg.desc import PkgDesc
+from slpkg.messages import Msg
+from slpkg.auto_pkg import Auto
+from slpkg.config import Config
+from slpkg.checks import Updates
+from slpkg.queue import QueuePkgs
+from slpkg.repoinfo import RepoInfo
+from slpkg.repolist import RepoList
+from slpkg.repositories import Repo
+from slpkg.blacklist import BlackList
+from slpkg.version import prog_version
+from slpkg.health import PackageHealth
+from slpkg.new_config import NewConfig
+from slpkg.tracking import TrackingDeps
+from slpkg.pkg_find import find_from_repos
+from slpkg.arguments import options, usage
+from slpkg.slpkg_update import it_self_update
+from slpkg.status_deps import DependenciesStatus
 
-from init import (
+from slpkg.init import (
     Update,
     Initialization,
     check_exists_repositories
 )
-from __metadata__ import MetaData as _meta_
+from slpkg.__metadata__ import MetaData as _meta_
 
-from pkg.manager import PackageManager
+from slpkg.pkg.manager import PackageManager
 
-from sbo.views import SBoNetwork
-from sbo.check import sbo_upgrade
-from sbo.autobuild import AutoBuild
-from sbo.slackbuild import SBoInstall
+from slpkg.sbo.views import SBoNetwork
+from slpkg.sbo.check import sbo_upgrade
+from slpkg.sbo.autobuild import AutoBuild
+from slpkg.sbo.slackbuild import SBoInstall
 
-from slack.patches import Patches
-from binary.check import pkg_upgrade
-from binary.install import BinaryInstall
+from slpkg.slack.patches import Patches
+from slpkg.binary.check import pkg_upgrade
+from slpkg.binary.install import BinaryInstall
 
 
 class ArgParse(object):

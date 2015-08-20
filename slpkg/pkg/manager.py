@@ -26,8 +26,8 @@ import os
 import subprocess
 
 
-from find import find_package
-from installed import GetFromInstalled
+from slpkg.pkg.find import find_package
+from slpkg.pkg.installed import GetFromInstalled
 
 from slpkg.utils import Utils
 from slpkg.messages import Msg

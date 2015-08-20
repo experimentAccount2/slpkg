@@ -45,8 +45,8 @@ from slpkg.pkg.installed import GetFromInstalled
 
 from slpkg.binary.greps import repo_data
 
-from mirrors import mirrors
-from slack_version import slack_ver
+from slpkg.slack.mirrors import mirrors
+from slpkg.slack.slack_version import slack_ver
 
 
 class Patches(object):

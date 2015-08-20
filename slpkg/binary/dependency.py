@@ -27,7 +27,7 @@ import sys
 from slpkg.toolbar import status
 from slpkg.__metadata__ import MetaData as _meta_
 
-from greps import Requires
+from slpkg.binary.greps import Requires
 
 
 class Dependencies(object):

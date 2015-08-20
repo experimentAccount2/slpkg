@@ -24,7 +24,7 @@
 
 import os
 
-from splitting import split_package
+from slpkg.splitting import split_package
 
 
 class Utils(object):

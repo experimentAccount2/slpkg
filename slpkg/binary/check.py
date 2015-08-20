@@ -31,8 +31,8 @@ from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.pkg.find import find_package
 
-from greps import repo_data
-from repo_init import RepoInit
+from slpkg.binary.greps import repo_data
+from slpkg.binary.repo_init import RepoInit
 
 
 def pkg_upgrade(repo, skip):

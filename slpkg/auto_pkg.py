@@ -24,10 +24,10 @@
 
 import sys
 
-from messages import Msg
-from __metadata__ import MetaData as _meta_
+from slpkg.messages import Msg
+from slpkg.__metadata__ import MetaData as _meta_
 
-from pkg.manager import PackageManager
+from slpkg.pkg.manager import PackageManager
 
 
 class Auto(object):

@@ -22,7 +22,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-from find import find_package
+from slpkg.pkg.find import find_package
 
 from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _meta_

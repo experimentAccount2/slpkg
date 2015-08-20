@@ -22,10 +22,10 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-from messages import Msg
-from sbo.greps import SBoGrep
-from pkg.manager import PackageManager
-from __metadata__ import MetaData as _meta_
+from slpkg.messages import Msg
+from slpkg.sbo.greps import SBoGrep
+from slpkg.pkg.manager import PackageManager
+from slpkg.__metadata__ import MetaData as _meta_
 
 
 def find_from_repos(pkg):

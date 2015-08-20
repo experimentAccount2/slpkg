@@ -22,9 +22,9 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-from utils import Utils
-from splitting import split_package
-from __metadata__ import MetaData as _meta_
+from slpkg.utils import Utils
+from slpkg.splitting import split_package
+from slpkg.__metadata__ import MetaData as _meta_
 
 
 class BlackList(object):

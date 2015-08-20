@@ -24,7 +24,7 @@
 
 import os
 
-from __metadata__ import MetaData as _meta_
+from slpkg.__metadata__ import MetaData as _meta_
 
 
 def delete(path, packages):

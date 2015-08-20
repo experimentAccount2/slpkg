@@ -27,11 +27,11 @@ import re
 import tarfile
 import subprocess
 
-from url_read import URL
-from checksum import check_md5
-from downloader import Download
-from grep_md5 import pkg_checksum
-from __metadata__ import MetaData as _meta_
+from slpkg.url_read import URL
+from slpkg.checksum import check_md5
+from slpkg.downloader import Download
+from slpkg.grep_md5 import pkg_checksum
+from slpkg.__metadata__ import MetaData as _meta_
 
 
 def it_self_update():

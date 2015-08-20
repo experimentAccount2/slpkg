@@ -22,19 +22,19 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-from utils import Utils
-from messages import Msg
-from graph import Graph
-from blacklist import BlackList
-from __metadata__ import MetaData as _meta_
+from slpkg.utils import Utils
+from slpkg.messages import Msg
+from slpkg.graph import Graph
+from slpkg.blacklist import BlackList
+from slpkg.__metadata__ import MetaData as _meta_
 
-from pkg.find import find_package
+from slpkg.pkg.find import find_package
 
-from sbo.dependency import Requires
-from sbo.search import sbo_search_pkg
+from slpkg.sbo.dependency import Requires
+from slpkg.sbo.search import sbo_search_pkg
 
-from binary.search import search_pkg
-from binary.dependency import Dependencies
+from slpkg.binary.search import search_pkg
+from slpkg.binary.dependency import Dependencies
 
 
 class TrackingDeps(object):

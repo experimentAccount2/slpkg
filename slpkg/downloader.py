@@ -25,8 +25,8 @@
 import os
 import subprocess
 
-from messages import Msg
-from __metadata__ import MetaData as _meta_
+from slpkg.messages import Msg
+from slpkg.__metadata__ import MetaData as _meta_
 
 
 class Download(object):

@@ -22,10 +22,10 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-from slack.mirrors import mirrors
+from slpkg.slack.mirrors import mirrors
 
-from url_read import URL
-from __metadata__ import MetaData as _meta_
+from slpkg.url_read import URL
+from slpkg.__metadata__ import MetaData as _meta_
 
 
 def pkg_checksum(binary, repo):

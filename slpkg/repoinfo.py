@@ -24,11 +24,11 @@
 
 import os
 
-from sizes import units
-from utils import Utils
-from repositories import Repo
-from repolist import RepoList
-from __metadata__ import MetaData as _meta_
+from slpkg.sizes import units
+from slpkg.utils import Utils
+from slpkg.repositories import Repo
+from slpkg.repolist import RepoList
+from slpkg.__metadata__ import MetaData as _meta_
 
 
 class RepoInfo(object):

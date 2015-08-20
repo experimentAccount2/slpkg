@@ -25,13 +25,13 @@
 import os
 import sys
 
-from utils import Utils
-from messages import Msg
-from graph import Graph
-from splitting import split_package
-from __metadata__ import MetaData as _meta_
+from slpkg.utils import Utils
+from slpkg.messages import Msg
+from slpkg.graph import Graph
+from slpkg.splitting import split_package
+from slpkg.__metadata__ import MetaData as _meta_
 
-from pkg.find import find_package
+from slpkg.pkg.find import find_package
 
 
 class DependenciesStatus(object):

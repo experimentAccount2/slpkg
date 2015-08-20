@@ -22,10 +22,10 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-from messages import Msg
-from arguments import usage
-from init import Initialization
-from __metadata__ import MetaData as _meta_
+from slpkg.messages import Msg
+from slpkg.arguments import usage
+from slpkg.init import Initialization
+from slpkg.__metadata__ import MetaData as _meta_
 
 
 class Updates(object):

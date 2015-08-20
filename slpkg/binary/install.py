@@ -41,9 +41,9 @@ from slpkg.pkg.find import find_package
 from slpkg.pkg.manager import PackageManager
 from slpkg.pkg.installed import GetFromInstalled
 
-from greps import repo_data
-from repo_init import RepoInit
-from dependency import Dependencies
+from slpkg.binary.greps import repo_data
+from slpkg.binary.repo_init import RepoInit
+from slpkg.binary.dependency import Dependencies
 
 
 class BinaryInstall(object):

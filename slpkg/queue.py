@@ -23,19 +23,18 @@
 
 
 import os
-
 from collections import OrderedDict
 
-from utils import Utils
-from downloader import Download
-from __metadata__ import MetaData as _meta_
+from slpkg.utils import Utils
+from slpkg.downloader import Download
+from slpkg.__metadata__ import MetaData as _meta_
 
-from sbo.greps import SBoGrep
-from pkg.find import find_package
-from pkg.build import BuildPackage
-from sbo.compressed import SBoLink
-from sbo.search import sbo_search_pkg
-from pkg.manager import PackageManager
+from slpkg.sbo.greps import SBoGrep
+from slpkg.pkg.find import find_package
+from slpkg.pkg.build import BuildPackage
+from slpkg.sbo.compressed import SBoLink
+from slpkg.sbo.search import sbo_search_pkg
+from slpkg.pkg.manager import PackageManager
 
 
 class QueuePkgs(object):

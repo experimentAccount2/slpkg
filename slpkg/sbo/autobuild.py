@@ -22,9 +22,9 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-from greps import SBoGrep
-
 from slpkg.pkg.build import BuildPackage
+
+from slpkg.sbo.greps import SBoGrep
 
 
 class AutoBuild(object):

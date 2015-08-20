@@ -23,11 +23,12 @@
 
 
 import os
-from utils import Utils
-from splitting import split_package
-from __metadata__ import MetaData as _meta_
 
-from pkg.find import find_package
+from slpkg.utils import Utils
+from slpkg.splitting import split_package
+from slpkg.__metadata__ import MetaData as _meta_
+
+from slpkg.pkg.find import find_package
 
 
 def library(repo):

@@ -28,20 +28,20 @@ import pydoc
 from slpkg.messages import Msg
 from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
+from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.pkg.find import find_package
 from slpkg.pkg.build import BuildPackage
 from slpkg.pkg.manager import PackageManager
 
-from read import ReadSBo
-from remove import delete
-from greps import SBoGrep
-from sbo_arch import SBoArch
-from compressed import SBoLink
-from search import sbo_search_pkg
-from build_num import BuildNumber
-from splitting import split_package
+from slpkg.sbo.read import ReadSBo
+from slpkg.sbo.remove import delete
+from slpkg.sbo.greps import SBoGrep
+from slpkg.sbo.sbo_arch import SBoArch
+from slpkg.sbo.compressed import SBoLink
+from slpkg.sbo.search import sbo_search_pkg
+from slpkg.sbo.build_num import BuildNumber
 
 
 class SBoNetwork(object):

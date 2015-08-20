@@ -24,9 +24,9 @@
 
 import os
 
-from __metadata__ import MetaData as _meta_
+from slpkg.__metadata__ import MetaData as _meta_
 
-from pkg.find import find_package
+from slpkg.pkg.find import find_package
 
 
 def write_deps(deps_dict):

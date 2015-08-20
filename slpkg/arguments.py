@@ -22,10 +22,10 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-from repolist import RepoList
-from __metadata__ import MetaData as _meta_
+from slpkg.repolist import RepoList
+from slpkg.__metadata__ import MetaData as _meta_
 
-from slack.slack_version import slack_ver
+from slpkg.slack.slack_version import slack_ver
 
 
 def header():
