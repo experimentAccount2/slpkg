@@ -277,20 +277,20 @@ For Slackware 'current' users must change the variable VERSION in '/etc/slpkg/sl
     $ slpkg -g edit=nano
 
 
-Slackware Mirrors
------------------
-
-Slpkg uses the central mirror "http://mirrors.slackware.com/slackware/" to find the 
-nearest one. If however for some reason this troublesome please edit the file in 
-'/etc/slpkg/slackware-mirrors'.
-
-
 Slackware ARM
 -------------
 
 Slackware ARM users needs to change mirror in '/etc/slpkg/slackware-changelogs-mirror' 
 for synchronize ChangeLog.txt file with slackpkg.
 Also you need to use only two repositories currently there 'slack' and 'sbo'.
+
+
+Slackware Mirrors
+-----------------
+
+Slpkg uses the central mirror "http://mirrors.slackware.com/slackware/" to find the 
+nearest one. If however for some reason this troublesome please edit the file in 
+'/etc/slpkg/slackware-mirrors'.
 
 
 Slpkg configuration
