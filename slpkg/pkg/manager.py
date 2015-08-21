@@ -204,10 +204,19 @@ class PackageManager(object):
         self.msg.template(78)
         print("| Found dependencies for package {0}:".format(package))
         self.msg.template(78)
+        self.size = 0
         for dep in dependencies.splitlines():
             if GetFromInstalled(dep).name():
-                print("| {0}{1}{2}".format(self.meta.color["RED"], dep,
+                ver = GetFromInstalled(dep).version()
+                package = max(find_package(dep + ver, self.meta.pkg_path))
+                self._sizes(package)
+                print("| {0}{1}{2}".format(self.meta.color["RED"], dep + ver,
                                            self.meta.color["ENDC"]))
+        self._calc_sizes()
+        self.msg.template(78)
+        print("| {0}Size of removed dependencies {1} {2}{3}".format(
+            self.meta.color["GREY"], round(self.size, 2), self.unit,
+            self.meta.color["ENDC"]))
         self.msg.template(78)
         return dependencies
 
