@@ -34,6 +34,7 @@ class RepoList(object):
 
     def __init__(self):
         self.meta = _meta_
+        self.msg = Msg()
         self.all_repos = {
             "slack": Repo().slack(),
             "sbo": Repo().sbo(),
@@ -59,13 +60,13 @@ class RepoList(object):
         """
         def_cnt, cus_cnt = 0, 0
         print("")
-        Msg().template(78)
+        self.msg.template(78)
         print("{0}{1}{2}{3}{4}{5}{6}".format(
             "| Repo id", " " * 2,
             "Repo URL", " " * 44,
             "Default", " " * 3,
             "Status"))
-        Msg().template(78)
+        self.msg.template(78)
         for repo_id, repo_URL in sorted(self.all_repos.iteritems()):
             status, COLOR = "disabled", self.meta.color["RED"]
             default = "yes"

@@ -23,8 +23,8 @@
 
 
 from slpkg.utils import Utils
-from slpkg.messages import Msg
 from slpkg.graph import Graph
+from slpkg.messages import Msg
 from slpkg.blacklist import BlackList
 from slpkg.__metadata__ import MetaData as _meta_
 
@@ -49,6 +49,7 @@ class TrackingDeps(object):
         self.repo = repo
         self.flag = flag
         self.meta = _meta_
+        self.msg = Msg()
         self.green = self.meta.color["GREEN"]
         self.yellow = self.meta.color["YELLOW"]
         self.cyan = self.meta.color["CYAN"]
@@ -62,7 +63,7 @@ class TrackingDeps(object):
     def run(self):
         """Run tracking dependencies
         """
-        Msg().resolving()
+        self.msg.resolving()
         self.repositories()
         if self.find_pkg:
             self.dependencies_list.reverse()
@@ -72,15 +73,15 @@ class TrackingDeps(object):
                 self.dependencies = ["No dependencies"]
             if self.flag.startswith("--graph="):
                 self.deps_tree()
-                Msg().done()
+                self.msg.done()
                 self.graph()
-            Msg().done()
+            self.msg.done()
             pkg_len = len(self.name) + 24
             print("")    # new line at start
-            Msg().template(pkg_len)
+            self.msg.template(pkg_len)
             print("| Package {0}{1}{2} dependencies :".format(
                 self.cyan, self.name, self.endc))
-            Msg().template(pkg_len)
+            self.msg.template(pkg_len)
             print("\\")
             print(" +---{0}[ Tree of dependencies ]{1}".format(self.yellow,
                                                                self.endc))

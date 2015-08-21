@@ -36,6 +36,7 @@ class PackageHealth(object):
     def __init__(self, mode):
         self.mode = mode
         self.meta = _meta_
+        self.msg = Msg()
         self.pkg_path = _meta_.pkg_path
         self.installed = []
         self.cn = 0
@@ -96,12 +97,12 @@ class PackageHealth(object):
         elif per < 60:
             color = self.meta.color["RED"]
         health = "{0}{1}%{2}".format(color, str(per), self.meta.color["ENDC"])
-        Msg().template(78)
+        self.msg.template(78)
         print("| {0}{1}{2}{3}{4}".format(
             "Total files", " " * 7, "Not installed", " " * 40, "Health"))
-        Msg().template(78)
+        self.msg.template(78)
         print("| {0}{1}{2}{3}{4:>4}".format(
             self.cf, " " * (18-len(str(self.cf))),
             self.cn, " " * (55-len(str(self.cn))),
             health))
-        Msg().template(78)
+        self.msg.template(78)

@@ -55,6 +55,7 @@ class BinaryInstall(object):
         self.repo = repo
         self.flag = flag
         self.meta = _meta_
+        self.msg = Msg()
         self.version = self.meta.slack_rel
         self.tmp_path = self.meta.slpkg_tmp_packages
         self.dwn, self.dep_dwn = [], []
@@ -64,7 +65,7 @@ class BinaryInstall(object):
         self.dependencies = []
         self.deps_dict = {}
         self.answer = ""
-        Msg().reading()
+        self.msg.reading()
         self.PACKAGES_TXT, self.mirror = RepoInit(self.repo).fetch()
         self.data = repo_data(self.PACKAGES_TXT, self.repo, self.flag)
         self.blacklist = BlackList().packages(self.data[0], self.repo)
@@ -77,7 +78,7 @@ class BinaryInstall(object):
             # fix if packages is for upgrade
             self.if_upgrade = if_upgrade
             mas_sum = dep_sum = sums = [0, 0, 0]
-            Msg().done()
+            self.msg.done()
             self.dependencies = self.resolving_deps()
             self.update_deps()
             (self.dep_dwn, self.dep_install, self.dep_comp_sum,
@@ -87,12 +88,12 @@ class BinaryInstall(object):
              self.uncomp_sum) = self.store(self.packages)
             if (self.meta.rsl_deps in ["on", "ON"] and
                     self.flag != "--resolve-off"):
-                Msg().done()
+                self.msg.done()
             if self.install:
                 print("\nThe following packages will be automatically "
                       "installed or upgraded \nwith new version:\n")
                 self.top_view()
-                Msg().upg_inst(self.if_upgrade)
+                self.msg.upg_inst(self.if_upgrade)
                 mas_sum = self.views(self.install, self.comp_sum)
                 if self.dependencies:
                     print("Installing for dependencies:")
@@ -107,10 +108,10 @@ class BinaryInstall(object):
                 print("=" * 79)
                 print("{0}Total {1} {2}.".format(self.meta.color["GREY"],
                                                  sum(sums),
-                                                 Msg().pkg(sum(sums))))
+                                                 self.msg.pkg(sum(sums))))
                 print("{0} {1} will be installed, {2} will be upgraded and "
                       "{3} will be reinstalled.".format(sums[2],
-                                                        Msg().pkg(sums[2]),
+                                                        self.msg.pkg(sums[2]),
                                                         sums[1], sums[0]))
                 print("Need to get {0} {1} of archives.".format(size[0],
                                                                 unit[0]))
@@ -118,7 +119,7 @@ class BinaryInstall(object):
                       "space will be used.{2}".format(size[1], unit[1],
                                                       self.meta.color["ENDC"]))
                 print("")
-                if Msg().answer() in ["y", "Y"]:
+                if self.msg.answer() in ["y", "Y"]:
                     self.install.reverse()
                     Download(self.tmp_path, self.dep_dwn + self.dwn,
                              self.repo).start()
@@ -127,11 +128,11 @@ class BinaryInstall(object):
                     self.install = Utils().check_downloaded(
                         self.tmp_path, self.install)
                     ins, upg = self.install_packages()
-                    Msg().reference(ins, upg)
+                    self.msg.reference(ins, upg)
                     write_deps(self.deps_dict)
                     delete(self.tmp_path, self.install)
             else:
-                Msg().not_found(self.if_upgrade)
+                self.msg.not_found(self.if_upgrade)
         except KeyboardInterrupt:
             print("")   # new line at exit
             raise SystemExit()
@@ -196,7 +197,7 @@ class BinaryInstall(object):
         requires = []
         if (self.meta.rsl_deps in ["on", "ON"] and
                 self.flag != "--resolve-off"):
-            Msg().resolving()
+            self.msg.resolving()
         for dep in self.packages:
             status(0.05)
             dependencies = []
@@ -236,7 +237,7 @@ class BinaryInstall(object):
         return [pkg_sum, upg_sum, uni_sum]
 
     def top_view(self):
-        Msg().template(78)
+        self.msg.template(78)
         print("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
             "| Package", " " * 17,
             "New Version", " " * 8,
@@ -244,7 +245,7 @@ class BinaryInstall(object):
             "Build", " " * 2,
             "Repos", " " * 10,
             "Size"))
-        Msg().template(78)
+        self.msg.template(78)
 
     def store(self, packages):
         """

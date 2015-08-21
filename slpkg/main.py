@@ -70,6 +70,7 @@ class ArgParse(object):
     def __init__(self, args):
         self.args = args
         self.meta = _meta_
+        self.msg = Msg()
         self.commands = [
             "update",
             "upgrade",
@@ -559,7 +560,7 @@ class ArgParse(object):
                 Auto(packages).select()
             if not_found:
                 for ntf in not_found:
-                    Msg().pkg_not_found("", ntf, "Not installed", "")
+                    self.msg.pkg_not_found("", ntf, "Not installed", "")
             raise SystemExit()
 
 

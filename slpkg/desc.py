@@ -35,6 +35,7 @@ class PkgDesc(object):
         self.repo = repo
         self.paint = paint
         self.meta = _meta_
+        self.msg = Msg()
         self.COLOR = ""
         self.lib = ""
         color_text = {
@@ -77,6 +78,6 @@ class PkgDesc(object):
                                              line[31:],
                                              self.meta.color["ENDC"]))
         if count == 0:
-            Msg().pkg_not_found("", self.name, "No matching", "\n")
+            self.msg.pkg_not_found("", self.name, "No matching", "\n")
         else:
             print("")   # new line at end

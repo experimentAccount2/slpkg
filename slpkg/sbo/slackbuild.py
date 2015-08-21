@@ -54,6 +54,7 @@ class SBoInstall(object):
         self.slackbuilds = slackbuilds
         self.flag = flag
         self.meta = _meta_
+        self.msg = Msg()
         self.arch = SBoArch().get()
         self.build_folder = self.meta.build_path
         self.unst = ["UNSUPPORTED", "UNTESTED"]
@@ -68,7 +69,7 @@ class SBoInstall(object):
         self.count_ins = 0
         self.count_upg = 0
         self.count_uni = 0
-        Msg().reading()
+        self.msg.reading()
         self.data = SBoGrep(name="").names()
         self.blacklist = BlackList().packages(pkgs=self.data, repo="sbo")
 
@@ -94,22 +95,22 @@ class SBoInstall(object):
 
             self.master_packages, mas_src = self.sbo_version_source(
                 self.package_found)
-            Msg().done()
+            self.msg.done()
             if (self.meta.rsl_deps in ["on", "ON"] and
                     self.flag != "--resolve-off" and not self.match):
-                Msg().resolving()
+                self.msg.resolving()
             self.dependencies, dep_src = self.sbo_version_source(
                 self.one_for_all(self.deps))
             if (self.meta.rsl_deps in ["on", "ON"] and
                     self.flag != "--resolve-off" and not self.match):
-                Msg().done()
+                self.msg.done()
             self.clear_masters()
 
             if self.package_found:
                 print("\nThe following packages will be automatically "
                       "installed or upgraded \nwith new version:\n")
                 self.top_view()
-                Msg().upg_inst(if_upgrade)
+                self.msg.upg_inst(if_upgrade)
 
                 # view master packages
                 for sbo, arch in zip(self.master_packages, mas_src):
@@ -132,16 +133,16 @@ class SBoInstall(object):
                 print("=" * 79)
                 print("{0}Total {1} {2}.".format(
                     self.meta.color["GREY"], count_total,
-                    Msg().pkg(count_total)))
+                    self.msg.pkg(count_total)))
                 print("{0} {1} will be installed, {2} allready installed and "
                       "{3} {4}".format(self.count_uni,
-                                       Msg().pkg(self.count_uni),
+                                       self.msg.pkg(self.count_uni),
                                        self.count_ins, self.count_upg,
-                                       Msg().pkg(self.count_upg)))
+                                       self.msg.pkg(self.count_upg)))
                 print("will be upgraded.{0}\n".format(self.meta.color["ENDC"]))
                 self.continue_to_install()
             else:
-                Msg().not_found(if_upgrade)
+                self.msg.not_found(if_upgrade)
         except KeyboardInterrupt:
             print("")   # new line at exit
             raise SystemExit()
@@ -159,9 +160,9 @@ class SBoInstall(object):
     def continue_to_install(self):
         """Continue to install ?
         """
-        if self.master_packages and Msg().answer() in ["y", "Y"]:
+        if self.master_packages and self.msg.answer() in ["y", "Y"]:
             installs, upgraded = self.build_install()
-            Msg().reference(installs, upgraded)
+            self.msg.reference(installs, upgraded)
             write_deps(self.deps_dict)
             delete(self.build_folder)
 
@@ -216,7 +217,7 @@ class SBoInstall(object):
     def top_view(self):
         """View top template
         """
-        Msg().template(78)
+        self.msg.template(78)
         print("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
             "| Package", " " * 17,
             "New version", " " * 8,
@@ -224,7 +225,7 @@ class SBoInstall(object):
             "Build", " " * 2,
             "Repos", " " * 10,
             "Size"))
-        Msg().template(78)
+        self.msg.template(78)
 
     def view_packages(self, *args):
         """:View slackbuild packages with version and arch
@@ -308,15 +309,15 @@ class SBoInstall(object):
                                              self.meta.pkg_path))
             src_link = SBoGrep(pkg).source().split()
             if installed:
-                Msg().template(78)
-                Msg().pkg_found(prgnam)
-                Msg().template(78)
+                self.msg.template(78)
+                self.msg.pkg_found(prgnam)
+                self.msg.template(78)
             elif self.unst[0] in src_link or self.unst[1] in src_link:
-                Msg().template(78)
+                self.msg.template(78)
                 print("| Package {0} {1}{2}{3}".format(
                     prgnam, self.meta.color["RED"], "".join(src_link),
                     self.meta.color["ENDC"]))
-                Msg().template(78)
+                self.msg.template(78)
             else:
                 sbo_url = sbo_search_pkg(pkg)
                 sbo_link = SBoLink(sbo_url).tar_gz()

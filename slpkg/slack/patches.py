@@ -56,6 +56,7 @@ class Patches(object):
         self.skip = skip
         self.flag = flag
         self.meta = _meta_
+        self.msg = Msg()
         self.version = self.meta.slack_rel
         self.patch_path = self.meta.slpkg_tmp_patches
         self.pkg_for_upgrade = []
@@ -68,7 +69,7 @@ class Patches(object):
         self.comp_sum = []
         self.uncomp_sum = []
         self.utils = Utils()
-        Msg().checking()
+        self.msg.checking()
         if self.version == "stable":
             self.PACKAGES_TXT = URL(mirrors("PACKAGES.TXT",
                                             "patches/")).reading()
@@ -81,10 +82,10 @@ class Patches(object):
         """
         try:
             self.store()
-            Msg().done()
+            self.msg.done()
             if self.upgrade_all:
                 print("\nThese packages need upgrading:\n")
-                Msg().template(78)
+                self.msg.template(78)
                 print("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
                     "| Package", " " * 17,
                     "New Version", " " * 8,
@@ -92,7 +93,7 @@ class Patches(object):
                     "Build", " " * 2,
                     "Repos", " " * 10,
                     "Size"))
-                Msg().template(78)
+                self.msg.template(78)
                 print("Upgrading:")
                 self.views()
                 unit, size = units(self.comp_sum, self.uncomp_sum)
@@ -101,7 +102,7 @@ class Patches(object):
                 print("{0}Total {1} {2} will be upgraded and {3} will be "
                       "installed.".format(self.meta.color["GREY"],
                                           self.count_upg,
-                                          Msg().pkg(self.upgrade_all),
+                                          self.msg.pkg(self.upgrade_all),
                                           self.count_added))
                 print("Need to get {0} {1} of archives.".format(size[0],
                                                                 unit[0]))
@@ -109,7 +110,7 @@ class Patches(object):
                       "will be used.{2}".format(size[1], unit[1],
                                                 self.meta.color["ENDC"]))
                 print("")
-                if Msg().answer() in ["y", "Y"]:
+                if self.msg.answer() in ["y", "Y"]:
                     Download(self.patch_path, self.dwn_links,
                              repo="slack").start()
                     self.upgrade_all = self.utils.check_downloaded(
@@ -118,7 +119,7 @@ class Patches(object):
                     self.kernel()
                     if self.meta.slackpkg_log in ["on", "ON"]:
                         self.slackpkg_update()
-                    Msg().reference(self.installed, self.upgraded)
+                    self.msg.reference(self.installed, self.upgraded)
                     delete(self.patch_path, self.upgrade_all)
             else:
                 slack_arch = ""
@@ -208,11 +209,11 @@ class Patches(object):
                     answer = self.meta.default_answer
                 else:
                     print("")
-                    Msg().template(78)
+                    self.msg.template(78)
                     print("| {0}*** HIGHLY recommended reinstall 'LILO' "
                           "***{1}".format(self.meta.color["RED"],
                                           self.meta.color["ENDC"]))
-                    Msg().template(78)
+                    self.msg.template(78)
                     try:
                         answer = raw_input("\nThe kernel has been upgraded, "
                                            "reinstall `LILO` [y/N]? ")

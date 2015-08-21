@@ -48,6 +48,7 @@ class BuildPackage(object):
         self.sources = sources
         self.path = path
         self.meta = _meta_
+        self.msg = Msg()
         self.prgnam = self.script[:-7]
         self.log_file = "build_{0}_log".format(self.prgnam)
         self.sbo_logs = self.meta.log_path + "sbo/"
@@ -105,7 +106,7 @@ class BuildPackage(object):
             os.chdir(self.path)
             self._check_if_build()
         except (OSError, IOError):
-            Msg().pkg_not_found("\n", self.prgnam, "Wrong file", "\n")
+            self.msg.pkg_not_found("\n", self.prgnam, "Wrong file", "\n")
         except KeyboardInterrupt:
             print("")   # new line at exit
             raise SystemExit()
@@ -115,7 +116,7 @@ class BuildPackage(object):
         """
         find = find_package(self.prgnam + self.meta.sp, self.meta.output)
         if not find:
-            Msg().build_FAILED(self.prgnam)
+            self.msg.build_FAILED(self.prgnam)
             raise SystemExit()
 
     def _create_md5_dict(self):

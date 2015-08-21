@@ -36,6 +36,7 @@ class Auto(object):
     def __init__(self, packages):
         self.packages = packages
         self.meta = _meta_
+        self.msg = Msg()
         self.commands = {
             "i": "installpkg",
             "u": "upgradepkg --install-new",
@@ -49,15 +50,15 @@ class Auto(object):
         for pkg in self.packages:
             print(" " + pkg.split("/")[-1])
         print("")
-        Msg().template(78)
+        self.msg.template(78)
         print("| Choose a Slackware command:")
-        Msg().template(78)
+        self.msg.template(78)
         for com in sorted(self.commands):
             print("| {0}{1}{2}) {3}{4}{5}".format(
                 self.meta.color["RED"], com, self.meta.color["ENDC"],
                 self.meta.color["GREEN"], self.commands[com],
                 self.meta.color["ENDC"]))
-        Msg().template(78)
+        self.msg.template(78)
         try:
             self.choice = raw_input(" > ")
             if self.choice in self.commands.keys():

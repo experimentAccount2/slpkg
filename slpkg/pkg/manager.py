@@ -41,6 +41,7 @@ class PackageManager(object):
     def __init__(self, binary):
         self.binary = binary
         self.meta = _meta_
+        self.msg = Msg()
         self.skip = ""
         self.size = 0
 
@@ -79,7 +80,7 @@ class PackageManager(object):
             bol = eol = ""
         else:
             bol = eol = "\n"
-        Msg().pkg_not_found(bol, pkg, message, eol)
+        self.msg.pkg_not_found(bol, pkg, message, eol)
 
     def remove(self, flag, extra):
         """Remove Slackware binary packages
@@ -156,7 +157,7 @@ class PackageManager(object):
                         removed.append(split_package(pkg)[0])
                         self._sizes(pkg)
             if not removed:
-                Msg().pkg_not_found("", tag, "Can't remove", "")
+                self.msg.pkg_not_found("", tag, "Can't remove", "")
         else:
             for pkg in self.binary:
                 name = GetFromInstalled(pkg).name()
@@ -170,7 +171,7 @@ class PackageManager(object):
                     removed.append(pkg)
                     self._sizes(package[0])
                 else:
-                    Msg().pkg_not_found("", pkg, "Can't remove", "")
+                    self.msg.pkg_not_found("", pkg, "Can't remove", "")
         if self.size > 1024:
             unit = "Mb"
             self.size = (self.size / 1024)
@@ -191,14 +192,14 @@ class PackageManager(object):
         """
         dependencies = Utils().read_file(path + package)
         print("")   # new line at start
-        Msg().template(78)
+        self.msg.template(78)
         print("| Found dependencies for package {0}:".format(package))
-        Msg().template(78)
+        self.msg.template(78)
         for dep in dependencies.splitlines():
             if GetFromInstalled(dep).name():
                 print("| {0}{1}{2}".format(self.meta.color["RED"], dep,
                                            self.meta.color["ENDC"]))
-        Msg().template(78)
+        self.msg.template(78)
         return dependencies
 
     def _removepkg(self, package):
@@ -237,9 +238,9 @@ class PackageManager(object):
     def _skip_remove(self):
         """Skip packages from remove
         """
-        Msg().template(78)
+        self.msg.template(78)
         print("| Insert packages to exception removal:")
-        Msg().template(78)
+        self.msg.template(78)
         try:
             self.skip = raw_input(" > ").split()
         except (KeyboardInterrupt, EOFError):
@@ -264,33 +265,33 @@ class PackageManager(object):
                         package.append(pkg)
                         dependency.append(rmv)
             if view:
-                Msg().template(78)
+                self.msg.template(78)
                 print("| {0}{1}{2}".format(
                     self.meta.color["RED"], " " * 30 + "!!! WARNING !!!",
                     self.meta.color["ENDC"]))
-                Msg().template(78)
+                self.msg.template(78)
                 for p, d in zip(package, dependency):
                     print("| {0}{1}{2} is dependency of the package --> "
                           "{3}{4}{5}".format(self.meta.color["YELLOW"], d,
                                              self.meta.color["ENDC"],
                                              self.meta.color["GREEN"], p,
                                              self.meta.color["ENDC"]))
-                Msg().template(78)
+                self.msg.template(78)
                 self._skip_remove()
 
     def _reference_rmvs(self, removes):
         """Prints all removed packages
         """
         print("")
-        Msg().template(78)
+        self.msg.template(78)
         print("| Total {0} packages removed".format(len(removes)))
-        Msg().template(78)
+        self.msg.template(78)
         for pkg in removes:
             if not GetFromInstalled(pkg).name():
                 print("| Package {0} removed".format(pkg))
             else:
                 print("| Package {0} not found".format(pkg))
-        Msg().template(78)
+        self.msg.template(78)
         print("")   # new line at end
 
     def find(self):
@@ -310,7 +311,7 @@ class PackageManager(object):
                     self._sizes(match)
         if matching == 0:
             message = "Can't find"
-            Msg().pkg_not_found("", ", ".join(self.binary), message, "\n")
+            self.msg.pkg_not_found("", ", ".join(self.binary), message, "\n")
         else:
             if self.size > 1024:
                 unit = "Mb"
@@ -353,7 +354,7 @@ class PackageManager(object):
                     bol = eol = ""
                 else:
                     bol = eol = "\n"
-                Msg().pkg_not_found(bol, pkg, message, eol)
+                self.msg.pkg_not_found(bol, pkg, message, eol)
 
     def package_list(self, repo, INDEX, installed):
         """List with the installed packages

@@ -40,6 +40,7 @@ class DependenciesStatus(object):
     def __init__(self, image):
         self.image = image
         self.meta = _meta_
+        self.msg = Msg()
         self.grey = self.meta.color["GREY"]
         self.green = self.meta.color["GREEN"]
         self.endc = self.meta.color["ENDC"]
@@ -77,9 +78,9 @@ class DependenciesStatus(object):
         if self.image:
             Graph(self.image).dependencies(self.dmap)
         print("")
-        Msg().template(78)
+        self.msg.template(78)
         print("| {0}{1}{2}".format("Dependencies", " " * 20, "Packages"))
-        Msg().template(78)
+        self.msg.template(78)
         for key, value in self.dmap.iteritems():
             print("  {0}{1}{2}{3}{4}".format(
                 self.green, key, self.endc, " " * (32-len(key)),
@@ -89,10 +90,10 @@ class DependenciesStatus(object):
     def tree(self):
         """Like tree view mode
         """
-        Msg().template(78)
+        self.msg.template(78)
         print("| Dependencies\n"
               "|   Packages")
-        Msg().template(78)
+        self.msg.template(78)
         self.data()
         for pkg, dep in self.dmap.iteritems():
             print("+ {0}{1}{2}".format(self.green, pkg, self.endc))

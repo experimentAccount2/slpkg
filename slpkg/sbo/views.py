@@ -51,6 +51,7 @@ class SBoNetwork(object):
     def __init__(self, name):
         self.name = name
         self.meta = _meta_
+        self.msg = Msg()
         self.arch = SBoArch().get()
         self.choice = ""
         self.FAULT = ""
@@ -61,7 +62,7 @@ class SBoNetwork(object):
         self.grey = self.meta.color["GREY"]
         self.endc = self.meta.color["ENDC"]
         self.build_folder = self.meta.build_path
-        Msg().reading()
+        self.msg.reading()
         grep = SBoGrep(self.name)
         self.data = SBoGrep(name="").names()
         self.blacklist = BlackList().packages(pkgs=self.data, repo="sbo")
@@ -73,7 +74,7 @@ class SBoNetwork(object):
             self.sbo_dwn = SBoLink(self.sbo_url).tar_gz()
             self.sbo_version = grep.version()
             self.dwn_srcs = self.sbo_dwn.split() + self.source_dwn
-        Msg().done()
+        self.msg.done()
 
     def view(self):
         """View SlackBuild package, read or install them
@@ -112,14 +113,14 @@ class SBoNetwork(object):
                         delete(self.build_folder)
                         break
                     else:
-                        Msg().template(78)
-                        Msg().pkg_found(prgnam)
-                        Msg().template(78)
+                        self.msg.template(78)
+                        self.msg.pkg_found(prgnam)
+                        self.msg.template(78)
                         break
                 else:
                     break
         else:
-            Msg().pkg_not_found("\n", self.name, "Can't view", "\n")
+            self.msg.pkg_not_found("\n", self.name, "Can't view", "\n")
 
     def view_sbo(self):
         """View slackbuild.org
@@ -131,12 +132,12 @@ class SBoNetwork(object):
             br2 = ")"
             fix_sp = ""
         print("")   # new line at start
-        Msg().template(78)
+        self.msg.template(78)
         print("| {0}Package {1}{2}{3} --> {4}".format(self.green,
                                                       self.cyan, self.name,
                                                       self.green,
                                                       self.endc + sbo_url))
-        Msg().template(78)
+        self.msg.template(78)
         print("| {0}Description : {1}{2}".format(self.green,
                                                  self.endc, self.sbo_desc))
         print("| {0}SlackBuild : {1}{2}".format(self.green, self.endc,
@@ -147,7 +148,7 @@ class SBoNetwork(object):
         print("| {0}Requirements : {1}{2}".format(self.yellow,
                                                   self.endc,
                                                   ", ".join(self.sbo_req)))
-        Msg().template(78)
+        self.msg.template(78)
         print("| {0}R{1}{2}EADME               View the README file".format(
             self.red, self.endc, br2))
         print("| {0}S{1}{2}lackBuild           View the SlackBuild file".format(
@@ -163,7 +164,7 @@ class SBoNetwork(object):
         print("| {0}Q{1}{2}uit                 Quit".format(self.red,
                                                             self.endc, br2))
 
-        Msg().template(78)
+        self.msg.template(78)
 
     def fill_pager(self, page):
         """Fix pager spaces

@@ -39,6 +39,7 @@ class Download(object):
         self.repo = repo
         self.file_name = ""
         self.meta = _meta_
+        self.msg = Msg()
         self.dir_prefix = ""
         self.downder = self.meta.downder
         self.downder_options = self.meta.downder_options
@@ -84,13 +85,13 @@ class Download(object):
         """
         if not os.path.isfile(self.path + self.file_name):
             print("")
-            Msg().template(78)
+            self.msg.template(78)
             print("| Download '{0}' file {1}[ FAILED ]{2}".format(
                 self.file_name, self.meta.color["RED"],
                 self.meta.color["ENDC"]))
-            Msg().template(78)
+            self.msg.template(78)
             print("")
-            if not Msg().answer() in ["y", "Y"]:
+            if not self.msg.answer() in ["y", "Y"]:
                 raise SystemExit()
 
     def _check_certificate(self):
@@ -100,11 +101,11 @@ class Download(object):
                 self.downder == "wget"):
             certificate = (' --no-check-certificate --header="Cookie: '
                            'oraclelicense=accept-securebackup-cookie"')
-            Msg().template(78)
+            self.msg.template(78)
             print("| '{0}' need to go ahead downloading".format(
                 certificate[:23]))
-            Msg().template(78)
+            self.msg.template(78)
             print("")
             self.downder_options += certificate
-            if not Msg().answer() in ["y", "Y"]:
+            if not self.msg.answer() in ["y", "Y"]:
                 raise SystemExit()

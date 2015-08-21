@@ -36,6 +36,7 @@ class NewConfig(object):
     """
     def __init__(self):
         self.meta = _meta_
+        self.msg = Msg()
         self.red = self.meta.color["RED"]
         self.green = self.meta.color["GREEN"]
         self.endc = self.meta.color["ENDC"]
@@ -52,10 +53,10 @@ class NewConfig(object):
         for n in self.news:
             print("{0}".format(n))
         print("")
-        Msg().template(78)
+        self.msg.template(78)
         print("| Installed {0} new configuration files:".format(
             len(self.news)))
-        Msg().template(78)
+        self.msg.template(78)
         self.choices()
 
     def find_new(self):
@@ -84,7 +85,7 @@ class NewConfig(object):
             self.red, self.endc, self.br))
         print("| {0}P{1}{2}rompt K, O, R, D, M option for each single "
               "file".format(self.red, self.endc, self.br))
-        Msg().template(78)
+        self.msg.template(78)
         try:
             choose = raw_input("\nWhat would you like to do [K/O/R/P]? ")
         except (KeyboardInterrupt, EOFError):
@@ -117,14 +118,14 @@ class NewConfig(object):
     def prompt(self):
         """Select file
         """
-        Msg().template(78)
+        self.msg.template(78)
         print("| Choose what to do file by file:")
         print("| {0}K{1}{2}eep, {3}O{4}{5}verwrite, {6}R{7}{8}emove, "
               "{9}D{10}{11}iff, {12}M{13}{14}erge".format(
                   self.red, self.endc, self.br, self.red, self.endc, self.br,
                   self.red, self.endc, self.br, self.red, self.endc, self.br,
                   self.red, self.endc, self.br))
-        Msg().template(78)
+        self.msg.template(78)
         print("")
         self.i = 0
         try:

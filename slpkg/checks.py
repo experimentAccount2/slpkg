@@ -34,6 +34,7 @@ class Updates(object):
     def __init__(self, repo):
         self.repo = repo
         self.meta = _meta_
+        self.msg = Msg()
         self.check = 2
         self.st = ""
         self.count_repo = 0
@@ -61,9 +62,9 @@ class Updates(object):
         """Top view bar status
         """
         print("")
-        Msg().template(78)
+        self.msg.template(78)
         print("| Repository         Status")
-        Msg().template(78)
+        self.msg.template(78)
 
     def run(self):
         """Run and check if new in ChangeLog.txt
