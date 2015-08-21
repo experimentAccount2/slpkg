@@ -1,4 +1,4 @@
-2.7.4 - 17/08/2015
+2.7.4 - 21/08/2015
 Added:
 - Support httpie for downloading
 - Remove packages with by TAG
