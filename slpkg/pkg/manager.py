@@ -44,6 +44,7 @@ class PackageManager(object):
         self.msg = Msg()
         self.skip = ""
         self.size = 0
+        self.unit = "Kb"
 
     def install(self, flag):
         """Install Slackware binary packages
@@ -143,7 +144,7 @@ class PackageManager(object):
     def _view_removed(self):
         """View packages before removed
         """
-        removed, unit = [], "Kb"
+        removed = []
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
             self.meta.color["CYAN"], ", ".join(self.binary),
             self.meta.color["ENDC"]))
@@ -172,19 +173,27 @@ class PackageManager(object):
                     self._sizes(package[0])
                 else:
                     self.msg.pkg_not_found("", pkg, "Can't remove", "")
-        if self.size > 1024:
-            unit = "Mb"
-            self.size = (self.size / 1024)
-        self._remove_summary(unit)
+        self._calc_sizes()
+        self._remove_summary()
         return removed
 
-    def _remove_summary(self, unit):
+    def _calc_sizes(self):
+        """Package size calculation
+        """
+        if self.size > 1024:
+            self.unit = "Mb"
+            self.size = (self.size / 1024)
+        if self.size > 1024:
+            self.unit = "Gb"
+            self.size = (self.size / 1024)
+
+    def _remove_summary(self):
         """Removed packge size summary
         """
         print("\nRemoved summary")
         print("=" * 79)
         print("{0}Size of removed packages {1} {2}.{3}".format(
-            self.meta.color["GREY"], round(self.size, 2), unit,
+            self.meta.color["GREY"], round(self.size, 2), self.unit,
             self.meta.color["ENDC"]))
 
     def _view_deps(self, path, package):
@@ -297,7 +306,7 @@ class PackageManager(object):
     def find(self):
         """Find installed Slackware packages
         """
-        matching, unit = 0, "Kb"
+        matching = 0
         print("\nPackages with matching name [ {0}{1}{2} ]\n".format(
             self.meta.color["CYAN"], ", ".join(self.binary),
             self.meta.color["ENDC"]))
@@ -313,15 +322,13 @@ class PackageManager(object):
             message = "Can't find"
             self.msg.pkg_not_found("", ", ".join(self.binary), message, "\n")
         else:
-            if self.size > 1024:
-                unit = "Mb"
-                self.size = (self.size / 1024)
+            self._calc_sizes()
             print("\nFound summary")
             print("=" * 79)
             print("{0}Total found {1} matching packages.{2}".format(
                 self.meta.color["GREY"], matching, self.meta.color["ENDC"]))
             print("{0}Size of installed packages {1} {2}.{3}\n".format(
-                self.meta.color["GREY"], round(self.size, 2), unit,
+                self.meta.color["GREY"], round(self.size, 2), self.unit,
                 self.meta.color["ENDC"]))
 
     def _sizes(self, package):
