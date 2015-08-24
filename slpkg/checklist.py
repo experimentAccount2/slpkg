@@ -23,13 +23,18 @@
 
 
 from __future__ import unicode_literals
-from dialog import Dialog
 
 
 class CheckList(object):
     """Create dialog checklist
     """
     def __init__(self, data, text, title, backtitle):
+        try:
+            from dialog import Dialog
+        except ImportError:
+            print("Require 'pythondialog': Install with '# slpkg -s sbo "
+                  "python2-pythondialog'")
+            raise SystemExit()
         self.d = Dialog(dialog="dialog", autowidgetsize=True)
         self.data = data
         self.text = text
@@ -41,15 +46,16 @@ class CheckList(object):
     def run(self):
         """Run dialog checklist
         """
-        pkgs = []
-        for item in self.data:
-            pkgs.append((item, "", False))
-
-        code, self.tags = self.d.checklist(text=self.text,
-                                           height=20, width=65, list_height=13,
-                                           choices=pkgs,
-                                           title=self.title,
-                                           backtitle=self.backtitle)
+        try:
+            choice = []
+            for item in self.data:
+                choice.append((item, "", False))
+            code, self.tags = self.d.checklist(
+                text=self.text, height=20, width=65, list_height=13,
+                choices=choice, title=self.title, backtitle=self.backtitle)
+        except KeyboardInterrupt:
+            print("")
+            raise SystemExit()
         if code == "ok":
             self.ununicode_to_string()
             return self.ununicode

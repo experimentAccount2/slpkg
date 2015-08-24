@@ -35,7 +35,7 @@ Usage: slpkg Commands:
              [-q [build, install, build-install]]
              [-g [print, edit=[editor]]]
              [-l [repository], --index, --installed]
-             [-c [repository], --upgrade, --skip=[...] --resolve-off]
+             [-c [repository], --upgrade, --skip=[...], --resolve-off]
              [-s [repository] [package...], --resolve-off]
              [-t [repository] [package], --check-deps, --graph=[type]]
              [-p [repository] [package], --color=[]]
@@ -44,7 +44,7 @@ Usage: slpkg Commands:
              [-f [package...]]
              [-i [options] [package...]]
              [-u [options] [package...]]
-             [-r [options] [package...], --check-deps]
+             [-r [options] [package...], --check-deps, --tag, --checklist]
              [-d [package...]]
 
 .SH DESCRIPTION
@@ -127,7 +127,7 @@ with the option "slpkg -s <repository> <packages>".
 .PP
 Additional options:
 .PP
-\fB--graph=[type]\fP : Drawing dependencies diagram. (example for type: ascii, image.x11, image.png etc.)
+\fB--graph=[type]\fP : Drawing dependencies diagram. (example for type: ascii, image.x11, image.png etc. Require pygraphviz)
 .PP
 \fB--tree\fP : Switch to tree view.
 
@@ -219,7 +219,7 @@ Additional options:
 .PP
 \fB--check-deps\fP : Check if installed packages used by other packages.
 .PP
-\fB--graph=[type]\fP : Drawing dependencies graph. (example for type: ascii, image.x11, image.png etc.)
+\fB--graph=[type]\fP : Drawing dependencies graph. (example for type: ascii, image.x11, image.png etc. Require pygraphviz)
 
 .SS -p, --desk, print packages description
 \fBslpkg\fP \fB-p\fP <\fIrepository\fP> <\fIname of package\fP>, \fB--color=[]\fP
@@ -264,7 +264,7 @@ and will skip any packages that do not already have a version installed.
 More information please read "man upgradepkg".
 
 .SS -r, --removepkg, remove previously installed Slackware binary packages
-\fBslpkg\fP \fB-r\fP \fB[-copy, -keep, -preserve, -warn]\fP <\fInames of packages\fP>, \fB--check-deps\fP,  \fB--tag\fP
+\fBslpkg\fP \fB-r\fP \fB[-copy, -keep, -preserve, -warn]\fP <\fInames of packages\fP>, \fB--check-deps\fP, \fB--tag\fP, \fB--checklist\fP
 .PP
 Removes a previously installed Slackware package, while writing a progress report to 
 the standard output. A package may be specified either by the full package name (as 
@@ -278,6 +278,8 @@ Additional options:
 \fB--check-deps\fP : Check if installed packages used by other packages.
 .pp
 \fB--tag\fP : Remove packages with by TAG.
+.PP
+\fB--checklist\fP : Remove packages using dialog utility. (Require python2-pythondialog)
 
 .SS -d, --display, display the installed packages contents and file list
 \fBslpkg\fP \fB-d\fP <\fInames of packages\fP>

@@ -34,6 +34,8 @@ from slpkg.messages import Msg
 from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _meta_
 
+from slpkg.checklist import CheckList
+
 
 class PackageManager(object):
     """Package manager class for install, upgrade,
@@ -141,22 +143,19 @@ class PackageManager(object):
                 raise SystemExit()
         return remove_dep
 
-    def _view_removed(self):
-        """View packages before removed
+    def _get_removed(self):
+        """Manage removed packages by extra options
         """
-        removed = []
+        removed, packages = [], []
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
             self.meta.color["CYAN"], ", ".join(self.binary),
             self.meta.color["ENDC"]))
-        if self.extra == "--tag":
+        if "--tag" in self.extra:
             for pkg in find_package("", self.meta.pkg_path):
                 for tag in self.binary:
                     if pkg.endswith(tag):
-                        print("[ {0}delete{1} ] --> {2}".format(
-                            self.meta.color["RED"], self.meta.color["ENDC"],
-                            pkg))
                         removed.append(split_package(pkg)[0])
-                        self._sizes(pkg)
+                        packages.append(pkg)
             if not removed:
                 self.msg.pkg_not_found("", tag, "Can't remove", "")
         else:
@@ -166,15 +165,33 @@ class PackageManager(object):
                 package = find_package("{0}{1}{2}".format(
                     name, ver, self.meta.sp), self.meta.pkg_path)
                 if pkg and name == pkg:
-                    print("[ {0}delete{1} ] --> {2}".format(
-                        self.meta.color["RED"], self.meta.color["ENDC"],
-                        package[0]))
                     removed.append(pkg)
-                    self._sizes(package[0])
+                    packages.append(package[0])
                 else:
                     self.msg.pkg_not_found("", pkg, "Can't remove", "")
-        self._calc_sizes()
-        self._remove_summary()
+        return removed, packages
+
+    def _view_removed(self):
+        """View packages before removed
+        """
+        removed, packages = self._get_removed()
+        if packages and "--checklist" in self.extra:
+            removed = []
+            pkgs = CheckList(packages,
+                             "Hit 'spacebar' to choose packages to remove",
+                             "Remove",
+                             "{0} {1}".format(self.meta.__all__,
+                                              self.meta.__version__)).run()
+            for rmv in pkgs:
+                removed.append(split_package(rmv)[0])
+            self.meta.default_answer = "y"
+        else:
+            for rmv, pkg in zip(removed, packages):
+                print("[ {0}delete{1} ] --> {2}".format(
+                    self.meta.color["RED"], self.meta.color["ENDC"], pkg))
+                self._sizes(pkg)
+                self._calc_sizes()
+            self._remove_summary()
         return removed
 
     def _calc_sizes(self):
@@ -271,7 +288,7 @@ class PackageManager(object):
     def _check_if_used(self, removes):
         """Check package if dependencies for another package
         before removed"""
-        if self.extra == "--check-deps":
+        if "--check-deps" in self.extra:
             print("")
             view = False
             package, dependency = [], []

@@ -18,3 +18,6 @@
 # [OPTIONAL]
 # perl 5
 # graph-easy >= 0.75 (drawing dependencies ascii diagram)
+#
+# [OPTIONAL]
+# python2-pythondialog >= 3.3.0 (Python interface to the UNIX dialog utility)

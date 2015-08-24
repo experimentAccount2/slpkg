@@ -457,8 +457,8 @@ class ArgParse(object):
         """
         packages = self.args[1:]
         options = ["-r", "--removepkg"]
-        additional_options = ["--check-deps", "--tag"]
-        flag = extra = ""
+        additional_options = ["--check-deps", "--tag", "--checklist"]
+        flag, extra = "", []
         flags = [
             "-warn",
             "-preserve",
@@ -466,10 +466,11 @@ class ArgParse(object):
             "-keep"
         ]
         if len(self.args) > 1 and self.args[0] in options:
-            if self.args[-1] in additional_options:
-                index = additional_options.index(self.args[-1])
-                extra = additional_options[index]
-                packages = self.args[1:-1]
+            for additional in additional_options:
+                if additional in self.args:
+                    extra.append(additional)
+                    self.args.remove(additional)
+                packages = self.args[1:]
             if self.args[1] in flags:
                 flag = self.args[1]
                 packages = self.args[2:]

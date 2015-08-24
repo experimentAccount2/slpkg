@@ -87,7 +87,7 @@ Optional arguments:
                                             only packages installed on the
                                             system.
   -c, --check, [repository], --upgrade,     Check, view and install updated
-      --skip=[...] --resolve--off           packages from repositories.
+      --skip=[...], --resolve--off          packages from repositories.
   -s, --sync, [repository] [package...],    Sync packages. Install packages
       --resolve-off                         directly from remote repositories
                                             with all dependencies.
@@ -117,7 +117,7 @@ Optional arguments:
       options=[--dry-run, --install-new,    binary packages from an older
       --reinstall, --verbose]               version to a newer one.
   -r, --removepkg, [options] [package...],  Removes a previously installed
-      --check-deps, --tag                   Slackware binary packages,
+      --check-deps, --tag, --checklist      Slackware binary packages,
       options=[-warn, -preserve, -copy,     while writing a progress report
       -keep]                                to the standard output.
   -d, --display, [package...]               Display the installed packages
@@ -152,7 +152,7 @@ def usage(repo):
              [-q [build, install, build-install]]
              [-g [print, edit=[editor]]]
              [-l [repository], --index, --installed]
-             [-c [repository], --upgrade, --skip=[...] --resolve-off]
+             [-c [repository], --upgrade, --skip=[...], --resolve-off]
              [-s [repository] [package...], --resolve-off]
              [-t [repository] [package], --check-deps, --graph=[type]]
              [-p [repository] [package], --color=[]]
@@ -161,7 +161,7 @@ def usage(repo):
              [-f [package...]]
              [-i [options] [package...]]
              [-u [options] [package...]]
-             [-r [options] [package...], --check-deps, --tag]
+             [-r [options] [package...], --check-deps, --tag, --checklist]
              [-d [package...]]
              """
     error_repo = ""

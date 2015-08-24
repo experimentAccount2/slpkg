@@ -430,7 +430,7 @@ Command Line Tool Usage
           options=[--dry-run, --install-new,    binary packages from an older
           --reinstall, --verbose]               version to a newer one.
       -r, --removepkg, [options] [package...],  Removes a previously installed
-          --check-deps, --tag                   Slackware binary packages,
+          --check-deps, --tag, --checklist      Slackware binary packages,
           options=[-warn, -preserve, -copy,     while writing a progress report
           -keep]                                to the standard output.
       -d, --display, [package...]               Display the installed packages
@@ -1390,6 +1390,15 @@ Remove packages with by TAG:
     Size of removed packages 24.61 Mb.
 
     Are you sure to remove 14 packages [y/N]? 
+
+Remove packages using dialog utility:
+
+.. code-block:: bash
+
+    $ slpkg -r _SBo --tag --checklist
+
+.. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/pythondialog.png
+    :target: https://github.com/dslackw/slpkg
 
 
 Build and install packages that have added to the queue:
