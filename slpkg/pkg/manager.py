@@ -43,7 +43,7 @@ class PackageManager(object):
         self.binary = binary
         self.meta = _meta_
         self.msg = Msg()
-        self.skip = ""
+        self.skip = []
         self.size = 0
         self.unit = "Kb"
 
@@ -293,46 +293,62 @@ class PackageManager(object):
     def _skip_remove(self):
         """Skip packages from remove
         """
-        self.msg.template(78)
-        print("| Insert packages to exception removal:")
-        self.msg.template(78)
-        try:
-            self.skip = raw_input(" > ").split()
-        except (KeyboardInterrupt, EOFError):
-            print("")
-            raise SystemExit()
+        if "--checklist" not in self.extra:
+            self.msg.template(78)
+            print("| Insert packages to exception removal:")
+            self.msg.template(78)
+            try:
+                self.skip = raw_input(" > ").split()
+            except (KeyboardInterrupt, EOFError):
+                print("")
+                raise SystemExit()
         for s in self.skip:
             if s in self.removed:
                 self.removed.remove(s)
+        print self.removed
 
     def _check_if_used(self, removes):
         """Check package if dependencies for another package
         before removed"""
         if "--check-deps" in self.extra:
             print("")
-            view = False
-            package, dependency = [], []
+            package, dependency, pkg_dep = [], [], []
             for pkg in find_package("", self.dep_path):
                 deps = Utils().read_file(self.dep_path + pkg)
                 for rmv in removes:
                     if GetFromInstalled(rmv).name() and rmv in deps.split():
-                        view = True
+                        pkg_dep.append(
+                            "{0} is dependency of the package --> {1}".format(
+                                rmv, pkg))
                         package.append(pkg)
                         dependency.append(rmv)
-            if view:
-                self.msg.template(78)
-                print("| {0}{1}{2}".format(
-                    self.meta.color["RED"], " " * 30 + "!!! WARNING !!!",
-                    self.meta.color["ENDC"]))
-                self.msg.template(78)
-                for p, d in zip(package, dependency):
-                    print("| {0}{1}{2} is dependency of the package --> "
-                          "{3}{4}{5}".format(self.meta.color["YELLOW"], d,
-                                             self.meta.color["ENDC"],
-                                             self.meta.color["GREEN"], p,
-                                             self.meta.color["ENDC"]))
-                self.msg.template(78)
-                self._skip_remove()
+            if package:
+                if "--checklist" in self.extra:
+                    choose = DialogUtil(
+                        data=pkg_dep,
+                        text="Hit 'spacebar' to choose packages to exception "
+                             "removal",
+                        title="!!! WARNING !!!",
+                        backtitle="{0} {1}".format(
+                            self.meta.__all__,
+                            self.meta.__version__),
+                        status=False).checklist()
+                    for pkg in choose:
+                        self.skip.append(pkg.split()[0])
+                else:
+                    self.msg.template(78)
+                    print("| {0}{1}{2}".format(
+                        self.meta.color["RED"], " " * 30 + "!!! WARNING !!!",
+                        self.meta.color["ENDC"]))
+                    self.msg.template(78)
+                    for p, d in zip(package, dependency):
+                        print("| {0}{1}{2} is dependency of the package --> "
+                              "{3}{4}{5}".format(self.meta.color["YELLOW"], d,
+                                                 self.meta.color["ENDC"],
+                                                 self.meta.color["GREEN"], p,
+                                                 self.meta.color["ENDC"]))
+                    self.msg.template(78)
+                    self._skip_remove()
 
     def _reference_rmvs(self, removes):
         """Prints all removed packages
