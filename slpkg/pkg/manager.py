@@ -147,9 +147,6 @@ class PackageManager(object):
         """Manage removed packages by extra options
         """
         removed, packages = [], []
-        print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
-            self.meta.color["CYAN"], ", ".join(self.binary),
-            self.meta.color["ENDC"]))
         if "--tag" in self.extra:
             for pkg in find_package("", self.meta.pkg_path):
                 for tag in self.binary:
@@ -175,6 +172,9 @@ class PackageManager(object):
         """View packages before removed
         """
         removed, packages = self._get_removed()
+        print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
+            self.meta.color["CYAN"], ", ".join(self.binary),
+            self.meta.color["ENDC"]))
         if packages and "--checklist" in self.extra:
             removed = []
             pkgs = CheckList(packages,
