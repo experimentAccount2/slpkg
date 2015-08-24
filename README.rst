@@ -262,7 +262,7 @@ Slackware64: `slpkg-2.7.5-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/rel
 Optional dependencies
 ---------------------
 
-`pygraphviz <https://pypi.python.org/pypi/pygraphviz>`_ for drawing dependencies diagram
+`pygraphviz <http://pygraphviz.github.io/>`_ for drawing dependencies diagram
 
 `graph-easy <http://bloodgate.com/perl/graph/manual/index.html>`_ for drawing ascii dependencies diagram
 
