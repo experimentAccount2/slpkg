@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-# checklist.py file is part of slpkg.
+# dialog_box.py file is part of slpkg.
 
 # Copyright 2014-2015 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
@@ -25,10 +25,10 @@
 from __future__ import unicode_literals
 
 
-class CheckList(object):
+class DialogUtil(object):
     """Create dialog checklist
     """
-    def __init__(self, data, text, title, backtitle):
+    def __init__(self, data, text, title, backtitle, status):
         try:
             from dialog import Dialog
         except ImportError:
@@ -40,16 +40,17 @@ class CheckList(object):
         self.text = text
         self.title = title
         self.backtitle = backtitle
+        self.status = status
         self.ununicode = []
         self.tags = []
 
-    def run(self):
+    def checklist(self):
         """Run dialog checklist
         """
         try:
             choice = []
             for item in self.data:
-                choice.append((item, "", False))
+                choice.append((item, "", self.status))
             code, self.tags = self.d.checklist(
                 text=self.text, height=20, width=65, list_height=13,
                 choices=choice, title=self.title, backtitle=self.backtitle)

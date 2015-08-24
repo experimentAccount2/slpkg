@@ -31,10 +31,9 @@ from slpkg.pkg.installed import GetFromInstalled
 
 from slpkg.utils import Utils
 from slpkg.messages import Msg
+from slpkg.dialog_box import DialogUtil
 from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _meta_
-
-from slpkg.checklist import CheckList
 
 
 class PackageManager(object):
@@ -177,11 +176,14 @@ class PackageManager(object):
             self.meta.color["ENDC"]))
         if packages and "--checklist" in self.extra:
             removed = []
-            pkgs = CheckList(packages,
-                             "Hit 'spacebar' to choose packages to remove",
-                             "Remove",
-                             "{0} {1}".format(self.meta.__all__,
-                                              self.meta.__version__)).run()
+            pkgs = DialogUtil(
+                data=packages,
+                text="Hit 'spacebar' to unchoose packages from remove",
+                title="Remove",
+                backtitle="{0} {1}".format(
+                    self.meta.__all__,
+                    self.meta.__version__),
+                status=True).checklist()
             for rmv in pkgs:
                 removed.append(split_package(rmv)[0])
             self.meta.default_answer = "y"
