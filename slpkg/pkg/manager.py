@@ -218,25 +218,43 @@ class PackageManager(object):
     def _view_deps(self, path, package):
         """View dependencies for before remove
         """
+        packages = []
         dependencies = Utils().read_file(path + package)
-        print("")   # new line at start
-        self.msg.template(78)
-        print("| Found dependencies for package {0}:".format(package))
-        self.msg.template(78)
-        self.size = 0
         for dep in dependencies.splitlines():
             if GetFromInstalled(dep).name():
                 ver = GetFromInstalled(dep).version()
-                package = max(find_package(dep + ver, self.meta.pkg_path))
-                self._sizes(package)
-                print("| {0}{1}{2}".format(self.meta.color["RED"], dep + ver,
+                find = max(find_package(dep + ver, self.meta.pkg_path))
+                self._sizes(find)
+                packages.append(dep + ver)
+        if "--checklist" in self.extra:
+            deps, dependencies = [], ""
+            deps = DialogUtil(
+                data=packages,
+                text="Found dependencies for package {0}".format(package),
+                title="Remove",
+                backtitle="{0} {1}".format(
+                    self.meta.__all__,
+                    self.meta.__version__),
+                status=True).checklist()
+            for d in deps:
+                dependencies += " " + "-".join(d.split("-")[:-1])
+            dependencies = dependencies.strip()
+            self.meta.remove_deps_answer = "y"
+        else:
+            self.size = 0
+            print("")   # new line at start
+            self.msg.template(78)
+            print("| Found dependencies for package {0}:".format(package))
+            self.msg.template(78)
+            for pkg in packages:
+                print("| {0}{1}{2}".format(self.meta.color["RED"], pkg,
                                            self.meta.color["ENDC"]))
-        self._calc_sizes()
-        self.msg.template(78)
-        print("| {0}Size of removed dependencies {1} {2}{3}".format(
-            self.meta.color["GREY"], round(self.size, 2), self.unit,
-            self.meta.color["ENDC"]))
-        self.msg.template(78)
+            self._calc_sizes()
+            self.msg.template(78)
+            print("| {0}Size of removed dependencies {1} {2}{3}".format(
+                self.meta.color["GREY"], round(self.size, 2), self.unit,
+                self.meta.color["ENDC"]))
+            self.msg.template(78)
         return dependencies
 
     def _removepkg(self, package):
