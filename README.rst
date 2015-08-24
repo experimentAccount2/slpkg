@@ -207,6 +207,7 @@ Notable mention must give the command '$ slpkg --removepkg <packages>' which can
 with all dependencies together after editing configuration file '/etc/slpkg/slpkg.conf' 
 (default is disable). Also you can check if packages used as dependency with additional option 
 "--check-deps". Option "--tag" allow to remove packages with by TAG.
+Optional you can use dialog utility with additional option "--checklist" (require python2-pythondialog).
 
 The last command is useful to print the entire contents of a package installed on the system with the
 command '$ slpkg -d <packages>'.
@@ -261,6 +262,8 @@ Slackware64: `slpkg-2.7.5-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/rel
 
 Optional dependencies
 ---------------------
+
+`python2-pythondialog <http://pythondialog.sourceforge.net/>`_ for dialog box interface
 
 `pygraphviz <http://pygraphviz.github.io/>`_ for drawing dependencies diagram
 

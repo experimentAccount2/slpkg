@@ -38,8 +38,8 @@ INSTALLATION_REQUIREMENTS = []
 DOCS_REQUIREMENTS = []
 TESTS_REQUIREMENTS = []
 OPTIONAL_REQUIREMENTS = [
-    "pygraphviz >= 1.3rc2",
-    "python2-pythondialog >= 3.3.0"
+    "python2-pythondialog >= 3.3.0",
+    "pygraphviz >= 1.3rc2"
 ]
 # Non-Python/non-PyPI optional dependencies:
 # ascii diagram: graph-easy (available from SBo repository)
