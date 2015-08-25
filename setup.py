@@ -44,6 +44,7 @@ OPTIONAL_REQUIREMENTS = [
 # Non-Python/non-PyPI optional dependencies:
 # ascii diagram: graph-easy (available from SBo repository)
 
+
 setup(
     name="slpkg",
     packages=["slpkg", "slpkg/sbo", "slpkg/pkg", "slpkg/slack",
@@ -57,6 +58,7 @@ setup(
     author_email=_meta_.__email__,
     url="https://github.com/dslackw/slpkg",
     package_data={"": ["LICENSE", "README.rst", "CHANGELOG"]},
+    # data_files=[("/etc/slpkg/", ["conf/slpkg.conf"])],
     install_requires=INSTALLATION_REQUIREMENTS,
     extras_require={
         "optional": OPTIONAL_REQUIREMENTS,
