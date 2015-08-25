@@ -45,6 +45,7 @@ class PackageManager(object):
         self.msg = Msg()
         self.skip = []
         self.size = 0
+        self.total_size = 0
         self.unit = "Kb"
 
     def install(self, flag):
@@ -202,9 +203,11 @@ class PackageManager(object):
         if self.size > 1024:
             self.unit = "Mb"
             self.size = (self.size / 1024)
+            self.total_size += self.size
         if self.size > 1024:
             self.unit = "Gb"
             self.size = (self.size / 1024)
+            self.total_size += self.size
 
     def _remove_summary(self):
         """Removed packge size summary
@@ -364,6 +367,9 @@ class PackageManager(object):
                 print("| Package {0} removed".format(pkg))
             else:
                 print("| Package {0} not found".format(pkg))
+        self.msg.template(78)
+        print("| Total removable size {0} {1}".format(
+            round(self.total_size, 2), self.unit))
         self.msg.template(78)
         print("")   # new line at end
 
