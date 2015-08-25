@@ -178,7 +178,7 @@ class PackageManager(object):
             removed = []
             pkgs = DialogUtil(
                 data=packages,
-                text="Hit 'spacebar' to unchoose packages from remove",
+                text="Press 'spacebar' to unchoose packages from remove",
                 title="Remove",
                 backtitle="{0} {1}".format(
                     self.meta.__all__,
@@ -327,7 +327,7 @@ class PackageManager(object):
                 if "--checklist" in self.extra:
                     choose = DialogUtil(
                         data=pkg_dep,
-                        text="Hit 'spacebar' to choose packages to exception "
+                        text="Press 'spacebar' to choose packages to exception "
                              "remove",
                         title="!!! WARNING !!!",
                         backtitle="{0} {1}".format(
