@@ -277,18 +277,21 @@ class PackageManager(object):
         deps.append(package)
         self._check_if_used(deps)
         for dep in deps:
-            if (dep not in self.skip and
-                    find_package(dep + self.meta.sp, self.meta.pkg_path)):
+            if dep not in self.skip and GetFromInstalled(dep).name():
+                ver = GetFromInstalled(dep).version()
+                removes.append(dep + ver)
                 self._removepkg(dep)
-                removes.append(dep)
         return removes
 
     def _rmv_pkg(self, package):
         """Remove one signle package
         """
+        removes = []
         if GetFromInstalled(package).name() and package not in self.skip:
+            ver = GetFromInstalled(package).version()
+            removes.append(package + ver)
             self._removepkg(package)
-        return package.split()
+        return removes
 
     def _skip_remove(self):
         """Skip packages from remove
