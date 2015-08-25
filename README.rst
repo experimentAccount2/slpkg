@@ -1349,7 +1349,7 @@ enabled from configuration file.
     | pysetuptools is dependency of the package --> wcwidth
     +==============================================================================
     +==============================================================================
-    | Insert packages to exception removal:
+    | Insert packages to exception remove:
     +==============================================================================
      > pysetuptools
 
