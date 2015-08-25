@@ -319,27 +319,20 @@ class ArgParse(object):
     def pkg_tracking(self):
         """Tracking package dependencies
         """
+        flag = []
         options = ["-t", "--tracking"]
-        flag = ["--check-deps", "--graph="]
-        if (len(self.args) == 3 and self.args[0] in options and
-                self.args[1] in self.meta.repositories):
-            TrackingDeps(self.args[2], self.args[1], flag="").run()
-        elif (len(self.args) == 4 and self.args[0] in options and
-                self.args[1] in self.meta.repositories and
-                self.args[3] == flag[0]):
-            TrackingDeps(self.args[2], self.args[1], flag[0]).run()
-        elif (len(self.args) == 4 and self.args[0] in options and
-                self.args[1] in self.meta.repositories and
-                self.args[3].startswith(flag[1])):
-            TrackingDeps(self.args[2], self.args[1], self.args[3]).run()
-        elif (len(self.args) == 5 and self.args[0] in options and
-                self.args[1] in self.meta.repositories and
-                self.args[3] == flag[0] and self.args[4].startswith(flag[1])):
-            TrackingDeps(self.args[2], self.args[1],
-                         self.args[3] + self.args[4]).run()
-        elif (len(self.args) > 1 and self.args[0] in options and
-                self.args[1] not in self.meta.repositories):
-            usage(self.args[1])
+        additional_options = ["--check-deps", "--graph="]
+        if (len(self.args) >= 3 and len(self.args) < 6 and
+                self.args[0] in options):
+            if self.args[1] in self.meta.repositories:
+                for arg in self.args[3:]:
+                    if arg.startswith(additional_options[1]):
+                        flag.append(arg)
+                    if arg in additional_options:
+                        flag.append(arg)
+                TrackingDeps(self.args[2], self.args[1], flag).run()
+            else:
+                usage(self.args[1])
         else:
             usage("")
 

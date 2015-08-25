@@ -59,6 +59,10 @@ class TrackingDeps(object):
         self.dependencies = []
         self.dependencies_list = []
         self.deps_dict = {}
+        for i in range(0, len(self.flag)):
+            if self.flag[i].startswith("--graph="):
+                self.image = self.flag[i].split("=")[1]
+                self.flag[i] = "--graph="
 
     def run(self):
         """Run tracking dependencies
@@ -71,10 +75,8 @@ class TrackingDeps(object):
             self.dependencies = Utils().remove_dbs(self.requires)
             if self.dependencies == []:
                 self.dependencies = ["No dependencies"]
-            if self.flag.startswith("--graph="):
+            if "--graph=" in self.flag:
                 self.deps_tree()
-                self.msg.done()
-                self.graph()
             self.msg.done()
             pkg_len = len(self.name) + 24
             print("")    # new line at start
@@ -87,9 +89,9 @@ class TrackingDeps(object):
                                                                self.endc))
             index = 0
             for pkg in self.dependencies:
-                used = self.check_used(pkg)
-                self.deps_used(pkg, used)
-                if used and self.flag.startswith("--check-deps"):
+                if "--check-deps" in self.flag:
+                    used = self.check_used(pkg)
+                    self.deps_used(pkg, used)
                     used = "{0} {1}{2}{3}".format(
                         "is dependency -->", self.cyan,
                         ", ".join(used), self.endc)
@@ -113,7 +115,7 @@ class TrackingDeps(object):
                 print("\n * = Installed\n")
             else:
                 print("")    # new line at end
-            if self.flag.startswith("--check-deps--graph="):
+            if "--graph=" in self.flag:
                 self.graph()
         else:
             print("\nNo package was found to match\n")
@@ -136,8 +138,7 @@ class TrackingDeps(object):
     def graph(self):
         """Drawing image dependencies map
         """
-        image = self.flag.split("=")[1]
-        Graph(image).dependencies(self.deps_dict)
+        Graph(self.image).dependencies(self.deps_dict)
 
     def check_used(self, pkg):
         """Check if dependencies used
@@ -158,13 +159,13 @@ class TrackingDeps(object):
         dependencies = self.dependencies + [self.name]
         if self.repo == "sbo":
             for dep in dependencies:
-                deps = Requires(self.flag).sbo(dep)
+                deps = Requires(flag="").sbo(dep)
                 if dep not in self.deps_dict.values():
                     self.deps_dict[dep] = Utils().dimensional_list(deps)
         else:
             for dep in dependencies:
                 deps = Dependencies(self.names, self.repo,
-                                    self.black).binary(dep, self.flag)
+                                    self.black).binary(dep, flag="")
                 if dep not in self.deps_dict.values():
                     self.deps_dict[dep] = Utils().dimensional_list(deps)
 
