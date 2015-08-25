@@ -295,7 +295,7 @@ class PackageManager(object):
         """
         if "--checklist" not in self.extra:
             self.msg.template(78)
-            print("| Insert packages to exception removal:")
+            print("| Insert packages to exception remove:")
             self.msg.template(78)
             try:
                 self.skip = raw_input(" > ").split()
