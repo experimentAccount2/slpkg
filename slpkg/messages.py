@@ -153,3 +153,4 @@ class Msg(object):
             if installed:
                 print("| Package {0} installed successfully".format(installed))
         self.template(78)
+        print("")
