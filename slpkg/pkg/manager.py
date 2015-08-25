@@ -305,7 +305,6 @@ class PackageManager(object):
         for s in self.skip:
             if s in self.removed:
                 self.removed.remove(s)
-        print self.removed
 
     def _check_if_used(self, removes):
         """Check package if dependencies for another package
