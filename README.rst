@@ -1406,7 +1406,7 @@ Remove packages using dialog utility:
 
 .. code-block:: bash
 
-    slpkg -r Flask --check-deps --checklist
+    $ slpkg -r Flask --check-deps --checklist
 
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/pythondialog2.png
     :target: https://github.com/dslackw/slpkg
