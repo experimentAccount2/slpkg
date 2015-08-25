@@ -170,10 +170,10 @@ class PackageManager(object):
     def _view_removed(self):
         """View packages before removed
         """
-        removed, packages = self._get_removed()
         print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
             self.meta.color["CYAN"], ", ".join(self.binary),
             self.meta.color["ENDC"]))
+        removed, packages = self._get_removed()
         if packages and "--checklist" in self.extra:
             removed = []
             pkgs = DialogUtil(
@@ -209,11 +209,12 @@ class PackageManager(object):
     def _remove_summary(self):
         """Removed packge size summary
         """
-        print("\nRemoved summary")
-        print("=" * 79)
-        print("{0}Size of removed packages {1} {2}.{3}".format(
-            self.meta.color["GREY"], round(self.size, 2), self.unit,
-            self.meta.color["ENDC"]))
+        if self.size > 0:
+            print("\nRemoved summary")
+            print("=" * 79)
+            print("{0}Size of removed packages {1} {2}.{3}".format(
+                self.meta.color["GREY"], round(self.size, 2), self.unit,
+                self.meta.color["ENDC"]))
 
     def _view_deps(self, path, package):
         """View dependencies for before remove
