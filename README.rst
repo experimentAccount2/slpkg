@@ -1365,8 +1365,6 @@ enabled from configuration file.
     | Package Jinja2-2.7.3 removed
     | Package werkzeug-0.9.4 removed
     +==============================================================================
-    | Total removable size 6.72 Mb
-    +==============================================================================
 
 Remove packages with by TAG:
 
