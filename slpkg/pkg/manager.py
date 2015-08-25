@@ -312,7 +312,6 @@ class PackageManager(object):
         """Check package if dependencies for another package
         before removed"""
         if "--check-deps" in self.extra:
-            print("")
             package, dependency, pkg_dep = [], [], []
             for pkg in find_package("", self.dep_path):
                 deps = Utils().read_file(self.dep_path + pkg)
