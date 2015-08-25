@@ -1297,7 +1297,7 @@ Removes a previously installed Slackware binary packages:
     --> Deleting empty directory /usr/doc/termcolor-1.1.0/
 
     +==============================================================================
-    | Package: termcolor removed
+    | Package: termcolor-1.1.0 removed
     +==============================================================================
 
 
@@ -1322,11 +1322,13 @@ enabled from configuration file.
     +==============================================================================
     | Found dependencies for package Flask:
     +==============================================================================
-    | pysetuptools
-    | MarkupSafe
-    | itsdangerous
-    | Jinja2
-    | werkzeug
+    | pysetuptools-18.0.1
+    | MarkupSafe-0.23
+    | werkzeug-0.9.4
+    | Jinja2-2.7.3
+    | itsdangerous-0.24
+    +==============================================================================
+    | Size of removed dependencies 5.52 Mb
     +==============================================================================
 
     Remove dependencies (maybe used by other packages) [y/N]? y
@@ -1349,20 +1351,19 @@ enabled from configuration file.
     +==============================================================================
     | Insert packages to exception removal:
     +==============================================================================
-     >     
+     > pysetuptools
 
     .
     .
     .
     +==============================================================================
-    | Total 6 packages removed
+    | Total 5 packages removed
     +==============================================================================
-    | Package Flask removed
-    | Package pysetuptools removed
-    | Package MarkupSafe removed
-    | Package itsdangerous removed
-    | Package Jinja2 removed
-    | Package werkzeug removed
+    | Package Flask-0.10.1 removed
+    | Package MarkupSafe-0.23 removed
+    | Package itsdangerous-0.24 removed
+    | Package Jinja2-2.7.3 removed
+    | Package werkzeug-0.9.4 removed
     +==============================================================================
 
 Remove packages with by TAG:
@@ -1401,6 +1402,19 @@ Remove packages using dialog utility:
     $ slpkg -r _SBo --tag --checklist
 
 .. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/pythondialog.png
+    :target: https://github.com/dslackw/slpkg
+
+.. code-block:: bash
+
+    slpkg -r Flask --check-deps --checklist
+
+.. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/pythondialog2.png
+    :target: https://github.com/dslackw/slpkg
+
+.. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/pythondialog3.png
+    :target: https://github.com/dslackw/slpkg
+
+.. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/pythondialog4.png
     :target: https://github.com/dslackw/slpkg
 
 
