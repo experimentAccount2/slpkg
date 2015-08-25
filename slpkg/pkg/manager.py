@@ -327,7 +327,7 @@ class PackageManager(object):
                     choose = DialogUtil(
                         data=pkg_dep,
                         text="Hit 'spacebar' to choose packages to exception "
-                             "removal",
+                             "remove",
                         title="!!! WARNING !!!",
                         backtitle="{0} {1}".format(
                             self.meta.__all__,
