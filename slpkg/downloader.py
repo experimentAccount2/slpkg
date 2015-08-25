@@ -86,7 +86,7 @@ class Download(object):
         if not os.path.isfile(self.path + self.file_name):
             print("")
             self.msg.template(78)
-            print("| Download '{0}' file {1}[ FAILED ]{2}".format(
+            print("| Download '{0}' file [{1}FAILED{2}]".format(
                 self.file_name, self.meta.color["RED"],
                 self.meta.color["ENDC"]))
             self.msg.template(78)
