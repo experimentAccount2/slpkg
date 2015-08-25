@@ -1,3 +1,13 @@
+2.7.5 - 25/08/2015
+Added:
+- python2-pythondialog optional dependency
+- "--checklist" option in remove packages
+- Gigabyte unit in package manager
+- Version in removed dependencies
+- Size of removed dependencies
+Updated:
+- Function Msg() in self.msg
+
 2.7.4 - 21/08/2015
 Added:
 - Support httpie for downloading
