@@ -41,6 +41,7 @@ OPTIONAL_REQUIREMENTS = [
     "python2-pythondialog >= 3.3.0",
     "pygraphviz >= 1.3rc2"
 ]
+
 # Non-Python/non-PyPI optional dependencies:
 # ascii diagram: graph-easy (available from SBo repository)
 
@@ -58,7 +59,6 @@ setup(
     author_email=_meta_.__email__,
     url="https://github.com/dslackw/slpkg",
     package_data={"": ["LICENSE", "README.rst", "CHANGELOG"]},
-    # data_files=[("/etc/slpkg/", ["conf/slpkg.conf"])],
     install_requires=INSTALLATION_REQUIREMENTS,
     extras_require={
         "optional": OPTIONAL_REQUIREMENTS,
