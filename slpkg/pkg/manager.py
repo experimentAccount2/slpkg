@@ -192,7 +192,7 @@ class PackageManager(object):
                 print("[ {0}delete{1} ] --> {2}".format(
                     self.meta.color["RED"], self.meta.color["ENDC"], pkg))
                 self._sizes(pkg)
-                self._calc_sizes()
+            self._calc_sizes()
             self._remove_summary()
         return removed
 
@@ -224,8 +224,6 @@ class PackageManager(object):
         for dep in dependencies.splitlines():
             if GetFromInstalled(dep).name():
                 ver = GetFromInstalled(dep).version()
-                find = max(find_package(dep + ver, self.meta.pkg_path))
-                self._sizes(find)
                 packages.append(dep + ver)
         if "--checklist" in self.extra:
             deps, dependencies = [], ""
@@ -249,7 +247,6 @@ class PackageManager(object):
             for pkg in packages:
                 print("| {0}{1}{2}".format(self.meta.color["RED"], pkg,
                                            self.meta.color["ENDC"]))
-            self._calc_sizes()
             self.msg.template(78)
             print("| {0}Size of removed dependencies {1} {2}{3}".format(
                 self.meta.color["GREY"], round(self.size, 2), self.unit,
