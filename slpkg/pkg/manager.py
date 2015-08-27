@@ -524,7 +524,7 @@ class PackageManager(object):
         all_installed_names = []
         all_installed_packages = find_package("", self.meta.pkg_path)
         for inst in all_installed_packages:
-            if repo == "sbo":
+            if repo == "sbo" and inst.endswith("_SBo"):
                 name = split_package(inst)[0]
                 all_installed_names.append(name)
             else:
