@@ -20,7 +20,7 @@
     :target: https://github.com/dslackw/slpkg/issues
  
 
-Slpkg v2.7.5
+Slpkg v2.7.6
 ============
 
 |
@@ -235,8 +235,8 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.7.5.tar.gz
-    $ cd slpkg-2.7.5
+    $ tar xvf slpkg-2.7.6.tar.gz
+    $ cd slpkg-2.7.6
     $ ./install.sh
 
 Using pip:
@@ -255,9 +255,9 @@ Using pip:
 
 Bbinary packages:
 
-Slackware: `slpkg-2.7.5-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.7.5/slpkg-2.7.5-i486-1_dsw.txz>`_
+Slackware: `slpkg-2.7.6-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.7.6/slpkg-2.7.6-i486-1_dsw.txz>`_
 
-Slackware64: `slpkg-2.7.5-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.7.5/slpkg-2.7.5-x86_64-1_dsw.txz>`_
+Slackware64: `slpkg-2.7.6-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.7.6/slpkg-2.7.6-x86_64-1_dsw.txz>`_
 
 
 Optional dependencies
@@ -639,7 +639,7 @@ Installing packages from the repositories (supporting multi packages):
     Resolving dependencies... Done
 
     +==============================================================================
-    | Package                 Version            Arch    Build  Repos          Size
+    | Package                 New version        Arch    Build  Repos          Size
     +==============================================================================
     Installing:
       atkmm                   2.22.6             x86_64  1      alien         124 K
@@ -670,7 +670,7 @@ Close auto resolve dependencies:
     with new version:
 
     +==============================================================================
-    | Package                 New Version        Arch    Build  Repos          Size
+    | Package                 New version        Arch    Build  Repos          Size
     +==============================================================================
     Installing:
       atkmm                   2.22.6             x86_64  1      alien         124 K
@@ -899,7 +899,7 @@ And check if packages need upgrade with:
     with new version:
 
     +==============================================================================
-    | Package                 Version            Arch    Build  Repos          Size
+    | Package                 New version        Arch    Build  Repos          Size
     +==============================================================================
     Upgrading:
       astroid-1.3.2           1.3.4              x86_64         SBo           
@@ -924,7 +924,7 @@ And check if packages need upgrade with:
     Resolving dependencies... Done
 
     +==============================================================================
-    | Package                 Version            Arch    Build  Repos          Size
+    | Package                 New version        Arch    Build  Repos          Size
     +==============================================================================
     Upgrading:
       gstreamer1-1.4.1        1.4.4              x86_64  1      slacky       1563 K
@@ -952,7 +952,7 @@ why always you can have updated your system:
     These packages need upgrading:
     
     +==============================================================================
-    | Package                   Version          Arch     Build  Repos         Size
+    | Package                   New version      Arch     Build  Repos         Size
     +==============================================================================
     Upgrading:
       dhcpcd-6.0.5              6.0.5            x86_64   3      Slack         92 K
@@ -993,7 +993,7 @@ Skip packages when upgrading:
     with new version:
 
     +==============================================================================
-    | Package                 Version            Arch    Build  Repos          Size
+    | Package                 New version        Arch    Build  Repos          Size
     +==============================================================================
     Upgrading:
       cffi-1.0.1              1.1.0              x86_64         SBo

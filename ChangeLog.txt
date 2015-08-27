@@ -1,3 +1,9 @@
+2.7.6 - 28/08/2015
+Fixed:
+- Failed checksum message #40
+Updated:
+- Print list packages from repositories
+
 2.7.5 - 25/08/2015
 Added:
 - python2-pythondialog optional dependency
