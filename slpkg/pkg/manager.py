@@ -219,6 +219,7 @@ class PackageManager(object):
     def _view_deps(self, path, package):
         """View dependencies for before remove
         """
+        self.size = 0
         packages = []
         dependencies = Utils().read_file(path + package)
         for dep in dependencies.splitlines():
@@ -245,9 +246,12 @@ class PackageManager(object):
             print("| Found dependencies for package {0}:".format(package))
             self.msg.template(78)
             for pkg in packages:
+                find = find_package(pkg + self.meta.sp, self.meta.pkg_path)
+                self._sizes(find[0])
                 print("| {0}{1}{2}".format(self.meta.color["RED"], pkg,
                                            self.meta.color["ENDC"]))
             self.msg.template(78)
+            self._calc_sizes()
             print("| {0}Size of removed dependencies {1} {2}{3}".format(
                 self.meta.color["GREY"], round(self.size, 2), self.unit,
                 self.meta.color["ENDC"]))
