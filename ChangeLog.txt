@@ -1,6 +1,7 @@
 2.7.6 - 28/08/2015
 Fixed:
 - Failed checksum message #40
+- Removed calculate size
 Updated:
 - Print list packages from repositories
 
