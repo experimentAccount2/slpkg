@@ -432,9 +432,11 @@ class PackageManager(object):
         tty_size = os.popen("stty size", "r").read().split()
         row = int(tty_size[0]) - 2
         try:
+            all_installed_names = []
             index, page, pkg_list = 0, row, []
             r = self.list_lib(repo)
             pkg_list = self.list_greps(repo, r)[0]
+            all_installed_names = self.list_of_installed(repo)
             print("")
             for pkg in sorted(pkg_list):
                 if INDEX:
@@ -453,9 +455,16 @@ class PackageManager(object):
                         print("")   # new line after page
                         page += row
                 elif installed:
-                    if self.list_of_installed(pkg):
-                        print("{0}{1}{2}".format(self.meta.color["GREEN"], pkg,
-                                                 self.meta.color["ENDC"]))
+                    if repo == "sbo":
+                        if pkg in all_installed_names:
+                            print("{0}{1}{2}".format(self.meta.color["GREEN"],
+                                                     pkg,
+                                                     self.meta.color["ENDC"]))
+                    else:
+                        if pkg[:-4] in all_installed_names:
+                            print("{0}{1}{2}".format(self.meta.color["GREEN"],
+                                                     pkg,
+                                                     self.meta.color["ENDC"]))
                 else:
                     print(pkg)
             print("")   # new line at end
@@ -500,7 +509,8 @@ class PackageManager(object):
     def list_color_tag(self, pkg):
         """Tag with color installed packages
         """
-        find = pkg + self.meta.sp
+        name = GetFromInstalled(pkg).name()
+        find = name + self.meta.sp
         if pkg.endswith(".txz") or pkg.endswith(".tgz"):
             find = pkg[:-4]
         if find_package(find, self.meta.pkg_path):
@@ -508,14 +518,18 @@ class PackageManager(object):
                                      self.meta.color["ENDC"])
         return pkg
 
-    def list_of_installed(self, pkg):
+    def list_of_installed(self, repo):
         """Return installed packages
         """
-        find = pkg + self.meta.sp
-        if pkg.endswith(".txz") or pkg.endswith(".tgz"):
-            find = pkg[:-4]
-        if find_package(find, self.meta.pkg_path):
-            return pkg
+        all_installed_names = []
+        all_installed_packages = find_package("", self.meta.pkg_path)
+        for inst in all_installed_packages:
+            if repo == "sbo":
+                name = split_package(inst)[0]
+                all_installed_names.append(name)
+            else:
+                all_installed_names.append(inst)
+        return all_installed_names
 
 
 def alien_filter(packages, sizes):
