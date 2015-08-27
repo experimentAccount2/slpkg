@@ -40,8 +40,8 @@ def check_md5(pkg_md5, src_file):
                 src_file.split("/")[-1], _meta_.color["RED"],
                 _meta_.color["ENDC"]))
             Msg().template(78)
-            print("| Expected: {0}".format(md5s))
-            print("| Found: {0}".format(pkg_md5))
+            print("| Expected: {0}".format(pkg_md5))
+            print("| Found: {0}".format(md5s))
             Msg().template(78)
             print("")
             if not Msg().answer() in ["y", "Y"]:
