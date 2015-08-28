@@ -251,7 +251,7 @@ class ArgParse(object):
         """
         options = ["-c", "--check"]
         flags = ["--upgrade", "--skip=", "--resolve-off"]
-        flags, flag, skip = self.__pkg_upgrade_flags(flags)
+        flag, skip = self.__pkg_upgrade_flags(flags)
         if (len(self.args) == 3 and self.args[0] in options and
                 self.args[2] == flags[0] and
                 self.args[1] in self.meta.repositories):
@@ -282,18 +282,16 @@ class ArgParse(object):
     def __pkg_upgrade_flags(self, flags):
         """Manage flags for package upgrade option
         """
-        flag = skip, i = "", 0
+        flag, skip = "", ""
         if flags[0] in self.args:
             if flags[2] in self.args:
                 flag = flags[2]
-                index = self.args.index(flags[2])
-                del self.args[index]
+                self.args.remove(flags[2])
             for arg in self.args:
                 if arg.startswith(flags[1]):
-                    skip = Regex(self.args[i].split("=")[1]).get()
-                    self.args.pop(i)
-                i += 1
-        return flags, flag, skip
+                    skip = Regex(arg.split("=")[1]).get()
+                    self.args.remove(arg)
+        return flag, skip
 
     def pkg_install(self):
         """Install packages by repository
