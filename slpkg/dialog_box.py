@@ -58,7 +58,28 @@ class DialogUtil(object):
             print("")
             raise SystemExit()
         if code == "ok":
-            self.ununicode_to_string()
+            self.unicode_to_string()
+            return self.ununicode
+        if code == "cancel":
+            self.exit()
+
+    def buildlist(self, enabled):
+        try:
+            choice = []
+            for item in self.data:
+                status = False
+                if item in enabled:
+                    status = True
+                choice.append((item, status))
+            items = [(tag, tag, sta, tag) for (tag, sta) in choice]
+            code, self.tags = self.d.buildlist(
+                text=self.text, items=items, visit_items=True, item_help=True,
+                title=self.title)
+        except KeyboardInterrupt:
+            print("")
+            raise SystemExit()
+        if code == "ok":
+            self.unicode_to_string()
             return self.ununicode
         if code == "cancel":
             self.exit()
@@ -68,7 +89,7 @@ class DialogUtil(object):
         """
         raise SystemExit()
 
-    def ununicode_to_string(self):
+    def unicode_to_string(self):
         """Convert unicode in string
         """
         for tag in self.tags:

@@ -23,7 +23,7 @@
 #
 # END OF LEGAL NOTICE
 #
-#
+# -----------------------------------------------------------------------
 # Slpkg uses the central mirror "http://mirrors.slackware.com/slackware/"
 # to find the nearest one. If however for some reason this troublesome
 # please uncomment (remove the '#' character) only one mirror from
