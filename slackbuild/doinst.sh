@@ -8,7 +8,7 @@ config() {
   fi
 }
 
-CONFIGS="slpkg.conf blacklist slackware-mirrors custom-repositories \
+CONFIGS="slpkg.conf repositories.conf blacklist slackware-mirrors custom-repositories \
     slackware-changelogs-mirror"
 for file in $CONFIGS; do
     config etc/slpkg/${file}.new

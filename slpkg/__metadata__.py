@@ -87,7 +87,7 @@ class MetaData(object):
 
     __all__ = "slpkg"
     __author__ = "dslackw"
-    __version_info__ = (2, 7, 6)
+    __version_info__ = (2, 7, 7)
     __version__ = "{0}.{1}.{2}".format(*__version_info__)
     __license__ = "GNU General Public License v3 (GPLv3)"
     __email__ = "d.zlatanidis@gmail.com"
@@ -137,21 +137,21 @@ class MetaData(object):
                             "salix", "slackl", "rested", "msb"]
 
     # read value from configuration file
-    if os.path.isfile("%s%s" % (conf_path, "slpkg.conf")):
-        f = open("%s%s" % (conf_path, "slpkg.conf"), "r")
-        conf = f.read()
-        f.close()
-        for line in conf.splitlines():
-            line = line.lstrip()
-            if line and not line.startswith("#"):
-                _conf_slpkg[line.split("=")[0]] = line.split("=")[1]
-
+    repositories = []
+    for files in ["slpkg.conf", "repositories.conf"]:
+        if os.path.isfile("%s%s" % (conf_path, files)):
+            f = open("%s%s" % (conf_path, files), "r")
+            conf = f.read()
+            f.close()
+            for line in conf.splitlines():
+                line = line.lstrip()
+                if line and not line.startswith("#"):
+                    if files == "slpkg.conf":
+                        _conf_slpkg[line.split("=")[0]] = line.split("=")[1]
+                    elif files == "repositories.conf":
+                        repositories.append(line)
     # Set values from configuration file
     slack_rel = _conf_slpkg["RELEASE"]
-    if isinstance(_conf_slpkg["REPOSITORIES"], basestring):
-        repositories = _conf_slpkg["REPOSITORIES"].split(",")
-    else:
-        repositories = _conf_slpkg["REPOSITORIES"]
     build_path = _conf_slpkg["BUILD_PATH"]
     slpkg_tmp_packages = _conf_slpkg["PACKAGES"]
     slpkg_tmp_patches = _conf_slpkg["PATCHES"]

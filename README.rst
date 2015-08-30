@@ -20,7 +20,7 @@
     :target: https://github.com/dslackw/slpkg/issues
  
 
-Slpkg v2.7.6
+Slpkg v2.7.7
 ============
 
 |
@@ -131,8 +131,8 @@ Default available Repositories:
   Versions: {14.0, 14,1}
 
 
-* Choose default repositories you need to work from file '/etc/slpkg/slpkg.conf' default is 
-  'slack' and 'sbo' repositories and read REPOSITORIES file for each of the particularities.
+* Choose default repositories you need to work from file '/etc/slpkg/repositories.conf' default 
+  is 'slack' and 'sbo' repositories and read REPOSITORIES file for each of the particularities.
   If a repository is not in the above list, manage custom repositories with commands 'repo-add'
   and 'repo-remove'.
 
@@ -142,7 +142,7 @@ Usage
 
 Need to run '$ slpkg update' for the first time to synchronize the list of packages,
 also every time you add a new repository.
-To add or remove repositories must edit the file '/etc/slpkg/slpkg.conf'.
+To add or remove repositories must edit the file '/etc/slpkg/repositories.conf'.
 
 Add custom repositories with the command '$ slpkg add-repo <repository name> <URL>' and after
 run '$ slpkg update' to update package list.
@@ -235,8 +235,8 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.7.6.tar.gz
-    $ cd slpkg-2.7.6
+    $ tar xvf slpkg-2.7.7.tar.gz
+    $ cd slpkg-2.7.7
     $ ./install.sh
 
 Using pip:
@@ -255,9 +255,9 @@ Using pip:
 
 Bbinary packages:
 
-Slackware: `slpkg-2.7.6-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.7.6/slpkg-2.7.6-i486-1_dsw.txz>`_
+Slackware: `slpkg-2.7.7-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.7.7/slpkg-2.7.7-i486-1_dsw.txz>`_
 
-Slackware64: `slpkg-2.7.6-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.7.6/slpkg-2.7.6-x86_64-1_dsw.txz>`_
+Slackware64: `slpkg-2.7.7-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.7.7/slpkg-2.7.7-x86_64-1_dsw.txz>`_
 
 
 Optional dependencies
@@ -322,6 +322,9 @@ Configuration Files
 
     /etc/slpkg/slpkg.conf
          General configuration of slpkg
+    
+    /etc/slpkg/repositories.conf
+         Configuration file for repositories
 
     /etc/slpkg/blacklist
          List of packages to skip
@@ -547,8 +550,11 @@ View information about the repositories:
       slonly   https://slackonly.com/pub/packages/                 yes     disabled
       studio   http://studioware.org/files/packages/               yes     disabled
 
-    15/15 enabled default repositories and 1 custom.
-    For enable or disable default repositories edit '/etc/slpkg/slpkg.conf' file.
+    Repositories summary
+    ===============================================================================
+    3/15 enabled default repositories and 1 custom.
+    For enable or disable default repositories edit '/etc/slpkg/repositories.conf' 
+    file.
 
     $ slpkg repo-info alien
 

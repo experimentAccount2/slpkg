@@ -1,3 +1,10 @@
+2.7.7 - 30/08/2015
+Added:
+- NEW configuration file for repositories in /etc/slpkg/repositories.conf
+Update:
+- Command line help logo
+- Flags for packages upgrade
+
 2.7.6 - 28/08/2015
 Fixed:
 - Failed checksum message #40

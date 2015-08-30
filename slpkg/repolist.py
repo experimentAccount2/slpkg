@@ -89,6 +89,6 @@ class RepoList(object):
         print("{0}{1}/{2} enabled default repositories and {3} custom.".format(
             self.meta.color["GREY"], def_cnt, len(self.all_repos), cus_cnt))
         print("For enable or disable default repositories edit "
-              "'/etc/slpkg/slpkg.conf' file.\n{0}".format(
+              "'/etc/slpkg/repositories.conf'\nfile.\n{0}".format(
                   self.meta.color["ENDC"]))
         raise SystemExit()
