@@ -71,9 +71,9 @@ class DialogUtil(object):
                 if item in enabled:
                     status = True
                 choice.append((item, status))
-            items = [(tag, tag, sta, tag) for (tag, sta) in choice]
+            items = [(tag, tag, sta) for (tag, sta) in choice]
             code, self.tags = self.d.buildlist(
-                text=self.text, items=items, visit_items=True, item_help=True,
+                text=self.text, items=items, visit_items=True, item_help=False,
                 title=self.title)
         except KeyboardInterrupt:
             print("")
