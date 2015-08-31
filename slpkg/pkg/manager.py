@@ -184,9 +184,10 @@ class PackageManager(object):
                     self.meta.__all__,
                     self.meta.__version__),
                 status=True).checklist()
-            for rmv in pkgs:
-                removed.append(split_package(rmv)[0])
-            self.meta.default_answer = "y"
+            if pkgs:
+                for rmv in pkgs:
+                    removed.append(split_package(rmv)[0])
+                self.meta.default_answer = "y"
         else:
             for rmv, pkg in zip(removed, packages):
                 print("[ {0}delete{1} ] --> {2}".format(
