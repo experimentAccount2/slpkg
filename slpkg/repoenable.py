@@ -48,6 +48,9 @@ class RepoEnable(object):
         """Choose repositories
         """
         keys = """
+Choose repositories at the right side for enable or to the
+left side for disable.
+
 Keys: SPACE   select or deselect the highlighted repositories,
              move it between the left and right lists
           ^       move the focus to the left list
@@ -59,7 +62,7 @@ Keys: SPACE   select or deselect the highlighted repositories,
         self.read_enabled()
         self.read_disabled()
         self.selected = DialogUtil(self.disabled, text=keys,
-                                   title="Enable | Disable  Repositories",
+                                   title="Repositories",
                                    backtitle="",
                                    status=False).buildlist(self.enabled)
         self.update_repos()
