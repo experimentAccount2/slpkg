@@ -1,8 +1,9 @@
-2.8.0 - 1/09/2015
+2.8.0 - 01/09/2015
 Added:
 - NEW configuration file for repositories in /etc/slpkg/repositories.conf
 - Enable and disable repositories with command via dialog utility
 Update:
+- All configuration files
 - Command line help logo
 - Flags for packages upgrade
 - Clear screen after exit dialog utility
