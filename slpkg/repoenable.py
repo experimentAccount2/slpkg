@@ -124,4 +124,6 @@ Keys: SPACE   select or deselect the highlighted repositories,
     def reference(self):
         """Reference enable repositories
         """
-        print("Enabled repositories: {0}".format(", ".join(self.selected)))
+        print("Enabled repositories:\n  {0}".format(", ".join(self.selected)))
+        print("\nView more information with commands:\n"
+              "  '# slpkg repo-list' and '# slpkg repo-info'\n")
