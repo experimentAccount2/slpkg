@@ -24,6 +24,8 @@
 
 from __future__ import unicode_literals
 
+import os
+
 
 class DialogUtil(object):
     """Create dialog checklist
@@ -88,7 +90,13 @@ class DialogUtil(object):
     def exit(self):
         """Exit from dialog
         """
+        self.clear_screen()
         raise SystemExit()
+
+    def clear_screen(self):
+        """Clear screen
+        """
+        os.system("clear")
 
     def unicode_to_string(self):
         """Convert unicode in string
