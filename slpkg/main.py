@@ -41,6 +41,7 @@ from slpkg.version import prog_version
 from slpkg.health import PackageHealth
 from slpkg.new_config import NewConfig
 from slpkg.tracking import TrackingDeps
+from slpkg.repoenable import RepoEnable
 from slpkg.pkg_find import find_from_repos
 from slpkg.arguments import options, usage
 from slpkg.slpkg_update import it_self_update
@@ -76,6 +77,7 @@ class ArgParse(object):
             "upgrade",
             "repo-add",
             "repo-remove",
+            "repo-enable",
             "repo-list",
             "repo-info",
             "update-slpkg",
@@ -86,8 +88,8 @@ class ArgParse(object):
 
         # checking if repositories exists
         if len(self.args) > 1 and self.args[0] not in [
-            "-h", "--help", "-v", "--version", "upgrade", "repo-list",
-            "repo-add", "repo-remove", "update", "update-slpkg",
+            "-h", "--help", "-v", "--version", "upgrade", "repo-enable",
+            "repo-list", "repo-add", "repo-remove", "update", "update-slpkg",
             "health", "-g", "--config"
         ]:
             check_exists_repositories()
@@ -124,6 +126,14 @@ class ArgParse(object):
         """
         if len(self.args) == 2 and self.args[0] == "update-slpkg":
             it_self_update()
+        else:
+            usage("")
+
+    def command_repo_enable(self):
+        """Repositories enable/disable
+        """
+        if len(self.args) == 1 and self.args[0] == "repo-enable":
+            RepoEnable().choose()
         else:
             usage("")
 
@@ -581,6 +591,7 @@ def main():
         "update": argparse.command_update,
         "upgrade": argparse.command_upgrade,
         "update-slpkg": argparse.command_update_slpkg,
+        "repo-enable": argparse.command_repo_enable,
         "repo-list": argparse.command_repo_list,
         "repo-add": argparse.command_repo_add,
         "repo-remove": argparse.command_repo_remove,

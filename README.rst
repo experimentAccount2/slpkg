@@ -196,7 +196,7 @@ choices such read, download, build, install etc.
 
 If you want to find packages from all repositories, this command will solve your hands '$ slpkg -F 
 <packages>'. It will search in all enabled repositories will find the configuration file 
-'/etc/slpkg/slpkg.conf' will print all the packages that match the description that you enter.
+'/etc/slpkg/repositories.conf' will print all the packages that match the description that you enter.
 
 If you want to see if any packages are installed on your system enter the command '$ slpkg -f <packages>'.
 The surprise in the end is the reporting of packages sum and size found.
@@ -369,6 +369,8 @@ Command Line Tool Usage
                                                 lists.
        repo-add [repository name] [URL]         Add custom repository.
        repo-remove [repository]                 Remove custom repository.
+       repo-enable                              Enable or disable default
+                                                repositories via dialog utility.
        repo-list                                Print a list of all the
                                                 repositories.
        repo-info [repository]                   Get information about a
@@ -444,6 +446,18 @@ Command Line Tool Usage
 
 Slpkg Examples
 --------------
+
+Enable default repositories edit /etc/slpkg/repositories.conf file or with 
+command.
+(require pythondialog, install with '# slpkg -s sbo python2-pythondialog'):
+
+.. code-block:: bash
+    
+    $ slpkg repo-enable
+
+.. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/repo_enable.png
+    :target: https://raw.githubusercontent.com/dslackw/images/master/slpkg/deps2.png
+
 
 If you use slpkg for the first time will have to create and update the package 
 list. This command must be executed to update the package lists:

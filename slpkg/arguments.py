@@ -50,6 +50,8 @@ Commands:
                                             lists.
    repo-add [repository name] [URL]         Add custom repository.
    repo-remove [repository]                 Remove custom repository.
+   repo-enable                              Enable or disable default
+                                            repositories via dialog utility.
    repo-list                                Print a list of all the
                                             repositories.
    repo-info [repository]                   Get information about a
@@ -137,6 +139,7 @@ def usage(repo):
              [upgrade, --only=[...]]
              [repo-add [repository name] [URL]]
              [repo-remove [repository]]
+             [repo-enable]
              [repo-list]
              [repo-info [repository]]
              [update [slpkg]]

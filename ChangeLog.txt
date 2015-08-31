@@ -1,9 +1,13 @@
-2.7.7 - 30/08/2015
+2.7.7 - 31/08/2015
 Added:
 - NEW configuration file for repositories in /etc/slpkg/repositories.conf
+- Enable and disable repositories with command via dialog utility
 Update:
 - Command line help logo
 - Flags for packages upgrade
+- Clear screen after exit dialog utility
+Fixed:
+- Remove None type packages
 
 2.7.6 - 28/08/2015
 Fixed:

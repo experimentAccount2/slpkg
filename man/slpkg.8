@@ -20,6 +20,7 @@ Usage: slpkg Commands:
              [upgrade, --only=[...]]
              [repo-add [repository name] [URL]]
              [repo-remove [repository]]
+             [repo-enable]
              [repo-list]
              [repo-info [repository]]
              [update [slpkg]]
@@ -94,6 +95,11 @@ contain at least the files "PACKAGES.TXT" and "CHECKSUMS.md5" and optional file
 \fBslpkg\fP \fBrepo-remove\fP <\fIrepository\fP> 
 .PP
 Remove custom repository by name.
+
+.SS repo-enable, enable or disable repositories
+\fBslpkg\fP \fBrepo-enable\fP
+.PP
+Enable or disable repositories via dialog utility (require pythondialog)
 
 .SS repo-list, repositories list
 \fBslpkg\fP \fBrepo-list\fP
