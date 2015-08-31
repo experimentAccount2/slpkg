@@ -64,13 +64,14 @@ class DialogUtil(object):
             self.exit()
 
     def buildlist(self, enabled):
+        """Run dialog buildlist
+        """
         try:
             choice = []
             for item in self.data:
-                status = False
-                if item in enabled:
-                    status = True
-                choice.append((item, status))
+                choice.append((item, False))
+            for item in enabled:
+                choice.append((item, True))
             items = [(tag, tag, sta) for (tag, sta) in choice]
             code, self.tags = self.d.buildlist(
                 text=self.text, items=items, visit_items=True, item_help=False,

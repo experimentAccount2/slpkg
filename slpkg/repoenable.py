@@ -22,9 +22,8 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-from slpkg.repolist import RepoList
+from slpkg.utils import Utils
 from slpkg.dialog_box import DialogUtil
-
 from slpkg.__metadata__ import MetaData as _meta_
 
 
@@ -32,17 +31,59 @@ class RepoEnable(object):
 
     def __init__(self):
         self.meta = _meta_
-        self.repositories = [
-            repo for repo in RepoList().all_repos.keys()
-        ]
-        self.enabled = self.meta.repositories
+        self.tag = "[REPOSITORIES]"
+        self.repositories_conf = "repositories.conf"
+        self.conf = Utils().read_file(
+            self.meta.conf_path + self.repositories_conf)
+        self.enabled = []
+        self.disabled = []
+        self.selected = []
 
     def choose(self):
-        # for repo in self.repositories:
-        #    if repo in self.enabled:
-        repos = DialogUtil(self.repositories, text="", title="bbbb",
-                           backtitle="ccccc",
-                           status=False).buildlist(self.enabled)
-        print repos
+        """Choose repositories
+        """
+        keys = """
+Keys: SPACE   select or deselect the highlighted repositories,
+             move it between the left and right lists
+          ^       move the focus to the left list
+          $       move the focus to the right list
+        TAB     move focus
+      ENTER   press the focused button
+
+      Disabled <----------------------> Enabled"""
+        self.read_enabled()
+        self.read_disabled()
+        self.selected = DialogUtil(self.disabled, text=keys,
+                                   title="Enable | Disable  Repositories",
+                                   backtitle="",
+                                   status=False).buildlist(self.enabled)
+        self.update()
+
+    def read_enabled(self):
+        """Read enable repositories
+        """
+        read_line = False
+        for line in self.conf.splitlines():
+            line = line.lstrip()
+            if self.tag in line:
+                read_line = True
+            if (line and read_line and not line.startswith("#") and
+                    self.tag not in line):
+                self.enabled.append(line)
+
+    def read_disabled(self):
+        """Read disable repositories
+        """
+        read_line = False
+        for line in self.conf.splitlines():
+            line = line.lstrip()
+            if self.tag in line:
+                read_line = True
+            if read_line and line.startswith("#"):
+                line = "".join(line.split("#")).strip()
+                self.disabled.append(line)
+
+    def update(self):
+        print self.selected
 
 RepoEnable().choose()
