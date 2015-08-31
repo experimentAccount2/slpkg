@@ -26,6 +26,6 @@
 # the user. The repositories will be added here should have a different
 # name from existing repositories and the default. Also, the link must
 # contain the PACKAGES.TXT files, CHECKSUMS.md5 and optional ChangeLog.txt.
-# -------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 #
 # NAME      URL
