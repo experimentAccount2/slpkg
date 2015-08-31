@@ -447,7 +447,7 @@ Command Line Tool Usage
 Slpkg Examples
 --------------
 
-Enable default repositories edit /etc/slpkg/repositories.conf file or with 
+Enable or disable default repositories edit /etc/slpkg/repositories.conf file or with 
 command.
 (require pythondialog, install with '# slpkg -s sbo python2-pythondialog'):
 
