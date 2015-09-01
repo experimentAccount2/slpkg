@@ -91,16 +91,16 @@ class SBoNetwork(object):
                 elif self.choice in ["R", "r"]:
                     README = ReadSBo(self.sbo_url).readme("README")
                     fill = self.fill_pager(README)
-                    pydoc.pager(README + fill)
+                    self.pager(README + fill)
                 elif self.choice in ["F", "f"]:
                     info = ReadSBo(self.sbo_url).info(self.name, ".info")
                     fill = self.fill_pager(info)
-                    pydoc.pager(info + fill)
+                    self.pager(info + fill)
                 elif self.choice in ["S", "s"]:
                     SlackBuild = ReadSBo(self.sbo_url).slackbuild(self.name,
                                                                   ".SlackBuild")
                     fill = self.fill_pager(SlackBuild)
-                    pydoc.pager(SlackBuild + fill)
+                    self.pager(SlackBuild + fill)
                 elif self.choice in ["B", "b"]:
                     self.build()
                     delete(self.build_folder)
@@ -165,6 +165,14 @@ class SBoNetwork(object):
                                                             self.endc, br2))
 
         self.msg.template(78)
+
+    def pager(self, text):
+        """Read text
+        """
+        try:
+            pydoc.pager(text)
+        except KeyboardInterrupt:
+            pass
 
     def fill_pager(self, page):
         """Fix pager spaces
