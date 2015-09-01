@@ -28,7 +28,6 @@ import pydoc
 from slpkg.messages import Msg
 from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
-from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.pkg.find import find_package
@@ -41,7 +40,7 @@ from slpkg.sbo.greps import SBoGrep
 from slpkg.sbo.sbo_arch import SBoArch
 from slpkg.sbo.compressed import SBoLink
 from slpkg.sbo.search import sbo_search_pkg
-from slpkg.sbo.build_num import BuildNumber
+from slpkg.sbo.build_check import slack_package
 
 
 class SBoNetwork(object):
@@ -228,18 +227,7 @@ class SBoNetwork(object):
     def install(self, prgnam):
         """Install SBo package found in /tmp directory.
         """
-        binary = ""
-        # Get build number from prgnam.SlackBuild script
-        build1 = BuildNumber("", "-".join(prgnam.split("-")[:-1])).get()
-        for pkg in find_package(prgnam + self.meta.sp, self.meta.output):
-            # Get build number from binary package
-            build2 = split_package(pkg[:-4])[3]
-            if pkg[:-4].endswith("_SBo") and build1 == build2:
-                binary = ["".join(self.meta.output + pkg)]
-                break
-        if not find_package(binary, self.meta.output):
-            self.msg.build_FAILED(prgnam)
-            raise SystemExit()
+        binary = slack_package(prgnam)
         print("[ {0}Installing{1} ] --> {2}".format(self.green,
                                                     self.endc,
                                                     self.name))

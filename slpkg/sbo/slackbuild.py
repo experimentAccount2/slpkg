@@ -30,7 +30,6 @@ from slpkg.toolbar import status
 from slpkg.log_deps import write_deps
 from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
-from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.pkg.find import find_package
@@ -44,7 +43,7 @@ from slpkg.sbo.sbo_arch import SBoArch
 from slpkg.sbo.compressed import SBoLink
 from slpkg.sbo.dependency import Requires
 from slpkg.sbo.search import sbo_search_pkg
-from slpkg.sbo.build_num import BuildNumber
+from slpkg.sbo.build_check import slack_package
 
 
 class SBoInstall(object):
@@ -279,23 +278,6 @@ class SBoInstall(object):
             filename.append(src.split("/")[-1])
         return filename
 
-    def search_in_output(self, prgnam):
-        """Search for binary packages in output directory
-        """
-        binary = ""
-        # Get build number from prgnam.SlackBuild script
-        build1 = BuildNumber("", "-".join(prgnam.split("-")[:-1])).get()
-        for pkg in find_package(prgnam + self.meta.sp, self.meta.output):
-            # Get build number from binary package
-            build2 = split_package(pkg[:-4])[3]
-            if pkg[:-4].endswith("_SBo") and build1 == build2:
-                binary = pkg
-                break
-        if not find_package(binary, self.meta.output):
-            self.msg.build_FAILED(prgnam)
-            raise SystemExit()
-        return ["".join(self.meta.output + binary)]
-
     def build_install(self):
         """Searches the package name and version in /tmp to
         install. If find two or more packages e.g. to build
@@ -329,7 +311,7 @@ class SBoInstall(object):
                 Download(self.build_folder, dwn_srcs, repo="sbo").start()
                 sources = self.filenames(src_link)
                 BuildPackage(script, sources, self.build_folder).build()
-                binary = self.search_in_output(prgnam)
+                binary = slack_package(prgnam)
                 if GetFromInstalled(pkg).name() == pkg:
                     print("[ {0}Upgrading{1} ] --> {2}".format(
                         self.meta.color["YELLOW"],
