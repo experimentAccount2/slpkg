@@ -484,7 +484,9 @@ list. This command must be executed to update the package lists:
 
     $ slpkg update --only=sbo,msb,slacky
 
-    Also you can check ChangeLog.txt for changes like:
+Also you can check ChangeLog.txt for changes like:
+
+.. code-block::
 
     $ slpkg -c sbo
     
