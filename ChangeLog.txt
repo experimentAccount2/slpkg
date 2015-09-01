@@ -9,6 +9,7 @@ Update:
 - Clear screen after exit dialog utility
 Fixed:
 - Remove None type packages
+- Remove old sbo folder if exists before start build
 
 2.7.6 - 28/08/2015
 Fixed:
