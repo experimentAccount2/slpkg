@@ -237,6 +237,9 @@ class SBoNetwork(object):
             if pkg[:-4].endswith("_SBo") and build1 == build2:
                 binary = ["".join(self.meta.output + pkg)]
                 break
+        if not find_package(binary, self.meta.output):
+            self.msg.build_FAILED(prgnam)
+            raise SystemExit()
         print("[ {0}Installing{1} ] --> {2}".format(self.green,
                                                     self.endc,
                                                     self.name))

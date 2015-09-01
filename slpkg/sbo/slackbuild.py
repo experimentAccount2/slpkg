@@ -291,6 +291,9 @@ class SBoInstall(object):
             if pkg[:-4].endswith("_SBo") and build1 == build2:
                 binary = pkg
                 break
+        if not find_package(binary, self.meta.output):
+            self.msg.build_FAILED(prgnam)
+            raise SystemExit()
         return ["".join(self.meta.output + binary)]
 
     def build_install(self):
