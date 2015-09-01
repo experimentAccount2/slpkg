@@ -31,8 +31,6 @@ import tarfile
 import subprocess
 import multiprocessing
 
-from slpkg.pkg.find import find_package
-
 from slpkg.messages import Msg
 from slpkg.checksum import check_md5
 from slpkg.__metadata__ import MetaData as _meta_
@@ -105,19 +103,10 @@ class BuildPackage(object):
                 subprocess.call("{0} ./{1}.SlackBuild".format(
                     " ".join(pass_var), self.prgnam, shell=True))
             os.chdir(self.path)
-            self._check_if_build()
         except (OSError, IOError):
             self.msg.pkg_not_found("\n", self.prgnam, "Wrong file", "\n")
         except KeyboardInterrupt:
             print("")   # new line at exit
-            raise SystemExit()
-
-    def _check_if_build(self):
-        """Check if package build normal in /tmp directory
-        """
-        find = find_package(self.prgnam + self.meta.sp, self.meta.output)
-        if not find:
-            self.msg.build_FAILED(self.prgnam)
             raise SystemExit()
 
     def _create_md5_dict(self):
