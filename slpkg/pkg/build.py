@@ -74,7 +74,7 @@ class BuildPackage(object):
             tar.extractall()
             tar.close()
             self._makeflags()
-            self._delete_sbo()
+            self._delete_sbo_tar_gz()
             self._create_md5_dict()
             for src in self.sources:
                 # fix build sources with spaces
@@ -146,7 +146,7 @@ class BuildPackage(object):
                     var.split("_")[1], os.environ[var]))
         return pass_var
 
-    def _delete_sbo(self):
+    def _delete_sbo_tar_gz(self):
         """Delete slackbuild tar.gz file after untar
         """
         if os.path.isfile(self.meta.build_path + self.script):
