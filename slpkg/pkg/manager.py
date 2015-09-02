@@ -153,7 +153,7 @@ class PackageManager(object):
                         removed.append(split_package(pkg)[0])
                         packages.append(pkg)
             if not removed:
-                self.msg.pkg_not_found("", tag, "Can't remove", "")
+                self.msg.pkg_not_found("", "'tag'", "Can't remove", "")
         else:
             for pkg in self.binary:
                 name = GetFromInstalled(pkg).name()
