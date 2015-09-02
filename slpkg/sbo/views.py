@@ -108,7 +108,7 @@ class SBoNetwork(object):
                     if not find_package(self.prgnam + self.meta.sp,
                                         self.meta.pkg_path):
                         self.build()
-                        self.install(self.prgnam)
+                        self.install()
                         delete(self.build_folder)
                         break
                     else:
