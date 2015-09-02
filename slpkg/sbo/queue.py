@@ -29,18 +29,19 @@ from slpkg.utils import Utils
 from slpkg.downloader import Download
 from slpkg.__metadata__ import MetaData as _meta_
 
-from slpkg.sbo.greps import SBoGrep
 from slpkg.pkg.find import find_package
 from slpkg.pkg.build import BuildPackage
+from slpkg.pkg.manager import PackageManager
+
+from slpkg.sbo.greps import SBoGrep
 from slpkg.sbo.compressed import SBoLink
 from slpkg.sbo.search import sbo_search_pkg
-from slpkg.pkg.manager import PackageManager
+from slpkg.sbo.build_check import slack_package
 
 
 class QueuePkgs(object):
-    """
-    Class to list, add or remove packages in queue,
-    also build or install.
+    """Manage SBo packages, add or remove for building or
+    installation
     """
     def __init__(self):
         queue_file = [
@@ -64,8 +65,7 @@ class QueuePkgs(object):
         self.queued = Utils().read_file(self.queue_list)
 
     def packages(self):
-        """
-        Return queue list from /var/lib/queue/queue_list
+        """Return queue list from /var/lib/queue/queue_list
         file.
         """
         queue_list = []
@@ -76,8 +76,7 @@ class QueuePkgs(object):
         return queue_list
 
     def listed(self):
-        """
-        Print packages from queue
+        """Print packages from queue
         """
         print("\nPackages in queue:\n")
         for pkg in self.packages():
@@ -89,8 +88,7 @@ class QueuePkgs(object):
             print("")   # new line at exit
 
     def add(self, pkgs):
-        """
-        Add packages in queue if not exist
+        """Add packages in queue if not exist
         """
         queue_list = self.packages()
         pkgs = list(OrderedDict.fromkeys(pkgs))
@@ -112,8 +110,7 @@ class QueuePkgs(object):
             print("")   # new line at exit
 
     def remove(self, pkgs):
-        """
-        Remove packages from queue
+        """Remove packages from queue
         """
         print("\nRemove packages from queue:\n")
         with open(self.queue_list, "w") as queue:
@@ -129,8 +126,7 @@ class QueuePkgs(object):
             print("")   # new line at exit
 
     def build(self):
-        """
-        Build packages from queue
+        """Build packages from queue
         """
         packages = self.packages()
         if packages:
@@ -154,21 +150,19 @@ class QueuePkgs(object):
             print("\nPackages not found in the queue for building\n")
 
     def install(self):
-        """
-        Install packages from queue
+        """Install packages from queue
         """
         packages = self.packages()
         if packages:
             print("")   # new line at start
             for pkg in packages:
-                # check if package exist in /tmp
-                find = find_package(pkg + self.meta.sp, self.meta.output)
-                try:
-                    find = max(find)
-                except ValueError:
-                    print("Package '{0}' not found in /tmp\n".format(pkg))
-                if pkg in find:
-                    binary = "{0}{1}".format(self.meta.output, find)
-                    PackageManager(binary.split()).upgrade(flag="--install-new")
+                ver = SBoGrep(pkg).version()
+                prgnam = "{0}-{1}".format(pkg, ver)
+                if find_package(prgnam + self.meta.sp, self.meta.output):
+                    binary = slack_package(prgnam)
+                    PackageManager(binary).upgrade(flag="--install-new")
+                else:
+                    print("\nPackage {0} not found in the {1} for "
+                          "installation\n".format(prgnam, self.meta.output))
         else:
             print("\nPackages not found in the queue for installation\n")

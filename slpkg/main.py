@@ -32,7 +32,6 @@ from slpkg.messages import Msg
 from slpkg.auto_pkg import Auto
 from slpkg.config import Config
 from slpkg.checks import Updates
-from slpkg.queue import QueuePkgs
 from slpkg.repoinfo import RepoInfo
 from slpkg.repolist import RepoList
 from slpkg.repositories import Repo
@@ -56,6 +55,7 @@ from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.pkg.manager import PackageManager
 
+from slpkg.sbo.queue import QueuePkgs
 from slpkg.sbo.views import SBoNetwork
 from slpkg.sbo.check import sbo_upgrade
 from slpkg.sbo.autobuild import AutoBuild
