@@ -63,10 +63,9 @@ Keys: SPACE   select or deselect the highlighted repositories,
       Disabled  <-------- REPOSITORIES ------->  Enabled"""
         self.read_enabled()
         self.read_disabled()
-        self.selected = DialogUtil(self.disabled, text=keys,
-                                   title="Repositories",
-                                   backtitle="",
-                                   status=False).buildlist(self.enabled)
+        text, title, backtitle, status = keys, "Repositories", "", False
+        self.selected = DialogUtil(self.disabled, text, title, backtitle,
+                                   status).buildlist(self.enabled)
         self.update_repos()
         self.clear_screen()
         self.reference()

@@ -176,14 +176,13 @@ class PackageManager(object):
         removed, packages = self._get_removed()
         if packages and "--checklist" in self.extra:
             removed = []
-            pkgs = DialogUtil(
-                data=packages,
-                text="Press 'spacebar' to unchoose packages from remove",
-                title="Remove",
-                backtitle="{0} {1}".format(
-                    self.meta.__all__,
-                    self.meta.__version__),
-                status=True).checklist()
+            data = packages
+            text = "Press 'spacebar' to unchoose packages from remove"
+            title = "Remove"
+            backtitle = "{0} {1}".format(self.meta.__all__,
+                                         self.meta.__version__)
+            status = True
+            pkgs = DialogUtil(data, text, title, backtitle, status).checklist()
             if pkgs:
                 for rmv in pkgs:
                     removed.append(split_package(rmv)[0])
@@ -229,14 +228,13 @@ class PackageManager(object):
                 packages.append(dep + ver)
         if "--checklist" in self.extra:
             deps, dependencies = [], ""
-            deps = DialogUtil(
-                data=packages,
-                text="Found dependencies for package {0}".format(package),
-                title="Remove",
-                backtitle="{0} {1}".format(
-                    self.meta.__all__,
-                    self.meta.__version__),
-                status=True).checklist()
+            data = packages
+            text = "Found dependencies for package {0}".format(package)
+            title = "Remove"
+            backtitle = "{0} {1}".format(self.meta.__all__,
+                                         self.meta.__version__)
+            status = True
+            deps = DialogUtil(data, text, title, backtitle, status).checklist()
             for d in deps:
                 dependencies += " " + "-".join(d.split("-")[:-1])
             dependencies = dependencies.strip()
@@ -327,15 +325,15 @@ class PackageManager(object):
                         dependency.append(rmv)
             if package:
                 if "--checklist" in self.extra:
-                    choose = DialogUtil(
-                        data=pkg_dep,
-                        text="Press 'spacebar' to choose packages to exception "
-                             "remove",
-                        title="!!! WARNING !!!",
-                        backtitle="{0} {1}".format(
-                            self.meta.__all__,
-                            self.meta.__version__),
-                        status=False).checklist()
+                    data = pkg_dep
+                    text = ("Press 'spacebar' to choose packages to exception "
+                            "remove")
+                    title = "!!! WARNING !!!"
+                    backtitle = "{0} {1}".format(self.meta.__all__,
+                                                 self.meta.__version__)
+                    status = True
+                    choose = DialogUtil(data, text, title, backtitle,
+                                        status).checklist()
                     for pkg in choose:
                         self.skip.append(pkg.split()[0])
                 else:

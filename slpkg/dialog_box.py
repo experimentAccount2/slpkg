@@ -30,7 +30,7 @@ import os
 class DialogUtil(object):
     """Create dialog checklist
     """
-    def __init__(self, data, text, title, backtitle, status):
+    def __init__(self, *args):
         try:
             from dialog import Dialog
         except ImportError:
@@ -38,11 +38,11 @@ class DialogUtil(object):
                   "python2-pythondialog'")
             raise SystemExit()
         self.d = Dialog(dialog="dialog", autowidgetsize=True)
-        self.data = data
-        self.text = text
-        self.title = title
-        self.backtitle = backtitle
-        self.status = status
+        self.data = args[0]
+        self.text = args[1]
+        self.title = args[2]
+        self.backtitle = args[3]
+        self.status = args[4]
         self.ununicode = []
         self.tags = []
 
