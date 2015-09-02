@@ -103,7 +103,7 @@ class Download(object):
                            'oraclelicense=accept-securebackup-cookie"')
             self.msg.template(78)
             print("| '{0}' need to go ahead downloading".format(
-                certificate[:23]))
+                certificate[:23].strip()))
             self.msg.template(78)
             print("")
             self.downder_options += certificate
