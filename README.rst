@@ -249,7 +249,7 @@ Using pip:
 
     $ pip uninstall slpkg
 
-    for clean data run clean.py from source code:
+    Data remove run from source code:
 
     $ python clean.py
 
