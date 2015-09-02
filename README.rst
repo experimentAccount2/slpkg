@@ -20,7 +20,7 @@
     :target: https://github.com/dslackw/slpkg/issues
  
 
-Slpkg v2.8.0
+Slpkg v2.8.1
 ============
 
 |
@@ -235,8 +235,8 @@ Untar the archive and run install.sh script:
 
 .. code-block:: bash
     
-    $ tar xvf slpkg-2.8.0.tar.gz
-    $ cd slpkg-2.8.0
+    $ tar xvf slpkg-2.8.1.tar.gz
+    $ cd slpkg-2.8.1
     $ ./install.sh
 
 Using pip:
@@ -255,9 +255,9 @@ Using pip:
 
 Bbinary packages:
 
-Slackware: `slpkg-2.8.0-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.8.0/slpkg-2.8.0-i486-1_dsw.txz>`_
+Slackware: `slpkg-2.8.1-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.8.1/slpkg-2.8.1-i486-1_dsw.txz>`_
 
-Slackware64: `slpkg-2.8.0-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.8.0/slpkg-2.8.0-x86_64-1_dsw.txz>`_
+Slackware64: `slpkg-2.8.1-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.8.1/slpkg-2.8.1-x86_64-1_dsw.txz>`_
 
 
 Optional dependencies
