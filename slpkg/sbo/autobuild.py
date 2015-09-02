@@ -34,6 +34,7 @@ class AutoBuild(object):
     def __init__(self, script, sources, path):
         self.script = script
         self.sources = sources
+        self.prgnam = self.script[:-7]
         self.path = path
         self.sbo_sources = []
 
@@ -41,19 +42,17 @@ class AutoBuild(object):
         """Build package and fix ordelist per checksum
         """
         self.info_file()
-        for sbo, dwn in zip(self.sbo_sources, self.sources):
-            if sbo != dwn:
-                # If the list does not have the same order use from .info
-                # order.
-                BuildPackage(self.script, self.sbo_sources, self.path).build()
-                raise SystemExit()
-        # If user use the correct order list
-        BuildPackage(self.script, self.sources, self.path).build()
+        sources = self.sources
+        if len(sources) > 1 and self.sbo_sources != sources:
+            sources = self.sbo_sources
+        # If the list does not have the same order use from .info
+        # order.
+        BuildPackage(self.script, sources, self.path).build()
+        raise SystemExit()
 
     def info_file(self):
         """Grab sources from .info file and store filename
         """
-        prgnam = self.script[:-7]
-        sources = SBoGrep(prgnam).source().split()
+        sources = SBoGrep(self.prgnam).source().split()
         for source in sources:
             self.sbo_sources.append(source.split("/")[-1])
