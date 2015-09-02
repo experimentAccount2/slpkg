@@ -126,10 +126,16 @@ Keys: SPACE   select or deselect the highlighted repositories,
     def reference(self):
         """Reference enable repositories
         """
+        total_enabled = ", ".join(self.selected)
+        if len(total_enabled) < 1:
+            total_enabled = ("{0}Are you crazy? This is a package "
+                             "manager for packages :p{1}".format(
+                                 self.meta.color["RED"],
+                                 self.meta.color["ENDC"]))
         self.msg.template(78)
         print("| Enabled repositories:")
         self.msg.template(78)
-        print("| {0}".format(", ".join(self.selected)))
+        print("| {0}".format(total_enabled))
         self.msg.template(78)
         print("{0}Total {1} repositories enabled.{2}\n".format(
             self.meta.color["GREY"], len(self.selected),
