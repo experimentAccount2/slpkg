@@ -279,9 +279,7 @@ class SBoInstall(object):
         return filename
 
     def build_install(self):
-        """Searches the package name and version in /tmp to
-        install. If find two or more packages e.g. to build
-        tag 2 or 3 will fit most.
+        """Build and install packages if not already installed
         """
         slackbuilds = self.dependencies + self.master_packages
         installs, upgraded, = [], []
