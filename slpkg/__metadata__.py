@@ -244,4 +244,4 @@ class MetaData(object):
     except KeyError:
         output = tmp
     if not output.endswith("/"):
-        output = output + "/"
+        output += "/"
