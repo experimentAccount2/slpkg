@@ -25,6 +25,7 @@
 import os
 
 from slpkg.utils import Utils
+from slpkg.messages import Msg
 from slpkg.dialog_box import DialogUtil
 from slpkg.__metadata__ import MetaData as _meta_
 
@@ -35,6 +36,7 @@ class RepoEnable(object):
     """
     def __init__(self):
         self.meta = _meta_
+        self.msg = Msg()
         self.tag = "[REPOSITORIES]"
         self.tag_line = False
         self.repositories_conf = "repositories.conf"
@@ -124,6 +126,11 @@ Keys: SPACE   select or deselect the highlighted repositories,
     def reference(self):
         """Reference enable repositories
         """
-        print("Enabled repositories:\n  {0}".format(", ".join(self.selected)))
-        print("\nView more information with commands:\n"
-              "  '# slpkg repo-list' and '# slpkg repo-info'\n")
+        self.msg.template(78)
+        print("| Enabled repositories:")
+        self.msg.template(78)
+        print("| {0}".format(", ".join(self.selected)))
+        self.msg.template(78)
+        print("{0}Total {1} repositories enabled.{2}\n".format(
+            self.meta.color["GREY"], len(self.selected),
+            self.meta.color["ENDC"]))
