@@ -22,6 +22,8 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+import os
+
 from slpkg.messages import Msg
 from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _meta_
@@ -43,7 +45,18 @@ def slack_package(prgnam):
         if pkg[:-4].endswith("_SBo") and build1 == build2:
             binary = pkg
             break
-    if not find_package(binary, _meta_.output):
+    if binary not in sbo_packages():
         Msg().build_FAILED(prgnam)
         raise SystemExit()
     return ["".join(_meta_.output + binary)]
+
+
+def sbo_packages():
+    """
+    Return all SBo packages from /tmp directory
+    """
+    packages = []
+    for pkg in os.listdir(_meta_.output):
+        if pkg.endswith(".tgz") or pkg.endswith(".txz"):
+            packages.append(pkg)
+    return packages

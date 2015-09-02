@@ -80,7 +80,7 @@ class SBoNetwork(object):
         from slackbuilds.org
         """
         if self.sbo_url and self.name not in self.blacklist:
-            prgnam = ("{0}-{1}".format(self.name, self.sbo_version))
+            self.prgnam = ("{0}-{1}".format(self.name, self.sbo_version))
             self.view_sbo()
             while True:
                 self.read_choice()
@@ -105,15 +105,15 @@ class SBoNetwork(object):
                     delete(self.build_folder)
                     break
                 elif self.choice in ["I", "i"]:
-                    if not find_package(prgnam + self.meta.sp,
+                    if not find_package(self.prgnam + self.meta.sp,
                                         self.meta.pkg_path):
                         self.build()
-                        self.install(prgnam)
+                        self.install(self.prgnam)
                         delete(self.build_folder)
                         break
                     else:
                         self.msg.template(78)
-                        self.msg.pkg_found(prgnam)
+                        self.msg.pkg_found()
                         self.msg.template(78)
                         break
                 else:
@@ -223,11 +223,12 @@ class SBoNetwork(object):
         for src in self.source_dwn:
             sources.append(src.split("/")[-1])
         BuildPackage(script, sources, self.meta.build_path).build()
+        slack_package(self.prgnam)  # check if build
 
-    def install(self, prgnam):
+    def install(self):
         """Install SBo package found in /tmp directory.
         """
-        binary = slack_package(prgnam)
+        binary = slack_package(self.prgnam)
         print("[ {0}Installing{1} ] --> {2}".format(self.green,
                                                     self.endc,
                                                     self.name))
