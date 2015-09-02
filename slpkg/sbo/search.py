@@ -30,8 +30,8 @@ from slpkg.slack.slack_version import slack_ver
 
 
 def sbo_search_pkg(name):
-    """
-    Search for package path from SLACKBUILDS.TXT file
+    """Search for package path from SLACKBUILDS.TXT file and
+    return url
     """
     try:
         repo = Repo().sbo()
