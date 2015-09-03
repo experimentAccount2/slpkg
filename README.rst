@@ -84,6 +84,7 @@ For advanced users download SlackBuild script and source:
     
     $ tar xvf slpkg.tar.gz
     $ cp v2.8.1.tar.gz slpkg
+    $ cd slpkg
     $ ./slpkg.SlackBuild
 
 For simple users download only source:
