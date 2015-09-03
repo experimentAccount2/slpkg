@@ -75,25 +75,32 @@ Features
 Installation
 ------------
 
-For advanced users download SlackBuild script and source:
-
-.. code-block:: bash
-
-    $ wget https://github.com/dslackw/slpkg/releases/download/v2.8.1/slpkg.tar.gz
-    $ wget https://github.com/dslackw/slpkg/archive/v2.8.1.tar.gz
-    
-    $ tar xvf slpkg.tar.gz
-    $ cp v2.8.1.tar.gz slpkg
-    $ cd slpkg
-    $ ./slpkg.SlackBuild
-
-For simple users download only source:
+Simple users download only source (installed as Slackware package):
 
 .. code-block:: bash
     
     $ tar xvf slpkg-2.8.1.tar.gz
     $ cd slpkg-2.8.1
     $ ./install.sh
+
+
+Advanced users download SlackBuild script and source:
+
+.. code-block:: bash
+
+    $ wget https://github.com/dslackw/slpkg/blob/master/slpkg.tar.gz
+    $ wget https://github.com/dslackw/slpkg/archive/v2.8.1.tar.gz
+    
+    $ tar xvf slpkg.tar.gz
+    $ cp v2.8.1.tar.gz slpkg
+    $ cd slpkg
+    
+    (Edit script and change VERSION if need)
+    
+    $ ./slpkg.SlackBuild
+
+    Install as you know :)
+
 
 Using pip:
 
@@ -109,7 +116,8 @@ Using pip:
 
     $ python clean.py
 
-Bbinary packages:
+
+Binary packages:
 
 Slackware: `slpkg-2.8.1-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.8.1/slpkg-2.8.1-i486-1_dsw.txz>`_
 
