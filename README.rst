@@ -75,13 +75,25 @@ Features
 Installation
 ------------
 
-Download only source (installed as Slackware package):
+Download latest release:
 
 .. code-block:: bash
     
+    Required root privileges
+   
     $ tar xvf slpkg-2.8.1.tar.gz
     $ cd slpkg-2.8.1
     $ ./install.sh
+    
+    Installed as Slackware package
+
+    Uninstall:
+
+    $ slpkg -r slpkg
+
+    or
+
+    $ removepkg slpkg
 
 
 Using pip:
