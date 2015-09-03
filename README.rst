@@ -75,7 +75,7 @@ Features
 Installation
 ------------
 
-Simple users download only source (installed as Slackware package):
+Download only source (installed as Slackware package):
 
 .. code-block:: bash
     
