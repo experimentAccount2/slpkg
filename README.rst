@@ -72,6 +72,67 @@ Features
 - Better Security
 
 
+Installation
+------------
+
+For advanced users download SlackBuild script and source:
+
+.. code-block:: bash
+
+    $ wget https://github.com/dslackw/slpkg/releases/download/v2.8.1/slpkg.tar.gz
+    $ wget https://github.com/dslackw/slpkg/archive/v2.8.1.tar.gz
+    
+    $ tar xvf slpkg.tar.gz
+    $ cp v2.8.1.tar.gz slpkg
+    $ ./slpkg.SlackBuild
+
+For simple users download only source:
+
+.. code-block:: bash
+    
+    $ tar xvf slpkg-2.8.1.tar.gz
+    $ cd slpkg-2.8.1
+    $ ./install.sh
+
+Using pip:
+
+.. code-block:: bash
+    
+    $ pip install slpkg --upgrade
+    
+    Uninstall:
+
+    $ pip uninstall slpkg
+
+    Data remove run from source code:
+
+    $ python clean.py
+
+Bbinary packages:
+
+Slackware: `slpkg-2.8.1-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.8.1/slpkg-2.8.1-i486-1_dsw.txz>`_
+
+Slackware64: `slpkg-2.8.1-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.8.1/slpkg-2.8.1-x86_64-1_dsw.txz>`_
+
+
+Optional dependencies
+---------------------
+
+`python2-pythondialog <http://pythondialog.sourceforge.net/>`_ for dialog box interface
+
+`pygraphviz <http://pygraphviz.github.io/>`_ for drawing dependencies diagram
+
+`graph-easy <http://bloodgate.com/perl/graph/manual/index.html>`_ for drawing ascii dependencies diagram
+
+
+Upgrade
+-------
+
+From version '2.1.4' you can update slpkg itself with '# slpkg update slpkg'.
+In each slpkg upgrade should track the configuration files in the folder '/etc/slpkg' 
+for changes.
+
+
 Demonstration
 -------------
 
@@ -226,56 +287,6 @@ Testing
 
 The majority of trials have been made in an environment Slackware x86_64 'stable' 
 and x86 'current' version 14.1.
-
-
-Installation
-------------
-
-Untar the archive and run install.sh script:
-
-.. code-block:: bash
-    
-    $ tar xvf slpkg-2.8.1.tar.gz
-    $ cd slpkg-2.8.1
-    $ ./install.sh
-
-Using pip:
-
-.. code-block:: bash
-    
-    $ pip install slpkg --upgrade
-    
-    Uninstall:
-
-    $ pip uninstall slpkg
-
-    Data remove run from source code:
-
-    $ python clean.py
-
-Bbinary packages:
-
-Slackware: `slpkg-2.8.1-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.8.1/slpkg-2.8.1-i486-1_dsw.txz>`_
-
-Slackware64: `slpkg-2.8.1-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v2.8.1/slpkg-2.8.1-x86_64-1_dsw.txz>`_
-
-
-Optional dependencies
----------------------
-
-`python2-pythondialog <http://pythondialog.sourceforge.net/>`_ for dialog box interface
-
-`pygraphviz <http://pygraphviz.github.io/>`_ for drawing dependencies diagram
-
-`graph-easy <http://bloodgate.com/perl/graph/manual/index.html>`_ for drawing ascii dependencies diagram
-
-
-Upgrade
--------
-
-From version '2.1.4' you can update slpkg itself with '# slpkg update slpkg'.
-In each slpkg upgrade should track the configuration files in the folder '/etc/slpkg' 
-for changes.
 
 
 Slackware Current
