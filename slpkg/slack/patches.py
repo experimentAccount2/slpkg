@@ -34,7 +34,7 @@ from slpkg.toolbar import status
 from slpkg.checksum import check_md5
 from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
-from slpkg.remove import remove_package
+from slpkg.remove import delete_package
 from slpkg.grep_md5 import pkg_checksum
 from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _meta_
@@ -120,7 +120,7 @@ class Patches(object):
                     if self.meta.slackpkg_log in ["on", "ON"]:
                         self.slackpkg_update()
                     self.msg.reference(self.installed, self.upgraded)
-                    remove_package(self.patch_path, self.upgrade_all)
+                    delete_package(self.patch_path, self.upgrade_all)
             else:
                 slack_arch = ""
                 if self.meta.arch == "x86_64":

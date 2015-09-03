@@ -27,7 +27,7 @@ import os
 from slpkg.__metadata__ import MetaData as _meta_
 
 
-def remove_package(path, packages):
+def delete_package(path, packages):
     """
     Remove downloaded packages
     """
