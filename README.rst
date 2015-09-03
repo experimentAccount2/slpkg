@@ -84,24 +84,6 @@ Simple users download only source (installed as Slackware package):
     $ ./install.sh
 
 
-Advanced users download SlackBuild script and source:
-
-.. code-block:: bash
-
-    $ wget https://github.com/dslackw/slpkg/blob/master/slpkg.tar.gz
-    $ wget https://github.com/dslackw/slpkg/archive/v2.8.1.tar.gz
-    
-    $ tar xvf slpkg.tar.gz
-    $ cp v2.8.1.tar.gz slpkg
-    $ cd slpkg
-    
-    (Edit script and change VERSION if need)
-    
-    $ ./slpkg.SlackBuild
-
-    Install as you know :)
-
-
 Using pip:
 
 .. code-block:: bash
