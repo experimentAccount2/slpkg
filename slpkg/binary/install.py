@@ -27,13 +27,13 @@ import os
 from slpkg.utils import Utils
 from slpkg.sizes import units
 from slpkg.messages import Msg
-from slpkg.remove import delete
 from slpkg.toolbar import status
 from slpkg.checksum import check_md5
 from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
 from slpkg.log_deps import write_deps
 from slpkg.grep_md5 import pkg_checksum
+from slpkg.remove import remove_package
 from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _meta_
 
@@ -130,7 +130,7 @@ class BinaryInstall(object):
                     ins, upg = self.install_packages()
                     self.msg.reference(ins, upg)
                     write_deps(self.deps_dict)
-                    delete(self.tmp_path, self.install)
+                    remove_package(self.tmp_path, self.install)
             else:
                 self.msg.not_found(self.if_upgrade)
         except KeyboardInterrupt:
