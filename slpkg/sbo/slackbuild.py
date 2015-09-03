@@ -43,7 +43,7 @@ from slpkg.sbo.sbo_arch import SBoArch
 from slpkg.sbo.compressed import SBoLink
 from slpkg.sbo.dependency import Requires
 from slpkg.sbo.search import sbo_search_pkg
-from slpkg.sbo.build_check import slack_package
+from slpkg.sbo.slack_find import slack_package
 
 
 class SBoInstall(object):

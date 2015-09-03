@@ -36,7 +36,7 @@ from slpkg.pkg.manager import PackageManager
 from slpkg.sbo.greps import SBoGrep
 from slpkg.sbo.compressed import SBoLink
 from slpkg.sbo.search import sbo_search_pkg
-from slpkg.sbo.build_check import slack_package
+from slpkg.sbo.slack_find import slack_package
 
 
 class QueuePkgs(object):
