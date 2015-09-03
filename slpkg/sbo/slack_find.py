@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# build_check.py file is part of slpkg.
+# slack_find.py file is part of slpkg.
 
 # Copyright 2014-2015 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
@@ -40,9 +40,13 @@ def slack_package(prgnam):
     # Get build number from prgnam.SlackBuild script
     build1 = BuildNumber("", "-".join(prgnam.split("-")[:-1])).get()
     for pkg in find_package(prgnam + _meta_.sp, _meta_.output):
+        name = split_package(pkg[:-4])[0]
+        ver = split_package(pkg[:-4])[1]
+        prgnam_find = "{0}-{1}".format(name, ver)
         # Get build number from binary package
         build2 = split_package(pkg[:-4])[3]
-        if pkg[:-4].endswith("_SBo") and build1 == build2:
+        if (pkg[:-4].endswith("_SBo") and prgnam_find == prgnam and
+                build1 == build2):
             binary = pkg
             break
     if binary not in sbo_packages():
