@@ -124,7 +124,7 @@ class Patches(object):
             else:
                 slack_arch = ""
                 if self.meta.arch == "x86_64":
-                    slack_arch = 64
+                    slack_arch = "64"
                 print("\nSlackware{0} '{1}' v{2} distribution is up to "
                       "date\n".format(slack_arch, self.version, slack_ver()))
         except KeyboardInterrupt:
