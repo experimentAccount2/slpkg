@@ -829,7 +829,7 @@ Drawing dependencies ascii diagram:
 
 .. code-block:: bash
    
-    $ slpkg -t sbo brasero --graph=ascii
+    $ slpkg -t sbo botocore --graph=ascii
     
                                        +---------------------------------+
                                        |                                 |
