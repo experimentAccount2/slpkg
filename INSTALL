@@ -15,10 +15,11 @@ Install slpkg
 
 There are mainly 3 ways:
 
-1) (Default method) Download latest slpkg version from :
+1) (Default method) Download latest slpkg version from:
    https://github.com/dslackw/slpkg/releases
    Untar or unzip the archive, cd in slpkg-<version> directory.
-   Run install.sh in this directory `./install.sh` and slpkg auto-installed.
+   Run install.sh in this directory `./install.sh` and slpkg auto-installed
+   as Slackware package (root privileges are required).
 
 2) Download binary package from https://github.com/dslackw/slpkg/releases
    and use Slackware command `upgradepkg --install-new <slpkg binary>`
