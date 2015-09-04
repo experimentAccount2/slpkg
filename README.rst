@@ -204,77 +204,77 @@ Default available Repositories:
 Usage
 -----
 
-Need to run '$ slpkg update' for the first time to synchronize the list of packages,
+Need to run '# slpkg update' for the first time to synchronize the list of packages,
 also every time you add a new repository.
 To add or remove repositories must edit the file '/etc/slpkg/repositories.conf'.
 
-Add custom repositories with the command '$ slpkg add-repo <repository name> <URL>' and after
-run '$ slpkg update' to update package list.
+Add custom repositories with the command '# slpkg add-repo <repository name> <URL>' and after
+run '# slpkg update' to update package list.
 
-View list of repositories with command '$ slpkg repo-list' or get repository information with
-command '$ slpkg repo-info <repository>.
+View list of repositories with command '# slpkg repo-list' or get repository information with
+command '# slpkg repo-info <repository>.
 
-Update slpkg itself simply run '$ slpkg update slpkg', and slpkg check from GitHub repository if
+Update slpkg itself simply run '# slpkg update slpkg', and slpkg check from GitHub repository if
 new versions are available.
 
-Checking packages health with command "$ slpkg health" and slpkg check if files missing from 
+Checking packages health with command "# slpkg health" and slpkg check if files missing from 
 package file list.
 
-Print dependencies status used by packages with command '$ slpkg deps-status' or drawing image 
+Print dependencies status used by packages with command '# slpkg deps-status' or drawing image 
 map dependencies with additional option '--graph=[image]'.
 
 Manage .new configuration files with command 'slpkg new-config' like remove, overwrite, merge etc.
 
 If you have already downloaded the script and the source code you can build the package with 
-the command '$ slpkg <script.tar.gz> <sources>'.
+the command '# slpkg <script.tar.gz> <sources>'.
 
-Manage packages in the black list with the command '$ slpkg -b <packages> --add or --remove'.
+Manage packages in the black list with the command '# slpkg -b <packages> --add or --remove'.
 
-Add SBo packages to queue with command '$ slpkg -q <packages> --add or --remove' and manage as 
-build, install or build and install with command '$ slpkg build or install or build-install'.
+Add SBo packages to queue with command '# slpkg -q <packages> --add or --remove' and manage as 
+build, install or build and install with command '# slpkg build or install or build-install'.
 This is very useful if you want to install multiple packages together suffice to add in the right 
 order if there are dependent packages.
 
-View list of packages from specific repository with command '$ slpkg -l <repository>'.
+View list of packages from specific repository with command '# slpkg -l <repository>'.
 Combine with the command 'grep' to catch the results you want.
 
-Check and upgrade the distribution of your upgrade your packages with command '$ slpkg -c <repository> 
+Check and upgrade the distribution of your upgrade your packages with command '# slpkg -c <repository> 
 --upgrade'. Don't forget to update packages list before (for 'slack' repository don't is necessary).
 This command except upgrade packages will fix packages with broken dependencies. Switch  off automatic
 resolve dependensies with additional option '--resolve-off'.
 
-The most famous command is '$ slpkg -s <repository> <packages>' , this command downloads and 
+The most famous command is '# slpkg -s <repository> <packages>' , this command downloads and 
 installs packages with resolve all the dependencies or switch of resolve with additional option
 '--resolve-off'.
 
-Tracking the dependencies of a package with command '$ slpkg -t <repository> <package>'.
+Tracking the dependencies of a package with command '# slpkg -t <repository> <package>'.
 Displays a package dependency tree and also tells you which ones are installed on your system events.
 Check if packages used from other packages with additional option '--check-deps' or drawing image 
 map dependencies with additional option '--graph=[image]'.
 
-Get information description of a package with command '$ slpkg -p <repository> <package>' and change
+Get information description of a package with command '# slpkg -p <repository> <package>' and change
 color text with additional flag '--color=[]'.
 
-View a page SBo package on your terminal with command '$ slpkg -n <package>' and then manage multiple 
+View a page SBo package on your terminal with command '# slpkg -n <package>' and then manage multiple 
 choices such read, download, build, install etc.
 
-If you want to find packages from all repositories, this command will solve your hands '$ slpkg -F 
+If you want to find packages from all repositories, this command will solve your hands '# slpkg -F 
 <packages>'. It will search in all enabled repositories will find the configuration file 
 '/etc/slpkg/repositories.conf' will print all the packages that match the description that you enter.
 
-If you want to see if any packages are installed on your system enter the command '$ slpkg -f <packages>'.
+If you want to see if any packages are installed on your system enter the command '# slpkg -f <packages>'.
 The surprise in the end is the reporting of packages sum and size found.
 
-The next four commands '$ slpkg --installpkg, --upgradepkg, --removepkg <packages>' install, upgrade, 
+The next four commands '# slpkg --installpkg, --upgradepkg, --removepkg <packages>' install, upgrade, 
 remove packages from your system events.
-Notable mention must give the command '$ slpkg --removepkg <packages>' which can remove a packages 
+Notable mention must give the command '# slpkg --removepkg <packages>' which can remove a packages 
 with all dependencies together after editing configuration file '/etc/slpkg/slpkg.conf' 
 (default is disable). Also you can check if packages used as dependency with additional option 
 "--check-deps". Option "--tag" allow to remove packages with by TAG.
 Optional you can use dialog utility with additional option "--checklist" (require python2-pythondialog).
 
 The last command is useful to print the entire contents of a package installed on the system with the
-command '$ slpkg -d <packages>'.
+command '# slpkg -d <packages>'.
 
 Some examples you will see below.
 
@@ -1335,7 +1335,7 @@ Removes a previously installed Slackware binary packages:
 
 
 Remove packages with all dependencies and check if used as dependency:
-Presupposes facility with the option '$ slpkg -s <repository> <packages>' and
+Presupposes facility with the option '# slpkg -s <repository> <packages>' and
 enabled from configuration file.
 
 .. code-block:: bash
