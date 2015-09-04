@@ -232,9 +232,6 @@ class MetaData(object):
     # slackpkg lib path
     slackpkg_lib_path = "/var/lib/slackpkg/"
 
-    # slackpkg conf path
-    slackpkg_conf = "/etc/slackpkg/"
-
     # computer architecture
     arch = os.uname()[4]
 
