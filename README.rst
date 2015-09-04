@@ -359,9 +359,6 @@ Configuration Files
          CHECKSUMS.md5 files
          FILELIST.TXT files
 
-    /etc/slpkg/slackware-changelogs-mirror
-         Slackware changelogs mirror
-
      
 Command Line Tool Usage
 -----------------------
