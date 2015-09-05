@@ -26,6 +26,7 @@ import os
 import shutil
 import subprocess
 
+from slpkg.init import Update
 from slpkg.utils import Utils
 from slpkg.sizes import units
 from slpkg.messages import Msg
@@ -121,6 +122,7 @@ class Patches(object):
                         self.slackpkg_update()
                     self.msg.reference(self.installed, self.upgraded)
                     delete_package(self.patch_path, self.upgrade_all)
+                    self.update_lists()
             else:
                 slack_arch = ""
                 if self.meta.arch == "x86_64":
@@ -238,3 +240,13 @@ class Patches(object):
         with open(self.meta.slackpkg_lib_path + "ChangeLog.txt", "w") as log:
                     log.write(NEW_ChangeLog_txt)
                     log.close()
+
+    def update_lists(self):
+        """Update packages list and ChangeLog.txt file after
+        upgrade distribution
+        """
+        print("{0}Update package lists ?{1}".format(self.meta.color["GREEN"],
+                                                    self.meta.color["ENDC"]))
+        print("=" * 79)
+        if self.msg.answer() in ["y", "Y"]:
+            Update().repository(["slack"])
