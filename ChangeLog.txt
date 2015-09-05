@@ -1,6 +1,8 @@
-2.8.2 - 04/09/2015
+2.8.3 - 05/09/2015
 Added:
 - Update package lists for repository 'slack' after upgrade distribution
+
+2.8.2 - 04/09/2015
 Updated:
 - Find SBo created Slackware packages
 Fixed:
