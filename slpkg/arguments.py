@@ -88,8 +88,9 @@ Optional arguments:
       --installed                           packages repository, index or print
                                             only packages installed on the
                                             system.
-  -c, --check, [repository], --upgrade,     Check, view and install updated
-      --skip=[...], --resolve--off          packages from repositories.
+  -c, --check, [repository], --upgrade,     Check for updated packages from the
+      --skip=[...], --resolve--off          repositories and install with all
+      --checklist                           dependencies.
   -s, --sync, [repository] [package...],    Sync packages. Install packages
       --resolve-off                         directly from remote repositories
                                             with all dependencies.
@@ -155,7 +156,8 @@ def usage(repo):
              [-q [build, install, build-install]]
              [-g [print, edit=[editor], reset]]
              [-l [repository], --index, --installed]
-             [-c [repository], --upgrade, --skip=[...], --resolve-off]
+             [-c [repository], --upgrade, --skip=[...], --resolve-off,
+                               --checklist]
              [-s [repository] [package...], --resolve-off]
              [-t [repository] [package], --check-deps, --graph=[type]]
              [-p [repository] [package], --color=[]]

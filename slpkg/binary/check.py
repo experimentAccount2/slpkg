@@ -27,6 +27,7 @@ from distutils.version import LooseVersion
 from slpkg.messages import Msg
 from slpkg.toolbar import status
 from slpkg.splitting import split_package
+from slpkg.upgrade_checklist import choose_upg
 from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.pkg.find import find_package
@@ -35,7 +36,7 @@ from slpkg.binary.greps import repo_data
 from slpkg.binary.repo_init import RepoInit
 
 
-def pkg_upgrade(repo, skip):
+def pkg_upgrade(repo, skip, flag):
     """
     Checking packages for upgrade
     """
@@ -61,6 +62,8 @@ def pkg_upgrade(repo, skip):
                         repo_pkg[1] != "blacklist"):
                     pkgs_for_upgrade.append(repo_pkg[0])
         Msg().done()
+        if "--checklist" in flag:
+            pkgs_for_upgrade = choose_upg(pkgs_for_upgrade)
         return pkgs_for_upgrade
     except KeyboardInterrupt:
         print("")   # new line at exit

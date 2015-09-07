@@ -260,22 +260,22 @@ class ArgParse(object):
         """Check and upgrade packages by repository
         """
         options = ["-c", "--check"]
-        flags = ["--upgrade", "--skip=", "--resolve-off"]
+        flags = ["--upgrade", "--skip=", "--resolve-off", "--checklist"]
         flag, skip = self.__pkg_upgrade_flags(flags)
         if (len(self.args) == 3 and self.args[0] in options and
                 self.args[2] == flags[0] and
                 self.args[1] in self.meta.repositories):
             if self.args[1] not in ["slack", "sbo"]:
-                BinaryInstall(pkg_upgrade(self.args[1], skip),
+                BinaryInstall(pkg_upgrade(self.args[1], skip, flag),
                               self.args[1], flag).start(if_upgrade=True)
             elif self.args[1] == "slack":
                 if self.meta.only_installed in ["on", "ON"]:
-                    BinaryInstall(pkg_upgrade("slack", skip),
+                    BinaryInstall(pkg_upgrade("slack", skip, flag),
                                   "slack", flag).start(if_upgrade=True)
                 else:
                     Patches(skip, flag).start()
             elif self.args[1] == "sbo":
-                SBoInstall(sbo_upgrade(skip), flag).start(if_upgrade=True)
+                SBoInstall(sbo_upgrade(skip, flag), flag).start(if_upgrade=True)
             else:
                 usage(self.args[1])
         elif len(self.args) == 2 and self.args[0] in options:
@@ -292,14 +292,14 @@ class ArgParse(object):
     def __pkg_upgrade_flags(self, flags):
         """Manage flags for package upgrade option
         """
-        flag, skip = "", ""
+        flag, skip = [], ""
         if flags[0] in self.args:
-            if flags[2] in self.args:
-                flag = flags[2]
-                self.args.remove(flags[2])
-            for arg in self.args:
+            for arg in self.args[3:]:
                 if arg.startswith(flags[1]):
                     skip = Regex(arg.split("=")[1]).get()
+                    self.args.remove(arg)
+                if arg in flags:
+                    flag.append(arg)
                     self.args.remove(arg)
         return flag, skip
 

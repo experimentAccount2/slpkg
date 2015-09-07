@@ -46,7 +46,8 @@ class Requires(object):
         """
         Build all dependencies of a package
         """
-        if self.meta.rsl_deps in ["on", "ON"] and self.flag != "--resolve-off":
+        if (self.meta.rsl_deps in ["on", "ON"] and
+                "--resolve-off" not in self.flag):
             try:
                 sys.setrecursionlimit(10000)
                 dependencies = []

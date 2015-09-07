@@ -29,12 +29,13 @@ from slpkg.messages import Msg
 from slpkg.toolbar import status
 from slpkg.blacklist import BlackList
 from slpkg.splitting import split_package
+from slpkg.upgrade_checklist import choose_upg
 from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.sbo.greps import SBoGrep
 
 
-def sbo_upgrade(skip):
+def sbo_upgrade(skip, flag):
     """
     Return packages for upgrade
     """
@@ -53,6 +54,8 @@ def sbo_upgrade(skip):
                 if LooseVersion(sbo_package) > LooseVersion(package):
                     upgrade_names.append(name)
         Msg().done()
+        if "--checklist" in flag:
+            upgrade_names = choose_upg(upgrade_names)
         return upgrade_names
     except KeyboardInterrupt:
         print("")   # new line at exit

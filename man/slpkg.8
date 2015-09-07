@@ -36,7 +36,8 @@ Usage: slpkg Commands:
              [-q [build, install, build-install]]
              [-g [print, edit=[editor], reset]]
              [-l [repository], --index, --installed]
-             [-c [repository], --upgrade, --skip=[...], --resolve-off]
+             [-c [repository], --upgrade, --skip=[...], --resolve-off,
+                               --checklist]
              [-s [repository] [package...], --resolve-off]
              [-t [repository] [package], --check-deps, --graph=[type]]
              [-p [repository] [package], --color=[]]
@@ -188,7 +189,7 @@ system. Support command "grep" like "# slpkg -l sbo | grep python".
 
 .SS -c, --check, check if your packages is up to date
 \fBslpkg\fP \fB-c\fP <\fIrepository\fP> \fB--upgrade\fP \fB--skip=[packages...]\fP, 
-\fB--resolve-off\fP
+\fB--resolve-off\fP, \fB--checklist\fP
 .PP
 Check your packages if up to date. Slackware patches repository works independently of the 
 others i.e not need before updating the list of packages by choosing "# slpkg update", works 
@@ -202,7 +203,9 @@ Additional options:
 .PP
 \fB--resolve-off\fP : Switch off automatic resolve dependencies.
 .PP
-\fB--skip=[packages...]\fP : Skip packages from upgrade separate by comma like "slpkg -c sbo --skip=jdk,pep8,pip".
+\fB--skip=[packages...]\fP : Skip packages from upgrade separate by comma like "slpkg -c sbo --skip=jdk,pep8,pip" (See REGEX).
+.PP
+\fB--checklist\fP : Enable dialog utility and checklist option. (Require python2-pythondialog)
 
 .SS -s, --sync, synchronize packages, download, build and install package with all dependencies
 \fBslpkg\fP \fB-s\fP <\fIrepository\fP> <\fInames of packages\fP>, \fB--resolve-off\fP

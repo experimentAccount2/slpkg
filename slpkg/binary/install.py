@@ -87,7 +87,7 @@ class BinaryInstall(object):
             (self.dwn, self.install, self.comp_sum,
              self.uncomp_sum) = self.store(self.packages)
             if (self.meta.rsl_deps in ["on", "ON"] and
-                    self.flag != "--resolve-off"):
+                    "--resolve-off" not in self.flag):
                 self.msg.done()
             if self.install:
                 print("\nThe following packages will be automatically "

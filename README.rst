@@ -241,7 +241,8 @@ Combine with the command 'grep' to catch the results you want.
 Check and upgrade the distribution of your upgrade your packages with command '# slpkg -c <repository> 
 --upgrade'. Don't forget to update packages list before (for 'slack' repository don't is necessary).
 This command except upgrade packages will fix packages with broken dependencies. Switch  off automatic
-resolve dependensies with additional option '--resolve-off'.
+resolve dependensies with additional option '--resolve-off'. Use '--checklist' option to help you
+to choose easy packages. For advanced users, option '--skip' give them more power (see man page).
 
 The most famous command is '# slpkg -s <repository> <packages>' , this command downloads and 
 installs packages with resolve all the dependencies or switch of resolve with additional option
@@ -418,8 +419,9 @@ Command Line Tool Usage
           --installed                           packages repository, index or print
                                                 only packages installed on the
                                                 system.
-      -c, --check, [repository], --upgrade,     Check, view and install updated
-          --skip=[...] --resolve--off           packages from repositories.
+      -c, --check, [repository], --upgrade,     Check for updated packages from the
+          --skip=[...], --resolve--off          repositories and install with all
+          --checklist                           dependencies.
       -s, --sync, [repository] [package...],    Sync packages. Install packages
           --resolve-off                         directly from remote repositories
                                                 with all dependencies.

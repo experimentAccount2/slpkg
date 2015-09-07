@@ -37,6 +37,7 @@ from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
 from slpkg.remove import delete_package
 from slpkg.grep_md5 import pkg_checksum
+from slpkg.dialog_box import DialogUtil
 from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _meta_
 
@@ -85,6 +86,8 @@ class Patches(object):
             self.store()
             self.msg.done()
             if self.upgrade_all:
+                if "--checklist" in self.flag:
+                    self.dialog_checklist()
                 print("\nThese packages need upgrading:\n")
                 self.msg.template(78)
                 print("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
@@ -156,6 +159,29 @@ class Patches(object):
                     self.count_added += 1
                     self.count_upg -= 1
         return self.count_upg
+
+    def dialog_checklist(self):
+        """Create checklist to choose packages for upgrade
+        """
+        text = "Press 'spacebar' to unchoose packages from upgrade"
+        title = "Upgrade"
+        backtitle = "{0} {1}".format(self.meta.__all__,
+                                     self.meta.__version__)
+        status = True
+        pkgs = DialogUtil(self.upgrade_all, text, title, backtitle,
+                          status).checklist()
+        index = 0
+        for pkg, comp, uncomp in zip(self.upgrade_all, self.comp_sum,
+                                     self.uncomp_sum):
+            if pkg not in pkgs:
+                self.dwn_links.pop(index)
+                self.upgrade_all.pop(index)
+                self.comp_sum.pop(index)
+                self.uncomp_sum.pop(index)
+                self.count_upg -= 1
+            index += 1
+        if not self.upgrade_all:
+            raise SystemExit()
 
     def views(self):
         """
