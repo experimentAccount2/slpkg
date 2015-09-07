@@ -114,10 +114,10 @@ if "install" in sys.argv:
         os.chmod(fish_completion + completion_file[1].split("/")[1], 744)
     conf_file = [
         "conf/slpkg.conf",
+        "conf/repositories.conf",
         "conf/blacklist",
         "conf/slackware-mirrors",
         "conf/custom-repositories",
-        "conf/slackware-changelogs-mirror"
     ]
     if not os.path.exists(_meta_.conf_path):
         os.makedirs(_meta_.conf_path)
