@@ -131,3 +131,5 @@ if "install" in sys.argv:
                 shutil.copy2(conf, _meta_.conf_path + filename + ".new")
         else:
             shutil.copy2(conf, _meta_.conf_path)
+    shutil.copy2(conf_file[0],
+                 _meta_.conf_path + conf_file[0].split("/")[-1] + ".orig")

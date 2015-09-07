@@ -1,6 +1,7 @@
 2.8.3 - 05/09/2015
 Added:
 - Update package lists for repository 'slack' after upgrade distribution
+- Reset slpkg configuration file in the default values
 Fixed:
 - pip install
 

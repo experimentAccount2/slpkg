@@ -22,6 +22,8 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+import shutil
+import filecmp
 import subprocess
 
 from slpkg.utils import Utils
@@ -80,3 +82,14 @@ class Config(object):
         Edit configuration file
         """
         subprocess.call("{0} {1}".format(editor, self.config_file), shell=True)
+
+    def reset(self):
+        """Reset slpkg.conf file with default values
+        """
+        shutil.copy2(self.config_file + ".orig", self.config_file)
+        if filecmp.cmp(self.config_file + ".orig", self.config_file):
+            print("{0}The reset was done{1}".format(
+                self.meta.color["GREEN"], self.meta.color["ENDC"]))
+        else:
+            print("{0}Reset failed{1}".format(self.meta.color["RED"],
+                                              self.meta.color["ENDC"]))
