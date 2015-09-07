@@ -163,22 +163,26 @@ class Patches(object):
     def dialog_checklist(self):
         """Create checklist to choose packages for upgrade
         """
+        data = []
+        for upg in self.upgrade_all:
+            data.append(upg[:-4])
         text = "Press 'spacebar' to unchoose packages from upgrade"
         title = "Upgrade"
         backtitle = "{0} {1}".format(self.meta.__all__,
                                      self.meta.__version__)
         status = True
-        pkgs = DialogUtil(self.upgrade_all, text, title, backtitle,
+        pkgs = DialogUtil(data, text, title, backtitle,
                           status).checklist()
         index = 0
         for pkg, comp, uncomp in zip(self.upgrade_all, self.comp_sum,
                                      self.uncomp_sum):
-            if pkg not in pkgs:
+            if pkg[:-4] not in pkgs:
                 self.dwn_links.pop(index)
                 self.upgrade_all.pop(index)
                 self.comp_sum.pop(index)
                 self.uncomp_sum.pop(index)
                 self.count_upg -= 1
+                index -= 1
             index += 1
         if not self.upgrade_all:
             raise SystemExit()
