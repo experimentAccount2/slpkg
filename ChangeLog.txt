@@ -1,6 +1,8 @@
 2.8.4 - 08/09/2015
 Added:
 - Additional option "--checklist" in option "--check" for upgrade packages
+Updated:
+- Slackware mirrors
 
 2.8.3 - 07/09/2015
 Added:
