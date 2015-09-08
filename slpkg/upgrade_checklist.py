@@ -34,23 +34,24 @@ def choose_upg(packages):
     """Create checklist to choose packages for upgrade
     """
     selected_packages, data = [], []
-    for pkg in packages:
-        name = GetFromInstalled(pkg).name()
-        ver = GetFromInstalled(pkg).version()
-        binary = "{0}{1}".format(name, ver)
-        installed = find_package(binary + _meta_.sp, _meta_.pkg_path)[0]
-        data.append(installed)
-    text = "Press 'spacebar' to unchoose packages from upgrade"
-    title = "Upgrade"
-    backtitle = "{0} {1}".format(_meta_.__all__, _meta_.__version__)
-    status = True
-    pkgs = DialogUtil(data, text, title, backtitle,
-                      status).checklist()
-    for pkg in pkgs:
-        name = split_package(pkg)[0]
-        if name in packages:
-            selected_packages.append(name)
-    if not selected_packages:
-        raise SystemExit()
-    print("")
+    if packages:
+        for pkg in packages:
+            name = GetFromInstalled(pkg).name()
+            ver = GetFromInstalled(pkg).version()
+            binary = "{0}{1}".format(name, ver)
+            installed = find_package(binary + _meta_.sp, _meta_.pkg_path)[0]
+            data.append(installed)
+        text = "Press 'spacebar' to unchoose packages from upgrade"
+        title = "Upgrade"
+        backtitle = "{0} {1}".format(_meta_.__all__, _meta_.__version__)
+        status = True
+        pkgs = DialogUtil(data, text, title, backtitle,
+                          status).checklist()
+        for pkg in pkgs:
+            name = split_package(pkg)[0]
+            if name in packages:
+                selected_packages.append(name)
+        if not selected_packages:
+            raise SystemExit()
+        print("")
     return selected_packages
