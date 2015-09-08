@@ -1,3 +1,7 @@
+2.8.5 - 08/09/2015
+Fixed:
+- Remove packages with option "--checklist" and "--check-deps"
+
 2.8.4 - 08/09/2015
 Added:
 - Additional option "--checklist" in option "--check" for upgrade packages
