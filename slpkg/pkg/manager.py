@@ -331,7 +331,7 @@ class PackageManager(object):
                     title = "!!! WARNING !!!"
                     backtitle = "{0} {1}".format(self.meta.__all__,
                                                  self.meta.__version__)
-                    status = True
+                    status = False
                     choose = DialogUtil(data, text, title, backtitle,
                                         status).checklist()
                     for pkg in choose:
