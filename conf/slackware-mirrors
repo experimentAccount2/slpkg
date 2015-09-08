@@ -31,7 +31,7 @@
 # below. Be careful is the template that the rest.
 #
 #
-# Last Updated: Fri Aug 7 01:47:02 UTC 2015
+# Last Updated: Tue Sep 8 00:47:02 UTC 2015
 # 
 # Available http mirrors:
 # 
@@ -179,32 +179,3 @@
 # za		 ftp://ftp.is.co.za/mirror/ftp.slackware.com/pub/ 
 # za		 ftp://ftp.wa.co.za/pub/slackware/ 
 # za		 ftp://slackware.mirror.ac.za/
-#
-#
-#
-# Available http mirrors for "arm*" systems:
-#
-# uk        http://ftp.arm.slackware.com/slackwarearm // Default, do not use
-# pl        http://ftp.slackware.pl/pub/slackwarearm
-# at        http://mirror.inode.at/data/slackwarearm
-# vt        http://mirrors.vbi.vt.edu/linux/slackwarearm
-# de        http://ftp.halifax.rwth-aachen.de/slackwarearm
-# us        http://mirrors-usa.go-parts.com/slackware/
-# ru        http://mirrors-ru.go-parts.com/slackware
-# au        http://mirrors-au.go-parts.com/slackware
-# br        http://mirrors-br.go-parts.com/slackware/
-#
-#
-# 
-# Available ftp mirrors for "arm*" systems:
-#
-# uk        ftp://ftp.arm.slackware.com/slackwarearm
-# pl        ftp://ftp.slackware.pl/pub/slackwarearm
-# at        ftp://mirror.inode.at/slackwarearm
-# vt        ftp://mirrors.vbi.vt.edu/linux/slackwarearm
-# de        ftp://ftp.halifax.rwth-aachen.de/slackwarearm
-# us        ftp://mirrors-usa.go-parts.com/slackware/
-# ru        ftp://mirrors-ru.go-parts.com/slackware
-# au        ftp://mirrors-au.go-parts.com/slackware
-# br        ftp://mirrors-br.go-parts.com/slackware
-
