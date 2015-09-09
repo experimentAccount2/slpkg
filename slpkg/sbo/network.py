@@ -262,9 +262,12 @@ class SBoNetwork(object):
         """
         self.error_uns()
         if self.FAULT:
-            print("\n{0}The package {1} {2}\n".format(self.red,
-                                                      self.FAULT,
-                                                      self.endc))
+            print("")
+            self.msg.template(78)
+            print("| {0}The package {1} {2} {3}".format(self.red, self.prgnam,
+                                                        self.FAULT, self.endc))
+            self.msg.template(78)
+            print("")
             raise SystemExit()
         sources = []
         if not os.path.exists(self.meta.build_path):
