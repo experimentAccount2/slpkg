@@ -100,6 +100,11 @@ class SBoNetwork(object):
                                                                   ".SlackBuild")
                     fill = self.fill_pager(SlackBuild)
                     self.pager(SlackBuild + fill)
+                elif self.choice in ["O", "o"]:
+                    doinst_sh = ReadSBo(self.sbo_url).doinst("doinst.sh")
+                    if doinst_sh != " ":
+                        fill = self.fill_pager(doinst_sh)
+                        self.pager(doinst_sh + fill)
                 elif self.choice in ["B", "b"]:
                     self.build()
                     delete(self.build_folder)
@@ -154,6 +159,8 @@ class SBoNetwork(object):
             self.red, self.endc, br2))
         print("| In{0}{1}f{2}{3}o{4}                View the Info file".format(
             br1, self.red, self.endc, br2, fix_sp))
+        print("| D{0}{1}o{2}{3}inst.sh{4}           View the doinst.sh "
+              "file".format(br1, self.red, self.endc, br2, fix_sp))
         print("| {0}D{1}{2}ownload             Download this package".format(
             self.red, self.endc, br2))
         print("| {0}B{1}{2}uild                Download and build".format(

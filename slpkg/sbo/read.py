@@ -48,3 +48,9 @@ class ReadSBo(object):
         Read SlackBuild file
         """
         return URL(self.sbo_url + name + sbo_file).reading()
+
+    def doinst(self, doinst_sh):
+        """
+        Read SlackBuild doinst.sh
+        """
+        return URL(self.sbo_url + doinst_sh).reading()
