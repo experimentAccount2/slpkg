@@ -56,8 +56,8 @@ from slpkg.__metadata__ import MetaData as _meta_
 from slpkg.pkg.manager import PackageManager
 
 from slpkg.sbo.queue import QueuePkgs
-from slpkg.sbo.views import SBoNetwork
 from slpkg.sbo.check import sbo_upgrade
+from slpkg.sbo.network import SBoNetwork
 from slpkg.sbo.autobuild import AutoBuild
 from slpkg.sbo.slackbuild import SBoInstall
 
