@@ -84,47 +84,102 @@ class SBoNetwork(object):
             self.view_sbo()
             while True:
                 self.read_choice()
-                if self.choice in ["D", "d"]:
-                    Download(path="", url=self.dwn_srcs, repo="sbo").start()
-                    break
-                elif self.choice in ["R", "r"]:
-                    README = ReadSBo(self.sbo_url).readme("README")
-                    fill = self.fill_pager(README)
-                    self.pager(README + fill)
-                elif self.choice in ["F", "f"]:
-                    info = ReadSBo(self.sbo_url).info(self.name, ".info")
-                    fill = self.fill_pager(info)
-                    self.pager(info + fill)
-                elif self.choice in ["S", "s"]:
-                    SlackBuild = ReadSBo(self.sbo_url).slackbuild(self.name,
-                                                                  ".SlackBuild")
-                    fill = self.fill_pager(SlackBuild)
-                    self.pager(SlackBuild + fill)
-                elif self.choice in ["O", "o"]:
-                    doinst_sh = ReadSBo(self.sbo_url).doinst("doinst.sh")
-                    if doinst_sh != " ":
-                        fill = self.fill_pager(doinst_sh)
-                        self.pager(doinst_sh + fill)
-                elif self.choice in ["B", "b"]:
-                    self.build()
-                    delete(self.build_folder)
-                    break
-                elif self.choice in ["I", "i"]:
-                    if not find_package(self.prgnam + self.meta.sp,
-                                        self.meta.pkg_path):
-                        self.build()
-                        self.install()
-                        delete(self.build_folder)
-                        break
-                    else:
-                        self.msg.template(78)
-                        self.msg.pkg_found()
-                        self.msg.template(78)
-                        break
-                else:
-                    break
+                choice = {
+                    "r": self.choice_README,
+                    "R": self.choice_README,
+                    "s": self.choice_SlackBuild,
+                    "S": self.choice_SlackBuild,
+                    "f": self.choice_info,
+                    "F": self.choice_info,
+                    "o": self.choice_doinst,
+                    "O": self.choice_doinst,
+                    "d": self.choice_download,
+                    "D": self.choice_download,
+                    "b": self.choice_build,
+                    "B": self.choice_build,
+                    "i": self.choice_install,
+                    "I": self.choice_install,
+                    "q": self.choice_quit,
+                    "Q": self.choice_quit,
+                }
+                try:
+                    choice[self.choice]()
+                except KeyError:
+                    raise SystemExit()
         else:
             self.msg.pkg_not_found("\n", self.name, "Can't view", "\n")
+
+    def read_choice(self):
+        """Return choice
+        """
+        try:
+            self.choice = raw_input("{0}  Choose an option > {1}".format(
+                self.grey, self.endc))
+        except (KeyboardInterrupt, EOFError):
+            print("")
+            raise SystemExit()
+
+    def choice_README(self):
+        """View README file
+        """
+        README = ReadSBo(self.sbo_url).readme("README")
+        fill = self.fill_pager(README)
+        self.pager(README + fill)
+
+    def choice_SlackBuild(self):
+        """View .SlackBuild file
+        """
+        SlackBuild = ReadSBo(self.sbo_url).slackbuild(self.name, ".SlackBuild")
+        fill = self.fill_pager(SlackBuild)
+        self.pager(SlackBuild + fill)
+
+    def choice_info(self):
+        """View .info file
+        """
+        info = ReadSBo(self.sbo_url).info(self.name, ".info")
+        fill = self.fill_pager(info)
+        self.pager(info + fill)
+
+    def choice_doinst(self):
+        """View doinst.sh file
+        """
+        doinst_sh = ReadSBo(self.sbo_url).doinst("doinst.sh")
+        if doinst_sh != " ":
+            fill = self.fill_pager(doinst_sh)
+            self.pager(doinst_sh + fill)
+
+    def choice_download(self):
+        """Download script.tar.gz and sources
+        """
+        Download(path="", url=self.dwn_srcs, repo="sbo").start()
+        raise SystemExit()
+
+    def choice_build(self):
+        """Build package
+        """
+        self.build()
+        delete(self.build_folder)
+        raise SystemExit()
+
+    def choice_install(self):
+        """Download, build and install package
+        """
+        if not find_package(self.prgnam + self.meta.sp,
+                            self.meta.pkg_path):
+            self.build()
+            self.install()
+            delete(self.build_folder)
+            raise SystemExit()
+        else:
+            self.msg.template(78)
+            self.msg.pkg_found(self.prgnam)
+            self.msg.template(78)
+            raise SystemExit()
+
+    def choice_quit(self):
+        """Quit from choices
+        """
+        raise SystemExit()
 
     def view_sbo(self):
         """View slackbuild.org
@@ -192,16 +247,6 @@ class SBoNetwork(object):
             return fill
         else:
             return ""
-
-    def read_choice(self):
-        """Return choice
-        """
-        try:
-            self.choice = raw_input("{0}  Choose an option > {1}".format(
-                self.grey, self.endc))
-        except (KeyboardInterrupt, EOFError):
-            print("")
-            raise SystemExit()
 
     def error_uns(self):
         """Check if package supported by arch
