@@ -137,16 +137,16 @@ class SBoNetwork(object):
                                                       self.green,
                                                       self.endc + sbo_url))
         self.msg.template(78)
-        print("| {0}Description : {1}{2}".format(self.green,
-                                                 self.endc, self.sbo_desc))
-        print("| {0}SlackBuild : {1}{2}".format(self.green, self.endc,
-                                                self.sbo_dwn.split("/")[-1]))
-        print("| {0}Sources : {1}{2}".format(
+        print("| {0}Description: {1}{2}".format(self.green,
+                                                self.endc, self.sbo_desc))
+        print("| {0}SlackBuild: {1}{2}".format(self.green, self.endc,
+                                               self.sbo_dwn.split("/")[-1]))
+        print("| {0}Sources: {1}{2}".format(
             self.green, self.endc,
             (", ".join([src.split("/")[-1] for src in self.source_dwn]))))
-        print("| {0}Requirements : {1}{2}".format(self.yellow,
-                                                  self.endc,
-                                                  ", ".join(self.sbo_req)))
+        print("| {0}Requirements: {1}{2}".format(self.yellow,
+                                                 self.endc,
+                                                 ", ".join(self.sbo_req)))
         self.msg.template(78)
         print("| {0}R{1}{2}EADME               View the README file".format(
             self.red, self.endc, br2))
