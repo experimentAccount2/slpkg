@@ -216,6 +216,9 @@ class SBoNetwork(object):
             br1, self.red, self.endc, br2, fix_sp))
         print("| D{0}{1}o{2}{3}inst.sh{4}           View the doinst.sh "
               "file".format(br1, self.red, self.endc, br2, fix_sp))
+        print("| {0}E{1}{2}dit                 Add char 'e' after choice, "
+              "example 'se'".format(self.red, self.endc, br2))
+        self.msg.template(78)
         print("| {0}D{1}{2}ownload             Download this package".format(
             self.red, self.endc, br2))
         print("| {0}B{1}{2}uild                Download and build".format(
@@ -284,7 +287,6 @@ class SBoNetwork(object):
         """Install SBo package found in /tmp directory.
         """
         binary = slack_package(self.prgnam)
-        print("[ {0}Installing{1} ] --> {2}".format(self.green,
-                                                    self.endc,
+        print("[ {0}Installing{1} ] --> {2}".format(self.green, self.endc,
                                                     self.name))
         PackageManager(binary).upgrade(flag="--install-new")
