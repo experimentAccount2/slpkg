@@ -535,11 +535,10 @@ class ArgParse(object):
         """Manage slpkg configuration file
         """
         options = ["-g", "--config"]
-        command = ["print", "edit=", "reset"]
+        command = ["print", "edit", "reset"]
         if (len(self.args) == 2 and self.args[0] in options and
-                self.args[1].startswith(command[1])):
-            editor = self.args[1][len(command[1]):]
-            Config().edit(editor)
+                self.args[1] == command[1]):
+            Config().edit()
         elif (len(self.args) == 2 and self.args[0] in options and
                 self.args[1] == (command[0])):
             Config().view()

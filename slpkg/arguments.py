@@ -81,8 +81,8 @@ Optional arguments:
       --remove, list, build, install,       Add or remove and print the list
       build-install                         of packages. Build and then install
                                             the packages from the queue.
-  -g, --config, print, edit=[editor],       Configuration file management.
-      reset                                 Print, edit the configuration file
+  -g, --config, print, edit, reset          Configuration file management.
+                                            Print, edit the configuration file
                                             or reset in the default values.
   -l, --list, [repository], --index,        Print a list of all available
       --installed                           packages repository, index or print
@@ -154,7 +154,7 @@ def usage(repo):
              [-b [package...] --add, --remove, list]
              [-q [package...] --add, --remove, list]
              [-q [build, install, build-install]]
-             [-g [print, edit=[editor], reset]]
+             [-g [print, edit, reset]]
              [-l [repository], --index, --installed]
              [-c [repository], --upgrade, --skip=[...], --resolve-off,
                                --checklist]

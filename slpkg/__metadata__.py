@@ -129,7 +129,8 @@ class MetaData(object):
         "DOWNDER_OPTIONS": "-c -N",
         "SLACKPKG_LOG": "on",
         "ONLY_INSTALLED": "off",
-        "PRG_BAR": "on"
+        "PRG_BAR": "on",
+        "EDITOR": "nano"
     }
 
     default_repositories = ["slack", "sbo", "rlw", "alien", "slacky", "studio",
@@ -171,6 +172,7 @@ class MetaData(object):
     slackpkg_log = _conf_slpkg["SLACKPKG_LOG"]
     only_installed = _conf_slpkg["ONLY_INSTALLED"]
     prg_bar = _conf_slpkg["PRG_BAR"]
+    editor = _conf_slpkg["EDITOR"]
 
     # Remove any gaps
     repositories = [repo.strip() for repo in repositories]

@@ -62,7 +62,8 @@ class Config(object):
             "DOWNDER_OPTIONS",
             "SLACKPKG_LOG",
             "ONLY_INSTALLED",
-            "PRG_BAR"
+            "PRG_BAR",
+            "EDITOR"
         ]
         read_conf = Utils().read_file(self.config_file)
         try:
@@ -77,11 +78,12 @@ class Config(object):
             raise SystemExit()
         print("")   # new line at end
 
-    def edit(self, editor):
+    def edit(self):
         """
         Edit configuration file
         """
-        subprocess.call("{0} {1}".format(editor, self.config_file), shell=True)
+        subprocess.call("{0} {1}".format(self.meta.editor,
+                                         self.config_file), shell=True)
 
     def reset(self):
         """Reset slpkg.conf file with default values

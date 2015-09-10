@@ -300,7 +300,7 @@ For Slackware 'current' users must change the variable VERSION in '/etc/slpkg/sl
 
 .. code-block:: bash
 
-    $ slpkg -g edit=nano
+    $ slpkg -g edit
 
 
 Slackware ARM
@@ -412,8 +412,8 @@ Command Line Tool Usage
           --remove, list, build, install,       Add or remove and print the list
           build-install                         of packages. Build and then install
                                                 the packages from the queue.
-      -g, --config, print, edit=[editor],       Configuration file management.
-          reset                                 Print, edit the configuration file
+      -g, --config, print, edit, reset          Configuration file management.
+                                                Print, edit the configuration file
                                                 or reset in the default values.
       -l, --list, [repository], --index,        Print a list of all available
           --installed                           packages repository, index or print

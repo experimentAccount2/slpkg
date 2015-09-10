@@ -34,7 +34,7 @@ Usage: slpkg Commands:
              [-b [package...] --add, --remove, list]
              [-q [package...] --add, --remove, list]
              [-q [build, install, build-install]]
-             [-g [print, edit=[editor], reset]]
+             [-g [print, edit, reset]]
              [-l [repository], --index, --installed]
              [-c [repository], --upgrade, --skip=[...], --resolve-off,
                                --checklist]
@@ -177,9 +177,9 @@ dependencies. If you want to remove all the packages from the list run "# slpkg 
 Build or install or build and install packages are queued.
 
 .SS -g, --config, configuration file management
-\fBslpkg\fP \fB-g\fP \fBprint\fP, \fBedit=[editor]\fP, \fBreset\fP
+\fBslpkg\fP \fB-g\fP \fBprint\fP, \fBedit\fP, \fBreset\fP
 .PP
-Print, reset or edit configuration file with your favorite editor.
+Print, reset or edit configuration file.
 
 .SS -l, --list, list of installed packages
 \fBslpkg\fP \fB-l\fP <\fIrepository\fP>, \fB--index\fP, \fB--installed\fP

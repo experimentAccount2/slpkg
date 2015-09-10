@@ -202,7 +202,7 @@ class SBoNetwork(object):
         with open(self.customs_path + filename, "w") as sbo_file:
             sbo_file.write(contents)
         subprocess.call(
-            "{0} {1}".format("vim", self.customs_path + filename),
+            "{0} {1}".format(self.meta.editor, self.customs_path + filename),
             shell=True)
 
     def view_sbo(self):
