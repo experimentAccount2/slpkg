@@ -24,6 +24,8 @@
 
 import os
 import pydoc
+import shutil
+import tarfile
 import subprocess
 
 from slpkg.messages import Msg
@@ -53,6 +55,7 @@ class SBoNetwork(object):
         self.meta = _meta_
         self.msg = Msg()
         self.arch = SBoArch().get()
+        self.comp_tar = ".tar.gz"
         self.choice = ""
         self.FAULT = ""
         self.green = self.meta.color["GREEN"]
@@ -285,6 +288,38 @@ class SBoNetwork(object):
         if "".join(self.source_dwn) in UNST:
             self.FAULT = "".join(self.source_dwn)
 
+    def untar(self):
+        os.chdir(self.meta.build_path)
+        tar = tarfile.open(self.name + self.comp_tar)
+        tar.extractall()
+        tar.close()
+
+    def maketar(self):
+        tar = tarfile.open(self.meta.build_path + self.name + self.comp_tar,
+                           "w:gz")
+        tar.add(self.name)
+        tar.close()
+
+    def delete_dir(self):
+        """Delete old folder if exists before start build
+        """
+        if os.path.isdir(self.meta.build_path + self.name):
+            shutil.rmtree(self.meta.build_path + self.name)
+
+    def copy_customs(self):
+        customs_files = []
+        files = [self.name + ".SlackBuild", self.name + ".info"]
+        for custom in os.listdir(self.customs_path):
+            if custom in files:
+                customs_files.append(custom)
+        if customs_files:
+            self.delete_dir()
+            self.untar()
+            for files in customs_files:
+                shutil.copy2(self.customs_path + files,
+                             self.meta.build_path + self.name)
+            self.maketar()
+
     def build(self):
         """Only build and create Slackware package
         """
@@ -302,11 +337,12 @@ class SBoNetwork(object):
             os.makedirs(self.meta.build_path)
         os.chdir(self.meta.build_path)
         Download(self.meta.build_path, self.dwn_srcs, repo="sbo").start()
+        self.copy_customs()
         script = self.sbo_dwn.split("/")[-1]
         for src in self.source_dwn:
             sources.append(src.split("/")[-1])
         BuildPackage(script, sources, self.meta.build_path).build()
-        slack_package(self.prgnam)  # check if build
+        # slack_package(self.prgnam)  # check if build
 
     def install(self):
         """Install SBo package found in /tmp directory.
