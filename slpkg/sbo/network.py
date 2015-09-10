@@ -24,9 +24,6 @@
 
 import os
 import pydoc
-import shutil
-import tarfile
-import subprocess
 
 from slpkg.messages import Msg
 from slpkg.blacklist import BlackList
@@ -77,9 +74,6 @@ class SBoNetwork(object):
             self.sbo_dwn = SBoLink(self.sbo_url).tar_gz()
             self.sbo_version = grep.version()
             self.dwn_srcs = self.sbo_dwn.split() + self.source_dwn
-        self.customs_path = self.meta.build_path + "customs_builds/"
-        if not os.path.exists(self.customs_path):
-            os.mkdir(self.customs_path)
         self.msg.done()
 
     def view(self):
@@ -96,16 +90,10 @@ class SBoNetwork(object):
                     "R": self.choice_README,
                     "s": self.choice_SlackBuild,
                     "S": self.choice_SlackBuild,
-                    "s edit": self.choice_SlackBuild,
-                    "S edit": self.choice_SlackBuild,
                     "f": self.choice_info,
                     "F": self.choice_info,
-                    "f edit": self.choice_info,
-                    "F edit": self.choice_info,
                     "o": self.choice_doinst,
                     "O": self.choice_doinst,
-                    "o edit": self.choice_doinst,
-                    "O edit": self.choice_doinst,
                     "d": self.choice_download,
                     "D": self.choice_download,
                     "b": self.choice_build,
@@ -144,21 +132,15 @@ class SBoNetwork(object):
         """View .SlackBuild file
         """
         SlackBuild = ReadSBo(self.sbo_url).slackbuild(self.name, ".SlackBuild")
-        if self.choice in ["s edit", "S edit"]:
-            self.edit(filename=self.name + ".SlackBuild", contents=SlackBuild)
-        else:
-            fill = self.fill_pager(SlackBuild)
-            self.pager(SlackBuild + fill)
+        fill = self.fill_pager(SlackBuild)
+        self.pager(SlackBuild + fill)
 
     def choice_info(self):
         """View .info file
         """
         info = ReadSBo(self.sbo_url).info(self.name, ".info")
-        if self.choice in ["f edit", "f edit"]:
-            self.edit(filename=self.name + ".info", contents=info)
-        else:
-            fill = self.fill_pager(info)
-            self.pager(info + fill)
+        fill = self.fill_pager(info)
+        self.pager(info + fill)
 
     def choice_doinst(self):
         """View doinst.sh file
@@ -201,13 +183,6 @@ class SBoNetwork(object):
         """
         raise SystemExit()
 
-    def edit(self, filename, contents):
-        with open(self.customs_path + filename, "w") as sbo_file:
-            sbo_file.write(contents)
-        subprocess.call(
-            "{0} {1}".format(self.meta.editor, self.customs_path + filename),
-            shell=True)
-
     def view_sbo(self):
         """View slackbuild.org
         """
@@ -237,16 +212,12 @@ class SBoNetwork(object):
         self.msg.template(78)
         print("| {0}R{1}{2}EADME               View the README file".format(
             self.red, self.endc, br2))
-        print("| {0}S{1}{2}lackBuild {3}(edit){4}    View the SlackBuild "
-              "file".format(self.red, self.endc, br2, self.grey, self.endc))
-        print("| In{0}{1}f{2}{3}o{4}      {5}(edit){6}    View the Info "
-              "file".format(br1, self.red, self.endc, br2, fix_sp, self.grey,
-                            self.endc))
+        print("| {0}S{1}{2}lackBuild           View the SlackBuild "
+              "file".format(self.red, self.endc, br2))
+        print("| In{0}{1}f{2}{3}o{4}                View the Info "
+              "file".format(br1, self.red, self.endc, br2, fix_sp))
         print("| D{0}{1}o{2}{3}inst.sh{4}           View the doinst.sh "
               "file".format(br1, self.red, self.endc, br2, fix_sp))
-        print("| {0}E{1}{2}dit                 Add word 'edit' after choice, "
-              "example 's edit'".format(self.red, self.endc, br2))
-        self.msg.template(78)
         print("| {0}D{1}{2}ownload             Download this package".format(
             self.red, self.endc, br2))
         print("| {0}B{1}{2}uild                Download and build".format(
@@ -288,38 +259,6 @@ class SBoNetwork(object):
         if "".join(self.source_dwn) in UNST:
             self.FAULT = "".join(self.source_dwn)
 
-    def untar(self):
-        os.chdir(self.meta.build_path)
-        tar = tarfile.open(self.name + self.comp_tar)
-        tar.extractall()
-        tar.close()
-
-    def maketar(self):
-        tar = tarfile.open(self.meta.build_path + self.name + self.comp_tar,
-                           "w:gz")
-        tar.add(self.name)
-        tar.close()
-
-    def delete_dir(self):
-        """Delete old folder if exists before start build
-        """
-        if os.path.isdir(self.meta.build_path + self.name):
-            shutil.rmtree(self.meta.build_path + self.name)
-
-    def copy_customs(self):
-        customs_files = []
-        files = [self.name + ".SlackBuild", self.name + ".info"]
-        for custom in os.listdir(self.customs_path):
-            if custom in files:
-                customs_files.append(custom)
-        if customs_files:
-            self.delete_dir()
-            self.untar()
-            for files in customs_files:
-                shutil.copy2(self.customs_path + files,
-                             self.meta.build_path + self.name)
-            self.maketar()
-
     def build(self):
         """Only build and create Slackware package
         """
@@ -337,12 +276,11 @@ class SBoNetwork(object):
             os.makedirs(self.meta.build_path)
         os.chdir(self.meta.build_path)
         Download(self.meta.build_path, self.dwn_srcs, repo="sbo").start()
-        self.copy_customs()
         script = self.sbo_dwn.split("/")[-1]
         for src in self.source_dwn:
             sources.append(src.split("/")[-1])
         BuildPackage(script, sources, self.meta.build_path).build()
-        # slack_package(self.prgnam)  # check if build
+        slack_package(self.prgnam)  # check if build
 
     def install(self):
         """Install SBo package found in /tmp directory.
