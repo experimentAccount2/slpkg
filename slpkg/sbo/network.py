@@ -24,6 +24,7 @@
 
 import os
 import pydoc
+import subprocess
 
 from slpkg.messages import Msg
 from slpkg.blacklist import BlackList
@@ -73,6 +74,9 @@ class SBoNetwork(object):
             self.sbo_dwn = SBoLink(self.sbo_url).tar_gz()
             self.sbo_version = grep.version()
             self.dwn_srcs = self.sbo_dwn.split() + self.source_dwn
+        self.customs_path = self.meta.build_path + "customs_builds/"
+        if not os.path.exists(self.customs_path):
+            os.mkdir(self.customs_path)
         self.msg.done()
 
     def view(self):
@@ -89,10 +93,16 @@ class SBoNetwork(object):
                     "R": self.choice_README,
                     "s": self.choice_SlackBuild,
                     "S": self.choice_SlackBuild,
+                    "s edit": self.choice_SlackBuild,
+                    "S edit": self.choice_SlackBuild,
                     "f": self.choice_info,
                     "F": self.choice_info,
+                    "f edit": self.choice_info,
+                    "F edit": self.choice_info,
                     "o": self.choice_doinst,
                     "O": self.choice_doinst,
+                    "o edit": self.choice_doinst,
+                    "O edit": self.choice_doinst,
                     "d": self.choice_download,
                     "D": self.choice_download,
                     "b": self.choice_build,
@@ -100,12 +110,13 @@ class SBoNetwork(object):
                     "i": self.choice_install,
                     "I": self.choice_install,
                     "q": self.choice_quit,
+                    "quit": self.choice_quit,
                     "Q": self.choice_quit,
                 }
                 try:
                     choice[self.choice]()
                 except KeyError:
-                    raise SystemExit()
+                    pass
         else:
             self.msg.pkg_not_found("\n", self.name, "Can't view", "\n")
 
@@ -130,15 +141,21 @@ class SBoNetwork(object):
         """View .SlackBuild file
         """
         SlackBuild = ReadSBo(self.sbo_url).slackbuild(self.name, ".SlackBuild")
-        fill = self.fill_pager(SlackBuild)
-        self.pager(SlackBuild + fill)
+        if self.choice in ["s edit", "S edit"]:
+            self.edit(filename=self.name + ".SlackBuild", contents=SlackBuild)
+        else:
+            fill = self.fill_pager(SlackBuild)
+            self.pager(SlackBuild + fill)
 
     def choice_info(self):
         """View .info file
         """
         info = ReadSBo(self.sbo_url).info(self.name, ".info")
-        fill = self.fill_pager(info)
-        self.pager(info + fill)
+        if self.choice in ["f edit", "f edit"]:
+            self.edit(filename=self.name + ".info", contents=info)
+        else:
+            fill = self.fill_pager(info)
+            self.pager(info + fill)
 
     def choice_doinst(self):
         """View doinst.sh file
@@ -181,6 +198,13 @@ class SBoNetwork(object):
         """
         raise SystemExit()
 
+    def edit(self, filename, contents):
+        with open(self.customs_path + filename, "w") as sbo_file:
+            sbo_file.write(contents)
+        subprocess.call(
+            "{0} {1}".format("vim", self.customs_path + filename),
+            shell=True)
+
     def view_sbo(self):
         """View slackbuild.org
         """
@@ -210,14 +234,15 @@ class SBoNetwork(object):
         self.msg.template(78)
         print("| {0}R{1}{2}EADME               View the README file".format(
             self.red, self.endc, br2))
-        print("| {0}S{1}{2}lackBuild           View the SlackBuild file".format(
-            self.red, self.endc, br2))
-        print("| In{0}{1}f{2}{3}o{4}                View the Info file".format(
-            br1, self.red, self.endc, br2, fix_sp))
+        print("| {0}S{1}{2}lackBuild {3}(edit){4}    View the SlackBuild "
+              "file".format(self.red, self.endc, br2, self.grey, self.endc))
+        print("| In{0}{1}f{2}{3}o{4}      {5}(edit){6}    View the Info "
+              "file".format(br1, self.red, self.endc, br2, fix_sp, self.grey,
+                            self.endc))
         print("| D{0}{1}o{2}{3}inst.sh{4}           View the doinst.sh "
               "file".format(br1, self.red, self.endc, br2, fix_sp))
-        print("| {0}E{1}{2}dit                 Add char 'e' after choice, "
-              "example 'se'".format(self.red, self.endc, br2))
+        print("| {0}E{1}{2}dit                 Add word 'edit' after choice, "
+              "example 's edit'".format(self.red, self.endc, br2))
         self.msg.template(78)
         print("| {0}D{1}{2}ownload             Download this package".format(
             self.red, self.endc, br2))
