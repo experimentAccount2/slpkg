@@ -1,3 +1,10 @@
+2.8.6 - 11/09/2015
+Added:
+- Read doinst.sh file in "--network" option
+- Editor via configuration file
+Updated:
+- Rename script view.py in network.py
+
 2.8.5 - 08/09/2015
 Fixed:
 - Remove packages with option "--checklist" and "--check-deps"
