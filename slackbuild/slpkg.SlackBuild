@@ -90,6 +90,7 @@ CONFIGS="slpkg.conf repositories.conf blacklist slackware-mirrors custom-reposit
 for file in $CONFIGS; do
     install -D -m0644 conf/$file $PKG/etc/slpkg/${file}.new
 done
+
 # keep original configuration file for reset
 cp -p conf/slpkg.conf $PKG/etc/slpkg/slpkg.conf.orig
 
