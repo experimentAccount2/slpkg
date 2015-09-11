@@ -269,17 +269,17 @@ class SBoNetwork(object):
             print("| Package {0} {1} {2} {3}".format(self.prgnam, self.red,
                                                      self.FAULT, self.endc))
             self.msg.template(78)
-            raise SystemExit()
-        sources = []
-        if not os.path.exists(self.meta.build_path):
-            os.makedirs(self.meta.build_path)
-        os.chdir(self.meta.build_path)
-        Download(self.meta.build_path, self.dwn_srcs, repo="sbo").start()
-        script = self.sbo_dwn.split("/")[-1]
-        for src in self.source_dwn:
-            sources.append(src.split("/")[-1])
-        BuildPackage(script, sources, self.meta.build_path).build()
-        slack_package(self.prgnam)  # check if build
+        else:
+            sources = []
+            if not os.path.exists(self.meta.build_path):
+                os.makedirs(self.meta.build_path)
+            os.chdir(self.meta.build_path)
+            Download(self.meta.build_path, self.dwn_srcs, repo="sbo").start()
+            script = self.sbo_dwn.split("/")[-1]
+            for src in self.source_dwn:
+                sources.append(src.split("/")[-1])
+            BuildPackage(script, sources, self.meta.build_path).build()
+            slack_package(self.prgnam)  # check if build
 
     def install(self):
         """Install SBo package found in /tmp directory.
