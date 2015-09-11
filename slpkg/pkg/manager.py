@@ -222,14 +222,16 @@ class PackageManager(object):
         """
         self.size = 0
         packages = []
-        dependencies = Utils().read_file(path + package)
-        for dep in dependencies.splitlines():
+        dependencies = (Utils().read_file(path + package)).splitlines()
+        for dep in dependencies:
             if GetFromInstalled(dep).name():
                 ver = GetFromInstalled(dep).version()
                 packages.append(dep + ver)
+            else:
+                dependencies.remove(dep)
         if packages:
             if "--checklist" in self.extra:
-                deps, dependencies = [], ""
+                deps, dependencies = [], []
                 data = packages
                 text = "Found dependencies for package {0}".format(package)
                 title = "Remove"
@@ -239,8 +241,7 @@ class PackageManager(object):
                 deps = DialogUtil(data, text, title, backtitle,
                                   status).checklist()
                 for d in deps:
-                    dependencies += " " + "-".join(d.split("-")[:-1])
-                dependencies = dependencies.strip()
+                    dependencies.append("-".join(d.split("-")[:-1]))
                 self.meta.remove_deps_answer = "y"
             else:
                 print("")   # new line at start
@@ -258,8 +259,7 @@ class PackageManager(object):
                     self.meta.color["GREY"], round(self.size, 2), self.unit,
                     self.meta.color["ENDC"]))
                 self.msg.template(78)
-            return dependencies
-        return ""
+        return dependencies
 
     def _removepkg(self, package):
         """removepkg Slackware command
@@ -277,10 +277,9 @@ class PackageManager(object):
         """Remove dependencies
         """
         removes = []
-        deps = dependencies.split()
-        deps.append(package)
-        self._check_if_used(deps)
-        for dep in deps:
+        dependencies.append(package)
+        self._check_if_used(dependencies)
+        for dep in dependencies:
             if dep not in self.skip and GetFromInstalled(dep).name():
                 ver = GetFromInstalled(dep).version()
                 removes.append(dep + ver)
