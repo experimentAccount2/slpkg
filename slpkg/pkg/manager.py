@@ -259,6 +259,7 @@ class PackageManager(object):
                     self.meta.color["ENDC"]))
                 self.msg.template(78)
             return dependencies
+        return ""
 
     def _removepkg(self, package):
         """removepkg Slackware command
