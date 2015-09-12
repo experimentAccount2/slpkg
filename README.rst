@@ -143,6 +143,12 @@ Demonstration
     :target: https://www.youtube.com/watch?v=oTtD4XhHKlA
 
 
+Youtube Asciicasts
+------------------
+
+`Playlist Tutorials <https://www.youtube.com/playlist?list=PLLzUUMSzaKvlS5--8AiFqWzxZPg3kxkqY>`_
+ 
+ 
 Repositories
 ------------
 
