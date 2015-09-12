@@ -39,7 +39,7 @@ DOCS_REQUIREMENTS = []
 TESTS_REQUIREMENTS = []
 OPTIONAL_REQUIREMENTS = [
     "python2-pythondialog >= 3.3.0",
-    "pygraphviz >= 1.3rc2"
+    "pygraphviz >= 1.3.1"
 ]
 
 # Non-Python/non-PyPI optional dependencies:
