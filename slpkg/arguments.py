@@ -98,7 +98,7 @@ Optional arguments:
       --check-deps, --graph=[type]          print package dependenies tree with
                                             highlight if packages is installed.
                                             Also check if dependencies used or
-                                            drawing dependencies digram.
+                                            drawing dependencies diagram.
   -p, --desc, [repository] [package],       Print description of a package
       --color=[]                            directly from the repository and
                                             change color text.
