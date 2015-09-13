@@ -1068,8 +1068,8 @@ Read fies, download, build or install:
     | Requirements : OpenAL, SDL2, speex, libmodplug
     +===============================================================================
     | README               View the README file
-    | SlackBuild           View the SlackBuild file
-    | Info                 View the Info file
+    | SlackBuild           View the .SlackBuild file
+    | Info                 View the .info file
     | Doinst.sh            View the doinst.sh file
     | Download             Download this package
     | Build                Download and build this package

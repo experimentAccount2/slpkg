@@ -3,6 +3,7 @@ Fixed:
 - Typo in help option
 Updated:
 - Optional dependencies
+- "--netwotk" view commands
 
 2.8.7 - 11/09/2015
 Fixed:
