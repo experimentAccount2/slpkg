@@ -23,6 +23,7 @@
 
 
 import os
+import sys
 import pydoc
 
 from slpkg.messages import Msg
@@ -114,12 +115,39 @@ class SBoNetwork(object):
     def read_choice(self):
         """Return choice
         """
+        commands = {
+            "r": "README",
+            "R": "README",
+            "s": "SlackBuild",
+            "S": "SlackBuild",
+            "f": "info",
+            "F": "info",
+            "o": "doinst",
+            "O": "doinst",
+            "d": "download",
+            "D": "download",
+            "b": "build",
+            "B": "build",
+            "i": "install",
+            "I": "install",
+            "q": "quit",
+            "quit": "quit",
+            "Q": "quit",
+        }
         try:
-            self.choice = raw_input("{0}  Choose an option > {1}".format(
-                self.grey, self.endc))
+            message = "  Choose an option > "
+            self.choice = raw_input("{0}{1}{2}".format(self.grey, message,
+                                                       self.endc))
         except (KeyboardInterrupt, EOFError):
             print("")
             raise SystemExit()
+        try:
+            sys.stdout.write("{0}\x1b[1A{1}{2}{3}\n".format(
+                " " * len(message), self.meta.color["CYAN"],
+                commands[self.choice], self.meta.color["ENDC"]))
+            sys.stdout.flush()
+        except KeyError:
+            pass
 
     def choice_README(self):
         """View README file
