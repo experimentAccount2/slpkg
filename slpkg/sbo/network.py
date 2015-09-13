@@ -240,9 +240,9 @@ class SBoNetwork(object):
         self.msg.template(78)
         print("| {0}R{1}{2}EADME               View the README file".format(
             self.red, self.endc, br2))
-        print("| {0}S{1}{2}lackBuild           View the SlackBuild "
+        print("| {0}S{1}{2}lackBuild           View the .SlackBuild "
               "file".format(self.red, self.endc, br2))
-        print("| In{0}{1}f{2}{3}o{4}                View the Info "
+        print("| In{0}{1}f{2}{3}o{4}                View the .info "
               "file".format(br1, self.red, self.endc, br2, fix_sp))
         print("| D{0}{1}o{2}{3}inst.sh{4}           View the doinst.sh "
               "file".format(br1, self.red, self.endc, br2, fix_sp))
