@@ -102,7 +102,7 @@ Optional arguments:
   -p, --desc, [repository] [package],       Print description of a package
       --color=[]                            directly from the repository and
                                             change color text.
-  -n, --network, [package]                  View a standard of SBo page in
+  -n, --network, [package], --checklist     View a standard of SBo page in
                                             terminal and manage multiple options
                                             like reading, downloading, building
                                             installation, etc.
@@ -161,7 +161,7 @@ def usage(repo):
              [-s [repository] [package...], --resolve-off]
              [-t [repository] [package], --check-deps, --graph=[type]]
              [-p [repository] [package], --color=[]]
-             [-n [SBo package]]
+             [-n [SBo package], --checklist]
              [-F [package...]]
              [-f [package...]]
              [-i [options] [package...]]
