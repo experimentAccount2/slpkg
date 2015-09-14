@@ -132,7 +132,6 @@ Recommended
 -----------
 
 Stay updated, see `SUN (Slackware Update Notifier) <https://github.com/dslackw/sun>`_
-SUN utility works with slpkg as with slackpkg.
 
 
 Upgrade
