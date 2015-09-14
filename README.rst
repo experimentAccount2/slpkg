@@ -1078,6 +1078,29 @@ Read fies, download, build or install:
     +================================================================================ 
       Choose an option > _
 
+
+Use dialog utility to help you find a package:
+
+.. code-block:: bash
+    
+    Load all repository:
+
+    $ slpkg -n ALL --checklist
+    Reading package lists...
+
+.. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/pythondialog5.png
+    :target: https://github.com/dslackw/slpkg
+
+.. code-block:: bash
+    
+    Search from pattern such as all 'perl' packages:
+
+    $ slpkg -n perl --checklist
+    Reading package lists...
+
+.. image:: https://raw.githubusercontent.com/dslackw/images/master/slpkg/pythondialog6.png
+    :target: https://github.com/dslackw/slpkg
+
      
 Auto tool to build package:
 

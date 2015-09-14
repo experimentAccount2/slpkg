@@ -1,4 +1,6 @@
-2.8.8 - 13/09/2015
+2.8.8 - 14/09/2015
+Added:
+- Additional option "--checklist" in "-n, --network" option
 Fixed:
 - Typo in help option
 Updated:

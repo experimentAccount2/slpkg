@@ -39,6 +39,7 @@ from slpkg.sbo.read import ReadSBo
 from slpkg.sbo.remove import delete
 from slpkg.sbo.greps import SBoGrep
 from slpkg.sbo.sbo_arch import SBoArch
+from slpkg.dialog_box import DialogUtil
 from slpkg.sbo.compressed import SBoLink
 from slpkg.sbo.search import sbo_search_pkg
 from slpkg.sbo.slack_find import slack_package
@@ -48,8 +49,9 @@ class SBoNetwork(object):
     """View SBo site in terminal and also read, build or
     install packages
     """
-    def __init__(self, name):
+    def __init__(self, name, flag):
         self.name = name
+        self.flag = flag
         self.meta = _meta_
         self.msg = Msg()
         self.arch = SBoArch().get()
@@ -64,8 +66,10 @@ class SBoNetwork(object):
         self.endc = self.meta.color["ENDC"]
         self.build_folder = self.meta.build_path
         self.msg.reading()
-        grep = SBoGrep(self.name)
         self.data = SBoGrep(name="").names()
+        if "--checklist" in self.flag:
+            self.with_checklist()
+        grep = SBoGrep(self.name)
         self.blacklist = BlackList().packages(pkgs=self.data, repo="sbo")
         self.sbo_url = sbo_search_pkg(self.name)
         if self.sbo_url:
@@ -75,7 +79,8 @@ class SBoNetwork(object):
             self.sbo_dwn = SBoLink(self.sbo_url).tar_gz()
             self.sbo_version = grep.version()
             self.dwn_srcs = self.sbo_dwn.split() + self.source_dwn
-        self.msg.done()
+        if "--checklist" not in self.flag or not self.sbo_url:
+            self.msg.done()
 
     def view(self):
         """View SlackBuild package, read or install them
@@ -256,6 +261,32 @@ class SBoNetwork(object):
                                                             self.endc, br2))
 
         self.msg.template(78)
+
+    def with_checklist(self):
+        """Using dialog and checklist option
+        """
+        data = []
+        try:
+            if self.name == "ALL":
+                data = self.data
+            else:
+                for name in self.data:
+                    if self.name in name:
+                        data.append(name)
+        except KeyboardInterrupt:
+            print("")
+            raise SystemExit()
+        if data:
+            text = "Press 'spacebar' to choose SlackBuild for view"
+            title = "SlackBuilds.org"
+            backtitle = "{0} {1}".format(_meta_.__all__, _meta_.__version__)
+            status = False
+            pkg = DialogUtil(data, text, title, backtitle, status).checklist()
+            if len(pkg) > 1:
+                print("\nslpkg: error: choose only one package")
+                raise SystemExit()
+            self.name = "".join(pkg)
+            os.system("clear")
 
     def pager(self, text):
         """Read text

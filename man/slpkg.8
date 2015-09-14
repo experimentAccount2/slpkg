@@ -253,10 +253,15 @@ Find installed packages with view total file size.
 Example you can view all installed sbo packages like "# slpkg -f _SBo".
 
 .SS -n, --network, view SBo packages
-\fBslpkg\fP \fB-n\fP <\fIname of package\fP>
+\fBslpkg\fP \fB-n\fP <\fIname of package\fP>, <\fI[pattern] --checklist\fP>
 .PP
 View complete slackbuilds.org site in your terminal. Read file, download, 
-build or install etc.
+build or install etc. Use 'ALL' in [pattern] and "--checklist" additional option to load all
+repository, example "slpkg -n ALL --checklist".
+.PP
+Additional options:
+.PP
+\fB--checklist\fP : Enable dialog utility and checklist option. (Require python2-pythondialog)
 
 .SS -i, --installpkg, install Slackware binary packages
 \fBslpkg\fP \fB-i\fP \fB[--warn, --md5sum, --root /otherroot, --infobox, --menu, --terse, 

@@ -347,10 +347,15 @@ class ArgParse(object):
     def sbo_network(self):
         """View slackbuilds packages
         """
+        flag = []
         options = ["-n", "--network"]
+        additional_options = ["--checklist"]
+        if self.args[-1] in additional_options:
+            flag.append(additional_options[0])
+            self.args.remove(additional_options[0])
         if (len(self.args) == 2 and self.args[0] in options and
                 "sbo" in self.meta.repositories):
-            SBoNetwork(self.args[1]).view()
+            SBoNetwork(self.args[1], flag).view()
         else:
             usage("sbo")
 
