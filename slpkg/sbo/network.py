@@ -79,7 +79,7 @@ class SBoNetwork(object):
             self.sbo_dwn = SBoLink(self.sbo_url).tar_gz()
             self.sbo_version = grep.version()
             self.dwn_srcs = self.sbo_dwn.split() + self.source_dwn
-        if "--checklist" not in self.flag or not self.sbo_url:
+        if "--checklist" not in self.flag or not self.sbo_url and self.name:
             self.msg.done()
 
     def view(self):
