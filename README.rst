@@ -128,6 +128,13 @@ Optional dependencies
 `graph-easy <http://slackbuilds.org/repository/14.1/graphics/graph-easy/>`_ for drawing ascii dependencies diagram
 
 
+Recommended
+-----------
+
+Stay updated, see `SUN (Slackware Update Notifier) <https://github.com/dslackw/sun>`_
+SUN utility works with slpkg as with slackpkg.
+
+
 Upgrade
 -------
 
