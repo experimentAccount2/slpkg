@@ -1079,7 +1079,7 @@ Read fies, download, build or install:
       Choose an option > _
 
 
-Use dialog utility to help you find a package:
+Use dialog utility to help you find a packages:
 
 .. code-block:: bash
     
