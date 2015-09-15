@@ -3,6 +3,8 @@ Added:
 - Additional option "--case-ins" case insensitive
 Fixed:
 - Dialog utility crash if exit with Esc key
+Update:
+- KeyboardInterrupt with signal
 
 2.8.8 - 14/09/2015
 Added:
