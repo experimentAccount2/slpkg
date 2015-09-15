@@ -333,11 +333,13 @@ nearest one. If however for some reason this troublesome please edit the file in
 
 Slpkg configuration
 -------------------
+
 It is important to read the configuration file '/etc/slpkg/slpkg.conf'. You will find many 
 useful options to configure the program so as you need it.
 
 A simple example is to close the progress bar for speed, changing the variable PRG_BAR the 
 value "off".
+
 
 Configuration Files
 -------------------
@@ -1261,7 +1263,29 @@ Search and find packages from repositories are enabled:
     ===============================================================================
     Total found 4 packages in 4 repositories.
 
-    
+   
+    Search in repositories with case sensitives:
+
+    $ slpkg -F pyqt5 AAA --case-ins
+
+    Packages with name matching [ pyqt5, AAA ]
+
+    +==============================================================================
+    | Repository  Package                                                      Size
+    +==============================================================================
+      slack       aaa_base-14.1-x86_64-1.txz                                   12 K
+      slack       aaa_elflibs-14.1-x86_64-3.txz                              4316 K
+      slack       aaa_terminfo-5.8-x86_64-1.txz                                44 K
+      sbo         jaaa-0.8.4                                                    0 K
+      sbo         python3-PyQt5-5.5                                             0 K
+      slonly      jaaa-0.8.4-x86_64-1_slack.txz                                40 K
+      slonly      python3-PyQt5-5.5-x86_64-1_slack.txz                       3088 K
+
+    Found summary
+    ===============================================================================
+    Total found 7 packages in 3 repositories.
+
+
 Find installed packages:
 
 .. code-block:: bash
