@@ -118,6 +118,7 @@ class TrackingDeps(object):
             if "--graph=" in self.flag:
                 self.graph()
         else:
+            self.msg.done()
             print("\nNo package was found to match\n")
 
     def repositories(self):
