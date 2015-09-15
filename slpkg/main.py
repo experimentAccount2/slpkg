@@ -489,10 +489,16 @@ class ArgParse(object):
     def bin_find(self):
         """Find installed packages
         """
-        packages = self.args[1:]
+        flag = []
         options = ["-f", "--find"]
+        additional_options = ["--case-ins"]
+        for arg in self.args[1:]:
+            if arg in additional_options:
+                flag.append(arg)
+                self.args.remove(arg)
+        packages = self.args[1:]
         if len(self.args) > 1 and self.args[0] in options:
-            PackageManager(packages).find()
+            PackageManager(packages).find(flag)
         else:
             usage("")
 

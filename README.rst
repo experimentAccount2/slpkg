@@ -452,7 +452,7 @@ Command Line Tool Usage
       -F, --FIND, [package...], --case-ins      Find packages from repositories and
                                                 search at each enabled repository
                                                 and prints results.
-      -f, --find, [package...]                  Find and print installed packages
+      -f, --find, [package...], --case-ins      Find and print installed packages
                                                 reporting the size and the sum.
       -i, --installpkg, [options] [package...]  Installs single or multiple *.tgz
           options=[--warn, --md5sum, --root,    (or .tbz, .tlz, .txz) Slackware

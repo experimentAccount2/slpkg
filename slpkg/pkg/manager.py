@@ -369,16 +369,22 @@ class PackageManager(object):
         self.msg.template(78)
         print("")   # new line at end
 
-    def find(self):
+    def find(self, flag):
         """Find installed Slackware packages
         """
-        matching = 0
+        matching, pkg_cache, match_cache = 0, "", ""
         print("\nPackages with matching name [ {0}{1}{2} ]\n".format(
             self.meta.color["CYAN"], ", ".join(self.binary),
             self.meta.color["ENDC"]))
         for pkg in self.binary:
             for match in find_package("", self.meta.pkg_path):
-                if pkg in match:
+                if "--case-ins" in flag:
+                    pkg_cache = pkg.lower()
+                    match_cache = match.lower()
+                else:
+                    pkg_cache = pkg
+                    match_cache = match
+                if pkg_cache in match_cache:
                     matching += 1
                     print("[ {0}installed{1} ] - {2}".format(
                         self.meta.color["GREEN"], self.meta.color["ENDC"],
