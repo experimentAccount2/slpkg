@@ -312,7 +312,7 @@ class ArgParse(object):
         flag = []
         options = ["-s", "--sync"]
         additional_options = ["--resolve-off", "--case-ins"]
-        for arg in self.args[-2:]:
+        for arg in self.args:
             if arg in additional_options:
                 flag.append(arg)
         if len(self.args) >= 3 and self.args[0] in options:
@@ -495,7 +495,7 @@ class ArgParse(object):
         flag = []
         options = ["-f", "--find"]
         additional_options = ["--case-ins"]
-        for arg in self.args[1:]:
+        for arg in self.args:
             if arg in additional_options:
                 flag.append(arg)
                 self.args.remove(arg)
