@@ -28,11 +28,11 @@ from slpkg.pkg.manager import PackageManager
 from slpkg.__metadata__ import MetaData as _meta_
 
 
-def find_from_repos(pkg):
+def find_from_repos(pkg, flag):
     """
     Find packages from enabled repositories
     """
-    cache = ""
+    cache, p_cache, find_cache = "", "", ""
     cyan = _meta_.color["CYAN"]
     endc = _meta_.color["ENDC"]
     count_pkg = count_repo = 0
@@ -47,7 +47,13 @@ def find_from_repos(pkg):
             packages, sizes = PackageManager(pkg).list_greps(repo, PACKAGES_TXT)
             for find, size in zip(packages, sizes):
                 for p in pkg:
-                    if p in find:
+                    if "--case-ins" in flag:
+                        p_cache = p.lower()
+                        find_cache = find.lower()
+                    else:
+                        p_cache = p
+                        find_cache = find
+                    if p_cache in find_cache:
                         if cache != repo:
                             count_repo += 1
                         cache = repo

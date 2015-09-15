@@ -38,11 +38,11 @@ Usage: slpkg Commands:
              [-l [repository], --index, --installed]
              [-c [repository], --upgrade, --skip=[...], --resolve-off,
                                --checklist]
-             [-s [repository] [package...], --resolve-off]
+             [-s [repository] [package...], --resolve-off, --case-ins]
              [-t [repository] [package], --check-deps, --graph=[type]]
              [-p [repository] [package], --color=[]]
-             [-n [SBo package], --checklist]
-             [-F [package...]]
+             [-n [SBo package], --checklist, --case-ins]
+             [-F [package...], --case-ins]
              [-f [package...]]
              [-i [options] [package...]]
              [-u [options] [package...]]
@@ -208,7 +208,7 @@ Additional options:
 \fB--checklist\fP : Enable dialog utility and checklist option. (Require python2-pythondialog)
 
 .SS -s, --sync, synchronize packages, download, build and install package with all dependencies
-\fBslpkg\fP \fB-s\fP <\fIrepository\fP> <\fInames of packages\fP>, \fB--resolve-off\fP
+\fBslpkg\fP \fB-s\fP <\fIrepository\fP> <\fInames of packages\fP>, \fB--resolve-off\fP, \fB--case-ins\fP
 .PP
 Installs or upgrade packages from the repositories with automatically resolving all 
 dependencies of the package.
@@ -216,6 +216,8 @@ dependencies of the package.
 Additional options:
 .PP
 \fB--resolve-off\fP : Switch off automatic resolve dependencies.
+.PP
+\fB--case-ins\fP : Search package name in repository with case insensitive.
 
 .SS -t, --tracking,  tracking dependencies
 \fBslpkg\fP \fB-t\fP <\fIrepository\fP> <\fIname of package\fP>, \fB--check-deps\fP, \fB--graph=[type]\fP
@@ -241,11 +243,15 @@ Additional options:
 \fB--color=[]\fP : Change color print.
 
 .SS -F, --FIND, find packages from repositories
-\fBslpkg\fP \fB-F\fP <\fInames of packages\fP>
+\fBslpkg\fP \fB-F\fP <\fInames of packages\fP>, \fB--case-ins\fP 
 .PP
 Find packages from all repositories are enabled. Useful command to find all available 
 packages per repository.
- 
+.PP
+Additional options:
+.PP
+\fB--case-ins\fP : Search package name in repository with case insensitive.
+
 .SS -f, --find, find istalled packages
 \fBslpkg\fP \fB-f\fP <\fInames of packages\fP>
 .PP
@@ -253,7 +259,7 @@ Find installed packages with view total file size.
 Example you can view all installed sbo packages like "# slpkg -f _SBo".
 
 .SS -n, --network, view SBo packages
-\fBslpkg\fP \fB-n\fP <\fIname of package\fP>, <\fI[pattern] --checklist\fP>
+\fBslpkg\fP \fB-n\fP <\fIname of package\fP>, <\fI[pattern], --checklist\fP>, \fI--case-ins\fP
 .PP
 View complete slackbuilds.org site in your terminal. Read file, download, 
 build or install etc. Use 'ALL' in [pattern] and "--checklist" additional option to load all
@@ -262,6 +268,8 @@ repository, example "slpkg -n ALL --checklist".
 Additional options:
 .PP
 \fB--checklist\fP : Enable dialog utility and checklist option. (Require python2-pythondialog)
+.PP
+\fB--case-ins\fP : Search package name in repository with case insensitive.
 
 .SS -i, --installpkg, install Slackware binary packages
 \fBslpkg\fP \fB-i\fP \fB[--warn, --md5sum, --root /otherroot, --infobox, --menu, --terse, 

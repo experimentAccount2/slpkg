@@ -43,8 +43,7 @@ class Requires(object):
         self.dep_results = []
 
     def sbo(self, name):
-        """
-        Build all dependencies of a package
+        """Build all dependencies of a package
         """
         if (self.meta.rsl_deps in ["on", "ON"] and
                 "--resolve-off" not in self.flag):

@@ -306,11 +306,12 @@ class ArgParse(object):
     def pkg_install(self):
         """Install packages by repository
         """
+        flag = []
         options = ["-s", "--sync"]
-        flag = ""
-        flags = ["--resolve-off"]
-        if self.args[-1] in flags:
-            flag = self.args[-1]
+        additional_options = ["--resolve-off", "--case-ins"]
+        for arg in self.args[-2:]:
+            if arg in additional_options:
+                flag.append(arg)
         if len(self.args) >= 3 and self.args[0] in options:
             if (self.args[1] in self.meta.repositories and
                     self.args[1] not in ["sbo"]):
@@ -349,10 +350,11 @@ class ArgParse(object):
         """
         flag = []
         options = ["-n", "--network"]
-        additional_options = ["--checklist"]
-        if self.args[-1] in additional_options:
-            flag.append(additional_options[0])
-            self.args.remove(additional_options[0])
+        additional_options = ["--checklist", "--case-ins"]
+        for arg in self.args[2:]:
+            if arg in additional_options:
+                flag.append(arg)
+                self.args.remove(arg)
         if (len(self.args) == 2 and self.args[0] in options and
                 "sbo" in self.meta.repositories):
             SBoNetwork(self.args[1], flag).view()
@@ -519,10 +521,15 @@ class ArgParse(object):
     def pkg_find(self):
         """Find packages from all enabled repositories
         """
+        flag = []
         packages = self.args[1:]
         options = ["-F", "--FIND"]
+        additional_options = ["--case-ins"]
+        for arg in self.args:
+            if arg in additional_options:
+                flag.append(arg)
         if len(self.args) > 1 and self.args[0] in options:
-            find_from_repos(packages)
+            find_from_repos(packages, flag)
         else:
             usage("")
 

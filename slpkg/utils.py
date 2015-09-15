@@ -30,6 +30,15 @@ from slpkg.splitting import split_package
 class Utils(object):
     """Class with usefull utilities
     """
+    def case_sensitive(self, lst):
+        """Create dictionary with key in lower case
+        and value with default
+        """
+        dictionary = {}
+        for pkg in lst:
+            dictionary[pkg.lower()] = pkg
+        return dictionary
+
     def dimensional_list(self, lists):
         """
         Create one dimensional list

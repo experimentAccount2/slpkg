@@ -435,7 +435,7 @@ Command Line Tool Usage
           --skip=[...], --resolve--off          repositories and install with all
           --checklist                           dependencies.
       -s, --sync, [repository] [package...],    Sync packages. Install packages
-          --resolve-off                         directly from remote repositories
+          --resolve-off, --case-ins             directly from remote repositories
                                                 with all dependencies.
       -t, --tracking, [repository] [package],   Tracking package dependencies and
           --check-deps, --graph=[type]          print package dependenies tree with
@@ -445,11 +445,11 @@ Command Line Tool Usage
       -p, --desc, [repository] [package],       Print description of a package
           --color=[]                            directly from the repository and
                                                 change color text.
-      -n, --network, [package]                  View a standard of SBo page in
-                                                terminal and manage multiple options
+      -n, --network, [package], --checklist,    View a standard of SBo page in
+          --case-ins                            terminal and manage multiple options
                                                 like reading, downloading, building
                                                 installation, etc.
-      -F, --FIND, [package...]                  Find packages from repositories and
+      -F, --FIND, [package...], --case-ins      Find packages from repositories and
                                                 search at each enabled repository
                                                 and prints results.
       -f, --find, [package...]                  Find and print installed packages

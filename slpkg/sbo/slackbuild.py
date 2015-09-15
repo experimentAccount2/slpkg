@@ -77,6 +77,7 @@ class SBoInstall(object):
         """
         try:
             tagc = ""
+            self.case_insensitive()
             for _sbo in self.slackbuilds:
                 status(0.03)
                 if _sbo in self.data and _sbo not in self.blacklist:
@@ -145,6 +146,18 @@ class SBoInstall(object):
         except KeyboardInterrupt:
             print("")   # new line at exit
             raise SystemExit()
+
+    def case_insensitive(self):
+        """Matching packages distinguish between uppercase and
+        lowercase
+        """
+        if "--case-ins" in self.flag:
+            data_dict = Utils().case_sensitive(self.data)
+            for name in self.slackbuilds:
+                for key, value in data_dict.iteritems():
+                    if key == name.lower():
+                        index = self.slackbuilds.index(name)
+                        self.slackbuilds[index] = value
 
     def update_deps(self):
         """Update dependencies dictionary with all package

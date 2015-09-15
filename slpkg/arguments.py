@@ -92,7 +92,7 @@ Optional arguments:
       --skip=[...], --resolve--off          repositories and install with all
       --checklist                           dependencies.
   -s, --sync, [repository] [package...],    Sync packages. Install packages
-      --resolve-off                         directly from remote repositories
+      --resolve-off, --case-ins             directly from remote repositories
                                             with all dependencies.
   -t, --tracking, [repository] [package],   Tracking package dependencies and
       --check-deps, --graph=[type]          print package dependenies tree with
@@ -102,11 +102,11 @@ Optional arguments:
   -p, --desc, [repository] [package],       Print description of a package
       --color=[]                            directly from the repository and
                                             change color text.
-  -n, --network, [package], --checklist     View a standard of SBo page in
-                                            terminal and manage multiple options
+  -n, --network, [package], --checklist,    View a standard of SBo page in
+      --case-ins                            terminal and manage multiple options
                                             like reading, downloading, building
                                             installation, etc.
-  -F, --FIND, [package...]                  Find packages from repositories and
+  -F, --FIND, [package...], --case-ins      Find packages from repositories and
                                             search at each enabled repository
                                             and prints results.
   -f, --find, [package...]                  Find and print installed packages
@@ -158,11 +158,11 @@ def usage(repo):
              [-l [repository], --index, --installed]
              [-c [repository], --upgrade, --skip=[...], --resolve-off,
                                --checklist]
-             [-s [repository] [package...], --resolve-off]
+             [-s [repository] [package...], --resolve-off, --case-ins]
              [-t [repository] [package], --check-deps, --graph=[type]]
              [-p [repository] [package], --color=[]]
-             [-n [SBo package], --checklist]
-             [-F [package...]]
+             [-n [SBo package], --checklist, --case-ins]
+             [-F [package...], --case-ins]
              [-f [package...]]
              [-i [options] [package...]]
              [-u [options] [package...]]

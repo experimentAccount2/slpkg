@@ -75,6 +75,7 @@ class BinaryInstall(object):
         Install packages from official Slackware distribution
         """
         try:
+            self.case_insensitive()
             # fix if packages is for upgrade
             self.if_upgrade = if_upgrade
             mas_sum = dep_sum = sums = [0, 0, 0]
@@ -136,6 +137,21 @@ class BinaryInstall(object):
         except KeyboardInterrupt:
             print("")   # new line at exit
             raise SystemExit()
+
+    def case_insensitive(self):
+        """Matching packages distinguish between uppercase and
+        lowercase
+        """
+        if "--case-ins" in self.flag:
+            data = []
+            for name in self.data[0]:
+                data.append(split_package(name)[0])
+            data_dict = Utils().case_sensitive(data)
+            for pkg in self.packages:
+                for key, value in data_dict.iteritems():
+                    if key == pkg.lower():
+                        index = self.packages.index(pkg)
+                        self.packages[index] = value
 
     def update_deps(self):
         """Update dependencies dictionary with all package

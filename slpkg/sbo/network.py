@@ -26,9 +26,11 @@ import os
 import sys
 import pydoc
 
+from slpkg.utils import Utils
 from slpkg.messages import Msg
 from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
+from slpkg.dialog_box import DialogUtil
 from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.pkg.find import find_package
@@ -39,7 +41,6 @@ from slpkg.sbo.read import ReadSBo
 from slpkg.sbo.remove import delete
 from slpkg.sbo.greps import SBoGrep
 from slpkg.sbo.sbo_arch import SBoArch
-from slpkg.dialog_box import DialogUtil
 from slpkg.sbo.compressed import SBoLink
 from slpkg.sbo.search import sbo_search_pkg
 from slpkg.sbo.slack_find import slack_package
@@ -67,6 +68,7 @@ class SBoNetwork(object):
         self.build_folder = self.meta.build_path
         self.msg.reading()
         self.data = SBoGrep(name="").names()
+        self.case_insensitive()
         if "--checklist" in self.flag:
             self.with_checklist()
         grep = SBoGrep(self.name)
@@ -116,6 +118,16 @@ class SBoNetwork(object):
                     pass
         else:
             self.msg.pkg_not_found("\n", self.name, "Can't view", "\n")
+
+    def case_insensitive(self):
+        """Matching packages distinguish between uppercase and
+        lowercase
+        """
+        if "--case-ins" in self.flag:
+            data_dict = Utils().case_sensitive(self.data)
+            for key, value in data_dict.iteritems():
+                if key == self.name.lower():
+                    self.name = value
 
     def read_choice(self):
         """Return choice
