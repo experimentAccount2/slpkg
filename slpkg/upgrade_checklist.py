@@ -47,6 +47,7 @@ def choose_upg(packages):
         status = True
         pkgs = DialogUtil(data, text, title, backtitle,
                           status).checklist()
+        pkgs = [] if pkgs is None else pkgs
         for pkg in pkgs:
             name = split_package(pkg)[0]
             if name in packages:

@@ -62,7 +62,7 @@ class DialogUtil(object):
         if code == "ok":
             self.unicode_to_string()
             return self.ununicode
-        if code == "cancel":
+        if code in ["cancel", "esc"]:
             self.exit()
 
     def buildlist(self, enabled):
@@ -84,7 +84,7 @@ class DialogUtil(object):
         if code == "ok":
             self.unicode_to_string()
             return self.ununicode
-        if code == "cancel":
+        if code in ["cancel", "esc"]:
             self.exit()
 
     def exit(self):

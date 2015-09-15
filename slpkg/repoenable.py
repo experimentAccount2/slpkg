@@ -66,7 +66,10 @@ Keys: SPACE   select or deselect the highlighted repositories,
         text, title, backtitle, status = keys, "Repositories", "", False
         self.selected = DialogUtil(self.disabled, text, title, backtitle,
                                    status).buildlist(self.enabled)
-        self.update_repos()
+        if self.selected is not None:
+            self.update_repos()
+        else:
+            self.selected = self.enabled
         self.clear_screen()
         self.reference()
 

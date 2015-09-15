@@ -294,8 +294,10 @@ class SBoNetwork(object):
             backtitle = "{0} {1}".format(_meta_.__all__, _meta_.__version__)
             status = False
             pkg = DialogUtil(data, text, title, backtitle, status).checklist()
-            if len(pkg) > 1:
+            if pkg and len(pkg) > 1:
                 print("\nslpkg: error: choose only one package")
+                raise SystemExit()
+            if pkg is None:
                 raise SystemExit()
             self.name = "".join(pkg)
             os.system("clear")
