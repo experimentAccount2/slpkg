@@ -24,10 +24,7 @@
 
 import os
 import sys
-import signal
 import getpass
-
-from slpkg.interrupts import signal_handler
 
 from slpkg.load import Regex
 from slpkg.desc import PkgDesc
@@ -663,5 +660,4 @@ def main():
 
 
 if __name__ == "__main__":
-    signal.signal(signal.SIGINT, signal_handler)
     main()
