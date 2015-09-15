@@ -1264,7 +1264,7 @@ Search and find packages from repositories are enabled:
     Total found 4 packages in 4 repositories.
 
    
-    Search in repositories with case sensitives:
+    Search in repositories with case insensitives:
 
     $ slpkg -F pyqt5 AAA --case-ins
 
