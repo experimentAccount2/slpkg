@@ -1,6 +1,8 @@
 2.8.9 - 15/09/2015
 Added:
 - Additional option "--case-ins" case insensitive
+Fixed:
+- Dialog utility crash if exit with Esc key
 
 2.8.8 - 14/09/2015
 Added:
