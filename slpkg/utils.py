@@ -31,7 +31,7 @@ class Utils(object):
     """Class with usefull utilities
     """
     def case_sensitive(self, lst):
-        """Create dictionary with key in lower case
+        """Create dictionary from list with key in lower case
         and value with default
         """
         dictionary = {}
