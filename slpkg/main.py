@@ -531,12 +531,13 @@ class ArgParse(object):
         """Find packages from all enabled repositories
         """
         flag = []
-        packages = self.args[1:]
         options = ["-F", "--FIND"]
         additional_options = ["--case-ins"]
         for arg in self.args:
             if arg in additional_options:
                 flag.append(arg)
+                self.args.remove(arg)
+        packages = self.args[1:]
         if len(self.args) > 1 and self.args[0] in options:
             find_from_repos(packages, flag)
         else:
