@@ -32,13 +32,9 @@ def status(sec):
     """Toolbar progressive status
     """
     if _meta_.prg_bar in ["on", "ON"]:
-        try:
-            syms = ["\\", "|", "/", "-"]
-            for sym in syms:
-                sys.stdout.write("\b{0}{1}{2}".format(_meta_.color["GREY"], sym,
-                                                      _meta_.color["ENDC"]))
-                sys.stdout.flush()
-                time.sleep(float(sec))
-        except KeyboardInterrupt:
-            print("")
-            raise SystemExit()
+        syms = ["\\", "|", "/", "-"]
+        for sym in syms:
+            sys.stdout.write("\b{0}{1}{2}".format(_meta_.color["GREY"], sym,
+                                                  _meta_.color["ENDC"]))
+            sys.stdout.flush()
+            time.sleep(float(sec))

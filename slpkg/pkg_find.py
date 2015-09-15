@@ -41,36 +41,32 @@ def find_from_repos(pkg, flag):
     Msg().template(78)
     print("| {0}  {1}{2}{3}".format("Repository", "Package", " " * 54, "Size"))
     Msg().template(78)
-    try:
-        for repo in _meta_.repositories:
-            PACKAGES_TXT = PackageManager(pkg).list_lib(repo)
-            packages, sizes = PackageManager(pkg).list_greps(repo, PACKAGES_TXT)
-            for find, size in zip(packages, sizes):
-                for p in pkg:
-                    if "--case-ins" in flag:
-                        p_cache = p.lower()
-                        find_cache = find.lower()
-                    else:
-                        p_cache = p
-                        find_cache = find
-                    if p_cache in find_cache:
-                        if cache != repo:
-                            count_repo += 1
-                        cache = repo
-                        count_pkg += 1
-                        ver = sbo_version(repo, find)
-                        print("  {0}{1}{2}{3}{4} {5}{6:>11}".format(
-                            cyan, repo, endc,
-                            " " * (12 - len(repo)),
-                            find + ver, " " * (53 - len(find + ver)),
-                            size))
-        print("\nFound summary")
-        print("=" * 79)
-        print("{0}Total found {1} packages in {2} repositories.{3}\n".format(
-            _meta_.color["GREY"], count_pkg, count_repo, _meta_.color["ENDC"]))
-    except KeyboardInterrupt:
-        print("")   # new line at exit
-        raise SystemExit()
+    for repo in _meta_.repositories:
+        PACKAGES_TXT = PackageManager(pkg).list_lib(repo)
+        packages, sizes = PackageManager(pkg).list_greps(repo, PACKAGES_TXT)
+        for find, size in zip(packages, sizes):
+            for p in pkg:
+                if "--case-ins" in flag:
+                    p_cache = p.lower()
+                    find_cache = find.lower()
+                else:
+                    p_cache = p
+                    find_cache = find
+                if p_cache in find_cache:
+                    if cache != repo:
+                        count_repo += 1
+                    cache = repo
+                    count_pkg += 1
+                    ver = sbo_version(repo, find)
+                    print("  {0}{1}{2}{3}{4} {5}{6:>11}".format(
+                        cyan, repo, endc,
+                        " " * (12 - len(repo)),
+                        find + ver, " " * (53 - len(find + ver)),
+                        size))
+    print("\nFound summary")
+    print("=" * 79)
+    print("{0}Total found {1} packages in {2} repositories.{3}\n".format(
+        _meta_.color["GREY"], count_pkg, count_repo, _meta_.color["ENDC"]))
 
 
 def sbo_version(repo, find):

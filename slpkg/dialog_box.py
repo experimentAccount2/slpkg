@@ -49,16 +49,12 @@ class DialogUtil(object):
     def checklist(self):
         """Run dialog checklist
         """
-        try:
-            choice = []
-            for item in self.data:
-                choice.append((item, "", self.status))
-            code, self.tags = self.d.checklist(
-                text=self.text, height=20, width=65, list_height=13,
-                choices=choice, title=self.title, backtitle=self.backtitle)
-        except KeyboardInterrupt:
-            print("")
-            raise SystemExit()
+        choice = []
+        for item in self.data:
+            choice.append((item, "", self.status))
+        code, self.tags = self.d.checklist(
+            text=self.text, height=20, width=65, list_height=13,
+            choices=choice, title=self.title, backtitle=self.backtitle)
         if code == "ok":
             self.unicode_to_string()
             return self.ununicode
@@ -68,19 +64,15 @@ class DialogUtil(object):
     def buildlist(self, enabled):
         """Run dialog buildlist
         """
-        try:
-            choice = []
-            for item in self.data:
-                choice.append((item, False))
-            for item in enabled:
-                choice.append((item, True))
-            items = [(tag, tag, sta) for (tag, sta) in choice]
-            code, self.tags = self.d.buildlist(
-                text=self.text, items=items, visit_items=True, item_help=False,
-                title=self.title)
-        except KeyboardInterrupt:
-            print("")
-            raise SystemExit()
+        choice = []
+        for item in self.data:
+            choice.append((item, False))
+        for item in enabled:
+            choice.append((item, True))
+        items = [(tag, tag, sta) for (tag, sta) in choice]
+        code, self.tags = self.d.buildlist(
+            text=self.text, items=items, visit_items=True, item_help=False,
+            title=self.title)
         if code == "ok":
             self.unicode_to_string()
             return self.ununicode

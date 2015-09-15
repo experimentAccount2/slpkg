@@ -66,16 +66,12 @@ class Config(object):
             "EDITOR"
         ]
         read_conf = Utils().read_file(self.config_file)
-        try:
-            for line in read_conf.splitlines():
-                if not line.startswith("#") and line.split("=")[0] in conf_args:
-                    print("{0}".format(line))
-                else:
-                    print("{0}{1}{2}".format(self.meta.color["CYAN"], line,
-                                             self.meta.color["ENDC"]))
-        except KeyboardInterrupt:
-            print("")
-            raise SystemExit()
+        for line in read_conf.splitlines():
+            if not line.startswith("#") and line.split("=")[0] in conf_args:
+                print("{0}".format(line))
+            else:
+                print("{0}{1}{2}".format(self.meta.color["CYAN"], line,
+                                         self.meta.color["ENDC"]))
         print("")   # new line at end
 
     def edit(self):

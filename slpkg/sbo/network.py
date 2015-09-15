@@ -155,7 +155,7 @@ class SBoNetwork(object):
             message = "  Choose an option > "
             self.choice = raw_input("{0}{1}{2}".format(self.grey, message,
                                                        self.endc))
-        except (KeyboardInterrupt, EOFError):
+        except EOFError:
             print("")
             raise SystemExit()
         try:
@@ -278,16 +278,12 @@ class SBoNetwork(object):
         """Using dialog and checklist option
         """
         data = []
-        try:
-            if self.name == "ALL":
-                data = self.data
-            else:
-                for name in self.data:
-                    if self.name in name:
-                        data.append(name)
-        except KeyboardInterrupt:
-            print("")
-            raise SystemExit()
+        if self.name == "ALL":
+            data = self.data
+        else:
+            for name in self.data:
+                if self.name in name:
+                    data.append(name)
         if data:
             text = "Press 'spacebar' to choose SlackBuild for view"
             title = "SlackBuilds.org"
@@ -305,10 +301,7 @@ class SBoNetwork(object):
     def pager(self, text):
         """Read text
         """
-        try:
-            pydoc.pager(text)
-        except KeyboardInterrupt:
-            pass
+        pydoc.pager(text)
 
     def fill_pager(self, page):
         """Fix pager spaces

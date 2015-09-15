@@ -75,77 +75,73 @@ class SBoInstall(object):
     def start(self, if_upgrade):
         """Start view, build and install SBo packages
         """
-        try:
-            tagc = ""
-            self.case_insensitive()
-            for _sbo in self.slackbuilds:
-                status(0.03)
-                if _sbo in self.data and _sbo not in self.blacklist:
-                    sbo_deps = Requires(self.flag).sbo(_sbo)
-                    self.deps += sbo_deps
-                    self.deps_dict[_sbo] = self.one_for_all(sbo_deps)
-                    self.package_found.append(_sbo)
-                else:
-                    self.package_not_found.append(_sbo)
-            self.update_deps()
-
-            if not self.package_found:
-                self.match = True
-                self.matching()
-
-            self.master_packages, mas_src = self.sbo_version_source(
-                self.package_found)
-            self.msg.done()
-            if (self.meta.rsl_deps in ["on", "ON"] and
-                    self.flag != "--resolve-off" and not self.match):
-                self.msg.resolving()
-            self.dependencies, dep_src = self.sbo_version_source(
-                self.one_for_all(self.deps))
-            if (self.meta.rsl_deps in ["on", "ON"] and
-                    self.flag != "--resolve-off" and not self.match):
-                self.msg.done()
-            self.clear_masters()
-
-            if self.package_found:
-                print("\nThe following packages will be automatically "
-                      "installed or upgraded \nwith new version:\n")
-                self.top_view()
-                self.msg.upg_inst(if_upgrade)
-
-                # view master packages
-                for sbo, arch in zip(self.master_packages, mas_src):
-                    tagc = self.tag(sbo)
-                    name = "-".join(sbo.split("-")[:-1])
-                    self.view_packages(tagc, name, sbo.split("-")[-1],
-                                       self.select_arch(arch))
-                self.view_installing_for_deps()
-
-                # view dependencies
-                for dep, arch in zip(self.dependencies, dep_src):
-                    tagc = self.tag(dep)
-                    name = "-".join(dep.split("-")[:-1])
-                    self.view_packages(tagc, name, dep.split("-")[-1],
-                                       self.select_arch(arch))
-
-                count_total = sum([self.count_ins, self.count_upg,
-                                   self.count_uni])
-                print("\nInstalling summary")
-                print("=" * 79)
-                print("{0}Total {1} {2}.".format(
-                    self.meta.color["GREY"], count_total,
-                    self.msg.pkg(count_total)))
-                print("{0} {1} will be installed, {2} allready installed and "
-                      "{3} {4}".format(self.count_uni,
-                                       self.msg.pkg(self.count_uni),
-                                       self.count_ins, self.count_upg,
-                                       self.msg.pkg(self.count_upg)))
-                print("will be upgraded.{0}\n".format(self.meta.color["ENDC"]))
-                self.continue_to_install()
+        tagc = ""
+        self.case_insensitive()
+        for _sbo in self.slackbuilds:
+            status(0.03)
+            if _sbo in self.data and _sbo not in self.blacklist:
+                sbo_deps = Requires(self.flag).sbo(_sbo)
+                self.deps += sbo_deps
+                self.deps_dict[_sbo] = self.one_for_all(sbo_deps)
+                self.package_found.append(_sbo)
             else:
-                self.msg.not_found(if_upgrade)
-        except KeyboardInterrupt:
-            print("")   # new line at exit
-            raise SystemExit()
+                self.package_not_found.append(_sbo)
+        self.update_deps()
+
+        if not self.package_found:
+            self.match = True
+            self.matching()
+
+        self.master_packages, mas_src = self.sbo_version_source(
+            self.package_found)
+        self.msg.done()
+        if (self.meta.rsl_deps in ["on", "ON"] and
+                self.flag != "--resolve-off" and not self.match):
+            self.msg.resolving()
+        self.dependencies, dep_src = self.sbo_version_source(
+            self.one_for_all(self.deps))
+        if (self.meta.rsl_deps in ["on", "ON"] and
+                self.flag != "--resolve-off" and not self.match):
+            self.msg.done()
+        self.clear_masters()
+
+        if self.package_found:
+            print("\nThe following packages will be automatically "
+                  "installed or upgraded \nwith new version:\n")
+            self.top_view()
+            self.msg.upg_inst(if_upgrade)
+
+            # view master packages
+            for sbo, arch in zip(self.master_packages, mas_src):
+                tagc = self.tag(sbo)
+                name = "-".join(sbo.split("-")[:-1])
+                self.view_packages(tagc, name, sbo.split("-")[-1],
+                                   self.select_arch(arch))
+            self.view_installing_for_deps()
+
+            # view dependencies
+            for dep, arch in zip(self.dependencies, dep_src):
+                tagc = self.tag(dep)
+                name = "-".join(dep.split("-")[:-1])
+                self.view_packages(tagc, name, dep.split("-")[-1],
+                                   self.select_arch(arch))
+
+            count_total = sum([self.count_ins, self.count_upg,
+                               self.count_uni])
+            print("\nInstalling summary")
+            print("=" * 79)
+            print("{0}Total {1} {2}.".format(
+                self.meta.color["GREY"], count_total,
+                self.msg.pkg(count_total)))
+            print("{0} {1} will be installed, {2} allready installed and "
+                  "{3} {4}".format(self.count_uni,
+                                   self.msg.pkg(self.count_uni),
+                                   self.count_ins, self.count_upg,
+                                   self.msg.pkg(self.count_upg)))
+            print("will be upgraded.{0}\n".format(self.meta.color["ENDC"]))
+            self.continue_to_install()
+        else:
+            self.msg.not_found(if_upgrade)
 
     def case_insensitive(self):
         """Matching packages distinguish between uppercase and

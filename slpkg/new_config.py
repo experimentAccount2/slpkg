@@ -88,7 +88,7 @@ class NewConfig(object):
         self.msg.template(78)
         try:
             choose = raw_input("\nWhat would you like to do [K/O/R/P]? ")
-        except (KeyboardInterrupt, EOFError):
+        except EOFError:
             print("")
             raise SystemExit()
         print("")
@@ -132,7 +132,7 @@ class NewConfig(object):
             while self.i < len(self.news):
                 self.question(self.news[self.i])
                 self.i += 1
-        except (KeyboardInterrupt, EOFError):
+        except EOFError:
             print("")
             raise SystemExit()
 

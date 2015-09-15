@@ -33,17 +33,13 @@ def sbo_search_pkg(name):
     """Search for package path from SLACKBUILDS.TXT file and
     return url
     """
-    try:
-        repo = Repo().sbo()
-        sbo_url = "{0}{1}/".format(repo, slack_ver())
-        SLACKBUILDS_TXT = Utils().read_file(
-            _meta_.lib_path + "sbo_repo/SLACKBUILDS.TXT")
-        for line in SLACKBUILDS_TXT.splitlines():
-            if line.startswith("SLACKBUILD LOCATION"):
-                sbo_name = (line[23:].split("/")[-1].replace("\n", "")).strip()
-                if name == sbo_name:
-                    return (sbo_url + line[23:].strip() + "/")
-        return ""
-    except KeyboardInterrupt:
-        print("")   # new line at exit
-        raise SystemExit()
+    repo = Repo().sbo()
+    sbo_url = "{0}{1}/".format(repo, slack_ver())
+    SLACKBUILDS_TXT = Utils().read_file(
+        _meta_.lib_path + "sbo_repo/SLACKBUILDS.TXT")
+    for line in SLACKBUILDS_TXT.splitlines():
+        if line.startswith("SLACKBUILD LOCATION"):
+            sbo_name = (line[23:].split("/")[-1].replace("\n", "")).strip()
+            if name == sbo_name:
+                return (sbo_url + line[23:].strip() + "/")
+    return ""

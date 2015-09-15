@@ -46,6 +46,3 @@ class URL(object):
                 self.meta.color["RED"], self.link.split("/")[-1],
                 self.meta.color["ENDC"]))
             return " "
-        except KeyboardInterrupt:
-            print("")   # new line at exit
-            raise SystemExit()

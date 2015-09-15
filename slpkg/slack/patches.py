@@ -82,59 +82,55 @@ class Patches(object):
         """
         Install new patches from official Slackware mirrors
         """
-        try:
-            self.store()
-            self.msg.done()
-            if self.upgrade_all:
-                if "--checklist" in self.flag:
-                    self.dialog_checklist()
-                print("\nThese packages need upgrading:\n")
-                self.msg.template(78)
-                print("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
-                    "| Package", " " * 17,
-                    "New Version", " " * 8,
-                    "Arch", " " * 4,
-                    "Build", " " * 2,
-                    "Repos", " " * 10,
-                    "Size"))
-                self.msg.template(78)
-                print("Upgrading:")
-                self.views()
-                unit, size = units(self.comp_sum, self.uncomp_sum)
-                print("\nInstalling summary")
-                print("=" * 79)
-                print("{0}Total {1} {2} will be upgraded and {3} will be "
-                      "installed.".format(self.meta.color["GREY"],
-                                          self.count_upg,
-                                          self.msg.pkg(self.upgrade_all),
-                                          self.count_added))
-                print("Need to get {0} {1} of archives.".format(size[0],
-                                                                unit[0]))
-                print("After this process, {0} {1} of additional disk space "
-                      "will be used.{2}".format(size[1], unit[1],
-                                                self.meta.color["ENDC"]))
-                print("")
-                if self.msg.answer() in ["y", "Y"]:
-                    Download(self.patch_path, self.dwn_links,
-                             repo="slack").start()
-                    self.upgrade_all = self.utils.check_downloaded(
-                        self.patch_path, self.upgrade_all)
-                    self.upgrade()
-                    self.kernel()
-                    if self.meta.slackpkg_log in ["on", "ON"]:
-                        self.slackpkg_update()
-                    self.msg.reference(self.installed, self.upgraded)
-                    delete_package(self.patch_path, self.upgrade_all)
-                    self.update_lists()
-            else:
-                slack_arch = ""
-                if self.meta.arch == "x86_64":
-                    slack_arch = "64"
-                print("\nSlackware{0} '{1}' v{2} distribution is up to "
-                      "date\n".format(slack_arch, self.version, slack_ver()))
-        except KeyboardInterrupt:
-            print("")   # new line at exit
-            raise SystemExit()
+        self.store()
+        self.msg.done()
+        if self.upgrade_all:
+            if "--checklist" in self.flag:
+                self.dialog_checklist()
+            print("\nThese packages need upgrading:\n")
+            self.msg.template(78)
+            print("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
+                "| Package", " " * 17,
+                "New Version", " " * 8,
+                "Arch", " " * 4,
+                "Build", " " * 2,
+                "Repos", " " * 10,
+                "Size"))
+            self.msg.template(78)
+            print("Upgrading:")
+            self.views()
+            unit, size = units(self.comp_sum, self.uncomp_sum)
+            print("\nInstalling summary")
+            print("=" * 79)
+            print("{0}Total {1} {2} will be upgraded and {3} will be "
+                  "installed.".format(self.meta.color["GREY"],
+                                      self.count_upg,
+                                      self.msg.pkg(self.upgrade_all),
+                                      self.count_added))
+            print("Need to get {0} {1} of archives.".format(size[0],
+                                                            unit[0]))
+            print("After this process, {0} {1} of additional disk space "
+                  "will be used.{2}".format(size[1], unit[1],
+                                            self.meta.color["ENDC"]))
+            print("")
+            if self.msg.answer() in ["y", "Y"]:
+                Download(self.patch_path, self.dwn_links,
+                         repo="slack").start()
+                self.upgrade_all = self.utils.check_downloaded(
+                    self.patch_path, self.upgrade_all)
+                self.upgrade()
+                self.kernel()
+                if self.meta.slackpkg_log in ["on", "ON"]:
+                    self.slackpkg_update()
+                self.msg.reference(self.installed, self.upgraded)
+                delete_package(self.patch_path, self.upgrade_all)
+                self.update_lists()
+        else:
+            slack_arch = ""
+            if self.meta.arch == "x86_64":
+                slack_arch = "64"
+            print("\nSlackware{0} '{1}' v{2} distribution is up to "
+                  "date\n".format(slack_arch, self.version, slack_ver()))
 
     def store(self):
         """
@@ -249,7 +245,7 @@ class Patches(object):
                     try:
                         answer = raw_input("\nThe kernel has been upgraded, "
                                            "reinstall `LILO` [y/N]? ")
-                    except (KeyboardInterrupt, EOFError):
+                    except EOFError:
                         print("")
                         raise SystemExit()
                 if answer in ["y", "Y"]:

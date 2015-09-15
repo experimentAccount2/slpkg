@@ -61,7 +61,7 @@ class PackageHealth(object):
                         pkg))
                 elif not self.mode:
                     print(line)
-        except (KeyboardInterrupt, IOError):
+        except IOError:
             print("")
             raise SystemExit()
 
@@ -70,19 +70,15 @@ class PackageHealth(object):
         """
         self.packages()
         self.cf = 0
-        try:
-            for pkg in self.installed:
-                if os.path.isfile(self.meta.pkg_path + pkg):
-                    self.lf = 0
-                    with open(self.pkg_path + pkg, "r") as fopen:
-                        for line in fopen:
-                            self.cf += 1     # count all files
-                            self.lf += 1     # count each package files
-                            if self.lf > 19:
-                                self.check(line, pkg)
-        except KeyboardInterrupt:
-            print("")
-            raise SystemExit()
+        for pkg in self.installed:
+            if os.path.isfile(self.meta.pkg_path + pkg):
+                self.lf = 0
+                with open(self.pkg_path + pkg, "r") as fopen:
+                    for line in fopen:
+                        self.cf += 1     # count all files
+                        self.lf += 1     # count each package files
+                        if self.lf > 19:
+                            self.check(line, pkg)
         self.results()
 
     def results(self):

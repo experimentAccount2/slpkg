@@ -55,7 +55,7 @@ class Graph(object):
                 G.write("{0}.dot".format(self.image))
                 self.graph_easy()
             G.draw(self.image)
-        except (IOError, KeyboardInterrupt):
+        except IOError:
             raise SystemExit()
         if os.path.isfile(self.image):
             print("Graph image file '{0}' created".format(self.image))

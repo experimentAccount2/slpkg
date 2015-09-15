@@ -105,9 +105,6 @@ class BuildPackage(object):
             os.chdir(self.path)
         except (OSError, IOError):
             self.msg.pkg_not_found("\n", self.prgnam, "Wrong file", "\n")
-        except KeyboardInterrupt:
-            print("")   # new line at exit
-            raise SystemExit()
 
     def _create_md5_dict(self):
         """Create md5 dictionary per source

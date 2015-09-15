@@ -56,21 +56,17 @@ class Download(object):
                 dwn_count, len(self.url), self.meta.color["GREEN"],
                 self.meta.color["ENDC"],
                 self.file_name))
-            try:
-                if self.downder in ["wget", "aria2c"]:
-                    subprocess.call("{0} {1} {2}{3} {4}".format(
-                                    self.downder, self.downder_options,
-                                    self.dir_prefix, self.path, dwn),
-                                    shell=True)
-                elif self.downder in ["curl", "http"]:
-                    subprocess.call("{0} {1} {2}{3} {4}".format(
-                                    self.downder, self.downder_options,
-                                    self.path, self.file_name, dwn), shell=True)
-                self._check_if_downloaded()
-                dwn_count += 1
-            except KeyboardInterrupt:
-                print   # new line at cancel
-                raise SystemExit()
+            if self.downder in ["wget", "aria2c"]:
+                subprocess.call("{0} {1} {2}{3} {4}".format(
+                                self.downder, self.downder_options,
+                                self.dir_prefix, self.path, dwn),
+                                shell=True)
+            elif self.downder in ["curl", "http"]:
+                subprocess.call("{0} {1} {2}{3} {4}".format(
+                                self.downder, self.downder_options,
+                                self.path, self.file_name, dwn), shell=True)
+            self._check_if_downloaded()
+            dwn_count += 1
 
     def _directory_prefix(self):
         """Downloader options for specific directory

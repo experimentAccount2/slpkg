@@ -645,23 +645,19 @@ class Initialization(object):
         repositories = self.meta.repositories
         if only:
             repositories = only
-        try:
-            for repo in repositories:
-                changelogs = "{0}{1}{2}".format(self.log_path, repo,
-                                                "/ChangeLog.txt")
-                if os.path.isfile(changelogs):
-                    os.remove(changelogs)
-                if os.path.isdir(self.lib_path + "{0}_repo/".format(repo)):
-                    for f in (os.listdir(self.lib_path + "{0}_repo/".format(
-                            repo))):
-                        files = "{0}{1}_repo/{2}".format(self.lib_path, repo, f)
-                        if os.path.isfile(files):
-                            os.remove(files)
-                        elif os.path.isdir(files):
-                            shutil.rmtree(files)
-        except KeyboardInterrupt:
-            print("")
-            raise SystemExit()
+        for repo in repositories:
+            changelogs = "{0}{1}{2}".format(self.log_path, repo,
+                                            "/ChangeLog.txt")
+            if os.path.isfile(changelogs):
+                os.remove(changelogs)
+            if os.path.isdir(self.lib_path + "{0}_repo/".format(repo)):
+                for f in (os.listdir(self.lib_path + "{0}_repo/".format(
+                        repo))):
+                    files = "{0}{1}_repo/{2}".format(self.lib_path, repo, f)
+                    if os.path.isfile(files):
+                        os.remove(files)
+                    elif os.path.isdir(files):
+                        shutil.rmtree(files)
         Update().repository(only)
 
 
@@ -683,26 +679,22 @@ class Update(object):
         enabled = self.meta.repositories
         if only:
             enabled = only
-        try:
-            for repo in enabled:
-                sys.stdout.write("{0}Check repository [{1}{2}{3}] ... "
-                                 "{4}".format(
-                                     self.meta.color["GREY"],
-                                     self.meta.color["CYAN"], repo,
-                                     self.meta.color["GREY"],
-                                     self.meta.color["ENDC"]))
-                sys.stdout.flush()
-                if repo in default:
-                    exec("{0}.{1}()".format(self._init, repo))
-                    sys.stdout.write(self.done)
-                elif repo in enabled:
-                    Initialization(False).custom(repo)
-                    sys.stdout.write(self.done)
-                else:
-                    sys.stdout.write(self.error)
-        except KeyboardInterrupt:
-            print("")
-            raise SystemExit()
+        for repo in enabled:
+            sys.stdout.write("{0}Check repository [{1}{2}{3}] ... "
+                             "{4}".format(
+                                    self.meta.color["GREY"],
+                                    self.meta.color["CYAN"], repo,
+                                    self.meta.color["GREY"],
+                                    self.meta.color["ENDC"]))
+            sys.stdout.flush()
+            if repo in default:
+                exec("{0}.{1}()".format(self._init, repo))
+                sys.stdout.write(self.done)
+            elif repo in enabled:
+                Initialization(False).custom(repo)
+                sys.stdout.write(self.done)
+            else:
+                sys.stdout.write(self.error)
         print("")   # new line at end
         raise SystemExit()
 

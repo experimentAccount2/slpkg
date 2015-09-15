@@ -47,25 +47,21 @@ class Requires(object):
         """
         if (self.meta.rsl_deps in ["on", "ON"] and
                 "--resolve-off" not in self.flag):
-            try:
-                sys.setrecursionlimit(10000)
-                dependencies = []
-                requires = SBoGrep(name).requires()
-                if requires:
-                    for req in requires:
-                        status(0.03)
-                        # toolbar_width = status(index, toolbar_width, 1)
-                        # avoid to add %README% as dependency and
-                        # if require in blacklist
-                        if "%README%" not in req and req not in self.blacklist:
-                            dependencies.append(req)
-                    if dependencies:
-                        self.dep_results.append(dependencies)
-                        for dep in dependencies:
-                            self.sbo(dep)
-                return self.dep_results
-            except KeyboardInterrupt:
-                print("")   # new line at exit
-                raise SystemExit()
+            sys.setrecursionlimit(10000)
+            dependencies = []
+            requires = SBoGrep(name).requires()
+            if requires:
+                for req in requires:
+                    status(0.03)
+                    # toolbar_width = status(index, toolbar_width, 1)
+                    # avoid to add %README% as dependency and
+                    # if require in blacklist
+                    if "%README%" not in req and req not in self.blacklist:
+                        dependencies.append(req)
+                if dependencies:
+                    self.dep_results.append(dependencies)
+                    for dep in dependencies:
+                        self.sbo(dep)
+            return self.dep_results
         else:
             return []

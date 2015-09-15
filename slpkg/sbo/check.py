@@ -39,27 +39,23 @@ def sbo_upgrade(skip, flag):
     """
     Return packages for upgrade
     """
-    try:
-        Msg().checking()
-        upgrade_names = []
-        data = SBoGrep(name="").names()
-        blacklist = BlackList().packages(pkgs=data, repo="sbo")
-        for pkg in sbo_list():
-            status(0.02)
-            name = split_package(pkg)[0]
-            ver = split_package(pkg)[1]
-            if (name in data and name not in skip and name not in blacklist):
-                sbo_package = ("{0}-{1}".format(name, SBoGrep(name).version()))
-                package = ("{0}-{1}".format(name, ver))
-                if LooseVersion(sbo_package) > LooseVersion(package):
-                    upgrade_names.append(name)
-        Msg().done()
-        if "--checklist" in flag:
-            upgrade_names = choose_upg(upgrade_names)
-        return upgrade_names
-    except KeyboardInterrupt:
-        print("")   # new line at exit
-        raise SystemExit()
+    Msg().checking()
+    upgrade_names = []
+    data = SBoGrep(name="").names()
+    blacklist = BlackList().packages(pkgs=data, repo="sbo")
+    for pkg in sbo_list():
+        status(0.02)
+        name = split_package(pkg)[0]
+        ver = split_package(pkg)[1]
+        if (name in data and name not in skip and name not in blacklist):
+            sbo_package = ("{0}-{1}".format(name, SBoGrep(name).version()))
+            package = ("{0}-{1}".format(name, ver))
+            if LooseVersion(sbo_package) > LooseVersion(package):
+                upgrade_names.append(name)
+    Msg().done()
+    if "--checklist" in flag:
+        upgrade_names = choose_upg(upgrade_names)
+    return upgrade_names
 
 
 def sbo_list():

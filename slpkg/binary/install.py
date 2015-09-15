@@ -74,69 +74,65 @@ class BinaryInstall(object):
         """
         Install packages from official Slackware distribution
         """
-        try:
-            self.case_insensitive()
-            # fix if packages is for upgrade
-            self.if_upgrade = if_upgrade
-            mas_sum = dep_sum = sums = [0, 0, 0]
+        self.case_insensitive()
+        # fix if packages is for upgrade
+        self.if_upgrade = if_upgrade
+        mas_sum = dep_sum = sums = [0, 0, 0]
+        self.msg.done()
+        self.dependencies = self.resolving_deps()
+        self.update_deps()
+        (self.dep_dwn, self.dep_install, self.dep_comp_sum,
+            self.dep_uncomp_sum) = self.store(self.dependencies)
+        self.clear_masters()
+        (self.dwn, self.install, self.comp_sum,
+            self.uncomp_sum) = self.store(self.packages)
+        if (self.meta.rsl_deps in ["on", "ON"] and
+                "--resolve-off" not in self.flag):
             self.msg.done()
-            self.dependencies = self.resolving_deps()
-            self.update_deps()
-            (self.dep_dwn, self.dep_install, self.dep_comp_sum,
-             self.dep_uncomp_sum) = self.store(self.dependencies)
-            self.clear_masters()
-            (self.dwn, self.install, self.comp_sum,
-             self.uncomp_sum) = self.store(self.packages)
-            if (self.meta.rsl_deps in ["on", "ON"] and
-                    "--resolve-off" not in self.flag):
-                self.msg.done()
-            if self.install:
-                print("\nThe following packages will be automatically "
-                      "installed or upgraded \nwith new version:\n")
-                self.top_view()
-                self.msg.upg_inst(self.if_upgrade)
-                mas_sum = self.views(self.install, self.comp_sum)
-                if self.dependencies:
-                    print("Installing for dependencies:")
-                    dep_sum = self.views(self.dep_install, self.dep_comp_sum)
-                # sums[0] --> installed
-                # sums[1] --> upgraded
-                # sums[2] --> uninstall
-                sums = [sum(i) for i in zip(mas_sum, dep_sum)]
-                unit, size = units(self.comp_sum + self.dep_comp_sum,
-                                   self.uncomp_sum + self.dep_uncomp_sum)
-                print("\nInstalling summary")
-                print("=" * 79)
-                print("{0}Total {1} {2}.".format(self.meta.color["GREY"],
-                                                 sum(sums),
-                                                 self.msg.pkg(sum(sums))))
-                print("{0} {1} will be installed, {2} will be upgraded and "
-                      "{3} will be reinstalled.".format(sums[2],
-                                                        self.msg.pkg(sums[2]),
-                                                        sums[1], sums[0]))
-                print("Need to get {0} {1} of archives.".format(size[0],
-                                                                unit[0]))
-                print("After this process, {0} {1} of additional disk "
-                      "space will be used.{2}".format(size[1], unit[1],
-                                                      self.meta.color["ENDC"]))
-                print("")
-                if self.msg.answer() in ["y", "Y"]:
-                    self.install.reverse()
-                    Download(self.tmp_path, self.dep_dwn + self.dwn,
-                             self.repo).start()
-                    self.dep_install = Utils().check_downloaded(
-                        self.tmp_path, self.dep_install)
-                    self.install = Utils().check_downloaded(
-                        self.tmp_path, self.install)
-                    ins, upg = self.install_packages()
-                    self.msg.reference(ins, upg)
-                    write_deps(self.deps_dict)
-                    delete_package(self.tmp_path, self.install)
-            else:
-                self.msg.not_found(self.if_upgrade)
-        except KeyboardInterrupt:
-            print("")   # new line at exit
-            raise SystemExit()
+        if self.install:
+            print("\nThe following packages will be automatically "
+                  "installed or upgraded \nwith new version:\n")
+            self.top_view()
+            self.msg.upg_inst(self.if_upgrade)
+            mas_sum = self.views(self.install, self.comp_sum)
+            if self.dependencies:
+                print("Installing for dependencies:")
+                dep_sum = self.views(self.dep_install, self.dep_comp_sum)
+            # sums[0] --> installed
+            # sums[1] --> upgraded
+            # sums[2] --> uninstall
+            sums = [sum(i) for i in zip(mas_sum, dep_sum)]
+            unit, size = units(self.comp_sum + self.dep_comp_sum,
+                               self.uncomp_sum + self.dep_uncomp_sum)
+            print("\nInstalling summary")
+            print("=" * 79)
+            print("{0}Total {1} {2}.".format(self.meta.color["GREY"],
+                                             sum(sums),
+                                             self.msg.pkg(sum(sums))))
+            print("{0} {1} will be installed, {2} will be upgraded and "
+                  "{3} will be reinstalled.".format(sums[2],
+                                                    self.msg.pkg(sums[2]),
+                                                    sums[1], sums[0]))
+            print("Need to get {0} {1} of archives.".format(size[0],
+                                                            unit[0]))
+            print("After this process, {0} {1} of additional disk "
+                  "space will be used.{2}".format(size[1], unit[1],
+                                                  self.meta.color["ENDC"]))
+            print("")
+            if self.msg.answer() in ["y", "Y"]:
+                self.install.reverse()
+                Download(self.tmp_path, self.dep_dwn + self.dwn,
+                         self.repo).start()
+                self.dep_install = Utils().check_downloaded(
+                    self.tmp_path, self.dep_install)
+                self.install = Utils().check_downloaded(
+                    self.tmp_path, self.install)
+                ins, upg = self.install_packages()
+                self.msg.reference(ins, upg)
+                write_deps(self.deps_dict)
+                delete_package(self.tmp_path, self.install)
+        else:
+            self.msg.not_found(self.if_upgrade)
 
     def case_insensitive(self):
         """Matching packages distinguish between uppercase and

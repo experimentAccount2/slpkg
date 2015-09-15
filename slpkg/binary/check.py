@@ -40,34 +40,30 @@ def pkg_upgrade(repo, skip, flag):
     """
     Checking packages for upgrade
     """
-    try:
-        Msg().checking()
-        PACKAGES_TXT = RepoInit(repo).fetch()[0]
-        pkgs_for_upgrade = []
-        # name = data[0]
-        # location = data[1]
-        # size = data[2]
-        # unsize = data[3]
-        data = repo_data(PACKAGES_TXT, repo, flag="")
-        for pkg in installed():
-            status(0.0005)
-            inst_pkg = split_package(pkg)
-            for name in data[0]:
-                if name:    # this tips because some pkg_name is empty
-                    repo_pkg = split_package(name[:-4])
-                if (repo_pkg[0] == inst_pkg[0] and
-                    LooseVersion(repo_pkg[1]) > LooseVersion(inst_pkg[1]) and
-                    repo_pkg[3] >= inst_pkg[3] and
-                        inst_pkg[0] not in skip and
-                        repo_pkg[1] != "blacklist"):
-                    pkgs_for_upgrade.append(repo_pkg[0])
-        Msg().done()
-        if "--checklist" in flag:
-            pkgs_for_upgrade = choose_upg(pkgs_for_upgrade)
-        return pkgs_for_upgrade
-    except KeyboardInterrupt:
-        print("")   # new line at exit
-        raise SystemExit()
+    Msg().checking()
+    PACKAGES_TXT = RepoInit(repo).fetch()[0]
+    pkgs_for_upgrade = []
+    # name = data[0]
+    # location = data[1]
+    # size = data[2]
+    # unsize = data[3]
+    data = repo_data(PACKAGES_TXT, repo, flag="")
+    for pkg in installed():
+        status(0.0005)
+        inst_pkg = split_package(pkg)
+        for name in data[0]:
+            if name:    # this tips because some pkg_name is empty
+                repo_pkg = split_package(name[:-4])
+            if (repo_pkg[0] == inst_pkg[0] and
+                LooseVersion(repo_pkg[1]) > LooseVersion(inst_pkg[1]) and
+                repo_pkg[3] >= inst_pkg[3] and
+                    inst_pkg[0] not in skip and
+                    repo_pkg[1] != "blacklist"):
+                pkgs_for_upgrade.append(repo_pkg[0])
+    Msg().done()
+    if "--checklist" in flag:
+        pkgs_for_upgrade = choose_upg(pkgs_for_upgrade)
+    return pkgs_for_upgrade
 
 
 def installed():

@@ -72,14 +72,10 @@ class Utils(object):
         Returns list with all the names of packages repository
         """
         packages = []
-        try:
-            for line in PACKAGES_TXT.splitlines():
-                if line.startswith("PACKAGE NAME:"):
-                    packages.append(split_package(line[14:].strip())[0])
-            return packages
-        except KeyboardInterrupt:
-            print("")
-            raise SystemExit()
+        for line in PACKAGES_TXT.splitlines():
+            if line.startswith("PACKAGE NAME:"):
+                packages.append(split_package(line[14:].strip())[0])
+        return packages
 
     def check_downloaded(self, path, maybe_downloaded):
         """
@@ -97,11 +93,7 @@ class Utils(object):
         Read config file and returns first uncomment line
         and stop. Used for Slackware mirrors
         """
-        try:
-            for line in config.splitlines():
-                line = line.lstrip()
-                if line and not line.startswith("#"):
-                    return line
-        except KeyboardInterrupt:
-            print("")
-            raise SystemExit()
+        for line in config.splitlines():
+            line = line.lstrip()
+            if line and not line.startswith("#"):
+                return line

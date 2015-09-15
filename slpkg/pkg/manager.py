@@ -59,7 +59,7 @@ class PackageManager(object):
                     print("Completed!\n")
                 else:
                     raise SystemExit()
-            except (subprocess.CalledProcessError, KeyboardInterrupt):
+            except subprocess.CalledProcessError:
                 self._not_found("Can't install", self.binary, pkg)
 
     def upgrade(self, flag):
@@ -74,7 +74,7 @@ class PackageManager(object):
                     print("Completed!\n")
                 else:
                     raise SystemExit()
-            except (subprocess.CalledProcessError, KeyboardInterrupt):
+            except subprocess.CalledProcessError:
                 self._not_found("Can't upgrade", self.binary, pkg)
 
     def _not_found(self, message, binary, pkg):
@@ -105,7 +105,7 @@ class PackageManager(object):
                     remove_pkg = raw_input(
                         "\nAre you sure to remove {0} {1} [y/N]? ".format(
                             str(len(self.removed)), msg))
-            except (KeyboardInterrupt, EOFError):
+            except EOFError:
                 print("")   # new line at exit
                 raise SystemExit()
             if remove_pkg in ["y", "Y"]:
@@ -138,7 +138,7 @@ class PackageManager(object):
                     "\nRemove dependencies (maybe used by "
                     "other packages) [y/N]? ")
                 print("")
-            except (KeyboardInterrupt, EOFError):
+            except EOFError:
                 print("")  # new line at exit
                 raise SystemExit()
         return remove_dep
@@ -269,8 +269,8 @@ class PackageManager(object):
                             shell=True)
             if os.path.isfile(self.dep_path + package):
                 os.remove(self.dep_path + package)  # remove log
-        except KeyboardInterrupt:
-            print("")
+        except subprocess.CalledProcessError as er:
+            print(er)
             raise SystemExit()
 
     def _rmv_deps(self, dependencies, package):
@@ -305,7 +305,7 @@ class PackageManager(object):
             self.msg.template(78)
             try:
                 self.skip = raw_input(" > ").split()
-            except (KeyboardInterrupt, EOFError):
+            except EOFError:
                 print("")
                 raise SystemExit()
         for s in self.skip:
@@ -477,7 +477,7 @@ class PackageManager(object):
                 else:
                     print(pkg)
             print("")   # new line at end
-        except (KeyboardInterrupt, EOFError):
+        except EOFError:
             print("")   # new line at exit
             raise SystemExit()
 

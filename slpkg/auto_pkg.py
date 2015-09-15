@@ -61,14 +61,14 @@ class Auto(object):
         self.msg.template(78)
         try:
             self.choice = raw_input(" > ")
-            if self.choice in self.commands.keys():
-                sys.stdout.write("   \x1b[1A{0}{1}{2}\n\n".format(
-                    self.meta.color["CYAN"], self.commands[self.choice],
-                    self.meta.color["ENDC"]))
-                sys.stdout.flush()
-        except KeyboardInterrupt:
+        except EOFError:
             print("")
             raise SystemExit()
+        if self.choice in self.commands.keys():
+            sys.stdout.write("   \x1b[1A{0}{1}{2}\n\n".format(
+                self.meta.color["CYAN"], self.commands[self.choice],
+                self.meta.color["ENDC"]))
+            sys.stdout.flush()
         self.execute()
 
     def execute(self):

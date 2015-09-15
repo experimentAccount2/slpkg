@@ -59,7 +59,7 @@ def it_self_update():
                 _meta_.__all__, __new_version__))
             try:
                 answer = raw_input("Would you like to upgrade [y/N]? ")
-            except (KeyboardInterrupt, EOFError):
+            except EOFError:
                 print("")
                 raise SystemExit()
         if answer in ["y", "Y"]:

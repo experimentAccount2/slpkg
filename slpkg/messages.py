@@ -133,7 +133,7 @@ class Msg(object):
         else:
             try:
                 answer = raw_input("Would you like to continue [y/N]? ")
-            except (KeyboardInterrupt, EOFError):
+            except EOFError:
                 print("")
                 raise SystemExit()
         return answer

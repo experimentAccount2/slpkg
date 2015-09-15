@@ -42,9 +42,6 @@ class FileSize(object):
             return int(meta.getheaders("Content-Length")[0])
         except (urllib2.URLError, IndexError):
             return " "
-        except KeyboardInterrupt:
-            print("")   # new line at cancel
-            raise SystemExit()
 
     def local(self):
         """
