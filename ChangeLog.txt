@@ -1,3 +1,7 @@
+2.8.9 - 15/09/2015
+Added:
+- Additional option "--case-ins" case insensitive
+
 2.8.8 - 14/09/2015
 Added:
 - Additional option "--checklist" in "-n, --network" option
