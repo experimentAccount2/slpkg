@@ -31,6 +31,14 @@ class Graph(object):
     """
     def __init__(self, image):
         self.image = image
+        self.file_format = [
+            "bmp", "canon", "cmap", "cmapx", "cmapx_np", "dot",
+            "eps", "fig", "gd", "gd2", "gif", "gtk", "gv", "ico",
+            "imap", "imap_np", "ismap", "jpe", "jpeg", "jpg", "pdf",
+            "pic", "plain", "plain-ext", "png", "pov", "ps", "ps2",
+            "svg", "svgz", "tif", "tiff", "tk", "vml", "vmlz",
+            "vrml", "wbmp", "x11", "xdot", "xlib"
+        ]
 
     def dependencies(self, deps_dict):
         """Generate graph file with depenndencies map tree
@@ -64,18 +72,11 @@ class Graph(object):
     def check_file(self):
         """Check for file format and type
         """
-        file_format = [
-            "bmp", "canon", "cmap", "cmapx", "cmapx_np", "dot",
-            "eps", "fig", "gd", "gd2", "gif", "gtk", "gv", "ico",
-            "imap", "imap_np", "ismap", "jpe", "jpeg", "jpg", "pdf",
-            "pic", "plain", "plain-ext", "png", "pov", "ps", "ps2",
-            "svg", "svgz", "tif", "tiff", "tk", "vml", "vmlz",
-            "vrml", "wbmp", "x11", "xdot", "xlib"
-        ]
         try:
-            if self.image.split(".")[1] not in file_format:
-                print("Format: {0} not recognized. Use one of: {1}".format(
-                    self.image.split(".")[1], " ".join(file_format)))
+            if self.image.split(".")[1] not in self.file_format:
+                print("Format: '{0}' not recognized. Use one of "
+                      "them:\n{1}".format(self.image.split(".")[1],
+                                          ", ".join(self.file_format)))
                 raise SystemExit()
         except IndexError:
             print("slpkg: error: Image file suffix missing")
