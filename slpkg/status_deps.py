@@ -108,8 +108,8 @@ class DependenciesStatus(object):
     def no_logs(self):
         """Print message if no logs found
         """
-        print("\n  There were no logs files. Obviously it wasn't used the \n"
-              "  method of installation with the command: \n"
+        print("\n  There were no logs files. Obviously not used the\n"
+              "  installation method with the command:\n"
               "  '$ slpkg -s <repository> <packages>' yet.\n")
         raise SystemExit()
 
