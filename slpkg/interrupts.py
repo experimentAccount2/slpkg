@@ -26,5 +26,7 @@ import sys
 
 
 def signal_handler(signal, frame):
+    """Handle keyboard interrupt ctrl+c
+    """
     print("")
     sys.exit(0)
