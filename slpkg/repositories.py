@@ -50,8 +50,8 @@ class Repo(object):
         if (repo in self.meta.repositories or repo in repo_name or
                 repo in self.meta.default_repositories):
             print("\nRepository name '{0}' exist, select different name.\n"
-                  "View all repositories with command 'repo-list'.\n".format(
-                      repo))
+                  "View all repositories with command 'slpkg "
+                  "repo-list'.\n".format(repo))
             raise SystemExit()
         elif len(repo) > 6:
             print("\nMaximum repository name length must be six (6) "
