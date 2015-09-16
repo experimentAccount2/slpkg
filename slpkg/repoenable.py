@@ -139,6 +139,6 @@ Keys: SPACE   select or deselect the highlighted repositories,
         self.msg.template(78)
         print("| {0}".format(total_enabled))
         self.msg.template(78)
-        print("{0}Total {1} repositories enabled.{2}\n".format(
+        print("{0}Total {1}/{2} repositories enabled.{3}\n".format(
             self.meta.color["GREY"], len(self.selected),
-            self.meta.color["ENDC"]))
+            len(self.enabled + self.disabled), self.meta.color["ENDC"]))
