@@ -32,12 +32,12 @@ class Graph(object):
     def __init__(self, image):
         self.image = image
         self.file_format = [
-            "bmp", "canon", "cmap", "cmapx", "cmapx_np", "dot",
-            "eps", "fig", "gd", "gd2", "gif", "gtk", "gv", "ico",
-            "imap", "imap_np", "ismap", "jpe", "jpeg", "jpg", "pdf",
-            "pic", "plain", "plain-ext", "png", "pov", "ps", "ps2",
-            "svg", "svgz", "tif", "tiff", "tk", "vml", "vmlz",
-            "vrml", "wbmp", "x11", "xdot", "xlib"
+            ".bmp", ".canon", ".cmap", ".cmapx", ".cmapx_np", ".dot",
+            ".eps", ".fig", ".gd", ".gd2", ".gif", ".gtk", ".gv", ".ico",
+            ".imap", ".imap_np", ".ismap", ".jpe", ".jpeg", ".jpg", ".pdf",
+            ".pic", ".plain", ".plain-ext", ".png", ".pov", ".ps", ".ps2",
+            ".svg", ".svgz", ".tif", ".tiff", ".tk", ".vml", ".vmlz",
+            ".vrml", ".wbmp", ".x11", ".xdot", ".xlib"
         ]
 
     def dependencies(self, deps_dict):
@@ -73,7 +73,8 @@ class Graph(object):
         """Check for file format and type
         """
         try:
-            if self.image.split(".")[1] not in self.file_format:
+            image_type = ".{0}".format(self.image.split(".")[1])
+            if image_type not in self.file_format:
                 print("Format: '{0}' not recognized. Use one of "
                       "them:\n{1}".format(self.image.split(".")[1],
                                           ", ".join(self.file_format)))
