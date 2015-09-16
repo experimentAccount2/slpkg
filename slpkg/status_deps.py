@@ -75,8 +75,6 @@ class DependenciesStatus(object):
         """Show dependencies status
         """
         self.data()
-        if self.image:
-            Graph(self.image).dependencies(self.dmap)
         print("")
         self.msg.template(78)
         print("| {0}{1}{2}".format("Dependencies", " " * 20, "Packages"))
@@ -86,6 +84,8 @@ class DependenciesStatus(object):
                 self.green, key, self.endc, " " * (32-len(key)),
                 ", ".join(value)))
         self.summary()
+        if self.image:
+            Graph(self.image).dependencies(self.dmap)
 
     def tree(self):
         """Like tree view mode
