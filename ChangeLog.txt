@@ -1,4 +1,6 @@
 2.9.0 - 17/09/2015
+Added:
+- Quit option in new-config command
 Updated:
 - Messages and references messages
 - Image types for graph 

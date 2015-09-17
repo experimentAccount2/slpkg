@@ -82,7 +82,8 @@ setup(
     long_description=open("README.rst").read()
     )
 
-# install man page and configuration files
+# Install man page and configuration files
+# with pip.
 if "install" in sys.argv:
     man_path = "/usr/man/man8/"
     if not os.path.exists(man_path):
