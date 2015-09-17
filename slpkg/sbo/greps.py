@@ -41,7 +41,7 @@ class SBoGrep(object):
         self.line_ver = "SLACKBUILD VERSION: "
         self.line_md5 = "SLACKBUILD MD5SUM: "
         self.line_md5_64 = "SLACKBUILD MD5SUM_{0}: ".format(arch64)
-        self.line_des = "SLACKBUILD SHORT DESCRIPTION:  "
+        self.line_des = "SLACKBUILD SHORT DESCRIPTION: "
         self.sbo_txt = self.meta.lib_path + "sbo_repo/SLACKBUILDS.TXT"
         self.answer = ["y", "Y"]
         self.unst = ["UNSUPPORTED", "UNTESTED"]
