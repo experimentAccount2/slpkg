@@ -85,9 +85,10 @@ class NewConfig(object):
             self.red, self.endc, self.br))
         print("| {0}P{1}{2}rompt K, O, R, D, M option for each single "
               "file".format(self.red, self.endc, self.br))
+        print("| {0}Q{1}{2}uit from menu".format(self.red, self.endc, self.br))
         self.msg.template(78)
         try:
-            choose = raw_input("\nWhat would you like to do [K/O/R/P]? ")
+            choose = raw_input("\nWhat would you like to do [K/O/R/P/Q]? ")
         except EOFError:
             print("")
             raise SystemExit()
@@ -121,10 +122,10 @@ class NewConfig(object):
         self.msg.template(78)
         print("| Choose what to do file by file:")
         print("| {0}K{1}{2}eep, {3}O{4}{5}verwrite, {6}R{7}{8}emove, "
-              "{9}D{10}{11}iff, {12}M{13}{14}erge".format(
+              "{9}D{10}{11}iff, {12}M{13}{14}erge, {15}Q{16}{17}uit".format(
                   self.red, self.endc, self.br, self.red, self.endc, self.br,
                   self.red, self.endc, self.br, self.red, self.endc, self.br,
-                  self.red, self.endc, self.br))
+                  self.red, self.endc, self.br, self.red, self.endc, self.br))
         self.msg.template(78)
         print("")
         self.i = 0
@@ -140,7 +141,7 @@ class NewConfig(object):
         """Choose what do to file by file
         """
         print("")
-        prompt_ask = raw_input("{0} [K/O/R/D/M]? ".format(n))
+        prompt_ask = raw_input("{0} [K/O/R/D/M/Q]? ".format(n))
         print("")
         if prompt_ask in ("K", "k"):
             self.keep()
@@ -153,6 +154,8 @@ class NewConfig(object):
             self.i -= 1
         elif prompt_ask in ("M", "m"):
             self.merge(n)
+        elif prompt_ask in ("Q", "q", "quit"):
+            self.quit()
 
     def _remove(self, n):
         """Remove one single file
@@ -225,3 +228,6 @@ class NewConfig(object):
                     out.write(l1 + "\n")
             print("The file {0} merged in file {1}".format(
                 n.split("/")[-1], n[:-4].split("/")[-1]))
+
+    def quit(self):
+        raise SystemExit()
