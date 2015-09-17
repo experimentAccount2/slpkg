@@ -2,6 +2,7 @@
 Added:
 - Quit option in new-config command
 Updated:
+- Installation bash script
 - Messages and references messages
 - Image types for graph 
 Fixed:

@@ -29,23 +29,18 @@ cat slpkg/__metadata__.py | grep "__version_info__ = (" \
 
 PRGNAM=slpkg
 VERSION=${VERSION:-$(__version)} 
-TAG=${TAG:-_dsw}
 
 # Installation script.
 # With this script allows you to install the slpkg as a Slackware package binary file.
 # Support wget download.
-
 ARCHIVES="$PRGNAM-$VERSION.tar.gz $PRGNAM-$VERSION.zip v$VERSION.tar.gz v$VERSION.zip"
 cd ..
 for file in $ARCHIVES; do
-    if [ -f $file ]; then
-        cp $file $PRGNAM-$VERSION/slackbuild
-        cd $PRGNAM-$VERSION/slackbuild
-        chmod +x $PRGNAM.SlackBuild
-        ./$PRGNAM.SlackBuild
-        rm $file
-    fi
+  if [ -f $file ]; then
+    cp $file $PRGNAM-$VERSION/slackbuild
+    cd $PRGNAM-$VERSION/slackbuild
+    chmod +x $PRGNAM.SlackBuild
+    ./$PRGNAM.SlackBuild
+    rm $file
+  fi
 done 
-
-# install or upgrade with new version
-upgradepkg --install-new /tmp/$PRGNAM-$VERSION-*$TAG.t?z
