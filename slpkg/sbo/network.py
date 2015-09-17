@@ -45,6 +45,8 @@ from slpkg.sbo.compressed import SBoLink
 from slpkg.sbo.search import sbo_search_pkg
 from slpkg.sbo.slack_find import slack_package
 
+from slack.slack_version import slack_ver
+
 
 class SBoNetwork(object):
     """View SBo site in terminal and also read, build or
@@ -239,10 +241,14 @@ class SBoNetwork(object):
             fix_sp = ""
         print("")   # new line at start
         self.msg.template(78)
-        print("| {0}Package {1}{2}{3} --> {4}".format(self.green,
-                                                      self.cyan, self.name,
-                                                      self.green,
-                                                      self.endc + sbo_url))
+        print("| {0}{1}SlackBuilds Repository{2}".format(" " * 28, self.grey,
+                                                         self.endc))
+        self.msg.template(78)
+        print("| {0} > {1} > {2}{3}{4}".format(slack_ver(),
+                                               sbo_url.split("/")[-3].title(),
+                                               self.cyan, self.name, self.endc))
+        self.msg.template(78)
+        print("| {0}Package url{1}: {2}".format(self.green, self.endc, sbo_url))
         self.msg.template(78)
         print("| {0}Description: {1}{2}".format(self.green,
                                                 self.endc, self.sbo_desc))

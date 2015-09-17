@@ -1066,14 +1066,18 @@ Read fies, download, build or install:
 
     $ slpkg -n bitfighter
     Reading package lists... Done
-    
+
+    +==============================================================================
+    |                             SlackBuilds Repository
+    +==============================================================================
+    | 14.1 > Games > bitfighter
     +===============================================================================
-    | Package bitfighter --> http://slackbuilds.org/repository/14.1/games/bitfighter/
+    | Package url: http://slackbuilds.org/repository/14.1/games/bitfighter/
     +===============================================================================
-    | Description : multi-player combat game
-    | SlackBuild : bitfighter.tar.gz
-    | Sources : bitfighter-019c.tar.gz, classic_level_pack.zip 
-    | Requirements : OpenAL, SDL2, speex, libmodplug
+    | Description: multi-player combat game
+    | SlackBuild: bitfighter.tar.gz
+    | Sources: bitfighter-019c.tar.gz, classic_level_pack.zip 
+    | Requirements: OpenAL, SDL2, speex, libmodplug
     +===============================================================================
     | README               View the README file
     | SlackBuild           View the .SlackBuild file

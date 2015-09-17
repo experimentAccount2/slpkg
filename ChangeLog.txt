@@ -4,7 +4,8 @@ Added:
 Updated:
 - Installation bash script
 - Messages and references messages
-- Image types for graph 
+- Image types for graph
+- View SlackBuilds repository in option "-n, --network"
 Fixed:
 - Some typos
 
