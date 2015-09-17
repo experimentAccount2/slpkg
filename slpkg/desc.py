@@ -26,6 +26,8 @@ from slpkg.utils import Utils
 from slpkg.messages import Msg
 from slpkg.__metadata__ import MetaData as _meta_
 
+from slpkg.sbo.greps import SBoGrep
+
 
 class PkgDesc(object):
     """Print package description from the repository
@@ -50,34 +52,26 @@ class PkgDesc(object):
         if self.repo in self.meta.repositories and self.repo != "sbo":
             self.lib = self.meta.lib_path + "{0}_repo/PACKAGES.TXT".format(
                 self.repo)
-        else:
-            self.lib = self.meta.lib_path + "{0}_repo/SLACKBUILDS.TXT".format(
-                self.repo)
 
     def view(self):
         """Print package description by repository
         """
-        PACKAGES_TXT = Utils().read_file(self.lib)
         print("")   # new line at start
-        count = 0
-        if self.repo != "sbo":
+        description, count = "", 0
+        if self.repo == "sbo":
+            description = SBoGrep(self.name).description()
+        else:
+            PACKAGES_TXT = Utils().read_file(self.lib)
             for line in PACKAGES_TXT.splitlines():
                 if line.startswith(self.name + ":"):
-                    print("{0}{1}{2}".format(self.COLOR,
-                                             line[len(self.name) + 1:],
-                                             self.meta.color["ENDC"]))
+                    description += line[len(self.name) + 2:] + "\n"
                     count += 1
                     if count == 11:
                         break
+        if description:
+            print("{0}{1}{2}".format(self.COLOR, description,
+                                     self.meta.color["ENDC"]))
         else:
-            for line in PACKAGES_TXT.splitlines():
-                if (line.startswith(
-                        "SLACKBUILD SHORT DESCRIPTION:  " + self.name + " (")):
-                    count += 1
-                    print("{0}{1}{2}".format(self.COLOR,
-                                             line[31:],
-                                             self.meta.color["ENDC"]))
-        if count == 0:
             self.msg.pkg_not_found("", self.name, "No matching", "\n")
-        else:
-            print("")   # new line at end
+        if description and self.repo == "sbo":
+            print("")

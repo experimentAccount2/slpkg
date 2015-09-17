@@ -45,7 +45,7 @@ from slpkg.sbo.compressed import SBoLink
 from slpkg.sbo.search import sbo_search_pkg
 from slpkg.sbo.slack_find import slack_package
 
-from slack.slack_version import slack_ver
+from slpkg.slack.slack_version import slack_ver
 
 
 class SBoNetwork(object):
