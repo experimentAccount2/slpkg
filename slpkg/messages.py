@@ -67,7 +67,7 @@ class Msg(object):
               "directory or read README".format(self.meta.color["CYAN"],
                                                 self.meta.color["ENDC"]))
         self.template(78)
-        print   # new line at end
+        print("")   # new line at end
 
     def template(self, max_len):
         """Print template
