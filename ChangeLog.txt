@@ -1,3 +1,9 @@
+2.9.1 - 18/09/2015
+Added:
+- Additional option "--deps" in removepkg option for remove dependencies
+instead via configuration file
+- Support ".tbz" and ".tlz" Slackware packages for auto detect option
+
 2.9.0 - 18/09/2015
 Added:
 - Quit option in new-config command
