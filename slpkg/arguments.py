@@ -120,9 +120,10 @@ Optional arguments:
       options=[--dry-run, --install-new,    binary packages from an older
       --reinstall, --verbose]               version to a newer one.
   -r, --removepkg, [options] [package...],  Removes a previously installed
-      --check-deps, --tag, --checklist      Slackware binary packages,
-      options=[-warn, -preserve, -copy,     while writing a progress report
-      -keep]                                to the standard output.
+      --deps, --check-deps, --tag,          Slackware binary packages,
+      --checklist                           while writing a progress report
+      options=[-warn, -preserve, -copy,     to the standard output.
+      -keep]                                Use only package name.
   -d, --display, [package...]               Display the installed packages
                                             contents and file list.
 
@@ -166,7 +167,8 @@ def usage(repo):
              [-f [package...], --case-ins]
              [-i [options] [package...]]
              [-u [options] [package...]]
-             [-r [options] [package...], --check-deps, --tag, --checklist]
+             [-r [options] [package...], --deps, --check-deps, --tag,
+                                         --checklist]
              [-d [package...]]
              """
     error_repo = ""

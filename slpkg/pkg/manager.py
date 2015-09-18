@@ -115,7 +115,8 @@ class PackageManager(object):
                     # then look log file for dependencies in /var/log/slpkg/dep,
                     # read and remove all else remove only the package.
                     if (os.path.isfile(self.dep_path + rmv) and
-                            self.meta.del_deps in ["on", "ON"]):
+                            self.meta.del_deps in ["on", "ON"] or
+                            "--deps" in self.extra):
                         dependencies = self._view_deps(self.dep_path, rmv)
                         if dependencies and self._rmv_deps_answer() in ["y",
                                                                         "Y"]:

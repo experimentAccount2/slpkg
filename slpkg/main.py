@@ -223,7 +223,10 @@ class ArgParse(object):
     def auto_build(self):
         """Auto built tool
         """
-        options = ["-a", "--autobuild"]
+        options = [
+            "-a",
+            "--autobuild"
+        ]
         if len(self.args) >= 3 and self.args[0] in options:
             AutoBuild(self.args[1], self.args[2:], self.meta.path).run()
         else:
@@ -232,7 +235,10 @@ class ArgParse(object):
     def pkg_list(self):
         """List of packages by repository
         """
-        options = ["-l", "--list"]
+        options = [
+            "-l",
+            "--list"
+        ]
         flag = ["--index", "--installed"]
         if (len(self.args) == 3 and self.args[0] in options and
                 self.args[1] in self.meta.repositories):
@@ -259,8 +265,16 @@ class ArgParse(object):
     def pkg_upgrade(self):
         """Check and upgrade packages by repository
         """
-        options = ["-c", "--check"]
-        flags = ["--upgrade", "--skip=", "--resolve-off", "--checklist"]
+        options = [
+            "-c",
+            "--check"
+        ]
+        flags = [
+            "--upgrade",
+            "--skip=",
+            "--resolve-off",
+            "--checklist"
+        ]
         flag, skip = self.__pkg_upgrade_flags(flags)
         if (len(self.args) == 3 and self.args[0] in options and
                 self.args[2] == flags[0] and
@@ -307,8 +321,14 @@ class ArgParse(object):
         """Install packages by repository
         """
         flag = []
-        options = ["-s", "--sync"]
-        additional_options = ["--resolve-off", "--case-ins"]
+        options = [
+            "-s",
+            "--sync"
+        ]
+        additional_options = [
+            "--resolve-off",
+            "--case-ins"
+        ]
         for arg in self.args:
             if arg in additional_options:
                 flag.append(arg)
@@ -329,8 +349,14 @@ class ArgParse(object):
         """Tracking package dependencies
         """
         flag = []
-        options = ["-t", "--tracking"]
-        additional_options = ["--check-deps", "--graph="]
+        options = [
+            "-t",
+            "--tracking"
+        ]
+        additional_options = [
+            "--check-deps",
+            "--graph="
+        ]
         if (len(self.args) >= 3 and len(self.args) < 6 and
                 self.args[0] in options):
             if self.args[1] in self.meta.repositories:
@@ -349,8 +375,14 @@ class ArgParse(object):
         """View slackbuilds packages
         """
         flag = []
-        options = ["-n", "--network"]
-        additional_options = ["--checklist", "--case-ins"]
+        options = [
+            "-n",
+            "--network"
+        ]
+        additional_options = [
+            "--checklist",
+            "--case-ins"
+        ]
         for arg in self.args[2:]:
             if arg in additional_options:
                 flag.append(arg)
@@ -365,8 +397,14 @@ class ArgParse(object):
         """Manage blacklist packages
         """
         blacklist = BlackList()
-        options = ["-b", "--blacklist"]
-        flag = ["--add", "--remove"]
+        options = [
+            "-b",
+            "--blacklist"
+        ]
+        flag = [
+            "--add",
+            "--remove"
+        ]
         command = ["list"]
         if (len(self.args) == 2 and self.args[0] in options and
                 self.args[1] == command[0]):
@@ -387,9 +425,20 @@ class ArgParse(object):
         """Manage packages in queue
         """
         queue = QueuePkgs()
-        options = ["-q", "--queue"]
-        flag = ["--add", "--remove"]
-        command = ["list", "build", "install", "build-install"]
+        options = [
+            "-q",
+            "--queue"
+        ]
+        flag = [
+            "--add",
+            "--remove"
+        ]
+        command = [
+            "list",
+            "build",
+            "install",
+            "build-install"
+        ]
         if (len(self.args) > 2 and self.args[0] in options and
                 self.args[-1] == flag[0]):
             queue.add(self.args[1:-1])
@@ -419,7 +468,10 @@ class ArgParse(object):
         """Install Slackware binary packages
         """
         packages = self.args[1:]
-        options = ["-i", "--installpkg"]
+        options = [
+            "-i",
+            "--installpkg"
+        ]
         flag = ""
         flags = [
             "--warn",
@@ -444,7 +496,10 @@ class ArgParse(object):
         """Install-upgrade Slackware binary packages
         """
         packages = self.args[1:]
-        options = ["-u", "--upgradepkg"]
+        options = [
+            "-u",
+            "--upgradepkg"
+        ]
         flag = ""
         flags = [
             "--dry-run",
@@ -464,8 +519,16 @@ class ArgParse(object):
         """Remove Slackware packages
         """
         packages = self.args[1:]
-        options = ["-r", "--removepkg"]
-        additional_options = ["--check-deps", "--tag", "--checklist"]
+        options = [
+            "-r",
+            "--removepkg"
+        ]
+        additional_options = [
+            "--deps",
+            "--check-deps",
+            "--tag",
+            "--checklist"
+        ]
         flag, extra = "", []
         flags = [
             "-warn",
@@ -490,7 +553,10 @@ class ArgParse(object):
         """Find installed packages
         """
         flag = []
-        options = ["-f", "--find"]
+        options = [
+            "-f",
+            "--find"
+        ]
         additional_options = ["--case-ins"]
         for arg in self.args:
             if arg in additional_options:
@@ -505,9 +571,18 @@ class ArgParse(object):
     def pkg_desc(self):
         """Print slack-desc by repository
         """
-        options = ["-p", "--desc"]
+        options = [
+            "-p",
+            "--desc"
+        ]
         flag = ["--color="]
-        colors = ["red", "green", "yellow", "cyan", "grey"]
+        colors = [
+            "red",
+            "green",
+            "yellow",
+            "cyan",
+            "grey"
+        ]
         if (len(self.args) == 3 and self.args[0] in options and
                 self.args[1] in self.meta.repositories):
             PkgDesc(self.args[2], self.args[1], paint="").view()
@@ -528,7 +603,10 @@ class ArgParse(object):
         """Find packages from all enabled repositories
         """
         flag = []
-        options = ["-F", "--FIND"]
+        options = [
+            "-F",
+            "--FIND"
+        ]
         additional_options = ["--case-ins"]
         for arg in self.args:
             if arg in additional_options:
@@ -544,7 +622,10 @@ class ArgParse(object):
         """Print packages contents
         """
         packages = self.args[1:]
-        options = ["-d", "--display"]
+        options = [
+            "-d",
+            "--display"
+        ]
         if len(self.args) > 1 and self.args[0] in options:
             PackageManager(packages).display()
         else:
@@ -553,8 +634,15 @@ class ArgParse(object):
     def congiguration(self):
         """Manage slpkg configuration file
         """
-        options = ["-g", "--config"]
-        command = ["print", "edit", "reset"]
+        options = [
+            "-g",
+            "--config"
+        ]
+        command = [
+            "print",
+            "edit",
+            "reset"
+        ]
         if (len(self.args) == 2 and self.args[0] in options and
                 self.args[1] == command[1]):
             Config().edit()

@@ -46,7 +46,8 @@ Usage: slpkg Commands:
              [-f [package...]]
              [-i [options] [package...]]
              [-u [options] [package...]]
-             [-r [options] [package...], --check-deps, --tag, --checklist]
+             [-r [options] [package...], --deps, --check-deps, --tag, 
+                                         --checklist]
              [-d [package...]]
 
 .SH DESCRIPTION
@@ -290,7 +291,7 @@ and will skip any packages that do not already have a version installed.
 More information please read "man upgradepkg".
 
 .SS -r, --removepkg, remove previously installed Slackware binary packages
-\fBslpkg\fP \fB-r\fP \fB[-copy, -keep, -preserve, -warn]\fP <\fInames of packages\fP>, \fB--check-deps\fP, \fB--tag\fP, \fB--checklist\fP
+\fBslpkg\fP \fB-r\fP \fB[-copy, -keep, -preserve, -warn]\fP <\fInames of packages\fP>, \fB--deps\fP, \fB--check-deps\fP, \fB--tag\fP, \fB--checklist\fP
 .PP
 Removes a previously installed Slackware package, while writing a progress report to 
 the standard output. A package may be specified either by the full package name (as 
@@ -301,8 +302,10 @@ More information please read "man removepkg".
 .PP
 Additional options:
 .PP
+\fB--deps\fP : Remove packages with dependencies.
+.PP
 \fB--check-deps\fP : Check if installed packages used by other packages.
-.pp
+.PP
 \fB--tag\fP : Remove packages with by TAG.
 .PP
 \fB--checklist\fP : Enable dialog utility and checklist option. (Require python2-pythondialog)

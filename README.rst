@@ -282,7 +282,8 @@ The next four commands '# slpkg --installpkg, --upgradepkg, --removepkg <package
 remove packages from your system events.
 Notable mention must give the command '# slpkg --removepkg <packages>' which can remove a packages 
 with all dependencies together after editing configuration file '/etc/slpkg/slpkg.conf' 
-(default is disable). Also you can check if packages used as dependency with additional option 
+(default is disable) or add additional option "--deps". Also you can check if packages used as 
+dependency with additional option 
 "--check-deps". Option "--tag" allow to remove packages with by TAG.
 Optional you can use dialog utility with additional option "--checklist" (require python2-pythondialog).
 
@@ -465,9 +466,10 @@ Command Line Tool Usage
           options=[--dry-run, --install-new,    binary packages from an older
           --reinstall, --verbose]               version to a newer one.
       -r, --removepkg, [options] [package...],  Removes a previously installed
-          --check-deps, --tag, --checklist      Slackware binary packages,
-          options=[-warn, -preserve, -copy,     while writing a progress report
-          -keep]                                to the standard output.
+          --deps, --check-deps, --tag,          Slackware binary packages,
+          --checklist                           while writing a progress report
+          options=[-warn, -preserve, -copy      to the standard output.
+          -keep]                                Use only package name. 
       -d, --display, [package...]               Display the installed packages
                                                 contents and file list.
 
@@ -1401,12 +1403,11 @@ Removes a previously installed Slackware binary packages:
 
 
 Remove packages with all dependencies and check if used as dependency:
-Presupposes facility with the option '# slpkg -s <repository> <packages>' and
-enabled from configuration file.
+Presupposes facility with the option '# slpkg -s <repository> <packages>'.
 
 .. code-block:: bash
 
-    $ slpkg -r Flask --check-deps
+    $ slpkg -r Flask --deps --check-deps 
 
     Packages with name matching [ Flask ]
 
