@@ -658,11 +658,17 @@ class ArgParse(object):
     def auto_detect(self, args):
         """Check for already Slackware binary packages exist
         """
+        suffixes = [
+            ".tgz",
+            ".txz",
+            ".tbz",
+            ".tlz"
+        ]
         if (not args[0].startswith("-") and args[0] not in self.commands and
-                args[0].endswith(".tgz") or args[0].endswith(".txz")):
+                args[0].endswith(tuple(suffixes))):
             packages, not_found = [], []
             for pkg in args:
-                if pkg.endswith(".tgz") or pkg.endswith(".txz"):
+                if pkg.endswith(tuple(suffixes)):
                     if os.path.isfile(pkg):
                         packages.append(pkg)
                     else:
