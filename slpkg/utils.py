@@ -97,3 +97,8 @@ class Utils(object):
             line = line.lstrip()
             if line and not line.startswith("#"):
                 return line
+
+    def debug(self, test):
+        """Function used for print some stuff for debugging
+        """
+        print(test)
