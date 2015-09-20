@@ -638,7 +638,7 @@ Installing packages from the repositories (supporting multi packages):
     Installing summary
     ===============================================================================
     Total 5 packages.
-    5 packages will be installed, 0 allready installed and 0 package
+    5 packages will be installed, 0 already installed and 0 package
     will be upgraded.
 
     Would you like to continue [y/N]?
@@ -677,7 +677,7 @@ Installing packages from the repositories (supporting multi packages):
     Installing summary
     ===============================================================================
     Total 15 packages.
-    10 packages will be installed, 5 allready installed and 0 package
+    10 packages will be installed, 5 already installed and 0 package
     will be upgraded.
 
     Would you like to continue [y/N]?
@@ -963,7 +963,7 @@ And check if packages need upgrade with:
     Installing summary
     ===============================================================================
     Total 5 packages.
-    0 package will be installed, 2 allready installed and 3 packages
+    0 package will be installed, 2 already installed and 3 packages
     will be upgraded.
 
     Would you like to continue [y/N]?
@@ -1055,7 +1055,7 @@ Skip packages when upgrading:
     Installing summary
     ===============================================================================
     Total 3 packages.
-    0 package will be installed, 1 allready installed and 2 packages
+    0 package will be installed, 1 already installed and 2 packages
     will be upgraded.
 
     Would you like to continue [y/N]?

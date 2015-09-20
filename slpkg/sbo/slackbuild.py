@@ -133,7 +133,7 @@ class SBoInstall(object):
             print("{0}Total {1} {2}.".format(
                 self.meta.color["GREY"], count_total,
                 self.msg.pkg(count_total)))
-            print("{0} {1} will be installed, {2} allready installed and "
+            print("{0} {1} will be installed, {2} already installed and "
                   "{3} {4}".format(self.count_uni,
                                    self.msg.pkg(self.count_uni),
                                    self.count_ins, self.count_upg,

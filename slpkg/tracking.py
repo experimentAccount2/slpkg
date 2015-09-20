@@ -41,7 +41,7 @@ class TrackingDeps(object):
     """
     View tree of dependencies and also
     highlight packages with color green
-    if allready installed and color red
+    if already installed and color red
     if not installed.
     """
     def __init__(self, name, repo, flag):
