@@ -168,7 +168,8 @@ class SBoInstall(object):
     def continue_to_install(self):
         """Continue to install ?
         """
-        if self.master_packages and self.msg.answer() in ["y", "Y"]:
+        if (self.count_uni > 0 and self.master_packages and
+                self.msg.answer() in ["y", "Y"]):
             installs, upgraded = self.build_install()
             self.msg.reference(installs, upgraded)
             write_deps(self.deps_dict)
