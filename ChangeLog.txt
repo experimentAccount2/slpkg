@@ -1,3 +1,9 @@
+2.9.2 - 21/08/2015
+Fixed:
+- 0 package will be installed... Would you like to continue [y/N]? #44
+- Matching packages with case insensitive option
+- Some typos
+
 2.9.1 - 18/09/2015
 Added:
 - Additional option "--deps" in removepkg option for remove dependencies
