@@ -1088,7 +1088,8 @@ Read fies, download, build or install:
     | Download             Download this package
     | Build                Download and build this package
     | Install              Download/Build/Install
-    | Quit                 Quit
+    | Clear                Clear screen
+      Quit                 Quit
     +================================================================================ 
       Choose an option > _
 
