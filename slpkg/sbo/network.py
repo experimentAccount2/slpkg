@@ -74,6 +74,7 @@ class SBoNetwork(object):
         if "--checklist" in self.flag:
             self.with_checklist()
         grep = SBoGrep(self.name)
+        self.sbo_files = grep.files()
         self.blacklist = BlackList().packages(pkgs=self.data, repo="sbo")
         self.sbo_url = sbo_search_pkg(self.name)
         if self.sbo_url:
@@ -194,8 +195,8 @@ class SBoNetwork(object):
     def choice_doinst(self):
         """View doinst.sh file
         """
-        doinst_sh = ReadSBo(self.sbo_url).doinst("doinst.sh")
-        if doinst_sh != " ":
+        if "doinst.sh" in self.sbo_files.split():
+            doinst_sh = ReadSBo(self.sbo_url).doinst("doinst.sh")
             fill = self.fill_pager(doinst_sh)
             self.pager(doinst_sh + fill)
 
@@ -269,8 +270,9 @@ class SBoNetwork(object):
               "file".format(self.red, self.endc, br2))
         print("| In{0}{1}f{2}{3}o{4}                View the .info "
               "file".format(br1, self.red, self.endc, br2, fix_sp))
-        print("| D{0}{1}o{2}{3}inst.sh{4}           View the doinst.sh "
-              "file".format(br1, self.red, self.endc, br2, fix_sp))
+        if "doinst.sh" in self.sbo_files.split():
+            print("| D{0}{1}o{2}{3}inst.sh{4}           View the doinst.sh "
+                  "file".format(br1, self.red, self.endc, br2, fix_sp))
         print("| {0}D{1}{2}ownload             Download this package".format(
             self.red, self.endc, br2))
         print("| {0}B{1}{2}uild                Download and build".format(
