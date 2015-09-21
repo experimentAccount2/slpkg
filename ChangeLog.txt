@@ -1,7 +1,9 @@
 2.9.2 - 21/08/2015
 Fixed:
+- Strange problem with node-0.12.7 - uname and rm commands not found. #43
 - 0 package will be installed... Would you like to continue [y/N]? #44
 - Matching packages with case insensitive option
+- Build package without keep log file
 - Some typos
 
 2.9.1 - 18/09/2015
