@@ -46,7 +46,7 @@ should occur to install packages. Slpkg makes it easier to maintain groups of ma
 having to manually update.
 
 Slpkg works in accordance with the standards of the organization slackbuilds.org 
-to builds packages. Also uses the Slackware linux instructions for installation,
+to builds packages. Also uses the Slackware Linux instructions for installation,
 upgrading or removing packages. 
 
 What makes slpkg to distinguish it from other tools; The user friendliness is its primary 
@@ -61,7 +61,7 @@ Features
 --------
 
 - Dependency resolution
-- Dependencies virtualization
+- Dependencies visualizations
 - Multiple options
 - Multiple repositories
 - Easy configuration
@@ -253,7 +253,7 @@ Combine with the command 'grep' to catch the results you want.
 Check and upgrade the distribution of your upgrade your packages with command '# slpkg -c <repository> 
 --upgrade'. Don't forget to update packages list before (for 'slack' repository don't is necessary).
 This command except upgrade packages will fix packages with broken dependencies. Switch  off automatic
-resolve dependensies with additional option '--resolve-off'. Use '--checklist' option to help you
+resolve dependencies with additional option '--resolve-off'. Use '--checklist' option to help you
 to choose easy packages. For advanced users, option '--skip' give them more power (see man page).
 
 The most famous command is '# slpkg -s <repository> <packages>' , this command downloads and 
