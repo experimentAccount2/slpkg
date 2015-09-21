@@ -130,6 +130,8 @@ class SBoNetwork(object):
             for key, value in data_dict.iteritems():
                 if key == self.name.lower():
                     self.name = value
+                else:
+                    self.name = self.name.lower()
 
     def read_choice(self):
         """Return choice

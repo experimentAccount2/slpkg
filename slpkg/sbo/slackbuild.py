@@ -150,10 +150,12 @@ class SBoInstall(object):
         if "--case-ins" in self.flag:
             data_dict = Utils().case_sensitive(self.data)
             for name in self.slackbuilds:
+                index = self.slackbuilds.index(name)
                 for key, value in data_dict.iteritems():
                     if key == name.lower():
-                        index = self.slackbuilds.index(name)
                         self.slackbuilds[index] = value
+                    else:
+                        self.slackbuilds[index] = name.lower()
 
     def update_deps(self):
         """Update dependencies dictionary with all package

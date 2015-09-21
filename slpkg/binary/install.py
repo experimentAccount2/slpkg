@@ -144,10 +144,12 @@ class BinaryInstall(object):
                 data.append(split_package(name)[0])
             data_dict = Utils().case_sensitive(data)
             for pkg in self.packages:
+                index = self.packages.index(pkg)
                 for key, value in data_dict.iteritems():
                     if key == pkg.lower():
-                        index = self.packages.index(pkg)
                         self.packages[index] = value
+                    else:
+                        self.packages[index] = pkg.lower()
 
     def update_deps(self):
         """Update dependencies dictionary with all package
