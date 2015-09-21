@@ -95,7 +95,7 @@ Optional arguments:
       --resolve-off, --case-ins             directly from remote repositories
                                             with all dependencies.
   -t, --tracking, [repository] [package],   Tracking package dependencies and
-      --check-deps, --graph=[type]          print package dependenies tree with
+      --check-deps, --graph=[type]          print package dependencies tree with
                                             highlight if packages is installed.
                                             Also check if dependencies used or
                                             drawing dependencies diagram.
