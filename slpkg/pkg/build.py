@@ -101,9 +101,9 @@ class BuildPackage(object):
                     self.prgnam, sum_time))
             else:
                 subprocess.call("{0} ./{1}.SlackBuild".format(
-                    " ".join(pass_var), self.prgnam, shell=True))
+                    " ".join(pass_var), self.prgnam), shell=True)
             os.chdir(self.path)
-        except (OSError, IOError):
+        except KeyboardInterrupt:   # (OSError, IOError):
             self.msg.pkg_not_found("\n", self.prgnam, "Wrong file", "\n")
 
     def _create_md5_dict(self):
