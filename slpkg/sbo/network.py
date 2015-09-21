@@ -107,12 +107,16 @@ class SBoNetwork(object):
                     "O": self.choice_doinst,
                     "d": self.choice_download,
                     "D": self.choice_download,
+                    "download": self.choice_download,
                     "b": self.choice_build,
                     "B": self.choice_build,
+                    "build": self.choice_build,
                     "i": self.choice_install,
                     "I": self.choice_install,
+                    "install": self.choice_install,
                     "c": self.choice_clear_screen,
                     "C": self.choice_clear_screen,
+                    "clear": self.choice_clear_screen,
                     "q": self.choice_quit,
                     "quit": self.choice_quit,
                     "Q": self.choice_quit
@@ -150,10 +154,13 @@ class SBoNetwork(object):
             "O": "doinst.sh",
             "d": "download",
             "D": "download",
+            "download": "download",
             "b": "build",
             "B": "build",
+            "build": "build",
             "i": "install",
             "I": "install",
+            "install": "install",
             "c": "clear",
             "C": "clear",
             "clear": "clear",
@@ -170,8 +177,8 @@ class SBoNetwork(object):
             raise SystemExit()
         try:
             sys.stdout.write("{0}\x1b[1A{1}{2}{3}\n".format(
-                " " * len(message), self.meta.color["CYAN"],
-                commands[self.choice], self.meta.color["ENDC"]))
+                " " * len(message), self.cyan, commands[self.choice],
+                self.endc))
             sys.stdout.flush()
         except KeyError:
             pass
