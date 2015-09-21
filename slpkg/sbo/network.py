@@ -111,9 +111,11 @@ class SBoNetwork(object):
                     "B": self.choice_build,
                     "i": self.choice_install,
                     "I": self.choice_install,
+                    "c": self.choice_clear_screen,
+                    "C": self.choice_clear_screen,
                     "q": self.choice_quit,
                     "quit": self.choice_quit,
-                    "Q": self.choice_quit,
+                    "Q": self.choice_quit
                 }
                 try:
                     choice[self.choice]()
@@ -152,9 +154,12 @@ class SBoNetwork(object):
             "B": "build",
             "i": "install",
             "I": "install",
+            "c": "clear",
+            "C": "clear",
+            "clear": "clear",
             "q": "quit",
             "quit": "quit",
-            "Q": "quit",
+            "Q": "quit"
         }
         try:
             message = "  Choose an option > "
@@ -228,6 +233,12 @@ class SBoNetwork(object):
             self.msg.template(78)
             raise SystemExit()
 
+    def choice_clear_screen(self):
+        """Clear screen
+        """
+        os.system("clear")
+        self.view()
+
     def choice_quit(self):
         """Quit from choices
         """
@@ -279,6 +290,9 @@ class SBoNetwork(object):
             self.red, self.endc, br2))
         print("| {0}I{1}{2}nstall              Download/Build/Install".format(
             self.red, self.endc, br2))
+        print("| {0}C{1}{2}lear                Clear screen".format(self.red,
+                                                                    self.endc,
+                                                                    br2))
         print("| {0}Q{1}{2}uit                 Quit".format(self.red,
                                                             self.endc, br2))
 
