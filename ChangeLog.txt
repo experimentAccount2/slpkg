@@ -3,6 +3,7 @@ Added:
 - Clear screen in "--network" option
 Updated:
 - View doinst.sh in "--network" option if exist
+- Commands in "--network" option
 Fixed:
 - Strange problem with node-0.12.7 - uname and rm commands not found. #43
 - 0 package will be installed... Would you like to continue [y/N]? #44
