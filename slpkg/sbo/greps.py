@@ -35,6 +35,7 @@ class SBoGrep(object):
         self.meta = _meta_
         arch64 = "x86_64"
         self.line_name = "SLACKBUILD NAME: "
+        self.line_files = "SLACKBUILD FILES: "
         self.line_down = "SLACKBUILD DOWNLOAD: "
         self.line_down_64 = "SLACKBUILD DOWNLOAD_{0}: ".format(arch64)
         self.line_req = "SLACKBUILD REQUIRES: "
@@ -147,3 +148,13 @@ class SBoGrep(object):
             if line.startswith(self.line_des):
                 if sbo_name == self.name:
                     return line[31:].strip()
+
+    def files(self):
+        """Grab files
+        """
+        for line in self.SLACKBUILDS_TXT.splitlines():
+            if line.startswith(self.line_name):
+                sbo_name = line[17:].strip()
+            if line.startswith(self.line_files):
+                if sbo_name == self.name:
+                    return line[18:].strip()
