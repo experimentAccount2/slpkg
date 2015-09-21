@@ -127,9 +127,9 @@ class BuildPackage(object):
         """
         pass_var = []
         for var in os.environ.keys():
-            if var.split("_")[0] == self.prgnam.upper():
-                pass_var.append("{0}={1}".format(
-                    var.split("_")[1], os.environ[var]))
+            expVAR = var.split("_")
+            if expVAR[0] == self.prgnam.upper() and expVAR[1] != "PATH":
+                pass_var.append("{0}={1}".format(expVAR[1], os.environ[var]))
         return pass_var
 
     def _delete_sbo_tar_gz(self):
