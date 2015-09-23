@@ -22,7 +22,8 @@
 #
 # END OF LEGAL NOTICE
 #
-# Default repositories
+# Change only the url if necessary finishing with "/". 
+# Do NOT change the name of the repository.
 # ----------------------------------------------------------------------------
 #
 # NAME      URL
