@@ -322,7 +322,7 @@ class SBoNetwork(object):
             status = False
             pkg = DialogUtil(data, text, title, backtitle, status).checklist()
             if pkg and len(pkg) > 1:
-                print("\nslpkg: error: choose only one package")
+                print("\nslpkg: Error: Choose only one package")
                 raise SystemExit()
             if pkg is None:
                 raise SystemExit()

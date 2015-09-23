@@ -54,7 +54,7 @@ Commands:
                                             repositories via dialog utility.
    repo-list                                Print a list of all the
                                             repositories.
-   repo-info [repository]                   Get information about a
+   lepo-info [repository]                   Get information about a
                                             repository.
    update slpkg                             Upgrade the program directly from
                                             repository.
@@ -176,10 +176,10 @@ def usage(repo):
         all_repos = RepoList().all_repos
         del RepoList().all_repos
         if repo in all_repos:
-            error_repo = ("slpkg: error: repository '{0}' is not activated"
+            error_repo = ("slpkg: Error: Repository '{0}' is not activated"
                           "\n".format(repo))
         else:
-            error_repo = ("slpkg: error: repository '{0}' does not exist"
+            error_repo = ("slpkg: Error: Repository '{0}' does not exist"
                           "\n".format(repo))
     header()
     print(usage.__doc__)

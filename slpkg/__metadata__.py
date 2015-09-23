@@ -31,7 +31,7 @@ def s_user(user):
     Check for root user
     """
     if user != "root":
-        print("\nslpkg: error: must have root privileges\n")
+        print("\nslpkg: Error: Must have root privileges\n")
         raise SystemExit()
 
 

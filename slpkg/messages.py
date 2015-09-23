@@ -53,7 +53,7 @@ class Msg(object):
         """Check for root user
         """
         if user != "root":
-            print("\nslpkg: error: must have root privileges\n")
+            print("\nslpkg: Error: Must have root privileges\n")
             raise SystemExit()
 
     def build_FAILED(self, prgnam):

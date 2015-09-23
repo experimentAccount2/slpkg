@@ -80,7 +80,7 @@ class Graph(object):
                                           ", ".join(self.file_format)))
                 raise SystemExit()
         except IndexError:
-            print("slpkg: error: Image file suffix missing")
+            print("slpkg: Error: Image file suffix missing")
             raise SystemExit()
 
     def graph_easy(self):

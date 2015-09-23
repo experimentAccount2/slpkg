@@ -33,6 +33,7 @@ class Repo(object):
     """
     def __init__(self):
         self.meta = _meta_
+        self.DEFAULT_REPOS_NAMES = self.meta.default_repositories
         self.custom_repo_file = "/etc/slpkg/custom-repositories"
         self.default_repo_file = "/etc/slpkg/default-repositories"
         self.custom_repositories_list = Utils().read_file(self.custom_repo_file)
@@ -57,8 +58,8 @@ class Repo(object):
                   "repo-list'.\n".format(repo))
             raise SystemExit()
         elif len(repo) > 6:
-            print("\nMaximum repository name length must be six (6) "
-                  "characters\n")
+            print("\nslpkg: Error: Maximum repository name length must be "
+                  "six (6) characters\n")
             raise SystemExit()
         with open(self.custom_repo_file, "a") as repos:
             new_line = "  {0}{1}{2}\n".format(repo, " " * (10 - len(repo)), url)
@@ -102,7 +103,14 @@ class Repo(object):
         for line in self.default_repositories_list.splitlines():
             line = line.lstrip()
             if not line.startswith("#"):
-                default_dict_repo[line.split()[0]] = line.split()[1]
+                if line.split()[0] in self.DEFAULT_REPOS_NAMES:
+                    default_dict_repo[line.split()[0]] = line.split()[1]
+                else:
+                    print("\nslpkg: Error: Repository name '{0}' is not "
+                          "default name.\n              Please check file: "
+                          "/etc/slpkg/default-repositories\n".format(
+                              line.split()[0]))
+                    raise SystemExit()
         return default_dict_repo
 
     def slack(self):
