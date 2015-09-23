@@ -65,6 +65,7 @@ Features
 - Multiple options
 - Multiple repositories
 - Easy configuration
+- Fully configurable
 - Adaptability
 - Powerful options
 - Source builder
