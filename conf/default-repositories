@@ -24,6 +24,9 @@
 #
 # Change only the url if necessary finishing with "/". 
 # Do NOT change the name of the repository.
+# Default repositories names:
+# sbo, rlw, alien, slacky, studio, slackr, slonly, ktown, multi, slacke, salix
+# slackl, rested, msb
 # ----------------------------------------------------------------------------
 #
 # NAME      URL
