@@ -1,4 +1,8 @@
-2.9.2 - 21/08/2015
+2.9.3 - 23/09/2015
+Added:
+- Default repositories file to allow editing urls
+
+2.9.2 - 21/09/2015
 Added:
 - Clear screen in "--network" option
 Updated:
