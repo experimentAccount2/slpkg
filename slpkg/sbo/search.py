@@ -33,7 +33,7 @@ def sbo_search_pkg(name):
     """Search for package path from SLACKBUILDS.TXT file and
     return url
     """
-    repo = Repo().sbo()
+    repo = Repo().default_repository()["sbo"]
     sbo_url = "{0}{1}/".format(repo, slack_ver())
     SLACKBUILDS_TXT = Utils().read_file(
         _meta_.lib_path + "sbo_repo/SLACKBUILDS.TXT")
