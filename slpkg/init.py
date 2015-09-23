@@ -42,6 +42,7 @@ class Initialization(object):
     def __init__(self, check):
         self.check = check
         self.meta = _meta_
+        self.def_repos_dict = Repo().default_repository()
         self.conf_path = self.meta.conf_path
         self.log_path = self.meta.log_path
         self.lib_path = self.meta.lib_path
@@ -139,7 +140,7 @@ class Initialization(object):
     def sbo(self):
         """Creating sbo local library
         """
-        repo = Repo().sbo()
+        repo = self.def_repos_dict["sbo"]
         log = self.log_path + "sbo/"
         lib = self.lib_path + "sbo_repo/"
         repo_name = log[:-1].split("/")[-1]
@@ -165,7 +166,7 @@ class Initialization(object):
     def rlw(self):
         """Creating rlw local library
         """
-        repo = Repo().rlw()
+        repo = self.def_repos_dict["rlw"]
         log = self.log_path + "rlw/"
         lib = self.lib_path + "rlw_repo/"
         repo_name = log[:-1].split("/")[-1]
@@ -195,7 +196,7 @@ class Initialization(object):
         ar = "x86"
         ver = slack_ver()
         arch = self.meta.arch
-        repo = Repo().alien()
+        repo = self.def_repos_dict["alien"]
         log = self.log_path + "alien/"
         lib = self.lib_path + "alien_repo/"
         repo_name = log[:-1].split("/")[-1]
@@ -228,7 +229,7 @@ class Initialization(object):
         """
         ar = ""
         arch = self.meta.arch
-        repo = Repo().slacky()
+        repo = self.def_repos_dict["slacky"]
         log = self.log_path + "slacky/"
         lib = self.lib_path + "slacky_repo/"
         repo_name = log[:-1].split("/")[-1]
@@ -263,7 +264,7 @@ class Initialization(object):
         """
         ar = ""
         arch = self.meta.arch
-        repo = Repo().studioware()
+        repo = self.def_repos_dict["studio"]
         log = self.log_path + "studio/"
         lib = self.lib_path + "studio_repo/"
         repo_name = log[:-1].split("/")[-1]
@@ -295,7 +296,7 @@ class Initialization(object):
     def slackr(self):
         """Creating slackers local library
         """
-        repo = Repo().slackers()
+        repo = self.def_repos_dict["slackr"]
         log = self.log_path + "slackr/"
         lib = self.lib_path + "slackr_repo/"
         repo_name = log[:-1].split("/")[-1]
@@ -325,7 +326,7 @@ class Initialization(object):
         ver = slack_ver()
         ar = "{0}-x86".format(ver)
         arch = self.meta.arch
-        repo = Repo().slackonly()
+        repo = self.def_repos_dict["slonly"]
         log = self.log_path + "slonly/"
         lib = self.lib_path + "slonly_repo/"
         repo_name = log[:-1].split("/")[-1]
@@ -358,7 +359,7 @@ class Initialization(object):
     def ktown(self):
         """Creating alien ktown local library
         """
-        repo = Repo().ktown()
+        repo = self.def_repos_dict["ktown"]
         log = self.log_path + "ktown/"
         lib = self.lib_path + "ktown_repo/"
         repo_name = log[:-1].split("/")[-1]
@@ -386,7 +387,7 @@ class Initialization(object):
         """Creating alien multilib local library
         """
         ver = slack_ver()
-        repo = Repo().multi()
+        repo = self.def_repos_dict["multi"]
         log = self.log_path + "multi/"
         lib = self.lib_path + "multi_repo/"
         repo_name = log[:-1].split("/")[-1]
@@ -417,7 +418,7 @@ class Initialization(object):
         """
         ar = ""
         arch = self.meta.arch
-        repo = Repo().slacke()
+        repo = self.def_repos_dict["slacke"]
         log = self.log_path + "slacke/"
         lib = self.lib_path + "slacke_repo/"
         repo_name = log[:-1].split("/")[-1]
@@ -451,7 +452,7 @@ class Initialization(object):
         """
         ar = "i486"
         arch = self.meta.arch
-        repo = Repo().salix()
+        repo = self.def_repos_dict["salix"]
         log = self.log_path + "salix/"
         lib = self.lib_path + "salix_repo/"
         repo_name = log[:-1].split("/")[-1]
@@ -482,7 +483,7 @@ class Initialization(object):
         """
         ar = "i486"
         arch = self.meta.arch
-        repo = Repo().slackel()
+        repo = self.def_repos_dict["slackl"]
         log = self.log_path + "slackl/"
         lib = self.lib_path + "slackl_repo/"
         repo_name = log[:-1].split("/")[-1]
@@ -511,7 +512,7 @@ class Initialization(object):
     def rested(self):
         """Creating alien restricted local library
         """
-        repo = Repo().restricted()
+        repo = self.def_repos_dict["rested"]
         log = self.log_path + "rested/"
         lib = self.lib_path + "rested_repo/"
         repo_name = log[:-1].split("/")[-1]
@@ -540,7 +541,7 @@ class Initialization(object):
         """
         ar = "x86"
         arch = self.meta.arch
-        repo = Repo().msb()
+        repo = self.def_repos_dict["msb"]
         log = self.log_path + "msb/"
         lib = self.lib_path + "msb_repo/"
         repo_name = log[:-1].split("/")[-1]

@@ -35,23 +35,7 @@ class RepoList(object):
     def __init__(self):
         self.meta = _meta_
         self.msg = Msg()
-        self.all_repos = {
-            "slack": Repo().slack(),
-            "sbo": Repo().sbo(),
-            "rlw": Repo().rlw(),
-            "alien": Repo().alien(),
-            "slacky": Repo().slacky(),
-            "studio": Repo().studioware(),
-            "slackr": Repo().slackers(),
-            "slonly": Repo().slackonly(),
-            "ktown": Repo().ktown(),
-            "multi": Repo().multi(),
-            "slacke": Repo().slacke(),
-            "salix": Repo().salix(),
-            "slackl": Repo().slackel(),
-            "rested": Repo().restricted(),
-            "msb": Repo().msb()
-        }
+        self.all_repos = Repo().default_repository()
         self.all_repos.update(Repo().custom_repository())
 
     def repos(self):

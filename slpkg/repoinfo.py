@@ -46,7 +46,7 @@ class RepoInfo(object):
             "Total uncompressed packages:": ""
         }
         self.meta = _meta_
-        self.all_repos = RepoList().all_repos
+        self.all_repos = Repo().default_repository()
         self.all_repos.update(Repo().custom_repository())
         del RepoList().all_repos
 

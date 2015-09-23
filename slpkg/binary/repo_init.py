@@ -38,6 +38,7 @@ class RepoInit(object):
     def __init__(self, repo):
         self.repo = repo
         self.meta = _meta_
+        self.def_repo_dict = Repo().default_repository()
         self.mirror = ""
 
     def fetch(self):
@@ -57,7 +58,7 @@ class RepoInit(object):
         self.mirror = mirrors(name="", location="")
 
     def _init_rlw(self):
-        self.mirror = "{0}{1}/".format(Repo().rlw(), slack_ver())
+        self.mirror = "{0}{1}/".format(self.def_repo_dict["rlw"], slack_ver())
 
     def _init_alien(self):
         ver = slack_ver()
@@ -66,21 +67,22 @@ class RepoInit(object):
             arch = "x86_64"
         if self.meta.slack_rel == "current":
             ver = self.meta.slack_rel
-        self.mirror = "{0}{1}/{2}/".format(Repo().alien(), ver, arch)
+        self.mirror = "{0}{1}/{2}/".format(self.def_repo_dict["alien"],
+                                           ver, arch)
 
     def _init_slacky(self):
         arch = ""
         if self.meta.arch == "x86_64":
             arch = "64"
-        self.mirror = "{0}slackware{1}-{2}/".format(Repo().slacky(), arch,
-                                                    slack_ver())
+        self.mirror = "{0}slackware{1}-{2}/".format(
+            self.def_repo_dict["slacky"], arch, slack_ver())
 
     def _init_studio(self):
         arch = ""
         if self.meta.arch == "x86_64":
             arch = "64"
-        self.mirror = "{0}slackware{1}-{2}/".format(Repo().studioware(),
-                                                    arch, slack_ver())
+        self.mirror = "{0}slackware{1}-{2}/".format(
+            self.def_repo_dict["studio"], arch, slack_ver())
 
     def _init_slackr(self):
         self.mirror = Repo().slackers()
@@ -92,35 +94,38 @@ class RepoInit(object):
             arch = "{0}-x86_64".format(ver)
         if self.meta.slack_rel == "current":
             arch = "{0}-x86_64".format(self.meta.slack_rel)
-        self.mirror = "{0}{1}/".format(Repo().slackonly(), arch)
+        self.mirror = "{0}{1}/".format(self.def_repo_dict["slonly"], arch)
 
     def _init_ktown(self):
-        self.mirror = Repo().ktown()
+        self.mirror = self.def_repo_dict["ktown"]
 
     def _init_multi(self):
         ver = slack_ver()
         if self.meta.slack_rel == "current":
             ver = self.meta.slack_rel
-        self.mirror = Repo().multi() + ver + "/"
+        self.mirror = self.def_repo_dict["multi"] + ver + "/"
 
     def _init_slacke(self):
         arch = ""
         if self.meta.arch == "x86_64":
             arch = "64"
         self.mirror = "{0}slacke{1}/slackware{2}-{3}/".format(
-            Repo().slacke(), self.meta.slacke_sub_repo[1:-1], arch, slack_ver())
+            self.def_repo_dict["slacke"], self.meta.slacke_sub_repo[1:-1],
+            arch, slack_ver())
 
     def _init_salix(self):
         arch = "i486"
         if self.meta.arch == "x86_64":
             arch = "x86_64"
-        self.mirror = "{0}{1}/{2}/".format(Repo().salix(), arch, slack_ver())
+        self.mirror = "{0}{1}/{2}/".format(self.def_repo_dict["salix"],
+                                           arch, slack_ver())
 
     def _init_slackl(self):
         arch = "i486"
         if self.meta.arch == "x86_64":
             arch = "x86_64"
-        self.mirror = "{0}{1}/current/".format(Repo().slackel(), arch)
+        self.mirror = "{0}{1}/current/".format(self.def_repo_dict["slackl"],
+                                               arch)
 
     def _init_rested(self):
         self.mirror = Repo().restricted()
@@ -130,4 +135,5 @@ class RepoInit(object):
         if self.meta.arch == "x86_64":
             arch = "x86_64"
         self.mirror = "{0}{1}/{2}/{3}/".format(
-            Repo().msb(), slack_ver(), self.meta.msb_sub_repo[1:-1], arch)
+            self.def_repo_dict["msb"], slack_ver(),
+            self.meta.msb_sub_repo[1:-1], arch)

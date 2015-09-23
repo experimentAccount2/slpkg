@@ -33,7 +33,6 @@ class Repo(object):
     """
     def __init__(self):
         self.meta = _meta_
-        self.default_dict_repo = {}
         self.custom_repo_file = "/etc/slpkg/custom-repositories"
         self.default_repo_file = "/etc/slpkg/default-repositories"
         self.custom_repositories_list = Utils().read_file(self.custom_repo_file)
@@ -89,20 +88,22 @@ class Repo(object):
     def custom_repository(self):
         """Return dictionary with repo name and url (used external)
         """
-        dict_repo = {}
+        custom_dict_repo = {}
         for line in self.custom_repositories_list.splitlines():
             line = line.lstrip()
             if not line.startswith("#"):
-                dict_repo[line.split()[0]] = line.split()[1]
-        return dict_repo
+                custom_dict_repo[line.split()[0]] = line.split()[1]
+        return custom_dict_repo
 
     def default_repository(self):
         """Return dictionary with default repo name and url
         """
+        default_dict_repo = {}
         for line in self.default_repositories_list.splitlines():
             line = line.lstrip()
             if not line.startswith("#"):
-                self.default_dict_repo[line.split()[0]] = line.split()[1]
+                default_dict_repo[line.split()[0]] = line.split()[1]
+        return default_dict_repo
 
     def slack(self):
         """Official slackware repository
@@ -120,73 +121,3 @@ class Repo(object):
         if not default.endswith("/"):
             default += "/"
         return default
-
-    def sbo(self):
-        """SlackBuilds.org repository
-        """
-        return self.default_dict_repo["sbo"]
-
-    def rlw(self):
-        """Robby"s repoisitory
-        """
-        return self.default_dict_repo["rlw"]
-
-    def alien(self):
-        """Alien"s slackbuilds repository
-        """
-        return self.default_dict_repo["alien"]
-
-    def slacky(self):
-        """Slacky.eu repository
-        """
-        return self.default_dict_repo["slacky"]
-
-    def studioware(self):
-        """Studioware repository
-        """
-        return self.default_dict_repo["studio"]
-
-    def slackers(self):
-        """Slackers.it repository
-        """
-        return self.default_dict_repo["slackr"]
-
-    def slackonly(self):
-        """Slackonly.com repository
-        """
-        return self.default_dict_repo["slonly"]
-
-    def ktown(self):
-        """Alien"s ktown repository
-        """
-        return self.default_dict_repo["ktown"]
-
-    def multi(self):
-        """Alien"s multilib repository
-        """
-        return self.default_dict_repo["multi"]
-
-    def slacke(self):
-        """Slacke slacke{17|18} repository
-        """
-        return self.default_dict_repo["slacke"]
-
-    def salix(self):
-        """SalixOS salix repository
-        """
-        return self.default_dict_repo["salix"]
-
-    def slackel(self):
-        """Slackel.gr slackel repository
-        """
-        return self.default_dict_repo["slackl"]
-
-    def restricted(self):
-        """Slackel.gr slackel repository
-        """
-        return self.default_dict_repo["rested"]
-
-    def msb(self):
-        """MSB mate repository
-        """
-        return self.default_dict_repo["msb"]
