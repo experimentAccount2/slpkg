@@ -33,17 +33,21 @@ class Repo(object):
     """
     def __init__(self):
         self.meta = _meta_
-        self.repo_file = "/etc/slpkg/custom-repositories"
-        self.repositories_list = Utils().read_file(self.repo_file)
+        self.default_dict_repo = {}
+        self.custom_repo_file = "/etc/slpkg/custom-repositories"
+        self.default_repo_file = "/etc/slpkg/default-repositories"
+        self.custom_repositories_list = Utils().read_file(self.custom_repo_file)
+        self.default_repositories_list = Utils().read_file(
+            self.default_repo_file)
+        self.default_repository()
 
     def add(self, repo, url):
-        """
-        Write custom repository name and url in a file
+        """Write custom repository name and url in a file
         """
         repo_name = []
         if not url.endswith("/"):
             url = url + "/"
-        for line in self.repositories_list.splitlines():
+        for line in self.custom_repositories_list.splitlines():
             line = line.lstrip()
             if line and not line.startswith("#"):
                 repo_name.append(line.split()[0])
@@ -57,7 +61,7 @@ class Repo(object):
             print("\nMaximum repository name length must be six (6) "
                   "characters\n")
             raise SystemExit()
-        with open(self.repo_file, "a") as repos:
+        with open(self.custom_repo_file, "a") as repos:
             new_line = "  {0}{1}{2}\n".format(repo, " " * (10 - len(repo)), url)
             repos.write(new_line)
         repos.close()
@@ -65,12 +69,11 @@ class Repo(object):
         raise SystemExit()
 
     def remove(self, repo):
-        """
-        Remove custom repository
+        """Remove custom repository
         """
         rem_repo = False
-        with open(self.repo_file, "w") as repos:
-            for line in self.repositories_list.splitlines():
+        with open(self.custom_repo_file, "w") as repos:
+            for line in self.custom_repositories_list.splitlines():
                 repo_name = line.split()[0]
                 if repo_name != repo:
                     repos.write(line + "\n")
@@ -84,19 +87,25 @@ class Repo(object):
         raise SystemExit()
 
     def custom_repository(self):
-        """
-        Return dictionary with repo name and url
+        """Return dictionary with repo name and url (used external)
         """
         dict_repo = {}
-        for line in self.repositories_list.splitlines():
+        for line in self.custom_repositories_list.splitlines():
             line = line.lstrip()
             if not line.startswith("#"):
                 dict_repo[line.split()[0]] = line.split()[1]
         return dict_repo
 
-    def slack(self):
+    def default_repository(self):
+        """Return dictionary with default repo name and url
         """
-        Official slackware repository
+        for line in self.default_repositories_list.splitlines():
+            line = line.lstrip()
+            if not line.startswith("#"):
+                self.default_dict_repo[line.split()[0]] = line.split()[1]
+
+    def slack(self):
+        """Official slackware repository
         """
         default = "http://mirrors.slackware.com/slackware/"
         if self.meta.arch.startswith("arm"):
@@ -113,86 +122,71 @@ class Repo(object):
         return default
 
     def sbo(self):
+        """SlackBuilds.org repository
         """
-        SlackBuilds.org repository
-        """
-        return "http://slackbuilds.org/slackbuilds/"
+        return self.default_dict_repo["sbo"]
 
     def rlw(self):
+        """Robby"s repoisitory
         """
-        Robby"s repoisitory
-        """
-        return "http://rlworkman.net/pkgs/"
+        return self.default_dict_repo["rlw"]
 
     def alien(self):
+        """Alien"s slackbuilds repository
         """
-        Alien"s slackbuilds repository
-        """
-        return "http://taper.alienbase.nl/mirrors/people/alien/sbrepos/"
+        return self.default_dict_repo["alien"]
 
     def slacky(self):
+        """Slacky.eu repository
         """
-        Slacky.eu repository
-        """
-        return "http://repository.slacky.eu/"
+        return self.default_dict_repo["slacky"]
 
     def studioware(self):
+        """Studioware repository
         """
-        Studioware repository
-        """
-        return "http://studioware.org/files/packages/"
+        return self.default_dict_repo["studio"]
 
     def slackers(self):
+        """Slackers.it repository
         """
-        Slackers.it repository
-        """
-        return "http://ponce.cc/slackers/repository/"
+        return self.default_dict_repo["slackr"]
 
     def slackonly(self):
+        """Slackonly.com repository
         """
-        Slackonly.com repository
-        """
-        return "https://slackonly.com/pub/packages/"
+        return self.default_dict_repo["slonly"]
 
     def ktown(self):
+        """Alien"s ktown repository
         """
-        Alien"s ktown repository
-        """
-        return "http://alien.slackbook.org/ktown/"
+        return self.default_dict_repo["ktown"]
 
     def multi(self):
+        """Alien"s multilib repository
         """
-        Alien"s multilib repository
-        """
-        return "http://www.slackware.com/~alien/multilib/"
+        return self.default_dict_repo["multi"]
 
     def slacke(self):
+        """Slacke slacke{17|18} repository
         """
-        Slacke slacke{17|18} repository
-        """
-        return "http://ngc891.blogdns.net/pub/"
+        return self.default_dict_repo["slacke"]
 
     def salix(self):
+        """SalixOS salix repository
         """
-        SalixOS salix repository
-        """
-        return "http://download.salixos.org/"
+        return self.default_dict_repo["salix"]
 
     def slackel(self):
+        """Slackel.gr slackel repository
         """
-        Slackel.gr slackel repository
-        """
-        return "http://www.slackel.gr/repo/"
+        return self.default_dict_repo["slackl"]
 
     def restricted(self):
+        """Slackel.gr slackel repository
         """
-        Slackel.gr slackel repository
-        """
-        return ("http://taper.alienbase.nl/mirrors/people/alien/"
-                "restricted_slackbuilds/")
+        return self.default_dict_repo["rested"]
 
     def msb(self):
+        """MSB mate repository
         """
-        MSB mate repository
-        """
-        return "http://slackware.org.uk/msb/"
+        return self.default_dict_repo["msb"]
