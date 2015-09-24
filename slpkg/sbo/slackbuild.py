@@ -154,8 +154,6 @@ class SBoInstall(object):
                 for key, value in data_dict.iteritems():
                     if key == name.lower():
                         self.slackbuilds[index] = value
-                    else:
-                        self.slackbuilds[index] = name.lower()
 
     def update_deps(self):
         """Update dependencies dictionary with all package

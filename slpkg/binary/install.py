@@ -148,8 +148,6 @@ class BinaryInstall(object):
                 for key, value in data_dict.iteritems():
                     if key == pkg.lower():
                         self.packages[index] = value
-                    else:
-                        self.packages[index] = pkg.lower()
 
     def update_deps(self):
         """Update dependencies dictionary with all package
