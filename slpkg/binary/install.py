@@ -140,8 +140,7 @@ class BinaryInstall(object):
         """
         if "--case-ins" in self.flag:
             data = []
-            for name in self.data[0]:
-                data.append(split_package(name)[0])
+            data = Utils().package_name(self.PACKAGES_TXT)
             data_dict = Utils().case_sensitive(data)
             for pkg in self.packages:
                 index = self.packages.index(pkg)
