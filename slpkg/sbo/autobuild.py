@@ -43,18 +43,15 @@ class AutoBuild(object):
     def run(self):
         """Build package and fix ordelist per checksum
         """
-        self.if_sources_exist()
-        if os.path.isfile(self.script):
-            self.info_file()
-            sources = self.sources
-            if len(sources) > 1 and self.sbo_sources != sources:
-                sources = self.sbo_sources
-            # If the list does not have the same order use from .info
-            # order.
-            BuildPackage(self.script, sources, self.path, auto=True).build()
-            raise SystemExit()
-        else:
-            print("\nslpkg: Error: SlackBuild archive.tar.gz not found\n")
+        self.files_exist()
+        self.info_file()
+        sources = self.sources
+        if len(sources) > 1 and self.sbo_sources != sources:
+            sources = self.sbo_sources
+        # If the list does not have the same order use from .info
+        # order.
+        BuildPackage(self.script, sources, self.path, auto=True).build()
+        raise SystemExit()
 
     def info_file(self):
         """Grab sources from .info file and store filename
@@ -63,10 +60,14 @@ class AutoBuild(object):
         for source in sources:
             self.sbo_sources.append(source.split("/")[-1])
 
-    def if_sources_exist(self):
-        """Check if sources exist
+    def files_exist(self):
+        """Check if SlackBuild archive.tar.gz and sources exist
         """
+        if not os.path.isfile(self.path + self.script):
+            print("\nslpkg: Error: SlackBuild archive.tar.gz not found\n")
+            raise SystemExit()
         for src in self.sources:
+            print self.path + src
             if not os.path.isfile(self.path + src):
                 print("\nslpkg: Error: Source file '{0}' not found\n".format(
                     src))
