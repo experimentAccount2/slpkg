@@ -42,7 +42,7 @@ def choose_upg(packages):
             installed = find_package(binary + _meta_.sp, _meta_.pkg_path)[0]
             data.append(installed)
         text = "Press 'spacebar' to unchoose packages from upgrade"
-        title = "Upgrade"
+        title = " Upgrade "
         backtitle = "{0} {1}".format(_meta_.__all__, _meta_.__version__)
         status = True
         pkgs = DialogUtil(data, text, title, backtitle,

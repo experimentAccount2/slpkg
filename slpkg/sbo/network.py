@@ -315,7 +315,7 @@ class SBoNetwork(object):
                     data.append(name)
         if data:
             text = "Press 'spacebar' to choose SlackBuild for view"
-            title = "SlackBuilds.org"
+            title = " SlackBuilds.org "
             backtitle = "{0} {1}".format(_meta_.__all__, _meta_.__version__)
             status = False
             pkg = DialogUtil(data, text, title, backtitle, status).checklist()

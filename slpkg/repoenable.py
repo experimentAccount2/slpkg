@@ -63,7 +63,7 @@ Keys: SPACE   select or deselect the highlighted repositories,
       Disabled  <-------- REPOSITORIES ------->  Enabled"""
         self.read_enabled()
         self.read_disabled()
-        text, title, backtitle, status = keys, "Repositories", "", False
+        text, title, backtitle, status = keys, " Repositories ", "", False
         self.selected = DialogUtil(self.disabled, text, title, backtitle,
                                    status).buildlist(self.enabled)
         if self.selected is not None:

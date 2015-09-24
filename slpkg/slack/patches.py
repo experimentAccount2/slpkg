@@ -163,7 +163,7 @@ class Patches(object):
         for upg in self.upgrade_all:
             data.append(upg[:-4])
         text = "Press 'spacebar' to unchoose packages from upgrade"
-        title = "Upgrade"
+        title = " Upgrade "
         backtitle = "{0} {1}".format(self.meta.__all__,
                                      self.meta.__version__)
         status = True
