@@ -178,13 +178,12 @@ class PackageManager(object):
         removed, packages = self._get_removed()
         if packages and "--checklist" in self.extra:
             removed = []
-            data = packages
             text = "Press 'spacebar' to unchoose packages from remove"
-            title = "Remove"
             backtitle = "{0} {1}".format(self.meta.__all__,
                                          self.meta.__version__)
             status = True
-            pkgs = DialogUtil(data, text, title, backtitle, status).checklist()
+            pkgs = DialogUtil(packages, text, " Remove ", backtitle,
+                              status).checklist()
             if pkgs:
                 for rmv in pkgs:
                     removed.append(split_package(rmv)[0])
@@ -233,13 +232,11 @@ class PackageManager(object):
         if packages:
             if "--checklist" in self.extra:
                 deps, dependencies = [], []
-                data = packages
                 text = "Found dependencies for package {0}".format(package)
-                title = "Remove"
                 backtitle = "{0} {1}".format(self.meta.__all__,
                                              self.meta.__version__)
                 status = True
-                deps = DialogUtil(data, text, title, backtitle,
+                deps = DialogUtil(packages, text, " Remove ", backtitle,
                                   status).checklist()
                 for d in deps:
                     dependencies.append("-".join(d.split("-")[:-1]))
@@ -329,15 +326,13 @@ class PackageManager(object):
                         dependency.append(rmv)
             if package:
                 if "--checklist" in self.extra:
-                    data = pkg_dep
                     text = ("Press 'spacebar' to choose packages to exception "
                             "remove")
-                    title = "!!! WARNING !!!"
                     backtitle = "{0} {1}".format(self.meta.__all__,
                                                  self.meta.__version__)
                     status = False
-                    choose = DialogUtil(data, text, title, backtitle,
-                                        status).checklist()
+                    choose = DialogUtil(pkg_dep, text, " !!! WARNING !!! ",
+                                        backtitle, status).checklist()
                     for pkg in choose:
                         self.skip.append(pkg.split()[0])
                 else:
