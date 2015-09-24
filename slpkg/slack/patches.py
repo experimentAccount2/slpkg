@@ -178,6 +178,7 @@ class Patches(object):
                 self.comp_sum.pop(index)
                 self.uncomp_sum.pop(index)
                 self.count_upg -= 1
+                del comp, uncomp
                 index -= 1
             index += 1
         if not self.upgrade_all:
