@@ -373,7 +373,8 @@ class SBoNetwork(object):
             script = self.sbo_dwn.split("/")[-1]
             for src in self.source_dwn:
                 sources.append(src.split("/")[-1])
-            BuildPackage(script, sources, self.meta.build_path).build()
+            BuildPackage(script, sources, self.meta.build_path,
+                         auto=False).build()
             slack_package(self.prgnam)  # check if build
 
     def install(self):

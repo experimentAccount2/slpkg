@@ -41,10 +41,11 @@ from slpkg.sbo.greps import SBoGrep
 class BuildPackage(object):
     """Build SBo packages from source
     """
-    def __init__(self, script, sources, path):
+    def __init__(self, script, sources, path, auto):
         self.script = script
         self.sources = sources
         self.path = path
+        self.auto = auto
         self.meta = _meta_
         self.msg = Msg()
         self.prgnam = self.script[:-7]
@@ -135,14 +136,14 @@ class BuildPackage(object):
     def _delete_sbo_tar_gz(self):
         """Delete slackbuild tar.gz file after untar
         """
-        if os.path.isfile(self.meta.build_path + self.script):
+        if not self.auto and os.path.isfile(self.meta.build_path + self.script):
             os.remove(self.meta.build_path + self.script)
 
     def _delete_dir(self):
         """Delete old folder if exists before start build
         """
-        if os.path.isdir(self.path + self.prgnam):
-            shutil.rmtree(self.path + self.prgnam)
+        if not self.auto and os.path.isdir(self.meta.build_path + self.prgnam):
+            shutil.rmtree(self.meta.build_path + self.prgnam)
 
 
 def log_head(path, log_file, log_time):

@@ -145,7 +145,8 @@ class QueuePkgs(object):
                     Download(self.meta.build_path, src.split(),
                              repo="sbo").start()
                     sources.append(src.split("/")[-1])
-                BuildPackage(script, sources, self.meta.build_path).build()
+                BuildPackage(script, sources, self.meta.build_path,
+                             auto=False).build()
         else:
             print("\nPackages not found in the queue for building\n")
 

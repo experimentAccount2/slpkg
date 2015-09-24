@@ -318,7 +318,8 @@ class SBoInstall(object):
                 dwn_srcs = sbo_link.split() + src_link
                 Download(self.build_folder, dwn_srcs, repo="sbo").start()
                 sources = self.filenames(src_link)
-                BuildPackage(script, sources, self.build_folder).build()
+                BuildPackage(script, sources, self.build_folder,
+                             auto=False).build()
                 binary = slack_package(prgnam)
                 if GetFromInstalled(pkg).name() == pkg:
                     print("[ {0}Upgrading{1} ] --> {2}".format(
