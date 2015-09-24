@@ -355,7 +355,8 @@ class ArgParse(object):
         ]
         additional_options = [
             "--check-deps",
-            "--graph="
+            "--graph=",
+            "--case-ins"
         ]
         if (len(self.args) >= 3 and len(self.args) < 6 and
                 self.args[0] in options):
@@ -363,8 +364,12 @@ class ArgParse(object):
                 for arg in self.args[3:]:
                     if arg.startswith(additional_options[1]):
                         flag.append(arg)
+                        arg = ""
                     if arg in additional_options:
                         flag.append(arg)
+                    if arg and arg not in additional_options:
+                        usage("")
+                        raise SystemExit()
                 TrackingDeps(self.args[2], self.args[1], flag).run()
             else:
                 usage(self.args[1])

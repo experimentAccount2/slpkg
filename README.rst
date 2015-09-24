@@ -445,8 +445,8 @@ Command Line Tool Usage
           --resolve-off, --case-ins             directly from remote repositories
                                                 with all dependencies.
       -t, --tracking, [repository] [package],   Tracking package dependencies and
-          --check-deps, --graph=[type]          print package dependencies tree with
-                                                highlight if packages is installed.
+          --check-deps, --graph=[type],         print package dependencies tree with
+          --case-ins                            highlight if packages is installed.
                                                 Also check if dependencies used or
                                                 drawing dependencies diagram.
       -p, --desc, [repository] [package],       Print description of a package

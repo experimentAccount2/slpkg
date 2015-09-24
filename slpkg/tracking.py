@@ -30,6 +30,7 @@ from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.pkg.find import find_package
 
+from slpkg.sbo.greps import SBoGrep
 from slpkg.sbo.dependency import Requires
 from slpkg.sbo.search import sbo_search_pkg
 
@@ -125,16 +126,42 @@ class TrackingDeps(object):
         """Get dependencies by repositories
         """
         if self.repo == "sbo":
-            self.dependencies_list = Requires(self.flag).sbo(self.name)
+            self.sbo_case_insensitive()
             self.find_pkg = sbo_search_pkg(self.name)
+            if self.find_pkg:
+                self.dependencies_list = Requires(self.flag).sbo(self.name)
         else:
-            PACKAGES_TXT = Utils().read_file(self.meta.lib_path + "{0}_repo/"
-                                             "PACKAGES.TXT".format(self.repo))
+            PACKAGES_TXT = Utils().read_file(
+                self.meta.lib_path + "{0}_repo/PACKAGES.TXT".format(self.repo))
             self.names = Utils().package_name(PACKAGES_TXT)
-            self.black = BlackList().packages(self.names, self.repo)
-            self.dependencies_list = Dependencies(
-                self.names, self.repo, self.black).binary(self.name, self.flag)
+            self.bin_case_insensitive()
             self.find_pkg = search_pkg(self.name, self.repo)
+            if self.find_pkg:
+                self.black = BlackList().packages(self.names, self.repo)
+                self.dependencies_list = Dependencies(
+                    self.names, self.repo, self.black).binary(self.name,
+                                                              self.flag)
+
+    def sbo_case_insensitive(self):
+        """Matching packages distinguish between uppercase and
+        lowercase for sbo repository
+        """
+        if "--case-ins" in self.flag:
+            data = SBoGrep(name="").names()
+            data_dict = Utils().case_sensitive(data)
+            for key, value in data_dict.iteritems():
+                if key == self.name.lower():
+                    self.name = value
+
+    def bin_case_insensitive(self):
+        """Matching packages distinguish between uppercase and
+        lowercase
+        """
+        if "--case-ins" in self.flag:
+            data_dict = Utils().case_sensitive(self.names)
+            for key, value in data_dict.iteritems():
+                if key == self.name.lower():
+                    self.name = value
 
     def graph(self):
         """Drawing image dependencies map

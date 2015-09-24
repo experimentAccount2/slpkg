@@ -95,8 +95,8 @@ Optional arguments:
       --resolve-off, --case-ins             directly from remote repositories
                                             with all dependencies.
   -t, --tracking, [repository] [package],   Tracking package dependencies and
-      --check-deps, --graph=[type]          print package dependencies tree with
-                                            highlight if packages is installed.
+      --check-deps, --graph=[type],         print package dependencies tree with
+      --case-ins                            highlight if packages is installed.
                                             Also check if dependencies used or
                                             drawing dependencies diagram.
   -p, --desc, [repository] [package],       Print description of a package
@@ -160,7 +160,8 @@ def usage(repo):
              [-c [repository], --upgrade, --skip=[...], --resolve-off,
                                --checklist]
              [-s [repository] [package...], --resolve-off, --case-ins]
-             [-t [repository] [package], --check-deps, --graph=[type]]
+             [-t [repository] [package], --check-deps, --graph=[type],
+                                         --case-ins]
              [-p [repository] [package], --color=[]]
              [-n [SBo package], --checklist, --case-ins]
              [-F [package...], --case-ins]

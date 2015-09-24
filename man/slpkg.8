@@ -39,7 +39,8 @@ Usage: slpkg Commands:
              [-c [repository], --upgrade, --skip=[...], --resolve-off,
                                --checklist]
              [-s [repository] [package...], --resolve-off, --case-ins]
-             [-t [repository] [package], --check-deps, --graph=[type]]
+             [-t [repository] [package], --check-deps, --graph=[type],
+                                         --case-ins]
              [-p [repository] [package], --color=[]]
              [-n [SBo package], --checklist, --case-ins]
              [-F [package...], --case-ins]
@@ -221,7 +222,7 @@ Additional options:
 \fB--case-ins\fP : Search package name in repository with case insensitive.
 
 .SS -t, --tracking,  tracking dependencies
-\fBslpkg\fP \fB-t\fP <\fIrepository\fP> <\fIname of package\fP>, \fB--check-deps\fP, \fB--graph=[type]\fP
+\fBslpkg\fP \fB-t\fP <\fIrepository\fP> <\fIname of package\fP>, \fB--check-deps\fP, \fB--graph=[type]\fP \fB--case-ins\fP
 .PP
 Tracking all dependencies of that package.
 The sequence shown is that you must follow to correctly install package.
@@ -232,6 +233,8 @@ Additional options:
 \fB--check-deps\fP : Check if installed packages used by other packages.
 .PP
 \fB--graph=[type]\fP : Drawing dependencies graph. (example for type: ascii, image.x11, image.png etc. Require pygraphviz)
+.PP
+\fB--case-ins\fP : Search package name in repository with case insensitive.
 
 .SS -p, --desk, print packages description
 \fBslpkg\fP \fB-p\fP <\fIrepository\fP> <\fIname of package\fP>, \fB--color=[]\fP
