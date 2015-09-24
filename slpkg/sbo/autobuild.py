@@ -22,6 +22,8 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+import os
+
 from slpkg.pkg.build import BuildPackage
 
 from slpkg.sbo.greps import SBoGrep
@@ -41,14 +43,17 @@ class AutoBuild(object):
     def run(self):
         """Build package and fix ordelist per checksum
         """
-        self.info_file()
-        sources = self.sources
-        if len(sources) > 1 and self.sbo_sources != sources:
-            sources = self.sbo_sources
-        # If the list does not have the same order use from .info
-        # order.
-        BuildPackage(self.script, sources, self.path).build()
-        raise SystemExit()
+        if os.path.isfile(self.script):
+            self.info_file()
+            sources = self.sources
+            if len(sources) > 1 and self.sbo_sources != sources:
+                sources = self.sbo_sources
+            # If the list does not have the same order use from .info
+            # order.
+            BuildPackage(self.script, sources, self.path).build()
+            raise SystemExit()
+        else:
+            print("\nslpkg: Error: SlackBuild archive.tar.gz not found\n")
 
     def info_file(self):
         """Grab sources from .info file and store filename
