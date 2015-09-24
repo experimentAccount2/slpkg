@@ -41,7 +41,7 @@ from slpkg.health import PackageHealth
 from slpkg.new_config import NewConfig
 from slpkg.tracking import TrackingDeps
 from slpkg.repoenable import RepoEnable
-from slpkg.pkg_find import find_from_repos
+from slpkg.pkg_find import FindFromRepos
 from slpkg.arguments import options, usage
 from slpkg.slpkg_update import it_self_update
 from slpkg.status_deps import DependenciesStatus
@@ -619,7 +619,7 @@ class ArgParse(object):
                 self.args.remove(arg)
         packages = self.args[1:]
         if len(self.args) > 1 and self.args[0] in options:
-            find_from_repos(packages, flag)
+            FindFromRepos().find(packages, flag)
         else:
             usage("")
 

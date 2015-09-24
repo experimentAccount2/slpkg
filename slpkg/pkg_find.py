@@ -28,52 +28,61 @@ from slpkg.pkg.manager import PackageManager
 from slpkg.__metadata__ import MetaData as _meta_
 
 
-def find_from_repos(pkg, flag):
+class FindFromRepos(object):
+    """Find packages from all enabled repositories
     """
-    Find packages from enabled repositories
-    """
-    cache, p_cache, find_cache = "", "", ""
-    cyan = _meta_.color["CYAN"]
-    endc = _meta_.color["ENDC"]
-    count_pkg = count_repo = 0
-    print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
-        cyan, ", ".join(pkg), endc))
-    Msg().template(78)
-    print("| {0}  {1}{2}{3}".format("Repository", "Package", " " * 54, "Size"))
-    Msg().template(78)
-    for repo in _meta_.repositories:
-        PACKAGES_TXT = PackageManager(pkg).list_lib(repo)
-        packages, sizes = PackageManager(pkg).list_greps(repo, PACKAGES_TXT)
-        for find, size in zip(packages, sizes):
-            for p in pkg:
-                if "--case-ins" in flag:
-                    p_cache = p.lower()
-                    find_cache = find.lower()
-                else:
-                    p_cache = p
-                    find_cache = find
-                if p_cache in find_cache:
-                    if cache != repo:
-                        count_repo += 1
-                    cache = repo
-                    count_pkg += 1
-                    ver = sbo_version(repo, find)
-                    print("  {0}{1}{2}{3}{4} {5}{6:>11}".format(
-                        cyan, repo, endc,
-                        " " * (12 - len(repo)),
-                        find + ver, " " * (53 - len(find + ver)),
-                        size))
-    print("\nFound summary")
-    print("=" * 79)
-    print("{0}Total found {1} packages in {2} repositories.{3}\n".format(
-        _meta_.color["GREY"], count_pkg, count_repo, _meta_.color["ENDC"]))
+    def __init__(self):
+        self.cache = ""
+        self.p_cache = ""
+        self.find_cache = ""
+        self.count_pkg = 0
+        self.count_repo = 0
+        self.meta = _meta_
+        self.cyan = self.meta.color["CYAN"]
+        self.grey = self.meta.color["GREY"]
+        self.endc = self.meta.color["ENDC"]
 
+    def find(self, pkg, flag):
+        """Start to find packages and print
+        """
+        print("\nPackages with name matching [ {0}{1}{2} ]\n".format(
+            self.cyan, ", ".join(pkg), self.endc))
+        Msg().template(78)
+        print("| {0}  {1}{2}{3}".format("Repository", "Package", " " * 54,
+                                        "Size"))
+        Msg().template(78)
+        for repo in _meta_.repositories:
+            PACKAGES_TXT = PackageManager(pkg).list_lib(repo)
+            packages, sizes = PackageManager(pkg).list_greps(repo, PACKAGES_TXT)
+            for find, size in zip(packages, sizes):
+                for p in pkg:
+                    if "--case-ins" in flag:
+                        self.p_cache = p.lower()
+                        self.find_cache = find.lower()
+                    else:
+                        self.p_cache = p
+                        self.find_cache = find
+                    if self.p_cache in self.find_cache:
+                        if self.cache != repo:
+                            self.count_repo += 1
+                        self.cache = repo
+                        self.count_pkg += 1
+                        ver = self.sbo_version(repo, find)
+                        print("  {0}{1}{2}{3}{4} {5}{6:>11}".format(
+                            self.cyan, repo, self.endc,
+                            " " * (12 - len(repo)),
+                            find + ver, " " * (53 - len(find + ver)),
+                            size))
+        print("\nFound summary")
+        print("=" * 79)
+        print("{0}Total found {1} packages in {2} repositories.{3}\n".format(
+            self.grey, self.count_pkg, self.count_repo, self.endc))
 
-def sbo_version(repo, find):
-    """
-    Add version to SBo packages
-    """
-    ver = ""
-    if repo == "sbo":
-        ver = "-" + SBoGrep(find).version()
-    return ver
+    def sbo_version(self, repo, find):
+        """
+        Add version to SBo packages
+        """
+        ver = ""
+        if repo == "sbo":
+            ver = "-" + SBoGrep(find).version()
+        return ver
