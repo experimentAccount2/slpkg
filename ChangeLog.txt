@@ -1,6 +1,8 @@
 2.9.4 - 24/09/2015
 Updated:
 - KeyboardInterrupt for main.py
+Fixed:
+- Pylint errors and code health
 
 2.9.3 - 23/09/2015
 Added:
