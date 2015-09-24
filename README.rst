@@ -363,6 +363,9 @@ Configuration Files
     /etc/slpkg/slackware-mirrors
          List of Slackware Mirrors
 
+    /etc/slpkg/default-repositories
+         List of default repositories
+
     /etc/slpkg/custom-repositories
          List of custom repositories
 
