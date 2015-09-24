@@ -85,7 +85,7 @@ class RepoInit(object):
             self.def_repo_dict["studio"], arch, slack_ver())
 
     def _init_slackr(self):
-        self.mirror = Repo().slackers()
+        self.mirror = self.def_repo_dict["slackr"]
 
     def _init_slonly(self):
         ver = slack_ver()
@@ -128,7 +128,7 @@ class RepoInit(object):
                                                arch)
 
     def _init_rested(self):
-        self.mirror = Repo().restricted()
+        self.mirror = self.def_repo_dict["rested"]
 
     def _init_msb(self):
         arch = "x86"
