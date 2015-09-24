@@ -1,7 +1,9 @@
 2.9.3 - 23/09/2015
 Added:
 - Default repositories file to allow editing urls
-
+Fixed:
+- Matching packages with case insensitive option
+ 
 2.9.2 - 21/09/2015
 Added:
 - Clear screen in "--network" option
