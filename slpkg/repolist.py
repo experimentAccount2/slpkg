@@ -36,6 +36,7 @@ class RepoList(object):
         self.meta = _meta_
         self.msg = Msg()
         self.all_repos = Repo().default_repository()
+        self.all_repos["slack"] = Repo().slack()
         self.all_repos.update(Repo().custom_repository())
 
     def repos(self):
