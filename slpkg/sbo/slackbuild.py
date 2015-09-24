@@ -76,6 +76,7 @@ class SBoInstall(object):
         """Start view, build and install SBo packages
         """
         tagc = ""
+        self.if_upgrade = if_upgrade
         self.case_insensitive()
         for _sbo in self.slackbuilds:
             status(0.03)
@@ -109,7 +110,7 @@ class SBoInstall(object):
             print("\nThe following packages will be automatically "
                   "installed or upgraded \nwith new version:\n")
             self.top_view()
-            self.msg.upg_inst(if_upgrade)
+            self.msg.upg_inst(self.if_upgrade)
 
             # view master packages
             for sbo, arch in zip(self.master_packages, mas_src):
@@ -141,7 +142,7 @@ class SBoInstall(object):
             print("will be upgraded.{0}\n".format(self.meta.color["ENDC"]))
             self.continue_to_install()
         else:
-            self.msg.not_found(if_upgrade)
+            self.msg.not_found(self.if_upgrade)
 
     def case_insensitive(self):
         """Matching packages distinguish between uppercase and
@@ -168,12 +169,12 @@ class SBoInstall(object):
     def continue_to_install(self):
         """Continue to install ?
         """
-        if (self.count_uni > 0 and self.master_packages and
-                self.msg.answer() in ["y", "Y"]):
-            installs, upgraded = self.build_install()
-            self.msg.reference(installs, upgraded)
-            write_deps(self.deps_dict)
-            delete(self.build_folder)
+        if self.count_uni > 0 or self.count_upg > 0:
+            if self.master_packages and self.msg.answer() in ["y", "Y"]:
+                installs, upgraded = self.build_install()
+                self.msg.reference(installs, upgraded)
+                write_deps(self.deps_dict)
+                delete(self.build_folder)
 
     def view_installing_for_deps(self):
         """View installing message for dependencies

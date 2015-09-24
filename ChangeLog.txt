@@ -2,6 +2,7 @@
 Updated:
 - KeyboardInterrupt for main.py
 Fixed:
+- Upgrade packages from sbo repository
 - Pylint errors and code health
 
 2.9.3 - 23/09/2015
