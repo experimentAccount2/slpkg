@@ -264,8 +264,8 @@ class Patches(object):
                          self.meta.slackpkg_lib_path + "ChangeLog.txt.old")
             os.remove(self.meta.slackpkg_lib_path + "ChangeLog.txt")
         with open(self.meta.slackpkg_lib_path + "ChangeLog.txt", "w") as log:
-                    log.write(NEW_ChangeLog_txt)
-                    log.close()
+            log.write(NEW_ChangeLog_txt)
+            log.close()
 
     def update_lists(self):
         """Update packages list and ChangeLog.txt file after
