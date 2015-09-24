@@ -1,3 +1,7 @@
+2.9.4 - 24/09/2015
+Updated:
+- KeyboardInterrupt for main.py
+
 2.9.3 - 23/09/2015
 Added:
 - Default repositories file to allow editing urls

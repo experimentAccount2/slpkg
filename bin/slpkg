@@ -32,11 +32,12 @@
 Slpkg is a user-friendly package manager for Slackware installations
 """
 
-import signal
 from slpkg.main import main
-from slpkg.interrupts import signal_handler
 
 
 if __name__ == "__main__":
-    signal.signal(signal.SIGINT, signal_handler)
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("")
+        raise SystemExit()
