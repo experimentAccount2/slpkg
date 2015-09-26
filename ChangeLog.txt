@@ -1,3 +1,7 @@
+2.9.5 - 26/09/2015
+Updated:
+- Check for root privileges
+
 2.9.4 - 24/09/2015
 Updated:
 - KeyboardInterrupt for main.py

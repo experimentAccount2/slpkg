@@ -24,7 +24,6 @@
 
 import os
 import sys
-import getpass
 
 from slpkg.load import Regex
 from slpkg.desc import PkgDesc
@@ -688,7 +687,6 @@ class ArgParse(object):
 
 def main():
 
-    Msg().s_user(getpass.getuser())
     args = sys.argv
     args.pop(0)
 

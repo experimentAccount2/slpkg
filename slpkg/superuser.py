@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# slpkg file is part of slpkg.
+# superuser.py file is part of slpkg.
 
 # Copyright 2014-2015 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
@@ -21,24 +21,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-     _       _
- ___| |_ __ | | ____ _
-/ __| | '_ \| |/ / _` |
-\__ \ | |_) |   < (_| |
-|___/_| .__/|_|\_\__, |
-      |_|        |___/
 
-Slpkg is a user-friendly package manager for Slackware installations
-"""
+import getpass
 
-from slpkg.main import main
-from slpkg.superuser import s_user
 
-if __name__ == "__main__":
-    try:
-        s_user()
-        main()
-    except KeyboardInterrupt:
-        print("")
+def s_user():
+    """Check for root user
+    """
+    if getpass.getuser() != "root":
+        print("\nslpkg: Error: Must have root privileges\n")
         raise SystemExit()

@@ -49,13 +49,6 @@ class Msg(object):
         """
         print("| Package {0} installed".format(pkg))
 
-    def s_user(self, user):
-        """Check for root user
-        """
-        if user != "root":
-            print("\nslpkg: Error: Must have root privileges\n")
-            raise SystemExit()
-
     def build_FAILED(self, prgnam):
         """Print error message if build failed
         """
