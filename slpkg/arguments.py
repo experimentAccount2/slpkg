@@ -176,7 +176,7 @@ def usage(repo):
     if repo and repo not in _meta_.repositories:
         all_repos = RepoList().all_repos
         del RepoList().all_repos
-        if repo in all_repos:
+        if repo in all_repos.keys():
             error_repo = ("slpkg: Error: Repository '{0}' is not activated"
                           "\n".format(repo))
         else:
