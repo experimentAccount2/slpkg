@@ -67,7 +67,6 @@ class AutoBuild(object):
             print("\nslpkg: Error: SlackBuild archive.tar.gz not found\n")
             raise SystemExit()
         for src in self.sources:
-            print self.path + src
             if not os.path.isfile(self.path + src):
                 print("\nslpkg: Error: Source file '{0}' not found\n".format(
                     src))
