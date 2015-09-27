@@ -30,8 +30,7 @@ from slpkg.pkg.find import find_package
 
 
 def write_deps(deps_dict):
-    """
-    Write dependencies in a log file
+    """Write dependencies in a log file
     into directory `/var/log/slpkg/dep/`
     """
     for name, dependencies in deps_dict.iteritems():

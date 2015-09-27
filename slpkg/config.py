@@ -38,8 +38,7 @@ class Config(object):
         self.meta = _meta_
 
     def view(self):
-        """
-        View slpkg config file
+        """View slpkg config file
         """
         print("")   # new line at start
         conf_args = [
@@ -75,8 +74,7 @@ class Config(object):
         print("")   # new line at end
 
     def edit(self):
-        """
-        Edit configuration file
+        """Edit configuration file
         """
         subprocess.call("{0} {1}".format(self.meta.editor,
                                          self.config_file), shell=True)

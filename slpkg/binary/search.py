@@ -30,8 +30,7 @@ from slpkg.__metadata__ import MetaData as _meta_
 
 
 def search_pkg(name, repo):
-    """
-    Search if package exists in PACKAGES.TXT file
+    """Search if package exists in PACKAGES.TXT file
     and return the name.
     """
     PACKAGES_TXT = Utils().read_file(_meta_.lib_path + "{0}_repo/"

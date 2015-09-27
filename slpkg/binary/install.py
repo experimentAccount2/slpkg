@@ -158,8 +158,7 @@ class BinaryInstall(object):
             self.deps_dict[dep] = deps
 
     def clear_masters(self):
-        """
-        Clear master packages if already exist in dependencies
+        """Clear master packages if already exist in dependencies
         or if added to install two or more times
         """
         packages = []
@@ -169,8 +168,7 @@ class BinaryInstall(object):
         self.packages = packages
 
     def install_packages(self):
-        """
-        Install or upgrade packages
+        """Install or upgrade packages
         """
         installs, upgraded = [], []
         for inst in (self.dep_install + self.install):
@@ -196,14 +194,12 @@ class BinaryInstall(object):
         return [installs, upgraded]
 
     def checksums(self, install):
-        """
-        Checksums before install
+        """Checksums before install
         """
         check_md5(pkg_checksum(install, self.repo), self.tmp_path + install)
 
     def resolving_deps(self):
-        """
-        Return package dependencies
+        """Return package dependencies
         """
         requires = []
         if (self.meta.rsl_deps in ["on", "ON"] and
@@ -220,8 +216,7 @@ class BinaryInstall(object):
         return Utils().remove_dbs(requires)
 
     def views(self, install, comp_sum):
-        """
-        Views packages
+        """Views packages
         """
         pkg_sum = uni_sum = upg_sum = 0
         # fix repositories align
@@ -248,6 +243,8 @@ class BinaryInstall(object):
         return [pkg_sum, upg_sum, uni_sum]
 
     def top_view(self):
+        """Print packages status bar
+        """
         self.msg.template(78)
         print("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}".format(
             "| Package", " " * 17,
@@ -259,8 +256,7 @@ class BinaryInstall(object):
         self.msg.template(78)
 
     def store(self, packages):
-        """
-        Store and return packages for install
+        """Store and return packages for install
         """
         dwn, install, comp_sum, uncomp_sum = ([] for i in range(4))
         # name = data[0]

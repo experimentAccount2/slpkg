@@ -23,8 +23,7 @@
 
 
 def units(comp_sum, uncomp_sum):
-    """
-    Calculate package size
+    """Calculate package size
     """
     compressed = round((sum(map(float, comp_sum)) / 1024), 2)
     uncompressed = round((sum(map(float, uncomp_sum)) / 1024), 2)

@@ -27,8 +27,7 @@ from slpkg.__metadata__ import MetaData as _meta_
 
 
 class SBoGrep(object):
-    """
-    Grab data from SLACKBUILDS.TXT file
+    """Grab data from SLACKBUILDS.TXT file
     """
     def __init__(self, name):
         self.name = name
@@ -73,6 +72,8 @@ class SBoGrep(object):
         return self._select_source_arch(source, source64)
 
     def _select_source_arch(self, source, source64):
+        """Return sources by arch
+        """
         src = ""
         if self.meta.arch == "x86_64":
             if source64:
@@ -124,6 +125,8 @@ class SBoGrep(object):
         return self._select_md5sum_arch(md5sum, md5sum64)
 
     def _select_md5sum_arch(self, md5sum, md5sum64):
+        """Return checksums by arch
+        """
         md5 = ""
         if self.meta.arch == "x86_64":
             if md5sum64:

@@ -31,10 +31,8 @@ from slpkg.slack.slack_version import slack_ver
 
 
 class RepoInit(object):
+    """Return PACKAGES.TXT and mirror by repository
     """
-    Return PACKAGES.TXT and mirror by repository
-    """
-
     def __init__(self, repo):
         self.repo = repo
         self.meta = _meta_

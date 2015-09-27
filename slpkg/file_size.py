@@ -33,8 +33,7 @@ class FileSize(object):
         self.registry = registry
 
     def server(self):
-        """
-        Returns the size of remote files
+        """Returns the size of remote files
         """
         try:
             tar = urllib2.urlopen(self.registry)
@@ -44,7 +43,6 @@ class FileSize(object):
             return " "
 
     def local(self):
-        """
-        Returns the size of local files
+        """Returns the size of local files
         """
         return os.path.getsize(self.registry)

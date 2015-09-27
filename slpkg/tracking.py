@@ -39,8 +39,7 @@ from slpkg.binary.dependency import Dependencies
 
 
 class TrackingDeps(object):
-    """
-    View tree of dependencies and also
+    """View tree of dependencies and also
     highlight packages with color green
     if already installed and color red
     if not installed.

@@ -40,8 +40,7 @@ class Utils(object):
         return dictionary
 
     def dimensional_list(self, lists):
-        """
-        Create one dimensional list
+        """Create one dimensional list
         """
         one_list = []
         for lst in lists:
@@ -49,8 +48,7 @@ class Utils(object):
         return one_list
 
     def remove_dbs(self, double):
-        """
-        Remove double item from list
+        """Remove double item from list
         """
         one = []
         for dup in double:
@@ -59,8 +57,7 @@ class Utils(object):
         return one
 
     def read_file(self, registry):
-        """
-        Returns reading file
+        """Returns reading file
         """
         with open(registry, "r") as file_txt:
             read_file = file_txt.read()
@@ -68,8 +65,7 @@ class Utils(object):
             return read_file
 
     def package_name(self, PACKAGES_TXT):
-        """
-        Returns list with all the names of packages repository
+        """Returns list with all the names of packages repository
         """
         packages = []
         for line in PACKAGES_TXT.splitlines():
@@ -78,8 +74,7 @@ class Utils(object):
         return packages
 
     def check_downloaded(self, path, maybe_downloaded):
-        """
-        Check if files downloaded and return downloaded
+        """Check if files downloaded and return downloaded
         packages
         """
         downloaded = []
@@ -89,8 +84,7 @@ class Utils(object):
         return downloaded
 
     def read_config(self, config):
-        """
-        Read config file and returns first uncomment line
+        """Read config file and returns first uncomment line
         and stop. Used for Slackware mirrors
         """
         for line in config.splitlines():

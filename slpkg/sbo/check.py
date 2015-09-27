@@ -36,8 +36,7 @@ from slpkg.sbo.greps import SBoGrep
 
 
 def sbo_upgrade(skip, flag):
-    """
-    Return packages for upgrade
+    """Return packages for upgrade
     """
     Msg().checking()
     upgrade_names = []
@@ -59,8 +58,7 @@ def sbo_upgrade(skip, flag):
 
 
 def sbo_list():
-    """
-    Return all SBo packages
+    """Return all SBo packages
     """
     sbo_packages = []
     for pkg in os.listdir(_meta_.pkg_path):

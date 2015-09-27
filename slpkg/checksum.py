@@ -28,8 +28,7 @@ from slpkg.__metadata__ import MetaData as _meta_
 
 
 def check_md5(pkg_md5, src_file):
-    """
-    MD5 Checksum
+    """MD5 Checksum
     """
     if _meta_.checkmd5 in ["on", "ON"]:
         print("")

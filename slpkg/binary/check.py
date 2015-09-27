@@ -37,8 +37,7 @@ from slpkg.binary.repo_init import RepoInit
 
 
 def pkg_upgrade(repo, skip, flag):
-    """
-    Checking packages for upgrade
+    """Checking packages for upgrade
     """
     Msg().checking()
     PACKAGES_TXT = RepoInit(repo).fetch()[0]
@@ -67,7 +66,6 @@ def pkg_upgrade(repo, skip, flag):
 
 
 def installed():
-    """
-    Return all installed packages
+    """Return all installed packages
     """
     return find_package("", _meta_.pkg_path)

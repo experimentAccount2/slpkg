@@ -28,10 +28,8 @@ from slpkg.__metadata__ import MetaData as _meta_
 
 
 class RepoList(object):
+    """List of repositories
     """
-    List of repositories
-    """
-
     def __init__(self):
         self.meta = _meta_
         self.msg = Msg()
@@ -40,8 +38,7 @@ class RepoList(object):
         self.all_repos.update(Repo().custom_repository())
 
     def repos(self):
-        """
-        View or enabled or disabled repositories
+        """View or enabled or disabled repositories
         """
         def_cnt, cus_cnt = 0, 0
         print("")

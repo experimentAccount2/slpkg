@@ -35,8 +35,7 @@ class URL(object):
         self.meta = _meta_
 
     def reading(self):
-        """
-        Open url and read
+        """Open url and read
         """
         try:
             f = urllib2.urlopen(self.link)

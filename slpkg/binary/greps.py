@@ -31,8 +31,7 @@ from slpkg.slack.slack_version import slack_ver
 
 
 def repo_data(PACKAGES_TXT, repo, flag):
-    """
-    Grap data packages
+    """Grap data packages
     """
     (name, location, size, unsize,
      rname, rlocation, rsize, runsize) = ([] for i in range(8))
@@ -77,8 +76,7 @@ def repo_data(PACKAGES_TXT, repo, flag):
 
 
 def rlw_filter(name, location, size, unsize):
-    """
-    Filter rlw repository data
+    """Filter rlw repository data
     """
     arch = _meta_.arch
     if arch.startswith("i") and arch.endswith("86"):
@@ -108,8 +106,7 @@ def alien_filter(name, location, size, unsize):
 
 
 def rested_filter(name, location, size, unsize):
-    """
-    Filter Alien"s repository data
+    """Filter Alien"s repository data
     """
     ver = slack_ver()
     if _meta_.slack_rel == "current":
@@ -128,8 +125,7 @@ def rested_filter(name, location, size, unsize):
 
 
 def ktown_filter(name, location, size, unsize):
-    """
-    Filter Alien"s ktown repository data
+    """Filter Alien"s ktown repository data
     """
     ver = slack_ver()
     if _meta_.slack_rel == "current":
@@ -155,8 +151,7 @@ class Requires(object):
         self.repo = repo
 
     def get_deps(self):
-        """
-        Grap package requirements from repositories
+        """Grap package requirements from repositories
         """
         if self.repo == "rlw":
             # Robby"s repository dependencies as shown in the central page
@@ -185,8 +180,7 @@ class Requires(object):
                             return self._req_fix(line)
 
     def _req_fix(self, line):
-        """
-        Fix slacky and salix requirements because many dependencies splitting
+        """Fix slacky and salix requirements because many dependencies splitting
         with "," and others with "|"
         """
         deps = []

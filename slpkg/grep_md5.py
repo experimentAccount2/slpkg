@@ -29,8 +29,7 @@ from slpkg.__metadata__ import MetaData as _meta_
 
 
 def pkg_checksum(binary, repo):
-    """
-    Return checksum from CHECKSUMS.md5 file by repository
+    """Return checksum from CHECKSUMS.md5 file by repository
     """
     md5 = "None"
     if repo == "slack_patches" and _meta_.slack_rel == "stable":

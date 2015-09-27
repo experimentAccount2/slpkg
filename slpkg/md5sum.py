@@ -26,7 +26,8 @@ import hashlib
 
 
 def md5(source):
-    """Return MD5 Checksum"""
+    """Return MD5 Checksum
+    """
     with open(source) as file_to_check:
         data = file_to_check.read()
         return hashlib.md5(data).hexdigest()

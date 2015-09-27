@@ -35,8 +35,7 @@ from slpkg.__metadata__ import MetaData as _meta_
 
 
 def it_self_update():
-    """
-    Check from GitHub slpkg repository if new version is available
+    """Check from GitHub slpkg repository if new version is available
     download and update itself
     """
     __new_version__ = ""

@@ -28,8 +28,7 @@ from slpkg.splitting import split_package
 
 
 def find_package(find_pkg, directory):
-    """
-    Find packages
+    """Find packages
     """
     pkgs = []
     if os.path.isdir(directory):

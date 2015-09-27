@@ -41,8 +41,7 @@ class Dependencies(object):
         self.meta = _meta_
 
     def binary(self, name, flag):
-        """
-        Build all dependencies of a package
+        """Build all dependencies of a package
         """
         if self.meta.rsl_deps in ["on", "ON"] and "--resolve-off" not in flag:
             sys.setrecursionlimit(10000)

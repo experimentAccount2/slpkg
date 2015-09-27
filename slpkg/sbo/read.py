@@ -32,25 +32,21 @@ class ReadSBo(object):
         self.sbo_url = sbo_url
 
     def readme(self, sbo_readme):
-        """
-        Read SlackBuild README file
+        """Read SlackBuild README file
         """
         return URL(self.sbo_url + sbo_readme).reading()
 
     def info(self, name, sbo_file):
-        """
-        Read info file
+        """Read info file
         """
         return URL(self.sbo_url + name + sbo_file).reading()
 
     def slackbuild(self, name, sbo_file):
-        """
-        Read SlackBuild file
+        """Read SlackBuild file
         """
         return URL(self.sbo_url + name + sbo_file).reading()
 
     def doinst(self, doinst_sh):
-        """
-        Read SlackBuild doinst.sh
+        """Read SlackBuild doinst.sh
         """
         return URL(self.sbo_url + doinst_sh).reading()
