@@ -182,7 +182,6 @@ def usage(repo):
         else:
             error_repo = ("slpkg: Error: Repository '{0}' does not exist"
                           "\n".format(repo))
-    header()
     print(usage.__doc__)
     print(error_repo)
     print("For more information try 'slpkg -h, --help' or view manpage\n")
