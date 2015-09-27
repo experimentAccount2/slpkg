@@ -26,9 +26,10 @@ from slpkg.__metadata__ import MetaData as _meta_
 
 
 def prog_version():
+    """Print version, license and email
     """
-    Print version, license and email
-    """
-    print("Version : {0}".format(_meta_.__version__))
-    print("Licence : {0}".format(_meta_.__license__))
-    print("Email   : {0}".format(_meta_.__email__))
+    print("Version : {0}\n"
+          "Licence : {1}\n"
+          "Email   : {2}".format(_meta_.__version__,
+                                 _meta_.__license__,
+                                 _meta_.__email__))
