@@ -1,6 +1,7 @@
-2.9.5 - 26/09/2015
+2.9.5 - 29/09/2015
 Updated:
 - Check for root privileges
+- Remove header from usage
 
 2.9.4 - 24/09/2015
 Updated:
