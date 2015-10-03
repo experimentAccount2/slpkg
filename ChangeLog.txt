@@ -1,3 +1,8 @@
+2.9.6 - 03/10/2015
+Fixed:
+- "nvidia-kernel" Fails to install #46
+- build fail because of Version is inconsistent #48
+
 2.9.5 - 01/10/2015
 Updated:
 - Check for root privileges
