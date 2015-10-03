@@ -54,7 +54,7 @@ Commands:
                                             repositories via dialog utility.
    repo-list                                Print a list of all the
                                             repositories.
-   lepo-info [repository]                   Get information about a
+   repo-info [repository]                   Get information about a
                                             repository.
    update slpkg                             Upgrade the program directly from
                                             repository.
