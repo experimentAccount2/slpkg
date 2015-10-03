@@ -226,8 +226,7 @@ class SBoNetwork(object):
     def choice_install(self):
         """Download, build and install package
         """
-        if not find_package(self.prgnam + self.meta.sp,
-                            self.meta.pkg_path):
+        if not find_package(self.prgnam, self.meta.pkg_path):
             self.build()
             self.install()
             delete(self.build_folder)

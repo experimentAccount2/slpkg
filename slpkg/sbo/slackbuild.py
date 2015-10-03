@@ -299,8 +299,7 @@ class SBoInstall(object):
         os.chdir(self.build_folder)
         for prgnam in slackbuilds:
             pkg = "-".join(prgnam.split("-")[:-1])
-            installed = "".join(find_package(prgnam + self.meta.sp,
-                                             self.meta.pkg_path))
+            installed = "".join(find_package(prgnam, self.meta.pkg_path))
             src_link = SBoGrep(pkg).source().split()
             if installed:
                 self.msg.template(78)

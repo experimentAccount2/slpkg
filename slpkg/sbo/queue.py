@@ -159,7 +159,7 @@ class QueuePkgs(object):
             for pkg in packages:
                 ver = SBoGrep(pkg).version()
                 prgnam = "{0}-{1}".format(pkg, ver)
-                if find_package(prgnam + self.meta.sp, self.meta.output):
+                if find_package(prgnam, self.meta.output):
                     binary = slack_package(prgnam)
                     PackageManager(binary).upgrade(flag="--install-new")
                 else:
