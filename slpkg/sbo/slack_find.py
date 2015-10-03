@@ -38,14 +38,13 @@ def slack_package(prgnam):
     """
     binary = ""
     # Get build number from prgnam.SlackBuild script
-    build1 = BuildNumber("", "-".join(prgnam.split("-")[:-1])).get()
-    for pkg in find_package(prgnam + _meta_.sp, _meta_.output):
-        name = split_package(pkg[:-4])[0]
-        ver = split_package(pkg[:-4])[1]
-        prgnam_find = "{0}-{1}".format(name, ver)
+    name = "-".join(prgnam.split("-")[:-1])
+    build1 = BuildNumber("", name).get()
+    for pkg in find_package(prgnam, _meta_.output):
+        name_find = split_package(pkg[:-4])[0]
         # Get build number from binary package
         build2 = split_package(pkg[:-4])[3]
-        if (pkg[:-4].endswith("_SBo") and prgnam_find == prgnam and
+        if (pkg[:-4].endswith("_SBo") and name == name_find and
                 build1 == build2):
             binary = pkg
             break
@@ -56,8 +55,7 @@ def slack_package(prgnam):
 
 
 def sbo_packages():
-    """
-    Return all SBo packages from /tmp directory
+    """Return all SBo packages from /tmp directory
     """
     packages = []
     for pkg in os.listdir(_meta_.output):
