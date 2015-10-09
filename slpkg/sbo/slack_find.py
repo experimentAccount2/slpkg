@@ -22,43 +22,26 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-import os
+from distutils.version import LooseVersion
 
 from slpkg.messages import Msg
-from slpkg.splitting import split_package
 from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.pkg.find import find_package
 
-from slpkg.sbo.build_num import BuildNumber
-
 
 def slack_package(prgnam):
-    """Search for binary packages in output directory
+    """Return maximum binary Slackware package from output directory
     """
-    binary = ""
-    # Get build number from prgnam.SlackBuild script
-    name = "-".join(prgnam.split("-")[:-1])
-    build1 = BuildNumber("", name).get()
+    binaries, cache, binary = [], " ", ""
     for pkg in find_package(prgnam, _meta_.output):
-        name_find = split_package(pkg[:-4])[0]
-        # Get build number from binary package
-        build2 = split_package(pkg[:-4])[3]
-        if (pkg[:-4].endswith("_SBo") and name == name_find and
-                build1 == build2):
-            binary = pkg
-            break
-    if binary not in sbo_packages():
+        if pkg.startswith(prgnam) and pkg[:-4].endswith("_SBo"):
+            binaries.append(pkg)
+    for bins in binaries:
+        if LooseVersion(bins) > LooseVersion(cache):
+            binary = bins
+            cache = binary
+    if not binary:
         Msg().build_FAILED(prgnam)
         raise SystemExit()
     return ["".join(_meta_.output + binary)]
-
-
-def sbo_packages():
-    """Return all SBo packages from /tmp directory
-    """
-    packages = []
-    for pkg in os.listdir(_meta_.output):
-        if pkg.endswith(".tgz") or pkg.endswith(".txz"):
-            packages.append(pkg)
-    return packages
