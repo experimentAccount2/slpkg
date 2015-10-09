@@ -1,3 +1,7 @@
+2.9.7 - 09/10/2015
+Fixed:
+- Find SBo Slackware binary packages from /tmp
+
 2.9.6 - 03/10/2015
 Fixed:
 - "nvidia-kernel" Fails to install #46
