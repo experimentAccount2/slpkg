@@ -116,6 +116,7 @@ class PackageManager(object):
                     # read and remove all else remove only the package.
                     if (os.path.isfile(self.dep_path + rmv) and
                             self.meta.del_deps in ["on", "ON"] or
+                            os.path.isfile(self.dep_path + rmv) and
                             "--deps" in self.extra):
                         dependencies = self._view_deps(self.dep_path, rmv)
                         if dependencies and self._rmv_deps_answer() in ["y",
