@@ -1,5 +1,6 @@
 2.9.8 - 14/10/2015
 Fixed:
+- Return checksums for SBo repository
 
 2.9.7 - 09/10/2015
 Fixed:
