@@ -59,35 +59,16 @@ class SBoGrep(object):
     def source(self):
         """Grab sources downloads links
         """
-        source, source64, = "", ""
         for line in self.SLACKBUILDS_TXT.splitlines():
             if line.startswith(self.line_name):
                 sbo_name = line[17:].strip()
+            if (self.meta.arch == "x86_64" and
+                    line.startswith(self.line_down_64)):
+                if sbo_name == self.name and line[28:].strip():
+                    return line[28:]
             if line.startswith(self.line_down):
                 if sbo_name == self.name and line[21:].strip():
-                    source = line[21:]
-            if line.startswith(self.line_down_64):
-                if sbo_name == self.name and line[28:].strip():
-                    source64 = line[28:]
-        return self._select_source_arch(source, source64)
-
-    def _select_source_arch(self, source, source64):
-        """Return sources by arch
-        """
-        src = ""
-        if self.meta.arch == "x86_64":
-            if source64:
-                src = source64
-            else:
-                src = source
-            if self.meta.skip_unst in self.answer and source64 in self.unst:
-                src = source
-        else:
-            if source:
-                src = source
-            if self.meta.skip_unst in self.answer and source in self.unst:
-                src = source64
-        return src
+                    return line[21:]
 
     def requires(self):
         """Grab package requirements
@@ -112,35 +93,16 @@ class SBoGrep(object):
     def checksum(self):
         """Grab checksum string
         """
-        md5sum, md5sum64, = [], []
         for line in self.SLACKBUILDS_TXT.splitlines():
             if line.startswith(self.line_name):
                 sbo_name = line[17:].strip()
-            if line.startswith(self.line_md5_64):
+            if (self.meta.arch == "x86_64" and
+                    line.startswith(self.line_md5_64)):
                 if sbo_name == self.name and line[26:].strip():
-                    md5sum64 = line[26:].strip().split()
+                    return line[26:].strip().split()
             if line.startswith(self.line_md5):
                 if sbo_name == self.name and line[19:].strip():
-                    md5sum = line[19:].strip().split()
-        return self._select_md5sum_arch(md5sum, md5sum64)
-
-    def _select_md5sum_arch(self, md5sum, md5sum64):
-        """Return checksums by arch
-        """
-        md5 = ""
-        if self.meta.arch == "x86_64":
-            if md5sum64:
-                md5 = md5sum64
-            else:
-                md5 = md5sum
-            if self.meta.skip_unst in self.answer:
-                md5 = md5sum
-        else:
-            if md5sum:
-                md5 = md5sum
-            if self.meta.skip_unst in self.answer and not md5sum:
-                md5 = md5sum64
-        return md5
+                    return line[19:].strip().split()
 
     def description(self):
         """Grab package verion
