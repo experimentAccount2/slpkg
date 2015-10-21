@@ -44,7 +44,7 @@ class BuildNumber(object):
                 self.sbo_url, self.pkg)).reading()
         else:
             SlackBuild = Utils().read_file("{0}{1}/{2}.SlackBuild".format(
-                self.meta.build_path,  self.pkg, self.pkg))
+                self.meta.build_path, self.pkg, self.pkg))
         for line in SlackBuild.splitlines():
             line = line.lstrip()
             if line.startswith("BUILD="):
