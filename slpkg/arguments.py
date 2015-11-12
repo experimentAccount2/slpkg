@@ -93,7 +93,7 @@ Optional arguments:
       --checklist                           dependencies.
   -s, --sync, [repository] [package...],    Sync packages. Install packages
       --resolve-off, --download-only,       directly from remote repositories
-      --case-ins                            with all dependencies.
+      --directory-prefix=[dir], --case-ins  with all dependencies.
   -t, --tracking, [repository] [package],   Tracking package dependencies and
       --check-deps, --graph=[type],         print package dependencies tree with
       --case-ins                            highlight if packages is installed.
@@ -160,6 +160,7 @@ def usage(repo):
              [-c [repository], --upgrade, --skip=[...], --resolve-off,
                                --checklist]
              [-s [repository] [package...], --resolve-off, --download-only,
+                                            --directory-prefix=[dir],
                                             --case-ins]
              [-t [repository] [package], --check-deps, --graph=[type],
                                          --case-ins]

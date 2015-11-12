@@ -327,9 +327,13 @@ class ArgParse(object):
         additional_options = [
             "--resolve-off",
             "--download-only",
+            "--directory-prefix=",
             "--case-ins"
         ]
         for arg in self.args:
+            if arg.startswith(additional_options[2]):
+                flag.append(arg)
+                arg = ""
             if arg in additional_options:
                 flag.append(arg)
         if len(self.args) >= 3 and self.args[0] in options:

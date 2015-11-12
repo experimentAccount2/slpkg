@@ -58,6 +58,11 @@ class BinaryInstall(object):
         self.msg = Msg()
         self.version = self.meta.slack_rel
         self.tmp_path = self.meta.slpkg_tmp_packages
+        for fl in self.flag:
+            if fl.startswith("--directory-prefix="):
+                self.tmp_path = fl.split("=")[1]
+                if not self.tmp_path.endswith("/"):
+                    self.tmp_path += "/"
         self.dwn, self.dep_dwn = [], []
         self.install, self.dep_install = [], []
         self.comp_sum, self.dep_comp_sum = [], []

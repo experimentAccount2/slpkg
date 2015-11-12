@@ -56,6 +56,11 @@ class SBoInstall(object):
         self.msg = Msg()
         self.arch = SBoArch().get()
         self.build_folder = self.meta.build_path
+        for fl in self.flag:
+            if fl.startswith("--directory-prefix="):
+                self.build_folder = fl.split("=")[1]
+                if not self.build_folder.endswith("/"):
+                    self.build_folder += "/"
         self.unst = ["UNSUPPORTED", "UNTESTED"]
         self.master_packages = []
         self.deps = []

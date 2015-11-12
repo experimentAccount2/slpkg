@@ -41,6 +41,7 @@ Usage: slpkg Commands:
              [-s [repository] [package...], --resolve-off, --download-only,
                                             --case-ins]
              [-t [repository] [package], --check-deps, --graph=[type],
+                                         --directory-prefix=[dir], 
                                          --case-ins]
              [-p [repository] [package], --color=[]]
              [-n [SBo package], --checklist, --case-ins]
@@ -221,6 +222,8 @@ Additional options:
 \fB--resolve-off\fP : Switch off automatic resolve dependencies.
 .PP
 \fB--download-only\fP : Download packages without install.
+.PP
+\fB--directory-prefix=[path/to/dir/]\fP : Download packages in specific directory.
 .PP
 \fB--case-ins\fP : Search package name in repository with case insensitive.
 
