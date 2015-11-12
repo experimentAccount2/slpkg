@@ -1,3 +1,11 @@
+3.0.1 - 12/11/2015
+Added:
+- Option "--download-only" to download packages with all dependencies without
+install.
+- Option "--directory-prefix=" to download packages in specific directory
+Fixed:
+- Code style
+
 3.0.0 - 15/10/2015
 Fixed:
 - Return checksums for SBo repository
