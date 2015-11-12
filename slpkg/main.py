@@ -326,6 +326,7 @@ class ArgParse(object):
         ]
         additional_options = [
             "--resolve-off",
+            "--download-only",
             "--case-ins"
         ]
         for arg in self.args:

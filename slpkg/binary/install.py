@@ -123,6 +123,8 @@ class BinaryInstall(object):
                 self.install.reverse()
                 Download(self.tmp_path, self.dep_dwn + self.dwn,
                          self.repo).start()
+                if "--download-only" in self.flag:
+                    raise SystemExit()
                 self.dep_install = Utils().check_downloaded(
                     self.tmp_path, self.dep_install)
                 self.install = Utils().check_downloaded(

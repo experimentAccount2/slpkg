@@ -169,9 +169,12 @@ class SBoInstall(object):
     def continue_to_install(self):
         """Continue to install ?
         """
-        if self.count_uni > 0 or self.count_upg > 0:
+        if (self.count_uni > 0 or self.count_upg > 0 or
+                "--download-only" in self.flag):
             if self.master_packages and self.msg.answer() in ["y", "Y"]:
                 installs, upgraded = self.build_install()
+                if "--download-only" in self.flag:
+                    raise SystemExit()
                 self.msg.reference(installs, upgraded)
                 write_deps(self.deps_dict)
                 delete(self.build_folder)
@@ -301,7 +304,7 @@ class SBoInstall(object):
             pkg = "-".join(prgnam.split("-")[:-1])
             installed = "".join(find_package(prgnam, self.meta.pkg_path))
             src_link = SBoGrep(pkg).source().split()
-            if installed:
+            if installed and "--download-only" not in self.flag:
                 self.msg.template(78)
                 self.msg.pkg_found(prgnam)
                 self.msg.template(78)
@@ -317,6 +320,8 @@ class SBoInstall(object):
                 script = sbo_link.split("/")[-1]
                 dwn_srcs = sbo_link.split() + src_link
                 Download(self.build_folder, dwn_srcs, repo="sbo").start()
+                if "--download-only" in self.flag:
+                    continue
                 sources = self.filenames(src_link)
                 BuildPackage(script, sources, self.build_folder,
                              auto=False).build()

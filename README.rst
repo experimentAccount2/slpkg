@@ -442,8 +442,8 @@ Command Line Tool Usage
           --skip=[...], --resolve--off          repositories and install with all
           --checklist                           dependencies.
       -s, --sync, [repository] [package...],    Sync packages. Install packages
-          --resolve-off, --case-ins             directly from remote repositories
-                                                with all dependencies.
+          --resolve-off, --download-only,       directly from remote repositories
+          --case-ins                            with all dependencies.
       -t, --tracking, [repository] [package],   Tracking package dependencies and
           --check-deps, --graph=[type],         print package dependencies tree with
           --case-ins                            highlight if packages is installed.
