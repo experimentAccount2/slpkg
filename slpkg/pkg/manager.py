@@ -23,6 +23,7 @@
 
 
 import os
+import re
 import subprocess
 
 
@@ -406,10 +407,11 @@ class PackageManager(object):
         data = Utils().read_file(self.meta.pkg_path + package)
         for line in data.splitlines():
             if line.startswith("UNCOMPRESSED PACKAGE SIZE:"):
+                digit = re.sub("\D", "", line[26:])
                 if "M" in line[26:]:
-                    self.size += float(line[26:-1]) * 1024
+                    self.size += float(digit) * 1024
                 else:
-                    self.size += float(line[26:-1])
+                    self.size += float(digit)
                     break
 
     def display(self):
