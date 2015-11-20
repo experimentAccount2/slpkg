@@ -1,3 +1,7 @@
+3.0.2 - 19/11/2015
+Fixed:
+- Convert string to float when try to remove packages #52
+
 3.0.1 - 12/11/2015
 Added:
 - Option "--download-only" to download packages with all dependencies without
