@@ -275,7 +275,8 @@ class BinaryInstall(object):
                                              self.data[2], self.data[3]):
                 if (pk and pkg == split_package(pk)[0] and
                         pk not in install and
-                        split_package(pk)[0] not in self.blacklist):
+                        split_package(pk)[0] not in self.blacklist and
+                        split_package(pk)[1] != "blacklist"):
                     dwn.append("{0}{1}/{2}".format(self.mirror, loc, pk))
                     install.append(pk)
                     comp_sum.append(comp)
