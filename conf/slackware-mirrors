@@ -31,7 +31,7 @@
 # below. Be careful is the template that the rest.
 #
 #
-# Last Updated: Tue Sep 8 00:47:02 UTC 2015
+# Last Updated: Thu Dec 3 01:47:01 UTC 2015
 # 
 # Available http mirrors:
 # 
@@ -41,6 +41,7 @@
 # au		 http://mirror.internode.on.net/pub/slackware/ 
 # au		 http://syd.mirror.rackspace.com/slackware/ 
 # be		 http://ftp.belnet.be/ftp.slackware.com/ 
+# bg		 http://mirrors.netix.net/slackware/ 
 # bg		 http://mirrors.unixsol.org/slackware/ 
 # bg		 http://slackware.telecoms.bg/slackware/ 
 # bg		 http://x.ultranet.biz/slackware/ 
@@ -50,6 +51,7 @@
 # ca		 http://mirror.csclub.uwaterloo.ca/slackware/ 
 # ca		 http://mirror.its.dal.ca/slackware/ 
 # cn		 http://mirror.bjtu.edu.cn/slackware/ 
+# de		 http://download.dlackware.com/slackware/ 
 # de		 http://ftp5.gwdg.de/pub/linux/slackware/ 
 # de		 http://mirror.netcologne.de/slackware/ 
 # ec		 http://mirror.cedia.org.ec/slackware/ 
@@ -78,6 +80,7 @@
 # nz		 http://ftp.slackware.org.nz/slackware/ 
 # ph		 http://mirror.rise.ph/slackware/ 
 # pl		 http://ftp.slackware.pl/pub/slackware/ 
+# pl		 http://mirror.onet.pl/pub/mirrors/slackware/ 
 # pl		 http://sunsite.icm.edu.pl/pub/Linux/slackware/ 
 # pt		 http://darkstar.ist.utl.pt/slackware/ 
 # pt		 http://ftp.rnl.tecnico.ulisboa.pt/pub/slackware/ 
@@ -124,6 +127,7 @@
 # au		 ftp://mirror.internode.on.net/pub/slackware/ 
 # au		 ftp://syd.mirror.rackspace.com/slackware/ 
 # be		 ftp://ftp.belnet.be/mirror/ftp.slackware.com/ 
+# bg		 ftp://mirrors.netix.net/slackware/ 
 # bg		 ftp://mirrors.unixsol.org/slackware/ 
 # bg		 ftp://slackware.telecoms.bg/slackware/ 
 # br		 ftp://linorg.usp.br/slackware/ 
@@ -150,6 +154,7 @@
 # nz		 ftp://ftp.slackware.org.nz/slackware/ 
 # ph		 ftp://mirror.rise.ph/slackware/ 
 # pl		 ftp://ftp.slackware.pl/pub/slackware/ 
+# pl		 ftp://mirror.onet.pl/pub/mirrors/slackware/ 
 # pl		 ftp://sunsite.icm.edu.pl/pub/Linux/slackware/ 
 # pt		 ftp://darkstar.ist.utl.pt/pub/slackware/ 
 # pt		 ftp://ftp.rnl.tecnico.ulisboa.pt/pub/slackware/ 
