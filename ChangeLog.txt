@@ -1,3 +1,7 @@
+3.0.3 - 1/12/2015
+Fixed:
+- Upgrading/Installing nouveau in slack repository #55
+
 3.0.2 - 19/11/2015
 Fixed:
 - Convert string to float when try to remove packages #52
