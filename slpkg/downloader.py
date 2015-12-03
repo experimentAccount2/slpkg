@@ -46,7 +46,7 @@ class Download(object):
 
     def start(self):
         """Download files using wget or other downloader.
-        Optional curl, aria2c and hhtp
+        Optional curl, aria2c and http
         """
         dwn_count = 1
         self._directory_prefix()
