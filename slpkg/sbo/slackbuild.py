@@ -77,11 +77,11 @@ class SBoInstall(object):
         self.data = SBoGrep(name="").names()
         self.blacklist = BlackList().packages(pkgs=self.data, repo="sbo")
 
-    def start(self, if_upgrade):
+    def start(self, is_upgrade):
         """Start view, build and install SBo packages
         """
         tagc = ""
-        self.if_upgrade = if_upgrade
+        self.is_upgrade = is_upgrade
         self.case_insensitive()
         for _sbo in self.slackbuilds:
             status(0.03)
@@ -115,7 +115,7 @@ class SBoInstall(object):
             print("\nThe following packages will be automatically "
                   "installed or upgraded \nwith new version:\n")
             self.top_view()
-            self.msg.upg_inst(self.if_upgrade)
+            self.msg.upg_inst(self.is_upgrade)
 
             # view master packages
             for sbo, arch in zip(self.master_packages, mas_src):
@@ -147,7 +147,7 @@ class SBoInstall(object):
             print("will be upgraded.{0}\n".format(self.meta.color["ENDC"]))
             self.continue_to_install()
         else:
-            self.msg.not_found(self.if_upgrade)
+            self.msg.not_found(self.is_upgrade)
 
     def case_insensitive(self):
         """Matching packages distinguish between uppercase and

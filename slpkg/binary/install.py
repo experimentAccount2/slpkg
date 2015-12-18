@@ -75,13 +75,13 @@ class BinaryInstall(object):
         self.data = repo_data(self.PACKAGES_TXT, self.repo, self.flag)
         self.blacklist = BlackList().packages(self.data[0], self.repo)
 
-    def start(self, if_upgrade):
+    def start(self, is_upgrade):
         """
         Install packages from official Slackware distribution
         """
         self.case_insensitive()
         # fix if packages is for upgrade
-        self.if_upgrade = if_upgrade
+        self.is_upgrade = is_upgrade
         mas_sum = dep_sum = sums = [0, 0, 0]
         self.msg.done()
         self.dependencies = self.resolving_deps()
@@ -98,7 +98,7 @@ class BinaryInstall(object):
             print("\nThe following packages will be automatically "
                   "installed or upgraded \nwith new version:\n")
             self.top_view()
-            self.msg.upg_inst(self.if_upgrade)
+            self.msg.upg_inst(self.is_upgrade)
             mas_sum = self.views(self.install, self.comp_sum)
             if self.dependencies:
                 print("Installing for dependencies:")
@@ -139,7 +139,7 @@ class BinaryInstall(object):
                 write_deps(self.deps_dict)
                 delete_package(self.tmp_path, self.install)
         else:
-            self.msg.not_found(self.if_upgrade)
+            self.msg.not_found(self.is_upgrade)
 
     def case_insensitive(self):
         """Matching packages distinguish between uppercase and

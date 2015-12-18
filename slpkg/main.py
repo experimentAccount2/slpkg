@@ -280,15 +280,15 @@ class ArgParse(object):
                 self.args[1] in self.meta.repositories):
             if self.args[1] not in ["slack", "sbo"]:
                 BinaryInstall(pkg_upgrade(self.args[1], skip, flag),
-                              self.args[1], flag).start(if_upgrade=True)
+                              self.args[1], flag).start(is_upgrade=True)
             elif self.args[1] == "slack":
                 if self.meta.only_installed in ["on", "ON"]:
                     BinaryInstall(pkg_upgrade("slack", skip, flag),
-                                  "slack", flag).start(if_upgrade=True)
+                                  "slack", flag).start(is_upgrade=True)
                 else:
                     Patches(skip, flag).start()
             elif self.args[1] == "sbo":
-                SBoInstall(sbo_upgrade(skip, flag), flag).start(if_upgrade=True)
+                SBoInstall(sbo_upgrade(skip, flag), flag).start(is_upgrade=True)
             else:
                 usage(self.args[1])
         elif len(self.args) == 2 and self.args[0] in options:
@@ -340,10 +340,10 @@ class ArgParse(object):
             if (self.args[1] in self.meta.repositories and
                     self.args[1] not in ["sbo"]):
                 BinaryInstall(self.args[2:], self.args[1], flag).start(
-                    if_upgrade=False)
+                    is_upgrade=False)
             elif (self.args[1] == "sbo" and
                     self.args[1] in self.meta.repositories):
-                SBoInstall(self.args[2:], flag).start(if_upgrade=False)
+                SBoInstall(self.args[2:], flag).start(is_upgrade=False)
             else:
                 usage(self.args[1])
         else:
