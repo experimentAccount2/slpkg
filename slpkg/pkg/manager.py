@@ -357,7 +357,10 @@ class PackageManager(object):
         """
         print("")
         self.msg.template(78)
-        print("| Total {0} packages removed".format(len(removes)))
+        msg_pkg = "package"
+        if len(removes) > 1:
+            msg_pkg = "packages"
+        print("| Total {0} {1} removed".format(len(removes), msg_pkg))
         self.msg.template(78)
         for pkg in removes:
             if not GetFromInstalled(pkg).name():
