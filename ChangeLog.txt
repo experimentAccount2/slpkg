@@ -3,6 +3,8 @@ Fixed:
 - Cannot install chkrootkit #53
 - Avoid reinstall binary packages if is already installed
 - Reference message when remove one package
+Updated:
+- Slackware mirrors
 
 3.0.3 - 01/12/2015
 Fixed:
