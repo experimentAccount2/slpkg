@@ -124,10 +124,17 @@ class BinaryInstall(object):
                   "space will be used.{2}".format(size[1], unit[1],
                                                   self.meta.color["ENDC"]))
             print("")
+            self.if_all_installed()
             if self.msg.answer() in ["y", "Y"]:
-                self.install.reverse()
-                Download(self.tmp_path, self.dep_dwn + self.dwn,
-                         self.repo).start()
+                for inst, dwn in zip(self.dep_install + self.install,
+                                     self.dep_dwn + self.dwn):
+                    if (not os.path.isfile(self.meta.pkg_path + inst[:-4]) or
+                            "--download-only" in self.flag):
+                        Download(self.tmp_path, dwn.split(), self.repo).start()
+                    else:
+                        self.msg.template(78)
+                        self.msg.pkg_found(inst)
+                        self.msg.template(78)
                 if "--download-only" in self.flag:
                     raise SystemExit()
                 self.dep_install = Utils().check_downloaded(
@@ -137,9 +144,20 @@ class BinaryInstall(object):
                 ins, upg = self.install_packages()
                 self.msg.reference(ins, upg)
                 write_deps(self.deps_dict)
-                delete_package(self.tmp_path, self.install)
+                delete_package(self.tmp_path, self.dep_install + self.install)
         else:
             self.msg.not_found(self.is_upgrade)
+
+    def if_all_installed(self):
+        """Check if all packages is already installed
+        """
+        count_inst = 0
+        for inst in (self.dep_install + self.install):
+            if (os.path.isfile(self.meta.pkg_path + inst[:-4]) and
+                    "--download-only" not in self.flag):
+                count_inst += 1
+        if count_inst == len(self.dep_install + self.install):
+            raise SystemExit()
 
     def case_insensitive(self):
         """Matching packages distinguish between uppercase and
@@ -183,12 +201,7 @@ class BinaryInstall(object):
             pkg_ver = "{0}-{1}".format(split_package(inst)[0],
                                        split_package(inst)[1])
             self.checksums(inst)
-            if os.path.isfile(self.meta.pkg_path + inst[:-4]):
-                print("[ {0}reinstalling{1} ] --> {2}".format(
-                    self.meta.color["GREEN"], self.meta.color["ENDC"], inst))
-                installs.append(pkg_ver)
-                PackageManager(package).upgrade("--reinstall")
-            elif GetFromInstalled(split_package(inst)[0]).name():
+            if GetFromInstalled(split_package(inst)[0]).name():
                 print("[ {0}upgrading{1} ] --> {2}".format(
                     self.meta.color["YELLOW"], self.meta.color["ENDC"], inst))
                 upgraded.append(pkg_ver)
