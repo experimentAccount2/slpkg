@@ -304,6 +304,8 @@ class SBoInstall(object):
         installs, upgraded, = [], []
         if not os.path.exists(self.build_folder):
             os.makedirs(self.build_folder)
+        if not os.path.exists(self.build_folder + "_SOURCES/"):
+            os.makedirs(self.build_folder + "_SOURCES/")
         os.chdir(self.build_folder)
         for prgnam in slackbuilds:
             pkg = "-".join(prgnam.split("-")[:-1])
@@ -323,8 +325,10 @@ class SBoInstall(object):
                 sbo_url = sbo_search_pkg(pkg)
                 sbo_link = SBoLink(sbo_url).tar_gz()
                 script = sbo_link.split("/")[-1]
-                dwn_srcs = sbo_link.split() + src_link
-                Download(self.build_folder, dwn_srcs, repo="sbo").start()
+                Download(self.build_folder, sbo_link.split(),
+                         repo="sbo").start()
+                Download(self.build_folder + "_SOURCES/", src_link,
+                         repo="sbo").start()
                 if "--download-only" in self.flag:
                     continue
                 sources = self.filenames(src_link)

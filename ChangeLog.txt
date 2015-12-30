@@ -1,4 +1,9 @@
-3.0.3 - 1/12/2015
+3.0.4 - 30/12/2015
+Fixed:
+- Cannot install chkrootkit #53
+- Reference message when remove one package
+
+3.0.3 - 01/12/2015
 Fixed:
 - Upgrading/Installing nouveau in slack repository #55
 Updated:

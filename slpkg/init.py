@@ -60,6 +60,8 @@ class Initialization(object):
             os.mkdir(self.tmp_path)
         if not os.path.exists(self.build_path):
             os.makedirs(self.build_path)
+        if not os.path.exists(self.build_path + "_SOURCES/"):
+            os.makedirs(self.build_path + "_SOURCES/")
         if not os.path.exists(self.slpkg_tmp_packages):
             os.makedirs(self.slpkg_tmp_packages)
         if not os.path.exists(self.slpkg_tmp_patches):

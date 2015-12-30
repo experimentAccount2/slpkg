@@ -75,11 +75,13 @@ class BuildPackage(object):
             self._makeflags()
             self._delete_sbo_tar_gz()
             self._create_md5_dict()
+            if not self.auto:
+                os.chdir(self.path + "_SOURCES/")
             for src in self.sources:
                 # fix build sources with spaces
                 src = src.replace("%20", " ")
                 check_md5(self.sbo_md5[src], src)
-                shutil.copy2(src, self.prgnam)
+                shutil.copy2(src, self.path + self.prgnam)
             os.chdir(self.path + self.prgnam)
             # change permissions
             subprocess.call("chmod +x {0}.SlackBuild".format(self.prgnam),

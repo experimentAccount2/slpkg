@@ -367,8 +367,13 @@ class SBoNetwork(object):
             sources = []
             if not os.path.exists(self.meta.build_path):
                 os.makedirs(self.meta.build_path)
+            if not os.path.exists(self.meta.build_path + "_SOURCES/"):
+                os.makedirs(self.meta.build_path + "_SOURCES/")
             os.chdir(self.meta.build_path)
-            Download(self.meta.build_path, self.dwn_srcs, repo="sbo").start()
+            Download(self.meta.build_path, self.sbo_dwn.split(),
+                     repo="sbo").start()
+            Download(self.meta.build_path + "_SOURCES/", self.source_dwn,
+                     repo="sbo").start()
             script = self.sbo_dwn.split("/")[-1]
             for src in self.source_dwn:
                 sources.append(src.split("/")[-1])
