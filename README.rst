@@ -1066,7 +1066,7 @@ Skip packages when upgrading:
 
 
 View complete slackbuilds.org site in your terminal.
-Read fies, download, build or install:
+Read files, download, build or install:
 
 .. code-block:: bash
 
