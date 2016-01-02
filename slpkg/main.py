@@ -419,14 +419,17 @@ class ArgParse(object):
                 self.args[1] == command[0]):
             blacklist.listed()
         elif (len(self.args) > 2 and self.args[0] in options and
-                self.args[-1] == flag[0]):
-            blacklist.add(self.args[1:-1])
+                flag[0] in self.args):
+            self.args.remove(flag[0])
+            blacklist.add(self.args[1:])
         elif (len(self.args) == 3 and self.args[0] in options and
-                self.args[1] == "ALL" and self.args[-1] == flag[1]):
+                "ALL" in self.args and flag[1] in self.args):
+            self.args.remove(flag[1])
             blacklist.remove(blacklist.get_black())
         elif (len(self.args) > 2 and self.args[0] in options and
-                self.args[-1] == flag[1]):
-            blacklist.remove(self.args[1:-1])
+                flag[1] in self.args):
+            self.args.remove(flag[1])
+            blacklist.remove(self.args[1:])
         else:
             usage("")
 
@@ -449,14 +452,17 @@ class ArgParse(object):
             "build-install"
         ]
         if (len(self.args) > 2 and self.args[0] in options and
-                self.args[-1] == flag[0]):
-            queue.add(self.args[1:-1])
+                flag[0] in self.args):
+            self.args.remove(flag[0])
+            queue.add(self.args[1:])
         elif (len(self.args) == 3 and self.args[0] in options and
-                self.args[1] == "ALL" and self.args[-1] == flag[1]):
+                "ALL" in self.args and flag[1] in self.args):
+            self.args.remove(flag[1])
             queue.remove(queue.packages())
         elif (len(self.args) > 2 and self.args[0] in options and
-                self.args[-1] == flag[1]):
-            queue.remove(self.args[1:-1])
+                flag[1] in self.args):
+            self.args.remove(flag[1])
+            queue.remove(self.args[1:])
         elif (len(self.args) == 2 and self.args[0] in options and
                 self.args[1] == command[0]):
             queue.listed()
