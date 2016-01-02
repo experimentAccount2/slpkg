@@ -81,6 +81,7 @@ class MetaData(object):
     __version__ = "{0}.{1}.{2}".format(*__version_info__)
     __license__ = "GNU General Public License v3 (GPLv3)"
     __email__ = "d.zlatanidis@gmail.com"
+    __maintainer__ = "Dimitris Zlatanidis (dslackw)"
 
     # Default Slackware release
     slack_rel = "stable"
