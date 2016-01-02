@@ -1,5 +1,5 @@
 .\"                                      -*- nroff -*-
-.\" Copyright (C) 2014-2015 Dimitris Zlatanidis
+.\" Copyright (C) 2014-2016 Dimitris Zlatanidis
 .\"
 .\" This program is free software: you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -11,7 +11,7 @@
 .\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 .\" GNU General Public License for more details.
 .\"
-.TH Slpkg "8" "6" 2015" "slpkg"
+.TH Slpkg "4" "1" 2016" "slpkg"
 .SH NAME
 Slpkg is a user-friendly package manager for Slackware installations
 .SH SYNOPSIS
@@ -31,25 +31,26 @@ Usage: slpkg Commands:
              Optional arguments:
              [-h] [-v]
              [-a [script] [sources...]]
-             [-b [package...] --add, --remove, list]
-             [-q [package...] --add, --remove, list]
-             [-q [build, install, build-install]]
+             [-b [package...] --add, --remove,
+                 [list]]
+             [-q [package...] --add, --remove,
+                 [list, build, install, build-install]]
              [-g [print, edit, reset]]
              [-l [repository], --index, --installed]
              [-c [repository], --upgrade, --skip=[...], --resolve-off,
                                --checklist]
              [-s [repository] [package...], --resolve-off, --download-only,
+                                            --directory-prefix=[dir],
                                             --case-ins]
              [-t [repository] [package], --check-deps, --graph=[type],
-                                         --directory-prefix=[dir], 
                                          --case-ins]
              [-p [repository] [package], --color=[]]
              [-n [SBo package], --checklist, --case-ins]
              [-F [package...], --case-ins]
-             [-f [package...]]
+             [-f [package...], --case-ins]
              [-i [options] [package...]]
              [-u [options] [package...]]
-             [-r [options] [package...], --deps, --check-deps, --tag, 
+             [-r [options] [package...], --deps, --check-deps, --tag,
                                          --checklist]
              [-d [package...]]
 
@@ -407,7 +408,7 @@ Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 .SH HOMEPAGE
 https://github.com/dslackw/slpkg
 .SH COPYRIGHT
-Copyright \(co 2014-2015 Dimitris Zlatanidis
+Copyright \(co 2014-2016 Dimitris Zlatanidis
 
 .SH SEE ALSO
 installpkg(8), upgradepkg(8), removepkg(8), pkgtool(8), slackpkg(8), explodepkg(8),
