@@ -152,9 +152,10 @@ def usage(repo):
              Optional arguments:
              [-h] [-v]
              [-a [script] [sources...]]
-             [-b [package...] --add, --remove, list]
-             [-q [package...] --add, --remove, list]
-             [-q [build, install, build-install]]
+             [-b [package...] --add, --remove,
+                 [list]]
+             [-q [package...] --add, --remove,
+                 [list, build, install, build-install]]
              [-g [print, edit, reset]]
              [-l [repository], --index, --installed]
              [-c [repository], --upgrade, --skip=[...], --resolve-off,
