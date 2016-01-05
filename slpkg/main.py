@@ -658,15 +658,16 @@ class ArgParse(object):
             "edit",
             "reset"
         ]
+        conf = Config()
         if (len(self.args) == 2 and self.args[0] in options and
                 self.args[1] == command[1]):
-            Config().edit()
+            conf.edit()
         elif (len(self.args) == 2 and self.args[0] in options and
                 self.args[1] == (command[0])):
-            Config().view()
+            conf.view()
         elif (len(self.args) == 2 and self.args[0] in options and
                 self.args[1] == (command[2])):
-            Config().reset()
+            conf.reset()
         else:
             usage("")
 
