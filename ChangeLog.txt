@@ -1,7 +1,8 @@
-3.0.5 - 04/01/2016
+3.0.5 - 06/01/2016
 Updated:
 - Positions arguments in queue and blacklist option for "--add" and "--remove"
 flags
+- Usage arguments
 - Files licence
 
 3.0.4 - 30/12/2015
