@@ -48,6 +48,7 @@ class Initialization(object):
         self.lib_path = self.meta.lib_path
         self.tmp_path = self.meta.tmp_path
         self.build_path = self.meta.build_path
+        self._SOURCES = self.meta._SBo_SOURCES
         self.slpkg_tmp_packages = self.meta.slpkg_tmp_packages
         self.slpkg_tmp_patches = self.meta.slpkg_tmp_patches
         if not os.path.exists(self.conf_path):
@@ -60,8 +61,8 @@ class Initialization(object):
             os.mkdir(self.tmp_path)
         if not os.path.exists(self.build_path):
             os.makedirs(self.build_path)
-        if not os.path.exists(self.build_path + "_SOURCES/"):
-            os.makedirs(self.build_path + "_SOURCES/")
+        if not os.path.exists(self._SOURCES):
+            os.makedirs(self._SOURCES)
         if not os.path.exists(self.slpkg_tmp_packages):
             os.makedirs(self.slpkg_tmp_packages)
         if not os.path.exists(self.slpkg_tmp_patches):

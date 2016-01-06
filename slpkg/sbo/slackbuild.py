@@ -56,6 +56,7 @@ class SBoInstall(object):
         self.msg = Msg()
         self.arch = SBoArch().get()
         self.build_folder = self.meta.build_path
+        self._SOURCES = self.meta._SBo_SOURCES
         for fl in self.flag:
             if fl.startswith("--directory-prefix="):
                 self.build_folder = fl.split("=")[1]
@@ -304,8 +305,8 @@ class SBoInstall(object):
         installs, upgraded, = [], []
         if not os.path.exists(self.build_folder):
             os.makedirs(self.build_folder)
-        if not os.path.exists(self.build_folder + "_SOURCES/"):
-            os.makedirs(self.build_folder + "_SOURCES/")
+        if not os.path.exists(self._SOURCES):
+            os.makedirs(self._SOURCES)
         os.chdir(self.build_folder)
         for prgnam in slackbuilds:
             pkg = "-".join(prgnam.split("-")[:-1])
@@ -327,8 +328,7 @@ class SBoInstall(object):
                 script = sbo_link.split("/")[-1]
                 Download(self.build_folder, sbo_link.split(),
                          repo="sbo").start()
-                Download(self.build_folder + "_SOURCES/", src_link,
-                         repo="sbo").start()
+                Download(self._SOURCES, src_link, repo="sbo").start()
                 if "--download-only" in self.flag:
                     continue
                 sources = self.filenames(src_link)

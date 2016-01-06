@@ -48,6 +48,7 @@ class BuildPackage(object):
         self.auto = auto
         self.meta = _meta_
         self.msg = Msg()
+        self._SOURCES = self.meta._SBo_SOURCES
         self.prgnam = self.script[:-7]
         self.log_file = "build_{0}_log".format(self.prgnam)
         self.sbo_logs = self.meta.log_path + "sbo/"
@@ -76,7 +77,7 @@ class BuildPackage(object):
             self._delete_sbo_tar_gz()
             self._create_md5_dict()
             if not self.auto:
-                os.chdir(self.path + "_SOURCES/")
+                os.chdir(self._SOURCES)
             for src in self.sources:
                 # fix build sources with spaces
                 src = src.replace("%20", " ")
