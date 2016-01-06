@@ -20,7 +20,7 @@
     :target: https://github.com/dslackw/slpkg/issues
  
 
-Slpkg v3.0.4
+Slpkg v3.0.5
 ============
 
 |
@@ -82,8 +82,8 @@ Download latest release:
     
     Required root privileges
    
-    $ tar xvf slpkg-3.0.4.tar.gz
-    $ cd slpkg-3.0.4
+    $ tar xvf slpkg-3.0.5.tar.gz
+    $ cd slpkg-3.0.5
     $ ./install.sh
     
     Installed as Slackware package
@@ -114,9 +114,9 @@ Using pip:
 
 Binary packages:
 
-Slackware: `slpkg-3.0.4-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v3.0.4/slpkg-3.0.4-i486-1_dsw.txz>`_
+Slackware: `slpkg-3.0.5-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v3.0.5/slpkg-3.0.5-i486-1_dsw.txz>`_
 
-Slackware64: `slpkg-3.0.4-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v3.0.4/slpkg-3.0.4-x86_64-1_dsw.txz>`_
+Slackware64: `slpkg-3.0.5-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v3.0.5/slpkg-3.0.5-x86_64-1_dsw.txz>`_
 
 
 Optional dependencies
@@ -1628,6 +1628,6 @@ visit the `store <https://store.slackware.com/cgi-bin/store>`_.
 Copyright 
 ---------
 
-- Copyright © Dimitris Zlatanidis
+- Copyright 2014-2016 © Dimitris Zlatanidis
 - Slackware® is a Registered Trademark of Patrick Volkerding.
 - Linux is a Registered Trademark of Linus Torvalds.

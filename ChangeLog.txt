@@ -2,7 +2,7 @@
 Updated:
 - Positions arguments in queue and blacklist option for "--add" and "--remove"
 flags
-
+- Files licence
 
 3.0.4 - 30/12/2015
 Fixed:
