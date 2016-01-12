@@ -48,7 +48,7 @@ class Initialization(object):
         self.lib_path = self.meta.lib_path
         self.tmp_path = self.meta.tmp_path
         self.build_path = self.meta.build_path
-        self._SOURCES = self.meta._SBo_SOURCES
+        self._SOURCES = self.meta.SBo_SOURCES
         self.slpkg_tmp_packages = self.meta.slpkg_tmp_packages
         self.slpkg_tmp_patches = self.meta.slpkg_tmp_patches
         if not os.path.exists(self.conf_path):

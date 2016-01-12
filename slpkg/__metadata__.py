@@ -164,7 +164,7 @@ class MetaData(object):
     editor = _conf_slpkg["EDITOR"]
 
     # SBo downloading sources path
-    _SBo_SOURCES = build_path + "_SOURCES/"
+    SBo_SOURCES = build_path + "_SOURCES/"
 
     # Remove any gaps
     repositories = [repo.strip() for repo in repositories]

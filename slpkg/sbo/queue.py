@@ -53,7 +53,7 @@ class QueuePkgs(object):
         self.quit = False
         self.queue = self.meta.lib_path + "queue/"
         self.queue_list = self.queue + "queue_list"
-        self._SOURCES = self.meta._SBo_SOURCES
+        self._SOURCES = self.meta.SBo_SOURCES
         if not os.path.exists(self.meta.lib_path):
             os.mkdir(self.meta.lib_path)
         if not os.path.exists(self.queue):

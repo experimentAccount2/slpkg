@@ -48,7 +48,7 @@ class BuildPackage(object):
         self.auto = auto
         self.meta = _meta_
         self.msg = Msg()
-        self._SOURCES = self.meta._SBo_SOURCES
+        self._SOURCES = self.meta.SBo_SOURCES
         self.prgnam = self.script[:-7]
         self.log_file = "build_{0}_log".format(self.prgnam)
         self.sbo_logs = self.meta.log_path + "sbo/"

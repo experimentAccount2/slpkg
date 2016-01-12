@@ -68,7 +68,7 @@ class SBoNetwork(object):
         self.grey = self.meta.color["GREY"]
         self.endc = self.meta.color["ENDC"]
         self.build_folder = self.meta.build_path
-        self._SOURCES = self.meta._SBo_SOURCES
+        self._SOURCES = self.meta.SBo_SOURCES
         self.msg.reading()
         self.data = SBoGrep(name="").names()
         self.case_insensitive()

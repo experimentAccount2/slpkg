@@ -56,7 +56,7 @@ class SBoInstall(object):
         self.msg = Msg()
         self.arch = SBoArch().get()
         self.build_folder = self.meta.build_path
-        self._SOURCES = self.meta._SBo_SOURCES
+        self._SOURCES = self.meta.SBo_SOURCES
         for fl in self.flag:
             if fl.startswith("--directory-prefix="):
                 self.build_folder = fl.split("=")[1]
