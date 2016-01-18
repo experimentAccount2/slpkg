@@ -557,9 +557,10 @@ class ArgParse(object):
                     extra.append(additional)
                     self.args.remove(additional)
                 packages = self.args[1:]
-            if self.args[1] in flags:
-                flag = self.args[1]
-                packages = self.args[2:]
+            for fl in flags:
+                if fl in self.args:
+                    flag = self.args[1]
+                    packages = self.args[2:]
             PackageManager(packages).remove(flag, extra)
         else:
             usage("")
