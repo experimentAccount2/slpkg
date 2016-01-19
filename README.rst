@@ -478,7 +478,7 @@ Command Line Tool Usage
 Slpkg Examples
 --------------
 
-Enable or disable default repositories edit /etc/slpkg/repositories.conf file or with 
+Enable or disable default repositories, edit /etc/slpkg/repositories.conf file or with 
 command.
 (require pythondialog, install with '# slpkg -s sbo python2-pythondialog'):
 
@@ -547,11 +547,6 @@ Also you can check ChangeLog.txt for changes like:
     From 5 repositories need 2 updating. Run the command 'slpkg update'.
 
 
-IMPORTANT: For Alien 's (Eric Hameleers) repositories (alien, multi and ktown) should run 
-'slpkg upgrade' instant 'slpkg update', if you want to spend from -stable in -current or not
-because there is not different file 'ChangeLog.txt' for each version.
-   
-    
 Add and remove custom repositories:
 
 .. code-block:: bash
@@ -1232,7 +1227,7 @@ Install mass-packages:
     $ slpkg -i *.t?z
 
 
-Slpkg auto detect Slackware binary packages (.txz and .tgz) for installation:
+Slpkg auto detect Slackware binary packages (.tgz, .txz, .tlz and .tbz) for installation:
 
 .. code-block:: bash
 
@@ -1252,7 +1247,7 @@ Slpkg auto detect Slackware binary packages (.txz and .tgz) for installation:
      > _
 
     
-Search and find packages from repositories are enabled:
+Search for packages from the enabled repositories:
 
 .. code-block:: bash
    
@@ -1406,7 +1401,7 @@ Removes a previously installed Slackware binary packages:
 
 
 Remove packages with all dependencies and check if used as dependency:
-Presupposes facility with the option '# slpkg -s <repository> <packages>'.
+(Presupposes install with the option '# slpkg -s <repository> <packages>')
 
 .. code-block:: bash
 
