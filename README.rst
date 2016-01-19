@@ -258,7 +258,7 @@ resolve dependencies with additional option '--resolve-off'. Use '--checklist' o
 to choose easy packages. For advanced users, option '--skip' give them more power (see man page).
 
 The most famous command is '# slpkg -s <repository> <packages>' , this command downloads and 
-installs packages with resolve all the dependencies or switch of resolve with additional option
+installs packages with resolve all the dependencies or switch off resolve with additional option
 '--resolve-off'. Also additional option "--case-ins" help you find packages with case insensitive.
 
 Tracking the dependencies of a package with command '# slpkg -t <repository> <package>'.
