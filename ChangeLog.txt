@@ -1,3 +1,9 @@
+3.0.6 - 19/01/2016
+Fixed:
+- "IndexError: list index out of range" when remove packages with "--tag" option
+Updated:
+- README.rst file
+
 3.0.5 - 06/01/2016
 Updated:
 - Positions arguments in queue and blacklist option for "--add" and "--remove"
