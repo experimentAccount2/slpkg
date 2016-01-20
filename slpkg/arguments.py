@@ -35,7 +35,9 @@ def header():
 
 
 def options():
-    """Slpkg is a user-friendly package manager for Slackware installations
+    """Usage: slpkg [COMMANDS|OPTIONS] {repository|package...}
+
+Slpkg is a user-friendly package manager for Slackware installations
                                                  _       _
                                              ___| |_ __ | | ____ _
                                             / __| | '_ \| |/ / _` |
@@ -136,7 +138,9 @@ Homepage: https://github.com/dslackw/slpkg
 
 
 def usage(repo):
-    """Usage: slpkg Commands:
+    """Usage: slpkg [COMMANDS|OPTIONS] {repository|package...}
+
+             Commands:
              [update, --only=[...]]
              [upgrade, --only=[...]]
              [repo-add [repository name] [URL]]
