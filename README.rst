@@ -53,9 +53,6 @@ What makes slpkg to distinguish it from other tools; The user friendliness is it
 target as well as easy to understand and use, also use color to highlight packages and 
 display warning messages, etc.
 
-Also you can install official packages of your favorite distribution directly from the 
-official repositories of Slackware. Even you can check for the official updates and install them.
-
 
 Features
 --------
