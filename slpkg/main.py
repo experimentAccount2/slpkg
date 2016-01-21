@@ -362,16 +362,22 @@ class ArgParse(object):
             "--graph=",
             "--case-ins"
         ]
-        for arg in self.args:
+        for arg in self.args[2:]:
             if arg.startswith(additional_options[1]):
                 flag.append(arg)
                 self.args.remove(arg)
             if arg in additional_options:
                 flag.append(arg)
-        # clean addition options from args
+        # clean additional options from args
         for f in flag:
             if f in self.args:
                 self.args.remove(f)
+        # print usage message if wrong addition option
+        for arg in self.args:
+            if arg.startswith("--"):
+                if arg not in additional_options:
+                    usage("")
+                    raise SystemExit()
         if (len(self.args) >= 3 and self.args[0] in options and
                 self.args[1] in self.meta.repositories):
             TrackingDeps(self.args[2], self.args[1], flag).run()
@@ -606,10 +612,10 @@ class ArgParse(object):
                 tag = arg[len(flag[0]):]
                 self.args.remove(arg)
                 break
-                if tag not in colors:
-                    print("\nslpkg: Error: Available colors {0}\n".format(
-                        colors))
-                    raise SystemExit()
+        if tag and tag not in colors:
+            print("\nslpkg: Error: Available colors {0}\n".format(
+                colors))
+            raise SystemExit()
         if (len(self.args) == 3 and self.args[0] in options and
                 self.args[1] in self.meta.repositories and tag in colors):
             PkgDesc(self.args[2], self.args[1], tag).view()
