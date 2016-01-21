@@ -362,21 +362,22 @@ class ArgParse(object):
             "--graph=",
             "--case-ins"
         ]
-        if (len(self.args) >= 3 and len(self.args) < 6 and
-                self.args[0] in options):
-            if self.args[1] in self.meta.repositories:
-                for arg in self.args[3:]:
-                    if arg.startswith(additional_options[1]):
-                        flag.append(arg)
-                        arg = ""
-                    if arg in additional_options:
-                        flag.append(arg)
-                    if arg and arg not in additional_options:
-                        usage("")
-                        raise SystemExit()
-                TrackingDeps(self.args[2], self.args[1], flag).run()
-            else:
-                usage(self.args[1])
+        for arg in self.args:
+            if arg.startswith(additional_options[1]):
+                flag.append(arg)
+                self.args.remove(arg)
+            if arg in additional_options:
+                flag.append(arg)
+        # clean addition options from args
+        for f in flag:
+            if f in self.args:
+                self.args.remove(f)
+        if (len(self.args) >= 3 and self.args[0] in options and
+                self.args[1] in self.meta.repositories):
+            TrackingDeps(self.args[2], self.args[1], flag).run()
+        elif (len(self.args) >= 2 and
+                self.args[1] not in self.meta.repositories):
+            usage(self.args[1])
         else:
             usage("")
 
