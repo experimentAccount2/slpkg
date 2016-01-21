@@ -599,16 +599,22 @@ class ArgParse(object):
             "cyan",
             "grey"
         ]
+        tag = ""
+        for arg in self.args:
+            if arg.startswith(flag[0]):
+                tag = arg[len(flag[0]):]
+                self.args.remove(arg)
+                break
+                if tag not in colors:
+                    print("\nslpkg: Error: Available colors {0}\n".format(
+                        colors))
+                    raise SystemExit()
         if (len(self.args) == 3 and self.args[0] in options and
+                self.args[1] in self.meta.repositories and tag in colors):
+            PkgDesc(self.args[2], self.args[1], tag).view()
+        elif (len(self.args) == 3 and self.args[0] in options and
                 self.args[1] in self.meta.repositories):
             PkgDesc(self.args[2], self.args[1], paint="").view()
-        elif (len(self.args) == 4 and self.args[0] in options and
-                self.args[3].startswith(flag[0])):
-            tag = self.args[3][len(flag[0]):]
-            if self.args[1] in self.meta.repositories and tag in colors:
-                PkgDesc(self.args[2], self.args[1], tag).view()
-            else:
-                usage(self.args[1])
         elif (len(self.args) > 1 and self.args[0] in options and
                 self.args[1] not in self.meta.repositories):
             usage(self.args[1])
