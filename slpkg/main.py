@@ -392,10 +392,10 @@ class ArgParse(object):
             "--checklist",
             "--case-ins"
         ]
-        for arg in self.args[2:]:
-            if arg in additional_options:
-                flag.append(arg)
-                self.args.remove(arg)
+        for add in additional_options:
+            if add in self.args:
+                flag.append(add)
+                self.args.remove(add)
         if (len(self.args) == 2 and self.args[0] in options and
                 "sbo" in self.meta.repositories):
             SBoNetwork(self.args[1], flag).view()
