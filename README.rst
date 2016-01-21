@@ -379,6 +379,8 @@ Command Line Tool Usage
 -----------------------
 
 .. code-block:: bash
+
+    Usage: slpkg [COMMANDS|OPTIONS] {repository|package...}
     
     Slpkg is a user-friendly package manager for Slackware installations
                                                      _       _
