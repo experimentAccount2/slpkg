@@ -1,9 +1,10 @@
-3.0.6 - 20/01/2016
+3.0.6 - 21/01/2016
 Fixed:
 - "IndexError: list index out of range" when remove packages with "--tag" option
 Updated:
 - README.rst file
 - Usage and help options
+- Positions arguments in "--desc" and "--network" options
 
 3.0.5 - 06/01/2016
 Updated:
