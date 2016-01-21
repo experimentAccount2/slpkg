@@ -378,7 +378,8 @@ class ArgParse(object):
                 if arg not in additional_options:
                     usage("")
                     raise SystemExit()
-        if (len(self.args) >= 3 and self.args[0] in options and
+        if (len(self.args) >= 2 and len(self.args) <= 3 and
+                self.args[0] in options and
                 self.args[1] in self.meta.repositories):
             TrackingDeps(self.args[2], self.args[1], flag).run()
         elif (len(self.args) >= 2 and
