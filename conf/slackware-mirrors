@@ -31,7 +31,7 @@
 # below. Be careful is the template that the rest.
 #
 #
-# Last Updated: Wed Dec 30 08:47:02 UTC 2015
+# Last Updated: Fri Jan 22 00:47:01 UTC 2016
 # 
 # Available http mirrors:
 # 
@@ -110,7 +110,6 @@
 # us		 http://slackblog.com/slackware/ 
 # us		 http://slackbuilds.org/mirror/slackware/ 
 # us		 http://slackware.cs.utah.edu/pub/slackware/ 
-# us		 http://slackware.mirrorcatalogs.com/ 
 # us		 http://slackware.mirrors.tds.net/pub/slackware/ 
 # us		 http://taper.alienbase.nl/mirrors/slackware/ 
 # za		 http://ftp.is.co.za/mirror/ftp.slackware.com/pub/ 
@@ -176,7 +175,6 @@
 # us		 ftp://mirrors3.kernel.org/slackware/ 
 # us		 ftp://mirrors4.kernel.org/slackware/ 
 # us		 ftp://slackware.cs.utah.edu/slackware/ 
-# us		 ftp://slackware.mirrorcatalogs.com/ 
 # us		 ftp://slackware.mirrors.tds.net/pub/slackware 
 # us		 ftp://taper.alienbase.nl/ 
 # za		 ftp://ftp.is.co.za/mirror/ftp.slackware.com/pub/ 
