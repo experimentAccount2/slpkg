@@ -35,9 +35,10 @@ def header():
 
 
 def options():
-    """Usage: slpkg [COMMANDS|OPTIONS] {repository|package...}
+    """Slpkg is a user-friendly package manager for Slackware installations
 
-Slpkg is a user-friendly package manager for Slackware installations
+Usage: slpkg [COMMANDS|OPTIONS] {repository|package...}
+
                                                  _       _
                                              ___| |_ __ | | ____ _
                                             / __| | '_ \| |/ / _` |
