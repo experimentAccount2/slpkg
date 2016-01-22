@@ -88,12 +88,12 @@ Optional arguments:
                                              Print, edit the configuration file
                                              or reset in the default values.
   -l | --list, [repository], --index,        Print a list of all available
-       --installed                           packages repository, index or
+       --installed                           packages from repository, index or
                                              print only packages installed on
                                              the system.
   -c | --check, [repository], --upgrade,     Check for updated packages from
-       --skip=[...], --resolve--off          the repositories and install with
-       --checklist                           all dependencies.
+       --skip=[...], --resolve--off          the repositories and upgrade or
+       --checklist                           install with all dependencies.
   -s | --sync, [repository] [package...],    Sync packages. Install packages
        --resolve-off, --download-only,       directly from remote repositories
        --directory-prefix=[dir], --case-ins  with all dependencies.
@@ -110,9 +110,8 @@ Optional arguments:
        --case-ins                            terminal and manage multiple
                                              options like reading, downloading,
                                              building, installation, etc.
-  -F | --FIND, [package...], --case-ins      Find packages from repositories
-                                             and search at each enabled
-                                             repository and prints results.
+  -F | --FIND, [package...], --case-ins      Find packages from each enabled
+                                             repository and print results.
   -f | --find, [package...], --case-ins      Find and print installed packages
                                              reporting the size and the sum.
   -i | --installpkg, [options] [package...]  Installs single or multiple *.tgz
