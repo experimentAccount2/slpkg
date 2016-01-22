@@ -20,7 +20,7 @@
     :target: https://github.com/dslackw/slpkg/issues
  
 
-Slpkg v3.0.6
+Slpkg v3.0.7
 ============
 
 |
@@ -79,8 +79,8 @@ Download latest release:
     
     Required root privileges
    
-    $ tar xvf slpkg-3.0.6.tar.gz
-    $ cd slpkg-3.0.6
+    $ tar xvf slpkg-3.0.7.tar.gz
+    $ cd slpkg-3.0.7
     $ ./install.sh
     
     Installed as Slackware package
@@ -111,9 +111,9 @@ Using pip:
 
 Binary packages:
 
-Slackware: `slpkg-3.0.6-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v3.0.6/slpkg-3.0.6-i486-1_dsw.txz>`_
+Slackware: `slpkg-3.0.7-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v3.0.7/slpkg-3.0.7-i486-1_dsw.txz>`_
 
-Slackware64: `slpkg-3.0.6-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v3.0.6/slpkg-3.0.6-x86_64-1_dsw.txz>`_
+Slackware64: `slpkg-3.0.7-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v3.0.7/slpkg-3.0.7-x86_64-1_dsw.txz>`_
 
 
 Optional dependencies
@@ -380,9 +380,10 @@ Command Line Tool Usage
 
 .. code-block:: bash
 
+    Slpkg is a user-friendly package manager for Slackware installations
+    
     Usage: slpkg [COMMANDS|OPTIONS] {repository|package...}
 
-    Slpkg is a user-friendly package manager for Slackware installations
                                                      _       _
                                                  ___| |_ __ | | ____ _
                                                 / __| | '_ \| |/ / _` |
