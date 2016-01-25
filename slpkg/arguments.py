@@ -112,7 +112,7 @@ Optional arguments:
                                              options like reading, downloading,
                                              building, installation, etc.
   -F | --FIND, [package...], --case-ins      Find packages from each enabled
-                                             repository and print results.
+                                             repository and view results.
   -f | --find, [package...], --case-ins      Find and print installed packages
                                              reporting the size and the sum.
   -i | --installpkg, [options] [package...]  Installs single or multiple *.tgz
