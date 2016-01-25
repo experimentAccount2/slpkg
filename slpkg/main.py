@@ -199,15 +199,20 @@ class ArgParse(object):
     def command_deps_status(self):
         """Print dependencies status
         """
+        image = ""
+        for arg in self.args:
+            if arg.startswith("--graph="):
+                image = arg.split("=")[1]
         if len(self.args) == 1 and self.args[0] == "deps-status":
-            DependenciesStatus(image="").show()
-        elif (len(self.args) == 2 and self.args[0] == "deps-status" and
-                self.args[1].startswith("--graph=")):
-            image = self.args[1].split("=")[1]
+            DependenciesStatus(image).show()
+        elif len(self.args) == 2 and self.args[0] == "deps-status" and image:
             DependenciesStatus(image).show()
         elif (len(self.args) == 2 and self.args[0] == "deps-status" and
-                self.args[1] == "--tree"):
-            DependenciesStatus(image="").tree()
+                "--tree" in self.args):
+            DependenciesStatus(image).tree()
+        elif (len(self.args) == 3 and self.args[0] == "deps-status" and
+                "--tree" in self.args and image):
+            DependenciesStatus(image).tree()
         else:
             usage("")
 
