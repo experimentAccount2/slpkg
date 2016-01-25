@@ -128,8 +128,8 @@ Optional arguments:
        --checklist                           while writing a progress report
        options=[-warn, -preserve, -copy,     to the standard output.
        -keep]                                Use only package name.
-  -d | --display, [package...]               Display the installed packages
-                                             contents and file list.
+  -d | --display, [package...]               Display the contents of installed
+                                             packages and file list.
 
 You can read more about slpkg from manpage or see examples from readme file.
 Issues: https://github.com/dslackw/slpkg/issues
