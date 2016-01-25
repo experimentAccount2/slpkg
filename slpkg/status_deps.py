@@ -104,6 +104,8 @@ class DependenciesStatus(object):
             sys.stdout.write("\x1b[1A{0}\n".format(" "))
             sys.stdout.flush()
         self.summary()
+        if self.image:
+            Graph(self.image).dependencies(self.dmap)
 
     def no_logs(self):
         """Print message if no logs found
