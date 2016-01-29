@@ -437,7 +437,7 @@ class PackageManager(object):
                     bol = eol = "\n"
                 self.msg.pkg_not_found(bol, pkg, message, eol)
 
-    def package_list(self, repo, INDEX, installed):
+    def package_list(self, repo, name, INDEX, installed):
         """List with the installed packages
         """
         tty_size = os.popen("stty size", "r").read().split()
@@ -450,6 +450,9 @@ class PackageManager(object):
             all_installed_names = self.list_of_installed(repo)
             print("")
             for pkg in sorted(pkg_list):
+                package = pkg
+                if name and repo != "sbo":
+                    pkg = split_package(pkg)[0]
                 if INDEX:
                     index += 1
                     pkg = self.list_color_tag(pkg)
@@ -472,7 +475,7 @@ class PackageManager(object):
                                                      pkg,
                                                      self.meta.color["ENDC"]))
                     else:
-                        if pkg[:-4] in all_installed_names:
+                        if package[:-4] in all_installed_names:
                             print("{0}{1}{2}".format(self.meta.color["GREEN"],
                                                      pkg,
                                                      self.meta.color["ENDC"]))

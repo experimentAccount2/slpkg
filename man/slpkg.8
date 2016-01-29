@@ -38,7 +38,7 @@ Usage: slpkg [COMMANDS|OPTIONS] {repository|package...}
              [-q [package...] --add, --remove,
                  [list, build, install, build-install]]
              [-g [print, edit, reset]]
-             [-l [repository], --index, --installed]
+             [-l [repository], --index, --installed, --name]
              [-c [repository], --upgrade, --skip=[...], --resolve-off,
                                --checklist]
              [-s [repository] [package...], --resolve-off, --download-only,
@@ -189,7 +189,7 @@ Build or install or build and install packages are queued.
 Print, reset or edit configuration file.
 
 .SS -l, --list, list of installed packages
-\fBslpkg\fP \fB-l\fP <\fIrepository\fP>, \fB--index\fP, \fB--installed\fP
+\fBslpkg\fP \fB-l\fP <\fIrepository\fP>, \fB--index\fP, \fB--installed\fP, \fB--name\fP
 .PP
 Print a list of all available packages from repository, index or print only packages installed on the 
 system. Support command "grep" like "# slpkg -l sbo | grep python".

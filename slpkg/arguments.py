@@ -89,7 +89,7 @@ Optional arguments:
                                              Print, edit the configuration file
                                              or reset in the default values.
   -l | --list, [repository], --index,        Print a list of all available
-       --installed                           packages from repository, index or
+       --installed, --name                   packages from repository, index or
                                              print only packages installed on
                                              the system.
   -c | --check, [repository], --upgrade,     Check for updated packages from
@@ -163,7 +163,7 @@ def usage(repo):
              [-q [package...] --add, --remove,
                  [list, build, install, build-install]]
              [-g [print, edit, reset]]
-             [-l [repository], --index, --installed]
+             [-l [repository], --index, --installedi, --name]
              [-c [repository], --upgrade, --skip=[...], --resolve-off,
                                --checklist]
              [-s [repository] [package...], --resolve-off, --download-only,

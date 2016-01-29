@@ -434,7 +434,7 @@ Command Line Tool Usage
                                                  Print, edit the configuration file
                                                  or reset in the default values.
       -l | --list, [repository], --index,        Print a list of all available
-           --installed                           packages from repository, index or
+           --installed, --name                   packages from repository, index or
                                                  print only packages installed on
                                                  the system.
       -c | --check, [repository], --upgrade,     Check for updated packages from

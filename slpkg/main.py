@@ -243,22 +243,28 @@ class ArgParse(object):
             "-l",
             "--list"
         ]
-        flag = ["--index", "--installed"]
+        flag = ["--index", "--installed", "--name"]
+        name = False
+        if "--name" in self.args:
+            name = True
+            self.args.remove("--name")
         if (len(self.args) == 3 and self.args[0] in options and
                 self.args[1] in self.meta.repositories):
             if self.args[2] == flag[0]:
                 PackageManager(binary=None).package_list(self.args[1],
+                                                         name,
                                                          INDEX=True,
                                                          installed=False)
             elif self.args[2] == flag[1]:
                 PackageManager(binary=None).package_list(self.args[1],
+                                                         name,
                                                          INDEX=False,
                                                          installed=True)
             else:
                 usage("")
         elif (len(self.args) == 2 and self.args[0] in options and
                 self.args[1] in self.meta.repositories):
-            PackageManager(None).package_list(self.args[1], INDEX=False,
+            PackageManager(None).package_list(self.args[1], name, INDEX=False,
                                               installed=False)
         elif (len(self.args) > 1 and self.args[0] in options and
                 self.args[1] not in self.meta.repositories):
