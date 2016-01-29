@@ -163,7 +163,7 @@ def usage(repo):
              [-q [package...] --add, --remove,
                  [list, build, install, build-install]]
              [-g [print, edit, reset]]
-             [-l [repository], --index, --installedi, --name]
+             [-l [repository], --index, --installed, --name]
              [-c [repository], --upgrade, --skip=[...], --resolve-off,
                                --checklist]
              [-s [repository] [package...], --resolve-off, --download-only,
