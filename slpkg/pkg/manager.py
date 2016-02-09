@@ -447,12 +447,10 @@ class PackageManager(object):
             index, page, pkg_list = 0, row, []
             r = self.list_lib(repo)
             pkg_list = self.list_greps(repo, r)[0]
-            all_installed_names = self.list_of_installed(repo)
+            all_installed_names = self.list_of_installed(repo, name)
             print("")
             for pkg in sorted(pkg_list):
-                package = pkg
-                if name and repo != "sbo":
-                    pkg = split_package(pkg)[0]
+                pkg = self._splitting_packages(pkg, repo, name)
                 if INDEX:
                     index += 1
                     pkg = self.list_color_tag(pkg)
@@ -475,7 +473,7 @@ class PackageManager(object):
                                                      pkg,
                                                      self.meta.color["ENDC"]))
                     else:
-                        if package[:-4] in all_installed_names:
+                        if pkg in all_installed_names:
                             print("{0}{1}{2}".format(self.meta.color["GREEN"],
                                                      pkg,
                                                      self.meta.color["ENDC"]))
@@ -485,6 +483,15 @@ class PackageManager(object):
         except EOFError:
             print("")   # new line at exit
             raise SystemExit()
+
+    def _splitting_packages(self, pkg, repo, name):
+        """Return package name from repositories
+        """
+        if name and repo != "sbo":
+            pkg = split_package(pkg)[0]
+        elif not name and repo != "sbo":
+            pkg = pkg[:-4]
+        return pkg
 
     def list_greps(self, repo, packages):
         """Grep packages
@@ -532,7 +539,7 @@ class PackageManager(object):
                                      self.meta.color["ENDC"])
         return pkg
 
-    def list_of_installed(self, repo):
+    def list_of_installed(self, repo, name):
         """Return installed packages
         """
         all_installed_names = []
@@ -542,7 +549,10 @@ class PackageManager(object):
                 name = split_package(inst)[0]
                 all_installed_names.append(name)
             else:
-                all_installed_names.append(inst)
+                if name:
+                    all_installed_names.append(split_package(inst)[0])
+                else:
+                    all_installed_names.append(inst)
         return all_installed_names
 
 

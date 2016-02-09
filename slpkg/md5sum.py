@@ -28,6 +28,8 @@ import hashlib
 def md5(source):
     """Return MD5 Checksum
     """
+    # fix passing char '+' from source
+    source = source.replace("%2B", "+")
     with open(source) as file_to_check:
         data = file_to_check.read()
         return hashlib.md5(data).hexdigest()
