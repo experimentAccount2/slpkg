@@ -51,7 +51,8 @@ class Download(object):
         dwn_count = 1
         self._directory_prefix()
         for dwn in self.url:
-            self.file_name = dwn.split("/")[-1]
+            # get file name from url and fix passing char '+'
+            self.file_name = dwn.split("/")[-1].replace("%2B", "+")
             self._check_certificate()
             print("\n[{0}/{1}][ {2}Download{3} ] --> {4}\n".format(
                 dwn_count, len(self.url), self.meta.color["GREEN"],

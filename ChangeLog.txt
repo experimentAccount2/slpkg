@@ -1,6 +1,7 @@
-3.0.9 - 04/01/2016
+3.0.9 - 09/02/2016
 Fixed:
 - Listed installed packages from repositories with the name only #58
+- Passing char '+' from sources
 
 3.0.8 - 29/01/2016
 Added:

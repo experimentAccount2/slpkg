@@ -82,7 +82,8 @@ class BuildPackage(object):
                 # fix build sources with spaces
                 src = src.replace("%20", " ")
                 check_md5(self.sbo_md5[src], src)
-                shutil.copy2(src, self.path + self.prgnam)
+                # copy source and fix passing char '+' from file name
+                shutil.copy2(src.replace("%2B", "+"), self.path + self.prgnam)
             os.chdir(self.path + self.prgnam)
             # change permissions
             subprocess.call("chmod +x {0}.SlackBuild".format(self.prgnam),
