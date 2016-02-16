@@ -91,7 +91,10 @@ class RepoInit(object):
         if self.meta.arch == "x86_64":
             arch = "{0}-x86_64".format(ver)
         if self.meta.slack_rel == "current":
-            arch = "{0}-x86_64".format(self.meta.slack_rel)
+            if self.meta.arch == "x86_64":
+                arch = "{0}-x86_64".format(self.meta.slack_rel)
+            else:
+                arch = "{0}-x86".format(self.meta.slack_rel)
         self.mirror = "{0}{1}/".format(self.def_repo_dict["slonly"], arch)
 
     def _init_ktown(self):
