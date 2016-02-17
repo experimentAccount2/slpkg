@@ -2,6 +2,8 @@
 Fixed:
 - Downloaded packages for x86 arch in the "slonly" repository #59
 - Continue build and install sbo packages if source link is death
+Updated:
+- Status toolbar
 
 3.0.9 - 09/02/2016
 Fixed:
