@@ -1,3 +1,7 @@
+3.1.0 - 17/02/2016
+Fixed:
+- Downloaded packages for x86 arch in the "slonly" repository #59
+
 3.0.9 - 09/02/2016
 Fixed:
 - Listed installed packages from repositories with the name only #58
