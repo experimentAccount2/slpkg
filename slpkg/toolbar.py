@@ -21,7 +21,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-
 import sys
 import time
 
@@ -32,7 +31,7 @@ def status(sec):
     """Toolbar progressive status
     """
     if _meta_.prg_bar in ["on", "ON"]:
-        syms = ["\\", "|", "/", "-"]
+        syms = ["|", "/", "-", "\\"]
         for sym in syms:
             sys.stdout.write("\b{0}{1}{2}".format(_meta_.color["GREY"], sym,
                                                   _meta_.color["ENDC"]))
