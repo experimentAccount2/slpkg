@@ -79,6 +79,8 @@ class BuildPackage(object):
             if not self.auto:
                 os.chdir(self._SOURCES)
             for src in self.sources:
+                if not os.path.isfile(src):
+                    continue
                 # fix build sources with spaces
                 src = src.replace("%20", " ")
                 check_md5(self.sbo_md5[src], src)

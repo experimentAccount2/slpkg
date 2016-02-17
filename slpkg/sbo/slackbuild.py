@@ -335,15 +335,16 @@ class SBoInstall(object):
                 BuildPackage(script, sources, self.build_folder,
                              auto=False).build()
                 binary = slack_package(prgnam)
-                if GetFromInstalled(pkg).name() == pkg:
-                    print("[ {0}Upgrading{1} ] --> {2}".format(
-                        self.meta.color["YELLOW"],
-                        self.meta.color["ENDC"], prgnam))
-                    upgraded.append(prgnam)
-                else:
-                    print("[ {0}Installing{1} ] --> {2}".format(
-                        self.meta.color["GREEN"],
-                        self.meta.color["ENDC"], prgnam))
-                    installs.append(prgnam)
-                PackageManager(binary).upgrade(flag="--install-new")
+                if os.path.isfile("".join(binary)):
+                    if GetFromInstalled(pkg).name() == pkg:
+                        print("[ {0}Upgrading{1} ] --> {2}".format(
+                            self.meta.color["YELLOW"],
+                            self.meta.color["ENDC"], prgnam))
+                        upgraded.append(prgnam)
+                    else:
+                        print("[ {0}Installing{1} ] --> {2}".format(
+                            self.meta.color["GREEN"],
+                            self.meta.color["ENDC"], prgnam))
+                        installs.append(prgnam)
+                    PackageManager(binary).upgrade(flag="--install-new")
         return installs, upgraded

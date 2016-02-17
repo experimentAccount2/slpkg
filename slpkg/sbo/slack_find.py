@@ -43,5 +43,5 @@ def slack_package(prgnam):
             cache = binary
     if not binary:
         Msg().build_FAILED(prgnam)
-        raise SystemExit()
+        # raise SystemExit()
     return ["".join(_meta_.output + binary)]
