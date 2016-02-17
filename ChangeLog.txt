@@ -1,6 +1,7 @@
 3.1.0 - 17/02/2016
 Fixed:
 - Downloaded packages for x86 arch in the "slonly" repository #59
+- Continue build and install sbo packages if source link is death
 
 3.0.9 - 09/02/2016
 Fixed:
