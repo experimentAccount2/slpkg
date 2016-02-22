@@ -119,7 +119,8 @@ class MetaData(object):
         "SLACKPKG_LOG": "on",
         "ONLY_INSTALLED": "off",
         "PRG_BAR": "on",
-        "EDITOR": "nano"
+        "EDITOR": "nano",
+        "NOT_DOWNGRADE": "off"
     }
 
     default_repositories = ["slack", "sbo", "rlw", "alien", "slacky", "studio",
@@ -162,6 +163,7 @@ class MetaData(object):
     only_installed = _conf_slpkg["ONLY_INSTALLED"]
     prg_bar = _conf_slpkg["PRG_BAR"]
     editor = _conf_slpkg["EDITOR"]
+    not_downgrade = _conf_slpkg["NOT_DOWNGRADE"]
 
     # SBo downloading sources path
     SBo_SOURCES = build_path + "_SOURCES/"

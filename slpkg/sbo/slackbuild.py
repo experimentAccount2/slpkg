@@ -23,6 +23,7 @@
 
 
 import os
+from distutils.version import LooseVersion
 
 from slpkg.utils import Utils
 from slpkg.messages import Msg
@@ -309,6 +310,9 @@ class SBoInstall(object):
             os.makedirs(self._SOURCES)
         os.chdir(self.build_folder)
         for prgnam in slackbuilds:
+            if (self.meta.not_downgrade == "on" and
+                    self.not_downgrade(prgnam) == True):
+                continue
             pkg = "-".join(prgnam.split("-")[:-1])
             installed = "".join(find_package(prgnam, self.meta.pkg_path))
             src_link = SBoGrep(pkg).source().split()
@@ -348,3 +352,16 @@ class SBoInstall(object):
                         installs.append(prgnam)
                     PackageManager(binary).upgrade(flag="--install-new")
         return installs, upgraded
+
+    def not_downgrade(self, prgnam):
+        """Don't downgrade packages if sbo version is lower than
+        installed"""
+        name = "-".join(prgnam.split("-")[:-1])
+        sbo_ver = prgnam.split("-")[-1]
+        ins_ver = GetFromInstalled(name).version()[1:]
+        if LooseVersion(sbo_ver) < LooseVersion(ins_ver):
+            self.msg.template(78)
+            print("| Package {0} don't downgrade, "
+                  "setting by user".format(name))
+            self.msg.template(78)
+            return True

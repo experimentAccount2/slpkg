@@ -62,7 +62,8 @@ class Config(object):
             "SLACKPKG_LOG",
             "ONLY_INSTALLED",
             "PRG_BAR",
-            "EDITOR"
+            "EDITOR",
+            "NOT_DOWNGRADE"
         ]
         read_conf = Utils().read_file(self.config_file)
         for line in read_conf.splitlines():

@@ -23,6 +23,7 @@
 
 
 import os
+from distutils.version import LooseVersion
 
 from slpkg.utils import Utils
 from slpkg.sizes import units
@@ -128,6 +129,9 @@ class BinaryInstall(object):
             if self.msg.answer() in ["y", "Y"]:
                 for inst, dwn in zip(self.dep_install + self.install,
                                      self.dep_dwn + self.dwn):
+                    if (self.meta.not_downgrade == "on" and
+                            self.not_downgrade(inst) == True):
+                        continue
                     if (not os.path.isfile(self.meta.pkg_path + inst[:-4]) or
                             "--download-only" in self.flag):
                         Download(self.tmp_path, dwn.split(), self.repo).start()
@@ -197,6 +201,9 @@ class BinaryInstall(object):
         """
         installs, upgraded = [], []
         for inst in (self.dep_install + self.install):
+            if (self.meta.not_downgrade == "on" and
+                    self.not_downgrade(inst) == True):
+                continue
             package = (self.tmp_path + inst).split()
             pkg_ver = "{0}-{1}".format(split_package(inst)[0],
                                        split_package(inst)[1])
@@ -212,6 +219,19 @@ class BinaryInstall(object):
                 installs.append(pkg_ver)
                 PackageManager(package).upgrade("--install-new")
         return [installs, upgraded]
+
+    def not_downgrade(self, package):
+        """Don't downgrade packages if sbo version is lower than
+        installed"""
+        name = split_package(package)[0]
+        rep_ver = split_package(package)[1]
+        ins_ver = GetFromInstalled(name).version()[1:]
+        if LooseVersion(rep_ver) < LooseVersion(ins_ver):
+            self.msg.template(78)
+            print("| Package {0} don't downgrade, "
+                  "setting by user".format(name))
+            self.msg.template(78)
+            return True
 
     def checksums(self, install):
         """Checksums before install
