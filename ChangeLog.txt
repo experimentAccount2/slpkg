@@ -1,3 +1,7 @@
+3.1.1 - 23/02/2016
+Added:
+- Feature: don't downgrade packages, setting via configuration file
+
 3.1.0 - 17/02/2016
 Fixed:
 - Downloaded packages for x86 arch in the "slonly" repository #59
