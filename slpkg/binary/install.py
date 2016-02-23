@@ -223,6 +223,8 @@ class BinaryInstall(object):
         name = split_package(package)[0]
         rep_ver = split_package(package)[1]
         ins_ver = GetFromInstalled(name).version()[1:]
+        if not ins_ver:
+            ins_ver = "0"
         if LooseVersion(rep_ver) < LooseVersion(ins_ver):
             self.msg.template(78)
             print("| Package {0} don't downgrade, "
