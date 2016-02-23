@@ -201,9 +201,6 @@ class BinaryInstall(object):
         """
         installs, upgraded = [], []
         for inst in (self.dep_install + self.install):
-            if (self.meta.not_downgrade == "on" and
-                    self.not_downgrade(inst) == True):
-                continue
             package = (self.tmp_path + inst).split()
             pkg_ver = "{0}-{1}".format(split_package(inst)[0],
                                        split_package(inst)[1])
