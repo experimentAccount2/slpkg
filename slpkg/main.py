@@ -324,7 +324,8 @@ class ArgParse(object):
                     self.args.remove(arg)
                 if arg in flags:
                     flag.append(arg)
-                    self.args.remove(arg)
+                    if arg in self.args:
+                        self.args.remove(arg)
         return flag, skip
 
     def pkg_install(self):
