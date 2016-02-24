@@ -182,7 +182,7 @@ class BinaryInstall(object):
         """
         for dep in self.dependencies:
             deps = Utils().dimensional_list(Dependencies(
-                self.PACKAGES_TXT, self.repo, self.blacklist).binary(
+                self.repo, self.blacklist).binary(
                     dep, self.flag))
             self.deps_dict[dep] = deps
 
@@ -248,7 +248,7 @@ class BinaryInstall(object):
             status(0.05)
             dependencies = []
             dependencies = Utils().dimensional_list(Dependencies(
-                self.PACKAGES_TXT, self.repo, self.blacklist).binary(
+                self.repo, self.blacklist).binary(
                     dep, self.flag))
             requires += dependencies
             self.deps_dict[dep] = Utils().remove_dbs(dependencies)

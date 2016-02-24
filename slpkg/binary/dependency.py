@@ -33,8 +33,7 @@ from slpkg.binary.greps import Requires
 class Dependencies(object):
     """Resolving binary dependencies
     """
-    def __init__(self, PACKAGES_TXT, repo, black):
-        self.packages = PACKAGES_TXT
+    def __init__(self, repo, black):
         self.repo = repo
         self.black = black
         self.dep_results = []
