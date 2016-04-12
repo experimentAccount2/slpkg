@@ -684,6 +684,8 @@ class Update(object):
         if only:
             enabled = only
         for repo in enabled:
+            if check_for_local_repos(repo) == True:
+                continue
             sys.stdout.write("{0}Check repository [{1}{2}{3}] ... "
                              "{4}".format(
                                     self.meta.color["GREY"],
@@ -707,16 +709,28 @@ def check_exists_repositories():
     """Checking if repositories exists by PACKAGES.TXT file
     """
     update = False
-    pkg_list = "PACKAGES.TXT"
     for repo in _meta_.repositories:
         pkg_list = "PACKAGES.TXT"
         if repo == "sbo":
             pkg_list = "SLACKBUILDS.TXT"
-        if not os.path.isfile("{0}{1}{2}".format(_meta_.lib_path, repo,
-                                                 "_repo/{0}".format(pkg_list))):
+        if check_for_local_repos(repo) == True:
+            pkg_list = "PACKAGES.TXT"
+            continue
+        if not os.path.isfile("{0}{1}{2}".format(
+                _meta_.lib_path, repo, "_repo/{0}".format(pkg_list))):
             update = True
     if update:
         print("\n  Please update packages lists. Run 'slpkg update'.\n" +
               "  This command should be used to synchronize packages\n" +
               "  lists from the repositories are enabled.\n")
         raise SystemExit()
+
+
+def check_for_local_repos(repo):
+    """Check if repository is local
+    """
+    repos_dict = Repo().default_repository()
+    if repo in repos_dict:
+        repo_url = repos_dict[repo]
+        if repo_url.startswith("file:///"):
+            return True
