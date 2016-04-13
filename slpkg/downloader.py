@@ -23,9 +23,11 @@
 
 
 import os
+import tarfile
 import subprocess
 
 from slpkg.messages import Msg
+from slpkg.slack.slack_version import slack_ver
 from slpkg.__metadata__ import MetaData as _meta_
 
 
@@ -53,6 +55,11 @@ class Download(object):
         for dwn in self.url:
             # get file name from url and fix passing char '+'
             self.file_name = dwn.split("/")[-1].replace("%2B", "+")
+
+            if dwn.startswith("file:///"):
+                source_dir = dwn[7:-7].replace("/" + slack_ver(), "")
+                self._make_tarfile(self.file_name, source_dir)
+
             self._check_certificate()
             print("\n[{0}/{1}][ {2}Download{3} ] --> {4}\n".format(
                 dwn_count, len(self.url), self.meta.color["GREEN"],
@@ -69,6 +76,12 @@ class Download(object):
                                 self.path, self.file_name, dwn), shell=True)
             self._check_if_downloaded()
             dwn_count += 1
+
+    def _make_tarfile(self, output_filename, source_dir):
+        """Create .tar.gz file
+        """
+        with tarfile.open(output_filename, "w:gz") as tar:
+            tar.add(source_dir, arcname=os.path.basename(source_dir))
 
     def _directory_prefix(self):
         """Downloader options for specific directory
