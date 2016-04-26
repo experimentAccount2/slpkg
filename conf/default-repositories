@@ -22,12 +22,13 @@
 #
 # END OF LEGAL NOTICE
 #
-# Change only the url if necessary finishing with "/". 
+# Change only the url if necessary finishing with "/".
+# For local repository start with "file:///" avoid end path with "/".
 # Do NOT change the name of the repository.
 # Default repositories names:
-# sbo, rlw, alien, slacky, studio, slackr, slonly, ktown, multi, slacke, salix
+# sbo, rlw, alien, slacky, studio, slackr, slonly, ktown, multi, slacke, salix,
 # slackl, rested, msb
-# ----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #
 # NAME      URL
   sbo       http://slackbuilds.org/slackbuilds/
