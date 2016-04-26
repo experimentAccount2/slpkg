@@ -57,7 +57,7 @@ class Download(object):
             self.file_name = dwn.split("/")[-1].replace("%2B", "+")
 
             if dwn.startswith("file:///"):
-                source_dir = dwn[7:-7].replace("/" + slack_ver(), "")
+                source_dir = dwn[7:-7].replace(slack_ver(), "")
                 self._make_tarfile(self.file_name, source_dir)
 
             self._check_certificate()
