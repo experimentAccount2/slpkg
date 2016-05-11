@@ -176,7 +176,7 @@ Default available Repositories:
 - `Studioware <http://studioware.org/packages>`_
   Arch: {x86, x86_64}
   Versions: {13.37, 14.0, 14.1}
-- `Slackers <http://ponce.cc/slackers/repository/>`_
+- `Slackers <http://slack.conraid.net/repository/>`_
   Arch: {x86_64}
   Versions: {current}
 - `Slackonly <https://slackonly.com/>`_
