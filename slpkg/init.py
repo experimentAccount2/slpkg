@@ -684,7 +684,7 @@ class Update(object):
         if only:
             enabled = only
         for repo in enabled:
-            if check_for_local_repos(repo) == True:
+            if check_for_local_repos(repo) is True:
                 continue
             sys.stdout.write("{0}Check repository [{1}{2}{3}] ... "
                              "{4}".format(
@@ -713,7 +713,7 @@ def check_exists_repositories():
         pkg_list = "PACKAGES.TXT"
         if repo == "sbo":
             pkg_list = "SLACKBUILDS.TXT"
-        if check_for_local_repos(repo) == True:
+        if check_for_local_repos(repo) is True:
             pkg_list = "PACKAGES.TXT"
             continue
         if not os.path.isfile("{0}{1}{2}".format(

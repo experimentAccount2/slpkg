@@ -311,7 +311,7 @@ class SBoInstall(object):
         os.chdir(self.build_folder)
         for prgnam in slackbuilds:
             if (self.meta.not_downgrade == "on" and
-                    self.not_downgrade(prgnam) == True):
+                    self.not_downgrade(prgnam) is True):
                 continue
             pkg = "-".join(prgnam.split("-")[:-1])
             installed = "".join(find_package(prgnam, self.meta.pkg_path))

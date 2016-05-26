@@ -130,7 +130,7 @@ class BinaryInstall(object):
                 for inst, dwn in zip(self.dep_install + self.install,
                                      self.dep_dwn + self.dwn):
                     if (self.meta.not_downgrade == "on" and
-                            self.not_downgrade(inst) == True):
+                            self.not_downgrade(inst) is True):
                         continue
                     if (not os.path.isfile(self.meta.pkg_path + inst[:-4]) or
                             "--download-only" in self.flag):
