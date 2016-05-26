@@ -451,6 +451,17 @@ class PackageManager(object):
             print("")
             for pkg in sorted(pkg_list):
                 pkg = self._splitting_packages(pkg, repo, name)
+                if installed:
+                    if repo == "sbo":
+                        if pkg in all_installed_names:
+                            pkg = ("{0}{1}{2}".format(self.meta.color["GREEN"],
+                                                      pkg,
+                                                      self.meta.color["ENDC"]))
+                    else:
+                        if pkg in all_installed_names:
+                            pkg = ("{0}{1}{2}".format(self.meta.color["GREEN"],
+                                                      pkg,
+                                                      self.meta.color["ENDC"]))
                 if INDEX:
                     index += 1
                     pkg = self.list_color_tag(pkg)
@@ -466,17 +477,6 @@ class PackageManager(object):
                             break
                         print("")   # new line after page
                         page += row
-                elif installed:
-                    if repo == "sbo":
-                        if pkg in all_installed_names:
-                            print("{0}{1}{2}".format(self.meta.color["GREEN"],
-                                                     pkg,
-                                                     self.meta.color["ENDC"]))
-                    else:
-                        if pkg in all_installed_names:
-                            print("{0}{1}{2}".format(self.meta.color["GREEN"],
-                                                     pkg,
-                                                     self.meta.color["ENDC"]))
                 else:
                     print(pkg)
             print("")   # new line at end

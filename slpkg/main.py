@@ -244,31 +244,24 @@ class ArgParse(object):
             "--list"
         ]
         flag = ["--index", "--installed", "--name"]
-        name = False
-        if "--name" in self.args:
-            name = True
-            self.args.remove("--name")
-        if (len(self.args) == 3 and self.args[0] in options and
-                self.args[1] in self.meta.repositories):
-            if self.args[2] == flag[0]:
-                PackageManager(binary=None).package_list(self.args[1],
-                                                         name,
-                                                         INDEX=True,
-                                                         installed=False)
-            elif self.args[2] == flag[1]:
-                PackageManager(binary=None).package_list(self.args[1],
-                                                         name,
-                                                         INDEX=False,
-                                                         installed=True)
-            else:
+        name = INDEX = installed = False
+        for arg in self.args[2:]:
+            if flag[0] == arg:
+                INDEX = True
+            if flag[1] in arg:
+                installed = True
+            if flag[2] == arg:
+                name = True
+            if arg not in flag:
                 usage("")
-        elif (len(self.args) == 2 and self.args[0] in options and
+                raise SystemExit()
+        if (len(self.args) >= 1 and len(self.args) <= 5 and
+                self.args[0] in options and
                 self.args[1] in self.meta.repositories):
-            PackageManager(None).package_list(self.args[1], name, INDEX=False,
-                                              installed=False)
-        elif (len(self.args) > 1 and self.args[0] in options and
-                self.args[1] not in self.meta.repositories):
-            usage(self.args[1])
+                PackageManager(binary=None).package_list(self.args[1],
+                                                         name,
+                                                         INDEX,
+                                                         installed)
         else:
             usage("")
 
