@@ -138,8 +138,7 @@ class TrackingDeps(object):
             if self.find_pkg:
                 self.black = BlackList().packages(self.names, self.repo)
                 self.dependencies_list = Dependencies(
-                    self.names, self.repo, self.black).binary(self.name,
-                                                              self.flag)
+                    self.repo, self.black).binary(self.name, self.flag)
 
     def sbo_case_insensitive(self):
         """Matching packages distinguish between uppercase and
@@ -191,8 +190,7 @@ class TrackingDeps(object):
                     self.deps_dict[dep] = Utils().dimensional_list(deps)
         else:
             for dep in dependencies:
-                deps = Dependencies(self.names, self.repo,
-                                    self.black).binary(dep, flag="")
+                deps = Dependencies(self.repo, self.black).binary(dep, flag="")
                 if dep not in self.deps_dict.values():
                     self.deps_dict[dep] = Utils().dimensional_list(deps)
 
