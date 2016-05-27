@@ -193,6 +193,14 @@ Print, reset or edit configuration file.
 .PP
 Print a list of all available packages from repository, index or print only packages installed on the 
 system. Support command "grep" like "# slpkg -l sbo | grep python".
+.PP
+Additional options:
+.PP
+\fB--index\fP : Count packages per page.
+.PP
+\fB--installed\fP : Highlight installed packages.
+.PP
+\fB--name\fP : Print package name only.
 
 .SS -c, --check, check if your packages is up to date
 \fBslpkg\fP \fB-c\fP <\fIrepository\fP> \fB--upgrade\fP \fB--skip=[packages...]\fP, 
