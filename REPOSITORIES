@@ -48,9 +48,3 @@ can not be calculated, good is the report these problems.
 Slackware ARM repositories:
 ---------------------------
 Slackware ARM users will must use only two repositories at the moment slack and sbo.
-
-REPOSITORIES ISSUES:
---------------------
-SlackBuilds.org (sbo) repository 14.1:
-Slackbuilds SDL2_mixer and SDL2_image they have wrong version in the .info file.
-Edit /var/log/slpkg/sbo_repo/SLACKBUILDS.TXT file for change VERSION from 2.0.0 to 2.0.1.
