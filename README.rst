@@ -216,7 +216,8 @@ Usage
 
 Need to run '# slpkg update' for the first time to synchronize the list of packages,
 also every time you add a new repository.
-To add or remove repositories must edit the file '/etc/slpkg/repositories.conf'.
+To add or remove repositories must edit the file '/etc/slpkg/repositories.conf' or
+run '# slpkg repo-enable' (python2-pythondialog required).
 
 Add custom repositories with the command '# slpkg add-repo <repository name> <URL>' and after
 run '# slpkg update' to update package list.
