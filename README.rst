@@ -20,7 +20,7 @@
     :target: https://github.com/dslackw/slpkg/issues
  
 
-Slpkg v3.1.5
+Slpkg v3.1.6
 ============
 
 |
@@ -79,8 +79,8 @@ Download latest release:
     
     Required root privileges
    
-    $ tar xvf slpkg-3.1.5.tar.gz
-    $ cd slpkg-3.1.5
+    $ tar xvf slpkg-3.1.6.tar.gz
+    $ cd slpkg-3.1.6
     $ ./install.sh
     
     Installed as Slackware package
@@ -111,9 +111,9 @@ Using pip:
 
 Binary packages:
 
-Slackware: `slpkg-3.1.5-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v3.1.5/slpkg-3.1.5-i486-1_dsw.txz>`_
+Slackware: `slpkg-3.1.6-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v3.1.6/slpkg-3.1.6-i486-1_dsw.txz>`_
 
-Slackware64: `slpkg-3.1.5-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v3.1.5/slpkg-3.1.5-x86_64-1_dsw.txz>`_
+Slackware64: `slpkg-3.1.6-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v3.1.6/slpkg-3.1.6-x86_64-1_dsw.txz>`_
 
 
 Optional dependencies
@@ -160,23 +160,23 @@ Default available Repositories:
 
 - `SBo <http://slackbuilds.org/>`_
   Arch: {x86, x86_64}
-  Versions: {13.1, 13.37, 14.0, 14.1}
+  Versions: {13.1, 13.37, 14.0, 14.1, 14.2}
 - `Slack <http://www.slackware.com/>`_
   Arch: {x86, x86_64}
-  Versions: {3.3, 8.1, 9.0, 9.1, 10.0, 10.1, 10.2, 11.0, 12.0, 12.2, 13.0, 13.37, 14.0, 14.1, current}
+  Versions: {3.3, 8.1, 9.0, 9.1, 10.0, 10.1, 10.2, 11.0, 12.0, 12.2, 13.0, 13.37, 14.0, 14.1, 14.2, current}
 - `Alien's <http://taper.alienbase.nl/mirrors/people/alien/sbrepos/>`_
   Arch: {x86, x86_64}
-  Versions: {13.0, 13.1, 13.37, 14.0, 14.1, current}
+  Versions: {13.0, 13.1, 13.37, 14.0, 14.1, 14.2, current}
 - `Slacky <http://repository.slacky.eu/>`_
   Arch: {x86, x86_64}
-  Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1}
+  Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1, 14.2}
 - `Robby's <http://rlworkman.net/pkgs/>`_
   Arch: {x86, x86_64}
-  Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1}
+  Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1, 14,2}
 - `Studioware <http://studioware.org/packages>`_
   Arch: {x86, x86_64}
   Versions: {13.37, 14.0, 14.1}
-- `Slackers <http://slack.conraid.net/repository/>`_
+- `Slackers <http://slack.conraid.net/repository/slackware64-current>`_
   Arch: {x86_64}
   Versions: {current}
 - `Slackonly <https://slackonly.com/>`_
@@ -187,22 +187,22 @@ Default available Repositories:
   Versions: {13.37, 14.0, 14.1, current}
 - `Alien's multi <http://www.slackware.com/~alien/multilib/>`_
   Arch: {x86_64}
-  Versions: {13.0, 13.1, 13.37, 14.0, 14.1, current}
+  Versions: {13.0, 13.1, 13.37, 14.0, 14.1, 14.2, current}
 - `Slacke E17 and E18 <http://ngc891.blogdns.net/pub/>`_
   Arch: {x86, x86_64, arm}
-  Versions: {14.1}
+  Versions: {14.1, 14.2}
 - `SalixOS <http://download.salixos.org/>`_
   Arch: {x86, x86_64}
-  Versions: {13.0, 13.1, 13.37, 14.0, 14.1}
+  Versions: {13.0, 13.1, 13.37, 14.0, 14.1, 14.2}
 - `Slackel <http://www.slackel.gr/repo/>`_
   Arch: {x86, x86_64}
   Versions: {current}
 - `Restricted <http://taper.alienbase.nl/mirrors/people/alien/restricted_slackbuilds/>`_
   Arch: {x86, x86_64}
-  Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14,1, current}
+  Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14,1, 14.2, current}
 - `MATE Desktop Environment <http://slackware.org.uk/msb/>`_
   Arch: {x86, x86_64}
-  Versions: {14.0, 14,1}
+  Versions: {14.0, 14,1, 14.2}
 
 
 * Choose default repositories you need to work from file '/etc/slpkg/repositories.conf' default 
