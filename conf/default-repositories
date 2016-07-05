@@ -36,7 +36,7 @@
   alien     http://taper.alienbase.nl/mirrors/people/alien/sbrepos/
   slacky    http://repository.slacky.eu/
   studio    http://studioware.org/files/packages/
-  slackr    http://slack.conraid.net/repository/
+  slackr    http://slack.conraid.net/repository/slackware64-current/
   slonly    https://slackonly.com/pub/packages/
   ktown     http://alien.slackbook.org/ktown/
   multi     http://www.slackware.com/~alien/multilib/
