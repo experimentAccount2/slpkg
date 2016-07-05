@@ -31,7 +31,7 @@
 # below. Be careful is the template that the rest.
 #
 #
-# Last Updated: Thu Feb 4 12:47:01 UTC 2016
+# Last Updated: Tue Jul 5 21:47:02 UTC 2016
 # 
 # Available http mirrors:
 # 
@@ -52,9 +52,12 @@
 # cn		 http://mirror.bjtu.edu.cn/slackware/ 
 # de		 http://download.dlackware.com/slackware/ 
 # de		 http://ftp5.gwdg.de/pub/linux/slackware/ 
+# de		 http://linux.rz.rub.de/slackware/ 
 # de		 http://mirror.netcologne.de/slackware/ 
 # ec		 http://mirror.cedia.org.ec/slackware/ 
 # fr		 http://slackware.mirrors.ovh.net/ftp.slackware.com/ 
+# gb		 http://bear.alienbase.nl/mirrors/slackware/ 
+# gb		 http://izzle121.net/pub/slackware/ 
 # gb		 http://lon.mirror.rackspace.com/slackware/ 
 # gb		 http://mirror.bytemark.co.uk/slackware/ 
 # gb		 http://slackware.uk/slackware/ 
@@ -63,10 +66,9 @@
 # hk		 http://hkg.mirror.rackspace.com/slackware/ 
 # hr		 http://mirror.slackware.hr/slackware/ 
 # id		 http://iso.ukdw.ac.id/slackware/ 
-# id		 http://mirrors.gudangteknologi.com/slackware 
 # id		 http://repo.ukdw.ac.id/slackware/ 
 # ie		 http://ftp.heanet.ie/mirrors/ftp.slackware.com/pub/slackware/ 
-# it		 http://slackware.muzzy.it/ 
+# jp		 http://ftp.kddilabs.jp/Linux/distributions/Slackware/ 
 # jp		 http://ftp.nara.wide.ad.jp/pub/Linux/slackware/ 
 # lt		 http://mirrors.atviras.lt/slackware/ 
 # lt		 http://slackware.laukas.lt 
@@ -74,6 +76,7 @@
 # nc		 http://mirror.lagoon.nc/pub/slackware/ 
 # nl		 http://ftp.bit.nl/mirror/slackware/ 
 # nl		 http://mirror.nl.leaseweb.net/slackware/ 
+# nl		 http://omegageek.noip.me/mirrors/slackware/ 
 # nl		 http://slackware.bokxing-it.nl/mirror/ 
 # no		 http://ftp.slackware.no/slackware/ 
 # nz		 http://ftp.slackware.org.nz/slackware/ 
@@ -81,7 +84,6 @@
 # pl		 http://ftp.slackware.pl/pub/slackware/ 
 # pl		 http://mirror.onet.pl/pub/mirrors/slackware/ 
 # pl		 http://sunsite.icm.edu.pl/pub/Linux/slackware/ 
-# pt		 http://darkstar.ist.utl.pt/slackware/ 
 # pt		 http://ftp.rnl.tecnico.ulisboa.pt/pub/slackware/ 
 # ru		 http://mirror.corbina.net/slackware/ 
 # ru		 http://mirror.yandex.ru/slackware/ 
@@ -90,28 +92,27 @@
 # tr		 http://ftp.linux.org.tr/slackware/ 
 # tw		 http://ftp.yzu.edu.tw/Linux/Slackware/ 
 # ua		 http://ifconfig.com.ua/slackware/ 
-# ua		 http://mirror.linux.lg.ua/slackware/ 
 # ua		 http://mirrors.nix.org.ua/linux/slackware/ 
-# us		 http://carroll.cac.psu.edu/pub/linux/distributions/slackware 
 # us		 http://dfw.mirror.rackspace.com/slackware/ 
 # us		 http://ftp.gtlib.gatech.edu/pub/slackware/ 
 # us		 http://ftp.slackware.com/pub/slackware/ 
 # us		 http://lug.mtu.edu/slackware/ 
+# us		 http://mirror.cs.princeton.edu/pub/mirrors/slackware/ 
 # us		 http://mirror.lug.udel.edu/pub/slackware/ 
+# us		 http://mirror.math.princeton.edu/pub/slackware/ 
 # us		 http://mirror.metrocast.net/slackware/ 
 # us		 http://mirror.nexcess.net/slackware/ 
-# us		 http://mirrors.kingrst.com/slackware/ 
+# us		 http://mirror.rlworkman.net/slackware/ 
 # us		 http://mirrors.xmission.com/slackware/ 
 # us		 http://mirrors1.kernel.org/slackware/ 
 # us		 http://mirrors2.kernel.org/slackware/ 
 # us		 http://mirrors3.kernel.org/slackware/ 
 # us		 http://mirrors4.kernel.org/slackware/ 
-# us		 http://reflect.cs.princeton.edu/slackware/ 
 # us		 http://slackblog.com/slackware/ 
 # us		 http://slackbuilds.org/mirror/slackware/ 
 # us		 http://slackware.cs.utah.edu/pub/slackware/ 
 # us		 http://slackware.mirrors.tds.net/pub/slackware/ 
-# us		 http://taper.alienbase.nl/mirrors/slackware/ 
+# us		 http://www3.rlworkman.net/slackware/ 
 # za		 http://ftp.is.co.za/mirror/ftp.slackware.com/pub/ 
 # za		 http://ftp.wa.co.za/pub/slackware/ 
 # za		 http://slackware.mirror.ac.za/ 
@@ -131,6 +132,7 @@
 # ca		 ftp://mirror.csclub.uwaterloo.ca/slackware/ 
 # ca		 ftp://mirror.its.dal.ca/slackware/ 
 # de		 ftp://ftp5.gwdg.de/pub/linux/slackware/ 
+# de		 ftp://linux.rz.rub.de/slackware/ 
 # de		 ftp://mirror.netcologne.de/slackware/ 
 # ec		 ftp://mirror.cedia.org.ec/slackware/ 
 # fr		 ftp://slackware.mirrors.ovh.net/ftp.slackware.com/ 
@@ -142,7 +144,7 @@
 # hk		 ftp://hkg.mirror.rackspace.com/slackware/ 
 # hr		 ftp://mirror.slackware.hr/slackware/ 
 # ie		 ftp://ftp.heanet.ie/mirrors/ftp.slackware.com/pub/slackware/ 
-# it		 ftp://slackware.muzzy.it/slackware/ 
+# jp		 ftp://ftp.kddilabs.jp/Linux/distributions/Slackware/ 
 # jp		 ftp://ftp.nara.wide.ad.jp/pub/Linux/slackware/ 
 # nc		 ftp://mirror.lagoon.nc/pub/slackware/ 
 # nl		 ftp://ftp.bit.nl/mirror/slackware/ 
@@ -153,7 +155,6 @@
 # pl		 ftp://ftp.slackware.pl/pub/slackware/ 
 # pl		 ftp://mirror.onet.pl/pub/mirrors/slackware/ 
 # pl		 ftp://sunsite.icm.edu.pl/pub/Linux/slackware/ 
-# pt		 ftp://darkstar.ist.utl.pt/pub/slackware/ 
 # pt		 ftp://ftp.rnl.tecnico.ulisboa.pt/pub/slackware/ 
 # ru		 ftp://mirror.corbina.net/slackware/ 
 # ru		 ftp://mirror.yandex.ru/slackware/ 
@@ -162,13 +163,14 @@
 # tw		 ftp://ftp.yzu.edu.tw/Linux/Slackware/ 
 # ua		 ftp://ifconfig.com.ua/pub/Mirror/slackware/ 
 # ua		 ftp://mirrors.nix.org.ua/linux/slackware/ 
-# us		 ftp://carroll.cac.psu.edu/pub/linux/distributions/slackware 
 # us		 ftp://dfw.mirror.rackspace.com/slackware/ 
 # us		 ftp://ftp.gtlib.gatech.edu/pub/slackware 
 # us		 ftp://ftp.lug.udel.edu/pub/slackware/ 
 # us		 ftp://ftp.slackware.com/pub/slackware/ 
 # us		 ftp://lug.mtu.edu/slackware/ 
+# us		 ftp://mirror.cs.princeton.edu/pub/mirrors/slackware/ 
 # us		 ftp://mirror.nexcess.net/slackware/ 
+# us		 ftp://mirror.rlworkman.net/slackware/ 
 # us		 ftp://mirrors.xmission.com/slackware/ 
 # us		 ftp://mirrors1.kernel.org/slackware/ 
 # us		 ftp://mirrors2.kernel.org/slackware/ 
@@ -176,7 +178,7 @@
 # us		 ftp://mirrors4.kernel.org/slackware/ 
 # us		 ftp://slackware.cs.utah.edu/slackware/ 
 # us		 ftp://slackware.mirrors.tds.net/pub/slackware 
-# us		 ftp://taper.alienbase.nl/ 
+# us		 ftp://www3.rlworkman.net/slackware/ 
 # za		 ftp://ftp.is.co.za/mirror/ftp.slackware.com/pub/ 
 # za		 ftp://ftp.wa.co.za/pub/slackware/ 
 # za		 ftp://slackware.mirror.ac.za/
