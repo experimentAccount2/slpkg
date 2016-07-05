@@ -31,5 +31,5 @@
 # kernel-source
 #
 #
-# aaa_elflibs can't be updated.
-aaa_elflibs
+# aaa_elflibs should NOT be blacklisted!
+#
