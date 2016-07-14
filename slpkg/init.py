@@ -708,7 +708,6 @@ class Update(object):
 def check_exists_repositories():
     """Checking if repositories exists by PACKAGES.TXT file
     """
-    update = False
     for repo in _meta_.repositories:
         pkg_list = "PACKAGES.TXT"
         if repo == "sbo":
@@ -718,12 +717,8 @@ def check_exists_repositories():
             continue
         if not os.path.isfile("{0}{1}{2}".format(
                 _meta_.lib_path, repo, "_repo/{0}".format(pkg_list))):
-            update = True
-    if update:
-        print("\n  Please update packages lists. Run 'slpkg update'.\n" +
-              "  This command should be used to synchronize packages\n" +
-              "  lists from the repositories are enabled.\n")
-        raise SystemExit()
+            return repo
+    return ""
 
 
 def check_for_local_repos(repo):

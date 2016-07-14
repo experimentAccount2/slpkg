@@ -86,12 +86,21 @@ class ArgParse(object):
         ]
 
         # checking if repositories exists
-        if len(self.args) > 1 and self.args[0] not in [
-            "-h", "--help", "-v", "--version", "upgrade", "repo-enable",
-            "repo-list", "repo-add", "repo-remove", "update", "update-slpkg",
-            "health", "-g", "--config"
-        ]:
-            check_exists_repositories()
+        repo = check_exists_repositories()
+        if len(self.args) > 1 and self.args[0] in [
+            "-c", "--check",
+            "-l", "--list",
+            "-c", "--check",
+            "-s", "--sync",
+            "-t", "--tracking",
+            "-p", "--desc",
+            "-F", "--FIND",
+            "-f", "--find"
+        ] and self.args[1] == repo:
+            print("\n  Please update packages lists. Run 'slpkg update'.\n" +
+                  "  This command should be used to synchronize packages\n" +
+                  "  lists from the repositories are enabled.\n")
+            raise SystemExit()
 
     def help_version(self):
         """Help and version info
