@@ -514,6 +514,7 @@ class PackageManager(object):
     def list_lib(self, repo):
         """Return package lists
         """
+        packages = ""
         if repo == "sbo":
             if (os.path.isfile(
                     self.meta.lib_path + "{0}_repo/SLACKBUILDS.TXT".format(
