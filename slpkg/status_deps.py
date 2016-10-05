@@ -66,10 +66,20 @@ class DependenciesStatus(object):
                         if name == dep:
                             if name not in self.dmap.keys():
                                 self.dmap[name] = [log]
-                                self.count_dep += 1
+                                if not self.count_pkg:
+                                    self.count_pkg = 1
                             else:
                                 self.dmap[name] += [log]
-                                self.count_pkg += 1
+        self.count_packages()
+
+    def count_packages(self):
+        """Count dependencies and packages
+        """
+        packages = []
+        for dep, pkg in self.dmap.iteritems():
+            packages += pkg
+            self.count_dep += 1
+        self.count_pkg = len(set(packages))
 
     def show(self):
         """Show dependencies status
