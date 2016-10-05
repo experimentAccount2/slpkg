@@ -1,6 +1,7 @@
 3.1.8 - 05/10/2016
 Fixed:
 - Print repository error message without usage
+- Count packages in deps-status option
 
 3.1.7 - 14/07/2016
 Fixed:
