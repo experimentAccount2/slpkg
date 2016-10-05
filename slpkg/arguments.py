@@ -181,8 +181,8 @@ def usage(repo):
                                          --checklist]
              [-d [package...]]
              """
-    error_repo = ""
     if repo and repo not in _meta_.repositories:
+        error_repo = ""
         all_repos = RepoList().all_repos.keys()
         del RepoList().all_repos
         if repo in all_repos:
@@ -191,6 +191,7 @@ def usage(repo):
         else:
             error_repo = ("slpkg: Error: Repository '{0}' does not exist"
                           "\n".format(repo))
+        print("\n" + error_repo)
+        raise SystemExit()
     print(usage.__doc__)
-    print(error_repo)
     print("For more information try 'slpkg -h, --help' or view manpage\n")
