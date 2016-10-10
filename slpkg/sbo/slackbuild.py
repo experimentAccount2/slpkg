@@ -177,7 +177,7 @@ class SBoInstall(object):
         """Continue to install ?
         """
         if (self.count_uni > 0 or self.count_upg > 0 or
-                "--download-only" in self.flag):
+                "--download-only" in self.flag or "--rebuild" in self.flag):
             if self.master_packages and self.msg.answer() in ["y", "Y"]:
                 installs, upgraded = self.build_install()
                 if "--download-only" in self.flag:
@@ -316,7 +316,8 @@ class SBoInstall(object):
             pkg = "-".join(prgnam.split("-")[:-1])
             installed = "".join(find_package(prgnam, self.meta.pkg_path))
             src_link = SBoGrep(pkg).source().split()
-            if installed and "--download-only" not in self.flag:
+            if (installed and "--download-only" not in self.flag and
+                    "--rebuild" not in self.flag):
                 self.msg.template(78)
                 self.msg.pkg_found(prgnam)
                 self.msg.template(78)
@@ -350,7 +351,11 @@ class SBoInstall(object):
                             self.meta.color["GREEN"],
                             self.meta.color["ENDC"], prgnam))
                         installs.append(prgnam)
-                    PackageManager(binary).upgrade(flag="--install-new")
+                    if ("--rebuild" in self.flag and
+                            GetFromInstalled(pkg).name() == pkg):
+                        PackageManager(binary).upgrade(flag="--reinstall")
+                    else:
+                        PackageManager(binary).upgrade(flag="--install-new")
         return installs, upgraded
 
     def not_downgrade(self, prgnam):

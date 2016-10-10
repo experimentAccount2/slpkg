@@ -114,8 +114,9 @@ Optional arguments:
        --checklist                           install with all dependencies.
 
   -s | --sync, [repository] [package...],    Sync packages. Install packages
-       --resolve-off, --download-only,       directly from remote repositories
-       --directory-prefix=[dir],             with all dependencies.
+       --rebuild, --reinstall,               directly from remote repositories
+       --resolve-off, --download-only,       with all dependencies.
+       --directory-prefix=[dir],
        --case-ins
 
   -t | --tracking, [repository] [package],   Tracking package dependencies and
@@ -194,7 +195,8 @@ def usage(repo):
              [-l [repository], --index, --installed, --name]
              [-c [repository], --upgrade, --skip=[...], --resolve-off,
                                --checklist]
-             [-s [repository] [package...], --resolve-off, --download-only,
+             [-s [repository] [package...], --rebuild, --reinstall,
+                                            --resolve-off, --download-only,
                                             --directory-prefix=[dir],
                                             --case-ins]
              [-t [repository] [package], --check-deps, --graph=[type],

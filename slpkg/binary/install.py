@@ -133,7 +133,8 @@ class BinaryInstall(object):
                             self.not_downgrade(inst) is True):
                         continue
                     if (not os.path.isfile(self.meta.pkg_path + inst[:-4]) or
-                            "--download-only" in self.flag):
+                            "--download-only" in self.flag or
+                            "--reinstall" in self.flag):
                         Download(self.tmp_path, dwn.split(), self.repo).start()
                     else:
                         self.msg.template(78)
@@ -160,7 +161,8 @@ class BinaryInstall(object):
             if (os.path.isfile(self.meta.pkg_path + inst[:-4]) and
                     "--download-only" not in self.flag):
                 count_inst += 1
-        if count_inst == len(self.dep_install + self.install):
+        if (count_inst == len(self.dep_install + self.install) and
+                "--reinstall" not in self.flag):
             raise SystemExit()
 
     def case_insensitive(self):
@@ -209,7 +211,10 @@ class BinaryInstall(object):
                 print("[ {0}upgrading{1} ] --> {2}".format(
                     self.meta.color["YELLOW"], self.meta.color["ENDC"], inst))
                 upgraded.append(pkg_ver)
-                PackageManager(package).upgrade("--install-new")
+                if "--reinstall" in self.flag:
+                    PackageManager(package).upgrade("--reinstall")
+                else:
+                    PackageManager(package).upgrade("--install-new")
             else:
                 print("[ {0}installing{1} ] --> {2}".format(
                     self.meta.color["GREEN"], self.meta.color["ENDC"], inst))
@@ -218,7 +223,7 @@ class BinaryInstall(object):
         return [installs, upgraded]
 
     def not_downgrade(self, package):
-        """Don't downgrade packages if sbo version is lower than
+        """Don't downgrade packages if repository version is lower than
         installed"""
         name = split_package(package)[0]
         rep_ver = split_package(package)[1]

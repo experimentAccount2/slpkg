@@ -41,7 +41,8 @@ Usage: slpkg [COMMANDS|OPTIONS] {repository|package...}
              [-l [repository], --index, --installed, --name]
              [-c [repository], --upgrade, --skip=[...], --resolve-off,
                                --checklist]
-             [-s [repository] [package...], --resolve-off, --download-only,
+             [-s [repository] [package...], --rebuild, --reinstall,
+                                            --resolve-off, --download-only,
                                             --directory-prefix=[dir],
                                             --case-ins]
              [-t [repository] [package], --check-deps, --graph=[type],
@@ -229,6 +230,10 @@ Installs or upgrade packages from the repositories with automatically resolving 
 dependencies of the package.
 .PP
 Additional options:
+.PP
+\fB--rebuild\fP : Rebuild packages from sbo repository.
+.PP
+\fB--reinstall\fP : Reinstall binary packages from repositories.
 .PP
 \fB--resolve-off\fP : Switch off automatic resolve dependencies.
 .PP

@@ -342,7 +342,9 @@ class ArgParse(object):
             "--resolve-off",
             "--download-only",
             "--directory-prefix=",
-            "--case-ins"
+            "--case-ins",
+            "--rebuild",
+            "--reinstall"
         ]
         for arg in self.args:
             if arg.startswith(additional_options[2]):
