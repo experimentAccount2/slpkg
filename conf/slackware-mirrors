@@ -31,7 +31,7 @@
 # below. Be careful is the template that the rest.
 #
 #
-# Last Updated: Tue Jul 5 21:47:02 UTC 2016
+# Last Updated: Mon Oct 10 13:47:02 UTC 2016
 # 
 # Available http mirrors:
 # 
@@ -39,6 +39,7 @@
 # au		 http://mirror.crucial.com.au/slackware/ 
 # au		 http://mirror.internode.on.net/pub/slackware/ 
 # au		 http://syd.mirror.rackspace.com/slackware/ 
+# ba		 http://slackware.mirror.ba/ 
 # be		 http://ftp.belnet.be/ftp.slackware.com/ 
 # bg		 http://mirrors.netix.net/slackware/ 
 # bg		 http://mirrors.unixsol.org/slackware/ 
@@ -103,6 +104,7 @@
 # us		 http://mirror.metrocast.net/slackware/ 
 # us		 http://mirror.nexcess.net/slackware/ 
 # us		 http://mirror.rlworkman.net/slackware/ 
+# us		 http://mirrors.absolutehosting.net/pub/slackware/ 
 # us		 http://mirrors.xmission.com/slackware/ 
 # us		 http://mirrors1.kernel.org/slackware/ 
 # us		 http://mirrors2.kernel.org/slackware/ 
@@ -112,11 +114,9 @@
 # us		 http://slackbuilds.org/mirror/slackware/ 
 # us		 http://slackware.cs.utah.edu/pub/slackware/ 
 # us		 http://slackware.mirrors.tds.net/pub/slackware/ 
-# us		 http://www3.rlworkman.net/slackware/ 
 # za		 http://ftp.is.co.za/mirror/ftp.slackware.com/pub/ 
 # za		 http://ftp.wa.co.za/pub/slackware/ 
 # za		 http://slackware.mirror.ac.za/ 
-# 
 # 
 # 
 # Available ftp mirrors:
@@ -124,6 +124,7 @@
 # au		 ftp://mirror.aarnet.edu.au/pub/slackware/ 
 # au		 ftp://mirror.internode.on.net/pub/slackware/ 
 # au		 ftp://syd.mirror.rackspace.com/slackware/ 
+# ba		 ftp://mirror.ba/slackware/ 
 # be		 ftp://ftp.belnet.be/mirror/ftp.slackware.com/ 
 # bg		 ftp://mirrors.netix.net/slackware/ 
 # bg		 ftp://mirrors.unixsol.org/slackware/ 
@@ -171,6 +172,7 @@
 # us		 ftp://mirror.cs.princeton.edu/pub/mirrors/slackware/ 
 # us		 ftp://mirror.nexcess.net/slackware/ 
 # us		 ftp://mirror.rlworkman.net/slackware/ 
+# us		 ftp://mirrors.absolutehosting.net/pub/slackware/ 
 # us		 ftp://mirrors.xmission.com/slackware/ 
 # us		 ftp://mirrors1.kernel.org/slackware/ 
 # us		 ftp://mirrors2.kernel.org/slackware/ 
@@ -178,7 +180,6 @@
 # us		 ftp://mirrors4.kernel.org/slackware/ 
 # us		 ftp://slackware.cs.utah.edu/slackware/ 
 # us		 ftp://slackware.mirrors.tds.net/pub/slackware 
-# us		 ftp://www3.rlworkman.net/slackware/ 
 # za		 ftp://ftp.is.co.za/mirror/ftp.slackware.com/pub/ 
 # za		 ftp://ftp.wa.co.za/pub/slackware/ 
 # za		 ftp://slackware.mirror.ac.za/
