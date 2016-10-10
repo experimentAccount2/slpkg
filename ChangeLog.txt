@@ -6,6 +6,7 @@ Fixed:
 - Count packages in deps-status option
 Updated:
 - Help and usage message
+- Slackware mirrors
 
 3.1.7 - 14/07/2016
 Fixed:
