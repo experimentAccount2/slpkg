@@ -273,6 +273,8 @@ class SBoInstall(object):
         if find_package(sbo, self.meta.pkg_path):
             paint = self.meta.color["GREEN"]
             self.count_ins += 1
+            if "--rebuild" in self.flag:
+                self.count_upg += 1
         elif sbo_name == find:
             paint = self.meta.color["YELLOW"]
             self.count_upg += 1
