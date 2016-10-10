@@ -264,7 +264,7 @@ class ArgParse(object):
             if arg not in flag:
                 usage("")
                 raise SystemExit()
-        if (len(self.args) >= 1 and len(self.args) <= 5 and
+        if (len(self.args) > 1 and len(self.args) <= 5 and
                 self.args[0] in options and
                 self.args[1] in self.meta.repositories):
             PackageManager(binary=None).package_list(self.args[1],
