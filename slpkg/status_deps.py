@@ -102,7 +102,7 @@ class DependenciesStatus(object):
         """
         self.msg.template(78)
         print("| Dependencies\n"
-              "|   Packages")
+              "| -- Packages")
         self.msg.template(78)
         self.data()
         for pkg, dep in self.dmap.iteritems():
