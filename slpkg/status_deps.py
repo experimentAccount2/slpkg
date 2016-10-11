@@ -76,7 +76,7 @@ class DependenciesStatus(object):
         """Count dependencies and packages
         """
         packages = []
-        for dep, pkg in self.dmap.iteritems():
+        for pkg in self.dmap.values():
             packages += pkg
             self.count_dep += 1
         self.count_pkg = len(set(packages))
