@@ -577,6 +577,10 @@ class ArgParse(object):
             "-copy",
             "-keep"
         ]
+        # merge --check-deps and --deps options
+        if (additional_options[1] in self.args and
+                additional_options[0] not in self.args):
+            self.args.append(additional_options[0])
         if len(self.args) > 1 and self.args[0] in options:
             for additional in additional_options:
                 if additional in self.args:

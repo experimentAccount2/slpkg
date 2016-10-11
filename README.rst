@@ -1437,7 +1437,7 @@ Remove packages with all dependencies and check if used as dependency:
 
 .. code-block:: bash
 
-    $ slpkg -r Flask --deps --check-deps 
+    $ slpkg -r Flask --check-deps 
 
     Packages with name matching [ Flask ]
 
