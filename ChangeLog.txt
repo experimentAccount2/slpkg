@@ -1,4 +1,4 @@
-3.1.8 - 10/10/2016
+3.1.8 - 11/10/2016
 Added:
 - Feature rebuild packages for sbo repository and reinstall binaries packages
 - Slackware package management tools. Thanks to Thomas Szteliga #71 
