@@ -74,9 +74,9 @@ class BinaryInstall(object):
         self.msg.reading()
         self.PACKAGES_TXT, self.mirror = RepoInit(self.repo).fetch()
         self.data = repo_data(self.PACKAGES_TXT, self.repo, self.flag)
-        self.names = []
+        self.repo_pkg_names = []
         for name in self.data[0]:
-            self.names.append(split_package(name)[0])
+            self.repo_pkg_names.append(split_package(name)[0])
         self.blacklist = BlackList().packages(self.data[0], self.repo)
 
     def start(self, is_upgrade):
@@ -266,7 +266,7 @@ class BinaryInstall(object):
         """
         requires = []
         for dep in dependencies:
-            if dep in self.names:
+            if dep in self.repo_pkg_names:
                 requires.append(dep)
         return requires
 
