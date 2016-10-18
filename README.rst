@@ -621,7 +621,7 @@ View information about the repositories:
 
     Repositories summary
     ===============================================================================
-    3/15 enabled default repositories and 1 custom.
+    3/14 enabled default repositories and 1 custom.
     For enable or disable default repositories edit '/etc/slpkg/repositories.conf' 
     file.
 
