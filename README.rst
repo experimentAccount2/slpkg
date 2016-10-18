@@ -249,7 +249,7 @@ order if there are dependent packages.
 View list of packages from specific repository with command '# slpkg -l <repository>'.
 Combine with the command 'grep' to catch the results you want.
 
-Check and upgrade the distribution of your upgrade your packages with command '# slpkg -c <repository> 
+Check and upgrade your distribution or upgrade your packages with command '# slpkg -c <repository> 
 --upgrade'. Don't forget to update packages list before (for 'slack' repository don't is necessary).
 This command except upgrade packages will fix packages with broken dependencies. Switch  off automatic
 resolve dependencies with additional option '--resolve-off'. Use '--checklist' option to help you
