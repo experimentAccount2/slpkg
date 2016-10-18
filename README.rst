@@ -178,7 +178,7 @@ Default available Repositories:
   Versions: {current}
 - `Slackonly <https://slackonly.com/>`_
   Arch: {x86, x86_64}
-  Versions: {14.1}
+  Versions: {14.1, 14.2}
 - `Alien's ktown <http://alien.slackbook.org/ktown/>`_
   Arch: {x86, x86_64}
   Versions: {13.37, 14.0, 14.1, 14.2, current}
