@@ -46,7 +46,6 @@ class Updates(object):
             "rlw": self._init.rlw,
             "alien": self._init.alien,
             "slacky": self._init.slacky,
-            "studio": self._init.studio,
             "slackr": self._init.slackr,
             "slonly": self._init.slonly,
             "ktown": self._init.ktown,

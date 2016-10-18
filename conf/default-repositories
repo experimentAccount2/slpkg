@@ -26,7 +26,7 @@
 # For local repository start with "file:///" avoid end path with "/".
 # Do NOT change the name of the repository.
 # Default repositories names:
-# sbo, rlw, alien, slacky, studio, slackr, slonly, ktown, multi, slacke, salix,
+# sbo, rlw, alien, slacky, slackr, slonly, ktown, multi, slacke, salix,
 # slackl, rested, msb
 # -----------------------------------------------------------------------------
 #
@@ -35,7 +35,6 @@
   rlw       http://rlworkman.net/pkgs/
   alien     http://taper.alienbase.nl/mirrors/people/alien/sbrepos/
   slacky    http://repository.slacky.eu/
-  studio    http://studioware.org/files/packages/
   slackr    http://slack.conraid.net/repository/slackware64-current/
   slonly    https://slackonly.com/pub/packages/
   ktown     http://alien.slackbook.org/ktown/

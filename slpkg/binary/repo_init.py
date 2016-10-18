@@ -75,13 +75,6 @@ class RepoInit(object):
         self.mirror = "{0}slackware{1}-{2}/".format(
             self.def_repo_dict["slacky"], arch, slack_ver())
 
-    def _init_studio(self):
-        arch = ""
-        if self.meta.arch == "x86_64":
-            arch = "64"
-        self.mirror = "{0}slackware{1}-{2}/".format(
-            self.def_repo_dict["studio"], arch, slack_ver())
-
     def _init_slackr(self):
         self.mirror = self.def_repo_dict["slackr"]
 

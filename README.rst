@@ -173,9 +173,6 @@ Default available Repositories:
 - `Robby's <http://rlworkman.net/pkgs/>`_
   Arch: {x86, x86_64}
   Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1, 14,2}
-- `Studioware <http://studioware.org/packages>`_
-  Arch: {x86, x86_64}
-  Versions: {13.37, 14.0, 14.1}
 - `Slackers <http://slack.conraid.net/repository/slackware64-current>`_
   Arch: {x86_64}
   Versions: {current}
@@ -533,7 +530,6 @@ list. This command must be executed to update the package lists:
     Update repository [sbo] ... Done
     Update repository [alien] ... Done
     Update repository [slacky] ... Done
-    Update repository [studio] ... Done
     Update repository [slackr] ... Done
     Update repository [slonly] ... Done
     Update repository [ktown] ... Done
@@ -622,7 +618,6 @@ View information about the repositories:
       slackr   http://www.slackers.it/repository/                  yes     disabled
       slacky   http://repository.slacky.eu/                        yes     disabled
       slonly   https://slackonly.com/pub/packages/                 yes     disabled
-      studio   http://studioware.org/files/packages/               yes     disabled
 
     Repositories summary
     ===============================================================================
