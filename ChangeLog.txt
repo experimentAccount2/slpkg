@@ -1,6 +1,9 @@
 3.1.9 - 17/10/2016
 Updated:
 - Switch to default version 1.16 for msb repository
+Fixed:
+- Resolve dependencies to the binaries repositories
+- Remove dependencies to the binaries repositories
 
 3.1.8 - 11/10/2016
 Added:

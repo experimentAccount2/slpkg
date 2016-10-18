@@ -74,6 +74,9 @@ class BinaryInstall(object):
         self.msg.reading()
         self.PACKAGES_TXT, self.mirror = RepoInit(self.repo).fetch()
         self.data = repo_data(self.PACKAGES_TXT, self.repo, self.flag)
+        self.names = []
+        for name in self.data[0]:
+            self.names.append(split_package(name)[0])
         self.blacklist = BlackList().packages(self.data[0], self.repo)
 
     def start(self, is_upgrade):
@@ -253,11 +256,19 @@ class BinaryInstall(object):
             status(0.05)
             dependencies = []
             dependencies = Utils().dimensional_list(Dependencies(
-                self.repo, self.blacklist).binary(
-                    dep, self.flag))
-            requires += dependencies
-            self.deps_dict[dep] = Utils().remove_dbs(dependencies)
+                self.repo, self.blacklist).binary(dep, self.flag))
+            requires += self._fix_deps_repos(dependencies)
+            self.deps_dict[dep] = Utils().remove_dbs(requires)
         return Utils().remove_dbs(requires)
+
+    def _fix_deps_repos(self, dependencies):
+        """Fix store deps include in repository
+        """
+        requires = []
+        for dep in dependencies:
+            if dep in self.names:
+                requires.append(dep)
+        return requires
 
     def views(self, install, comp_sum):
         """Views packages
@@ -312,8 +323,7 @@ class BinaryInstall(object):
                                              self.data[2], self.data[3]):
                 if (pk and pkg == split_package(pk)[0] and
                         pk not in install and
-                        split_package(pk)[0] not in self.blacklist and
-                        split_package(pk)[1] != "blacklist"):
+                        split_package(pk)[0] not in self.blacklist):
                     dwn.append("{0}{1}/{2}".format(self.mirror, loc, pk))
                     install.append(pk)
                     comp_sum.append(comp)
