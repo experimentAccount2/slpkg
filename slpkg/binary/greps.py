@@ -159,9 +159,7 @@ class Requires(object):
             dependencies = {
                 "abiword": "wv",
                 "claws-mail": "libetpan",
-                "inkscape": "gtkmm atkmm pangomm cairomm mm-common libsigc++ "
-                            "libwpg lxml gsl numpy BeautifulSoup",
-                "texlive": "libsigsegv texi2html",
+                "inkscape": "lxml numpy BeautifulSoup",
                 "xfburn": "libburn libisofs"
             }
             if self.name in dependencies.keys():
