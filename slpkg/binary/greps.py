@@ -154,14 +154,12 @@ class Requires(object):
         """Grap package requirements from repositories
         """
         if self.repo == "rlw":
-            # Robby"s repository dependencies as shown in the central page
-            # http://rlworkman.net/pkgs/
-            dependencies = {
-                "abiword": "wv",
-                "claws-mail": "libetpan",
-                "inkscape": "lxml numpy BeautifulSoup",
-                "xfburn": "libburn libisofs"
-            }
+            dependencies = {}
+            rlw_deps = Utils().read_file(_meta_.conf_path + "rlworkman.deps")
+            for line in rlw_deps.splitlines():
+                if line and not line.startswith("#"):
+                    pkgs = line.split(":")
+                    dependencies[pkgs[0]] = pkgs[1]
             if self.name in dependencies.keys():
                 return dependencies[self.name].split()
             else:

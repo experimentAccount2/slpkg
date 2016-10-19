@@ -125,7 +125,8 @@ if "install" in sys.argv:
         "conf/blacklist",
         "conf/slackware-mirrors",
         "conf/default-repositories",
-        "conf/custom-repositories"
+        "conf/custom-repositories",
+        "conf/rlworkman.deps"
     ]
     if not os.path.exists(_meta_.conf_path):
         os.makedirs(_meta_.conf_path)
