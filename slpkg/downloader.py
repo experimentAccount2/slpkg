@@ -33,7 +33,7 @@ from slpkg.__metadata__ import MetaData as _meta_
 
 class Download(object):
     """Downloader manager. Slpkg use wget by default but support
-    curl, aria2 and http
+    curl, aria2 and httpie
     """
     def __init__(self, path, url, repo):
         self.path = path
@@ -48,7 +48,7 @@ class Download(object):
 
     def start(self):
         """Download files using wget or other downloader.
-        Optional curl, aria2c and http
+        Optional curl, aria2c and httpie
         """
         dwn_count = 1
         self._directory_prefix()

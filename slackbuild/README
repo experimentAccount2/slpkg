@@ -8,3 +8,5 @@ Optional dependencies:
    python2-pythondialog (for dialog box interface)
    pygraphviz (for drawing dependencies diagram)
    graph-easy (for drawing ascii dependencies diagram)
+   aria2 (alternative downloader)
+   httpie (alternative downloader)
