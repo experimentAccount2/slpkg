@@ -187,7 +187,7 @@ Default available Repositories:
   Versions: {13.0, 13.1, 13.37, 14.0, 14.1, 14.2, current}
 - `Slacke E17 and E18 <http://ngc891.blogdns.net/pub/>`_
   Arch: {x86, x86_64, arm}
-  Versions: {14.1, 14.2}
+  Versions: {14.1}
 - `SalixOS <http://download.salixos.org/>`_
   Arch: {x86, x86_64}
   Versions: {13.0, 13.1, 13.37, 14.0, 14.1, 14.2}
