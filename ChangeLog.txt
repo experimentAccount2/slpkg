@@ -1,6 +1,8 @@
 3.2.0 - 19/10/2016
 Fixed:
 - Bugfix: IndexError: list index out of range, for tracking arguments
+Updated:
+- Rworkman's (rlw) repository dependencies for Slackware 14.2
 
 3.1.9 - 17/10/2016
 Updated:
