@@ -2,8 +2,8 @@
 Updated:
 - Switch to default version 1.16 for msb repository
 Fixed:
-- Resolve dependencies to the binaries repositories
-- Remove dependencies to the binaries repositories
+- Resolve dependencies for the binaries repositories
+- Remove dependencies for the binaries repositories
 Remove:
 - Studioware binary repository because switch to slackbuild type
 
