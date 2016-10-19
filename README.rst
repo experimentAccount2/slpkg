@@ -20,7 +20,7 @@
     :target: https://github.com/dslackw/slpkg/issues
  
 
-Slpkg v3.1.8
+Slpkg v3.1.9
 ============
 
 |
@@ -79,8 +79,8 @@ Download latest release:
     
     Required root privileges
    
-    $ tar xvf slpkg-3.1.8.tar.gz
-    $ cd slpkg-3.1.8
+    $ tar xvf slpkg-3.1.9.tar.gz
+    $ cd slpkg-3.1.9
     $ ./install.sh
     
     Installed as Slackware package
@@ -111,9 +111,9 @@ Using pip:
 
 Binary packages:
 
-Slackware: `slpkg-3.1.8-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v3.1.8/slpkg-3.1.8-i486-1_dsw.txz>`_
+Slackware: `slpkg-3.1.9-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v3.1.9/slpkg-3.1.9-i486-1_dsw.txz>`_
 
-Slackware64: `slpkg-3.1.8-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v3.1.8/slpkg-3.1.8-x86_64-1_dsw.txz>`_
+Slackware64: `slpkg-3.1.9-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v3.1.9/slpkg-3.1.9-x86_64-1_dsw.txz>`_
 
 
 Optional dependencies
