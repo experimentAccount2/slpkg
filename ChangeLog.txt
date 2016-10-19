@@ -1,3 +1,7 @@
+3.2.0 - 19/10/2016
+Fixed:
+- Bugfix: IndexError: list index out of range, for tracking arguments
+
 3.1.9 - 17/10/2016
 Updated:
 - Switch to default version 1.16 for msb repository
