@@ -155,6 +155,7 @@ class BinaryInstall(object):
                 delete_package(self.tmp_path, self.dep_install + self.install)
         else:
             self.msg.not_found(self.is_upgrade)
+            raise SystemExit(1)
 
     def if_all_installed(self):
         """Check if all packages is already installed

@@ -150,6 +150,7 @@ class SBoInstall(object):
             self.continue_to_install()
         else:
             self.msg.not_found(self.is_upgrade)
+            raise SystemExit(1)
 
     def case_insensitive(self):
         """Matching packages distinguish between uppercase and
