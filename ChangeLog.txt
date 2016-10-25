@@ -1,3 +1,7 @@
+3.2.1 - 25/10/2016
+Fixed:
+- Return exit code when packages for installation not found #73
+
 3.2.0 - 19/10/2016
 Added:
 - rlworkman.deps dependencies configuration file
