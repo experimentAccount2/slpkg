@@ -1,3 +1,8 @@
+3.2.2 - 26/10/2016
+Added:
+- Support Python3 with 2to3 tool.
+- Build and install with Python 3
+
 3.2.1 - 25/10/2016
 Fixed:
 - Return exit code when packages for installation not found #73
