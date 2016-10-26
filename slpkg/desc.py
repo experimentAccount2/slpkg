@@ -73,5 +73,6 @@ class PkgDesc(object):
                                      self.meta.color["ENDC"]))
         else:
             self.msg.pkg_not_found("", self.name, "No matching", "\n")
+            raise SystemExit(1)
         if description and self.repo == "sbo":
             print("")

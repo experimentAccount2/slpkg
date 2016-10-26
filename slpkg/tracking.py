@@ -120,6 +120,7 @@ class TrackingDeps(object):
         else:
             self.msg.done()
             print("\nNo package was found to match\n")
+            raise SystemExit(1)
 
     def repositories(self):
         """Get dependencies by repositories

@@ -62,6 +62,7 @@ class PackageManager(object):
                     raise SystemExit()
             except subprocess.CalledProcessError:
                 self._not_found("Can't install", self.binary, pkg)
+                raise SystemExit(1)
 
     def upgrade(self, flag):
         """Upgrade Slackware binary packages with new
@@ -77,6 +78,7 @@ class PackageManager(object):
                     raise SystemExit()
             except subprocess.CalledProcessError:
                 self._not_found("Can't upgrade", self.binary, pkg)
+                raise SystemExit(1)
 
     def _not_found(self, message, binary, pkg):
         if len(binary) > 1:
@@ -157,7 +159,8 @@ class PackageManager(object):
                         removed.append(split_package(pkg)[0])
                         packages.append(pkg)
             if not removed:
-                self.msg.pkg_not_found("", "'tag'", "Can't remove", "")
+                self.msg.pkg_not_found("", "'tag'", "Can't remove", "\n")
+                raise SystemExit(1)
         else:
             for pkg in self.binary:
                 name = GetFromInstalled(pkg).name()
@@ -168,7 +171,8 @@ class PackageManager(object):
                     removed.append(pkg)
                     packages.append(package[0])
                 else:
-                    self.msg.pkg_not_found("", pkg, "Can't remove", "")
+                    self.msg.pkg_not_found("", pkg, "Can't remove", "\n")
+                    raise SystemExit(1)
         return removed, packages
 
     def _view_removed(self):
@@ -394,6 +398,7 @@ class PackageManager(object):
         if matching == 0:
             message = "Can't find"
             self.msg.pkg_not_found("", ", ".join(self.binary), message, "\n")
+            raise SystemExit(1)
         else:
             self._calc_sizes()
             print("\nFound summary")
@@ -437,6 +442,7 @@ class PackageManager(object):
                 else:
                     bol = eol = "\n"
                 self.msg.pkg_not_found(bol, pkg, message, eol)
+                raise SystemExit(1)
 
     def package_list(self, repo, name, INDEX, installed):
         """List with the installed packages

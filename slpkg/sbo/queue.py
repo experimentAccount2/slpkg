@@ -151,6 +151,7 @@ class QueuePkgs(object):
                              auto=False).build()
         else:
             print("\nPackages not found in the queue for building\n")
+            raise SystemExit(1)
 
     def install(self):
         """Install packages from queue
@@ -169,3 +170,4 @@ class QueuePkgs(object):
                           "installation\n".format(prgnam, self.meta.output))
         else:
             print("\nPackages not found in the queue for installation\n")
+            raise SystemExit(1)

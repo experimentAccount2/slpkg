@@ -222,6 +222,6 @@ def usage(repo):
             error_repo = ("slpkg: Error: Repository '{0}' does not exist"
                           "\n".format(repo))
         print("\n" + error_repo)
-        raise SystemExit()
+        raise SystemExit(1)
     print(usage.__doc__)
     print("For more information try 'slpkg -h, --help' or view manpage\n")

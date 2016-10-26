@@ -128,6 +128,7 @@ class SBoNetwork(object):
                     pass
         else:
             self.msg.pkg_not_found("\n", self.name, "Can't view", "\n")
+            raise SystemExit(1)
 
     def case_insensitive(self):
         """Matching packages distinguish between uppercase and
