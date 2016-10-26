@@ -63,6 +63,9 @@ fi
 
 set -e
 
+PYTHON=python
+[ "${PYTHON3:-no}" = "yes" ] && PYTHON=python3
+
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
@@ -80,14 +83,13 @@ find -L . \
 # avoid install man page and configuration files over setup.py
 sed -i 's/if "install"/if ""/' setup.py
 
-python setup.py install --root=$PKG
+# Python 3 support
+if [ "$PYTHON3" = "yes" ]; then
+  sh convert-py3k
+  cd py3k/$PRGNAM
+fi
 
-### Python 3 support ###
-# if $(python3 -c 'import sys' 2>/dev/null); then
-#  sh convert-py3k
-#  cd py3k/$PRGNAM  
-#  python3 setup.py install --root=$PKG
-# fi
+$PYTHON setup.py install --root=$PKG
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

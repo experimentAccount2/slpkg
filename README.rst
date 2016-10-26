@@ -78,11 +78,16 @@ Download latest release:
 .. code-block:: bash
     
     Required root privileges
-   
+
     $ tar xvf slpkg-3.2.1.tar.gz
     $ cd slpkg-3.2.1
     $ ./install.sh
     
+    If you want to build slpkg for use with Python 3.x (needs the
+    optional dependency python3) pass the script PYTHON3=yes, like:
+
+    PYTHON3=yes ./install.sh
+
     Installed as Slackware package
 
     Uninstall:

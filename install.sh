@@ -22,6 +22,9 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# If you want to build slpkg for use with Python 3.x (needs the
+# optional dependency python3) pass the script PYTHON3=yes, like:
+# PYTHON3=yes ./install.sh
 
 __version() {
 # Grab version from __metadata_.py file
