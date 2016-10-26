@@ -107,7 +107,7 @@ class Repo(object):
                     default_dict_repo[line.split()[0]] = line.split()[1]
                 else:
                     print("\nslpkg: Error: Repository name '{0}' is not "
-                          "default name.\n              Please check file: "
+                          "default.\n              Please check file: "
                           "/etc/slpkg/default-repositories\n".format(
                               line.split()[0]))
                     raise SystemExit()
