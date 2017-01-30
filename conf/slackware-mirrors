@@ -31,7 +31,7 @@
 # below. Be careful is the template that the rest.
 #
 #
-# Last Updated: Mon Oct 10 13:47:02 UTC 2016
+# Last Updated: Mon Jan 30 07:47:01 UTC 2017
 # 
 # Available http mirrors:
 # 
@@ -97,7 +97,6 @@
 # us		 http://dfw.mirror.rackspace.com/slackware/ 
 # us		 http://ftp.gtlib.gatech.edu/pub/slackware/ 
 # us		 http://ftp.slackware.com/pub/slackware/ 
-# us		 http://lug.mtu.edu/slackware/ 
 # us		 http://mirror.cs.princeton.edu/pub/mirrors/slackware/ 
 # us		 http://mirror.lug.udel.edu/pub/slackware/ 
 # us		 http://mirror.math.princeton.edu/pub/slackware/ 
@@ -168,7 +167,6 @@
 # us		 ftp://ftp.gtlib.gatech.edu/pub/slackware 
 # us		 ftp://ftp.lug.udel.edu/pub/slackware/ 
 # us		 ftp://ftp.slackware.com/pub/slackware/ 
-# us		 ftp://lug.mtu.edu/slackware/ 
 # us		 ftp://mirror.cs.princeton.edu/pub/mirrors/slackware/ 
 # us		 ftp://mirror.nexcess.net/slackware/ 
 # us		 ftp://mirror.rlworkman.net/slackware/ 
