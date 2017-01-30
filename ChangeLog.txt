@@ -1,3 +1,8 @@
+3.2.3 - 30/01/2017
+Updated:
+- Copyright year
+- Slackware mirrors
+
 3.2.2 - 26/10/2016
 Added:
 - Support Python3 with 2to3 tool.
