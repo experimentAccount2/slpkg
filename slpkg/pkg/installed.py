@@ -3,7 +3,7 @@
 
 # installed.py file is part of slpkg.
 
-# Copyright 2014-2016 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
+# Copyright 2014-2017 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
 
 # Slpkg is a user-friendly package manager for Slackware installations

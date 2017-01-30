@@ -2,7 +2,7 @@
 
 # install.sh file is part of slpkg.
 
-# Copyright 2014-2016 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
+# Copyright 2014-2017 Dimitris Zlatanidis <d.zlatanidis@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
