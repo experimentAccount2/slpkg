@@ -86,7 +86,9 @@ class ArgParse(object):
         ]
 
         # checking if repositories exists
-        repo = check_exists_repositories()
+        enabled_repos = _meta_.repositories
+        if len(self.args) > 1:
+            repo = check_exists_repositories(args[1])
         if len(self.args) > 1 and self.args[0] in [
             "-c", "--check",
             "-l", "--list",
@@ -96,7 +98,7 @@ class ArgParse(object):
             "-p", "--desc",
             "-F", "--FIND",
             "-f", "--find"
-        ] and self.args[1] == repo:
+        ] and self.args[1] == repo and repo in enabled_repos:
             print("\n  Please update packages lists. Run 'slpkg update'.\n" +
                   "  This command should be used to synchronize packages\n" +
                   "  lists from the repositories are enabled.\n")

@@ -671,19 +671,18 @@ class Update(object):
         raise SystemExit()
 
 
-def check_exists_repositories():
+def check_exists_repositories(repo):
     """Checking if repositories exists by PACKAGES.TXT file
     """
-    for repo in _meta_.repositories:
+    pkg_list = "PACKAGES.TXT"
+    if repo == "sbo":
+        pkg_list = "SLACKBUILDS.TXT"
+    if check_for_local_repos(repo) is True:
         pkg_list = "PACKAGES.TXT"
-        if repo == "sbo":
-            pkg_list = "SLACKBUILDS.TXT"
-        if check_for_local_repos(repo) is True:
-            pkg_list = "PACKAGES.TXT"
-            continue
-        if not os.path.isfile("{0}{1}{2}".format(
-                _meta_.lib_path, repo, "_repo/{0}".format(pkg_list))):
-            return repo
+        return ""
+    if not os.path.isfile("{0}{1}{2}".format(
+            _meta_.lib_path, repo, "_repo/{0}".format(pkg_list))):
+        return repo
     return ""
 
 
