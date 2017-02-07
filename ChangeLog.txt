@@ -1,7 +1,11 @@
-3.2.3 - 30/01/2017
+3.2.3 - 07/02/2017
 Updated:
 - Copyright year
 - Slackware mirrors
+
+Fixed:
+- Update package lists after initialization (IOError: [Errno 2] No such file
+or directory)
 
 3.2.2 - 26/10/2016
 Added:
