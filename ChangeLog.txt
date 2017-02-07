@@ -4,7 +4,7 @@ Updated:
 - Slackware mirrors
 
 Fixed:
-- Update package lists after initialization (IOError: [Errno 2] No such file
+- Update package lists after fresh installation (IOError: [Errno 2] No such file
 or directory)
 
 3.2.2 - 26/10/2016
