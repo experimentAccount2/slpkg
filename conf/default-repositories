@@ -22,13 +22,15 @@
 #
 # END OF LEGAL NOTICE
 #
+# This file provide the urls from repositories. 
 # Change only the url if necessary finishing with "/".
 # For local repository start with "file:///" avoid end path with "/".
 # Do NOT change the name of the repository.
+#
 # Default repositories names:
 # sbo, slack, rlw, alien, slacky, slackr, slonly, ktown, multi, slacke, salix,
 # slackl, rested, msb, csb, connor
-# Slackware repository (slack) served from file slackware-mirros
+# NOTE: Slackware repository (slack) served from file slackware-mirros
 # -----------------------------------------------------------------------------
 #
 # NAME      URL
