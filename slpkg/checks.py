@@ -54,7 +54,8 @@ class Updates(object):
             "salix": self._init.salix,
             "slackl": self._init.slackl,
             "rested": self._init.rested,
-            "msb": self._init.msb
+            "msb": self._init.msb,
+            "connos": self._init.msb
         }
 
     def status_bar(self):

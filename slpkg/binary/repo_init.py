@@ -131,3 +131,10 @@ class RepoInit(object):
         self.mirror = "{0}{1}/{2}/{3}/".format(
             self.def_repo_dict["msb"], slack_ver(),
             self.meta.msb_sub_repo[1:-1], arch)
+
+    def _init_connos(self):
+        arch = ""
+        if self.meta.arch == "x86_64":
+            arch = "64"
+        self.mirror = "{0}slack-n-free{1}-{2}/".format(
+            self.def_repo_dict["connos"], arch, slack_ver())

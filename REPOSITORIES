@@ -26,7 +26,7 @@ dependencies.
 
 Slonly repository do not support -current for x86 arch.
 
-Alien's ktown (ktown), Alien's multilib (multi), Slacke E17 and E18
+Alien's ktown (ktown), Alien's multilib (multi), Slacke E17 and E18, slack-n-free,
 and Alien's restricted repository has no reference dependencies.
 
 IMPORTANT: For Alien's (Eric Hameleers) repositories (alien, multi and ktown) should run 

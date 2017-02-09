@@ -524,12 +524,51 @@ class Initialization(object):
             os.mkdir(lib)
         if arch == "x86_64":
             ar = "x86_64"
+        version = ""
+        if "msb" in self.meta.repositories:
+            version = self.meta.msb_sub_repo[1:-1]
         PACKAGES_TXT = "{0}{1}/{2}/{3}/{4}".format(
-            repo, slack_ver(), self.meta.msb_sub_repo[1:-1], ar, lib_file)
+            repo, slack_ver(), version, ar, lib_file)
         FILELIST_TXT = ""
         CHECKSUMS_MD5 = "{0}{1}/{2}/{3}/{4}".format(
-            repo, slack_ver(), self.meta.msb_sub_repo[1:-1], ar, md5_file)
+            repo, slack_ver(), version, ar, md5_file)
         ChangeLog_txt = "{0}{1}".format(repo, log_file)
+        if self.check:
+            return self.checks_logs(log, ChangeLog_txt)
+        self.down(lib, PACKAGES_TXT, repo_name)
+        self.down(lib, CHECKSUMS_MD5, repo_name)
+        self.down(log, ChangeLog_txt, repo_name)
+        self.remote(log, ChangeLog_txt, lib, PACKAGES_TXT, CHECKSUMS_MD5,
+                    FILELIST_TXT, repo_name)
+
+    def connos(self):
+        """Creating connochaetos (slack-n-free) local library
+        """
+        nickname = "slack-n-free"
+        ar = ""
+        arch = self.meta.arch
+        repo = self.def_repos_dict["connos"]
+        log = self.log_path + "connos/"
+        lib = self.lib_path + "connos_repo/"
+        repo_name = log[:-1].split("/")[-1]
+        lib_file = "PACKAGES.TXT"
+        # lst_file = ""
+        md5_file = "CHECKSUMS.md5"
+        log_file = "ChangeLog.txt"
+        if not os.path.exists(log):
+            os.mkdir(log)
+        if not os.path.exists(lib):
+            os.mkdir(lib)
+        if arch == "x86_64":
+            ar = "64"
+        PACKAGES_TXT = "{0}{1}{2}-{3}/{4}".format(repo, nickname, ar,
+                                                  slack_ver(), lib_file)
+        FILELIST_TXT = ""
+        CHECKSUMS_MD5 = "{0}{1}{2}-{3}/{4}".format(repo, nickname, ar,
+                                                   slack_ver(), md5_file)
+
+        ChangeLog_txt = "{0}{1}{2}-{3}/{4}".format(repo, nickname, ar,
+                                                   slack_ver(), log_file)
         if self.check:
             return self.checks_logs(log, ChangeLog_txt)
         self.down(lib, PACKAGES_TXT, repo_name)
