@@ -145,3 +145,11 @@ class RepoInit(object):
             arch = "64"
         self.mirror = "{0}slack-n-free{1}-{2}/".format(
             self.def_repo_dict["connos"], arch, slack_ver())
+
+    def _init_mles(self):
+        arch = "32"
+        if self.meta.arch == "x86_64":
+            arch = "64"
+        self.mirror = "{0}{1}-{2}-{3}bit/".format(
+            self.def_repo_dict["mles"],
+            self.meta.mles_sub_repo[1:-1], slack_ver(), arch)

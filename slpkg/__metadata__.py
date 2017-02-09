@@ -61,6 +61,7 @@ def grab_sub_repo(repositories, repos):
             sub = repositories[i].replace(repos, "")
             repositories[i] = repos
             return sub
+    return ""
 
 
 def select_slack_release(slack_rel):
@@ -100,7 +101,7 @@ class MetaData(object):
                          "slacky", "slackr", "slonly",
                          "ktown{latest}", "multi", "slacke{18}",
                          "salix", "slackl", "rested", "msb{1.16}",
-                         "csb", "connos"],
+                         "csb", "connos", "mles{desktop}"],
         "BUILD_PATH": "/tmp/slpkg/build/",
         "PACKAGES": "/tmp/slpkg/packages/",
         "PATCHES": "/tmp/slpkg/patches/",
@@ -126,7 +127,7 @@ class MetaData(object):
 
     default_repositories = ["slack", "sbo", "rlw", "alien", "slacky", "slackr",
                             "slonly", "ktown", "multi", "slacke", "salix",
-                            "slackl", "rested", "msb", "csb", "connos"]
+                            "slackl", "rested", "msb", "csb", "connos", "mles"]
 
     # read value from configuration file
     repositories = []
@@ -142,6 +143,7 @@ class MetaData(object):
                         _conf_slpkg[line.split("=")[0]] = line.split("=")[1]
                     elif files == "repositories.conf":
                         repositories.append(line)
+
     # Set values from configuration file
     slack_rel = _conf_slpkg["RELEASE"]
     build_path = _conf_slpkg["BUILD_PATH"]
@@ -179,10 +181,10 @@ class MetaData(object):
     ktown_kde_repo = grab_sub_repo(repositories, "ktown")
     slacke_sub_repo = grab_sub_repo(repositories, "slacke")
     msb_sub_repo = grab_sub_repo(repositories, "msb")
+    mles_sub_repo = grab_sub_repo(repositories, "mles")
 
     # remove no default repositories
     repositories = remove_repositories(repositories, default_repositories)
-
     # add custom repositories
     update_repositories(repositories, conf_path)
 

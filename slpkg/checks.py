@@ -56,7 +56,8 @@ class Updates(object):
             "rested": self._init.rested,
             "msb": self._init.msb,
             "csb": self._init.csb,
-            "connos": self._init.msb
+            "connos": self._init.msb,
+            "mles": self._init.mles
         }
 
     def status_bar(self):

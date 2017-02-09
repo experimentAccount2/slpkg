@@ -211,6 +211,9 @@ Default available Repositories:
 - `Connochaetos (Slack-n-Free) <https://connochaetos.org/slack-n-free/>`_
   Arch: {x86, x86_64}
   Versions: {14,1, 14.2}
+- `Microlinux mles <http://www.microlinux.fr/microlinux/>`_
+  Arch: {x86, x86_64}
+  Versions: {14,1, 14.2}
 
 
 * Choose default repositories you need to work from file '/etc/slpkg/repositories.conf' default 
