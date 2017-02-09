@@ -262,12 +262,12 @@ class Initialization(object):
         self.remote(log, ChangeLog_txt, lib, PACKAGES_TXT, CHECKSUMS_MD5,
                     FILELIST_TXT, repo_name)
 
-    def slackr(self):
+    def conrad(self):
         """Creating slackers local library
         """
-        repo = self.def_repos_dict["slackr"]
-        log = self.log_path + "slackr/"
-        lib = self.lib_path + "slackr_repo/"
+        repo = self.def_repos_dict["conrad"]
+        log = self.log_path + "conrad/"
+        lib = self.lib_path + "conrad_repo/"
         repo_name = log[:-1].split("/")[-1]
         lib_file = "PACKAGES.TXT"
         # lst_file = ""

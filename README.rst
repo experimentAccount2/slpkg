@@ -178,7 +178,7 @@ Default available Repositories:
 - `Robby's <http://rlworkman.net/pkgs/>`_
   Arch: {x86, x86_64}
   Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1, 14,2}
-- `Slackers <http://slack.conraid.net/repository/slackware64-current>`_
+- `Conraid's <http://slack.conraid.net/repository/slackware64-current>`_
   Arch: {x86_64}
   Versions: {current}
 - `Slackonly <https://slackonly.com/>`_
@@ -544,7 +544,7 @@ list. This command must be executed to update the package lists:
     Update repository [sbo] ... Done
     Update repository [alien] ... Done
     Update repository [slacky] ... Done
-    Update repository [slackr] ... Done
+    Update repository [conrad] ... Done
     Update repository [slonly] ... Done
     Update repository [ktown] ... Done
     Update repository [salix] ... Done
@@ -629,7 +629,7 @@ View information about the repositories:
       slack    http://ftp.cc.uoc.gr/mirrors/linux/slackware/       yes      enabled
       slacke   http://ngc891.blogdns.net/pub/                      yes     disabled
       slackl   http://www.slackel.gr/repo/                         yes     disabled
-      slackr   http://www.slackers.it/repository/                  yes     disabled
+      conrad    http://slack.conraid.net/repository/slackware64-~   yes     disabled
       slacky   http://repository.slacky.eu/                        yes     disabled
       slonly   https://slackonly.com/pub/packages/                 yes     disabled
 
@@ -1302,7 +1302,7 @@ Search for packages from the enabled repositories:
       sbo         aria2-1.18.10                                                 0 K
       slonly      aria2-1.18.10-x86_64-1_slack.txz                           1124 K
       salix       aria2-1.18.1-x86_64-1rl.txz                                1052 K
-      slackr      aria2-1.18.10-x86_64-1cf.txz                               1140 K
+      conrad      aria2-1.18.10-x86_64-1cf.txz                               1140 K
     
     Found summary
     ===============================================================================

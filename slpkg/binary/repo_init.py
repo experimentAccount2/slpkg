@@ -75,8 +75,8 @@ class RepoInit(object):
         self.mirror = "{0}slackware{1}-{2}/".format(
             self.def_repo_dict["slacky"], arch, slack_ver())
 
-    def _init_slackr(self):
-        self.mirror = self.def_repo_dict["slackr"]
+    def _init_conrad(self):
+        self.mirror = self.def_repo_dict["conrad"]
 
     def _init_slonly(self):
         ver = slack_ver()

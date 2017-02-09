@@ -14,7 +14,7 @@ Rworkman's (rlw) repository use dependencies where displayed in central site
 'http://rlworkman.net/pkgs/' and only those. Unfortunately there is no fixed reference
 dependencies file PACKAGES.TXT. You can make changes in /etc/slpkg/rlworkman.deps file.
 
-Slackers.it (slackr) repository must be used only from Slackware64 current users
+Conraid's (conrad) repository must be used only from Slackware64 current users
 and has no reference dependencies.
 
 Slackel.gr (slackl) repository must be used only from Slackware{x86, x86_64} -current users.

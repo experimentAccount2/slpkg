@@ -98,7 +98,7 @@ class MetaData(object):
     _conf_slpkg = {
         "RELEASE": "stable",
         "REPOSITORIES": ["slack", "sbo", "rlw", "alien",
-                         "slacky", "slackr", "slonly",
+                         "slacky", "conrad", "slonly",
                          "ktown{latest}", "multi", "slacke{18}",
                          "salix", "slackl", "rested", "msb{1.16}",
                          "csb", "connos", "mles{desktop}"],
@@ -125,7 +125,7 @@ class MetaData(object):
         "NOT_DOWNGRADE": "off"
     }
 
-    default_repositories = ["slack", "sbo", "rlw", "alien", "slacky", "slackr",
+    default_repositories = ["slack", "sbo", "rlw", "alien", "slacky", "conrad",
                             "slonly", "ktown", "multi", "slacke", "salix",
                             "slackl", "rested", "msb", "csb", "connos", "mles"]
 
