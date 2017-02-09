@@ -1,3 +1,17 @@
+3.2.4 - 07/02/2017
+Updated:
+- Switch SlackBuild script to arch i586
+- Rename repository slackr to conrad
+
+Added:
+- Repository Cinnamon
+- Repository connochaetos (slack-n-free)
+- Repository Microlinux {desktop, server, extras}
+
+Fixed:
+- Upgrade package lists
+- Mate repository check for updates
+
 3.2.3 - 07/02/2017
 Updated:
 - Copyright year
