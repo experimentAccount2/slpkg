@@ -99,7 +99,8 @@ class MetaData(object):
         "REPOSITORIES": ["slack", "sbo", "rlw", "alien",
                          "slacky", "slackr", "slonly",
                          "ktown{latest}", "multi", "slacke{18}",
-                         "salix", "slackl", "rested", "msb{1.16}", "connos"],
+                         "salix", "slackl", "rested", "msb{1.16}",
+                         "csb", "connos"],
         "BUILD_PATH": "/tmp/slpkg/build/",
         "PACKAGES": "/tmp/slpkg/packages/",
         "PATCHES": "/tmp/slpkg/patches/",
@@ -125,7 +126,7 @@ class MetaData(object):
 
     default_repositories = ["slack", "sbo", "rlw", "alien", "slacky", "slackr",
                             "slonly", "ktown", "multi", "slacke", "salix",
-                            "slackl", "rested", "msb", "connos"]
+                            "slackl", "rested", "msb", "csb", "connos"]
 
     # read value from configuration file
     repositories = []

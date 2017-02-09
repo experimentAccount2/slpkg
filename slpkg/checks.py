@@ -55,6 +55,7 @@ class Updates(object):
             "slackl": self._init.slackl,
             "rested": self._init.rested,
             "msb": self._init.msb,
+            "csb": self._init.csb,
             "connos": self._init.msb
         }
 

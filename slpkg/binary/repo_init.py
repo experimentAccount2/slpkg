@@ -132,6 +132,13 @@ class RepoInit(object):
             self.def_repo_dict["msb"], slack_ver(),
             self.meta.msb_sub_repo[1:-1], arch)
 
+    def _init_csb(self):
+        arch = "x86"
+        if self.meta.arch == "x86_64":
+            arch = "x86_64"
+        self.mirror = "{0}{1}/{2}".format(
+            self.def_repo_dict["csb"], slack_ver(), arch)
+
     def _init_connos(self):
         arch = ""
         if self.meta.arch == "x86_64":
