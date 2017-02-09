@@ -26,8 +26,9 @@
 # For local repository start with "file:///" avoid end path with "/".
 # Do NOT change the name of the repository.
 # Default repositories names:
-# sbo, rlw, alien, slacky, slackr, slonly, ktown, multi, slacke, salix,
-# slackl, rested, msb
+# sbo, slack, rlw, alien, slacky, slackr, slonly, ktown, multi, slacke, salix,
+# slackl, rested, msb, csb, connor
+# Slackware repository (slack) served from file slackware-mirros
 # -----------------------------------------------------------------------------
 #
 # NAME      URL
