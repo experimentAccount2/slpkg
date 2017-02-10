@@ -6,7 +6,7 @@ Updated:
 
 Added:
 - Repository Cinnamon
-- Repository connochaetos (slack-n-free)
+- Repository Connochaetos (slack-n-free)
 - Repository Microlinux {desktop, server, extras}
 
 Fixed:
