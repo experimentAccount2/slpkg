@@ -29,7 +29,7 @@ from slpkg.__metadata__ import MetaData as _meta_
 
 
 class Repo(object):
-    """Central repository urls
+    """Manage repositories configuration files
     """
     def __init__(self):
         self.meta = _meta_
