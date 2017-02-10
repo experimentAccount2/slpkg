@@ -510,6 +510,7 @@ class Initialization(object):
         """Creating MATE local library
         """
         ar = "x86"
+        ver_slack = slack_ver()
         arch = self.meta.arch
         repo = self.def_repos_dict["msb"]
         log = self.log_path + "msb/"
@@ -527,11 +528,13 @@ class Initialization(object):
             ar = "x86_64"
         version = ""
         version = self.meta.msb_sub_repo[1:-1]
+        if self.meta.slack_rel == "current":
+            ver_slack = self.meta.slack_rel
         PACKAGES_TXT = "{0}{1}/{2}/{3}/{4}".format(
-            repo, slack_ver(), version, ar, lib_file)
+            repo, ver_slack, version, ar, lib_file)
         FILELIST_TXT = ""
         CHECKSUMS_MD5 = "{0}{1}/{2}/{3}/{4}".format(
-            repo, slack_ver(), version, ar, md5_file)
+            repo, ver_slack, version, ar, md5_file)
         ChangeLog_txt = "{0}{1}".format(repo, log_file)
         if self.check:
             return self.checks_logs(log, ChangeLog_txt)
@@ -545,6 +548,7 @@ class Initialization(object):
         """Creating Cinnamon local library
         """
         ar = "x86"
+        ver_slack = slack_ver()
         arch = self.meta.arch
         repo = self.def_repos_dict["csb"]
         log = self.log_path + "csb/"
@@ -560,11 +564,13 @@ class Initialization(object):
             os.mkdir(lib)
         if arch == "x86_64":
             ar = "x86_64"
+        if self.meta.slack_rel == "current":
+            ver_slack = self.meta.slack_rel
         PACKAGES_TXT = "{0}{1}/{2}/{3}".format(
-            repo, slack_ver(), ar, lib_file)
+            repo, ver_slack, ar, lib_file)
         FILELIST_TXT = ""
         CHECKSUMS_MD5 = "{0}{1}/{2}/{3}".format(
-            repo, slack_ver(), ar, md5_file)
+            repo, ver_slack, ar, md5_file)
         ChangeLog_txt = "{0}{1}".format(repo, log_file)
         if self.check:
             return self.checks_logs(log, ChangeLog_txt)

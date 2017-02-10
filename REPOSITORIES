@@ -2,6 +2,7 @@
 This file was created to explain some peculiarities of repositories used by the slpkg.
 --------------------------------------------------------------------------------------
 
+*** NOTE: For more informations, refer directly to the repositories ***
 
 Default repositories:
 ---------------------
@@ -19,10 +20,11 @@ and has no reference dependencies.
 
 Slackel.gr (slackl) repository must be used only from Slackware{x86, x86_64} -current users.
 
-MSB (msb) repository has one ChangeLog.txt file for three sub-repositories {1.6, 1.8, 1.10}.
-So if you have updated the list of packages with version 1.8 and want to switch to version 
-1.10 then run "slpkg upgrade" instead of "slpkg update". MSB (msb) repository has no reference 
-dependencies.
+MSB (msb) repository has one ChangeLog.txt file for three sub-repositories {1.14, 1.16, latest}.
+So if you have updated the list of packages with version 1.14 and want to switch to version 
+1.16 then run "slpkg upgrade" instead of "slpkg update". MSB (msb) repository has no reference 
+dependencies. Similarly apply and for the repository Cinnamon (csb) but with the different 
+versions. Both repositories Mate and Cinnamon support Slackware -current x86_64 but not x86.
 
 Slonly repository do not support -current for x86 arch.
 
