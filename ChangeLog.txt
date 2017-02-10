@@ -2,6 +2,7 @@
 Updated:
 - Switch SlackBuild script to arch i586
 - Rename repository slackr to conrad
+- Repository MATE to support Slackware -current x86_64
 
 Added:
 - Repository Cinnamon

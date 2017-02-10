@@ -204,7 +204,7 @@ Default available Repositories:
   Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14,1, 14.2, current}
 - `MATE Desktop Environment <http://slackware.org.uk/msb/>`_
   Arch: {x86, x86_64}
-  Versions: {14.0, 14,1, 14.2}
+  Versions: {14.0, 14,1, 14.2, current}
 - `Cinnamon Desktop Environment <http://slackware.org.uk/csb/>`_
   Arch: {x86, x86_64}
   Versions: {14,1, 14.2, current}
