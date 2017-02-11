@@ -1,3 +1,7 @@
+3.2.5 - 11/02/2017
+Updated:
+- Url for mles/mled repository (Thanks Kiki Novak for the report)
+
 3.2.4 - 10/02/2017
 Updated:
 - Switch SlackBuild script to arch i586
