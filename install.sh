@@ -28,7 +28,7 @@
 
 __version() {
 # Grab version from __metadata_.py file
-cat slpkg/version_info.py | grep "__version_info__ = (" \
+cat slpkg/__metadata__.py | grep "__version_info__ = (" \
     | tr -d [[:space:]] | cut -c19-23 | tr , .
 }
 
