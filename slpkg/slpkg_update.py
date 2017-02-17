@@ -45,7 +45,6 @@ def it_self_update():
                 "{3}/{4}/version_info.py".format(repository, _meta_.__author__,
                                                  _meta_.__all__, branch,
                                                  _meta_.__all__))
-    print ver_link
     version_data = URL(ver_link).reading()
     for line in version_data.splitlines():
         line = line.strip()
