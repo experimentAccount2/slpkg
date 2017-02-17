@@ -116,7 +116,7 @@ Using pip:
 
 Binary packages:
 
-Slackware: `slpkg-3.2.4-i486-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v3.2.4/slpkg-3.2.4-i486-1_dsw.txz>`_
+Slackware: `slpkg-3.2.4-i586-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v3.2.4/slpkg-3.2.4-i586-1_dsw.txz>`_
 
 Slackware64: `slpkg-3.2.4-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v3.2.4/slpkg-3.2.4-x86_64-1_dsw.txz>`_
 
