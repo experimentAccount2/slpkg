@@ -32,7 +32,7 @@ class SBoArch(object):
         self.meta = _meta_
         self.arch = self.meta.arch
         # Architectures
-        self.x86 = "i486"
+        self.x86 = "i586"
         self.arm = "arm"
 
     def get(self):
