@@ -120,7 +120,7 @@ class MetaData(object):
         "DOWNDER_OPTIONS": "-c -N",
         "SLACKPKG_LOG": "on",
         "ONLY_INSTALLED": "off",
-        "PRG_BAR": "on",
+        "PRG_BAR": "off",
         "EDITOR": "nano",
         "NOT_DOWNGRADE": "off"
     }
