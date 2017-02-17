@@ -4,6 +4,9 @@ Updated:
 - Switch to arch i586 for sbo repository
 - Switch off progress bar by default
 
+Fixed:
+- Exit codes - another scenario of #73 #79
+
 3.2.4 - 10/02/2017
 Updated:
 - Switch SlackBuild script to arch i586
