@@ -42,9 +42,10 @@ def it_self_update():
     repository = "github"
     branch = "master"
     ver_link = ("https://raw.{0}usercontent.com/{1}/{2}/"
-                "{3}/{4}/__metadata__.py".format(repository, _meta_.__author__,
+                "{3}/{4}/version_info.py".format(repository, _meta_.__author__,
                                                  _meta_.__all__, branch,
                                                  _meta_.__all__))
+    print ver_link
     version_data = URL(ver_link).reading()
     for line in version_data.splitlines():
         line = line.strip()
