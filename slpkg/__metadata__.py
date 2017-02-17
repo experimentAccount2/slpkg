@@ -23,6 +23,7 @@
 
 
 import os
+from version_info import __version_info__
 
 
 def remove_repositories(repositories, default_repositories):
@@ -78,7 +79,6 @@ class MetaData(object):
 
     __all__ = "slpkg"
     __author__ = "dslackw"
-    __version_info__ = (3, 2, 4)
     __version__ = "{0}.{1}.{2}".format(*__version_info__)
     __license__ = "GNU General Public License v3 (GPLv3)"
     __email__ = "d.zlatanidis@gmail.com"

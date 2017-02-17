@@ -4,7 +4,7 @@
     :target: https://travis-ci.org/dslackw/slpkg
 .. image:: https://landscape.io/github/dslackw/slpkg/master/landscape.png
     :target: https://landscape.io/github/dslackw/slpkg/master
-.. image:: https://img.shields.io/codacy/6464ba0bd1e3.2.48388c71a34b3a5e8.svg
+.. image:: https://img.shields.io/codacy/6464ba0bd1e3.2.58388c71a34b3a5e8.svg
     :target: https://www.codacy.com/public/dzlatanidis/slpkg/dashboard
 .. image:: https://img.shields.io/pypi/dm/slpkg.svg
     :target: https://pypi.python.org/pypi/slpkg
@@ -20,7 +20,7 @@
     :target: https://github.com/dslackw/slpkg/issues
  
 
-Slpkg v3.2.4
+Slpkg v3.2.5
 ============
 
 |
@@ -79,8 +79,8 @@ Download latest release:
     
     Required root privileges
 
-    $ tar xvf slpkg-3.2.4.tar.gz
-    $ cd slpkg-3.2.4
+    $ tar xvf slpkg-3.2.5.tar.gz
+    $ cd slpkg-3.2.5
     $ ./install.sh
     
     If you want to build slpkg for use with Python 3.x (needs the
@@ -116,9 +116,9 @@ Using pip:
 
 Binary packages:
 
-Slackware: `slpkg-3.2.4-i586-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v3.2.4/slpkg-3.2.4-i586-1_dsw.txz>`_
+Slackware: `slpkg-3.2.5-i586-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v3.2.5/slpkg-3.2.5-i586-1_dsw.txz>`_
 
-Slackware64: `slpkg-3.2.4-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v3.2.4/slpkg-3.2.4-x86_64-1_dsw.txz>`_
+Slackware64: `slpkg-3.2.5-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/releases/download/v3.2.5/slpkg-3.2.5-x86_64-1_dsw.txz>`_
 
 
 Optional dependencies
