@@ -51,7 +51,7 @@ class Graph(object):
                     not os.path.isfile("/usr/bin/graph-easy")):
                 comma = ","
                 graph_easy = " graph-easy"
-            print("Require 'pygraphviz{0}{1}': Install with '# slpkg -s sbo "
+            print("Require 'pygraphviz{0}{1}': Install with 'slpkg -s sbo "
                   "pygraphviz{1}'".format(comma, graph_easy))
             raise SystemExit()
         if self.image != "ascii":
@@ -87,7 +87,7 @@ class Graph(object):
         """Draw ascii diagram. graph-easy perl module require
         """
         if not os.path.isfile("/usr/bin/graph-easy"):
-            print("Require 'graph-easy': Install with '$ slpkg -s sbo "
+            print("Require 'graph-easy': Install with 'slpkg -s sbo "
                   "graph-easy'")
             self.remove_dot()
             raise SystemExit()
