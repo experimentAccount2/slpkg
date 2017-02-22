@@ -126,7 +126,8 @@ if "install" in sys.argv:
         "conf/slackware-mirrors",
         "conf/default-repositories",
         "conf/custom-repositories",
-        "conf/rlworkman.deps"
+        "conf/rlworkman.deps",
+        "conf/pkg_security"
     ]
     if not os.path.exists(_meta_.conf_path):
         os.makedirs(_meta_.conf_path)

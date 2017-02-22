@@ -25,6 +25,8 @@
 import os
 from distutils.version import LooseVersion
 
+from slpkg.security import pkg_security
+
 from slpkg.utils import Utils
 from slpkg.messages import Msg
 from slpkg.toolbar import status
@@ -52,6 +54,7 @@ class SBoInstall(object):
     """
     def __init__(self, slackbuilds, flag):
         self.slackbuilds = slackbuilds
+        pkg_security(self.slackbuilds)
         self.flag = flag
         self.meta = _meta_
         self.msg = Msg()

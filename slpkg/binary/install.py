@@ -25,6 +25,8 @@
 import os
 from distutils.version import LooseVersion
 
+from slpkg.security import pkg_security
+
 from slpkg.utils import Utils
 from slpkg.sizes import units
 from slpkg.messages import Msg
@@ -53,6 +55,7 @@ class BinaryInstall(object):
     """
     def __init__(self, packages, repo, flag):
         self.packages = packages
+        pkg_security(packages)
         self.repo = repo
         self.flag = flag
         self.meta = _meta_

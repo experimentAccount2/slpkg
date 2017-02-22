@@ -131,6 +131,18 @@ class Msg(object):
                 raise SystemExit()
         return answer
 
+    def security_pkg(self, pkg):
+        """Warning message for some special reasons
+        """
+        self.template(78)
+        print("| {0}{1} *** WARNING ***{2}\n"
+              "| Before proceed with package '{3}' will you must read the\n"
+              "| README file. You can use command 'slpkg -n {4}'").format(
+                  " " * 20, self.meta.color["RED"], self.meta.color["ENDC"],
+                  pkg, pkg)
+        self.template(78)
+        print("")
+
     def reference(self, install, upgrade):
         """Reference list with packages installed
         and upgraded
