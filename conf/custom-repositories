@@ -22,6 +22,7 @@
 #
 # END OF LEGAL NOTICE
 #
+# ----------------------------------------------------------------------------
 # This file is used to read, write and remove custom repositories by
 # the user. The repositories will be added here should have a different
 # name from existing repositories and the default. Also, the link must
