@@ -395,7 +395,7 @@ class ArgParse(object):
         for f in flag:
             if f in self.args:
                 self.args.remove(f)
-        # print usage message if wrong addition option
+        # print usage message if wrong additional option
         for arg in self.args:
             if arg.startswith("--"):
                 if arg not in additional_options:
