@@ -5,6 +5,7 @@ Updated:
 Added:
 - Support the special packages who need attention (OpenGL 32-Bits Libs after
 upgrade #81) Thanks to Edward W. Koenig and Inukaze for the report
+- pkg_security configuration file
 
 3.2.5 - 17/02/2017
 Updated:
