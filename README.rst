@@ -130,6 +130,10 @@ Optional dependencies
 
 `graph-easy <http://slackbuilds.org/repository/14.1/graphics/graph-easy/>`_ for drawing ascii dependencies diagram
 
+`httpie <https://slackbuilds.org/repository/14.2/network/httpie/>`_ alternative downloader
+
+`aria2 <https://slackbuilds.org/repository/14.2/network/aria2/>`_ alternative downloader
+
 
 Recommended
 -----------
