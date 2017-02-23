@@ -134,11 +134,13 @@ class Msg(object):
     def security_pkg(self, pkg):
         """Warning message for some special reasons
         """
+        print("")
         self.template(78)
-        print("| {0}{1} *** WARNING ***{2}\n"
-              "| Before proceed with package '{3}' will you must read the\n"
-              "| README file. You can use command 'slpkg -n {4}'").format(
-                  " " * 20, self.meta.color["RED"], self.meta.color["ENDC"],
+        print("| {0}{1}*** WARNING ***{2}").format(
+            " " * 27, self.meta.color["RED"], self.meta.color["ENDC"])
+        self.template(78)
+        print("| Before proceed with package '{0}' will you must read the\n"
+              "| README file. You can use command 'slpkg -n {1}'").format(
                   pkg, pkg)
         self.template(78)
         print("")
