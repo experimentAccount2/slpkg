@@ -28,7 +28,7 @@ from slpkg.messages import Msg
 
 def pkg_security(pkgs):
     """Check packages before install or upgrade for security
-    reasons"""
+    reasons. Configuration file in the /etc/slpkg/pkg_security"""
     security_packages = Utils().read_file("/etc/slpkg/pkg_security")
     packages = []
     for read in security_packages.splitlines():
