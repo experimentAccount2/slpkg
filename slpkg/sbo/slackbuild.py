@@ -25,7 +25,6 @@
 import os
 from distutils.version import LooseVersion
 
-from slpkg.security import pkg_security
 
 from slpkg.utils import Utils
 from slpkg.messages import Msg
@@ -33,6 +32,7 @@ from slpkg.toolbar import status
 from slpkg.log_deps import write_deps
 from slpkg.blacklist import BlackList
 from slpkg.downloader import Download
+from slpkg.security import pkg_security
 from slpkg.__metadata__ import MetaData as _meta_
 
 from slpkg.pkg.find import find_package
