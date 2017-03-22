@@ -22,6 +22,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+import os
 import urllib2
 
 from slpkg.__metadata__ import MetaData as _meta_
@@ -38,6 +39,23 @@ class URL(object):
         """Open url and read
         """
         try:
+            # testing proxy
+            proxies = {}
+            try:
+                proxies["http_proxy"] = os.environ['http_proxy']
+            except KeyError:
+                pass
+            try:
+                proxies["https_proxy"] = os.environ['https_proxy']
+            except KeyError:
+                pass
+
+            if len(proxies) != 0:
+                proxy = urllib2.ProxyHandler(proxies)
+                opener = urllib2.build_opener(proxy)
+                urllib2.install_opener(opener)
+
+            # end testing
             f = urllib2.urlopen(self.link)
             return f.read()
         except (urllib2.URLError, ValueError):
