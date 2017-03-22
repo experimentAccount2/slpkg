@@ -37,16 +37,16 @@
 # NAME      URL
   sbo       http://slackbuilds.org/slackbuilds/
   rlw       http://rlworkman.net/pkgs/
-  alien     http://taper.alienbase.nl/mirrors/people/alien/sbrepos/
+  alien     http://bear.alienbase.nl/mirrors/people/alien/sbrepos/
   slacky    http://repository.slacky.eu/
   conrad    http://slack.conraid.net/repository/slackware64-current/
   slonly    https://slackonly.com/pub/packages/
   ktown     http://alien.slackbook.org/ktown/
-  multi     http://www.slackware.com/~alien/multilib/
+  multi     http://bear.alienbase.nl/mirrors/people/alien/multilib/
   slacke    http://ngc891.blogdns.net/pub/
   salix     http://download.salixos.org/
   slackl    http://www.slackel.gr/repo/
-  rested    http://taper.alienbase.nl/mirrors/people/alien/restricted_slackbuilds/
+  rested    http://bear.alienbase.nl/mirrors/people/alien/restricted_slackbuilds/
   msb       http://slackware.org.uk/msb/
   csb       http://slackware.uk/csb/
   connos    https://connochaetos.org/slack-n-free/

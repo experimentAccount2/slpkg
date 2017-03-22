@@ -173,7 +173,7 @@ Default available Repositories:
 - `Slack <http://www.slackware.com/>`_
   Arch: {x86, x86_64}
   Versions: {3.3, 8.1, 9.0, 9.1, 10.0, 10.1, 10.2, 11.0, 12.0, 12.2, 13.0, 13.37, 14.0, 14.1, 14.2, current}
-- `Alien's <http://taper.alienbase.nl/mirrors/people/alien/sbrepos/>`_
+- `Alien's <http://bear.alienbase.nl/mirrors/people/alien/sbrepos/>`_
   Arch: {x86, x86_64}
   Versions: {13.0, 13.1, 13.37, 14.0, 14.1, 14.2, current}
 - `Slacky <http://repository.slacky.eu/>`_
@@ -191,7 +191,7 @@ Default available Repositories:
 - `Alien's ktown <http://alien.slackbook.org/ktown/>`_
   Arch: {x86, x86_64}
   Versions: {13.37, 14.0, 14.1, 14.2, current}
-- `Alien's multi <http://www.slackware.com/~alien/multilib/>`_
+- `Alien's multi <http://bear.alienbase.nl/mirrors/people/alien/multilib/>`_
   Arch: {x86_64}
   Versions: {13.0, 13.1, 13.37, 14.0, 14.1, 14.2, current}
 - `Slacke E17 and E18 <http://ngc891.blogdns.net/pub/>`_
@@ -203,7 +203,7 @@ Default available Repositories:
 - `Slackel <http://www.slackel.gr/repo/>`_
   Arch: {x86, x86_64}
   Versions: {current}
-- `Restricted <http://taper.alienbase.nl/mirrors/people/alien/restricted_slackbuilds/>`_
+- `Restricted <http://bear.alienbase.nl/mirrors/people/alien/restricted_slackbuilds/>`_
   Arch: {x86, x86_64}
   Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14,1, 14.2, current}
 - `MATE Desktop Environment <http://slackware.org.uk/msb/>`_
