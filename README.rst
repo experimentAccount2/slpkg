@@ -179,7 +179,7 @@ Default available Repositories:
 - `Slacky <http://repository.slacky.eu/>`_
   Arch: {x86, x86_64}
   Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1, 14.2}
-- `Robby's <http://rlworkman.net/pkgs/>`_
+- `Robby's <http://slackware.uk/people/rlworkman/>`_
   Arch: {x86, x86_64}
   Versions: {11.0, 12.0, 12.1, 12.2, 13.0, 13.1, 13.37, 14.0, 14.1, 14,2}
 - `Conraid's <http://slack.conraid.net/repository/slackware64-current>`_
