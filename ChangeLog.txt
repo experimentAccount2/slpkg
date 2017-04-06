@@ -1,7 +1,11 @@
-3.2.7 - 24/03/2017
-Updated
+3.2.7 - 06/04/2017
+Updated:
 - Alien's repositories {alien, ktown, multi} #83 (Thanks to travis-82)
 - Rworkman's repository {rlw} #83
+
+Added:
+- Sbosrcarch as secondary repository for source files #82 (Thanks to
+travis-82)
 
 3.2.6 - 22/02/2017
 Updated:
