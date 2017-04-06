@@ -103,6 +103,8 @@ class MetaData(object):
                          "salix", "slackl", "rested", "msb{1.16}",
                          "csb", "connos", "mles{desktop}"],
         "BUILD_PATH": "/tmp/slpkg/build/",
+        "SBOSRCARCH": "off",
+        "SBOSRCARCH_LINK": "http://slackware.uk/sbosrcarch/by-name/",
         "PACKAGES": "/tmp/slpkg/packages/",
         "PATCHES": "/tmp/slpkg/patches/",
         "CHECKMD5": "on",
@@ -147,6 +149,8 @@ class MetaData(object):
     # Set values from configuration file
     slack_rel = _conf_slpkg["RELEASE"]
     build_path = _conf_slpkg["BUILD_PATH"]
+    sbosrcarch = _conf_slpkg["SBOSRCARCH"]
+    sbosrcarch_link = _conf_slpkg["SBOSRCARCH_LINK"]
     slpkg_tmp_packages = _conf_slpkg["PACKAGES"]
     slpkg_tmp_patches = _conf_slpkg["PATCHES"]
     checkmd5 = _conf_slpkg["CHECKMD5"]

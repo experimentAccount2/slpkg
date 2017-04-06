@@ -337,6 +337,8 @@ class SBoInstall(object):
                 sbo_url = sbo_search_pkg(pkg)
                 sbo_link = SBoLink(sbo_url).tar_gz()
                 script = sbo_link.split("/")[-1]
+                if self.meta.sbosrcarch in ["on", "ON"]:
+                    src_link = self.sbosrcarsh(prgnam, sbo_link, src_link)
                 Download(self.build_folder, sbo_link.split(),
                          repo="sbo").start()
                 Download(self._SOURCES, src_link, repo="sbo").start()
@@ -378,3 +380,14 @@ class SBoInstall(object):
                   "setting by user".format(name))
             self.msg.template(78)
             return True
+
+    def sbosrcarsh(self, prgnam, sbo_link, src_link):
+        """Alternative repository for sbo sources"""
+        sources = []
+        name = "-".join(prgnam.split("-")[:-1])
+        category = "{0}/{1}/".format(sbo_link.split("/")[-2], name)
+        for link in src_link:
+            source = link.split("/")[-1]
+            sources.append("{0}{1}{2}".format(self.meta.sbosrcarch_link,
+                                              category, source))
+        return sources
