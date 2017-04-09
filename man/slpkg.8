@@ -39,8 +39,8 @@ Usage: slpkg [COMMANDS|OPTIONS] {repository|package...}
                  [list, build, install, build-install]]
              [-g [print, edit, reset]]
              [-l [repository], --index, --installed, --name]
-             [-c [repository], --upgrade, --skip=[...], --resolve-off,
-                               --checklist]
+             [-c [repository], --upgrade, --rebuild, --skip=[...],
+                               --resolve-off, --checklist]
              [-s [repository] [package...], --rebuild, --reinstall,
                                             --resolve-off, --download-only,
                                             --directory-prefix=[dir],
@@ -204,7 +204,7 @@ Additional options:
 \fB--name\fP : Print package name only.
 
 .SS -c, --check, check if your packages is up to date
-\fBslpkg\fP \fB-c\fP <\fIrepository\fP> \fB--upgrade\fP \fB--skip=[packages...]\fP, 
+\fBslpkg\fP \fB-c\fP <\fIrepository\fP> \fB--upgrade\fP \fB--rebuild\fP \fB--skip=[packages...]\fP,
 \fB--resolve-off\fP, \fB--checklist\fP
 .PP
 Check your packages if up to date. Slackware patches repository works independently of the 
@@ -216,6 +216,8 @@ Additional options:
 \fB-c ALL\fP : Check ChangeLog.txt files for changes.
 .PP
 \fB--upgrade\fP : Check and install packages for upgrade.
+.PP
+\fB--rebuild\fP : Rebuild packages from sbo repository.
 .PP
 \fB--resolve-off\fP : Switch off automatic resolve dependencies.
 .PP

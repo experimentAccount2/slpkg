@@ -292,7 +292,8 @@ class ArgParse(object):
             "--upgrade",
             "--skip=",
             "--resolve-off",
-            "--checklist"
+            "--checklist",
+            "--rebuild"
         ]
         flag, skip = self.__pkg_upgrade_flags(flags)
         if (len(self.args) == 3 and self.args[0] in options and

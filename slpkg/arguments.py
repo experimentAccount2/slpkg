@@ -110,8 +110,8 @@ Optional arguments:
                                              the system.
 
   -c | --check, [repository], --upgrade,     Check for updated packages from
-       --skip=[...], --resolve--off          the repositories and upgrade or
-       --checklist                           install with all dependencies.
+       --rebuild --skip=[...],               the repositories and upgrade or
+       --resolve-off, --checklist            install with all dependencies.
 
   -s | --sync, [repository] [package...],    Sync packages. Install packages
        --rebuild, --reinstall,               directly from remote repositories
@@ -193,8 +193,8 @@ def usage(repo):
                  [list, build, install, build-install]]
              [-g [print, edit, reset]]
              [-l [repository], --index, --installed, --name]
-             [-c [repository], --upgrade, --skip=[...], --resolve-off,
-                               --checklist]
+             [-c [repository], --upgrade, --rebuild, --skip=[...],
+                               --resolve-off, --checklist]
              [-s [repository] [package...], --rebuild, --reinstall,
                                             --resolve-off, --download-only,
                                             --directory-prefix=[dir],
