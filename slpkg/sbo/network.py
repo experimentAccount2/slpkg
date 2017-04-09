@@ -55,7 +55,6 @@ class SBoNetwork(object):
     """
     def __init__(self, name, flag):
         self.name = name
-        pkg_security([self.name])
         self.flag = flag
         self.meta = _meta_
         self.msg = Msg()
@@ -230,6 +229,7 @@ class SBoNetwork(object):
     def choice_install(self):
         """Download, build and install package
         """
+        pkg_security([self.name])
         if not find_package(self.prgnam, self.meta.pkg_path):
             self.build()
             self.install()
@@ -360,6 +360,7 @@ class SBoNetwork(object):
     def build(self):
         """Only build and create Slackware package
         """
+        pkg_security([self.name])
         self.error_uns()
         if self.FAULT:
             print("")
