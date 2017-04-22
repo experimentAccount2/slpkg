@@ -526,7 +526,6 @@ class Initialization(object):
             os.mkdir(lib)
         if arch == "x86_64":
             ar = "x86_64"
-        version = ""
         version = self.meta.msb_sub_repo[1:-1]
         if self.meta.slack_rel == "current":
             ver_slack = self.meta.slack_rel
