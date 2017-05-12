@@ -1660,9 +1660,7 @@ Man page it is available for full support:
 
 Donate
 ------
-If you feel satisfied with this project and want to thank me go
-to `Slackware <https://store.slackware.com/cgi-bin/store/slackdonation>`_ and make a donation or 
-visit the `store <https://store.slackware.com/cgi-bin/store>`_.
+If you feel satisfied with this project and want to thanks me make a donation `Dimitris Zlatanidis <https://www.paypal.me/DimitrisZlatanidis>`_
 
 
 Copyright 
