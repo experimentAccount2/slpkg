@@ -124,11 +124,11 @@ Slackware64: `slpkg-3.2.7-x86_64-1_dsw.txz <https://github.com/dslackw/slpkg/rel
 Optional dependencies
 ---------------------
 
-`python2-pythondialog <http://slackbuilds.org/repository/14.1/python/python2-pythondialog/>`_ for dialog box interface
+`python2-pythondialog <http://slackbuilds.org/repository/14.2/python/python2-pythondialog/>`_ for dialog box interface
 
-`pygraphviz <http://slackbuilds.org/repository/14.1/graphics/pygraphviz/>`_ for drawing dependencies diagram
+`pygraphviz <http://slackbuilds.org/repository/14.2/graphics/pygraphviz/>`_ for drawing dependencies diagram
 
-`graph-easy <http://slackbuilds.org/repository/14.1/graphics/graph-easy/>`_ for drawing ascii dependencies diagram
+`graph-easy <http://slackbuilds.org/repository/14.2/graphics/graph-easy/>`_ for drawing ascii dependencies diagram
 
 `httpie <https://slackbuilds.org/repository/14.2/network/httpie/>`_ alternative downloader
 
@@ -318,7 +318,7 @@ Testing
 -------
 
 The majority of trials have been made in an environment Slackware x86_64 'stable' 
-and x86 'current' version 14.1.
+and x86 'current' version 14.2.
 
 
 Slackware Current
@@ -597,7 +597,7 @@ Add and remove custom repositories:
 
 .. code-block:: bash
 
-    $ slpkg repo-add ponce http://ponce.cc/slackware/slackware64-14.1/packages/
+    $ slpkg repo-add ponce http://ponce.cc/slackware/slackware64-14.2/packages/
 
     Repository 'ponce' successfully added
 
@@ -625,7 +625,7 @@ View information about the repositories:
       ktown    http://alien.slackbook.org/ktown/                   yes     disabled
       msb      http://slackware.org.uk/msb/                        yes      enabled
       multi    http://www.slackware.com/~alien/multilib/           yes     disabled
-      ponce    http://ponce.cc/slackware/slackware64-14.1/packa~   no       enabled
+      ponce    http://ponce.cc/slackware/slackware64-14.2/packa~   no       enabled
       rested   http://taper.alienbase.nl/mirrors/people/alien/r~   yes     disabled
       rlw      http://rlworkman.net/pkgs/                          yes     disabled
       salix    http://download.salixos.org/                        yes     disabled
@@ -1069,7 +1069,7 @@ Upgrade only distribution:
     $ slpkg -c slack --upgrade --skip="multi:*multilib*,ktown:*"  // This upgrade 
     Checking... Done                                              // distribution
                                                                   // and skip all 
-    Slackware64 'stable' v14.1 distribution is up to date         // packages from
+    Slackware64 'stable' v14.2 distribution is up to date         // packages from
                                                                   // ktown repository
                                                                   // and multilib
                                                                   // from multi.
@@ -1114,9 +1114,9 @@ Read files, download, build or install:
     +==============================================================================
     |                             SlackBuilds Repository
     +==============================================================================
-    | 14.1 > Games > bitfighter
+    | 14.2 > Games > bitfighter
     +===============================================================================
-    | Package url: http://slackbuilds.org/repository/14.1/games/bitfighter/
+    | Package url: http://slackbuilds.org/repository/14.2/games/bitfighter/
     +===============================================================================
     | Description: multi-player combat game
     | SlackBuild: bitfighter.tar.gz
@@ -1322,8 +1322,8 @@ Search for packages from the enabled repositories:
     +==============================================================================
     | Repository  Package                                                      Size
     +==============================================================================
-      slack       aaa_base-14.1-x86_64-1.txz                                   12 K
-      slack       aaa_elflibs-14.1-x86_64-3.txz                              4316 K
+      slack       aaa_base-14.2-x86_64-1.txz                                   12 K
+      slack       aaa_elflibs-14.2-x86_64-3.txz                              4316 K
       slack       aaa_terminfo-5.8-x86_64-1.txz                                44 K
       sbo         jaaa-0.8.4                                                    0 K
       sbo         python3-PyQt5-5.5                                             0 K
