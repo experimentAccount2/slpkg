@@ -1660,7 +1660,11 @@ Man page it is available for full support:
 
 Donate
 ------
-If you feel satisfied with this project and want to thanks me make a donation `Dimitris Zlatanidis <https://www.paypal.me/DimitrisZlatanidis>`_
+
+If you feel satisfied with this project and want to thanks me make a donation.
+
+.. image:: https://github.com/dslackw/images/blob/master/donate/paypaldonate.png
+    :target: https://www.paypal.me/DimitrisZlatanidis 
 
 
 Copyright 
