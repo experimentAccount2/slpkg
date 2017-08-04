@@ -33,7 +33,7 @@ from slpkg.pkg.find import find_package
 def slack_package(prgnam):
     """Return maximum binary Slackware package from output directory
     """
-    binaries, cache, binary = [], " ", ""
+    binaries, cache, binary = [], "0", ""
     for pkg in find_package(prgnam, _meta_.output):
         if pkg.startswith(prgnam) and pkg[:-4].endswith("_SBo"):
             binaries.append(pkg)
