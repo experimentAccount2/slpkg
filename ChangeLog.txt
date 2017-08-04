@@ -68,7 +68,7 @@ Fixed:
 Added:
 - rlworkman.deps dependencies configuration file
 Fixed:
-- Bugfix: IndexError: list index out of range, for tracking arguments
+- BugFix: IndexError: list index out of range, for tracking arguments
 Updated:
 - Rworkman's (rlw) repository dependencies for Slackware 14.2
 
@@ -627,7 +627,7 @@ Added:
 
 2.3.0 - 07/05/2015
 Fixed:
-- Bugfix: Find package error #13, Thanks 'lucashpandolfo' for reporting
+- BugFix: Find package error #13, Thanks 'lucashpandolfo' for reporting
 
 2.2.9 - 24/4/2015
 Fixed:
@@ -739,7 +739,7 @@ Added:
 - Options in /etc/slpkg/slpkg.conf file to select repositories
 - Options to skip unsupported and untested packages
 Fixed:
-- Bugfix TypeError for unsupported/untested sbo packages
+- BugFix TypeError for unsupported/untested sbo packages
 
 2.1.0 - 28/11/2014
 Fixed:
@@ -777,7 +777,7 @@ Added:
 - All repositories in tracking dependencies options '-t'
 - Configuration file managment
 Fixed:
-- Bugfix upgrading binary packages
+- BugFix upgrading binary packages
 
 2.0.4 - 07/11/2014
 Added:
@@ -798,7 +798,7 @@ Fixed:
 
 2.0.1 - 20/10/2014
 Fixed:
-- Bugfix md5 checksum failed
+- BugFix md5 checksum failed
 - Download all sources before build in view options
 
 2.0.0 - 15/10/2014
@@ -817,11 +817,11 @@ Fixed:
 
 1.9.7 - 06/10/2014
 Fixed:
-- Bugfix UnboundLocalError: local variable 'arch' referenced before assignment
+- BugFix UnboundLocalError: local variable 'arch' referenced before assignment
 
 1.9.6 - 04/10/2014
 FIxed:
-- Bugfix install packages from slack repo
+- BugFix install packages from slack repo
 
 1.9.5 - 04/10/2014
 Fixed:
@@ -850,7 +850,7 @@ Fixed:
 
 1.9.9 - 25/09/2014
 Fixed:
-- Bugfix v1.9.0 no update slackbuilds packages
+- BugFix v1.9.0 no update slackbuilds packages
 - Arch in sbo upgrade
 
 1.9.0 - 24/09/2014
@@ -953,7 +953,7 @@ Fixed:
 
 1.7.4 - 17/08/2014
 Fixed:
-- Bugfix NameError: global name 'getpass' is not defined
+- BugFix NameError: global name 'getpass' is not defined
 Added:
 - Downloaded .asc files to upgrade or install packages from Slackware tree
 - Calculate file sizes in the process of installing 
@@ -962,7 +962,7 @@ Added:
 1.7.3 - 16/8/2014
 Fixed:
 - Sort the packets in the list view. We thank Dave for help https://github.com/wvragga.
-- Bugfix reinstall lilo after upgrading kernel.
+- BugFix reinstall lilo after upgrading kernel.
 - Removed some code system and replaced with Python code.
 - Reinstall if packages exist and upgrading if not in options slpkg -s slack <packages>
 - New paths created, ChangeLog.txt saved in /var/log/slpkg and SLACKBUILDS.TXT in /var/lib/slpkg/sbo_repo
@@ -975,7 +975,7 @@ Fixed:
 
 1.7.1 - 11/08/2014
 Fixed:
-- Bugfix OSError: [Errno 2] No such file or directory: '/tmp/slpkg/patches/
+- BugFix OSError: [Errno 2] No such file or directory: '/tmp/slpkg/patches/
 Added:
 - Change the way to search packages from slackbuilds.org.
 - The route search package eventually becomes found after ChangeLog.txt change
