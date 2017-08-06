@@ -53,7 +53,7 @@ class Msg(object):
         """Print error message if build failed
         """
         self.template(78)
-        print("| Build package {0} [ {1}FAILED{2} ]".format(
+        print("| Some error on the package {0} [ {1}FAILED{2} ]".format(
             prgnam, self.meta.color["RED"], self.meta.color["ENDC"]))
         self.template(78)
         print("| See log file in '{0}/var/log/slpkg/sbo/build_logs{1}' "
