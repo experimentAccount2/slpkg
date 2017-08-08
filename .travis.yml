@@ -18,6 +18,6 @@ install:
 
 # command to run tests
 script: 
-  - nosetests --with-cprofile --cprofile-stats-erase --cprofile-stats-file=profile_slpkg_a8aff97e71_2
-  - python -m properform Push 47.88.50.110:15554 asdf_slpkg_a8aff97e71_2 ./profile_slpkg_a8aff97e71_2
-#2017-08-08 17:21:27 modified at 0#2017-08-08 17:21:33 modified at 1#2017-08-08 17:21:40 modified at 2
+  - nosetests --with-cprofile --cprofile-stats-erase --cprofile-stats-file=profile_slpkg_a8aff97e71_3
+  - python -m properform Push 47.88.50.110:15554 asdf_slpkg_a8aff97e71_3 ./profile_slpkg_a8aff97e71_3
+#2017-08-08 17:21:27 modified at 0#2017-08-08 17:21:33 modified at 1#2017-08-08 17:21:40 modified at 2#2017-08-08 17:21:46 modified at 3
